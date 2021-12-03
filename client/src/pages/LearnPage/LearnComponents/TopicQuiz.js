@@ -21,16 +21,16 @@ function TopicQuiz(props) {
     const persistQuizCompletionToDB = async (username, topic) => {
         try {
             if (topic === "Brier Scores") {
-                await axios.patch(`http://localhost:5000/learnQuizzes/${username}`, {
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/learnQuizzes/${username}`, {
                     brierComplete: true
                 });
                 
             } else if (topic === "The Good Judgment Project") {
-                await axios.patch(`http://localhost:5000/learnQuizzes/${username}`, {
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/learnQuizzes/${username}`, {
                     gjpComplete: true
                 });
             } else if (topic === "Superforecasters") {
-                await axios.patch(`http://localhost:5000/learnQuizzes/${username}`, {
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/learnQuizzes/${username}`, {
                     superforecastersComplete: true
                 });
             };
@@ -43,10 +43,10 @@ function TopicQuiz(props) {
     const updateOnboarding = async (username) => {
         try {
             // Try to redo this so that we don't need to do the GET first 
-            const userDocument = await axios.get(`http://localhost:5000/users/${username}`);
+            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             if (userDocument.data[0].onboarding.completeALearnQuiz === true) {
                 userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 20;
-                await axios.patch(`http://localhost:5000/users/${username}`, 
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
                     { 
                         onboarding: userDocument.data[0].onboarding,
                         fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 
@@ -56,7 +56,7 @@ function TopicQuiz(props) {
             } else {
                 userDocument.data[0].onboarding.completeALearnQuiz = true;
                 userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 250;
-                await axios.patch(`http://localhost:5000/users/${username}`, 
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
                     { 
                         onboarding: userDocument.data[0].onboarding,
                         fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 

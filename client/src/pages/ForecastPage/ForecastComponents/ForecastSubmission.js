@@ -56,7 +56,7 @@ function ForecastSubmission(props) {
 
     const getAllForecastsFromDB = async (userMarkets) => {
         try {
-            const allForecastsUnfiltered = await axios.get('http://localhost:5000/forecasts');
+            const allForecastsUnfiltered = await axios.get('https://fantasy-forecast-politics.herokuapp.com/forecasts');
             let filtered = [];
             let filteredAndOrganised = [];
             for (let i = 0; i < userMarkets.length; i++) {
@@ -82,7 +82,7 @@ function ForecastSubmission(props) {
         // marketName === undefined when useEffect runs before a problem is selected
         if (marketName === undefined) return;
         try {
-            const leaderboardResponse = await axios.get(`http://localhost:5000/leaderboards/leaderboard/${marketName}`);
+            const leaderboardResponse = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboard/${marketName}`);
             let lbRankings = leaderboardResponse.data.rankings;
             let newRankings = await lbRankings.sort((a, b) => b.marketPoints - a.marketPoints);
             formatUserRank(newRankings);
@@ -163,7 +163,7 @@ console.log("Here1");
 
     const getBrierForClosedForecast = async (username, problemName) => {
         try {
-            const userDocument = await axios.get(`http://localhost:5000/users/${username}`);
+            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             const forecastDetails = userDocument.data[0].brierScores.find(el => el.problemName === problemName);
             setClosedForecastScore(forecastDetails === undefined ? "No Forecast Submitted" : forecastDetails.brierScore.toFixed(0));
         } catch (error) {
@@ -286,7 +286,7 @@ console.log("Here1");
             return;
         }
         try {
-            const document = await axios.get(`http://localhost:5000/forecasts/${forecast}`);
+            const document = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${forecast}`);
             const documentForecastData = document.data[0].submittedForecasts;
             let index = 0;
             for (let i = 0; i < documentForecastData.length; i++) {
@@ -294,7 +294,7 @@ console.log("Here1");
                     index = i;
                 };
             };
-            const newForecast = await axios.patch(`http://localhost:5000/forecasts/update/${forecast}`, {
+            const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update/${forecast}`, {
                 updatedForecastsForUser: {certainty: newCertainty, comments: newComments, date: new Date().toString()},
                 locationOfForecasts: `submittedForecasts.${index}.forecasts`,
                 locationOfForecastCount: `submittedForecasts.${index}.numberOfForecastsSubmittedByUser`
@@ -308,7 +308,7 @@ console.log("Here1");
 
     const handleForecastSubmit = async (forecast, certainty, comments, username) => {
         try {
-            const submittedForecast = await axios.patch(`http://localhost:5000/forecasts/submit/${forecast}`, {
+            const submittedForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/submit/${forecast}`, {
                 username: username,
                 certainty: certainty,
                 comments: comments,
@@ -328,10 +328,10 @@ console.log("Here1");
     const updateOnboarding = async (username) => {
         try {
             // Try to redo this so that we don't need to do the GET first 
-            const userDocument = await axios.get(`http://localhost:5000/users/${username}`);
+            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             if (userDocument.data[0].onboarding.submitAForecast === true) {
                 userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 25;
-                await axios.patch(`http://localhost:5000/users/${username}`, 
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
                     { 
                         fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 
                     }
@@ -341,7 +341,7 @@ console.log("Here1");
             } else {
                 userDocument.data[0].onboarding.submitAForecast = true;
                 userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 300
-                await axios.patch(`http://localhost:5000/users/${username}`, 
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
                     { 
                         onboarding: userDocument.data[0].onboarding,
                         fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 

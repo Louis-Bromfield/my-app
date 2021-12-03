@@ -88,7 +88,7 @@ function LeaderboardMenu(props) {
         } else {
             setLeagueCreationError("");
             try {
-                await axios.post('http://localhost:5000/leaderboards', {
+                await axios.post('https://fantasy-forecast-politics.herokuapp.com/leaderboards', {
                     leaderboardName: league,
                     rankings: usersToInvite,
                     isPublic: publicStatus,
@@ -111,7 +111,7 @@ function LeaderboardMenu(props) {
 
     const checkIfUserIsInMarkets = async (username) => {
         try {
-            const allUserLeaderboardsFromDB = await axios.get(`http://localhost:5000/leaderboards/${username}`);
+            const allUserLeaderboardsFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${username}`);
             if (allUserLeaderboardsFromDB.data[0].length === 0) {
                 setUserInNoMarkets(true)
             } else {
@@ -128,7 +128,7 @@ function LeaderboardMenu(props) {
     };
 
     const pullAllMarketsFromDB = async (username) => {
-        const leaderboardDocument = await axios.get(`http://localhost:5000/leaderboards/justNames/${username}`);
+        const leaderboardDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/justNames/${username}`);
         setAllMarkets(leaderboardDocument.data);
     };
 
@@ -167,7 +167,7 @@ function LeaderboardMenu(props) {
     const leagueCreationMenu = async (openStatus, username) => {
         try {
             if (usersArray !== ["empty array"]) {
-                let allUsers = await axios.get('http://localhost:5000/users');
+                let allUsers = await axios.get('https://fantasy-forecast-politics.herokuapp.com/users');
                 let filteredUsers = [];
                 for (let i = 0; i < allUsers.data.length; i++) {
                     if (allUsers.data[i].username !== username) {
@@ -222,7 +222,7 @@ function LeaderboardMenu(props) {
         try {
             setLoading(true);
             for (let i = 0; i < markets.length; i++) {
-                const leaderboardUpdate = await axios.patch(`http://localhost:5000/leaderboards/marketSignUp/${markets[i]}`, {
+                const leaderboardUpdate = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/marketSignUp/${markets[i]}`, {
                     username: username
                 });
                 console.log(leaderboardUpdate);
@@ -237,11 +237,11 @@ function LeaderboardMenu(props) {
     const updateOnboardingAndUserMarkets = async (markets, username) => {
         try {
             // Try to redo this so that we don't need to do the GET first 
-            const userDocument = await axios.get(`http://localhost:5000/users/${username}`);
+            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             if (userDocument.data[0].onboarding.joinAMarket === true) {
                 userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 5;
                 userDocument.data[0].markets = [...userDocument.data[0].markets, ...markets];
-                await axios.patch(`http://localhost:5000/users/${username}`, 
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
                     { 
                         onboarding: userDocument.data[0].onboarding,
                         fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints,
@@ -253,7 +253,7 @@ function LeaderboardMenu(props) {
                 userDocument.data[0].onboarding.joinAMarket = true;
                 userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 150;
                 userDocument.data[0].markets = [...userDocument.data[0].markets, ...markets];
-                await axios.patch(`http://localhost:5000/users/${username}`, 
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
                     { 
                         onboarding: userDocument.data[0].onboarding,
                         fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints,
@@ -273,15 +273,15 @@ function LeaderboardMenu(props) {
     const respondToInvite = async (market, response, username) => {
         try {
             if (response === "accept") {
-                await axios.patch(`http://localhost:5000/leaderboards/${market}/acceptInvite/${username}`);
-                await axios.patch(`http://localhost:5000/users/${username}/addMarket/${market}`);
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${market}/acceptInvite/${username}`);
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/addMarket/${market}`);
                 setInviteAlert(`Congratulations, you have now joined the ${market} market!`);
                 setTimeout(() => {
                     setInviteAlert("No message");
                 }, 1500);
             } else if (response === "reject") {
-                await axios.patch(`http://localhost:5000/leaderboards/${market}/removeUser/${username}`)
-                await axios.patch(`http://localhost:5000/users/${username}/removeMarket/${market}`);
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${market}/removeUser/${username}`)
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/removeMarket/${market}`);
                 setInviteAlert(`You have rejected this invitation to join ${market}.`);
                 setTimeout(() => {
                     setInviteAlert("No message");

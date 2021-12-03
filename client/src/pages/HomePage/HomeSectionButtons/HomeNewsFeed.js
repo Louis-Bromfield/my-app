@@ -46,7 +46,7 @@ function HomeNewsFeed(props) {
 
     const getAllNewsFeedPostsFromDB = async () => {
         try {
-            const allPosts = await axios.get('http://localhost:5000/homePageNewsFeedPosts');
+            const allPosts = await axios.get('https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts');
             setFeed(allPosts.data.reverse());
             setFilteredFeed(feed);
         } catch (error) {
@@ -56,7 +56,7 @@ function HomeNewsFeed(props) {
 
     const getUserMarketsFromDB = async (username) => {
         try {
-            const allMarkets = await axios.get(`http://localhost:5000/leaderboards/${username}`);
+            const allMarkets = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${username}`);
             let filtersArr = [];
             let userMarketsArr = [];
             for (let i = 0; i < allMarkets.data.length; i++) {
@@ -89,7 +89,7 @@ function HomeNewsFeed(props) {
             const postURL = e.target.value;
             setNewPostURL(postURL);
             setPostPreviewLoading(true);
-            const postPreviewObj = await axios.get('http://localhost:5000/helpers/getPostInfo', {
+            const postPreviewObj = await axios.get('https://fantasy-forecast-politics.herokuapp.com/helpers/getPostInfo', {
                 params: {
                     URL: postURL
                 }
@@ -142,7 +142,7 @@ function HomeNewsFeed(props) {
 
     const persistPostToDB = async (username) => {
         try {
-            await axios.post('http://localhost:5000/homePageNewsFeedPosts', {
+            await axios.post('https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts', {
                 articleURL: newPostURL,
                 postDescription: newPostDescription,
                 author: username,
@@ -162,16 +162,16 @@ function HomeNewsFeed(props) {
     const updateOnboarding = async (username) => {
         try {
             // Try to redo this so that we don't need to do the GET first 
-            const userDocument = await axios.get(`http://localhost:5000/users/${username}`);
+            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             if (userDocument.data[0].onboarding.submitAPost === true) {
                 userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 25
-                await axios.patch(`http://localhost:5000/users/${username}`, {
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, {
                     fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints
                 });
             } else {
                 userDocument.data[0].onboarding.submitAPost = true;
                 userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 200
-                await axios.patch(`http://localhost:5000/users/${username}`, 
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
                     { 
                         onboarding: userDocument.data[0].onboarding,
                         fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 
@@ -205,7 +205,7 @@ function HomeNewsFeed(props) {
             return;
         };
         try {
-            await axios.patch(`http://localhost:5000/homePageNewsFeedPosts/${postID}`, {
+            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/${postID}`, {
                 articleURL: postURL,
                 postDescription: postDescription,
                 markets: postMarkets,
@@ -224,7 +224,7 @@ function HomeNewsFeed(props) {
 
     const deletePost = async (postID) => {
         try {
-            await axios.delete(`http://localhost:5000/homePageNewsFeedPosts/${postID}`);
+            await axios.delete(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/${postID}`);
             setCauseFeedNewsFeedRefreshWithoutAnimation(false);
             setCauseFeedNewsFeedRefresh(causeNewsFeedRefresh+1);
         } catch (error) {
@@ -235,9 +235,9 @@ function HomeNewsFeed(props) {
     const voteOnPost = async (vote, postID, postVotes) => {
         try {
             if (vote === "upvote") {
-                await axios.patch(`http://localhost:5000/homePageNewsFeedPosts/vote/${postID}`, { vote: "upvote", username: props.username })
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/vote/${postID}`, { vote: "upvote", username: props.username })
             } else if (vote === "downvote") {
-                await axios.patch(`http://localhost:5000/homePageNewsFeedPosts/vote/${postID}`, { vote: "downvote", username: props.username })
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/vote/${postID}`, { vote: "downvote", username: props.username })
             }
             setCauseFeedNewsFeedRefreshWithoutAnimation(true);
         } catch (error) {

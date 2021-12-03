@@ -22,7 +22,7 @@ function App() {
   const [profilePicture, setProfilePicture] = useState("");
 
   const updateUsername = async (newUsername) => {
-    await axios.patch(`http://localhost:5000/users/${username}`, { username: newUsername });
+    await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, { username: newUsername });
     setUsername(newUsername);
     localStorage.setItem("username", newUsername);
   };

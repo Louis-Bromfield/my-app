@@ -147,7 +147,7 @@ console.log("Individual Leaderboard UE");
     
     const getLeaderboardData = async (leaderboard) => {
         try {
-            const lbData = await axios.get(`http://localhost:5000/leaderboards/leaderboard/${leaderboard}`);
+            const lbData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${leaderboard}`);
             const lbRankings = lbData.data.rankings;
             lbRankings.sort((a, b) => b.marketPoints - a.marketPoints);
             const filtered = filterByInvite(lbRankings);
@@ -167,7 +167,7 @@ console.log("Individual Leaderboard UE");
     // const getUserSpecificData = async (rankings) => {
     //     try {
     //         for (let i = 0; i < rankings.length; i++) {
-    //             const userDocument = await axios.get(`http://localhost:5000/users/${rankings[i].username}`);
+    //             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${rankings[i].username}`);
     //             rankings[i].brierScores = [];
     //             let totalBrier = 0;
     //             if (userDocument.data[0].brierScores.length > 0) {
@@ -197,7 +197,7 @@ console.log("Individual Leaderboard UE");
 
     const leaveMarket = async (leaderboard, username) => {
         try {
-            await axios.patch(`http://localhost:5000/leaderboards/removeUser/${leaderboard}/${username}`);
+            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/removeUser/${leaderboard}/${username}`);
             history.push("/leaderboard-select");
         } catch (error) {
             console.error("Error in IndividualLeaderboard > leaveMarket");
@@ -211,7 +211,7 @@ console.log("Individual Leaderboard UE");
         } else if (usersPulled === false) {
             setUsersPulled(true);
             try {
-                let allUsers = await axios.get('http://localhost:5000/users');
+                let allUsers = await axios.get('https://fantasy-forecast-politics.herokuapp.com/users');
                 let inviteList = [];
                 let kickList = [];
                 for (let i = 0; i < allUsers.data.length; i++) {
@@ -238,11 +238,11 @@ console.log("Individual Leaderboard UE");
     const send = async (inviteOrKick, user, market) => {
         try {
             if (inviteOrKick === "invite") {
-                await axios.patch(`http://localhost:5000/leaderboards/${market}`, { username: user });
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${market}`, { username: user });
                 console.log("invite sent!");
                 setSendResponseText(`You have invited ${user}.`);
             } else if (inviteOrKick === "kick") {
-                const res = await axios.patch(`http://localhost:5000/leaderboards/kick/${market}`, { username: user });
+                const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/kick/${market}`, { username: user });
                 console.log(res);
                 console.log("user kicked!");
                 setSendResponseText(`You have kicked ${user}.`);

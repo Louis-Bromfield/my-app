@@ -37,7 +37,7 @@ function ProfileStats(props) {
 
     const getGlobalData = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/users/globalData');
+            const res = await axios.get('https://fantasy-forecast-politics.herokuapp.com/users/globalData');
             console.log(res.data);
             setGlobalBestBrier(res.data.bestBrier.toFixed(0));
             setGlobalWorstBrier(res.data.worstBrier.toFixed(0));
@@ -50,7 +50,7 @@ function ProfileStats(props) {
 
     const formatBrierData = async (userObj, username) => {
         if (userObj === null) {
-            const brierData = await axios.get(`http://localhost:5000/users/${username}`);
+            const brierData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             userObj = brierData.data[0];
         };
         let allBrierArray = [null];
@@ -143,7 +143,7 @@ function ProfileStats(props) {
     const findUniquePlayerStats = async (userObj, username) => {
         try {
             if (userObj === null) {
-                const userDoc = await axios.get(`http://localhost:5000/users/${username}`);
+                const userDoc = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
                 userObj = userDoc.data[0];
             };
             setProblemsAttempted(userObj.brierScores.length || "X");

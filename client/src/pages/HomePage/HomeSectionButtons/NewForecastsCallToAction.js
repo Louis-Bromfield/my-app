@@ -9,7 +9,7 @@ function NewForecastsCallToAction(props) {
 
     const checkForForecastsUserHasNotAttempted = async (username) => {
         try {
-            const forecastData = await axios.get(`http://localhost:5000/users/unattemptedForecasts/${username}`);
+            const forecastData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/unattemptedForecasts/${username}`);
             setUnattemptedForecasts(forecastData.data);
         } catch (error) {
             console.error(error);

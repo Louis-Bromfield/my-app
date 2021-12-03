@@ -40,7 +40,7 @@ function ForecastAdmin() {
 
     const getAllForecastsFromDB = async () => {
         try {
-            const allForecastsDocument = await axios.get('http://localhost:5000/forecasts');
+            const allForecastsDocument = await axios.get('https://fantasy-forecast-politics.herokuapp.com/forecasts');
             setAllForecasts(allForecastsDocument.data);
             setSelectedProblem(allForecastsDocument.data[0].problemName);
         } catch (error) {
@@ -51,7 +51,7 @@ function ForecastAdmin() {
 
     const getAllMarketsFromDB = async () => {
         try {
-            const allMarketsDocument = await axios.get(`http://localhost:5000/leaderboards/justNames/${localStorage.getItem("username")}`);
+            const allMarketsDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/justNames/${localStorage.getItem("username")}`);
             let filteredbyIsFFOrNot = [];
             for (let i = 0; i < allMarketsDocument.data.length; i++) {
                 if (allMarketsDocument.data[i][2] === true) {
@@ -67,7 +67,7 @@ function ForecastAdmin() {
 
     const persistNewProblemToDB = async (problemName, oDateTime, cDateTime, market) => {
         try {
-            await axios.post('http://localhost:5000/forecasts/newProblem', {
+            await axios.post('https://fantasy-forecast-politics.herokuapp.com/forecasts/newProblem', {
                 problemName: problemName,
                 startDate: oDateTime,
                 closeDate: cDateTime,
@@ -96,16 +96,16 @@ function ForecastAdmin() {
             let scores;
             if (closeEarly === true) {
                 console.log("Here2");
-                scores = await axios.patch(`http://localhost:5000/users/calculateBrier/${problemName}/${happenedStatus}/${market}/${closeEarly}`, {
+                scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/calculateBrier/${problemName}/${happenedStatus}/${market}/${closeEarly}`, {
                     newProblemCloseDateTime: newProblemCloseDateTime
                 });
             } else if (closeEarly === false) {
                 console.log("Here3");
-                scores = await axios.patch(`http://localhost:5000/users/calculateBrier/${problemName}/${happenedStatus}/${market}/${closeEarly}`);
+                scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/calculateBrier/${problemName}/${happenedStatus}/${market}/${closeEarly}`);
             };
 
             // Market Points
-            const updatedMarket = await axios.patch(`http://localhost:5000/leaderboards/closedProblem/${market}`, {
+            const updatedMarket = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/closedProblem/${market}`, {
                 scores: scores.data
             });
             console.log(updatedMarket.data);

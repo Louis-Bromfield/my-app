@@ -23,16 +23,16 @@ function ProfileDetails(props) {
             props.updateUsername(newUsernameToPersist);
             console.log("done0");
             // forecasts
-            await axios.patch(`http://localhost:5000/forecasts/changeUsername/${currentUsername}`, { username: newUsernameToPersist });
+            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/changeUsername/${currentUsername}`, { username: newUsernameToPersist });
             console.log("done1");
             // homepagenewsfeedposts (all posts where user = author)
-            await axios.patch(`http://localhost:5000/homePageNewsFeedPosts/changeUsernameOrProfilePic/${currentUsername}`, { changeUsername: true, username: newUsernameToPersist });
+            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/changeUsernameOrProfilePic/${currentUsername}`, { changeUsername: true, username: newUsernameToPersist });
             console.log("done2");
             // all leaderboards/markets the user is in
-            await axios.patch(`http://localhost:5000/leaderboards/changeUsername/${currentUsername}`, { username: newUsernameToPersist });
+            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/changeUsername/${currentUsername}`, { username: newUsernameToPersist });
 
             // learn quizzes - still need to write backend code for this
-            await axios.patch(`http://localhost:5000/learnquizzes/${currentUsername}`, { username: newUsernameToPersist });
+            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/learnquizzes/${currentUsername}`, { username: newUsernameToPersist });
             console.log("done3");
 
             props.setShowModal(true);
@@ -45,7 +45,7 @@ function ProfileDetails(props) {
 
     const persistNewPasswordToDB = async (currentUsername, newPasswordToPersist) => {
         try {
-            await axios.patch(`http://localhost:5000/users/${currentUsername}`, { password: newPasswordToPersist });
+            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${currentUsername}`, { password: newPasswordToPersist });
             props.setShowModal(true);
             props.setModalContent(`Password changed to ${newPasswordToPersist}!`);
         } catch (error) {
@@ -64,7 +64,7 @@ function ProfileDetails(props) {
         try {
             const formData = new FormData();
             formData.append("image", fileData);
-            const res = await axios.patch(`http://localhost:5000/users/imageAPI/${localStorage.getItem("username")}`, formData);
+            const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/imageAPI/${localStorage.getItem("username")}`, formData);
             localStorage.setItem("profilePicture", res.data.profilePicture);
             props.setShowModal(true);
             props.setModalContent(`Your profile picture has been updated. Refresh the page to see!`);

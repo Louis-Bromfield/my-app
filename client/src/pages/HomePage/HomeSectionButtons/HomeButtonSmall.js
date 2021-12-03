@@ -33,7 +33,7 @@ function HomeButtonSmall(props) {
 
     const getLearnProgress = async (username) => {
         try {
-            const userLearn = await axios.get(`http://localhost:5000/learnQuizzes/${username}`);
+            const userLearn = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/learnQuizzes/${username}`);
             if (userLearn === null) {
                 setLearnProgress(0);
                 setTotalQuizCount(0);
@@ -59,7 +59,7 @@ function HomeButtonSmall(props) {
     const getLeaderboardRank = async (username) => {
         try {
             const lbName = "Fantasy Forecast All-Time";
-            const leaderboard = await axios.get(`http://localhost:5000/leaderboards/leaderboard/${lbName}`);
+            const leaderboard = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${lbName}`);
             let lbRankings = leaderboard.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
             for (let i = 0; i < lbRankings.length; i++) {
                 if (lbRankings[i].username === username) {

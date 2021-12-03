@@ -16,7 +16,7 @@ function Leaderboard(props) {
         try {
             let totalAverageBrier = 0;
             for (let i = 0; i < rankings.length; i++) {
-                const userDocument = await axios.get(`http://localhost:5000/users/${rankings[i].username}`);
+                const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${rankings[i].username}`);
                 // console.log(userDocument.data[0]);
                 if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
                     rankings[i].marketPoints = userDocument.data[0].fantasyForecastPoints;

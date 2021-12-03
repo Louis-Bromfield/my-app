@@ -21,7 +21,7 @@ const ClosedProblemModal = (props) => {
 
     const closeModal = async (username) => {
         props.setShowClosedProblemModal(false);
-        await axios.patch(`http://localhost:5000/users/${username}`, { numberOfClosedForecasts: 0});
+        await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, { numberOfClosedForecasts: 0});
     };
 
   return (

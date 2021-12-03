@@ -9,7 +9,7 @@ function ForecastArticlesDisplay(props) {
 
     const googleNewsScrape = async (searchTerm) => {
         try {
-            const googleNewsScrapeResult = await axios.get(`http://localhost:5000/googleNewsScraper/${searchTerm}`);
+            const googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${searchTerm}`);
             setArticles(googleNewsScrapeResult.data);
         } catch (error) {
             console.error(error);

@@ -39,7 +39,7 @@ function Search() {
     const retrieveUserRankFromDB = async (username) => {
         try {
             const lbName = "Fantasy Forecast All-Time"
-            const userData = await axios.get(`http://localhost:5000/leaderboards/leaderboard/${lbName}`);
+            const userData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${lbName}`);
             const lbRankings = userData.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
             for (let i = 0; i < lbRankings.length; i++) {
                 if (lbRankings[i].username === username) {
@@ -56,7 +56,7 @@ function Search() {
                     };
                 };
             };
-            const userDocument = await axios.get(`http://localhost:5000/users/profileData/${username}`);
+            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/profileData/${username}`);
             console.log(userDocument);
             formatBrierData(userDocument.data.userObj, playerUsername);
             findUniquePlayerStats(userDocument.data.userObj, playerUsername);
@@ -86,7 +86,7 @@ function Search() {
         setLoading(true);
         if (username === "" || username.length === 0) return;
         try {
-            const userDocument = await axios.get(`http://localhost:5000/users/${username}`);
+            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             if (userDocument.data.length === 0) {
                 setErrorMessage("No profiles were found with this username. Please try again.");
             } else if (userDocument.data.length > 0) {
@@ -150,7 +150,7 @@ function Search() {
         let bestBrierMe = 0;
         let worstBrierMe = 110;
         let averageBrierMe = 0;
-        const myStats = await axios.get(`http://localhost:5000/users/${localStorage.getItem("username")}`);
+        const myStats = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${localStorage.getItem("username")}`);
         for (let i = 0; i < myStats.data[0].brierScores.length; i++) {
             if (myStats.data[0].brierScores[i].brierScore > bestBrierMe) {
                 setBestChangedMe(true);
@@ -218,7 +218,7 @@ function Search() {
     const findUniquePlayerStats = async (userObj, username) => {
         try {
             if (userObj === null) {
-                const userDoc = await axios.get(`http://localhost:5000/users/${username}`);
+                const userDoc = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
                 userObj = userDoc.data[0];
             };
             setProblemsAttempted(userObj.brierScores.length || "X");

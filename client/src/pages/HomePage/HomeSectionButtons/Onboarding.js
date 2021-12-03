@@ -14,7 +14,7 @@ function Onboarding(props) {
 
     const getAllOnboardingBooleans = async (username) => {
         try {
-            const allOnboardingBooleans = await axios.get(`http://localhost:5000/users/${username}`);
+            const allOnboardingBooleans = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             setOnboardingLoading(true)
             setTimeout(() => {
                 setOnboardingLoading(false);

@@ -38,7 +38,7 @@ console.log("Profile.js UE");
     const retrieveUserInfoFromDB = async (username) => {
         try {
             const lbName = "Fantasy Forecast All-Time"
-            const userData = await axios.get(`http://localhost:5000/leaderboards/leaderboard/${lbName}`);
+            const userData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${lbName}`);
             const lbRankings = userData.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
             for (let i = 0; i < lbRankings.length; i++) {
                 if (lbRankings[i].username === username) {
@@ -55,7 +55,7 @@ console.log("Profile.js UE");
                     };      
                 };
             };
-            const userDocument = await axios.get(`http://localhost:5000/users/profileData/${username}`);
+            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/profileData/${username}`);
             setUserObj(userDocument.data.userObj);
             setFantasyForecastPoints(userDocument.data.userObj.fantasyForecastPoints);
             setBrierAverage(Number(userDocument.data.averageBrier).toFixed(0));
@@ -82,13 +82,13 @@ console.log("Profile.js UE");
     const updateOnboarding = async (username) => {
         try {
             // Try to redo this so that we don't need to do the GET first 
-            const userDocument = await axios.get(`http://localhost:5000/users/${username}`);
+            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             if (userDocument.data[0].onboarding.visitProfilePage === true) {
                 return;
             } else {
                 userDocument.data[0].onboarding.visitProfilePage = true;
                 userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 100
-                await axios.patch(`http://localhost:5000/users/${username}`, 
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
                     { 
                         onboarding: userDocument.data[0].onboarding,
                         fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 
