@@ -82,7 +82,7 @@ function ForecastSubmission(props) {
         // marketName === undefined when useEffect runs before a problem is selected
         if (marketName === undefined) return;
         try {
-            const leaderboardResponse = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboard/${marketName}`);
+            const leaderboardResponse = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${marketName}`);
             let lbRankings = leaderboardResponse.data.rankings;
             let newRankings = await lbRankings.sort((a, b) => b.marketPoints - a.marketPoints);
             formatUserRank(newRankings);
