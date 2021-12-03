@@ -27,18 +27,20 @@ function ForecastStatistics(props) {
                 let totalCertainty = 0.00;
                 let numbOfForecasts = 0;
                     for (let i = 0; i < selectedForecast.submittedForecasts.length; i++) {
-                        let index = selectedForecast.submittedForecasts[i].forecasts.length-1;
-                        if (selectedForecast.submittedForecasts[i].forecasts[index].date.slice(0, 15) === new Date().toString().slice(0, 15)) {
-                            if (selectedForecast.submittedForecasts[i].forecasts[index].certainty > highestCertaintySoFar) {
-                                highestCertaintySoFar = selectedForecast.submittedForecasts[i].forecasts[index].certainty;
-                                highestChanged = true;
+                        // let index = selectedForecast.submittedForecasts[i].forecasts.length-1;
+                        for (let j = selectedForecast.submittedForecasts[i].forecasts.length-1; j >= 0; j--) {
+                            if (selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) === new Date().toString().slice(0, 15)) {
+                                if (selectedForecast.submittedForecasts[i].forecasts[j].certainty > highestCertaintySoFar) {
+                                    highestCertaintySoFar = selectedForecast.submittedForecasts[i].forecasts[j].certainty;
+                                    highestChanged = true;
+                                };
+                                if (selectedForecast.submittedForecasts[i].forecasts[j].certainty < lowestCertaintySoFar) {
+                                    lowestCertaintySoFar = selectedForecast.submittedForecasts[i].forecasts[j].certainty;
+                                    lowestChanged = true;
+                                };
+                                totalCertainty += selectedForecast.submittedForecasts[i].forecasts[j].certainty;
+                                numbOfForecasts += 1;
                             };
-                            if (selectedForecast.submittedForecasts[i].forecasts[index].certainty < lowestCertaintySoFar) {
-                                lowestCertaintySoFar = selectedForecast.submittedForecasts[i].forecasts[index].certainty;
-                                lowestChanged = true;
-                            };
-                            totalCertainty += selectedForecast.submittedForecasts[i].forecasts[index].certainty;
-                            numbOfForecasts += 1;
                         };
                     };
                     if (highestChanged === true) {
