@@ -60,7 +60,7 @@ function Login(props) {
             return;
         }
         try {
-            const user = await axios.get(`http://localhost:5000/users/${username}/${password}`);
+            const user = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/${password}`);
             if (user.data.length === 0) {
                 setLoginError("Incorrect login details. Please try again, or sign up if you don't have an account.");
             }
@@ -88,11 +88,11 @@ function Login(props) {
         }
         try {
             // Get to see if username has already been taken
-            const user = await axios.get(`http://localhost:5000/users/${newUsername}`);
+            const user = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${newUsername}`);
             // If no users with that name exist:
             if (user.data.length === 0) {
                 // Create Account
-                const newUser = await axios.post(`http://localhost:5000/users`, {
+                const newUser = await axios.post(`https://fantasy-forecast-politics.herokuapp.com/users`, {
                     username: newUsername,
                     password: newPassword,
                     name: newFullName,
@@ -102,15 +102,15 @@ function Login(props) {
                     console.log(newUser);
                     const formData = new FormData();
                     formData.append("image", newProfilePicture);
-                    await axios.patch(`http://localhost:5000/users/imageAPI/${newUsername}`, formData);
+                    await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/imageAPI/${newUsername}`, formData);
                     setCreateAccountText("Account successfully created.");
                     localStorage.setItem("firstVisit", true);
                 };
                 // Add user to Global Leaderboard
                 const lbName = "Fantasy Forecast All-Time"
-                await axios.patch(`http://localhost:5000/leaderboards/${lbName}`, { username: newUsername });
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${lbName}`, { username: newUsername });
                 // Add user to Learn Quizzes
-                await axios.post(`http://localhost:5000/learnquizzes/`, { username: newUsername });
+                await axios.post(`https://fantasy-forecast-politics.herokuapp.com/learnquizzes/`, { username: newUsername });
             } else if (user.data[0].username === newUsername) {
                 setCreateAccountError("This username has been taken. Please try another username.");
             };
