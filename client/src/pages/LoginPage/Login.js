@@ -60,7 +60,7 @@ function Login(props) {
             return;
         }
         try {
-            const user = await axios.get(`http://localhost:5000/users/${username}/${password}`);
+            const user = await axios.get(`http://localhost:5000/users/${username}/${password}/`);
             if (user.data.length === 0) {
                 setLoginError("Incorrect login details. Please try again, or sign up if you don't have an account.");
             }
