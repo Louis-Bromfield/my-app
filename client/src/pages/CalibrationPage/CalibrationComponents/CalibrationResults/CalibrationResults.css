@@ -1,0 +1,27 @@
+.calibration-results {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4vh;
+}
+
+.summary-and-chart {
+    display: flex;
+    flex-direction: row;
+}
+
+.results-not-available {
+    color: rgb(241, 44, 44);
+    text-align: center;
+    margin-top: 2vh;
+}
+
+@media (max-width: 1100px) {
+    .calibration-results {
+        row-gap: 3vh;
+    }
+    .summary-and-chart {
+        flex-direction: column-reverse;
+        margin: 0 auto;
+        align-items: center;
+    }
+}

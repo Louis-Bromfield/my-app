@@ -1,0 +1,115 @@
+.leaderboard {
+    width: 100%;
+    height: 80vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    background-color: rgba(241, 241, 241, 0.103);
+}
+
+.leaderboard-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.leaderboard-title-row > th {
+    background-color: #636baa;
+    color: #fff;
+    font-size: 1.2em;
+}
+
+.leaderboard-table > tr {
+    height: 40px;
+    border-bottom: 1px solid lightgray;
+}
+
+.leaderboard-title-row > th,
+.leaderboard-row > td,
+.leaderboard-row-matching-username > td {
+    /* border-left: 1px solid lightgrey; */
+}
+
+.leaderboard-title-row > th:first-child,
+.leaderboard-row > td:first-child,
+.leaderboard-row-matching-username > td:first-child {
+    border-left: none;
+}
+
+.leaderboard-row,
+.leaderboard-row-matching-username {
+    border-bottom: 1px solid rgba(211, 211, 211, 0.549);
+}
+
+.leaderboard-row-matching-username {
+    background-color: #404d72;
+    color: #fff;
+}
+
+.position-column {
+    width: 5%;
+    border: 1px solid #fff;
+}
+
+.leaderboard-rank-data,
+.leaderboard-username-data,
+.leaderboard-ffPoints-data,
+.leaderboard-avgBrierScore-data,
+.leaderboard-last5Forecasts-data {
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.leaderboard-username-data {
+    text-align: left;
+}
+
+.username-column {
+    width: 40%;
+    border: 1px solid #fff;
+}
+
+.leaderboard-username-data {
+    padding-left: 1vw;
+}
+
+.leaderboards-profile-pic {
+    width: 3%;
+    border-radius: 40%;
+    vertical-align: middle;
+    margin-right: 1%;
+}
+
+.ffpoints-column,
+.avg-brier-column {
+    width: 15%;
+    border: 1px solid #fff;
+}
+
+.last-five-briers-column {
+    width: 30%;
+    border: 1px solid #fff;
+}
+
+.last-five-data-span {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.last-five-data-single-result {
+    border: 1px solid black;
+    width: 20%;
+    max-width: 20%;
+    margin: 0.3%;
+}
+
+@media (max-width: 1500px) {
+    .leaderboard-title-row {
+        font-size: 0.8em;
+    }
+    .username-column {
+        width: 25%;
+    }
+    .leaderboards-profile-pic {
+        width: 5%;
+    }
+}

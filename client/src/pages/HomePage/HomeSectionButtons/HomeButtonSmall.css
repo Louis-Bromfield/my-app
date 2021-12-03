@@ -1,0 +1,46 @@
+.home-button-small {
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid lightgray; */
+    box-shadow: 0.5px 1px 2.5px 0.5px #888888;
+    margin-bottom: 1vh;
+    padding: 2%;
+    background-color: #fff;
+    font-size: 0.9em;
+}
+
+.home-button-small-title {
+    display: grid;
+    grid-template-columns: 95% 5%;
+    padding: 1.5%;
+    background-color: #404d72;
+    color: white;
+    border-radius: 5px;
+}
+
+.home-button-nav-right {
+    border: 1px solid white;
+    padding: 1px;
+    border-radius: 3px;
+}
+
+.home-button-small-data {
+    font-size: 50px;
+    text-align: center;
+    padding: 10px;
+}
+
+.home-button-small-subtitle {
+    text-align: center;
+}
+
+.home-button-scroll {
+    cursor: pointer;
+}
+
+@media (max-width: 1100px) {
+    .home-button-small {
+        width: 80%;
+        margin: 0 auto;
+    }
+}

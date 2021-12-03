@@ -1,0 +1,36 @@
+.forecast-admin-container {
+    border: 1px solid black;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 5vh;
+    padding: 1%;
+}
+
+.forecast-admin-btn {
+    color: #fff;
+    background-color: green;
+    border: none;
+    outline: none;
+    padding: 0.5%;
+}
+
+.forecast-admin-btn:hover {
+    background-color: rgb(67, 185, 67);
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.forecast-admin-header {
+    color: #404d72;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.selected-problem-spotlight {
+    border: 1px solid #404d72;
+    border-radius: 5px;
+    padding: 1%;
+}

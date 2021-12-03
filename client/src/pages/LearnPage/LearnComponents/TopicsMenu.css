@@ -1,0 +1,38 @@
+.topics-menu {
+    text-align: center;
+    border: 1px solid darkgray;
+    background-color: rgba(255, 255, 255, 0.911);
+    padding: 1%;
+    position: absolute;
+    width: 23%;
+    z-index: -0;
+}
+
+.topics-list {
+    list-style: none;
+    padding-top: 1vh;
+}
+
+.topics-list > li {
+    padding: 3%;
+    margin-bottom: 1vh;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+}
+
+.topics-list > li:hover {
+    background-color: #404d75;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.topics-list > hr {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.selected-topic {
+    background-color: #404d75;
+    color: #fff;
+}

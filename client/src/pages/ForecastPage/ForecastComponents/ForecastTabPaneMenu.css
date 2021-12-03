@@ -1,0 +1,39 @@
+.forecast-tab-pane-menu {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    margin: 0 auto;
+    background-color: rgb(243, 243, 243);
+}
+
+.tab-pane-selector {
+    display: flex;
+    width: 50%;
+    padding: 1%;
+    border: 1px solid darkgray;
+    margin: 0 auto;
+}
+
+.tab-pane-selector > h2 {
+    margin: 0 auto;
+}
+
+.tab-pane-selector:hover {
+    cursor: pointer;
+    background-color: #404d72;
+    border: 1px solid white;
+    color: #fff;
+    transition: 0.2s ease;
+    text-decoration-color: #fff;
+}
+
+.selected-tab {
+    text-decoration: underline;
+    text-decoration-thickness: 5px;
+    text-decoration-color: #404d72;
+}
+
+.selected-tab:hover,
+.unselected-tab:hover {
+    color: #fff;
+}

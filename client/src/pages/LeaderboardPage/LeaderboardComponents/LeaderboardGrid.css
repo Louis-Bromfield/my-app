@@ -1,0 +1,26 @@
+.leaderboard-grid {
+    display: grid;
+    width: 95%;
+    grid-template-columns: 25% 25% 25% 25%;
+    margin: 0% 1% 1% 1%;
+    /* padding-bottom: 1vh; */
+}
+
+.your-markets-leaderboards,
+.all-markets-leaderboards {
+    text-decoration: none;
+}
+
+@media (max-width: 1500px) {
+    .leaderboard-grid {
+        /* grid-template-columns: 50% 50%; */
+        font-size: 0.90em;
+    }
+}
+
+@media (max-width: 600px) {
+    .leaderboard-grid {
+        grid-template-columns: 100%;
+        grid-template-rows: 20vh;
+    }
+}

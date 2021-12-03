@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@500&family=Encode+Sans&family=Lato:wght@400&family=Open+Sans:wght@300&family=Titillium+Web&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Assistant', sans-serif;
+  -ms-overflow-style: none;
+}
+
+
+.main-div {
+    background-color: rgb(248, 247, 247);
+}
+
+.home,
+.calibration,
+.individual-leaderboard,
+.leaderboard-menu,
+.learn,
+.profile,
+.login {
+  display: flex;
+  margin: 3vh 0vw 4vh 8vw;
+  background-color: rgb(248, 247, 247);
+}
+
+.forecast {
+    display: flex;
+    margin: 3vh 2vw 4vh 2vw;
+    background-color: rgb(248, 247, 247);
+}
+
+.modal-i-btn {
+    cursor: pointer;
+}

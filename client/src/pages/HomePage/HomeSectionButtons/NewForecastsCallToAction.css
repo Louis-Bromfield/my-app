@@ -1,0 +1,76 @@
+.new-forecasts-container {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0.5px 1px 2.5px 0.5px #888888;
+    margin-bottom: 1vh;
+    padding: 2%;
+    background-color: #fff;
+    font-size: 0.9em;
+}
+
+.container-header {
+    display: grid;
+    grid-template-columns: 80% 20%;
+    padding: 1%;
+    background-color: #404d72;
+    color: #fff;
+    border-radius: 5px;
+    margin-bottom: 1%;
+}
+
+.show-hide-new-forecasts-c2a {
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.show-hide-new-forecasts-c2a:hover {
+    cursor: pointer;
+    background-color: #6e78c2;
+    color: #fff;
+    transition: 0.2s ease;
+}
+
+.new-forecasts-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.forecast-list-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.forecast-list-subtitle {
+    margin: 0 auto;
+    margin-top: 0.5vh;
+    margin-bottom: 1vh;
+}
+
+.forecast-ul {
+    list-style-type: '- ';
+    border-bottom: 1px solid lightgray;
+    /* border-radius: 3px; */
+    padding: 1% 2% 2% 2%;
+    margin-bottom: 0.5vh;
+}
+
+.forecast-li {
+    margin-left: 1vw;
+}
+
+.forecast-li-market {
+    color: #404d72;
+}
+
+.forecast-li-problem-more {
+    margin-left: 1vw;
+    color: #404d72;
+}
+
+@media (max-width: 1100px) {
+    .new-forecasts-container {
+        width: 80%;
+        margin: 0 auto;
+    }
+}

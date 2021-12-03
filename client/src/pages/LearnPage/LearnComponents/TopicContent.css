@@ -1,0 +1,43 @@
+.topic-text-paragraph {
+    padding: 1%;
+}
+
+.topic-text-paragraph > p {
+    padding: 1%;
+}
+
+.middle-align {
+    text-align: center;
+}
+
+.single-chart-div {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 60%;
+}
+
+.multiple-chart-div {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 60%;
+}
+
+.topic-ordered-list > li {
+    margin-left: 1vw;
+}
+
+.topic-ordered-sub-list > li {
+    margin-left: 3vw;
+}
+
+@media (max-width: 1100px) {
+    .chart {
+        width: 150%;
+        margin-left: -10vw;
+    }
+    .topic-text-paragraph {
+        padding: 2%;
+    }
+}

@@ -1,0 +1,51 @@
+.forecast-tab-pane-display {
+    margin-top: 1vh;
+    padding: 1%;
+}
+
+.default-div {
+    display: flex;
+    background-color: #404d72;
+    color: #fff;
+    width: 20%;
+    margin: 0 auto;
+    padding: 1%;
+}
+
+.default-div > h3 {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.articles-div {
+    list-style: none;
+}
+
+.forecast-stats-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.forecast-stats-div-line-chart {
+    height: 50%;
+    margin-bottom: 2vh;
+}
+
+.forecast-stats-div-four-container {
+    display: grid;
+    grid-template-columns: 25% 23% 23% 21%;
+    column-gap: 1%;
+    justify-content: center;
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    text-align: center;
+    padding: 0.5%;
+}
+
+@media (max-width: 1500px) {
+    .forecast-stats-div-four-container {
+        grid-template-columns: 50% 50%;
+        row-gap: 1vh;
+        font-size: 0.85em;
+    }
+}

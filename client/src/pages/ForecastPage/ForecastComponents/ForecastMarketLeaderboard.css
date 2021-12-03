@@ -1,0 +1,86 @@
+.leaderboard-snapshot {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.leaderboard-title {
+    color: #404d72;
+}
+
+.leaderboard-snapshot-table {
+    border: 1px solid green;
+    border-collapse: collapse;
+}
+
+.leaderboard-snapshot-table > tr {
+    height: 20px;
+}
+
+.leaderboard-snapshot-title-row > th {
+    background-color: #636baa;
+    color: white;
+}
+
+.leaderboard-title-row > th,
+.leaderboard-row > td {
+    border-left: 1px solid lightgrey;
+}
+
+.leaderboard-snapshot-title-row > th:first-child,
+.leaderboard-snapshot-row > td:first-child,
+.leaderboard-snapshot-row-matching-username > td:first-child {
+    border-left: none;
+}
+
+.leaderboard-snapshot-row-matching-username {
+    background-color: #404d72;
+    color: #fff;
+}
+
+.snapshot-position-column {
+    width: 5%;
+    border: 1px dotted black;
+}
+
+.leaderboard-snapshot-rank-data,
+.leaderboard-snapshot-username-data,
+.leaderboard-snapshot-ffPoints-data,
+.leaderboard-snapshot-avgBrierScore-data,
+.leaderboard-snapshot-last5Forecasts-data {
+    text-align: center;
+}
+
+.leaderboard-snapshot-ffpoints-column,
+.leaderboard-snapshot-avg-brier-column {
+    border: 1px dotted black;
+}
+
+.snapshot-position-column {
+    width: 2%;
+}
+
+.snapshot-username-column {
+    width: 10%;
+}
+
+.snapshot-ffpoints-column {
+    width: 10%;
+}
+
+.snapshot-avg-brier-column {
+    width: 10%;
+}
+
+@media (max-width: 1500px) {
+    .leaderboard-snapshot {
+        width: 85%;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 1100px) {
+    .leaderboard-snapshot {
+        font-size: 1.1em;
+    }
+}

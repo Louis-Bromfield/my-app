@@ -1,0 +1,10 @@
+.home-header-intro {
+    height: 10%;
+    margin-bottom: 2vh;
+}
+
+@media (max-width: 1500px) {
+    .home-header-intro {
+        font-size: 0.9em;
+    }
+}

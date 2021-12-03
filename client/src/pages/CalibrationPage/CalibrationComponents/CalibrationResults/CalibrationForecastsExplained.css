@@ -1,0 +1,13 @@
+.forecast-results-navigation {
+    display: flex;
+    flex-direction: row;
+    width: 40%;
+}
+
+.forecast-results-navigation > h2 {
+    padding: 0 1vw 0 1vw;
+    color: #17317e;
+    /* -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none; */
+}

@@ -1,0 +1,6 @@
+.progress-bar {
+    border: 2px solid black;
+    background-color: lightgray;
+    margin-top: 2vh;
+    text-align: center;
+}

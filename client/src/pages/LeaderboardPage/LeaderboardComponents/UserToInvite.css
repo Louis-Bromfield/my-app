@@ -1,0 +1,37 @@
+.selected-friend-to-invite,
+.deselected-friend-to-invite {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    align-items: center;
+    /* border: 1px solid lightgray; */
+    border-radius: 5px;
+    padding: 1%;
+}
+
+.selected-friend-to-invite {
+    background-color:rgb(96, 209, 96);
+    color: white;
+}
+
+.selected-friend-to-invite:hover {
+    background-color:rgb(96, 209, 96);
+    color: #fff;
+    transition: 0.2s ease;
+    cursor: pointer;
+}
+
+.deselected-friend-to-invite {
+    background-color: none;
+    color: black;
+    transition: 0.2s ease;
+}
+
+.deselected-friend-to-invite:hover {
+    background-color:rgba(96, 209, 96, 0.233);
+    cursor: pointer;
+}
+
+.friend-to-invite > img {
+    width: 70%;
+}

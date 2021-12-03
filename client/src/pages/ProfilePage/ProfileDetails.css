@@ -1,0 +1,61 @@
+.profile-details {
+    /* height: 40vh; */
+    margin-bottom: 3vh;
+    padding: 0.5%;
+}
+
+.profile-details-grid {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 100%;
+    justify-content: center;
+    /* border: 1px solid green; */
+    padding: 1% 1% 1% 10%;
+}
+
+.submit-field {
+    display: flex;
+    flex-direction: column;
+    margin: 0% 0% 1% 0%;
+}
+
+.new-profile-info-field {
+    padding: 1.5%;
+    width: 50%;
+}
+
+.submit-profile-change {
+    color: #242d75;
+    width: 50%;
+    padding: 1.5%;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid lightgray;
+}
+
+.submit-profile-change:hover {
+    background-color: #242d75cc;
+    color: white;
+    transition: 0.2s ease;
+}
+
+.delete-account-btn {
+    color: #ff0000;
+    width: 10%;
+    padding: 0.5%;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid lightgray;
+}
+
+.delete-account-btn:hover {
+    background-color: #c92318cc;
+    color: white;
+    transition: 0.2s ease;
+}
+
+@media (max-width: 1100px) {
+    .delete-account-btn {
+        width: 15%;
+    }
+}

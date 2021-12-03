@@ -1,0 +1,19 @@
+.forecast {
+    display: flex;
+    flex-direction: column;
+}
+
+.forecast-header {
+    margin-left: 6vw;
+    margin-bottom: 2vh;
+}
+
+.forecast > p {
+    margin-bottom: 2vh;
+}
+
+@media (max-width: 1100px) {
+    .forecast {
+        font-size: 0.9em;
+    }
+}

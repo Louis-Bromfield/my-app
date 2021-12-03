@@ -1,0 +1,13 @@
+.radar-chart-div {
+    margin-top: 1vh;
+    text-align: center;
+    width: 50%;
+    height: 75vh;
+}
+
+@media (max-width: 1100px) {
+    .radar-chart-div {
+        height: 75vh;
+        width: 70%;
+    }
+}
