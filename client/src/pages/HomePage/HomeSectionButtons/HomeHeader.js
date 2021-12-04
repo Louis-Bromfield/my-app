@@ -5,6 +5,7 @@ function HomeHeader(props) {
     return (
         <div className="home-header-intro">
             <h1>Welcome back, {props.name}! W:{props.width} H:{props.height}</h1>
+            <h1>HELLO STEPHANIE YOU'RE SO PRETTY EEEEEEEEEEEE</h1>
             <p>This is the home page for Fantasy Forecast. Use this as a central hub for 
                 navigating the site! Check out the news feed to see the latest stories that
                 your fellow forecasters have shared, or use any of the shortcuts to visit the 
