@@ -51,7 +51,7 @@ function ForecastAdmin() {
 
     const getAllMarketsFromDB = async () => {
         try {
-            const allMarketsDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/justNames/${localStorage.getItem("username")}`);
+            const allMarketsDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/justNames/${localStorage.getItem("username")}`);
             let filteredbyIsFFOrNot = [];
             for (let i = 0; i < allMarketsDocument.data.length; i++) {
                 if (allMarketsDocument.data[i][2] === true) {
@@ -96,12 +96,12 @@ function ForecastAdmin() {
             let scores;
             if (closeEarly === true) {
                 console.log("Here2");
-                scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/calculateBrier/${problemName}/${happenedStatus}/${market}/${closeEarly}`, {
+                scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBrier/${problemName}/${happenedStatus}/${market}/${closeEarly}`, {
                     newProblemCloseDateTime: newProblemCloseDateTime
                 });
             } else if (closeEarly === false) {
                 console.log("Here3");
-                scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/calculateBrier/${problemName}/${happenedStatus}/${market}/${closeEarly}`);
+                scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBrier/${problemName}/${happenedStatus}/${market}/${closeEarly}`);
             };
 
             // Market Points
@@ -294,7 +294,7 @@ function ForecastAdmin() {
                 />
                 <button 
                     className="forecast-admin-btn"
-                    onClick={() => { setNewProblemCloseDateTime(new Date(`${problemNewCloseDate.toString().slice(0, 15)} ${problemNewCloseTime.toString().slice(0, 5)}:00 GMT+0000 (Greenwich Mean Time)`).toString()); console.log(new Date(`${problemNewCloseDate.toString().slice(0, 15)} ${problemNewCloseTime.toString().slice(0, 5)}:00 GMT+0000 (Greenwich Mean Time)`).toString())}}>
+                    onClick={() => { console.log(problemNewCloseDate); console.log(problemNewCloseTime); setNewProblemCloseDateTime(new Date(`${problemNewCloseDate.toString().slice(0, 15)} ${problemNewCloseTime.toString().slice(0, 5)}:00 GMT+0000 (Greenwich Mean Time)`).toString()); console.log(new Date(`${problemNewCloseDate.toString().slice(0, 15)} ${problemNewCloseTime.toString().slice(0, 5)}:00 GMT+0000 (Greenwich Mean Time)`).toString())}}>
                         MUST CLICK: Format New Close Date Time
                 </button>
                 <br />

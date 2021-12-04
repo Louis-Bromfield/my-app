@@ -280,13 +280,22 @@ router.patch("/calculateBrier/:problemName/:happenedStatus/:marketName/:closeEar
         const forecastObj = await Forecasts.findOne({ problemName: req.params.problemName });
         console.log("Here5");
         console.log(forecastObj);
+        let happened;
+        if (req.params.happenedStatus === "true") {
+            happened = true;
+        } else if (req.params.happenedStatus === "false") {
+            happened = false;
+        };
         // If a problem is being closed early, update the date in the obj and then persist to DB
-        if (Boolean(req.params.closeEarly) === true) {
+        if (req.params.closeEarly === "true") {
             console.log("Here6");
             forecastObj.closeDate = req.body.newProblemCloseDateTime;
-            await Forecasts.findByIdAndUpdate(forecastObj._id, { closeDate: req.body.newProblemCloseDateTime});
+            await Forecasts.findByIdAndUpdate(forecastObj._id, { closeDate: req.body.newProblemCloseDateTime, happened: happened, isClosed: true});
+        } else if (req.params.closeEarly === "false") {
+            // Close Forecast
+            await Forecasts.findByIdAndUpdate(forecastObj._id, { isClosed: true, happened: happened });
         };
-        const calculatedBriers = calculateBriers(forecastObj, Boolean(req.params.happenedStatus));
+        const calculatedBriers = calculateBriers(forecastObj, happened);
         let scoresToReturn = [];
         for (let i = 0; i < calculatedBriers.length; i++) {
             const toPush = {
@@ -306,8 +315,6 @@ router.patch("/calculateBrier/:problemName/:happenedStatus/:marketName/:closeEar
             toPush.username = calculatedBriers[i].username;
             scoresToReturn.push(toPush);
         };
-        // Close Forecast
-        await Forecasts.findByIdAndUpdate(forecastObj._id, { isClosed: true }, { new: true });
         res.json({ scores: scoresToReturn });
     } catch (error) {
         console.error("error in users > patch calculateBriers");

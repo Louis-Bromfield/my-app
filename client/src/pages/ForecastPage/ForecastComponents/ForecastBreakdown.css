@@ -1,0 +1,14 @@
+.predictions-container {
+    padding: 1%;
+}
+
+.prediction-ul {
+    list-style: none;
+    text-align: left;
+}
+
+.prediction-li {
+    display: flex;
+    flex-direction: column;
+    margin: 1%;
+}

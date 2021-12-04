@@ -33,6 +33,10 @@ const ForecastsSchema = mongoose.Schema({
     }],
     isClosed: {
         type: Boolean,
+    },
+    happened: {
+        type: Boolean,
+        default: false
     }
 });
 

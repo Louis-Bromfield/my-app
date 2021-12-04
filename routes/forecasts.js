@@ -26,6 +26,93 @@ router.get("/:problemName", async (req, res) => {
     };
 });
 
+// Get a specific user's forecast object for a given problem
+router.get("/:problemName/:username", async (req, res) => {
+    try {
+        const forecastObj = await Forecasts.find({ problemName: req.params.problemName });
+        const userForecastData = forecastObj[0].submittedForecasts.find(el => el.username === req.params.username);
+        const startDate = new Date(forecastObj[0].startDate);
+        const closeDate = new Date(forecastObj[0].closeDate);
+
+        const formulaComponents = [];
+        let arrToReturn = [];
+
+        formulaComponents[0] = [];
+        formulaComponents[0].username = userForecastData.username;
+        arrToReturn[0] = [];
+        arrToReturn[0].username = userForecastData.username;
+
+        // tScore
+        let tScore;
+        if (new Date(userForecastData.forecasts[0].date) < closeDate) {
+            let tValue = (closeDate - new Date(userForecastData.forecasts[0].date))/1000;
+            let timeFrame = (closeDate - startDate)/1000;
+            tScore = (tValue/timeFrame)*10;
+        } else {
+            tScore = 0;
+        };
+        formulaComponents[0].tScore = tScore;
+
+        let sumOfNewWeightedBriers = 0;
+        let fullArrayToReturn = [];
+        for (let i = 0; i < userForecastData.forecasts.length; i++) {
+            fullArrayToReturn[i] = {certainty: "", date: "", comments: "", newBrier: 0, duration: "", percentageOfTimeAtThisScore: ""};
+
+            // Forecast WAS made before close date
+            if (new Date(userForecastData.forecasts[i].date) < closeDate) {
+                let originalBrier;
+                if (forecastObj[0].happened === true) {
+                    originalBrier = (((1 - userForecastData.forecasts[i].certainty) * (1 - userForecastData.forecasts[i].certainty)) + ((0 - (1 - userForecastData.forecasts[i].certainty)) * (0 - (1 -userForecastData.forecasts[i].certainty))));
+                } else if (forecastObj[0].happened === false) {
+                    originalBrier = (((0 - userForecastData.forecasts[i].certainty) * (0 - userForecastData.forecasts[i].certainty)) + ((1 - (1 - userForecastData.forecasts[i].certainty)) * (1 - (1 -userForecastData.forecasts[i].certainty))));
+                };
+                let newBrier = (2 - originalBrier) * 50;
+                fullArrayToReturn[i].certainty = userForecastData.forecasts[i].certainty;
+                fullArrayToReturn[i].date = userForecastData.forecasts[i].date;
+                fullArrayToReturn[i].comments = userForecastData.forecasts[i].comments;
+                fullArrayToReturn[i].newBrier = newBrier;
+
+                let newBrierWeightedByDuration;
+                let thisForecastTimeDate = new Date(userForecastData.forecasts[i].date);
+                if (i < userForecastData.forecasts.length-1) {
+                    let nextForecastTimeDate = new Date(userForecastData.forecasts[i+1].date);
+                    let forecastTimeFrame = (closeDate - startDate)/1000;
+                    let duration = (nextForecastTimeDate - thisForecastTimeDate)/1000;
+                    fullArrayToReturn[i].duration = duration;
+                    let percentageOfTimeAtThisScore = ((duration/forecastTimeFrame)*100);
+                    fullArrayToReturn[i].percentageOfTimeAtThisScore = percentageOfTimeAtThisScore;
+                    newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
+                    sumOfNewWeightedBriers = sumOfNewWeightedBriers + newBrierWeightedByDuration;
+                }
+                else if (i === userForecastData.forecasts.length-1) {
+                    let forecastTimeFrame = (closeDate - startDate)/1000;
+                    let duration = (closeDate - thisForecastTimeDate)/1000;
+                    fullArrayToReturn[i].duration = duration;
+                    let percentageOfTimeAtThisScore = ((duration/forecastTimeFrame)*100);
+                    fullArrayToReturn[i].percentageOfTimeAtThisScore = percentageOfTimeAtThisScore;
+                    newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
+                    sumOfNewWeightedBriers = sumOfNewWeightedBriers + newBrierWeightedByDuration;
+                    formulaComponents[0].finalBrierSum = sumOfNewWeightedBriers;
+                };
+            // Forecast was NOT made before close date
+            } else if (new Date(userForecastData.forecasts[i].date) > closeDate) {
+                sumOfNewWeightedBriers = sumOfNewWeightedBriers + 0;
+                if (i === userForecastData.forecasts.length-1) {
+                    formulaComponents[0].finalBrierSum = sumOfNewWeightedBriers;
+                };
+            };
+        };
+        // formulaComponents[0].brierSumPlusTScore = formulaComponents[0].finalBrierSum + formulaComponents[0].tScore;
+        // arrToReturn[0].finalScore = Number((formulaComponents[0].finalBrierSum + formulaComponents[0].tScore).toFixed(2));
+        // console.log(formulaComponents);
+        // console.log(arrToReturn);
+        res.send(fullArrayToReturn);
+    } catch (error) {
+        console.error("error in forecasts.js > get /:problemName/:username");
+        console.error(error);
+    };
+});
+
 // Get all forecasts that are in the user's markets - currently doing the filtering client-side
 router.get("/:markets", async (req, res) => {
     try {

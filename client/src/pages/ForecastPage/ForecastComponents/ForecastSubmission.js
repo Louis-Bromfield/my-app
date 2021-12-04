@@ -3,6 +3,8 @@ import './ForecastSubmission.css';
 import axios from 'axios';
 import Modal from '../../../components/Modal';
 import { FaInfoCircle } from 'react-icons/fa';
+import ForecastBreakdown from './ForecastBreakdown';
+
 
 function ForecastSubmission(props) {
     const [forecastProblems, setForecastProblems] = useState([]);
@@ -202,6 +204,10 @@ console.log("Here1");
                     setUserHasAttempted(false);
                     setUserPreviousAttemptCertainty("-");
                     setUserPreviousAttemptComments("No Forecast Submitted");
+                    setNumberOfForecastsSubmitted(0);
+                    setHighestCertainty("N/A");
+                    setLowestCertainty("N/A");
+                    setFinalCertainty("N/A")
                     return;
                 } else {
                     for (let j = 0; j < forecastProblems[i].submittedForecasts.length; j++) {
@@ -214,6 +220,10 @@ console.log("Here1");
                             setUserHasAttempted(false);
                             setUserPreviousAttemptCertainty("-");
                             setUserPreviousAttemptComments("No Forecast Submitted");
+                            setNumberOfForecastsSubmitted(0);
+                            setHighestCertainty("N/A");
+                            setLowestCertainty("N/A");
+                            setFinalCertainty("N/A")
                         };
                     };
                 };
@@ -545,26 +555,31 @@ console.log("Here1");
             }
             {(forecastClosed === true && hasAForecastBeenSelected === true) && 
                 <div className="forecast-submission-div">
-                <h2 className="selected-forecast">{selectedForecast}</h2>
-                <h4 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 41)}</h4>
-                <div className="forecast-review-div">
-                    <div className="forecast-review-div-left">
-                        <h2 style={{ color: "#404d72" }}><u>Your Stats</u></h2>
-                        <h3># of Forecasts Submitted: {numberOfForecastsSubmitted}</h3>
-                        <h3>Highest Certainty: {highestCertainty}</h3>
-                        <h3>Lowest Certainty: {lowestCertainty}</h3>
-                        <h3 style={{ color: "#404d72" }}>Final Certainty: {finalCertainty}</h3>
+                    <h2 className="selected-forecast">{selectedForecast}</h2>
+                    <h4 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 41)}</h4>
+                    <div className="forecast-review-div">
+                        <div className="forecast-review-div-left">
+                            <h2 style={{ color: "#404d72" }}><u>Your Stats</u></h2>
+                            <h3># of Forecasts Submitted: {numberOfForecastsSubmitted}</h3>
+                            <h3>Highest Certainty: {highestCertainty}</h3>
+                            <h3>Lowest Certainty: {lowestCertainty}</h3>
+                            <h3 style={{ color: "#404d72" }}>Final Certainty: {finalCertainty}</h3>
+                        </div>
+                        <div className="forecast-review-div-right">
+                            <h1>{closedForecastScore}</h1>
+                            <h2 style={{ color: "#404d72" }}>Your Brier Score</h2>
+                            <h3>(110 = Best, 0 = Worst)</h3>
+                            <br />
+                            <h1>{closedForecastScore}</h1>
+                            <h2 style={{ color: "#404d72" }}>Market / FantasyForecast Points Earned</h2>
+                        </div>
                     </div>
-                    <div className="forecast-review-div-right">
-                        <h1>{closedForecastScore}</h1>
-                        <h2 style={{ color: "#404d72" }}>Your Brier Score</h2>
-                        <h3>(110 = Best, 0 = Worst)</h3>
-                        <br />
-                        <h1>{closedForecastScore}</h1>
-                        <h2 style={{ color: "#404d72" }}>Market / FantasyForecast Points Earned</h2>
-                    </div>
+                    <ForecastBreakdown 
+                        username={props.username} 
+                        selectedForecast={selectedForecast}
+                        userHasAttempted={userHasAttempted}
+                    />
                 </div>
-            </div>
             }
             {(forecastClosed === true && hasAForecastBeenSelected === false) && 
                 <div className="forecast-submission-div">
