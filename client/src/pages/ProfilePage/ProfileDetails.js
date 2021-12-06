@@ -67,9 +67,9 @@ function ProfileDetails(props) {
             console.log("2");
             formData.append("image", fileData);
             console.log("3");
-            formData.append("username", props.username);
+            formData.append("username", props.username === undefined ? localStorage.getItem("username") : props.username);
             console.log("4");
-            const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/imageAPI/${localStorage.getItem("username") || props.username}`, formData);
+            const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/imageAPI/${localStorage.getItem("username")}`, formData);
             console.log("5");
             localStorage.setItem("profilePicture", res.data.profilePicture);
             console.log("6");
