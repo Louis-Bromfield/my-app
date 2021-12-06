@@ -102,6 +102,7 @@ function Login(props) {
                     console.log(newUser);
                     const formData = new FormData();
                     formData.append("image", newProfilePicture);
+                    formData.append("username", newUsername);
                     await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/imageAPI/${newUsername}`, formData);
                     setCreateAccountText("Account successfully created.");
                     localStorage.setItem("firstVisit", true);
