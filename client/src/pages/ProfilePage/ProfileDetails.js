@@ -64,7 +64,7 @@ function ProfileDetails(props) {
         try {
             const formData = new FormData();
             formData.append("image", fileData);
-            formData.append("username", newUsername);
+            formData.append("username", props.username);
             const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/imageAPI/${localStorage.getItem("username")}`, formData);
             localStorage.setItem("profilePicture", res.data.profilePicture);
             props.setShowModal(true);
