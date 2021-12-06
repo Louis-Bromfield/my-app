@@ -13,7 +13,7 @@ function Navbar(props) {
     const history = useHistory();
 
     const updateWidth = () => {
-        setWidth(window.innerWidth > 1350);
+        setWidth(window.innerWidth > 1150);
     }
 
     useEffect(() => {
