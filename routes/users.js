@@ -207,6 +207,7 @@ router.patch("/imageAPI/:username", parser.single("image"), async (req, res) => 
     } catch (error) {
         console.error("Error in router.post/imageAPI in users.js");
         console.error(error);
+        res.json({errorMsg: "An error happened!", errorFull: error});
     };
 });
 
