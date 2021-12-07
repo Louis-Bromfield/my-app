@@ -89,7 +89,7 @@ function ForecastProblemLineChart(props) {
                 pointRadius: 3
             });
             // Create line for days with no prediction (since the last prediction was made)
-            let today = new Date();
+            let today = new Date("Tue Dec 21 2021");
             if (today > new Date(data.data[data.data.length-1].x)) {
                 let averageSinceLatestPrediction = [dailyAverages[dailyAverages.length-1], {x: today.toString().slice(0, 15), y: dailyAverages[dailyAverages.length-1].y}];
                 setAverageSinceLastPredictionData({
