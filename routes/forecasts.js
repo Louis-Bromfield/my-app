@@ -26,7 +26,7 @@ router.get("/:problemName", async (req, res) => {
     };
 });
 
-/// Get a specific user's forecast object for a given problem
+// Get a specific user's forecast object for a given problem
 router.get("/:problemName/:username", async (req, res) => {
     try {
         const forecastObj = await Forecasts.find({ problemName: req.params.problemName });
@@ -55,9 +55,8 @@ router.get("/:problemName/:username", async (req, res) => {
 
         let sumOfNewWeightedBriers = 0;
         let fullArrayToReturn = [];
-
         for (let i = 0; i < userForecastData.forecasts.length; i++) {
-            fullArrayToReturn[i+1] = {certainty: "", date: "", comments: "", newBrier: 0, duration: "", percentageOfTimeAtThisScore: ""};
+            fullArrayToReturn[i] = {certainty: "", date: "", comments: "", newBrier: 0, duration: "", percentageOfTimeAtThisScore: ""};
 
             // Forecast WAS made before close date
             if (new Date(userForecastData.forecasts[i].date) < closeDate) {
@@ -68,10 +67,10 @@ router.get("/:problemName/:username", async (req, res) => {
                     originalBrier = (((0 - userForecastData.forecasts[i].certainty) * (0 - userForecastData.forecasts[i].certainty)) + ((1 - (1 - userForecastData.forecasts[i].certainty)) * (1 - (1 -userForecastData.forecasts[i].certainty))));
                 };
                 let newBrier = (2 - originalBrier) * 50;
-                fullArrayToReturn[i+1].certainty = userForecastData.forecasts[i].certainty;
-                fullArrayToReturn[i+1].date = userForecastData.forecasts[i].date;
-                fullArrayToReturn[i+1].comments = userForecastData.forecasts[i].comments;
-                fullArrayToReturn[i+1].newBrier = newBrier;
+                fullArrayToReturn[i].certainty = userForecastData.forecasts[i].certainty;
+                fullArrayToReturn[i].date = userForecastData.forecasts[i].date;
+                fullArrayToReturn[i].comments = userForecastData.forecasts[i].comments;
+                fullArrayToReturn[i].newBrier = newBrier;
 
                 let newBrierWeightedByDuration;
                 let thisForecastTimeDate = new Date(userForecastData.forecasts[i].date);
@@ -79,18 +78,18 @@ router.get("/:problemName/:username", async (req, res) => {
                     let nextForecastTimeDate = new Date(userForecastData.forecasts[i+1].date);
                     let forecastTimeFrame = (closeDate - startDate)/1000;
                     let duration = (nextForecastTimeDate - thisForecastTimeDate)/1000;
-                    fullArrayToReturn[i+1].duration = duration;
+                    fullArrayToReturn[i].duration = duration;
                     let percentageOfTimeAtThisScore = ((duration/forecastTimeFrame)*100);
-                    fullArrayToReturn[i+1].percentageOfTimeAtThisScore = percentageOfTimeAtThisScore;
+                    fullArrayToReturn[i].percentageOfTimeAtThisScore = percentageOfTimeAtThisScore;
                     newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
                     sumOfNewWeightedBriers = sumOfNewWeightedBriers + newBrierWeightedByDuration;
                 }
                 else if (i === userForecastData.forecasts.length-1) {
                     let forecastTimeFrame = (closeDate - startDate)/1000;
                     let duration = (closeDate - thisForecastTimeDate)/1000;
-                    fullArrayToReturn[i+1].duration = duration;
+                    fullArrayToReturn[i].duration = duration;
                     let percentageOfTimeAtThisScore = ((duration/forecastTimeFrame)*100);
-                    fullArrayToReturn[i+1].percentageOfTimeAtThisScore = percentageOfTimeAtThisScore;
+                    fullArrayToReturn[i].percentageOfTimeAtThisScore = percentageOfTimeAtThisScore;
                     newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
                     sumOfNewWeightedBriers = sumOfNewWeightedBriers + newBrierWeightedByDuration;
                     formulaComponents[0].finalBrierSum = sumOfNewWeightedBriers;
@@ -107,7 +106,6 @@ router.get("/:problemName/:username", async (req, res) => {
         // arrToReturn[0].finalScore = Number((formulaComponents[0].finalBrierSum + formulaComponents[0].tScore).toFixed(2));
         // console.log(formulaComponents);
         // console.log(arrToReturn);
-        fullArrayToReturn[0] = {startDate: forecastObj[0].startDate, closeDate: forecastObj[0].closeDate};
         res.send(fullArrayToReturn);
     } catch (error) {
         console.error("error in forecasts.js > get /:problemName/:username");

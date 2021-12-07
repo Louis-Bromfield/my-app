@@ -125,10 +125,9 @@ function ForecastSubmission(props) {
             let highest = 0;
             let lowest = 100;
             let highestChanged, lowestChanged = false;
-            let totalNumOfForecasts = 0;
-            let finalCertainty = 0;
             for (let i = 0; i < forecast.submittedForecasts.length; i++) {
                 if (forecast.submittedForecasts[i].username === props.username) {
+                    setNumberOfForecastsSubmitted(forecast.submittedForecasts[i].forecasts.length);
                     if (forecast.submittedForecasts[i].forecasts.length === 0) {
 console.log("Here1");
                         highest = "N/A";
@@ -137,20 +136,16 @@ console.log("Here1");
                         return;
                     } else {
                         for (let j = 0; j < forecast.submittedForecasts[i].forecasts.length; j++) {
-                            if (new Date(forecast.submittedForecasts[i].forecasts[j].date) < new Date(forecast.closeDate)) {
-                                totalNumOfForecasts++;
-                                finalCertainty = forecast.submittedForecasts[i].forecasts[j].certainty*100;
-                                if (forecast.submittedForecasts[i].forecasts[j].certainty*100 > highest) {
-                                    highest = forecast.submittedForecasts[i].forecasts[j].certainty*100;
-                                    highestChanged = true;
-                                };
-                                if (forecast.submittedForecasts[i].forecasts[j].certainty*100 < lowest) {
-                                    lowest = forecast.submittedForecasts[i].forecasts[j].certainty*100;
-                                    lowestChanged = true;
-                                };
+                            if (forecast.submittedForecasts[i].forecasts[j].certainty*100 > highest) {
+                                highest = forecast.submittedForecasts[i].forecasts[j].certainty*100;
+                                highestChanged = true;
+                            };
+                            if (forecast.submittedForecasts[i].forecasts[j].certainty*100 < lowest) {
+                                lowest = forecast.submittedForecasts[i].forecasts[j].certainty*100;
+                                lowestChanged = true;
                             };
                         };
-                        setFinalCertainty(`${finalCertainty}%`);
+                        setFinalCertainty(`${forecast.submittedForecasts[i].forecasts[forecast.submittedForecasts[i].forecasts.length-1].certainty*100}%`);
                     };
                 };
             };
@@ -161,7 +156,6 @@ console.log("Here1");
                 setHighestCertainty("N/A");
                 setLowestCertainty("N/A");
             }
-            setNumberOfForecastsSubmitted(totalNumOfForecasts);
         } else {
             setButtonDisabled(false);
             setForecastClosed(false);
