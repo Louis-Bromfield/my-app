@@ -62,12 +62,21 @@ function ProfileDetails(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            console.log("1");
             const formData = new FormData();
+            console.log("2");
             formData.append("image", fileData);
+            console.log("3");
+            formData.append("username", props.username === undefined ? localStorage.getItem("username") : props.username);
+            console.log("4");
             const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/imageAPI/${localStorage.getItem("username")}`, formData);
+            console.log("5");
             localStorage.setItem("profilePicture", res.data.profilePicture);
+            console.log("6");
             props.setShowModal(true);
+            console.log("7");
             props.setModalContent(`Your profile picture has been updated. Refresh the page to see!`);
+            console.log("8");
         } catch (error) {
             console.log("error in handleSubmit");
             console.log(error);

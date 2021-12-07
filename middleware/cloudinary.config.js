@@ -21,8 +21,7 @@ const storage = new CloudinaryStorage({
     params: {
         folder: "Fantasy Forecast Profile Pictures",
         format: async () => "png",
-        public_id: (req, file) => file.filename,
-        overwrite: false
+        public_id: (req, file) => req.params.username
     },
 });
 

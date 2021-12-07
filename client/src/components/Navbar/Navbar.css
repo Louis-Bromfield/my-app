@@ -8,7 +8,6 @@
     height: 11vh;
     display: flex;
     flex-direction: row;
-    /* position: fixed; */
     align-items: center;
     justify-content: center;
     top: 0;
@@ -155,6 +154,11 @@
 }
 
 @media (max-width: 1700px) {
+    .nav-logo {
+        width: 100%;
+        padding-bottom: 1%;
+        margin-left: 15%;
+    }
     .nav-title {
         font-size: 0.85em;
     }
@@ -173,15 +177,24 @@
 
 @media (max-width: 1400px) {
     .navbar {
-        height: 10vh;
+        height: 12vh;
     }
     .nav-title {
         font-size: 0.85em;
     }
+    .nav-logo {
+        width: 75%;
+        padding-bottom: 1%;
+        margin-left: 15%;
+    }
     .navbar-grid {
         width: 85%;
-        grid-template-columns: 27% 50% 20%;
-        column-gap: 5%;
+        grid-template-columns: 27% 53% 20%;
+        padding-top: 0.5%;
+        /* column-gap: 5%; */
+    }
+    .user-logout-container {
+        padding-top: 2%;
     }
     .nav-menu-items {
         margin: 0 auto;
@@ -191,6 +204,6 @@
     }
     .nav-text-profile,
     .nav-logout-btn {
-        font-size: 1em;
+        font-size: 0.9em;
     }
 }
