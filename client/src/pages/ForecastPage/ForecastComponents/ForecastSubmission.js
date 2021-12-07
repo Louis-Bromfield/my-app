@@ -125,9 +125,10 @@ function ForecastSubmission(props) {
             let highest = 0;
             let lowest = 100;
             let highestChanged, lowestChanged = false;
+            let totalNumOfForecasts = 0;
+            let finalCertainty = 0;
             for (let i = 0; i < forecast.submittedForecasts.length; i++) {
                 if (forecast.submittedForecasts[i].username === props.username) {
-                    setNumberOfForecastsSubmitted(forecast.submittedForecasts[i].forecasts.length);
                     if (forecast.submittedForecasts[i].forecasts.length === 0) {
 console.log("Here1");
                         highest = "N/A";
@@ -136,16 +137,20 @@ console.log("Here1");
                         return;
                     } else {
                         for (let j = 0; j < forecast.submittedForecasts[i].forecasts.length; j++) {
-                            if (forecast.submittedForecasts[i].forecasts[j].certainty*100 > highest) {
-                                highest = forecast.submittedForecasts[i].forecasts[j].certainty*100;
-                                highestChanged = true;
-                            };
-                            if (forecast.submittedForecasts[i].forecasts[j].certainty*100 < lowest) {
-                                lowest = forecast.submittedForecasts[i].forecasts[j].certainty*100;
-                                lowestChanged = true;
+                            if (new Date(forecast.submittedForecasts[i].forecasts[j].date) < new Date(forecast.closeDate)) {
+                                totalNumOfForecasts++;
+                                finalCertainty = forecast.submittedForecasts[i].forecasts[j].certainty*100;
+                                if (forecast.submittedForecasts[i].forecasts[j].certainty*100 > highest) {
+                                    highest = forecast.submittedForecasts[i].forecasts[j].certainty*100;
+                                    highestChanged = true;
+                                };
+                                if (forecast.submittedForecasts[i].forecasts[j].certainty*100 < lowest) {
+                                    lowest = forecast.submittedForecasts[i].forecasts[j].certainty*100;
+                                    lowestChanged = true;
+                                };
                             };
                         };
-                        setFinalCertainty(`${forecast.submittedForecasts[i].forecasts[forecast.submittedForecasts[i].forecasts.length-1].certainty*100}%`);
+                        setFinalCertainty(`${finalCertainty*100}%`);
                     };
                 };
             };
@@ -156,6 +161,7 @@ console.log("Here1");
                 setHighestCertainty("N/A");
                 setLowestCertainty("N/A");
             }
+            setNumberOfForecastsSubmitted(totalNumOfForecasts);
         } else {
             setButtonDisabled(false);
             setForecastClosed(false);
@@ -555,7 +561,7 @@ console.log("Here1");
             }
             {(forecastClosed === true && hasAForecastBeenSelected === true) && 
                 <div className="forecast-submission-div">
-                    <h2 className="selected-forecast">{selectedForecast}</h2>
+                    {forecastClosed === true ? <h2 className="selected-forecast" style={{ backgroundColor: "darkred" }}>{selectedForecast}</h2> : <h2 className="selected-forecast">{selectedForecast}</h2>}
                     <h4 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 41)}</h4>
                     <div className="forecast-review-div">
                         <div className="forecast-review-div-left">

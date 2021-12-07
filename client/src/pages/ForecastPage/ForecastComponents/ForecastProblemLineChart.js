@@ -8,6 +8,7 @@ function ForecastProblemLineChart(props) {
   const [chartData, setChartData] = useState([]);
   const [userChartData, setUserChartData] = useState([]);
   const [averageChartData, setAverageChartData] = useState([]);
+  const [averageSinceLastPrediction, setAverageSinceLastPredictionData] = useState([]);
   const [labelsArray, setLabelsArray] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState("");
@@ -87,6 +88,19 @@ function ForecastProblemLineChart(props) {
                 borderWidth: 4,
                 pointRadius: 3
             });
+            // Create line for days with no prediction (since the last prediction was made)
+            let today = new Date();
+            if (today > new Date(data.data[data.data.length-1].x)) {
+                let averageSinceLatestPrediction = [dailyAverages[dailyAverages.length-1], {x: today.toString().slice(0, 15), y: dailyAverages[dailyAverages.length-1].y}];
+                setAverageSinceLastPredictionData({
+                    label: "Average Certainty Since Last Prediction",
+                    data: averageSinceLatestPrediction,
+                    backgroundColor: "rgba(255, 0, 0, 0.5)",
+                    borderColor: "rgba(255, 0, 0, 0.5)",
+                    borderWidth: 4,
+                    pointRadius: 0
+                });
+            };
         };
         createLabelsArray(new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
     };
@@ -152,6 +166,14 @@ function ForecastProblemLineChart(props) {
             borderWidth: userChartData.borderWidth,
             showLine: userChartData.showLine,
             pointRadius: userChartData.pointRadius
+        }, {
+            label: averageSinceLastPrediction.label,
+            data: averageSinceLastPrediction.data,
+            backgroundColor: averageSinceLastPrediction.backgroundColor,
+            borderColor: averageSinceLastPrediction.borderColor,
+            borderWidth: averageSinceLastPrediction.borderWidth,
+            showLine: averageSinceLastPrediction.showLine,
+            pointRadius: averageSinceLastPrediction.pointRadius  
         }],
         spanGaps: false,
         responsive: true,
