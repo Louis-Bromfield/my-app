@@ -11,9 +11,9 @@ const {
 } = process.env;
 
 cloudinary.config({
-    cloud_name: CLOUDINARY_HOST,
-    api_key: CLOUDINARY_API_KEY,
-    api_secret: CLOUDINARY_API_SECRET,
+    cloud_name: 'dnna7u4ew',
+    api_key: '597681729823415',
+    api_secret: 'b6lwb9PrtxLIiJr1BDjEdgH7ptw',
 });
 
 const storage = new CloudinaryStorage({
