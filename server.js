@@ -11,8 +11,6 @@ const path = require("path");
 app.use(express.json());
 app.use(cors());
 
-// This is a comment 
-
 // Routes
 const homePageNewsFeedRoutes = require('./routes/homePageNewsFeedPosts');
 app.use('/homePageNewsFeedPosts', homePageNewsFeedRoutes);
