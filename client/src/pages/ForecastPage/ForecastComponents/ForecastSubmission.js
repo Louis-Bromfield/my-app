@@ -150,7 +150,7 @@ console.log("Here1");
                                 };
                             };
                         };
-                        setFinalCertainty(`${finalCertainty*100}%`);
+                        setFinalCertainty(`${finalCertainty}%`);
                     };
                 };
             };
