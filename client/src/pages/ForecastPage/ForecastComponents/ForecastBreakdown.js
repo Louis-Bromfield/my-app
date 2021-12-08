@@ -5,6 +5,7 @@ import axios from 'axios';
 function ForecastBreakdown(props) {
     const [predictionData, setPredictionData] = useState([]);
     const [tScore, setTScore] = useState(0);
+    const [showBreakdown, setShowBreakdown] = useState(false);
 
     useEffect(() => {
         if (props.userHasAttempted === true) {
@@ -103,11 +104,15 @@ function ForecastBreakdown(props) {
     let totalScore = 0;
     return (
         <div className="predictions-container">
-            {props.userHasAttempted === true &&
+            {showBreakdown === false && 
+                <button className="show-btn" onClick={() => setShowBreakdown(!showBreakdown)}>Show Prediction Breakdown</button>
+            }
+            {(props.userHasAttempted === true && showBreakdown === true) &&
                 <div className="to-show">
+                    <button className="hide-btn" onClick={() => setShowBreakdown(!showBreakdown)}>Hide Prediction Breakdown</button>
                     <h2 style={{ color: "#404d72" }}><u>Your Predictions</u></h2>
                     <hr />
-                    {predictionData[0] !== undefined && 
+                    {predictionData[0] !== undefined &&
                         <div className="date-container">
                             <div className="sub-date-container">
                                 <h3 style={{ color: "#404d72" }}>{predictionData[0].startDate}</h3>
