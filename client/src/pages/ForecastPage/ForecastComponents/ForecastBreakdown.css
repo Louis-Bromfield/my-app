@@ -2,6 +2,24 @@
     padding: 1%;
 }
 
+.show-btn,
+.hide-btn {
+    color: #fff;
+    padding: 1%;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.show-btn {
+    background-color: #404d72;
+}
+
+.hide-btn {
+    background-color: darkred;
+    margin-bottom: 1vh;
+}
+
 .date-container {
     display: flex;
     flex-direction: row;
