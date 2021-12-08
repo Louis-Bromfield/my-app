@@ -90,17 +90,18 @@ function ForecastProblemLineChart(props) {
             });
             // Create line for days with no prediction (since the last prediction was made)
             let today = new Date();
+            let averageSinceLatestPrediction = [];
             if ((today > new Date(data.data[data.data.length-1].x)) && (today < new Date(selectedForecast.closeDate))) {
-                let averageSinceLatestPrediction = [dailyAverages[dailyAverages.length-1], {x: today.toString().slice(0, 15), y: dailyAverages[dailyAverages.length-1].y}];
-                setAverageSinceLastPredictionData({
-                    label: "Average Certainty Since Last Prediction",
-                    data: averageSinceLatestPrediction,
-                    backgroundColor: "rgba(255, 0, 0, 0.5)",
-                    borderColor: "rgba(255, 0, 0, 0.5)",
-                    borderWidth: 4,
-                    pointRadius: 0
-                });
+                averageSinceLatestPrediction = [dailyAverages[dailyAverages.length-1], {x: today.toString().slice(0, 15), y: dailyAverages[dailyAverages.length-1].y}];
             };
+            setAverageSinceLastPredictionData({
+                label: "Average Certainty Since Last Prediction",
+                data: averageSinceLatestPrediction,
+                backgroundColor: "rgba(255, 0, 0, 0.5)",
+                borderColor: "rgba(255, 0, 0, 0.5)",
+                borderWidth: 4,
+                pointRadius: 0
+            });
         };
         createLabelsArray(new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
     };

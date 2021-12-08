@@ -177,9 +177,7 @@ router.patch("/imageAPI/:username", parser.single("image"), async (req, res) => 
             image: req.file.path,
         });
         // Update User Document
-        console.log(req.params.username);
         const userDocument = await Users.findOne({ username: req.params.username });
-        console.log(userDocument);
         const response = await Users.findByIdAndUpdate(userDocument._id, {
             profilePicture: imageUploaded.image
         },
@@ -272,15 +270,10 @@ router.patch("/:username/removeMarket/:marketName", async (req, res) => {
 });
 
 router.patch("/calculateBrier/:problemName/:happenedStatus/:marketName/:closeEarly", async (req, res) => {
-    console.log("Here4");
-    console.log(req.params);
-    console.log(req.body);
     try {
         // Get usernames of everyone who made a forecast + their forecasts
         // const forecastDocument = await Forecasts.find();
         const forecastObj = await Forecasts.findOne({ problemName: req.params.problemName });
-        console.log("Here5");
-        console.log(forecastObj);
         let happened;
         if (req.params.happenedStatus === "true") {
             happened = true;
@@ -289,7 +282,6 @@ router.patch("/calculateBrier/:problemName/:happenedStatus/:marketName/:closeEar
         };
         // If a problem is being closed early, update the date in the obj and then persist to DB
         if (req.params.closeEarly === "true") {
-            console.log("Here6");
             forecastObj.closeDate = req.body.newProblemCloseDateTime;
             await Forecasts.findByIdAndUpdate(forecastObj._id, { closeDate: req.body.newProblemCloseDateTime, happened: happened, isClosed: true});
         } else if (req.params.closeEarly === "false") {
@@ -358,9 +350,7 @@ const calculateBriers = (forecastObj, happened) => {
             // as someone may have submitted a forecast before I had a chance to close it
 
             // Forecast WAS made before close date
-            console.log(`${new Date(forecastObj.submittedForecasts[i].forecasts[j].date)} < ${closeDate}`);
             if (new Date(forecastObj.submittedForecasts[i].forecasts[j].date) < closeDate) {
-console.log("woohoo! this forecast counts");
                 let originalBrier;
                 if (happened === true) {
                     originalBrier = (((1 - forecastObj.submittedForecasts[i].forecasts[j].certainty) * (1 - forecastObj.submittedForecasts[i].forecasts[j].certainty)) + ((0 - (1 - forecastObj.submittedForecasts[i].forecasts[j].certainty)) * (0 - (1 -forecastObj.submittedForecasts[i].forecasts[j].certainty))));
@@ -389,7 +379,6 @@ console.log("woohoo! this forecast counts");
                 };
             // Forecast was NOT made before close date
             } else if (new Date(forecastObj.submittedForecasts[i].forecasts[j].date) > closeDate) {
-console.log("oh no! this forecast was submitted after the close date of the problem, maybe the admin closed it early")
                 sumOfNewWeightedBriers = sumOfNewWeightedBriers + 0;
                 if (j === forecastObj.submittedForecasts[i].forecasts.length-1) {
                     formulaComponents[i].finalBrierSum = sumOfNewWeightedBriers;
@@ -399,8 +388,6 @@ console.log("oh no! this forecast was submitted after the close date of the prob
         formulaComponents[i].brierSumPlusTScore = formulaComponents[i].finalBrierSum + formulaComponents[i].tScore;
         arrToReturn[i].finalScore = Number((formulaComponents[i].finalBrierSum + formulaComponents[i].tScore).toFixed(2));
     };
-    console.log(formulaComponents);
-    console.log(arrToReturn);
     return arrToReturn;
 };
 
