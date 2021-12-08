@@ -103,10 +103,6 @@ router.get("/:problemName/:username", async (req, res) => {
                 };
             };
         };
-        // formulaComponents[0].brierSumPlusTScore = formulaComponents[0].finalBrierSum + formulaComponents[0].tScore;
-        // arrToReturn[0].finalScore = Number((formulaComponents[0].finalBrierSum + formulaComponents[0].tScore).toFixed(2));
-        // console.log(formulaComponents);
-        // console.log(arrToReturn);
         fullArrayToReturn[0] = {startDate: forecastObj[0].startDate, closeDate: forecastObj[0].closeDate};
         res.send(fullArrayToReturn);
     } catch (error) {
@@ -127,7 +123,6 @@ router.get("/:markets", async (req, res) => {
 // Add a new problem to the database
 router.post("/newProblem", async (req, res) => {
     try {
-        console.log(req.body);
         const newProblem = new Forecasts({
             problemName: req.body.problemName,
             startDate: req.body.startDate,
@@ -165,7 +160,6 @@ router.patch("/submit/:problemName", async (req, res) => {
             }, 
             { new: true }
         );
-        console.log(newForecastSavedToDB);
         res.json(newForecastSavedToDB);
     } catch (error) {
         console.error("Error in forecasts.js > patch");

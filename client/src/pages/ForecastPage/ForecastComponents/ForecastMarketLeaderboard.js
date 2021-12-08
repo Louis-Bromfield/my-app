@@ -14,7 +14,6 @@ function ForecastMarketLeaderboard(props) {
         for (let i = 0; i < leaderboard.length; i++) {
             if (leaderboard[i].username === username) {
                 rank = i;
-                // console.log(`found user at rank index = ${i}`);
                 break;
             };
         };

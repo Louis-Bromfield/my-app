@@ -17,8 +17,6 @@ function ProfileDetails(props) {
     }
 
     const persistNewUsernameToDB = async (currentUsername, newUsernameToPersist) => {
-        console.log(`currentUsername is ${currentUsername}`);
-        console.log(`newUsernameToPersist = ${newUsernameToPersist}`);
         try {
             props.updateUsername(newUsernameToPersist);
             console.log("done0");

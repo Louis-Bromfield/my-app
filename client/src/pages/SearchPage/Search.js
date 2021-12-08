@@ -57,7 +57,6 @@ function Search() {
                 };
             };
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/profileData/${username}`);
-            console.log(userDocument);
             formatBrierData(userDocument.data.userObj, playerUsername);
             findUniquePlayerStats(userDocument.data.userObj, playerUsername);
             // setSearchedUserBrierScoresArr(userDocument.data.userObj.brierScoresArr);
@@ -107,7 +106,6 @@ function Search() {
     };
 
     const formatBrierData = async (userObj, username) => {
-        console.log(userObj);
         let allBrierArray = [null];
         let recentBrierArray = [null];
         let bestBrierPlayer = 0;

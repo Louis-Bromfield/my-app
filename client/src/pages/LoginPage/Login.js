@@ -50,7 +50,6 @@ function Login(props) {
     const handleNewProfilePictureChange = ({ target }) => {
         setCreateAccountError("");
         setNewProfilePicture(target.files[0]);
-        console.log(target);
         setFile(target.value);
     }
 
@@ -77,7 +76,6 @@ function Login(props) {
     };
 
     const createAccount = async (newUsername, newPassword, newFullName, newEmailAddress, newProfilePicture) => {
-        console.log(newProfilePicture);
         // Check for empty fields
         if (newUsername === "" || newPassword === "" || newFullName === "" || newEmailAddress === "" || /^\s*$/.test(newUsername) || /^\s*$/.test(newPassword) || /^\s*$/.test(newFullName) || /^\s*$/.test(newEmailAddress)) {
             setCreateAccountError("One or more empty fields. Please enter your username and password, then press Create Account.");
@@ -99,7 +97,6 @@ function Login(props) {
                     email: newEmailAddress
                 });
                 if (newUser) {
-                    console.log(newUser);
                     const formData = new FormData();
                     formData.append("image", newProfilePicture);
                     formData.append("username", newUsername);

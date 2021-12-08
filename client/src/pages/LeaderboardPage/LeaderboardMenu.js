@@ -225,7 +225,6 @@ function LeaderboardMenu(props) {
                 const leaderboardUpdate = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/marketSignUp/${markets[i]}`, {
                     username: username
                 });
-                console.log(leaderboardUpdate);
             };
         } catch (error) {
             console.error("Error in LeaderboardMenu.js > submitMarketChoices")
@@ -248,7 +247,8 @@ function LeaderboardMenu(props) {
                         markets: userDocument.data[0].markets
                     }
                 );
-                console.log("You just got 5 points for joining a market!");
+                setShowModal(true);
+                setModalContent("You just got 5 points for joining a market!");
             } else {
                 userDocument.data[0].onboarding.joinAMarket = true;
                 userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 150;
@@ -261,7 +261,7 @@ function LeaderboardMenu(props) {
                     }
                 );
                 setShowModal(true);
-                setModalContent("You just got 150 Fantasy Forecast Points for joining your first market! Every time you join a market you'll earn 5 points.")
+                setModalContent("You just got 150 Fantasy Forecast Points for joining your first market! Every time you join a market you'll earn 5 points.");
             }
         } catch (error) {
             console.error("Error in LeaderboardMenu > updateOnboarding")

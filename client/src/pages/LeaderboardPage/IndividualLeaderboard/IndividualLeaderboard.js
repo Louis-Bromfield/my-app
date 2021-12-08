@@ -184,7 +184,6 @@ console.log("Individual Leaderboard UE");
     //             } else {
     //                 rankings[i].avgBrierScore = totalBrier / userDocument.data[0].brierScores.length;
     //             }
-    //             console.log(rankings[i]);
     //             rankings = rankings.sort((a, b) => b.marketPoints - a.marketPoints);
     //             // setUsersData(rankings);
     //         };
@@ -239,11 +238,9 @@ console.log("Individual Leaderboard UE");
         try {
             if (inviteOrKick === "invite") {
                 await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${market}`, { username: user });
-                console.log("invite sent!");
                 setSendResponseText(`You have invited ${user}.`);
             } else if (inviteOrKick === "kick") {
                 const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/kick/${market}`, { username: user });
-                console.log(res);
                 console.log("user kicked!");
                 setSendResponseText(`You have kicked ${user}.`);
             };
@@ -290,7 +287,7 @@ console.log("Individual Leaderboard UE");
                                             <li 
                                                 key={index} 
                                                 className="user-li" 
-                                                onClick={() => {setInviteUser(item.username); console.log(`selected: ${item.username}`)}}
+                                                onClick={() => setInviteUser(item.username)}
                                             >
                                                 <h3>{item.username}</h3>
                                             </li>
@@ -309,7 +306,7 @@ console.log("Individual Leaderboard UE");
                                             <li 
                                                 key={index} 
                                                 className="user-li" 
-                                                onClick={() => {setKickUser(item.username); console.log(`selected: ${item.username}`)}}
+                                                onClick={() => setKickUser(item.username)}
                                             >
                                                 <h3>{item.username}</h3>
                                             </li>

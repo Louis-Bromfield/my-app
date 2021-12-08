@@ -38,7 +38,6 @@ function ProfileStats(props) {
     const getGlobalData = async () => {
         try {
             const res = await axios.get('https://fantasy-forecast-politics.herokuapp.com/users/globalData');
-            console.log(res.data);
             setGlobalBestBrier(res.data.bestBrier.toFixed(0));
             setGlobalWorstBrier(res.data.worstBrier.toFixed(0));
             setGlobalAverageBrier(res.data.averageBrier.toFixed(0));

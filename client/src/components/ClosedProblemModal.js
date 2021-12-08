@@ -32,7 +32,6 @@ const ClosedProblemModal = (props) => {
         <br />
         <div className={layoutClassName}>
             {brierArr.map((item, index) => {
-                console.log(item);
                 return (
                     <div className="closed-forecast-container">
                         <h3>{item.problemName}</h3>

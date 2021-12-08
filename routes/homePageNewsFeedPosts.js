@@ -22,7 +22,6 @@ router.get("/:id", async (req, res) => {
 const getArticleHeadline = async (url) => {
     try {
         const article = await extract(url);
-        console.log(article.title, article.image);
         return [ article.title, article.image ];
     } catch (error) {
         console.error(error);
@@ -85,7 +84,6 @@ router.patch("/changeUsernameOrProfilePic/:currentUsername", async (req, res) =>
             if (allPosts[i].author === req.params.currentUsername) {
                 if (req.body.changeUsername === true) {
                     await HomePageNewsFeedPost.findByIdAndUpdate(allPosts[i]._id, { author: req.body.username });
-                    console.log(`Post updated!, at id: ${allPosts[i]._id} we changed ${allPosts[i].author} to ${req.body.username}`);
                 } else if (req.body.changeUsername === false) {
                     await HomePageNewsFeedPost.findByIdAndUpdate(allPosts[i]._id, { authorProfilePicture: req.body.authorProfilePicture });
                 };

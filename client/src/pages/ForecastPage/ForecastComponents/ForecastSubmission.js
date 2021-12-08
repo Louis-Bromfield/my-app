@@ -130,7 +130,6 @@ function ForecastSubmission(props) {
             for (let i = 0; i < forecast.submittedForecasts.length; i++) {
                 if (forecast.submittedForecasts[i].username === props.username) {
                     if (forecast.submittedForecasts[i].forecasts.length === 0) {
-console.log("Here1");
                         highest = "N/A";
                         lowest = "N/A";
                         setFinalCertainty("N/A");
@@ -203,7 +202,6 @@ console.log("Here1");
     const pullForecastDetailsAndCheckIfAlreadyAttempted = (forecast) => {
         for (let i = 0; i < forecastProblems.length; i++) {
             if (forecastProblems[i].problemName === forecast) {
-                // console.log(forecastProblems[i]);
                 setSelectedForecastMarket(forecastProblems[i].market);
                 props.changeForecast(forecastProblems[i]);
                 if (forecastProblems[i].submittedForecasts.length === 0) {

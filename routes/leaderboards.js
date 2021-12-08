@@ -66,19 +66,10 @@ router.post("/", async (req, res) => {
 // Update market points for a closed problem
 router.patch("/closedProblem/:market", async (req, res) => {
     try {
-        // console.log("in closedProblem/market/scores");
-        // console.log(req.params.market);
-        // console.log(req.body.scores.scores);
         const marketDocument = await Leaderboards.findOne({ leaderboardName: req.params.market });
-        // console.log(marketDocument);
         for (let i = 0; i < req.body.scores.scores.length; i++) {
-            // console.log(req.body.scores.scores[i].username);
             const index = marketDocument.rankings.indexOf(marketDocument.rankings.find(el => el.username === req.body.scores.scores[i].username));
-            // console.log(index);
-            // console.log(`Old score = ${marketDocument.rankings[index].marketPoints}`);
-            // console.log(`Points added = ${req.body.scores.scores[i].brierScore}`);
             marketDocument.rankings[index].marketPoints += req.body.scores.scores[i].brierScore;
-            // console.log(`New score = ${marketDocument.rankings[index].marketPoints}`);
         };
         const updatedMarket = await Leaderboards.findByIdAndUpdate(marketDocument._id, { rankings: marketDocument.rankings }, { new: true });
         res.json(updatedMarket);
@@ -91,7 +82,6 @@ router.patch("/closedProblem/:market", async (req, res) => {
 // Add a user to a leaderboard
 router.patch("/:leaderboardName", async (req, res) => {
     try {
-        console.log("in patch/leaderboardName");
         const document = await Leaderboards.findOne({ leaderboardName: req.params.leaderboardName });
         if (document.rankings.some(user => user.username === req.body.username)) {
             res.json({ message: "User is already in this market"});
@@ -123,7 +113,6 @@ router.patch("/:leaderboardName", async (req, res) => {
 // Kick a user from a leaderboard
 router.patch("/kick/:leaderboardName", async (req, res) => {
     try {
-        console.log("in patch/kick/leaderboardName");
         const document = await Leaderboards.findOne({ leaderboardName: req.params.leaderboardName });
         let userIndex = document.rankings.findIndex(el => el.username === req.body.username);
         document.rankings.splice(userIndex, 1);
@@ -143,7 +132,6 @@ router.patch("/kick/:leaderboardName", async (req, res) => {
 // Add a user to a leaderboard from market sign up - always add
 router.patch("/marketSignUp/:leaderboardName", async (req, res) => {
     try {
-        console.log("in patch/marketSignUp/leaderboardName");
         const document = await Leaderboards.findOne({ leaderboardName: req.params.leaderboardName });
         if (document.rankings.some(user => user.username === req.body.username)) {
             res.json({ message: "User is already in this market"});
@@ -215,7 +203,6 @@ router.patch("/:leaderboardName/removeUser/:username", async (req, res) => {
         for (let i = 0; i < document.rankings.length; i++) {
             if (document.rankings[i].username === req.params.username) {
                 document.rankings.splice(i, 1);
-                console.log(document.rankings);
             };
         };
         const updatedLBData = await Leaderboards.findByIdAndUpdate(document._id, 

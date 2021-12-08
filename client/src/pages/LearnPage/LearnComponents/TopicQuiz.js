@@ -52,7 +52,8 @@ function TopicQuiz(props) {
                         fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 
                     }
                 );
-                console.log("You just got 50 points for completing a quiz!");
+                props.handleQuizCompletion(true);
+                props.handleQuizCompletionModalContent("You just got 50 points for completing a quiz!");
             } else {
                 userDocument.data[0].onboarding.completeALearnQuiz = true;
                 userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 250;
@@ -62,7 +63,6 @@ function TopicQuiz(props) {
                         fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 
                     }
                 );
-                console.log("You just got 250 points for completing your first quiz!");
                 props.handleQuizCompletion(true);
                 props.handleQuizCompletionModalContent("You just got 250 Fantasy Forecast Points for completing your first quiz! Completing quizzes will now return 20 points per quiz.");
             };

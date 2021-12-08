@@ -17,7 +17,6 @@ function Leaderboard(props) {
             let totalAverageBrier = 0;
             for (let i = 0; i < rankings.length; i++) {
                 const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${rankings[i].username}`);
-                // console.log(userDocument.data[0]);
                 if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
                     rankings[i].marketPoints = userDocument.data[0].fantasyForecastPoints;
                 };
@@ -38,7 +37,6 @@ function Leaderboard(props) {
                     rankings[i].avgBrierScore = totalBrier / userDocument.data[0].brierScores.length;
                     totalAverageBrier += (totalBrier / userDocument.data[0].brierScores.length);
                 }
-                // console.log(rankings[i]);
                 rankings = rankings.sort((a, b) => b.marketPoints - a.marketPoints);
             };
             props.setAverageBrier(totalAverageBrier / rankings.length);
@@ -64,7 +62,6 @@ function Leaderboard(props) {
                         <th className="last-five-briers-column">Last 5 Forecasts (&nbsp;&nbsp;/110&nbsp;&nbsp;)</th>
                     </tr>
                     {usersData.map((item, index) => {
-                        // console.log(item);
                         if (item.username === props.username) {
                             return (
                                 <tr className="leaderboard-row-matching-username" key={index}>
