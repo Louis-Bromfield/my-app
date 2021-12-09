@@ -551,7 +551,7 @@ function ForecastSubmission(props) {
                             </div>
                         </div>
                         <div className="scores">
-                            <h4 className="brier-info">FF Scores range from 0-110, and are made up of the accuracy of your prediction and when you submitted it, 
+                            <h4 className="brier-info">Brier Scores range from 0-110, and are made up of the accuracy of your prediction and when you submitted it, 
                             meaning more accuracy earlier is more rewarding! For more info, visit the Brier Scores tab on the Learn page!</h4>
                         </div>
                     </div>
