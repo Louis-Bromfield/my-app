@@ -30,11 +30,11 @@ function ForecastStatistics(props) {
                         // let index = selectedForecast.submittedForecasts[i].forecasts.length-1;
                         for (let j = selectedForecast.submittedForecasts[i].forecasts.length-1; j >= 0; j--) {
                             if (selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) === new Date().toString().slice(0, 15)) {
-                                if (selectedForecast.submittedForecasts[i].forecasts[j].certainty > highestCertaintySoFar) {
+                                if (selectedForecast.submittedForecasts[i].forecasts[j].certainty >= highestCertaintySoFar) {
                                     highestCertaintySoFar = selectedForecast.submittedForecasts[i].forecasts[j].certainty;
                                     highestChanged = true;
                                 };
-                                if (selectedForecast.submittedForecasts[i].forecasts[j].certainty < lowestCertaintySoFar) {
+                                if (selectedForecast.submittedForecasts[i].forecasts[j].certainty <= lowestCertaintySoFar) {
                                     lowestCertaintySoFar = selectedForecast.submittedForecasts[i].forecasts[j].certainty;
                                     lowestChanged = true;
                                 };
