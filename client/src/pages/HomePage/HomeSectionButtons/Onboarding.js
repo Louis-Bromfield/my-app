@@ -61,18 +61,6 @@ function Onboarding(props) {
                         </li>
 
                     }
-                    {onboardingBooleans.completeCalibration ?
-                        <li className="onboarding-list-item" style={{ backgroundColor: "lightgreen" }}>
-                            <h4>Complete the Calibraton</h4>
-                            <h4>Reward: 400pts</h4>
-                        </li>
-                    :
-                        <li className="onboarding-list-item" style={{ backgroundColor: "none" }}>
-                            <h4>Complete the Calibraton</h4>
-                            <h4>Reward: 400pts</h4>
-                        </li>
-
-                    }
                     {onboardingBooleans.joinAMarket ?
                         <li className="onboarding-list-item" style={{ backgroundColor: "lightgreen" }}>
                             <h4>Join a market</h4>
@@ -157,18 +145,6 @@ function Onboarding(props) {
                             <li className="onboarding-list-item" style={{ backgroundColor: "none" }}>
                                 <h4>Visit your profile page</h4>
                                 <h4>Reward: 100pts</h4>
-                            </li>
-
-                        }
-                        {onboardingBooleans.completeCalibration ?
-                            <li className="onboarding-list-item" style={{ backgroundColor: "lightgreen" }}>
-                                <h4>Complete the Calibraton</h4>
-                                <h4>Reward: 400pts</h4>
-                            </li>
-                        :
-                            <li className="onboarding-list-item" style={{ backgroundColor: "none" }}>
-                                <h4>Complete the Calibraton</h4>
-                                <h4>Reward: 400pts</h4>
                             </li>
 
                         }

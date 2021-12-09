@@ -11,11 +11,6 @@ const OnboardingSchema = mongoose.Schema({
         required: true,
         default: false
     },
-    completeCalibration: {
-        type: Boolean,
-        required: true,
-        default: false
-    },
     joinAMarket: {
         type: Boolean,
         required: true,
