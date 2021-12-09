@@ -220,10 +220,12 @@ function LeaderboardMenu(props) {
             return;
         }
         try {
+            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             setLoading(true);
             for (let i = 0; i < markets.length; i++) {
                 const leaderboardUpdate = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/marketSignUp/${markets[i]}`, {
-                    username: username
+                    username: username,
+                    profilePicture: userDocument.data[0].profilePicture
                 });
             };
         } catch (error) {
@@ -463,7 +465,7 @@ function LeaderboardMenu(props) {
                                     <UserToInvite 
                                         key={index}
                                         username={user.username} 
-                                        ProfileP={ProfileP} 
+                                        ProfileP={user.profilePicture} 
                                         toggleInviteUserToLeague={toggleInviteUserToLeague}
                                     />
                                 )

@@ -96,17 +96,19 @@ function Login(props) {
                     name: newFullName,
                     email: newEmailAddress
                 });
+                let profilePicResponse = "";
                 if (newUser) {
                     const formData = new FormData();
                     formData.append("image", newProfilePicture);
                     formData.append("username", newUsername);
-                    await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/imageAPI/${newUsername}`, formData);
+                    profilePicResponse = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/imageAPI/${newUsername}`, formData);
                     setCreateAccountText("Account successfully created.");
                     localStorage.setItem("firstVisit", true);
                 };
                 // Add user to Global Leaderboard
+                if (profilePicResponse !== "") profilePicResponse = profilePicResponse.data.profilePicture;
                 const lbName = "Fantasy Forecast All-Time"
-                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${lbName}`, { username: newUsername });
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${lbName}`, { username: newUsername, profilePicture: profilePicResponse });
                 // Add user to Learn Quizzes
                 await axios.post(`https://fantasy-forecast-politics.herokuapp.com/learnquizzes/`, { username: newUsername });
             } else if (user.data[0].username === newUsername) {
@@ -141,6 +143,7 @@ function Login(props) {
                     <input type="email" className="input-field" placeholder="Enter Your Email Address" onChange={(e) => handleNewEmailAddressChange(e)} />
                     <h3 className="form-title">Profile Picture:</h3>
                     <input type="file" className="input-field-photo" onChange={(e) => handleNewProfilePictureChange(e)} />
+                    <h4 style={{ color: "#fff" }}>Your username, password and profile picture can all be updated from your profile page.</h4>
                     <button className="signup-btn" onClick={() => createAccount(newUsername, newPassword, newFullName, newEmailAddress, newProfilePicture)}>Create Account</button>
                     {createAccountError !== "" && <h3 className="error-message">{createAccountError}</h3>}
                     {createAccountText !== "" && <h3 className="text-message">{createAccountText}</h3>}

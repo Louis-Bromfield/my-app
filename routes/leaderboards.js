@@ -86,7 +86,7 @@ router.patch("/:leaderboardName", async (req, res) => {
         if (document.rankings.some(user => user.username === req.body.username)) {
             res.json({ message: "User is already in this market"});
         } else if (req.params.leaderboardName === "Fantasy Forecast All-Time") {
-            const toPushToDB = { username: req.body.username, marketPoints: 0, acceptedInvite: true };
+            const toPushToDB = { username: req.body.username, marketPoints: 0, acceptedInvite: true, profilePicture: req.body.profilePicture };
             const newLeaderboardDataPushedToDB = await Leaderboards.findByIdAndUpdate(document._id,
                 {
                     $push: { rankings: toPushToDB },
@@ -136,7 +136,7 @@ router.patch("/marketSignUp/:leaderboardName", async (req, res) => {
         if (document.rankings.some(user => user.username === req.body.username)) {
             res.json({ message: "User is already in this market"});
         } else {
-            const toPushToDB = { username: req.body.username, marketPoints: 0, acceptedInvite: true };
+            const toPushToDB = { username: req.body.username, marketPoints: 0, acceptedInvite: true, profilePicture: req.body.profilePicture };
             const newLeaderboardDataPushedToDB = await Leaderboards.findByIdAndUpdate(document._id,
                 {
                     $push: { rankings: toPushToDB },
