@@ -14,7 +14,7 @@ function Onboarding(props) {
 
     const getAllOnboardingBooleans = async (username) => {
         try {
-            const allOnboardingBooleans = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            const allOnboardingBooleans = await axios.get(`http://localhost:5000/users/${username}`);
             setOnboardingLoading(true)
             setTimeout(() => {
                 setOnboardingLoading(false);
@@ -50,62 +50,92 @@ function Onboarding(props) {
                     </div>
                     <ul className="onboarding-list">
                     {onboardingBooleans.visitProfilePage ?
-                        <li className="onboarding-list-item" style={{ backgroundColor: "lightgreen" }}>
-                            <h4>Visit your profile page</h4>
-                            <h4>Reward: 100pts</h4>
+                        <li 
+                            className="onboarding-list-item" 
+                            style={{ backgroundColor: "lightgreen" }}
+                            onClick={() => { props.setShowModal(true); props.setModalContent("This can be done by clicking on your username in the top right of the screen!")}}>
+                                <h4>Visit your profile page</h4>
+                                <h4>Reward: 100pts</h4>
                         </li>
                     :
-                        <li className="onboarding-list-item" style={{ backgroundColor: "none" }}>
-                            <h4>Visit your profile page</h4>
-                            <h4>Reward: 100pts</h4>
+                        <li 
+                            className="onboarding-list-item" 
+                            style={{ backgroundColor: "none" }}
+                            onClick={() => { props.setShowModal(true); props.setModalContent("This can be done by clicking on your username in the top right of the screen!")}}>
+                                <h4>Visit your profile page</h4>
+                                <h4>Reward: 100pts</h4>
                         </li>
 
                     }
                     {onboardingBooleans.joinAMarket ?
-                        <li className="onboarding-list-item" style={{ backgroundColor: "lightgreen" }}>
-                            <h4>Join a market</h4>
-                            <h4>Reward: 150pts</h4>
+                        <li 
+                            className="onboarding-list-item" 
+                            style={{ backgroundColor: "lightgreen" }}
+                            onClick={() => { props.setShowModal(true); props.setModalContent("This can be done by selecting Leaderboards from the top of the screen, then pressing the Join A Market button!")}}>
+                                <h4>Join a market</h4>
+                                <h4>Reward: 150pts</h4>
                         </li>
                     :
-                        <li className="onboarding-list-item" style={{ backgroundColor: "none" }}>
-                            <h4>Join a market</h4>
-                            <h4>Reward: 150pts</h4>
+                        <li 
+                            className="onboarding-list-item" 
+                            style={{ backgroundColor: "none" }}
+                            onClick={() => { props.setShowModal(true); props.setModalContent("This can be done by selecting Leaderboards from the top of the screen, then pressing the Join A Market button!")}}>
+                                <h4>Join a market</h4>
+                                <h4>Reward: 150pts</h4>
                         </li>
 
                     }
                     {onboardingBooleans.submitAPost ?
-                        <li className="onboarding-list-item" style={{ backgroundColor: "lightgreen" }}>
-                            <h4>Submit a post</h4>
-                            <h4>Reward: 200pts</h4>
+                        <li 
+                            className="onboarding-list-item" 
+                            style={{ backgroundColor: "lightgreen" }}
+                            onClick={() => { props.setShowModal(true); props.setModalContent("This can be done by pressing the Post to your Feed button at the top of the News Feed!")}}>
+                                <h4>Submit a post</h4>
+                                <h4>Reward: 200pts</h4>
                         </li>
                     :
-                        <li className="onboarding-list-item" style={{ backgroundColor: "none" }}>
-                            <h4>Submit a post</h4>
-                            <h4>Reward: 200pts</h4>
+                        <li 
+                            className="onboarding-list-item" 
+                            style={{ backgroundColor: "none" }}
+                            onClick={() => { props.setShowModal(true); props.setModalContent("This can be done by pressing the Post to your Feed button at the top of the News Feed!")}}>
+                                <h4>Submit a post</h4>
+                                <h4>Reward: 200pts</h4>
                         </li>
 
                     }
                     {onboardingBooleans.submitAForecast ?
-                        <li className="onboarding-list-item" style={{ backgroundColor: "lightgreen" }}>
-                            <h4>Submit a forecast</h4>
-                            <h4>Reward: 300pts</h4>
+                        <li 
+                            className="onboarding-list-item" 
+                            style={{ backgroundColor: "lightgreen" }}
+                            onClick={() => { props.setShowModal(true); props.setModalContent("Once you've joined a market, the dropdown menu at the top of the My Forecasts page will contain problems you are able to tackle. Submit a forecast to any problem to complete this onboarding task!")}}>
+                                <h4>Submit a forecast</h4>
+                                <h4>Reward: 300pts</h4>
                         </li>
                     :
-                        <li className="onboarding-list-item" style={{ backgroundColor: "none" }}>
-                            <h4>Submit a forecast</h4>
-                            <h4>Reward: 300pts</h4>
+                        <li 
+                            className="onboarding-list-item" 
+                            style={{ backgroundColor: "none" }}
+                            onClick={() => { props.setShowModal(true); props.setModalContent("Once you've joined a market, the dropdown menu at the top of the My Forecasts page will contain problems you are able to tackle. Submit a forecast to any problem to complete this onboarding task!")}}>
+                                <h4>Submit a forecast</h4>
+                                <h4>Reward: 300pts</h4>
                         </li>
 
                     }
                     {onboardingBooleans.completeALearnQuiz ?
-                        <li className="onboarding-list-item" style={{ backgroundColor: "lightgreen" }}>
-                            <h4>Complete a Learn Quiz</h4>
-                            <h4>Reward: 250pts</h4>
+                        <li 
+                            className="onboarding-list-item" 
+                            style={{ backgroundColor: "lightgreen" }}
+                            onClick={() => { props.setShowModal(true); props.setModalContent("All of the topics found on the Learn page (apart from Fantasy Forecast Points) contain a quiz at the end of their information page!")}}>
+                                <h4>Complete a Learn Quiz</h4>
+                                <h4>Reward: 250pts</h4>
                         </li>
                     :
-                        <li className="onboarding-list-item" style={{ backgroundColor: "none" }}>
-                            <h4>Complete a Learn Quiz</h4>
-                            <h4>Reward: 250pts</h4>
+                        <li 
+                            className="onboarding-list-item" 
+                            style={{ backgroundColor: "none" }}
+                            onClick={() => { props.setShowModal(true); props.setModalContent("All of the topics found on the Learn page (apart from Fantasy Forecast Points) contain a quiz at the end of their information page!")}}>
+                                <h4>Complete a Learn Quiz</h4>
+                                <h4>Reward: 250pts</h4>
                         </li>
 
                     }
@@ -137,62 +167,92 @@ function Onboarding(props) {
                     </div>
                     <ul className="onboarding-list">
                         {onboardingBooleans.visitProfilePage ?
-                            <li className="onboarding-list-item" style={{ backgroundColor: "lightgreen" }}>
-                                <h4>Visit your profile page</h4>
-                                <h4>Reward: 100pts</h4>
+                            <li 
+                                className="onboarding-list-item" 
+                                style={{ backgroundColor: "lightgreen" }}
+                                onClick={() => { props.setShowModal(true); props.setModalContent("This can be done by clicking on your username in the top right of the screen!")}}>
+                                    <h4>Visit your profile page</h4>
+                                    <h4>Reward: 100pts</h4>
                             </li>
                         :
-                            <li className="onboarding-list-item" style={{ backgroundColor: "none" }}>
-                                <h4>Visit your profile page</h4>
-                                <h4>Reward: 100pts</h4>
+                            <li 
+                                className="onboarding-list-item" 
+                                style={{ backgroundColor: "none" }}
+                                onClick={() => { props.setShowModal(true); props.setModalContent("This can be done by clicking on your username in the top right of the screen!")}}>
+                                    <h4>Visit your profile page</h4>
+                                    <h4>Reward: 100pts</h4>
                             </li>
 
                         }
                         {onboardingBooleans.joinAMarket ?
-                            <li className="onboarding-list-item" style={{ backgroundColor: "lightgreen" }}>
-                                <h4>Join a market</h4>
-                                <h4>Reward: 150pts</h4>
+                            <li 
+                                className="onboarding-list-item" 
+                                style={{ backgroundColor: "lightgreen" }}
+                                onClick={() => { props.setShowModal(true); props.setModalContent("This can be done by selecting Leaderboards from the top of the screen, then pressing the Join A Market button!")}}>
+                                    <h4>Join a market</h4>
+                                    <h4>Reward: 150pts</h4>
                             </li>
                         :
-                            <li className="onboarding-list-item" style={{ backgroundColor: "none" }}>
-                                <h4>Join a market</h4>
-                                <h4>Reward: 150pts</h4>
+                            <li 
+                                className="onboarding-list-item" 
+                                style={{ backgroundColor: "none" }}
+                                onClick={() => { props.setShowModal(true); props.setModalContent("This can be done by selecting Leaderboards from the top of the screen, then pressing the Join A Market button!")}}>
+                                    <h4>Join a market</h4>
+                                    <h4>Reward: 150pts</h4>
                             </li>
 
                         }
                         {onboardingBooleans.submitAPost ?
-                            <li className="onboarding-list-item" style={{ backgroundColor: "lightgreen" }}>
-                                <h4>Submit a post</h4>
-                                <h4>Reward: 200pts</h4>
+                            <li 
+                                className="onboarding-list-item" 
+                                style={{ backgroundColor: "lightgreen" }}
+                                onClick={() => { props.setShowModal(true); props.setModalContent("This can be done by pressing the Post to your Feed button at the top of the News Feed!")}}>
+                                    <h4>Submit a post</h4>
+                                    <h4>Reward: 200pts</h4>
                             </li>
                         :
-                            <li className="onboarding-list-item" style={{ backgroundColor: "none" }}>
-                                <h4>Submit a post</h4>
-                                <h4>Reward: 200pts</h4>
+                            <li 
+                                className="onboarding-list-item" 
+                                style={{ backgroundColor: "none" }}
+                                onClick={() => { props.setShowModal(true); props.setModalContent("This can be done by pressing the Post to your Feed button at the top of the News Feed!")}}>
+                                    <h4>Submit a post</h4>
+                                    <h4>Reward: 200pts</h4>
                             </li>
 
                         }
                         {onboardingBooleans.submitAForecast ?
-                            <li className="onboarding-list-item" style={{ backgroundColor: "lightgreen" }}>
-                                <h4>Submit a forecast</h4>
-                                <h4>Reward: 300pts</h4>
+                            <li 
+                                className="onboarding-list-item" 
+                                style={{ backgroundColor: "lightgreen" }}
+                                onClick={() => { props.setShowModal(true); props.setModalContent("Once you've joined a market, the dropdown menu at the top of the My Forecasts page will contain problems you are able to tackle. Submit a forecast to any problem to complete this onboarding task!")}}>
+                                    <h4>Submit a forecast</h4>
+                                    <h4>Reward: 300pts</h4>
                             </li>
                         :
-                            <li className="onboarding-list-item" style={{ backgroundColor: "none" }}>
-                                <h4>Submit a forecast</h4>
-                                <h4>Reward: 300pts</h4>
+                            <li 
+                                className="onboarding-list-item" 
+                                style={{ backgroundColor: "none" }}
+                                onClick={() => { props.setShowModal(true); props.setModalContent("Once you've joined a market, the dropdown menu at the top of the My Forecasts page will contain problems you are able to tackle. Submit a forecast to any problem to complete this onboarding task!")}}>
+                                    <h4>Submit a forecast</h4>
+                                    <h4>Reward: 300pts</h4>
                             </li>
 
                         }
                         {onboardingBooleans.completeALearnQuiz ?
-                            <li className="onboarding-list-item" style={{ backgroundColor: "lightgreen" }}>
-                                <h4>Complete a Learn Quiz</h4>
-                                <h4>Reward: 250pts</h4>
+                            <li 
+                                className="onboarding-list-item" 
+                                style={{ backgroundColor: "lightgreen" }}
+                                onClick={() => { props.setShowModal(true); props.setModalContent("All of the topics found on the Learn page (apart from Fantasy Forecast Points) contain a quiz at the end of their information page!")}}>
+                                    <h4>Complete a Learn Quiz</h4>
+                                    <h4>Reward: 250pts</h4>
                             </li>
                         :
-                            <li className="onboarding-list-item" style={{ backgroundColor: "none" }}>
-                                <h4>Complete a Learn Quiz</h4>
-                                <h4>Reward: 250pts</h4>
+                            <li 
+                                className="onboarding-list-item" 
+                                style={{ backgroundColor: "none" }}
+                                onClick={() => { props.setShowModal(true); props.setModalContent("All of the topics found on the Learn page (apart from Fantasy Forecast Points) contain a quiz at the end of their information page!")}}>
+                                    <h4>Complete a Learn Quiz</h4>
+                                    <h4>Reward: 250pts</h4>
                             </li>
 
                         }

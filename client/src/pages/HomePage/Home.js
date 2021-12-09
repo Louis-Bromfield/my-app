@@ -89,7 +89,9 @@ function Home(props) {
                                 username={props.username}
                                 handleClick={() => onboardingButtonClick(showOnboarding, buttonText)} 
                                 buttonText={buttonText} 
-                                isHidden={showOnboarding} 
+                                isHidden={showOnboarding}
+                                setShowModal={setShowModal}
+                                setModalContent={setModalContent}
                             />
                         </div>
                         <HomeButtonSmall 
