@@ -391,6 +391,7 @@ function ForecastSubmission(props) {
                                     All currently open forecasts are available here...
                             </option>
                             {forecastProblemsForDropdown.map((item, index) => {
+                                if (item[0] === "Fantasy Forecast All-Time") return null;
                                 if (typeof(item[0]) === 'string') {
                                     return (
                                         <optgroup label={item[0]} key={index}>
