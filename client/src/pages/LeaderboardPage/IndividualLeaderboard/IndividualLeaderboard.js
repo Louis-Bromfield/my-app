@@ -197,6 +197,10 @@ console.log("Individual Leaderboard UE");
     const leaveMarket = async (leaderboard, username) => {
         try {
             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/removeUser/${leaderboard}/${username}`);
+            let markets = localStorage.getItem("markets").split(",");
+            let index = markets.findIndex(market => market === leaderboard);
+            markets.splice(index, 1);
+            localStorage.setItem("markets", markets);
             history.push("/leaderboard-select");
         } catch (error) {
             console.error("Error in IndividualLeaderboard > leaveMarket");

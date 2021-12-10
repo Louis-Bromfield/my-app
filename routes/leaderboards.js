@@ -166,7 +166,20 @@ router.patch("/removeUser/:leaderboardName/:username", async (req, res) => {
                 },
                 { new: true }
             );
-            res.json(newLeaderboardDataPushedToDB);
+            // Also need to update userDocument markets array
+            const userDocument = await Users.findOne({ username: req.params.username });
+            const marketIndex = userDocument.markets.findIndex(market => market === req.params.leaderboardName);
+            userDocument.markets.splice(marketIndex, 1);
+            const newMarketDataPushedToDB = await Users.findByIdAndUpdate(userDocument._id,
+                {
+                    markets: userDocument.markets,
+                },
+                { new: true }
+            );
+            res.json({ 
+                newLeaderboardDataPushedToDB: newLeaderboardDataPushedToDB, 
+                newMarketDataPushedToDB: newMarketDataPushedToDB 
+            });
         };
     } catch (error) {
         console.error("Error in Leaderboards > patch > remove user from leaderboard");
