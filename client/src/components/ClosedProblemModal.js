@@ -24,32 +24,45 @@ const ClosedProblemModal = (props) => {
         await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, { numberOfClosedForecasts: 0});
     };
 
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        <img src={FFLogo} alt="" />
-        <h3>We've closed some forecast problems!</h3>
-        <br />
-        <div className={layoutClassName}>
-            {brierArr.map((item, index) => {
-                return (
-                    <div className="closed-forecast-container">
-                        <h3>{item.problemName}</h3>
-                        <hr />
-                        <h4>{item.marketName}</h4>
-                        <br />
-                        <span className="one-line-span"><h3>You Scored:&nbsp;&nbsp;</h3><h3 style={{ color: "orange"}}>{item.brierScore}</h3><h3>&nbsp;/ 110</h3></span>
-                        <span className="one-line-span"><h3>You Earned&nbsp;</h3><h3 style={{ color: "orange"}}>{item.brierScore.toFixed(2).slice(0, -3)}</h3><h3>&nbsp;Market Points and FFPoints!</h3></span>
-                    </div>
-                );
-            })}
+    return (
+        <div className={showHideClassName}>
+          <section className="modal-main">
+            <img src={FFLogo} alt="" />
+            <h3>We've closed some forecast problems! Go to My Forecasts and select the problem for a breakdown of your performance!</h3>
+            <button type="button" onClick={() => closeModal(props.userObj.username)} className="close-modal-btn">
+                Close
+            </button>
+            <br />
+            <div className={layoutClassName}>
+                {brierArr.map((item, index) => {
+                    if (item.captainedStatus === true) {
+                        return (
+                            <div className="closed-forecast-container-boosted" key={index}>
+                                <h3 style={{ color: "gold" }}>Boosted: {item.problemName}</h3>
+                                <hr />
+                                <h4>{item.marketName}</h4>
+                                <br />
+                                <span className="one-line-span"><h3>You Scored:&nbsp;&nbsp;</h3><h3 style={{ color: "orange"}}>{item.brierScore}</h3><h3>&nbsp;/ 110</h3></span>
+                                <span className="one-line-span"><h3>You Earned&nbsp;</h3><h3 style={{ color: "orange"}}>{item.brierScore.toFixed(2).slice(0, -3)}</h3><h3>&nbsp;Market Points and FFPoints!</h3></span>
+                            </div>
+                        );
+                    } else if (item.captainedStatus === false) {
+                        return (
+                            <div className="closed-forecast-container" key={index}>
+                                <h3>{item.problemName}</h3>
+                                <hr />
+                                <h4>{item.marketName}</h4>
+                                <br />
+                                <span className="one-line-span"><h3>You Scored:&nbsp;&nbsp;</h3><h3 style={{ color: "orange"}}>{item.brierScore}</h3><h3>&nbsp;/ 110</h3></span>
+                                <span className="one-line-span"><h3>You Earned&nbsp;</h3><h3 style={{ color: "orange"}}>{item.brierScore.toFixed(2).slice(0, -3)}</h3><h3>&nbsp;Market Points and FFPoints!</h3></span>
+                            </div>
+                        );
+                    } else return null;
+                })}
+            </div>
+          </section>
         </div>
-        <button type="button" onClick={() => closeModal(props.userObj.username)} className="close-modal-btn">
-            Close
-        </button>
-      </section>
-    </div>
-  );
+    );
 };
 
 export default ClosedProblemModal;

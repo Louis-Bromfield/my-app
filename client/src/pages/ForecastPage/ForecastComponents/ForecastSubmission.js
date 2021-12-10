@@ -11,8 +11,6 @@ function ForecastSubmission(props) {
     const [forecastProblemsForDropdown, setForecastProblemsForDropdown] = useState([]);
     const [selectedForecast, setSelectedForecast] = useState("No forecast problem selected");
     const [hasAForecastBeenSelected, setHasAForecastBeenSelected] = useState(false);
-    const [potentialCorrectBrier, setPotentialCorrectBrier] = useState(0.00);
-    const [potentialIncorrectBrier, setPotentialIncorrectBrier] = useState(0.00);
     const [dropdownHighlight, setDropdownHighlight] = useState(false);
     const [isInputDisabled, setIsInputDisabled] = useState(true);
     const [selectedForecastMarket, setSelectedForecastMarket] = useState("N/A");
@@ -33,6 +31,8 @@ function ForecastSubmission(props) {
     const [closedForecastScore, setClosedForecastScore] = useState();
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
+    const [modalContent2, setModalContent2] = useState("");
+    const [userCaptainedProblem, setUserCaptainedProblem] = useState();
 
     let alertStyle;
     if (dropdownHighlight === true) {
@@ -130,6 +130,7 @@ function ForecastSubmission(props) {
             for (let i = 0; i < forecast.submittedForecasts.length; i++) {
                 if (forecast.submittedForecasts[i].username === props.username) {
                     if (forecast.submittedForecasts[i].forecasts.length === 0) {
+console.log("Here1");
                         highest = "N/A";
                         lowest = "N/A";
                         setFinalCertainty("N/A");
@@ -202,6 +203,7 @@ function ForecastSubmission(props) {
     const pullForecastDetailsAndCheckIfAlreadyAttempted = (forecast) => {
         for (let i = 0; i < forecastProblems.length; i++) {
             if (forecastProblems[i].problemName === forecast) {
+                // console.log(forecastProblems[i]);
                 setSelectedForecastMarket(forecastProblems[i].market);
                 props.changeForecast(forecastProblems[i]);
                 if (forecastProblems[i].submittedForecasts.length === 0) {
@@ -219,6 +221,7 @@ function ForecastSubmission(props) {
                             setUserHasAttempted(true);
                             setUserPreviousAttemptCertainty((forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].certainty*100).toFixed(2));
                             setUserPreviousAttemptComments(forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].comments);
+                            setUserCaptainedProblem(forecastProblems[i].submittedForecasts[j].captainedStatus);
                             return;
                         } else {
                             setUserHasAttempted(false);
@@ -241,13 +244,9 @@ function ForecastSubmission(props) {
 
         if (certainty > 100) {
             setButtonDisabled(true);
-            setPotentialCorrectBrier("N/A");
-            setPotentialIncorrectBrier("N/A");
             setForecastResponseMessage("Please enter a certainty BELOW or equal to 100");
             return;
         } else if (certainty < 0) {
-            setPotentialCorrectBrier("N/A");
-            setPotentialIncorrectBrier("N/A");
             setForecastResponseMessage("Please enter a certainty ABOVE or equal to 100");
             setButtonDisabled(true);
             return;
@@ -260,19 +259,6 @@ function ForecastSubmission(props) {
             setForecastResponseMessage("Please input a certainty between 0 and 100");
         };
         let currentPrediction = certainty/100;
-
-        //Correct Forecast
-        let correctBrier = Math.pow((1-currentPrediction), 2);
-        let incorrectBrier = Math.pow((0-(1-currentPrediction)), 2);
-        let brierScore = (correctBrier + incorrectBrier).toFixed(2);
-        setPotentialCorrectBrier(brierScore);
-
-        //Incorrect Forecast
-        let correctBrier2 = Math.pow(1-(1-currentPrediction), 2);
-        let incorrectBrier2 = Math.pow((0-currentPrediction), 2);
-        let incorrectBrierScore = (correctBrier2 + incorrectBrier2).toFixed(2);
-        setPotentialIncorrectBrier(incorrectBrierScore);
-
         setCertainty(currentPrediction);
     };
 
@@ -327,7 +313,7 @@ function ForecastSubmission(props) {
                 certainty: certainty,
                 comments: comments,
                 date: new Date().toString(),
-                brierScore: -1
+                captainedStatus: false
             });
             setForecastResponseMessage("Forecast successfully submitted!")
             updateOnboarding(username);
@@ -369,14 +355,27 @@ function ForecastSubmission(props) {
         };
     };
 
+    const handleCaptainChange = async (captainedStatus, username) => {
+        try {
+            let newStatus = !captainedStatus;
+            setUserCaptainedProblem(!userCaptainedProblem);
+            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/captainAProblem/${selectedForecast}/${username}/${newStatus}`);
+        } catch (error) {
+            console.error("ForecastSubmission > handleCaptainChange");
+            console.error(error);
+        }
+    };
+
     return (
         <div className="forecast-submission-and-selection-div">
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
+                <br />
+                <p>{modalContent2}</p>
             </Modal>
             <div className="forecast-top-bar">
                 <div className="forecast-selection-div">
-                    <label htmlFor="forecast-selection"><h2 className="header-label">Select a Forecast</h2></label>
+                    <label htmlFor="forecast-selection"><h2 className="header-label">Select a Problem</h2></label>
                     <select 
                         className="forecast-selection-select"
                         name="forecast-selection" 
@@ -438,7 +437,7 @@ function ForecastSubmission(props) {
                         <FaInfoCircle 
                             color={"orange"} 
                             className="modal-i-btn"
-                            onClick={() => { setShowModal(true); setModalContent(`This is where you will submit all of your predictions. Each problem has a deadline, found below the button that opened this box, and you are able to submit as many predictions as you want before said deadline. EVERY forecast you make contributes to your final score for the problem, so getting it right earlier will be more rewarding! We also ask that you submit an explanation of your 0-100% forecast, this will help remind you why you forecasted what you did in case you come back to update it. The Articles tab below returns articles based on a web scrape of the problem, so they may vary in terms of usefulness. The Forecast Stats tab will show you what other forecasters are saying for this problem.`)}}
+                            onClick={() => { setShowModal(true); setModalContent(`This is where you will submit all of your predictions. Each problem has a deadline, found below the button that opened this box, and you are able to submit as many predictions as you want before said deadline. EVERY forecast you make contributes to your final score for the problem, so getting it right earlier will be more rewarding! We also ask that you submit an explanation of your 0-100% forecast, this will help remind you why you forecasted what you did in case you come back to update it.`); setModalContent2(`The Articles tab below returns articles based on a web scrape of the problem, so they may vary in terms of usefulness. The Forecast Stats tab will show you what other forecasters are saying for this problem.`)}}
                         />
                     </h2>
                     <h4 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 38)}</h4>
@@ -533,6 +532,18 @@ function ForecastSubmission(props) {
                                 </button>
                             }
                         </div>
+                        {userHasAttempted === true && 
+                            <div className="captain-a-problem-div">
+                                <h3>
+                                    <FaInfoCircle 
+                                    color={"orange"} 
+                                    className="modal-i-btn"
+                                    onClick={() => { setShowModal(true); setModalContent(`When we calculate your score, every certainty you submit is converted into a score from 0-100 and then multiplied by the amount of time it was your newest prediction. If this 'Boost Your Prediction' button is selected when the problem closes, each of those scores will be modified. You do not have to tick this box every time you make a new prediction, once checked this will stay checked until you uncheck it or the problem reaches the deadline.`); setModalContent2(`If the problem DOES happen, every score you get from a certainty ABOVE 50% will be doubled, and every score from a certainty BELOW 50% will be halved. If the problem DOES NOT happen, every score you get from a certainty ABOVE 50% will be halved, and every score from a certainty BELOW 50% will be doubled. You can use this boost option on every problem.`)}}/>
+                                    Boost My Prediction&nbsp;
+                                </h3>
+                                <input type="checkbox" defaultChecked={userCaptainedProblem} onChange={() => handleCaptainChange(userCaptainedProblem, props.username)}/>
+                            </div>
+                        }
                         {(forecastResponseMessage === "Forecast successfully updated!" || forecastResponseMessage === "Forecast successfully submitted!") && 
                             <h3 className="forecast-message" style={{ color: "green" }}>{forecastResponseMessage}</h3>
                         }
@@ -552,40 +563,43 @@ function ForecastSubmission(props) {
                             </div>
                         </div>
                         <div className="scores">
-                            <h4 className="brier-info">Brier Scores range from 0-110, and are made up of the accuracy of your prediction and when you submitted it, 
+                            <h4 className="brier-info">FF Scores range from 0-110, and are made up of the accuracy of your prediction and when you submitted it, 
                             meaning more accuracy earlier is more rewarding! For more info, visit the Brier Scores tab on the Learn page!</h4>
                         </div>
                     </div>
                 </div>
             }
-            {(forecastClosed === true && hasAForecastBeenSelected === true) && 
-                <div className="forecast-submission-div">
-                    {forecastClosed === true ? <h2 className="selected-forecast" style={{ backgroundColor: "darkred" }}>{selectedForecast}</h2> : <h2 className="selected-forecast">{selectedForecast}</h2>}
-                    <h4 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 41)}</h4>
-                    <div className="forecast-review-div">
-                        <div className="forecast-review-div-left">
-                            <h2 style={{ color: "#404d72" }}><u>Your Stats</u></h2>
-                            <h3># of Forecasts Submitted: {numberOfForecastsSubmitted}</h3>
-                            <h3>Highest Certainty: {highestCertainty}</h3>
-                            <h3>Lowest Certainty: {lowestCertainty}</h3>
-                            <h3 style={{ color: "#404d72" }}>Final Certainty: {finalCertainty}</h3>
-                        </div>
-                        <div className="forecast-review-div-right">
-                            <h1>{closedForecastScore}</h1>
-                            <h2 style={{ color: "#404d72" }}>Your Brier Score</h2>
-                            <h3>(110 = Best, 0 = Worst)</h3>
-                            <br />
-                            <h1>{closedForecastScore}</h1>
-                            <h2 style={{ color: "#404d72" }}>Market / FantasyForecast Points Earned</h2>
+            <div className="forecast-submission-div">
+                {(forecastClosed === true && hasAForecastBeenSelected === true) && 
+                    <div className="">
+                        {forecastClosed === true ? <h2 className="selected-forecast" style={{ backgroundColor: "darkred" }}>{selectedForecast}</h2> : <h2 className="selected-forecast">{selectedForecast}</h2>}
+                        <h4 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 41)}</h4>
+                        <div className="forecast-review-div">
+                            <div className="forecast-review-div-left">
+                                <h2 style={{ color: "#404d72" }}><u>Your Stats</u></h2>
+                                <h3># of Forecasts Submitted: {numberOfForecastsSubmitted}</h3>
+                                <h3>Highest Certainty: {highestCertainty}</h3>
+                                <h3>Lowest Certainty: {lowestCertainty}</h3>
+                                <h3 style={{ color: "#404d72" }}>Final Certainty: {finalCertainty}</h3>
+                            </div>
+                            <div className="forecast-review-div-right">
+                                <h1>{closedForecastScore}</h1>
+                                <h2 style={{ color: "#404d72" }}>Your Brier Score</h2>
+                                <h3>(110 = Best, 0 = Worst)</h3>
+                                <br />
+                                <h1>{closedForecastScore}</h1>
+                                <h2 style={{ color: "#404d72" }}>Market / FantasyForecast Points Earned</h2>
+                            </div>
                         </div>
                     </div>
-                    <ForecastBreakdown 
-                        username={props.username} 
-                        selectedForecast={selectedForecast}
-                        userHasAttempted={userHasAttempted}
-                    />
-                </div>
-            }
+                }
+                <ForecastBreakdown 
+                    username={props.username} 
+                    selectedForecast={selectedForecast}
+                    userHasAttempted={userHasAttempted}
+                    forecastClosed={forecastClosed}
+                />
+            </div>
             {(forecastClosed === true && hasAForecastBeenSelected === false) && 
                 <div className="forecast-submission-div">
                     <h2 className="selected-forecast">{selectedForecast}</h2>

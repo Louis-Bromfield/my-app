@@ -45,3 +45,16 @@
     flex-direction: column;
     margin: 1%;
 }
+
+.hypothetical-results-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    row-gap: 1vh;
+    column-gap: 1vh;
+}
+
+.hypothetical-results-subcontainer {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid lightgray;
+}

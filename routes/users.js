@@ -294,7 +294,8 @@ router.patch("/calculateBrier/:problemName/:happenedStatus/:marketName/:closeEar
             const toPush = {
                 brierScore: calculatedBriers[i].finalScore,
                 problemName: req.params.problemName,
-                marketName: req.params.marketName
+                marketName: req.params.marketName,
+                captainedStatus: calculatedBriers[i].captainedStatus
             };
             const user = await Users.findOne({ username: calculatedBriers[i].username });
             await Users.findOneAndUpdate({ username: calculatedBriers[i].username }, {
@@ -350,6 +351,7 @@ const calculateBriers = (forecastObj, happened) => {
             // as someone may have submitted a forecast before I had a chance to close it
 
             // Forecast WAS made before close date
+            console.log(`${new Date(forecastObj.submittedForecasts[i].forecasts[j].date)} < ${closeDate}`);
             if (new Date(forecastObj.submittedForecasts[i].forecasts[j].date) < closeDate) {
                 let originalBrier;
                 if (happened === true) {
@@ -366,14 +368,59 @@ const calculateBriers = (forecastObj, happened) => {
                     let forecastTimeFrame = (closeDate - startDate)/1000;
                     let duration = (nextForecastTimeDate - thisForecastTimeDate)/1000;
                     let percentageOfTimeAtThisScore = ((duration/forecastTimeFrame)*100);
-                    newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
+
+                    // Boosting
+                    if (forecastObj.submittedForecasts[i].captainedStatus === true) {
+                        if (happened === true) {
+                            if (forecastObj.submittedForecasts[i].forecasts[j].certainty > 0.5) {
+                                newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))*2);
+                            } else if (forecastObj.submittedForecasts[i].forecasts[j].certainty < 0.5) {
+                                newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))/2);
+                            } else {
+                                newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
+                            }
+                        } else if (happened === false) {
+                            if (forecastObj.submittedForecasts[i].forecasts[j].certainty > 0.5) {
+                                newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))/2);
+                            } else if (forecastObj.submittedForecasts[i].forecasts[j].certainty < 0.5) {
+                                newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))*2);
+                            } else {
+                                newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
+                            }
+                        }
+                    } else if (forecastObj.submittedForecasts[i].captainedStatus === false) {
+                        newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
+                    }
                     sumOfNewWeightedBriers = sumOfNewWeightedBriers + newBrierWeightedByDuration;
                 }
                 else if (j === forecastObj.submittedForecasts[i].forecasts.length-1) {
                     let forecastTimeFrame = (closeDate - startDate)/1000;
                     let duration = (closeDate - thisForecastTimeDate)/1000;
                     let percentageOfTimeAtThisScore = ((duration/forecastTimeFrame)*100);
-                    newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
+
+                    // Boosting
+                    if (forecastObj.submittedForecasts[i].captainedStatus === true) {
+                        if (happened === true) {
+                            if (forecastObj.submittedForecasts[i].forecasts[j].certainty > 0.5) {
+                                newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))*2);
+                            } else if (forecastObj.submittedForecasts[i].forecasts[j].certainty < 0.5) {
+                                newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))/2);
+                            } else {
+                                newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
+                            }
+                        } else if (happened === false) {
+                            if (forecastObj.submittedForecasts[i].forecasts[j].certainty > 0.5) {
+                                newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))/2);
+                            } else if (forecastObj.submittedForecasts[i].forecasts[j].certainty < 0.5) {
+                                newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))*2);
+                            } else {
+                                newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
+                            }
+                        }
+                    } else if (forecastObj.submittedForecasts[i].captainedStatus === false) {
+                        newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
+                    }
+
                     sumOfNewWeightedBriers = sumOfNewWeightedBriers + newBrierWeightedByDuration;
                     formulaComponents[i].finalBrierSum = sumOfNewWeightedBriers;
                 };
@@ -387,6 +434,7 @@ const calculateBriers = (forecastObj, happened) => {
         };
         formulaComponents[i].brierSumPlusTScore = formulaComponents[i].finalBrierSum + formulaComponents[i].tScore;
         arrToReturn[i].finalScore = Number((formulaComponents[i].finalBrierSum + formulaComponents[i].tScore).toFixed(2));
+        arrToReturn[i].captainedStatus = forecastObj.submittedForecasts[i].captainedStatus;
     };
     return arrToReturn;
 };

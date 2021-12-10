@@ -27,84 +27,207 @@ router.get("/:problemName", async (req, res) => {
 });
 
 // Get a specific user's forecast object for a given problem
-router.get("/:problemName/:username", async (req, res) => {
+router.get("/:problemName/:closedStatus/:username", async (req, res) => {
     try {
-        const forecastObj = await Forecasts.find({ problemName: req.params.problemName });
-        const userForecastData = forecastObj[0].submittedForecasts.find(el => el.username === req.params.username);
-        const startDate = new Date(forecastObj[0].startDate);
-        const closeDate = new Date(forecastObj[0].closeDate);
+        if (req.params.closedStatus === "true") {
+            const forecastObj = await Forecasts.find({ problemName: req.params.problemName });
+            const userForecastData = forecastObj[0].submittedForecasts.find(el => el.username === req.params.username);
+            const startDate = new Date(forecastObj[0].startDate);
+            const closeDate = new Date(forecastObj[0].closeDate);
 
-        const formulaComponents = [];
-        let arrToReturn = [];
+            const formulaComponents = [];
+            let arrToReturn = [];
 
-        formulaComponents[0] = [];
-        formulaComponents[0].username = userForecastData.username;
-        arrToReturn[0] = [];
-        arrToReturn[0].username = userForecastData.username;
+            formulaComponents[0] = [];
+            formulaComponents[0].username = userForecastData.username;
+            arrToReturn[0] = [];
+            arrToReturn[0].username = userForecastData.username;
 
-        // tScore
-        let tScore;
-        if (new Date(userForecastData.forecasts[0].date) < closeDate) {
-            let tValue = (closeDate - new Date(userForecastData.forecasts[0].date))/1000;
-            let timeFrame = (closeDate - startDate)/1000;
-            tScore = (tValue/timeFrame)*10;
-        } else {
-            tScore = 0;
-        };
-        formulaComponents[0].tScore = tScore;
+            // tScore
+            let tScore;
+            if (new Date(userForecastData.forecasts[0].date) < closeDate) {
+                let tValue = (closeDate - new Date(userForecastData.forecasts[0].date))/1000;
+                let timeFrame = (closeDate - startDate)/1000;
+                tScore = (tValue/timeFrame)*10;
+            } else {
+                tScore = 0;
+            };
+            formulaComponents[0].tScore = tScore;
 
-        let sumOfNewWeightedBriers = 0;
-        let fullArrayToReturn = [];
+            let sumOfNewWeightedBriers = 0;
+            let fullArrayToReturn = [];
 
-        for (let i = 0; i < userForecastData.forecasts.length; i++) {
-            fullArrayToReturn[i+1] = {certainty: "", date: "", comments: "", newBrier: 0, duration: "", percentageOfTimeAtThisScore: ""};
+            for (let i = 0; i < userForecastData.forecasts.length; i++) {
+                fullArrayToReturn[i+1] = {certainty: "", date: "", comments: "", newBrier: 0, duration: "", percentageOfTimeAtThisScore: ""};
 
-            // Forecast WAS made before close date
-            if (new Date(userForecastData.forecasts[i].date) < closeDate) {
-                let originalBrier;
-                if (forecastObj[0].happened === true) {
-                    originalBrier = (((1 - userForecastData.forecasts[i].certainty) * (1 - userForecastData.forecasts[i].certainty)) + ((0 - (1 - userForecastData.forecasts[i].certainty)) * (0 - (1 -userForecastData.forecasts[i].certainty))));
-                } else if (forecastObj[0].happened === false) {
-                    originalBrier = (((0 - userForecastData.forecasts[i].certainty) * (0 - userForecastData.forecasts[i].certainty)) + ((1 - (1 - userForecastData.forecasts[i].certainty)) * (1 - (1 -userForecastData.forecasts[i].certainty))));
-                };
-                let newBrier = (2 - originalBrier) * 50;
-                fullArrayToReturn[i+1].certainty = userForecastData.forecasts[i].certainty;
-                fullArrayToReturn[i+1].date = userForecastData.forecasts[i].date;
-                fullArrayToReturn[i+1].comments = userForecastData.forecasts[i].comments;
-                fullArrayToReturn[i+1].newBrier = newBrier;
+                // Forecast WAS made before close date
+                if (new Date(userForecastData.forecasts[i].date) < closeDate) {
+                    let originalBrier;
+                    if (forecastObj[0].happened === true) {
+                        originalBrier = (((1 - userForecastData.forecasts[i].certainty) * (1 - userForecastData.forecasts[i].certainty)) + ((0 - (1 - userForecastData.forecasts[i].certainty)) * (0 - (1 -userForecastData.forecasts[i].certainty))));
+                    } else if (forecastObj[0].happened === false) {
+                        originalBrier = (((0 - userForecastData.forecasts[i].certainty) * (0 - userForecastData.forecasts[i].certainty)) + ((1 - (1 - userForecastData.forecasts[i].certainty)) * (1 - (1 -userForecastData.forecasts[i].certainty))));
+                    };
+                    let newBrier = (2 - originalBrier) * 50;
+                    fullArrayToReturn[i+1].certainty = userForecastData.forecasts[i].certainty;
+                    fullArrayToReturn[i+1].date = userForecastData.forecasts[i].date;
+                    fullArrayToReturn[i+1].comments = userForecastData.forecasts[i].comments;
+                    fullArrayToReturn[i+1].newBrier = newBrier;
 
-                let newBrierWeightedByDuration;
-                let thisForecastTimeDate = new Date(userForecastData.forecasts[i].date);
-                if (i < userForecastData.forecasts.length-1) {
-                    let nextForecastTimeDate = new Date(userForecastData.forecasts[i+1].date);
-                    let forecastTimeFrame = (closeDate - startDate)/1000;
-                    let duration = (nextForecastTimeDate - thisForecastTimeDate)/1000;
-                    fullArrayToReturn[i+1].duration = duration;
-                    let percentageOfTimeAtThisScore = ((duration/forecastTimeFrame)*100);
-                    fullArrayToReturn[i+1].percentageOfTimeAtThisScore = percentageOfTimeAtThisScore;
-                    newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
-                    sumOfNewWeightedBriers = sumOfNewWeightedBriers + newBrierWeightedByDuration;
-                }
-                else if (i === userForecastData.forecasts.length-1) {
-                    let forecastTimeFrame = (closeDate - startDate)/1000;
-                    let duration = (closeDate - thisForecastTimeDate)/1000;
-                    fullArrayToReturn[i+1].duration = duration;
-                    let percentageOfTimeAtThisScore = ((duration/forecastTimeFrame)*100);
-                    fullArrayToReturn[i+1].percentageOfTimeAtThisScore = percentageOfTimeAtThisScore;
-                    newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
-                    sumOfNewWeightedBriers = sumOfNewWeightedBriers + newBrierWeightedByDuration;
-                    formulaComponents[0].finalBrierSum = sumOfNewWeightedBriers;
-                };
-            // Forecast was NOT made before close date
-            } else if (new Date(userForecastData.forecasts[i].date) > closeDate) {
-                sumOfNewWeightedBriers = sumOfNewWeightedBriers + 0;
-                if (i === userForecastData.forecasts.length-1) {
-                    formulaComponents[0].finalBrierSum = sumOfNewWeightedBriers;
+                    let newBrierWeightedByDuration;
+                    let thisForecastTimeDate = new Date(userForecastData.forecasts[i].date);
+                    if (i < userForecastData.forecasts.length-1) {
+                        let nextForecastTimeDate = new Date(userForecastData.forecasts[i+1].date);
+                        let forecastTimeFrame = (closeDate - startDate)/1000;
+                        let duration = (nextForecastTimeDate - thisForecastTimeDate)/1000;
+                        fullArrayToReturn[i+1].duration = duration;
+                        let percentageOfTimeAtThisScore = ((duration/forecastTimeFrame)*100);
+                        fullArrayToReturn[i+1].percentageOfTimeAtThisScore = percentageOfTimeAtThisScore;
+                        newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
+                        sumOfNewWeightedBriers = sumOfNewWeightedBriers + newBrierWeightedByDuration;
+                    }
+                    else if (i === userForecastData.forecasts.length-1) {
+                        let forecastTimeFrame = (closeDate - startDate)/1000;
+                        let duration = (closeDate - thisForecastTimeDate)/1000;
+                        fullArrayToReturn[i+1].duration = duration;
+                        let percentageOfTimeAtThisScore = ((duration/forecastTimeFrame)*100);
+                        fullArrayToReturn[i+1].percentageOfTimeAtThisScore = percentageOfTimeAtThisScore;
+                        newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
+                        sumOfNewWeightedBriers = sumOfNewWeightedBriers + newBrierWeightedByDuration;
+                        formulaComponents[0].finalBrierSum = sumOfNewWeightedBriers;
+                    };
+                // Forecast was NOT made before close date
+                } else if (new Date(userForecastData.forecasts[i].date) > closeDate) {
+                    sumOfNewWeightedBriers = sumOfNewWeightedBriers + 0;
+                    if (i === userForecastData.forecasts.length-1) {
+                        formulaComponents[0].finalBrierSum = sumOfNewWeightedBriers;
+                    };
                 };
             };
+            fullArrayToReturn[0] = {startDate: forecastObj[0].startDate, closeDate: forecastObj[0].closeDate};
+            res.send(fullArrayToReturn);
+        } else if (req.params.closedStatus === "false") {
+            // Need to send back hypotheticals
+            const forecastObj = await Forecasts.find({ problemName: req.params.problemName });
+            const userForecastData = forecastObj[0].submittedForecasts.find(el => el.username === req.params.username);
+            const startDate = new Date(forecastObj[0].startDate);
+            const closeDate = new Date(forecastObj[0].closeDate);
+
+            const formulaComponents = [];
+            let arrToReturn = [];
+
+            formulaComponents[0] = [];
+            formulaComponents[0].username = userForecastData.username;
+            arrToReturn[0] = [];
+            arrToReturn[0].username = userForecastData.username;
+
+            // tScore
+            let tScore;
+            if (new Date(userForecastData.forecasts[0].date) < closeDate) {
+                let tValue = (closeDate - new Date(userForecastData.forecasts[0].date))/1000;
+                let timeFrame = (closeDate - startDate)/1000;
+                tScore = (tValue/timeFrame)*10;
+            } else {
+                tScore = 0;
+            };
+            formulaComponents[0].tScore = tScore;
+
+            let sumOfNewWeightedCorrectBriers = 0;
+            let sumOfNewWeightedIncorrectBriers = 0;
+            let fullArrayToReturn = [];
+
+            for (let i = 0; i < userForecastData.forecasts.length; i++) {
+                fullArrayToReturn[i+1] = {
+                    certainty: "", 
+                    date: "", 
+                    comments: "",                    
+                    newHappenedBrier: 0, 
+                    newNotHappenedBrier: 0,
+                    happenedBrierWeightedAndCaptained: 0,
+                    notHappenedBrierWeightedAndCaptained: 0,      
+                    duration: "", 
+                    percentageOfTimeAtThisScore: ""
+                };
+
+                // Forecast WAS made before close date
+                if (new Date(userForecastData.forecasts[i].date) < closeDate) {
+                    let correctBrier = (((1 - userForecastData.forecasts[i].certainty) * (1 - userForecastData.forecasts[i].certainty)) + ((0 - (1 - userForecastData.forecasts[i].certainty)) * (0 - (1 -userForecastData.forecasts[i].certainty))));
+                    let incorrectBrier = (((0 - userForecastData.forecasts[i].certainty) * (0 - userForecastData.forecasts[i].certainty)) + ((1 - (1 - userForecastData.forecasts[i].certainty)) * (1 - (1 -userForecastData.forecasts[i].certainty))));
+
+                    let newHappenedBrier = (2 - correctBrier) * 50;
+                    let newNotHappenedBrier = (2 - incorrectBrier) * 50;
+
+                    fullArrayToReturn[i+1].certainty = userForecastData.forecasts[i].certainty;
+                    fullArrayToReturn[i+1].date = userForecastData.forecasts[i].date;
+                    fullArrayToReturn[i+1].comments = userForecastData.forecasts[i].comments;
+                    fullArrayToReturn[i+1].newHappenedBrier = newHappenedBrier;
+                    fullArrayToReturn[i+1].newNotHappenedBrier = newNotHappenedBrier;
+
+                    let correctBrierWeightedByDuration, incorrectBrierWeightedByDuration;
+                    let thisForecastTimeDate = new Date(userForecastData.forecasts[i].date);
+                    if (i < userForecastData.forecasts.length-1) {
+                        let nextForecastTimeDate = new Date(userForecastData.forecasts[i+1].date);
+                        let forecastTimeFrame = (closeDate - startDate)/1000;
+                        let duration = (nextForecastTimeDate - thisForecastTimeDate)/1000;
+                        fullArrayToReturn[i+1].duration = duration;
+                        let percentageOfTimeAtThisScore = ((duration/forecastTimeFrame)*100);
+                        fullArrayToReturn[i+1].percentageOfTimeAtThisScore = percentageOfTimeAtThisScore;
+
+                        correctBrierWeightedByDuration = (newHappenedBrier * (percentageOfTimeAtThisScore/100));
+                        incorrectBrierWeightedByDuration = (newNotHappenedBrier * (percentageOfTimeAtThisScore/100));
+
+                        if (userForecastData.forecasts[i].certainty > 0.5) {
+                            fullArrayToReturn[i+1].happenedBrierWeightedAndCaptained = ((newHappenedBrier * (percentageOfTimeAtThisScore/100))*2);
+                            fullArrayToReturn[i+1].notHappenedBrierWeightedAndCaptained = ((newNotHappenedBrier * (percentageOfTimeAtThisScore/100))/2);
+                        } else if (userForecastData.forecasts[i].certainty < 0.5) {
+                            fullArrayToReturn[i+1].happenedBrierWeightedAndCaptained = ((newHappenedBrier * (percentageOfTimeAtThisScore/100))/2);
+                            fullArrayToReturn[i+1].notHappenedBrierWeightedAndCaptained = ((newNotHappenedBrier * (percentageOfTimeAtThisScore/100))*2);
+                        } else {
+                            fullArrayToReturn[i+1].happenedBrierWeightedAndCaptained = (newHappenedBrier * (percentageOfTimeAtThisScore/100));
+                            fullArrayToReturn[i+1].notHappenedBrierWeightedAndCaptained = (newNotHappenedBrier * (percentageOfTimeAtThisScore/100));
+                        }
+
+                        sumOfNewWeightedCorrectBriers = sumOfNewWeightedCorrectBriers + correctBrierWeightedByDuration;
+                        sumOfNewWeightedIncorrectBriers = sumOfNewWeightedIncorrectBriers + incorrectBrierWeightedByDuration;
+                    }
+                    else if (i === userForecastData.forecasts.length-1) {
+                        let forecastTimeFrame = (closeDate - startDate)/1000;
+                        let duration = (closeDate - thisForecastTimeDate)/1000;
+                        fullArrayToReturn[i+1].duration = duration;
+                        let percentageOfTimeAtThisScore = ((duration/forecastTimeFrame)*100);
+                        fullArrayToReturn[i+1].percentageOfTimeAtThisScore = percentageOfTimeAtThisScore;
+                        
+                        correctBrierWeightedByDuration = (newHappenedBrier * (percentageOfTimeAtThisScore/100));
+                        incorrectBrierWeightedByDuration = (newNotHappenedBrier * (percentageOfTimeAtThisScore/100));
+                        
+                        if (userForecastData.forecasts[i].certainty > 0.5) {
+                            fullArrayToReturn[i+1].happenedBrierWeightedAndCaptained = ((newHappenedBrier * (percentageOfTimeAtThisScore/100))*2);
+                            fullArrayToReturn[i+1].notHappenedBrierWeightedAndCaptained = ((newNotHappenedBrier * (percentageOfTimeAtThisScore/100))/2);
+                        } else if (userForecastData.forecasts[i].certainty < 0.5) {
+                            fullArrayToReturn[i+1].happenedBrierWeightedAndCaptained = ((newHappenedBrier * (percentageOfTimeAtThisScore/100))/2);
+                            fullArrayToReturn[i+1].notHappenedBrierWeightedAndCaptained = ((newNotHappenedBrier * (percentageOfTimeAtThisScore/100))*2);
+                        } else {
+                            fullArrayToReturn[i+1].happenedBrierWeightedAndCaptained = (newHappenedBrier * (percentageOfTimeAtThisScore/100));
+                            fullArrayToReturn[i+1].notHappenedBrierWeightedAndCaptained = (newNotHappenedBrier * (percentageOfTimeAtThisScore/100));
+                        }
+
+                        sumOfNewWeightedCorrectBriers = sumOfNewWeightedCorrectBriers + correctBrierWeightedByDuration;
+                        sumOfNewWeightedIncorrectBriers = sumOfNewWeightedIncorrectBriers + incorrectBrierWeightedByDuration;
+                        
+                        formulaComponents[0].finalCorrectBrierSumUncaptained = sumOfNewWeightedCorrectBriers;
+                        formulaComponents[0].finalIncorrectBrierSumUncaptained = sumOfNewWeightedIncorrectBriers;
+                    };
+                // Forecast was NOT made before close date
+                } else if (new Date(userForecastData.forecasts[i].date) > closeDate) {
+                    sumOfNewWeightedBriers = sumOfNewWeightedBriers + 0;
+                    if (i === userForecastData.forecasts.length-1) {
+                        formulaComponents[0].finalBrierSum = sumOfNewWeightedBriers;
+                    };
+                };
+            };
+            fullArrayToReturn[0] = {startDate: forecastObj[0].startDate, closeDate: forecastObj[0].closeDate};
+            res.send(fullArrayToReturn);
         };
-        fullArrayToReturn[0] = {startDate: forecastObj[0].startDate, closeDate: forecastObj[0].closeDate};
-        res.send(fullArrayToReturn);
     } catch (error) {
         console.error("error in forecasts.js > get /:problemName/:username");
         console.error(error);

@@ -129,6 +129,13 @@
     color: #404d72;
 }
 
+.captain-a-problem-div {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    align-items: center;
+}
+
 .forecast-message {
     padding-bottom: 1vh;
     margin-bottom: 1vh;
