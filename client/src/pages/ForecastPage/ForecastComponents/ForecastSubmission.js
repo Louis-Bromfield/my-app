@@ -593,12 +593,22 @@ console.log("Here1");
                         </div>
                     </div>
                 }
-                <ForecastBreakdown 
-                    username={props.username} 
-                    selectedForecast={selectedForecast}
-                    userHasAttempted={userHasAttempted}
-                    forecastClosed={forecastClosed}
-                />
+                {(hasAForecastBeenSelected === true && forecastClosed === true) &&
+                    <ForecastBreakdown 
+                        username={props.username} 
+                        selectedForecast={selectedForecast}
+                        userHasAttempted={userHasAttempted}
+                        forecastClosed={true}
+                    />
+                }
+                {(hasAForecastBeenSelected === true && forecastClosed === false) &&
+                    <ForecastBreakdown 
+                        username={props.username} 
+                        selectedForecast={selectedForecast}
+                        userHasAttempted={userHasAttempted}
+                        forecastClosed={false}
+                    />
+                }
             </div>
             {(forecastClosed === true && hasAForecastBeenSelected === false) && 
                 <div className="forecast-submission-div">
