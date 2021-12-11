@@ -333,4 +333,25 @@ res.send("Done");
     }
 });
 
+// Update whether or not a user is captaining a problem 
+router.patch("/captainAProblem/:selectedForecast/:username/:captainedStatus", async (req, res) => {
+    try {
+        let booleanStatus;
+        if (req.params.captainedStatus === "true") booleanStatus = true;
+        else if (req.params.captainedStatus === "false") booleanStatus = false;
+        const allForecastData = await Forecasts.findOne({ problemName: req.params.selectedForecast });
+        for (let i = 0; i < allForecastData.submittedForecasts.length; i++) {
+            if (allForecastData.submittedForecasts[i].username === req.params.username) {
+                allForecastData.submittedForecasts[i].captainedStatus = booleanStatus;
+                const new1 = await Forecasts.findByIdAndUpdate(allForecastData._id, { submittedForecasts: allForecastData.submittedForecasts }, {new: true});
+                console.log(new1);
+            };
+        };
+        res.send("Done");
+    } catch (error) {
+        console.error("error in forecasts.js > captainAProblem patch");
+        console.error(error);
+    }
+});
+
 module.exports = router;
