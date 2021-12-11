@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ForecastBreakdown.css';
 import axios from 'axios';
+import ForecastResultsBreakdown from './ForecastResultsBreakdown';
 
 function ForecastBreakdown(props) {
     const [predictionData, setPredictionData] = useState([]);
