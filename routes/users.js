@@ -291,13 +291,36 @@ router.patch("/calculateBrier/:problemName/:happenedStatus/:marketName/:closeEar
         const calculatedBriers = calculateBriers(forecastObj, happened);
         let scoresToReturn = [];
         for (let i = 0; i < calculatedBriers.length; i++) {
+            const user = await Users.findOne({ username: calculatedBriers[i].username });
+            // Work out if they should receive a performance bonus for this Brier Score
+            let scoreChain = 1;
+            if (calculatedBriers[i].finalScore >= 90 || (calculatedBriers[i].captainedStatus === true && calculatedBriers[i].finalScore >= 180)) {
+                for (let i = user.brierScores.length-1; i >= 0; i--) {
+                    if (user.brierScores[i].marketName === req.params.marketName) {
+                        if (user.brierScores[i].brierScore >= 90) {
+                            scoreChain++;
+                        } else {
+                            break;
+                        }
+                    }
+                };
+                // If scoreChain === 1, the only prediction >= 90 is the current one, 1x streak = 5% boost
+                if (scoreChain === 1) {
+                    boost = 0.05;
+                    newScorePerformanceBoosted = calculatedBriers[i].finalScore + (calculatedBriers[i].finalScore * boost);
+                } else {
+                    // If scoreChain > 1, they're on a streak of more than 1 consecutive problems in this market scoring >= 90
+                    // 2x streak = 6% boost, 3x streak = 7% boost, 4x streak = 8% boost, etc etc.
+                    boost = 0.04 + (scoreChain/100);
+                    newScorePerformanceBoosted = calculatedBriers[i].finalScore + (calculatedBriers[i].finalScore * boost);
+                };
+            };
             const toPush = {
-                brierScore: calculatedBriers[i].finalScore,
+                brierScore: newScorePerformanceBoosted,
                 problemName: req.params.problemName,
                 marketName: req.params.marketName,
                 captainedStatus: calculatedBriers[i].captainedStatus
             };
-            const user = await Users.findOne({ username: calculatedBriers[i].username });
             await Users.findOneAndUpdate({ username: calculatedBriers[i].username }, {
                 $push: { brierScores: toPush },
                 fantasyForecastPoints: Number(user.fantasyForecastPoints) + toPush.brierScore,
