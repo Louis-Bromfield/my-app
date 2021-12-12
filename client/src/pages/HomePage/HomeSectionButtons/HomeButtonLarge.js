@@ -60,7 +60,6 @@ function HomeButtonLarge(props) {
         scales: {
             y: {
                 beginAtZero: true,
-                max: 100
             },
             x: {
                 display: false
