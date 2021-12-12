@@ -83,3 +83,8 @@
     text-align: center;
     justify-content: center;
 }
+
+.boost-div {
+    display: flex;
+    flex-direction: column;
+}

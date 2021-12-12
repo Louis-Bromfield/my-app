@@ -304,16 +304,14 @@ router.patch("/calculateBrier/:problemName/:happenedStatus/:marketName/:closeEar
                         }
                     }
                 };
-                // If scoreChain === 1, the only prediction >= 90 is the current one, 1x streak = 5% boost
+                // if scoreChain is 1, then only their current prediction is above 90 or 180, just a 1x streak, bonuses only start at 2x streak
                 if (scoreChain === 1) {
-                    boost = 0.05;
-                    newScorePerformanceBoosted = calculatedBriers[i].finalScore + (calculatedBriers[i].finalScore * boost);
+                    boost = 0;
+                // 2x streak = 0.03 + 0.02 = 0.05, 5% boost 
                 } else {
-                    // If scoreChain > 1, they're on a streak of more than 1 consecutive problems in this market scoring >= 90
-                    // 2x streak = 6% boost, 3x streak = 7% boost, 4x streak = 8% boost, etc etc.
-                    boost = 0.04 + (scoreChain/100);
-                    newScorePerformanceBoosted = calculatedBriers[i].finalScore + (calculatedBriers[i].finalScore * boost);
-                };
+                    boost = 0.03 + (scoreChain/100);
+                }
+                newScorePerformanceBoosted = calculatedBriers[i].finalScore + (calculatedBriers[i].finalScore * boost);
             };
             const toPush = {
                 brierScore: newScorePerformanceBoosted,

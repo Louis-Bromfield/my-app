@@ -29,6 +29,7 @@ const ClosedProblemModal = (props) => {
           <section className="modal-main">
             <img src={FFLogo} alt="" />
             <h3>We've closed some forecast problems! Go to My Forecasts and select the problem for a breakdown of your performance!</h3>
+            <h4>You will receive boosts for every consecutive problem where you score either 90 and above (unboosted) or 180 and above (boosted). 2 predictions in a row = 5% bonus, 3 prediction = 6%, and so on.</h4>
             <button type="button" onClick={() => closeModal(props.userObj.username)} className="close-modal-btn">
                 Close
             </button>
@@ -42,8 +43,42 @@ const ClosedProblemModal = (props) => {
                                 <hr />
                                 <h4>{item.marketName}</h4>
                                 <br />
-                                <span className="one-line-span"><h3>You Scored:&nbsp;&nbsp;</h3><h3 style={{ color: "orange"}}>{item.brierScore}</h3><h3>&nbsp;/ 110</h3></span>
-                                <span className="one-line-span"><h3>You Earned&nbsp;</h3><h3 style={{ color: "orange"}}>{item.brierScore.toFixed(2).slice(0, -3)}</h3><h3>&nbsp;Market Points and FFPoints!</h3></span>
+                                <span className="one-line-span">
+                                    <h3>
+                                        You Scored:&nbsp;&nbsp;
+                                    </h3>
+                                    <h3 style={{ color: "orange"}}>
+                                        {item.brierScore.toFixed(2)}
+                                    </h3>
+                                    <h3>
+                                        &nbsp;/ 110
+                                    </h3>
+                                </span>
+                                <span className="one-line-span">
+                                    <h3>
+                                        You Earned&nbsp;
+                                    </h3>
+                                    <h3 style={{ color: "orange"}}>
+                                        {item.brierScore.toFixed(2).slice(0, -3)}
+                                    </h3>
+                                    <h3>
+                                        &nbsp;Market Points and FFPoints!
+                                    </h3>
+                                </span>
+                                <br />
+                                {item.performanceBoost > 1 &&
+                                    <div className="boost-div">
+                                        <h3>
+                                            As you are on a {item.performanceBoost}x streak of scoring 90 or above (or 180 or above on boosted predictions), you received a Boost of&nbsp;
+                                        </h3>
+                                        <h3 style={{ color: "orange"}}>
+                                            {3+item.performanceBoost}% ({(item.brierScore - (item.brierScore / (100 + (3+item.performanceBoost)) * 100)).toFixed(2)} points)
+                                        </h3>
+                                        <h3>
+                                            &nbsp;on this prediction.
+                                        </h3>
+                                    </div>
+                                }
                             </div>
                         );
                     } else if (item.captainedStatus === false) {
@@ -53,8 +88,42 @@ const ClosedProblemModal = (props) => {
                                 <hr />
                                 <h4>{item.marketName}</h4>
                                 <br />
-                                <span className="one-line-span"><h3>You Scored:&nbsp;&nbsp;</h3><h3 style={{ color: "orange"}}>{item.brierScore}</h3><h3>&nbsp;/ 110</h3></span>
-                                <span className="one-line-span"><h3>You Earned&nbsp;</h3><h3 style={{ color: "orange"}}>{item.brierScore.toFixed(2).slice(0, -3)}</h3><h3>&nbsp;Market Points and FFPoints!</h3></span>
+                                <span className="one-line-span">
+                                    <h3>
+                                        You Scored:&nbsp;&nbsp;
+                                    </h3>
+                                    <h3 style={{ color: "orange"}}>{
+                                        item.brierScore.toFixed(2)}
+                                    </h3>
+                                    <h3>
+                                        &nbsp;/ 110
+                                    </h3>
+                                </span>
+                                <span className="one-line-span">
+                                    <h3>
+                                        You Earned&nbsp;
+                                    </h3>
+                                    <h3 style={{ color: "orange"}}>
+                                        {item.brierScore.toFixed(2).slice(0, -3)}
+                                    </h3>
+                                    <h3>
+                                        &nbsp;Market Points and FFPoints!
+                                    </h3>
+                                </span>
+                                <br />
+                                {item.performanceBoost > 1 &&
+                                    <div className="boost-div">
+                                        <h3>
+                                            As you are on a {item.performanceBoost}x streak of scoring 90 or above (or 180 or above on boosted predictions), you received a Boost of&nbsp;
+                                        </h3>
+                                        <h3 style={{ color: "orange"}}>
+                                            {3+item.performanceBoost}% ({(item.brierScore - (item.brierScore / (100 + (3+item.performanceBoost)) * 100)).toFixed(2)} points)
+                                        </h3>
+                                        <h3>
+                                            &nbsp;on this prediction.
+                                        </h3>
+                                    </div>
+                                }
                             </div>
                         );
                     } else return null;
@@ -62,7 +131,7 @@ const ClosedProblemModal = (props) => {
             </div>
           </section>
         </div>
-    );
+      );
 };
 
 export default ClosedProblemModal;
