@@ -59,7 +59,7 @@ console.log("Profile.js UE");
             setUserObj(userDocument.data.userObj);
             setFantasyForecastPoints(userDocument.data.userObj.fantasyForecastPoints);
             setBrierAverage(Number(userDocument.data.averageBrier).toFixed(0));
-            setBestForecast(`${userDocument.data.bestBrier} / 100 - ${userDocument.data.bestForecastProblem}`);
+            setBestForecast(`${userDocument.data.bestBrier} / 110 - ${userDocument.data.bestForecastProblem}`);
             setBrierScoresArr(userDocument.data.userObj.brierScoresArr);
         } catch (error) {
             console.error("Error in Profile.js > retrieveUserInfoFromDB");

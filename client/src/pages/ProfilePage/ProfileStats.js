@@ -59,8 +59,9 @@ function ProfileStats(props) {
         let averageBrierPlayer = 0;
         let allLabelsArray = [""];
         let recentLabelsArray = [""];
-        for (let i = 0; i < userObj.brierScores.length; i++) {
-            allLabelsArray.push(`${i+1}`);
+        let counter = 0;
+        for (let i = userObj.brierScores.length-1; i >= 0; i--) {
+            allLabelsArray.push(`${userObj.brierScores[i].problemName}`);
             if (userObj.brierScores[i].brierScore >= bestBrierPlayer) {
                 setBestChanged(true);
                 bestBrierPlayer = userObj.brierScores[i].brierScore;
@@ -71,10 +72,11 @@ function ProfileStats(props) {
             };
             averageBrierPlayer += userObj.brierScores[i].brierScore;
             allBrierArray.push(userObj.brierScores[i].brierScore);
-            if (i < 10) {
+            if (counter < 10) {
                 recentBrierArray.push(userObj.brierScores[i].brierScore);
                 recentLabelsArray.push(`${userObj.brierScores[i].problemName}`);
             };
+            counter++;
         };
         setPlayerBestBrier(bestBrierPlayer.toFixed(0));
         setPlayerWorstBrier(worstBrierPlayer.toFixed(0));
@@ -83,12 +85,12 @@ function ProfileStats(props) {
         // Recent Data
         allBrierArray.push(null);
         recentBrierArray.push(null);
-        setRecentData(recentBrierArray);
-        setAllData(allBrierArray);
+        setRecentData(recentBrierArray.reverse());
+        setAllData(allBrierArray.reverse());
         allLabelsArray.push("");
         recentLabelsArray.push("");
-        setAllLabels(allLabelsArray);
-        setRecentLabels(recentLabelsArray);
+        setAllLabels(allLabelsArray.reverse());
+        setRecentLabels(recentLabelsArray.reverse());
     };
 
     const recentForecastData = {
@@ -98,8 +100,10 @@ function ProfileStats(props) {
                 label: "Forecast Scores",
                 data: recentData,
                 fill: false,
-                backgroundColor: "rgba(75, 192, 192, 0.2)",
-                borderColor: "rgba(75, 192, 192, 1)"
+                backgroundColor: "rgba(75, 192, 192, 1)",
+                borderColor: "rgba(75, 192, 192, 1)",
+                pointRadius: 4,
+                borderWidth: 4
             }
         ],
         spanGaps: false,
@@ -115,8 +119,10 @@ function ProfileStats(props) {
                 label: "Forecast Scores",
                 data: allData,
                 fill: false,
-                backgroundColor: "rgba(75, 192, 192, 0.2)",
-                borderColor: "rgba(75, 192, 192, 1)"
+                backgroundColor: "rgba(75, 192, 192, 1)",
+                borderColor: "rgba(75, 192, 192, 1)",
+                pointRadius: 4,
+                borderWidth: 4
             }
         ],
         spanGaps: false,
@@ -172,7 +178,7 @@ function ProfileStats(props) {
                         <li onClick={() => setStats(allTimeForecastData)}><h3>All Forecasts</h3></li>
                     </ul>
                     {/* <h4>*Until you've forecasted on more than 10 problems, these charts will look identical*</h4> */}
-                    <Line className="profile-stats-line-chart" data={recentForecastData || stats} options={options} />
+                    <Line className="profile-stats-line-chart" data={stats || recentForecastData} options={options} />
                 </div>
                 <div className="profile-stats-grid">
                     <br/>

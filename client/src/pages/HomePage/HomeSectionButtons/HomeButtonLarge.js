@@ -23,25 +23,20 @@ function HomeButtonLarge(props) {
                 return;
             }
             let brierArray = [null];
+            let labelsArray = [""];
             for (let i = 0; i < brierDocument.data[0].brierScores.length; i++) {
                 brierArray.push(brierDocument.data[0].brierScores[i].brierScore);
+                labelsArray.push(brierDocument.data[0].brierScores[i].problemName)
             };
             brierArray.push(null);
+            labelsArray.push("");
             setData(brierArray);
-            getChartLabels(brierDocument.data[0].brierScores);
+            setLabels(labelsArray);
+            // getChartLabels(brierDocument.data[0].brierScores);
         } catch (error) {
             console.error("Error in HomeButtonLarge > getBrierDataFromDB");
             console.error(error);
         };
-    };
-
-    const getChartLabels = (brierArray) => {
-        let labelsArray = [""];
-        for (let i = 0; i < brierArray.length; i++) {
-            labelsArray.push(`${i+1}`);
-        };
-        labelsArray.push("");
-        setLabels(labelsArray);
     };
 
     const recentForecastData = {
@@ -66,6 +61,9 @@ function HomeButtonLarge(props) {
             y: {
                 beginAtZero: true,
                 max: 100
+            },
+            x: {
+                display: false
             }
         }
     };
