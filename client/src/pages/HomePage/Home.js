@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Home.css';
+import axios from 'axios';
 import HomeHeader from './HomeSectionButtons/HomeHeader';
 import HomeNewsFeed from './HomeSectionButtons/HomeNewsFeed';
 import HomeButtonSmall from './HomeSectionButtons/HomeButtonSmall';
