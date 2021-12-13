@@ -88,6 +88,11 @@
     color: #242d75;
 }
 
+.selected {
+    background-color: #404d72;
+    color: #fff;
+}
+
 @media (max-width: 1500px) {
     .profile-header {
         font-size: 1.8em;
