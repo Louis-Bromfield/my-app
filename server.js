@@ -18,8 +18,8 @@ app.use('/homePageNewsFeedPosts', homePageNewsFeedRoutes);
 const helperRoutes = require('./routes/helpers');
 app.use('/helpers', helperRoutes);
 
-const onboardingRoutes = require('./routes/onboarding');
-app.use('/onboarding', onboardingRoutes);
+// const onboardingRoutes = require('./routes/onboarding');
+// app.use('/onboarding', onboardingRoutes);
 
 const userRoutes = require('./routes/users');
 app.use('/users', userRoutes);
