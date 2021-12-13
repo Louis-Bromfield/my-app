@@ -24,14 +24,16 @@ function HomeButtonLarge(props) {
             }
             let brierArray = [null];
             let labelsArray = [""];
-            for (let i = 0; i < brierDocument.data[0].brierScores.length; i++) {
+            let counter = 0;
+            for (let i = brierDocument.data[0].brierScores.length-1; counter < 10 && i >= 0; i--) {
                 brierArray.push(brierDocument.data[0].brierScores[i].brierScore);
-                labelsArray.push(brierDocument.data[0].brierScores[i].problemName)
+                labelsArray.push(brierDocument.data[0].brierScores[i].problemName);
+                counter++;
             };
             brierArray.push(null);
             labelsArray.push("");
-            setData(brierArray);
-            setLabels(labelsArray);
+            setData(brierArray.reverse());
+            setLabels(labelsArray.reverse());
             // getChartLabels(brierDocument.data[0].brierScores);
         } catch (error) {
             console.error("Error in HomeButtonLarge > getBrierDataFromDB");
