@@ -21,6 +21,7 @@ function Home(props) {
     const [showModal, setShowModal] = useState(false);
     const [showClosedProblemModal, setShowClosedProblemModal] = useState(props.user.numberOfClosedForecasts > 0 ? true : false);
     const [modalContent, setModalContent] = useState("");
+    const [userObj, setUserObj] = useState(props.user); 
 
     const onboardingButtonClick = (showOnboarding, buttonText) => {
         setShowOnboarding(!showOnboarding);
@@ -34,7 +35,26 @@ function Home(props) {
             setModalContent(welcomeString);
             localStorage.setItem("firstVisit", false);
         };
-    }, []);
+        if (props.user.numberOfClosedForecasts === undefined) {
+            console.log("yes");
+            getClosedForecastCount(localStorage.getItem("username") || props.username);
+        };
+    }, [props.user.numberOfClosedForecasts, props.username]);
+
+    const getClosedForecastCount = async (username) => {
+        try {
+            const userDocument = await axios.get(`http://localhost:5000/users/${username}`);
+            console.log(userDocument.data[0]);
+            console.log(userDocument.data[0].numberOfClosedForecasts > 0 ? true : false)
+            if (userDocument.data[0].numberOfClosedForecasts > 0) {
+                setShowClosedProblemModal(true);
+            };
+            setUserObj(userDocument.data[0]);
+        } catch (error) {
+            console.log("Error in getClosedForecastCount");
+            console.error(error);
+        }
+    };
 
     const scrollHomeStats = (currentStatsShowing) => {
         switch(currentStatsShowing) {
@@ -63,11 +83,11 @@ function Home(props) {
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>
-            {props.user.numberOfClosedForecasts > 0 &&
+            {(props.user.numberOfClosedForecasts > 0 || userObj.numberOfClosedForecasts > 0) &&
                 <ClosedProblemModal 
                     show={showClosedProblemModal}
                     setShowClosedProblemModal={setShowClosedProblemModal}
-                    userObj={props.user}>
+                    userObj={userObj === undefined ? props.user : userObj}>
                 </ClosedProblemModal>
             } 
             {/* <button type="button" onClick={() => setShowModal(true)}>
