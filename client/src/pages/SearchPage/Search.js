@@ -113,8 +113,9 @@ function Search() {
         let averageBrierPlayer = 0;
         let allLabelsArray = [""];
         let recentLabelsArray = [""];
-        for (let i = 0; i < userObj.brierScores.length; i++) {
-            allLabelsArray.push(`${i+1}`);
+        let counter = 0;
+        for (let i = userObj.brierScores.length-1; i >= 0; i--) {
+            allLabelsArray.push(`${userObj.brierScores[i].problemName}`);
             if (userObj.brierScores[i].brierScore > bestBrierPlayer) {
                 setBestChanged(true);
                 bestBrierPlayer = userObj.brierScores[i].brierScore;
@@ -125,10 +126,11 @@ function Search() {
             };
             averageBrierPlayer += userObj.brierScores[i].brierScore;
             allBrierArray.push(userObj.brierScores[i].brierScore);
-            if (i < 10) {
+            if (counter < 10) {
                 recentBrierArray.push(userObj.brierScores[i].brierScore);
                 recentLabelsArray.push(`${userObj.brierScores[i].problemName}`);
             };
+            counter++;
         };
         setPlayerBestBrier(bestBrierPlayer.toFixed(0));
         setPlayerWorstBrier(worstBrierPlayer.toFixed(0));
@@ -137,12 +139,12 @@ function Search() {
         // Recent Data
         allBrierArray.push(null);
         recentBrierArray.push(null);
-        setRecentData(recentBrierArray);
-        setAllData(allBrierArray);
+        setRecentData(recentBrierArray.reverse());
+        setAllData(allBrierArray.reverse());
         allLabelsArray.push("");
         recentLabelsArray.push("");
-        setAllLabels(allLabelsArray);
-        setRecentLabels(recentLabelsArray);
+        setAllLabels(allLabelsArray.reverse());
+        setRecentLabels(recentLabelsArray.reverse());
 
         // Logged in user's data for comparative stats
         let bestBrierMe = 0;
@@ -203,7 +205,6 @@ function Search() {
         scales: {
             y: {
                 beginAtZero: true,
-                max: 100
             },
             x: {
                 display: false
