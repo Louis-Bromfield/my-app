@@ -470,7 +470,13 @@ console.log("Here1");
                                 }
                             </div>
                             <div className="forecast-submission-input-explanation-section">
-                                <h3>Forecast Explanation</h3>
+                                <h3>
+                                    Forecast Explanation
+                                    <FaInfoCircle 
+                                    color={"orange"} 
+                                    className="modal-i-btn"
+                                    onClick={() => { setShowModal(true); setModalContent(`Feel free to note what resources, articles, key events or info helped to inform your prediction. This will be helpful for when you update your predictions (to see how you justified prior forecasts).`)}}/>
+                                </h3>
                                 {userHasAttempted === true &&
                                     <textarea 
                                         className="forecast-submission-explanation-input"
