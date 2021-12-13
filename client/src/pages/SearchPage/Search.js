@@ -300,7 +300,7 @@ function Search() {
                                         <h2>|</h2>
                                         <li onClick={() => setStats(allTimeForecastData)}><h3>All Forecasts</h3></li>
                                     </ul>
-                                    <Line className="profile-stats-line-chart" data={recentForecastData || stats} options={options} />
+                                    <Line className="profile-stats-line-chart" data={stats || recentForecastData} options={options} />
                                 </div>
                                 <div className="profile-stats-grid">
                                     <br/>
