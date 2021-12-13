@@ -22,7 +22,8 @@ function Home(props) {
     const [showModal, setShowModal] = useState(false);
     const [showClosedProblemModal, setShowClosedProblemModal] = useState(props.user.numberOfClosedForecasts > 0 ? true : false);
     const [modalContent, setModalContent] = useState("");
-    const [userObj, setUserObj] = useState(props.user); 
+    const [userObj, setUserObj] = useState(props.user);
+    const [onboardingClassName, setOnboardingClassName] = useState("onboarding-div-closed");
 
     const onboardingButtonClick = (showOnboarding, buttonText) => {
         setShowOnboarding(!showOnboarding);
@@ -104,8 +105,8 @@ function Home(props) {
                         />
                     </div>
                     <div className="home-page-stats-div">
-                    <NewForecastsCallToAction username={props.username} /> 
-                        <div className="onboarding-div">
+                        <NewForecastsCallToAction username={props.username} /> 
+                        <div className={onboardingClassName}>
                             <Onboarding 
                                 username={props.username}
                                 handleClick={() => onboardingButtonClick(showOnboarding, buttonText)} 
@@ -113,6 +114,7 @@ function Home(props) {
                                 isHidden={showOnboarding}
                                 setShowModal={setShowModal}
                                 setModalContent={setModalContent}
+                                setOnboardingClassName={setOnboardingClassName}
                             />
                         </div>
                         <HomeButtonSmall 

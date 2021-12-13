@@ -10,6 +10,14 @@
     row-gap: 1%;
 }
 
+.onboarding-div {
+    margin-top: 3%;
+}
+
+.onboarding-div-closed {
+    margin-top: -2.5%;
+}
+
 .home-page-div {
     display: flex;
     flex-direction: column;
