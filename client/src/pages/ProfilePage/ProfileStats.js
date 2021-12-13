@@ -20,6 +20,8 @@ function ProfileStats(props) {
     const [bestGlobalBrier, setGlobalBestBrier] = useState();
     const [worstGlobalBrier, setGlobalWorstBrier] = useState();
     const [averageGlobalBrier, setGlobalAverageBrier] = useState();
+    const [selectedStats, setSelectedStats] = useState("selected");
+    const [selectedStats2, setSelectedStats2] = useState("unselected");
 
     useEffect(() => {
         if (props.userObj === undefined) {
@@ -172,9 +174,9 @@ function ProfileStats(props) {
                 <div className="profile-stats-recent-forecasts">
                     <br/>
                     <ul className="profile-stats-selectors">
-                        <li onClick={() => setStats(recentForecastData)}><h3>Recent Forecasts</h3></li>
+                        <li className={selectedStats} onClick={() => { setStats(recentForecastData); setSelectedStats("selected"); setSelectedStats2("unselected")}}><h3>Recent Forecasts</h3></li>
                         <h2>|</h2>
-                        <li onClick={() => setStats(allTimeForecastData)}><h3>All Forecasts</h3></li>
+                        <li className={selectedStats2} onClick={() => { setStats(allTimeForecastData); setSelectedStats("unselected"); setSelectedStats2("selected")}}><h3>All Forecasts</h3></li>
                     </ul>
                     {/* <h4>*Until you've forecasted on more than 10 problems, these charts will look identical*</h4> */}
                     <Line className="profile-stats-line-chart" data={stats || recentForecastData} options={options} />

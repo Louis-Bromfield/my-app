@@ -35,6 +35,8 @@ function Search() {
     const [averageBrierMe, setAverageBrierMe] = useState();
     const [bestChangedMe, setBestChangedMe] = useState(false);
     const [worstChangedMe, setWorstChangedMe] = useState(false);
+    const [selectedStats, setSelectedStats] = useState("selected");
+    const [selectedStats2, setSelectedStats2] = useState("unselected");
 
     const retrieveUserRankFromDB = async (username) => {
         try {
@@ -174,8 +176,10 @@ function Search() {
                 label: "Forecast Scores",
                 data: recentData,
                 fill: false,
-                backgroundColor: "rgba(75, 192, 192, 0.2)",
-                borderColor: "rgba(75, 192, 192, 1)"
+                backgroundColor: "rgba(75, 192, 192, 1)",
+                borderColor: "rgba(75, 192, 192, 1)",
+                pointRadius: 4,
+                borderWidth: 4
             }
         ],
         spanGaps: false,
@@ -191,8 +195,10 @@ function Search() {
                 label: "Forecast Scores",
                 data: allData,
                 fill: false,
-                backgroundColor: "rgba(75, 192, 192, 0.2)",
-                borderColor: "rgba(75, 192, 192, 1)"
+                backgroundColor: "rgba(75, 192, 192, 1)",
+                borderColor: "rgba(75, 192, 192, 1)",
+                pointRadius: 4,
+                borderWidth: 4
             }
         ],
         spanGaps: false,
@@ -296,9 +302,9 @@ function Search() {
                                 <div className="profile-stats-recent-forecasts">
                                     <br/>
                                     <ul className="profile-stats-selectors">
-                                        <li onClick={() => setStats(recentForecastData)}><h3>Recent Forecasts</h3></li>
+                                    <li className={selectedStats} onClick={() => { setStats(recentForecastData); setSelectedStats("selected"); setSelectedStats2("unselected")}}><h3>Recent Forecasts</h3></li>
                                         <h2>|</h2>
-                                        <li onClick={() => setStats(allTimeForecastData)}><h3>All Forecasts</h3></li>
+                                        <li className={selectedStats2} onClick={() => { setStats(allTimeForecastData); setSelectedStats("unselected"); setSelectedStats2("selected")}}><h3>All Forecasts</h3></li>
                                     </ul>
                                     <Line className="profile-stats-line-chart" data={stats || recentForecastData} options={options} />
                                 </div>

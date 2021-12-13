@@ -48,8 +48,10 @@ function HomeButtonLarge(props) {
                 label: "Recent Forecast Brier Scores",
                 data: data,
                 fill: false,
-                backgroundColor: "rgba(75, 192, 192, 0.2)",
-                borderColor: "rgba(75, 192, 192, 1)"
+                backgroundColor: "rgba(75, 192, 192, 1)",
+                borderColor: "rgba(75, 192, 192, 1)",
+                pointRadius: 3,
+                borderWidth: 3
             }
         ],
         spanGaps: false,
