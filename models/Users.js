@@ -5,10 +5,6 @@ const OnboardingSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
-    completeCalibration: {
-        type: Boolean,
-        default: false
-    },
     joinAMarket: {
         type: Boolean,
         default: false
