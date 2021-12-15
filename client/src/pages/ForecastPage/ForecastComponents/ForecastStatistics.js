@@ -116,6 +116,11 @@ function ForecastStatistics(props) {
             {props.today === true && 
                 <h2 className="forecast-statistics-title">
                     Forecast Statistics - Today
+                </h2>
+            }
+            {props.today === false && 
+                <h2 className="forecast-statistics-title">
+                    Forecast Statistics - All
                     <FaInfoCircle 
                         color={"orange"} 
                         className="modal-i-btn"
@@ -127,7 +132,6 @@ function ForecastStatistics(props) {
                     />
                 </h2>
             }
-            {props.today === false && <h2 className="forecast-statistics-title">Forecast Statistics - All</h2>}
             <div className="forecast-statistics-grid">
                 <div className="forecast-statistics-grid-row-odd">
                     <h3>Average Certainty:</h3>
