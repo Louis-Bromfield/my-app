@@ -7,6 +7,7 @@ import Top3Users from './IndividualLeaderboardComponents/Top3Users';
 import LeaderboardSpecificStats from './IndividualLeaderboardComponents/LeaderboardSpecificStats';
 import Leaderboard from './IndividualLeaderboardComponents/Leaderboard';
 import axios from 'axios';
+import ConfirmationModal from '../../../components/ConfirmationModal';
 
 function IndividualLeaderboard(props) {
     const history = useHistory();
@@ -27,6 +28,7 @@ function IndividualLeaderboard(props) {
     const [usersPulled, setUsersPulled] = useState(false);
     const [averagePoints, setAveragePoints] = useState(0);
     const [averageBrier, setAverageBrier] = useState(0);
+    const [showConfirmationModal, setShowConfirmationModal] = useState(false);
     
     let index = 0;
     for (let i = 0; i < navigationOrder.length; i++) {
@@ -256,6 +258,14 @@ console.log("Individual Leaderboard UE");
 
     return (
         <div className="individual-leaderboard">
+            <ConfirmationModal 
+                show={showConfirmationModal} 
+                handleClose={() => {
+                    leaveMarket(currentLeaderboardName, props.username) 
+                    setShowConfirmationModal(false)
+                }} 
+                justClose={() => setShowConfirmationModal(false)}
+            />
             <div className="button-container">
                 <button 
                     className="return-to-leaderboard-menu-btn" 
@@ -265,7 +275,7 @@ console.log("Individual Leaderboard UE");
                 {(currentLeaderboardName !== "Fantasy Forecast All-Time" && props.location.user === true) && 
                     <button 
                         className="leave-leaderboard-btn"
-                        onClick={() => leaveMarket(currentLeaderboardName, props.username)}>
+                        onClick={() => setShowConfirmationModal(true)}>
                             Leave Market
                     </button>
                 }
