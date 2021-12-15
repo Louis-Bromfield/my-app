@@ -74,13 +74,13 @@ function Leaderboard(props) {
                                     <td className="leaderboard-avgBrierScore-data">{Number(item.avgBrierScore).toFixed(1)}</td>
                                     <td className="leaderboard-last5Forecasts-data">
                                         <span className="last-five-data-span">
-                                            {item.brierScores.map((item, index) => {
-                                                if (index <= 4) {
+                                            {item.brierScores.map((item2, index) => {
+                                                if (index >= item.brierScores.length - 5) {
                                                     return (
                                                         <h4 
                                                             key={index} 
                                                             className="last-five-data-single-result">
-                                                                &nbsp;&nbsp;{Number(item).toFixed(1)}&nbsp;&nbsp;
+                                                                &nbsp;&nbsp;{Number(item2).toFixed(1)}&nbsp;&nbsp;
                                                         </h4> 
                                                     )
                                                 } else return null;
@@ -101,13 +101,13 @@ function Leaderboard(props) {
                                     <td className="leaderboard-avgBrierScore-data">{Number(item.avgBrierScore).toFixed(1)}</td>
                                     <td className="leaderboard-last5Forecasts-data">
                                         <span className="last-five-data-span">
-                                            {item.brierScores.map((item, index) => {
-                                                if (index <= 4) {
+                                            {item.brierScores.map((item2, index) => {
+                                                if (index >= item.brierScores.length - 5) {
                                                     return (
                                                         <h4 
                                                             key={index} 
                                                             className="last-five-data-single-result">
-                                                                &nbsp;&nbsp;{Number(item).toFixed(1)}&nbsp;&nbsp;
+                                                                &nbsp;&nbsp;{Number(item2).toFixed(1)}&nbsp;&nbsp;
                                                         </h4> 
                                                     )
                                                 } else return null;
