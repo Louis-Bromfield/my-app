@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ForecastStatistics.css';
 import Modal from '../../../components/Modal';
+import { FaInfoCircle } from 'react-icons/fa';
 
 function ForecastStatistics(props) {
     const [highestCertainty, setHighestCertainty] = useState(0);
