@@ -202,6 +202,8 @@ function ForecastProblemLineChart(props) {
         <div className="forecast-problem-line-chart">
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
+                <br />
+                <p>{modalContent2}</p>
             </Modal>
             <h2>
                 <u>{props.selectedForecast.problemName}</u>
