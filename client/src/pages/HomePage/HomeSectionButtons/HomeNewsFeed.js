@@ -5,6 +5,7 @@ import ProfilePic from '../../../media/ProfileP.png';
 import ReactLoading from 'react-loading';
 import * as AiIcons from 'react-icons/ai';
 import ImagePlaceholder from '../../../media/sd.png';
+import ConfirmationModal from ',,/../../components/ConfirmationModal';
 
 function HomeNewsFeed(props) {
     const [feed, setFeed] = useState([]);
@@ -27,6 +28,8 @@ function HomeNewsFeed(props) {
     const [postPreviewImage, setPostPreviewImage] = useState();
     const [postPreviewLoading, setPostPreviewLoading] = useState(false);
     const [filteringFeed, setFilteringFeed] = useState(false);
+    const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+    const [postIDToDelete, setPostIDToDelete] = useState();
     let userMarketsForPost = [];
     
     useEffect(() => {
@@ -278,6 +281,14 @@ function HomeNewsFeed(props) {
 
     return (
             <div className="home-page-news-feed-container">
+                <ConfirmationModal 
+                    show={showConfirmationModal} 
+                    handleClose={() => {
+                        deletePost(postIDToDelete); 
+                        setShowConfirmationModal(false)
+                    }} 
+                    justClose={() => setShowConfirmationModal(false)}
+                />
                 <h1 className="news-feed-title">News Feed</h1>
                 <div className="post">
                     {post === false && 
@@ -501,7 +512,7 @@ function HomeNewsFeed(props) {
                                                 {item.author === props.username && 
                                                     <AiIcons.AiFillDelete size={25} 
                                                         className="post-control-btn" 
-                                                        onClick={() => deletePost(item._id)} />
+                                                        onClick={() => { setShowConfirmationModal(true); setPostIDToDelete(item._id)}} />
                                                 }
                                                 <AiIcons.AiFillLike 
                                                     size={25} 
@@ -569,7 +580,7 @@ function HomeNewsFeed(props) {
                                                     {item.author === props.username && 
                                                         <AiIcons.AiFillDelete size={25} 
                                                             className="post-control-btn" 
-                                                            onClick={() => deletePost(item._id)} />
+                                                            onClick={() => { setShowConfirmationModal(true); setPostIDToDelete(item._id)}} />
                                                     }
                                                     <AiIcons.AiFillLike 
                                                         size={25} 
