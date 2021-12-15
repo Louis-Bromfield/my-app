@@ -5,7 +5,7 @@ import ProfilePic from '../../../media/ProfileP.png';
 import ReactLoading from 'react-loading';
 import * as AiIcons from 'react-icons/ai';
 import ImagePlaceholder from '../../../media/sd.png';
-import ConfirmationModal from ',,/../../components/ConfirmationModal';
+import ConfirmationModal from '../../../components/ConfirmationModal';
 
 function HomeNewsFeed(props) {
     const [feed, setFeed] = useState([]);
