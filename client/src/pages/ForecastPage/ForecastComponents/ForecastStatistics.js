@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './ForecastStatistics.css';
+import Modal from '../../../components/Modal';
 
 function ForecastStatistics(props) {
     const [highestCertainty, setHighestCertainty] = useState(0);
     const [lowestCertainty, setLowestCertainty] = useState(0);
     const [currentAverageCertainty, setCurrentAverageCertainty] = useState(0);
     const [numberOfForecasts, setNumberOfForecasts] = useState(0);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState("");
+    const [modalContent2, setModalContent2] = useState("");
 
     useEffect(() => {
         getForecastInfo(props.today, props.selectedForecast);
@@ -103,7 +107,25 @@ function ForecastStatistics(props) {
 
     return (
         <div className="forecast-statistics">
-            {props.today === true && <h2 className="forecast-statistics-title">Forecast Statistics - Today</h2>}
+            <Modal show={showModal} handleClose={() => setShowModal(false)}>
+                <p>{modalContent}</p>
+                <br />
+                <p>{modalContent2}</p>
+            </Modal>
+            {props.today === true && 
+                <h2 className="forecast-statistics-title">
+                    Forecast Statistics - Today
+                    <FaInfoCircle 
+                        color={"orange"} 
+                        className="modal-i-btn"
+                        onClick={() => {
+                            setShowModal(true); 
+                            setModalContent(`There may appear to be a higher number of forecasts listed below than are visible on the chart. As stated in the info button by the title above the chart, this is due to the chart only showing the most recent prediction made on a given day by each user, in order to keep the chart readable.`);
+                            setModalContent2(`If you submit one prediction today, that will appear on the chart. If you submit a second prediction today, only the second one will appear on the chart for today. If we didn't do this, I could submit 100 predictions everyday from 0-100 and make the chart unreadable!`)
+                        }}
+                    />
+                </h2>
+            }
             {props.today === false && <h2 className="forecast-statistics-title">Forecast Statistics - All</h2>}
             <div className="forecast-statistics-grid">
                 <div className="forecast-statistics-grid-row-odd">
