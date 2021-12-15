@@ -66,16 +66,22 @@ function ForecastAdmin() {
     };
 
     const persistNewProblemToDB = async (problemName, oDateTime, cDateTime, market) => {
-        try {
-            await axios.post('https://fantasy-forecast-politics.herokuapp.com/forecasts/newProblem', {
-                problemName: problemName,
-                startDate: oDateTime,
-                closeDate: cDateTime,
-                market: market,
-            });
-        } catch (error) {
-            console.error("Error in ForecastAdmin > persistNewProblemToDB");
-            console.error(error);
+        if (/%/.test(problemName)) {
+            setAdminText("Problem name contains a %, this is not allowed.")
+            return;
+        } else {
+            setAdminText("");
+            try {
+                await axios.post('https://fantasy-forecast-politics.herokuapp.com/forecasts/newProblem', {
+                    problemName: problemName,
+                    startDate: oDateTime,
+                    closeDate: cDateTime,
+                    market: market,
+                });
+            } catch (error) {
+                console.error("Error in ForecastAdmin > persistNewProblemToDB");
+                console.error(error);
+            };
         };
     };
 
@@ -215,7 +221,7 @@ function ForecastAdmin() {
                 </div>
             </div>
             <br />
-            {adminText !== "" && <h3>{adminText}</h3>}
+            {adminText !== "" && <h3 style={{ color: "green" }}>{adminText}</h3>}
             <hr />
             <div className="close-problem-early-container">
                 <br />
