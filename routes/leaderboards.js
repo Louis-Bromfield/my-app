@@ -166,6 +166,10 @@ router.patch("/removeUser/:leaderboardName/:username", async (req, res) => {
                 },
                 { new: true }
             );
+            // If the user who leaves is the last user in the leaderboard, delete it
+            if (newLeaderboardDataPushedToDB.rankings.length === 0) {
+                await Leaderboards.findByIdAndDelete(document._id);
+            };
             // Also need to update userDocument markets array
             const userDocument = await Users.findOne({ username: req.params.username });
             const marketIndex = userDocument.markets.findIndex(market => market === req.params.leaderboardName);
