@@ -29,8 +29,7 @@ function ForecastArticlesDisplay(props) {
     } else {
         return (
             <div className="articles">
-                <h3>The articles shown below are generated from a web scrape of the problem, exactly as it is worded above. This can result in a wide variety</h3>
-                <h3>in terms of their relevance and usefulness.</h3>
+                <h3>The articles shown below are generated from a web scrape of the problem, exactly as it is worded above. This can result in a wide variety in terms of their relevance and usefulness.</h3>
                 {articles !== "loading" && <div className="articles-grid">
                     {articles.map((article, index) => {
                         if (article.img === "N/A") {

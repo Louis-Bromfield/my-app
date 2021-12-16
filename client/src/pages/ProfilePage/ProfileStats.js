@@ -193,13 +193,13 @@ function ProfileStats(props) {
                     </div>
                     <div className="profile-stats-grid-body-three-cols">
                         <h4 className="oddrow">{bestChanged === true ? playerBestBrier : "N/A"}</h4>
-                        <h3 className="oddrow" style={{backgroundColor: "rgb(250, 250, 250)", color: "#404d72" }}>Best Brier</h3>
+                        <h4 className="oddrow" style={{backgroundColor: "rgb(250, 250, 250)", color: "#404d72" }}>Best Brier</h4>
                         <h4 className="oddrow">{bestGlobalBrier}</h4>
                         <h4>{worstChanged === true ? playerWorstBrier : "N/A"}</h4>
-                        <h3 style={{ color: "#404d72" }}>Worst Brier</h3>
+                        <h4 style={{ color: "#404d72" }}>Worst Brier</h4>
                         <h4>{worstGlobalBrier}</h4>
                         <h4 className="oddrow">{isNaN(playerAverageBrier) ? "N/A" : playerAverageBrier}</h4>
-                        <h3 className="oddrow" style={{backgroundColor: "rgb(250, 250, 250)", color: "#404d72" }}>Average Brier</h3>
+                        <h4 className="oddrow" style={{backgroundColor: "rgb(250, 250, 250)", color: "#404d72" }}>Average Brier</h4>
                         <h4 className="oddrow">{averageGlobalBrier}</h4>
                     </div>
                     <br />

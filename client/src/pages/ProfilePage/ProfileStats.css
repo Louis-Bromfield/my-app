@@ -59,7 +59,8 @@
 
 .profile-stats-grid-body-three-cols {
     display: grid;
-    grid-template-columns: 35% 30% 35%;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 35% 35% 35%;
     text-align: center;
     height: 25%;
     padding-top: 1%;
@@ -92,6 +93,12 @@
     .profile-stats-recent-forecasts {
         border: none;
     }
+    .profile-stats-grid-body-three-cols {
+        margin-bottom: 3vh;
+    }
+}
+
+@media (max-height: 819px) {
     .profile-stats-grid-body-three-cols {
         margin-bottom: 3vh;
     }
