@@ -64,7 +64,7 @@ function Onboarding(props) {
                     <ul className="onboarding-list">
                     <li 
                             className="onboarding-list-item" 
-                            style={{ backgroundColor: onboardingBooleans.visitProfilePage ? "lightgreen" : "none"}}
+                            style={{ backgroundColor: onboardingBooleans.visitProfilePage ? "lightgreen" : "none" }}
                             onClick={() => { props.setShowModal(true); props.setModalContent("This can be done by clicking on your username in the top right of the screen!")}}>
                                 <h4>Visit your profile page</h4>
                                 <h4>Reward: 100pts</h4>
@@ -72,7 +72,7 @@ function Onboarding(props) {
                         <li 
                             className="onboarding-list-item" 
                             style={{ backgroundColor: onboardingBooleans.joinAMarket ? "lightgreen" : "none" }}
-                            onClick={() => { props.setShowModal(true); props.setModalContent("You can't submit any forecasts until you join a market. To do this, select Leaderboards from the top of the screen, then pressing the Join A Market button!")}}>
+                            onClick={() => { props.setShowModal(true); props.setModalContent("You can't submit any forecasts until you join a market. To do this, select Leaderboards from the top of the screen, then press the Join A Market button!")}}>
                                 <h4>Join a market</h4>
                                 <h4>Reward: 150pts</h4>
                         </li>

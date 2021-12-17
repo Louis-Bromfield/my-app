@@ -33,6 +33,7 @@ function ForecastSubmission(props) {
     const [modalContent, setModalContent] = useState("");
     const [modalContent2, setModalContent2] = useState("");
     const [userCaptainedProblem, setUserCaptainedProblem] = useState();
+    const [marketWarning, setMarketWarning] = useState(false);
 
     let alertStyle;
     if (dropdownHighlight === true) {
@@ -66,12 +67,20 @@ function ForecastSubmission(props) {
                     filteredAndOrganised.push([userMarkets[i]]);
                 };
             };
+            let forecastsAreAvailable = false;
             for (let i = 0; i < allForecastsUnfiltered.data.length; i++) {
                 if (userMarkets.includes(allForecastsUnfiltered.data[i].market) && new Date() > new Date(allForecastsUnfiltered.data[i].startDate)) {
                     filtered.push(allForecastsUnfiltered.data[i]);
                     let index = userMarkets.indexOf(allForecastsUnfiltered.data[i].market);
                     filteredAndOrganised[index].push(allForecastsUnfiltered.data[i]);
+                    forecastsAreAvailable = true;
                 };
+            };
+            console.log(`if they have no problems, this should be false ==> ${forecastsAreAvailable}, otherwise true`);
+            if (forecastsAreAvailable === false) {
+                setMarketWarning(true)
+            } else {
+                setMarketWarning(false);
             };
             setForecastProblems(filtered);
             setForecastProblemsForDropdown(filteredAndOrganised);
@@ -374,53 +383,60 @@ console.log("Here1");
                 <p>{modalContent2}</p>
             </Modal>
             <div className="forecast-top-bar">
-                <div className="forecast-selection-div">
-                    <label htmlFor="forecast-selection"><h2 className="header-label">Select a Problem</h2></label>
-                    <select 
-                        className="forecast-selection-select"
-                        name="forecast-selection" 
-                        id="forecast-selection"
-                        defaultValue={selectedForecast}
-                        onChange={handleChange}
-                        style={alertStyle}
-                        onClick={() => setDropdownHighlight(false)}>
-                            <option 
-                                key={-1} 
-                                value={"All currently open forecasts are available here..."}>
-                                    All currently open forecasts are available here...
-                            </option>
-                            {forecastProblemsForDropdown.map((item, index) => {
-                                if (item[0] === "Fantasy Forecast All-Time") return null;
-                                if (typeof(item[0]) === 'string') {
-                                    return (
-                                        <optgroup label={item[0]} key={index}>
-                                            {item.map((nestedItem, nestedIndex) => {
-                                                if ((typeof(nestedItem) === 'object') && (new Date(nestedItem.closeDate) > new Date())) {
-                                                    return (
-                                                        <option 
-                                                            key={nestedIndex} 
-                                                            value={nestedItem.problemName}
-                                                            style={{  color: "green" }}>
-                                                                OPEN: {nestedItem.problemName}
-                                                        </option>
-                                                    )
-                                                } else if ((typeof(nestedItem) === 'object') && (new Date(nestedItem.closeDate) <= new Date())) {
-                                                    return (
-                                                        <option 
-                                                            key={nestedIndex} 
-                                                            value={nestedItem.problemName}
-                                                            style={{  color: "red" }}>
-                                                                CLOSED: {nestedItem.problemName}
-                                                        </option>
-                                                    )
-                                                } else return null;
-                                            })}
-                                        </optgroup>
-                                    )
-                                } else return null;
-                            })}
-                    </select>
-                </div>
+                {marketWarning === true &&
+                        <div className="forecast-selection-div">
+                            <h3>You are not currently in any markets, so no forecasts are available. To join a market, go to the Leaderboards page and press the Join A Market button.</h3>
+                        </div>
+                    }
+                    {marketWarning === false && 
+                    <div className="forecast-selection-div">
+                        <label htmlFor="forecast-selection"><h2 className="header-label">Select a Problem</h2></label>
+                        <select 
+                            className="forecast-selection-select"
+                            name="forecast-selection" 
+                            id="forecast-selection"
+                            defaultValue={selectedForecast}
+                            onChange={handleChange}
+                            style={alertStyle}
+                            onClick={() => setDropdownHighlight(false)}>
+                                <option 
+                                    key={-1} 
+                                    value={"All currently open forecasts are available here..."}>
+                                        All currently open forecasts are available here...
+                                </option>
+                                {forecastProblemsForDropdown.map((item, index) => {
+                                    if (item[0] === "Fantasy Forecast All-Time") return null;
+                                    if (typeof(item[0]) === 'string') {
+                                        return (
+                                            <optgroup label={item[0]} key={index}>
+                                                {item.map((nestedItem, nestedIndex) => {
+                                                    if ((typeof(nestedItem) === 'object') && (new Date(nestedItem.closeDate) > new Date())) {
+                                                        return (
+                                                            <option 
+                                                                key={nestedIndex} 
+                                                                value={nestedItem.problemName}
+                                                                style={{  color: "green" }}>
+                                                                    OPEN: {nestedItem.problemName}
+                                                            </option>
+                                                        )
+                                                    } else if ((typeof(nestedItem) === 'object') && (new Date(nestedItem.closeDate) <= new Date())) {
+                                                        return (
+                                                            <option 
+                                                                key={nestedIndex} 
+                                                                value={nestedItem.problemName}
+                                                                style={{  color: "red" }}>
+                                                                    CLOSED: {nestedItem.problemName}
+                                                            </option>
+                                                        )
+                                                    } else return null;
+                                                })}
+                                            </optgroup>
+                                        )
+                                    } else return null;
+                                })}
+                        </select>
+                    </div>
+                }
                 <div className="forecast-market-name-div">
                     <h2 className="header-label">Current Market</h2>
                     <h3>{selectedForecastMarket}</h3>

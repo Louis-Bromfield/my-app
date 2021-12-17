@@ -366,13 +366,11 @@ function LeaderboardMenu(props) {
                     {userInNoMarkets === true && 
                         <h4>You're not currently in any markets (apart from our Fantasy Forecast All-Time leaderboard). Below is a 
                         list of all the public markets available for you to join. You can join simply by checking the box and 
-                        pressing "Submit".
-                        </h4>
+                        pressing "Confirm Market Choices".</h4>
                     }
                     {userInNoMarkets === false && 
                         <h4>Below is a list of all the public markets available for you to join. You can join simply by 
-                        checking the box and pressing "Submit".
-                        </h4>
+                        checking the box and pressing "Confirm Market Choices".</h4>
                     }
                     <div className="markets-list">
                         <h2 className="market-list-title">Markets</h2>
