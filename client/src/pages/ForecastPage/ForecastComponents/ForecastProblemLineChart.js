@@ -82,12 +82,12 @@ function ForecastProblemLineChart(props) {
             setChartData(data);
             setUserChartData(userData);
             setAverageChartData({
-                label: "Daily Average Certainty",
+                label: "Average Certainty",
                 data: dailyAverages,
                 backgroundColor: "#404d72",
                 borderColor: "#404d72",
                 borderWidth: 4,
-                pointRadius: 3
+                pointRadius: 0
             });
             // Create line for days with no prediction (since the last prediction was made)
             let today = new Date();
