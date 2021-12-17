@@ -72,14 +72,14 @@ function Onboarding(props) {
                         <li 
                             className="onboarding-list-item" 
                             style={{ backgroundColor: onboardingBooleans.joinAMarket ? "lightgreen" : "none" }}
-                            onClick={() => { props.setShowModal(true); props.setModalContent("This can be done by selecting Leaderboards from the top of the screen, then pressing the Join A Market button!")}}>
+                            onClick={() => { props.setShowModal(true); props.setModalContent("You can't submit any forecasts until you join a market. To do this, select Leaderboards from the top of the screen, then pressing the Join A Market button!")}}>
                                 <h4>Join a market</h4>
                                 <h4>Reward: 150pts</h4>
                         </li>
                         <li 
                             className="onboarding-list-item" 
                             style={{ backgroundColor: onboardingBooleans.submitAForecast ? "lightgreen" : "none" }}
-                            onClick={() => { props.setShowModal(true); props.setModalContent("Once you've joined a market, the dropdown menu at the top of the My Forecasts page will contain problems you are able to tackle. Submit a forecast to any problem to complete this onboarding task!")}}>
+                            onClick={() => { props.setShowModal(true); props.setModalContent("Once you've joined a market, the dropdown menu at the top of the My Forecasts page will contain problems you are able to tackle based on the markets you have joined. Submit a forecast to any problem to complete this onboarding task!")}}>
                                 <h4>Submit a forecast</h4>
                                 <h4>Reward: 300pts</h4>
                         </li>
