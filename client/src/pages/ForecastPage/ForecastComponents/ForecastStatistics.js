@@ -127,7 +127,7 @@ function ForecastStatistics(props) {
                         onClick={() => {
                             setShowModal(true); 
                             setModalContent(`There may appear to be a higher number of forecasts listed below than are visible on the chart. As stated in the info button by the title above the chart, this is due to the chart only showing the most recent prediction made on a given day by each user, in order to keep the chart readable.`);
-                            setModalContent2(`If you submit one prediction today, that will appear on the chart. If you submit a second prediction today, only the second one will appear on the chart for today. This keeps the chart readable and clear.`)
+                            setModalContent2(`If you submit one prediction today, that will appear on the chart. If you submit a second prediction today, only the second one will appear on the chart for today. The chart is all that this affects, all of your predictions will count towards your score for the problem, no matter what.`)
                         }}
                     />
                 </h2>
