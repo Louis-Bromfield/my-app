@@ -147,7 +147,7 @@ function ForecastBreakdown(props) {
                     <hr />
                     {forecastClosed === true && 
                         <div className="container">
-                            <button className="show-btn" onClick={() => setShowForecastByForecastBreakdown(!showForecastByForecastBreakdown)}>{showForecastByForecastBreakdown === true ? "Hide" : "Show"} Individual Predictions</button>
+                            <button className={showForecastByForecastBreakdown === true ? "show-btn" : "hide-btn"} onClick={() => setShowForecastByForecastBreakdown(!showForecastByForecastBreakdown)}>{showForecastByForecastBreakdown === true ? "Hide" : "Show"} Individual Predictions</button>
                             <ul className="prediction-ul">
                                 {predictionData.map((item, index) => {
                                     // Index !== 0 is because at element 0 is an object containing start and close dates
