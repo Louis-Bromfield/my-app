@@ -22,9 +22,11 @@ function Leaderboard(props) {
                 };
                 rankings[i].brierScores = [];
                 let totalBrier = 0;
+                let numberOfBriersInThisMarket = 0;
                 if (userDocument.data[0].brierScores.length > 0) {
                     for (let j = 0; j < userDocument.data[0].brierScores.length; j++) {
                         if (userDocument.data[0].brierScores[j].marketName === props.leaderboardTitle || userDocument.data[0].brierScores[j].marketName === localStorage.getItem('currentLeaderboardName')) {
+                            numberOfBriersInThisMarket++;
                             rankings[i].brierScores.push(userDocument.data[0].brierScores[j].brierScore);
                             totalBrier += userDocument.data[0].brierScores[j].brierScore;
                         };
@@ -34,9 +36,14 @@ function Leaderboard(props) {
                 if (userDocument.data[0].brierScores.length === 0) {
                     rankings[i].avgBrierScore = 0;
                 } else {
-                    rankings[i].avgBrierScore = totalBrier / userDocument.data[0].brierScores.length;
+                    let avgBrierScore = totalBrier / numberOfBriersInThisMarket;
+                    if (isNaN(avgBrierScore)) {
+                        rankings[i].avgBrierScore = 0.0;
+                    } else if (!isNaN(avgBrierScore)) {
+                        rankings[i].avgBrierScore = totalBrier / numberOfBriersInThisMarket;
+                    }
                     totalAverageBrier += (totalBrier / userDocument.data[0].brierScores.length);
-                }
+                };
                 rankings = rankings.sort((a, b) => b.marketPoints - a.marketPoints);
             };
             props.setAverageBrier(totalAverageBrier / rankings.length);
