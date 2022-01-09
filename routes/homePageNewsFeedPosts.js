@@ -76,6 +76,29 @@ router.patch("/:id", async (req, res) => {
     }
 });
 
+// Update a post
+router.patch("/postComment/:id", async (req, res) => {
+    console.log("here");
+    try {
+        // New comment, not a reply
+        if (req.body.isNewComment === true) {
+            const newPostObj = { comment: req.body.newComment, author: req.body.author }
+            const updatedPost = await HomePageNewsFeedPost.findByIdAndUpdate(req.body.postID,
+                {
+                    $push: { comments: newPostObj }
+                },
+                { new: true }
+            );
+            res.json({ newPost: updatedPost });
+        // A reply
+        } else if (req.body.isNewComment === false) {
+            
+        };
+    } catch (error) {
+        res.json({ error: error.message });
+    }
+});
+
 // Update all posts when a user changes their username
 router.patch("/changeUsernameOrProfilePic/:currentUsername", async (req, res) => {
     try {

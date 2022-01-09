@@ -5,6 +5,7 @@ import axios from 'axios';
 import Navbar from './components/Navbar/Navbar';
 import ScrollToTop from './ScrollToTop';
 import Home from './pages/HomePage/Home';
+import IndividualNewsFeedPost from './pages/HomePage/HomeSectionButtons/IndividualNewsFeedPost';
 import Forecast from './pages/ForecastPage/Forecast';
 import LeaderboardMenu from './pages/LeaderboardPage/LeaderboardMenu';
 import IndividualLeaderboard from './pages/LeaderboardPage/IndividualLeaderboard/IndividualLeaderboard';
@@ -81,6 +82,7 @@ function App() {
             {/* <Route path='/learn' component={Learn} /> */}
             {/* <Route path='/my-profile' component={Profile} /> */}
             <Route exact path='/' render={(props) => <Home {...props} username={username} name={name} user={userObject} />} />
+            <Route path="/news-post" render={(props) => <IndividualNewsFeedPost {...props} />} />
             <Route path='/forecast' render={(props) => <Forecast {...props} markets={markets} username={username} />} />
             <Route path='/leaderboard-select' render={(props) => <LeaderboardMenu {...props} username={username} />} />
             <Route path='/leaderboard' render={(props) => <IndividualLeaderboard {...props} username={username} />} />

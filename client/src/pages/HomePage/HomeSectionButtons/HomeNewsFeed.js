@@ -529,26 +529,28 @@ function HomeNewsFeed(props) {
                                             </div>
                                         </div>
                                     </div>
-                                    <p className="post-author-description">{item.postDescription}</p>
-                                    <div className="post-news-preview">
-                                        <a href={item.articleURL} target="_blank" rel="noreferrer nofollow">
-                                            {item.articleImage !== "" && <img src={item.articleImage} className="post-news-image" alt="News pic"/>}
-                                            {item.articleImage === "" && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
-                                        </a>
-                                        <a href={item.articleURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{item.articleTitle}</h3></a>
-                                    </div>
-                                    <div className="post-markets">
-                                        {item.markets.map((market, index) => {
-                                            if (index < item.markets.length-1) {
-                                                return (
-                                                    <h4 key={index}>&nbsp;{market}&nbsp;|</h4>
+                                    <Link style={{ textDecoration: "none"}} to={articleProps} onClick={() => localStorage.setItem("postID", item._id)}>
+                                        <p className="post-author-description">{item.postDescription}</p>
+                                        <div className="post-news-preview">
+                                            <a href={item.articleURL} target="_blank" rel="noreferrer nofollow">
+                                                {item.articleImage !== "" && <img src={item.articleImage} className="post-news-image" alt="News pic"/>}
+                                                {item.articleImage === "" && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
+                                            </a>
+                                            <a href={item.articleURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{item.articleTitle}</h3></a>
+                                        </div>
+                                        <div className="post-markets">
+                                            {item.markets.map((market, index) => {
+                                                if (index < item.markets.length-1) {
+                                                    return (
+                                                        <h4 key={index}>&nbsp;{market}&nbsp;|</h4>
+                                                    )
+                                                }
+                                                else return (
+                                                    <h4 key={index}>&nbsp;{market}&nbsp;</h4>
                                                 )
-                                            }
-                                            else return (
-                                                <h4 key={index}>&nbsp;{market}&nbsp;</h4>
-                                            )
-                                        })}
-                                    </div>
+                                            })}
+                                        </div>
+                                    </Link>
                                 </li>
                             )
                         })}
@@ -597,26 +599,28 @@ function HomeNewsFeed(props) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <p className="post-author-description">{item.postDescription}</p>
-                                        <div className="post-news-preview">
-                                            <a href={item.articleURL} target="_blank" rel="noreferrer nofollow">
-                                                {item.articleImage !== "" && <img src={item.articleImage} className="post-news-image" alt="News pic"/>}
-                                                {item.articleImage === "" && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
-                                            </a>
-                                            <a href={item.articleURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{item.articleTitle}</h3></a>
-                                        </div>
-                                        <div className="post-markets">
-                                            {item.markets.map((market, index) => {
-                                                if (index < item.markets.length-1) {
-                                                    return (
-                                                        <h4 key={index}>&nbsp;{market}&nbsp;|</h4>
+                                        <Link style={{ textDecoration: "none"}} to={articleProps} onClick={() => localStorage.setItem("postID", item._id)}>
+                                            <p className="post-author-description">{item.postDescription}</p>
+                                            <div className="post-news-preview">
+                                                <a href={item.articleURL} target="_blank" rel="noreferrer nofollow">
+                                                    {item.articleImage !== "" && <img src={item.articleImage} className="post-news-image" alt="News pic"/>}
+                                                    {item.articleImage === "" && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
+                                                </a>
+                                                <a href={item.articleURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{item.articleTitle}</h3></a>
+                                            </div>
+                                            <div className="post-markets">
+                                                {item.markets.map((market, index) => {
+                                                    if (index < item.markets.length-1) {
+                                                        return (
+                                                            <h4 key={index}>&nbsp;{market}&nbsp;|</h4>
+                                                        )
+                                                    }
+                                                    else return (
+                                                        <h4 key={index}>&nbsp;{market}&nbsp;</h4>
                                                     )
-                                                }
-                                                else return (
-                                                    <h4 key={index}>&nbsp;{market}&nbsp;</h4>
-                                                )
-                                            })}
-                                        </div>
+                                                })}
+                                            </div>
+                                        </Link>
                                     </li>
                                 ) 
                             } else return null;

@@ -39,6 +39,10 @@ const HomePageNewsFeedPostsSchema = mongoose.Schema({
     authorProfilePicture: {
         type: String,
         default: ""
+    },
+    comments: {
+        type: Array,
+        default: []
     }
 });
 
