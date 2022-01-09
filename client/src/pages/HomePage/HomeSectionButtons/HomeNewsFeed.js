@@ -405,10 +405,6 @@ function HomeNewsFeed(props) {
                         <div className="news-feed-filter-div">
                             <div className="checkbox-div">
                                 {userMarkets.map((item, index) => {
-                                    const articleProps = {
-                                        pathname: "/news-post",
-                                        postObject: item
-                                    }
                                     if (filters.includes(item)) {
                                         return (
                                             <div className="filter-market-checkbox" key={index} >
@@ -568,6 +564,10 @@ function HomeNewsFeed(props) {
                 {filtersApplied === false &&
                     <ul className="home-page-rss-feed">
                         {feed.map((item, index) => {
+                            const articleProps = {
+                                pathname: "/news-post",
+                                postObject: item
+                            };
                             // check if any element from post.markets is in userMarkets
                             if (item.markets.some(market => userMarkets.includes(market))) {
                                 return (

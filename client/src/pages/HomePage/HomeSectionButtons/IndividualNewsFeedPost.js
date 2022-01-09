@@ -114,14 +114,14 @@ function IndividualNewsFeedPost(props) {
                                 <AiIcons.AiFillLike 
                                     size={25} 
                                     className="post-control-btn" 
-                                    color={"green"} 
-                                    onClick={() => voteOnPost("upvote", _id, likes)} />
+                                    color={"green"} />
+                                    {/* onClick={() => voteOnPost("upvote", _id, likes)} /> */}
                                     {likes.length}
                                 <AiIcons.AiFillDislike 
                                     size={25} 
                                     className="post-control-btn" 
-                                    color={"darkred"} 
-                                    onClick={() => voteOnPost("downvote", _id, dislikes)} />
+                                    color={"darkred"} />
+                                    {/* onClick={() => voteOnPost("downvote", _id, dislikes)} /> */}
                                     {dislikes.length}
                             </div>
                         </div>
