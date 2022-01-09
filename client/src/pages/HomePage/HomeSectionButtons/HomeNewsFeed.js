@@ -608,7 +608,7 @@ function HomeNewsFeed(props) {
                                                 </div>
                                             </div>
                                         </div>
-                                        <Link style={{ textDecoration: "none"}} to={articleProps} onClick={() => localStorage.setItem("postID", item._id)}>
+                                        <Link style={{ textDecoration: "none", color: "black"}} to={articleProps} onClick={() => localStorage.setItem("postID", item._id)}>
                                             <p className="post-author-description">{item.postDescription}</p>
                                             <div className="post-news-preview">
                                                 <a href={item.articleURL} target="_blank" rel="noreferrer nofollow">
