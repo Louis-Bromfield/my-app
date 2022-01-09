@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './HomeNewsFeed.css';
 import ProfilePic from '../../../media/ProfileP.png';
@@ -404,6 +405,10 @@ function HomeNewsFeed(props) {
                         <div className="news-feed-filter-div">
                             <div className="checkbox-div">
                                 {userMarkets.map((item, index) => {
+                                    const articleProps = {
+                                        pathname: "/news-post",
+                                        postObject: item
+                                    }
                                     if (filters.includes(item)) {
                                         return (
                                             <div className="filter-market-checkbox" key={index} >
@@ -491,6 +496,10 @@ function HomeNewsFeed(props) {
                 {filtersApplied === true &&
                     <ul className="home-page-rss-feed">
                         {filteredFeed.map((item, index) => {
+                            const articleProps = {
+                                pathname: "/news-post",
+                                postObject: item
+                            }
                             return (
                                 <li key={index} className="news-feed-post">
                                     <div className="post-author">
