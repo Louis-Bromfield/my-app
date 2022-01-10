@@ -208,6 +208,12 @@
     }
 }
 
+@media (max-width: 900px) {
+    .post-author-description {
+        font-size: 0.95em;
+    }
+}
+
 .post-news-preview > a {
     text-decoration: none;
     color: #16295e;
