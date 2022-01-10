@@ -202,6 +202,12 @@
     width: 100%;
 }
 
+@media (max-width: 500px) {
+    .post-news-preview {
+        font-size: 0.95em;
+    }
+}
+
 .post-news-preview > a {
     text-decoration: none;
     color: #16295e;
