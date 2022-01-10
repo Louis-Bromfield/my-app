@@ -32,7 +32,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 30%;
+    width: 100%;
 }
 
 .market-cb {
@@ -61,7 +61,7 @@
 .create-post-submit, 
 .create-post-close {
     color: #242d75;
-    width: 15%;
+    width: 25%;
     padding: 1%;
     cursor: pointer;
     outline: none;
@@ -258,6 +258,14 @@
 }
 
 @media (max-width: 900px) {
+    .create-post-fieldset > h4 {
+        font-size: 0.9em;
+        padding-bottom: 1vh;
+    }
+    .checkbox-div {
+        display: flex;
+        flex-direction: column;
+    }
     .post-author-description {
         font-size: 0.90em;
         padding-top: 1vh;
