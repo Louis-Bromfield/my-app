@@ -259,25 +259,31 @@
 
 @media (max-width: 900px) {
     .post-author-description {
-        font-size: 0.95em;
+        font-size: 0.90em;
+        padding-top: 1vh;
+        margin-bottom: 2vh; 
     }
     .news-feed-post {
         padding-bottom: 6vh;
         margin-bottom: 1vh;
     }
-    .author-profile-pic {
-        width: 10%;
-        border: 3px solid red;
+    .post-author-left > img {
+        width: 40%;
     }
     .post-markets > h4 {
         font-size: 0.85em;
     }
-    .post-news-image {
-        width: 1%;
-    }
     .post-news-title {
         width: 120%;
         font-size: 0.9em;
+    }
+    .post-author-left {
+        width: 110%;
+        font-size: 0.9em;
+    }
+    .post-author-right {
+        width: 130%;
+        margin-left: -15vw;
     }
 }
 
