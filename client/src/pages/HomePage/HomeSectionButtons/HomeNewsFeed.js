@@ -502,7 +502,11 @@ function HomeNewsFeed(props) {
                                         <div className="post-author-left">
                                             <img className="author-profile-pic" src={item.author === props.username ? localStorage.getItem("profilePicture") : item.authorProfilePicture} alt=""/>
                                             <div className="post-author-details">
-                                                <h3>{item.author}</h3>
+                                                <Link 
+                                                    to={{pathname: "/search", clickedUsername: item.author}}
+                                                    style={{ textDecoration: "none", color: "#404d72"}}>
+                                                        <h3>{item.author}</h3>
+                                                </Link>
                                                 <h5>{new Date(item.postDate).toString().slice(0, 21)}</h5>
                                             </div>
                                         </div>
@@ -534,7 +538,7 @@ function HomeNewsFeed(props) {
                                             </div>
                                         </div>
                                     </div>
-                                    <Link style={{ textDecoration: "none"}} to={articleProps} onClick={() => localStorage.setItem("postID", item._id)}>
+                                    <Link style={{ textDecoration: "none", color: "black" }} to={articleProps} onClick={() => localStorage.setItem("postID", item._id)}>
                                         <p className="post-author-description">{item.postDescription}</p>
                                         <div className="post-news-preview">
                                             <a href={item.articleURL} target="_blank" rel="noreferrer nofollow">
@@ -576,7 +580,11 @@ function HomeNewsFeed(props) {
                                             <div className="post-author-left">
                                                 <img className="author-profile-pic" src={item.author === props.username ? localStorage.getItem("profilePicture") : item.authorProfilePicture} alt=""/>
                                                 <div className="post-author-details">
-                                                    <h3>{item.author}</h3>
+                                                    <Link 
+                                                        to={{pathname: "/search", clickedUsername: item.author}}
+                                                        style={{ textDecoration: "none", color: "#404d72"}}>
+                                                            <h3>{item.author}</h3>
+                                                    </Link>
                                                     <h5>{new Date(item.postDate).toString().slice(0, 21)}</h5>
                                                 </div>
                                             </div>
