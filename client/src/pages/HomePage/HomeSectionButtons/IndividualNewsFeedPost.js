@@ -57,7 +57,7 @@ function IndividualNewsFeedPost(props) {
     };
 
     const submitNewComment = async (comment) => {
-        const ID = props.location.postObject._id === undefined ? localStorage.getItem("postID") : props.location.postObject._id 
+        const ID = props.location.postObject === undefined ? localStorage.getItem("postID") : props.location.postObject._id;
         try {
             const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/postComment/${ID}`, 
             {
