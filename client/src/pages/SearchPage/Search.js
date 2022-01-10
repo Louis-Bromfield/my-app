@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Search.css';
 import FakeProfilePic2 from '../../media/ProfileP.png';
@@ -37,6 +37,13 @@ function Search() {
     const [worstChangedMe, setWorstChangedMe] = useState(false);
     const [selectedStats, setSelectedStats] = useState("selected");
     const [selectedStats2, setSelectedStats2] = useState("unselected");
+
+    useEffect(() => {
+        console.log(props);
+        if (props.location.clickedUsername !== undefined) {
+            retrievePlayerInfo(props.location.clickedUsername);
+        };
+    }, []);
 
     const retrieveUserRankFromDB = async (username) => {
         try {

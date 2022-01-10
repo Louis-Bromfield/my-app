@@ -168,23 +168,35 @@ function IndividualNewsFeedPost(props) {
                         if (Array.isArray(item)) {
                             return (
                                 item.map((subComment, subIndex) => {
+                                    const usernameProps = {
+                                        pathname: "/search",
+                                        clickedUsername: subComment.author
+                                    }
                                     return (
                                         <div 
                                             key={subIndex}
                                             className="comment-in-chain">
-                                                <h4 className="comment-author">{subComment.author}</h4>
+                                                <Link to={usernameProps}>
+                                                    <h4 className="comment-author">{subComment.author}</h4>
+                                                </Link>
                                                 <h4>{subComment.comment}</h4>
                                         </div>
                                     )
                                 })
                             ) 
                         } else if (typeof item === "object") {
+                            const usernameProps = {
+                                pathname: "/search",
+                                clickedUsername: item.author
+                            }
                             return (
                                 <div 
                                     key={index}
                                     className="comment-no-replies">
                                         <div className="author-details">
-                                            <h4 className="comment-author">{item.author}</h4>
+                                            <Link to={usernameProps}>
+                                                <h4 className="comment-author">{item.author}</h4>
+                                            </Link>
                                         </div>
                                         <h4>{item.comment}</h4>
                                 </div>
