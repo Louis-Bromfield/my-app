@@ -201,7 +201,9 @@ function IndividualNewsFeedPost(props) {
                                     key={index}
                                     className="comment-no-replies">
                                         <div className="author-details">
-                                            <Link to={usernameProps}>
+                                            <Link 
+                                                to={usernameProps}
+                                                onClick={() => localStorage.setItem("selectedPage", "Search")}>
                                                 <h4 className="comment-author">{item.author}</h4>
                                             </Link>
                                         </div>
@@ -212,7 +214,12 @@ function IndividualNewsFeedPost(props) {
                     })}
                     {newCommentStatus === true && 
                         <div className="comment-in-chain">
-                            <h4 className="comment-author">{localStorage.getItem("username")}</h4>
+                            <Link 
+                                to={{pathname: "/search", clickedUsername: author}}
+                                onClick={() => localStorage.setItem("selectedPage", "Search")}
+                                style={{ textDecoration: "none", color: "#404d72"}}>
+                                    <h4 className="comment-author">{localStorage.getItem("username")}</h4>
+                            </Link>
                             <h4>{newCommentToRender}</h4>
                         </div>
                     }
