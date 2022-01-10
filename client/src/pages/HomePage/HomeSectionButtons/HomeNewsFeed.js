@@ -504,6 +504,7 @@ function HomeNewsFeed(props) {
                                             <div className="post-author-details">
                                                 <Link 
                                                     to={{pathname: "/search", clickedUsername: item.author}}
+                                                    onClick={() => localStorage.setItem("selectedPage", "Search")}
                                                     style={{ textDecoration: "none", color: "#404d72"}}>
                                                         <h3>{item.author}</h3>
                                                 </Link>
@@ -582,6 +583,7 @@ function HomeNewsFeed(props) {
                                                 <div className="post-author-details">
                                                     <Link 
                                                         to={{pathname: "/search", clickedUsername: item.author}}
+                                                        onClick={() => localStorage.setItem("selectedPage", "Search")}
                                                         style={{ textDecoration: "none", color: "#404d72"}}>
                                                             <h3>{item.author}</h3>
                                                     </Link>

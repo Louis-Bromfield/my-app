@@ -107,6 +107,7 @@ function IndividualNewsFeedPost(props) {
                             <div className="post-author-details">
                                 <Link 
                                     to={{pathname: "/search", clickedUsername: author}}
+                                    onClick={() => localStorage.setItem("selectedPage", "Search")}
                                     style={{ textDecoration: "none", color: "#404d72"}}>
                                         <h3>{author}</h3>
                                 </Link>
@@ -180,7 +181,9 @@ function IndividualNewsFeedPost(props) {
                                         <div 
                                             key={subIndex}
                                             className="comment-in-chain">
-                                                <Link to={usernameProps}>
+                                                <Link 
+                                                    to={usernameProps}
+                                                    onClick={() => localStorage.setItem("selectedPage", "Search")}>
                                                     <h4 className="comment-author">{subComment.author}</h4>
                                                 </Link>
                                                 <h4>{subComment.comment}</h4>
