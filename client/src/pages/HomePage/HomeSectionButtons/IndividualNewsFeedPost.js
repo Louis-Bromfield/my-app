@@ -105,7 +105,11 @@ function IndividualNewsFeedPost(props) {
                         <div className="post-author-left">
                             <img className="author-profile-pic" src={author === localStorage.getItem("username") ? localStorage.getItem("profilePicture") : authorProfilePicture} alt=""/>
                             <div className="post-author-details">
-                                <h3>{author}</h3>
+                                <Link 
+                                    to={{pathname: "/search", clickedUsername: author}}
+                                    style={{ textDecoration: "none", color: "#404d72"}}>
+                                        <h3>{author}</h3>
+                                </Link>
                                 <h5>{new Date(postDate).toString().slice(0, 21)}</h5>
                             </div>
                         </div>
