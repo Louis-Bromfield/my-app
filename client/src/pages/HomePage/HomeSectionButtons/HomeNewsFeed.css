@@ -267,9 +267,6 @@
         padding-bottom: 6vh;
         margin-bottom: 1vh;
     }
-    .post-author-left > img {
-        width: 40%;
-    }
     .post-markets > h4 {
         font-size: 0.85em;
     }
@@ -293,6 +290,9 @@
     }
     .create-post-button {
         font-size: 1.1em;
+    }
+    .post-author-left > img {
+        width: 30%;
     }
 }
 
