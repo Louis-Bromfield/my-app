@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './IndividualNewsFeedPost.css';
 import * as AiIcons from 'react-icons/ai';
 import ImagePlaceholder from '../../../media/sd.png';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 
 function IndividualNewsFeedPost(props) {
