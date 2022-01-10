@@ -5,7 +5,7 @@ import FakeProfilePic2 from '../../media/ProfileP.png';
 import { Line } from 'react-chartjs-2';
 import ReactLoading from 'react-loading';
 
-function Search() {
+function Search(props) {
     const [markets, setMarkets] = useState("");
     const [index, setIndex] = useState();
     const [searchName, setSearchName] = useState("");
