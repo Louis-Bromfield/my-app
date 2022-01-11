@@ -1,6 +1,7 @@
 .home-header-intro {
     height: 10%;
     margin-bottom: 2vh;
+    color: red;
 }
 
 @media (max-width: 1500px) {
