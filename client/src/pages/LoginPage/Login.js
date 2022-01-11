@@ -143,7 +143,7 @@ function Login(props) {
                     <input type="email" className="input-field" placeholder="Enter Your Email Address" onChange={(e) => handleNewEmailAddressChange(e)} />
                     <h3 className="form-title">Profile Picture:</h3>
                     <input type="file" className="input-field-photo" onChange={(e) => handleNewProfilePictureChange(e)} />
-                    <h4 style={{ color: "#fff" }}>Your username, password and profile picture can all be updated from your profile page.</h4>
+                    <h4 className="extra-text" style={{ color: "#fff" }}>Your username, password and profile picture can all be updated from your profile page.</h4>
                     <button className="signup-btn" onClick={() => createAccount(newUsername, newPassword, newFullName, newEmailAddress, newProfilePicture)}>Create Account</button>
                     {createAccountError !== "" && <h3 className="error-message">{createAccountError}</h3>}
                     {createAccountText !== "" && <h3 className="text-message">{createAccountText}</h3>}
