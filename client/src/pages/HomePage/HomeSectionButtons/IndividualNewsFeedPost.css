@@ -203,8 +203,16 @@
     .individual-news-feed-post {
         padding-bottom: 3vh;
     }
-    .post-author-left > img {
+    /* .post-author-left > img {
         width: 40%;
         height: 80%;
+    } */
+    .comment-submit-field {
+        height: 4vh;
+        margin-bottom: 1vh;
+    }
+    .submit-comment-btn {
+        font-size: 0.6em;
+        /* height: 4vh; */
     }
 } 
