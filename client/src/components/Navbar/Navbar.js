@@ -24,6 +24,8 @@ function Navbar(props) {
     };
 
     useEffect(() => {
+        setWidth(window.innerWidth > 1350);
+        setMobileWidth(window.innerWidth <= 650);
         window.addEventListener("resize", updateWidth);
         return () => window.addEventListener("resize", updateWidth);
     });
