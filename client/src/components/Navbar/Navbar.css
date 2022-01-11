@@ -326,12 +326,3 @@ span {
     color: #fff;
     text-decoration: overline;
 }
-
-.mobile-nav-logout-btn {
-    background-color: #fff;
-    color: #404d72;
-    border: 1px solid #404d72;
-    padding: 1%;
-    margin-left: 9vw;
-    width: 50%;
-}

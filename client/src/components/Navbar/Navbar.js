@@ -8,6 +8,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import FantasyForecastLogo from '../../media/sd2.png';
 
+
 function Navbar(props) {
     const [selectedPage, setSelectedPage] = useState("Home");
     const [width, setWidth] = useState(window.innerWidth > 1100);
@@ -76,16 +77,6 @@ function Navbar(props) {
                                 );
                             };
                     })}
-                    <li>
-                        <button 
-                            className="mobile-nav-logout-btn" 
-                            onClick={() => {
-                                signOut(props.logOut); 
-                                history.push("/")
-                            }}>
-                                Log Out
-                        </button>
-                    </li>
                     </ul>
                 </nav>
             </IconContext.Provider>   
