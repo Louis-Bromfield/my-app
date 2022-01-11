@@ -200,4 +200,7 @@
     .individual-post-container {
         width: 80%;
     }
+    .individual-news-feed-post {
+        padding-bottom: 3vh;
+    }
 } 
