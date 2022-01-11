@@ -203,4 +203,8 @@
     .individual-news-feed-post {
         padding-bottom: 3vh;
     }
+    .post-author-left > img {
+        width: 40%;
+        height: 80%;
+    }
 } 
