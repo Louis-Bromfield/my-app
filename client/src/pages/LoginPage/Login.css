@@ -9,7 +9,7 @@
 }
 
 .login-logo {
-    width: 20%;
+    width: 30%;
     margin-bottom: 5vh;
 }
 
@@ -79,4 +79,27 @@
 
 .text-message {
     color: rgb(100, 216, 100);
+}
+
+@media (max-width: 700px) {
+    .login-signup-container {
+        display: flex;
+        flex-direction: column;
+    }
+    .login-logo {
+        width: 60%;
+        margin-bottom: 0;
+    }
+    .form-title {
+        font-size: 1.5em;
+    }
+    .login-div > h3,
+    .signup-div > h3 {
+        font-size: 0.9em;
+    }
+    .extra-text {
+        text-align: center;
+        margin-top: 1vh;
+        margin-bottom: 1vh;
+    }
 }
