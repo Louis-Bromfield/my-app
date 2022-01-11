@@ -189,3 +189,12 @@
         height: 6vh;
     }
 }
+
+@media (max-width: 900px) {
+    .post-button {
+        width: 50%;
+        height: 90%;
+        padding: 1%;
+        font-size: 0.8em;
+    }
+}
