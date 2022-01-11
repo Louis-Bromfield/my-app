@@ -219,6 +219,6 @@
 
 @media (max-width: 480px) {
     .post-author-left > img {
-        width: 40%;
+        width: 25%;
     }
 }
