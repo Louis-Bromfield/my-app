@@ -217,7 +217,7 @@
     }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 480px) {
     .post-author-left > img {
         width: 40%;
     }
