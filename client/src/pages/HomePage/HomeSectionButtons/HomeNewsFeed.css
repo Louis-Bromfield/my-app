@@ -286,6 +286,9 @@
         width: 110%;
         font-size: 0.9em;
     }
+    .post-author-left > img {
+        width: 10%;
+    }
     .post-author-right {
         width: 130%;
         margin-left: -15vw;
@@ -298,9 +301,6 @@
     }
     .create-post-button {
         font-size: 1.1em;
-    }
-    .post-author-left > img {
-        width: 30%;
     }
 }
 
