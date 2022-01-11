@@ -204,7 +204,7 @@
         padding-bottom: 3vh;
     }
     .post-author-left > img {
-        /* width: 40%; */
+        width: 40%;
         height: 80%;
     }
     .comment-submit-field {
