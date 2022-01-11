@@ -12,6 +12,7 @@ import FantasyForecastLogo from '../../media/sd2.png';
 function Navbar(props) {
     const [selectedPage, setSelectedPage] = useState("Home");
     const [width, setWidth] = useState(window.innerWidth > 1100);
+    const [mobileWidth, setMobileWidth] = useState(window.innerWidth > 650);
     const [sidebar, setSidebar] = useState(false);
     const history = useHistory();
 
@@ -19,6 +20,7 @@ function Navbar(props) {
 
     const updateWidth = () => {
         setWidth(window.innerWidth > 1350);
+        setMobileWidth(window.innerWidth <= 650);
     };
 
     useEffect(() => {
@@ -32,7 +34,7 @@ function Navbar(props) {
 
     return (
         <>
-            {window.innerWidth <= 650 &&
+            {mobileWidth === true &&
                 <IconContext.Provider value={{ color: '#fff' }}>
                     <div className='mobile-navbar'>
                         <Link to='#' className='mobile-menu-bars'>
@@ -77,7 +79,7 @@ function Navbar(props) {
                 </nav>
             </IconContext.Provider>   
             }
-            {window.innerWidth > 650 &&
+            {mobileWidth === false &&
                 <IconContext.Provider value ={{ color: "#fff" }}>
                         {/* <nav className="nav-menu"> */}
                             <div className="navbar">
