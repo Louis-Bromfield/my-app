@@ -205,7 +205,7 @@
     }
     .post-author-left > img {
         width: 10%;
-        height: 105%;
+        /* height: 105%; */
     }
     .comment-submit-field {
         height: 4vh;
