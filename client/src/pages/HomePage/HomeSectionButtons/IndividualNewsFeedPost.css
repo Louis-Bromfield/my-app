@@ -216,3 +216,9 @@
         /* height: 4vh; */
     }
 }
+
+@media (max-width: 425px) {
+    .post-author-left > img {
+        width: 40%;
+    }
+}
