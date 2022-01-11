@@ -9,7 +9,7 @@
 }
 
 .login-logo {
-    width: 30%;
+    width: 20%;
     margin-bottom: 5vh;
 }
 
@@ -81,7 +81,7 @@
     color: rgb(100, 216, 100);
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
     .login-signup-container {
         display: flex;
         flex-direction: column;
