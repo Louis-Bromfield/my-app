@@ -204,7 +204,8 @@
         padding-bottom: 3vh;
     }
     .post-author-left > img {
-        width: 25%;
+        width: 10%;
+        height: 105%;
     }
     .comment-submit-field {
         height: 4vh;
@@ -214,4 +215,10 @@
         font-size: 0.6em;
         /* height: 4vh; */
     }
-} 
+}
+
+@media (max-width: 425px) {
+    .post-author-left > img {
+        width: 40%;
+    }
+}
