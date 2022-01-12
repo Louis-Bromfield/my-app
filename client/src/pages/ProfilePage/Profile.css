@@ -111,3 +111,89 @@
         text-align: center;
     }
 }
+
+@media (max-height: 950px) {
+    .profile-main-info {
+        margin-bottom: 5vh;
+    }
+}
+
+@media (max-height: 850px) {
+    .profile-main-info {
+        margin-bottom: 10vh;
+    }
+    .profile-profile-pic {
+        max-width: 70%;
+        min-width: 70%;
+    }
+}
+
+@media (max-height: 750px) {
+    .profile-main-info {
+        margin-bottom: 30vh;
+    }
+}
+
+@media (max-height: 650px) {
+    .profile-main-info {
+        margin-bottom: 40vh;
+    }
+    .profile-main-info {
+        grid-template-columns: 30% 70%;
+    }
+    .profile-profile-pic {
+        max-width: 60%;
+        min-width: 60%;
+    }
+}
+
+@media (max-height: 600px) {
+    .profile-main-info {
+        margin-bottom: 50vh;
+    }
+}
+
+@media (max-height: 550px) {
+    .profile-main-info {
+        margin-bottom: 60vh;
+    }
+}
+
+@media (max-height: 500px) {
+    .profile-main-info {
+        margin-bottom: 70vh;
+    }
+    .profile-main-info {
+        grid-template-columns: 20% 80%;
+    }
+}
+
+@media (max-height: 450px) {
+    .profile-main-info {
+        margin-bottom: 80vh;
+    }
+}
+
+@media (max-height: 400px) {
+    .profile-main-info {
+        margin-bottom: 90vh;
+    }
+}
+
+@media (max-height: 350px) {
+    .profile-main-info {
+        margin-bottom: 100vh;
+    }
+}
+
+@media (max-height: 300px) {
+    .profile-main-info {
+        margin-bottom: 105vh;
+    }
+}
+
+@media (max-height: 250px) {
+    .profile-main-info {
+        margin-bottom: 110vh;
+    }
+}

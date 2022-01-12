@@ -132,9 +132,6 @@ function ProfileDetails(props) {
                     </div>
                 </div>
             </div>
-            <div className="edit-profile-field">
-                <button className="delete-account-btn">Delete My Account</button>
-            </div>
         </div>
     )
 }
