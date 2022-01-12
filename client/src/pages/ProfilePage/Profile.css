@@ -102,8 +102,8 @@
     }
     .profile-profile-pic {
         margin: 0 auto;
-        max-width: 40%;
-        min-width: 40%;
+        max-width: 50%;
+        min-width: 50%;
         border: 2px solid #404d72;
         margin-top: 2vh;
     }
@@ -114,17 +114,17 @@
 
 @media (max-height: 950px) {
     .profile-main-info {
-        margin-bottom: 5vh;
+        margin-bottom: 10vh;
     }
 }
 
 @media (max-height: 850px) {
     .profile-main-info {
-        margin-bottom: 10vh;
+        margin-bottom: 30vh;
     }
     .profile-profile-pic {
-        max-width: 70%;
-        min-width: 70%;
+        max-width: 50%;
+        min-width: 50%;
     }
 }
 
