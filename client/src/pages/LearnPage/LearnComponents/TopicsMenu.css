@@ -36,3 +36,10 @@
     background-color: #404d75;
     color: #fff;
 }
+
+@media (max-width: 800px) {
+    .topics-menu {
+        position: relative;
+        width: 100%;
+    }
+}

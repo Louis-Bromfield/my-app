@@ -25,3 +25,17 @@
         font-size: 0.90em;
     }
 }
+
+@media (max-width: 800px) {
+    .learn {
+        font-size: 0.8em;
+    }
+    .learn-grid {
+        display: flex;
+        flex-direction: column;
+        row-gap: 2vh;
+    }
+    .topic-pane {
+        text-align: center;
+    }
+}
