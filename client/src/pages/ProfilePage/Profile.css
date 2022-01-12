@@ -79,6 +79,12 @@
 
 @media (max-width: 620px) {
     .profile {
+        width: 90%;
+    }
+    .main-profile-grid {
+        margin-left: -6vw;
+    }
+    .profile {
         font-size: 0.85em;
     }
     .profile-main-info {
@@ -86,13 +92,7 @@
     }
 }
 
-@media (max-width: 420px) {
-    .profile {
-        width: 90%;
-    }
-    .main-profile-grid {
-        margin-left: -6vw;
-    }
+@media (max-width: 450px) {
     .profile-main-info {
         display: grid;
         grid-template-columns: 100%;
