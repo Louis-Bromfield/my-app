@@ -64,7 +64,43 @@
         font-size: 1.8em;
     }
     /* .profile-profile-pic {
-        max-height: 300%;
-        min-height: 300%;
+        max-height: 80%;
+        min-height: 80%;
     } */
+}
+
+@media (max-width: 900px) {
+    .profile-main-info {
+        grid-template-columns: 40% 60%;
+        height: 30vh;
+        margin-bottom: 3vh;
+    }
+}
+
+@media (max-width: 620px) {
+    .profile {
+        font-size: 0.7em;
+    }
+    .profile-main-info {
+        margin-bottom: 5vh;
+    }
+}
+
+@media (max-width: 400px) {
+    .profile-main-info {
+        display: grid;
+        grid-template-columns: 100%;
+        row-gap: 15vh;
+        grid-template-rows: 20% 80%;
+        margin-bottom: 25vh;
+    }
+    .profile-profile-pic {
+        margin: 0 auto;
+        max-width: 50%;
+        min-width: 50%;
+        margin-top: 2vh;
+    }
+    .profile-summary {
+        text-align: center;
+    }
 }
