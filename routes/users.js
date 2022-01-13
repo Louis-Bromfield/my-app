@@ -312,6 +312,8 @@ router.patch("/calculateBrier/:problemName/:happenedStatus/:marketName/:closeEar
                     boost = 0.03 + (scoreChain/100);
                 }
                 newScorePerformanceBoosted = calculatedBriers[i].finalScore + (calculatedBriers[i].finalScore * boost);
+            } else {
+                newScorePerformanceBoosted = calculatedBriers[i].finalScore;
             };
             const toPush = {
                 brierScore: newScorePerformanceBoosted,
@@ -454,15 +456,15 @@ const calculateBriers = (forecastObj, happened) => {
             };
         };
         formulaComponents[i].brierSumPlusTScore = formulaComponents[i].finalBrierSum + formulaComponents[i].tScore;
-        // New 75 Boosting - temporarily removed for simplicity's sake
+        // Just 75 boosting
         // if (forecastObj.submittedForecasts[i].captainedStatus === true) {
         //     if (formulaComponents[i].brierSumPlusTScore >= 75) {
-        //         formulaComponents[i].brierSumPlusTScore = ((formulaComponents[i].finalBrierSum + formulaComponents[i].tScore)*2);
+        //         formulaComponents[i].brierSumPlusTScore = (formulaComponents[i].brierSumPlusTScore*2);
         //     } else if (formulaComponents[i].brierSumPlusTScore < 75) {
-        //         formulaComponents[i].brierSumPlusTScore = ((formulaComponents[i].finalBrierSum + formulaComponents[i].tScore)/2);
+        //         formulaComponents[i].brierSumPlusTScore = (formulaComponents[i].brierSumPlusTScore/2);
         //     };
         // };
-        arrToReturn[i].finalScore = Number((formulaComponents[i].finalBrierSumPlusTScore).toFixed(2));
+        arrToReturn[i].finalScore = formulaComponents[i].brierSumPlusTScore;
         arrToReturn[i].captainedStatus = forecastObj.submittedForecasts[i].captainedStatus;
     };
     return arrToReturn;
