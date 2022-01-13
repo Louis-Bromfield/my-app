@@ -29,7 +29,7 @@ const ClosedProblemModal = (props) => {
           <section className="modal-main">
             <img src={FFLogo} alt="" />
             <h3>We've closed some forecast problems! Go to My Forecasts and select the problem for a breakdown of your performance!</h3>
-            <h4>You will receive boosts for every consecutive problem where you score either 90 and above (unboosted) or 180 and above (boosted). 2 predictions in a row = 5% bonus, 3 prediction = 6%, and so on.</h4>
+            <h4>You will receive boosts for every consecutive problem where you score 75 or above. 2 predictions in a row = 5% bonus, 3 prediction = 6%, and so on.</h4>
             <button type="button" onClick={() => closeModal(props.userObj.username)} className="close-modal-btn">
                 Close
             </button>

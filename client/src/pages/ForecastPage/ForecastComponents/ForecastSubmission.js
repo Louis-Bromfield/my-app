@@ -183,6 +183,7 @@ console.log("Here1");
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             const forecastDetails = userDocument.data[0].brierScores.find(el => el.problemName === problemName);
             setClosedForecastScore(forecastDetails === undefined ? "No Forecast Submitted" : forecastDetails.brierScore.toFixed(0));
+            localStorage.setItem("closedForecastScore", forecastDetails.brierScore);
         } catch (error) {
             console.error("Error in ForecastSubmission > getBrierForClosedForecast");
             console.error(error);
@@ -554,7 +555,7 @@ console.log("Here1");
                                 </button>
                             }
                         </div>
-                        {userHasAttempted === true && 
+                        {/* {userHasAttempted === true && 
                             <div className="captain-a-problem-div">
                                 <h3>
                                     <FaInfoCircle 
@@ -565,7 +566,7 @@ console.log("Here1");
                                 </h3>
                                 <input type="checkbox" defaultChecked={userCaptainedProblem} onChange={() => handleCaptainChange(userCaptainedProblem, props.username)}/>
                             </div>
-                        }
+                        } */}
                         {(forecastResponseMessage === "Forecast successfully updated!" || forecastResponseMessage === "Forecast successfully submitted!") && 
                             <h3 className="forecast-message" style={{ color: "green" }}>{forecastResponseMessage}</h3>
                         }

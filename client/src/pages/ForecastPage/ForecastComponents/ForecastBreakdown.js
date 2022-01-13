@@ -113,9 +113,7 @@ function ForecastBreakdown(props) {
 
     let totalScore = 0;
     let totalIfHappenedNoBoost = 0;
-    let totalIfHappenedAndBoost = 0;
     let totalIfNotHappenedNoBoost = 0;
-    let totalIfNotHappenedAndBoost = 0;
     return (
         <div className="predictions-container">
             {showBreakdown === false && 
@@ -219,9 +217,9 @@ function ForecastBreakdown(props) {
                                         const duration = timeFormatter(item.duration);
                                         if (index === 1) {
                                             totalIfHappenedNoBoost += (item.newHappenedBrier * (item.percentageOfTimeAtThisScore/100));
-                                            totalIfHappenedAndBoost += item.happenedBrierWeightedAndCaptained;
+                                            // totalIfHappenedAndBoost += item.happenedBrierWeightedAndCaptained;
                                             totalIfNotHappenedNoBoost += (item.newNotHappenedBrier * (item.percentageOfTimeAtThisScore/100));
-                                            totalIfNotHappenedAndBoost += item.notHappenedBrierWeightedAndCaptained;
+                                            // totalIfNotHappenedAndBoost += item.notHappenedBrierWeightedAndCaptained;
                                             if (showForecastByForecastBreakdown === true) {
                                                 return (
                                                     <li key={index} className="prediction-li">
@@ -235,10 +233,10 @@ function ForecastBreakdown(props) {
                                                         <h3 style={{ color: "#404d72" }}>What Will This Forecast Score Me?</h3>
                                                         <h4>If this problem <u>does</u> happen: {item.newHappenedBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newHappenedBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
                                                         {/* <h4>If this problem does happen, and you boost your prediction, this forecast will score you: {item.newHappenedBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newHappenedBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4> */}
-                                                        <h4>If this problem <u>does</u> happen, and you boost this problem: {item.happenedBrierWeightedAndCaptained.toFixed(2)}</h4>
+                                                        {/* <h4>If this problem <u>does</u> happen, and you boost this problem: {item.happenedBrierWeightedAndCaptained.toFixed(2)}</h4> */}
                                                         <h4>If this problem does <u>not</u> happen: {item.newNotHappenedBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newNotHappenedBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
                                                         {/* <h4>If this problem does not happen, and you boost your prediction,  this forecast will score you: {item.newNotHappenedBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newNotHappenedBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4> */}
-                                                        <h4>If this problem does <u>not</u> happen, and you boost this problem: {item.notHappenedBrierWeightedAndCaptained.toFixed(2)}</h4>
+                                                        {/* <h4>If this problem does <u>not</u> happen, and you boost this problem: {item.notHappenedBrierWeightedAndCaptained.toFixed(2)}</h4> */}
                                                         <br />
                                                         <h2 style={{ color: "#404d72"}}>Time Score - {tScore.toFixed(2)} / 10</h2>
                                                         <h4>As this was your first prediction, it determines your Time Score (aka how early was this prediction made?)</h4>
@@ -249,9 +247,9 @@ function ForecastBreakdown(props) {
                                             } else return null;
                                         } else {
                                             totalIfHappenedNoBoost += (item.newHappenedBrier * (item.percentageOfTimeAtThisScore/100));
-                                            totalIfHappenedAndBoost += item.happenedBrierWeightedAndCaptained;
+                                            // totalIfHappenedAndBoost += item.happenedBrierWeightedAndCaptained;
                                             totalIfNotHappenedNoBoost += (item.newNotHappenedBrier * (item.percentageOfTimeAtThisScore/100));
-                                            totalIfNotHappenedAndBoost += item.notHappenedBrierWeightedAndCaptained;
+                                            // totalIfNotHappenedAndBoost += item.notHappenedBrierWeightedAndCaptained;
                                             if (showForecastByForecastBreakdown === true) {
                                                 return (
                                                     <li key={index} className="prediction-li">
@@ -265,10 +263,10 @@ function ForecastBreakdown(props) {
                                                         <h3 style={{ color: "#404d72" }}>What Will This Forecast Score Me?</h3>
                                                         <h4>If this problem <u>does</u> happen: {item.newHappenedBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newHappenedBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
                                                         {/* <h4>If this problem does happen, and you boost your prediction, this forecast will score you: {item.newHappenedBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newHappenedBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4> */}
-                                                        <h4>If this problem <u>does</u> happen, and you boost this problem: {item.happenedBrierWeightedAndCaptained.toFixed(2)}</h4>
+                                                        {/* <h4>If this problem <u>does</u> happen, and you boost this problem: {item.happenedBrierWeightedAndCaptained.toFixed(2)}</h4> */}
                                                         <h4>If this problem does <u>not</u> happen: {item.newNotHappenedBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newNotHappenedBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
                                                         {/* <h4>If this problem does not happen, and you boost your prediction,  this forecast will score you: {item.newNotHappenedBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newNotHappenedBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4> */}
-                                                        <h4>If this problem does <u>not</u> happen, and you boost this problem: {item.notHappenedBrierWeightedAndCaptained.toFixed(2)}</h4>
+                                                        {/* <h4>If this problem does <u>not</u> happen, and you boost this problem: {item.notHappenedBrierWeightedAndCaptained.toFixed(2)}</h4> */}
                                                         <br />
                                                         <hr />
                                                     </li>
@@ -281,9 +279,7 @@ function ForecastBreakdown(props) {
                             <ForecastResultsBreakdown 
                                 forecastClosed={false}
                                 totalIfHappenedNoBoost={totalIfHappenedNoBoost}
-                                totalIfHappenedAndBoost={totalIfHappenedAndBoost}
                                 totalIfNotHappenedNoBoost={totalIfNotHappenedNoBoost}
-                                totalIfNotHappenedAndBoost={totalIfNotHappenedAndBoost}
                                 tScore={tScore}                                
                             />
                         </div>

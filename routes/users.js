@@ -391,27 +391,27 @@ const calculateBriers = (forecastObj, happened) => {
                     let percentageOfTimeAtThisScore = ((duration/forecastTimeFrame)*100);
 
                     // Boosting
-                    if (forecastObj.submittedForecasts[i].captainedStatus === true) {
-                        if (happened === true) {
-                            if (forecastObj.submittedForecasts[i].forecasts[j].certainty > 0.5) {
-                                newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))*2);
-                            } else if (forecastObj.submittedForecasts[i].forecasts[j].certainty < 0.5) {
-                                newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))/2);
-                            } else {
-                                newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
-                            }
-                        } else if (happened === false) {
-                            if (forecastObj.submittedForecasts[i].forecasts[j].certainty > 0.5) {
-                                newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))/2);
-                            } else if (forecastObj.submittedForecasts[i].forecasts[j].certainty < 0.5) {
-                                newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))*2);
-                            } else {
-                                newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
-                            }
-                        }
-                    } else if (forecastObj.submittedForecasts[i].captainedStatus === false) {
+                    // if (forecastObj.submittedForecasts[i].captainedStatus === true) {
+                    //     if (happened === true) {
+                    //         if (forecastObj.submittedForecasts[i].forecasts[j].certainty > 0.5) {
+                    //             newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))*2);
+                    //         } else if (forecastObj.submittedForecasts[i].forecasts[j].certainty < 0.5) {
+                    //             newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))/2);
+                    //         } else {
+                    //             newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
+                    //         }
+                    //     } else if (happened === false) {
+                    //         if (forecastObj.submittedForecasts[i].forecasts[j].certainty > 0.5) {
+                    //             newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))/2);
+                    //         } else if (forecastObj.submittedForecasts[i].forecasts[j].certainty < 0.5) {
+                    //             newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))*2);
+                    //         } else {
+                    //             newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
+                    //         }
+                    //     }
+                    // } else if (forecastObj.submittedForecasts[i].captainedStatus === false) {
                         newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
-                    }
+                    // }
                     sumOfNewWeightedBriers = sumOfNewWeightedBriers + newBrierWeightedByDuration;
                 }
                 else if (j === forecastObj.submittedForecasts[i].forecasts.length-1) {
@@ -420,27 +420,27 @@ const calculateBriers = (forecastObj, happened) => {
                     let percentageOfTimeAtThisScore = ((duration/forecastTimeFrame)*100);
 
                     // Boosting
-                    if (forecastObj.submittedForecasts[i].captainedStatus === true) {
-                        if (happened === true) {
-                            if (forecastObj.submittedForecasts[i].forecasts[j].certainty > 0.5) {
-                                newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))*2);
-                            } else if (forecastObj.submittedForecasts[i].forecasts[j].certainty < 0.5) {
-                                newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))/2);
-                            } else {
-                                newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
-                            }
-                        } else if (happened === false) {
-                            if (forecastObj.submittedForecasts[i].forecasts[j].certainty > 0.5) {
-                                newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))/2);
-                            } else if (forecastObj.submittedForecasts[i].forecasts[j].certainty < 0.5) {
-                                newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))*2);
-                            } else {
-                                newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
-                            }
-                        }
-                    } else if (forecastObj.submittedForecasts[i].captainedStatus === false) {
+                    // if (forecastObj.submittedForecasts[i].captainedStatus === true) {
+                    //     if (happened === true) {
+                    //         if (forecastObj.submittedForecasts[i].forecasts[j].certainty > 0.5) {
+                    //             newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))*2);
+                    //         } else if (forecastObj.submittedForecasts[i].forecasts[j].certainty < 0.5) {
+                    //             newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))/2);
+                    //         } else {
+                    //             newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
+                    //         }
+                    //     } else if (happened === false) {
+                    //         if (forecastObj.submittedForecasts[i].forecasts[j].certainty > 0.5) {
+                    //             newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))/2);
+                    //         } else if (forecastObj.submittedForecasts[i].forecasts[j].certainty < 0.5) {
+                    //             newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))*2);
+                    //         } else {
+                    //             newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
+                    //         }
+                    //     }
+                    // } else if (forecastObj.submittedForecasts[i].captainedStatus === false) {
                         newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
-                    }
+                    // }
 
                     sumOfNewWeightedBriers = sumOfNewWeightedBriers + newBrierWeightedByDuration;
                     formulaComponents[i].finalBrierSum = sumOfNewWeightedBriers;
@@ -454,7 +454,15 @@ const calculateBriers = (forecastObj, happened) => {
             };
         };
         formulaComponents[i].brierSumPlusTScore = formulaComponents[i].finalBrierSum + formulaComponents[i].tScore;
-        arrToReturn[i].finalScore = Number((formulaComponents[i].finalBrierSum + formulaComponents[i].tScore).toFixed(2));
+        // New 75 Boosting - temporarily removed for simplicity's sake
+        // if (forecastObj.submittedForecasts[i].captainedStatus === true) {
+        //     if (formulaComponents[i].brierSumPlusTScore >= 75) {
+        //         formulaComponents[i].brierSumPlusTScore = ((formulaComponents[i].finalBrierSum + formulaComponents[i].tScore)*2);
+        //     } else if (formulaComponents[i].brierSumPlusTScore < 75) {
+        //         formulaComponents[i].brierSumPlusTScore = ((formulaComponents[i].finalBrierSum + formulaComponents[i].tScore)/2);
+        //     };
+        // };
+        arrToReturn[i].finalScore = Number((formulaComponents[i].finalBrierSumPlusTScore).toFixed(2));
         arrToReturn[i].captainedStatus = forecastObj.submittedForecasts[i].captainedStatus;
     };
     return arrToReturn;
