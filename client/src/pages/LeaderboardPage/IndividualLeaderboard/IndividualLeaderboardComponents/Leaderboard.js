@@ -17,7 +17,7 @@ function Leaderboard(props) {
             if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
                 let ffRankings = [];
                 for (let i = 0; i < rankings.length; i++) {
-                    const userDocumentFF = await axios.get(`http://localhost:5000/users/${rankings[i].username}`);
+                    const userDocumentFF = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${rankings[i].username}`);
 
                     if (userDocumentFF.data[0].username === props.username) {
                         props.setUserInMarket(true);
@@ -49,7 +49,7 @@ function Leaderboard(props) {
             };
             let totalAverageBrier = 0;
             for (let i = 0; i < rankings.length; i++) {
-                const userDocument = await axios.get(`http://localhost:5000/users/${rankings[i].username}`);
+                const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${rankings[i].username}`);
 
                 if (userDocument.data[0].username === props.username) {
                     props.setUserInMarket(true);
