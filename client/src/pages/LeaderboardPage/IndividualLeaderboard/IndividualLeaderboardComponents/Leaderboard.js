@@ -112,7 +112,9 @@ function Leaderboard(props) {
                         if (item.username === props.username) {
                             return (
                                 <tr className="leaderboard-row-matching-username" key={index}>
-                                    <td className="leaderboard-rank-data">{index+1}</td>
+                                    <td className="leaderboard-rank-data">
+                                        {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1}
+                                    </td>
                                     <td className="leaderboard-username-data">
                                         <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic"/>
                                         {item.username}
@@ -139,7 +141,9 @@ function Leaderboard(props) {
                         } else if (item.username !== props.username && item.acceptedInvite === true) {
                             return (
                                 <tr className="leaderboard-row" key={index}>
-                                    <td className="leaderboard-rank-data">{index+1}</td>
+                                    <td className="leaderboard-rank-data">
+                                        {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1}
+                                    </td>
                                     <td className="leaderboard-username-data">
                                         <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic"/>
                                         {item.username}
@@ -213,7 +217,9 @@ function Leaderboard(props) {
                         if (item.username === props.username) {
                             return (
                                 <tr className="leaderboard-row-matching-username" key={index}>
-                                    <td className="leaderboard-rank-data">{index+1}</td>
+                                    <td className="leaderboard-rank-data">
+                                        {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1}
+                                    </td>
                                     <td className="leaderboard-username-data">
                                         <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic"/>
                                         {item.username}
@@ -240,7 +246,9 @@ function Leaderboard(props) {
                         } else if (item.username !== props.username) {
                             return (
                                 <tr className="leaderboard-row" key={index}>
-                                    <td className="leaderboard-rank-data">{index+1}</td>
+                                    <td className="leaderboard-rank-data">
+                                        {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1}
+                                    </td>
                                     <td className="leaderboard-username-data">
                                         <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic"/>
                                         {item.username}
