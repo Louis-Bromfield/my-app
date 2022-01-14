@@ -101,7 +101,7 @@ function Search(props) {
                 retrieveUserRankFromDB(username);
                 setPlayerUsername(userDocument.data[0].username);
                 setPlayerName(userDocument.data[0].name);
-                setPlayerPoints(userDocument.data[0].fantasyForecastPoints);
+                setPlayerPoints(userDocument.data[0].fantasyForecastPoints.toFixed(0));
                 formatMarketsString(userDocument.data[0].markets);
                 setPlayerProfilePic(userDocument.data[0].profilePicture);
             };
