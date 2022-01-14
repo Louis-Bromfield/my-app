@@ -98,7 +98,7 @@ function Leaderboard(props) {
     return (
         <div className="leaderboard">
             <table className="leaderboard-table">
-            {(props.isFFLeaderboard === false || props.leaderboardTitle !== "Fantasy Forecast All-Time") &&
+            {(props.isFFLeaderboard === true && props.leaderboardTitle !== "Fantasy Forecast All-Time") &&
                 <tbody>
                     {console.log("Here1")}
                     <tr className="leaderboard-title-row">

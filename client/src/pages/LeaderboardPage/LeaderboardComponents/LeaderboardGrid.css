@@ -21,6 +21,7 @@
 @media (max-width: 600px) {
     .leaderboard-grid {
         grid-template-columns: 100%;
-        grid-template-rows: 20vh;
+        grid-template-rows: 18vh;
+        row-gap: 2vh;
     }
 }

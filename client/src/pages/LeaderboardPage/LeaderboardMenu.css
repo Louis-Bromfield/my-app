@@ -134,6 +134,7 @@
 
 .player-li {
     margin-left: 2vw;
+    list-style: none;
 }
 
 .response-div {
@@ -227,4 +228,68 @@
 .markets-legend {
     display: flex;
     flex-direction: row;
+}
+
+@media (max-width: 950px) {
+    .market-div {
+        width: 40%;
+    }
+}
+
+@media (max-width: 600px) {
+    .your-markets-button-div {
+        width: 100%;
+        height: 15vh;
+        display: flex;
+        flex-direction: column;
+        row-gap: 1vh;
+    }
+    .join-a-market-btn,
+    .close-btn,
+    .manage-your-invites-btn,
+    .create-a-league-btn {
+        width: 100%;
+        height: 30%;
+    }
+    .create-a-league-div {
+        font-size: 0.9em;
+    }
+    .create-a-league-form {
+        text-align: center;
+    }
+    .team-name-input {
+        width: 90%;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .friends-invite-list {
+        grid-template-columns: repeat(auto-fill, 40%);
+        column-gap: 5%;
+    }
+    .public-private-explainer {
+        font-size: 0.9em;
+        padding: 5%;
+        padding-top: 0%;
+    }
+    .public-private-container {
+        width: 75%;
+    }
+    .submit-markets-btn,
+    .confirm-create-league-btn {
+        width: 60%;
+        margin: 1%;
+    }
+    .markets-legend {
+        font-size: 0.95em;
+    }
+    .market-div {
+        margin: 0 auto;
+        margin-top: 1vh;
+        width: 90%;
+        padding: 5%;
+    }
+    .manage-your-invites-div,
+    .market-sign-up-div {
+        font-size: 0.9em;
+    }
 }

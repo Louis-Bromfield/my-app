@@ -471,7 +471,7 @@ function LeaderboardMenu(props) {
                         </div>
                         <br />
                         <h3>Public or Private?</h3>
-                        <h4>A public leaderboard means it will be visible for all users in the section below labelled "All Markets offered by Fantasy Forecast".
+                        <h4 className="public-private-explainer">A public leaderboard means it will be visible for all users in the section below labelled "All Markets offered by Fantasy Forecast".
                             A private leaderboard is one that is only visible to members of the leaderboard, who will be able to see it in the section labelled "Your Markets".
                             Regardless of public or private, other players will still need to request to join or accept an invite from a current member.
                         </h4>

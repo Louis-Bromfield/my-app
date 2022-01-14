@@ -49,3 +49,17 @@
         font-size: 0.9em;
     }
 }
+
+@media (max-width: 600px) {
+    .leaderboard-shortcut,
+    .leaderboard-shortcut-blue,
+    .leaderboard-shortcut-red {
+        width: 60%;
+        height: 100%;
+    }
+    img {
+        min-width: 40%;
+        max-width: 40%;
+        height: 80%;
+    }
+}
