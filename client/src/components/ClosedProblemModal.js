@@ -29,7 +29,7 @@ const ClosedProblemModal = (props) => {
           <section className="modal-main">
             <img src={FFLogo} alt="" />
             <h3>We've closed some forecast problems! Go to My Forecasts and select the problem for a breakdown of your performance!</h3>
-            <h4>You will receive boosts for every consecutive problem where you score 75 or above. 2 predictions in a row = 5% bonus, 3 prediction = 6%, and so on.</h4>
+            <h4>You will receive boosts for every consecutive problem where you score 75+. 2 predictions in a row = 5% bonus, 3 prediction = 6%, and so on.</h4>
             <button type="button" onClick={() => closeModal(props.userObj.username)} className="close-modal-btn">
                 Close
             </button>
@@ -69,7 +69,7 @@ const ClosedProblemModal = (props) => {
                                 {item.performanceBoost > 1 &&
                                     <div className="boost-div">
                                         <h3>
-                                            As you are on a {item.performanceBoost}x streak of scoring 90 or above (or 180 or above on boosted predictions), you received a Boost of&nbsp;
+                                            As you are on a {item.performanceBoost}x streak of scoring 75 or above in this market, you received a Boost of&nbsp;
                                         </h3>
                                         <h3 style={{ color: "orange"}}>
                                             {3+item.performanceBoost}% ({(item.brierScore - (item.brierScore / (100 + (3+item.performanceBoost)) * 100)).toFixed(2)} points)
@@ -114,7 +114,7 @@ const ClosedProblemModal = (props) => {
                                 {item.performanceBoost > 1 &&
                                     <div className="boost-div">
                                         <h3>
-                                            As you are on a {item.performanceBoost}x streak of scoring 90 or above (or 180 or above on boosted predictions), you received a Boost of&nbsp;
+                                            As you are on a {item.performanceBoost}x streak of scoring 75 or above in this market, you received a Boost of&nbsp;
                                         </h3>
                                         <h3 style={{ color: "orange"}}>
                                             {3+item.performanceBoost}% ({(item.brierScore - (item.brierScore / (100 + (3+item.performanceBoost)) * 100)).toFixed(2)} points)
