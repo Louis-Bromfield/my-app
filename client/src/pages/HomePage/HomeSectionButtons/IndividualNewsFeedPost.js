@@ -35,7 +35,7 @@ function IndividualNewsFeedPost(props) {
             setArticleTitle(res.data.articleTitle);
             setArticleURL(res.data.articleURL);
             setMarkets(res.data.markets);
-            setComments(res.data.comments);
+            setComments(res.data.comments.reverse());
         } else {
             setAuthor(props.location.postObject.author);
             setAuthorProfilePicture(props.location.postObject.authorProfilePicture);
@@ -47,7 +47,7 @@ function IndividualNewsFeedPost(props) {
             setArticleTitle(props.location.postObject.articleTitle);
             setArticleURL(props.location.postObject.articleURL);
             setMarkets(props.location.postObject.markets);
-            setComments(props.location.postObject.comments);
+            setComments(props.location.postObject.comments.reverse());
         }
     }, []);
 
@@ -168,6 +168,17 @@ function IndividualNewsFeedPost(props) {
                     </button>
                 </div>
                 <div className="comments-sub-container">
+                    {newCommentStatus === true && 
+                        <div className="comment-in-chain">
+                            <Link 
+                                to={{pathname: "/search", clickedUsername: author}}
+                                onClick={() => localStorage.setItem("selectedPage", "Search")}
+                                style={{ textDecoration: "none", color: "#404d72"}}>
+                                    <h4 className="comment-author">{localStorage.getItem("username")}</h4>
+                            </Link>
+                            <h4>{newCommentToRender}</h4>
+                        </div>
+                    }
                     {comments.map((item, index) => {
                         if (Array.isArray(item)) {
                             return (
@@ -211,17 +222,6 @@ function IndividualNewsFeedPost(props) {
                             )
                         } else return null;
                     })}
-                    {newCommentStatus === true && 
-                        <div className="comment-in-chain">
-                            <Link 
-                                to={{pathname: "/search", clickedUsername: author}}
-                                onClick={() => localStorage.setItem("selectedPage", "Search")}
-                                style={{ textDecoration: "none", color: "#404d72"}}>
-                                    <h4 className="comment-author">{localStorage.getItem("username")}</h4>
-                            </Link>
-                            <h4>{newCommentToRender}</h4>
-                        </div>
-                    }
                 </div>
             </div>
         </div>
