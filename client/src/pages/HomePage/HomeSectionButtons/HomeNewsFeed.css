@@ -287,7 +287,9 @@
         font-size: 0.9em;
     }
     .post-author-left > img {
-        width: 10%;
+        width: 15%;
+        max-width: 15%;
+        min-width: 15%;
     }
     .post-author-right {
         width: 130%;
