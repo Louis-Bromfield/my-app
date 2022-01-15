@@ -16,7 +16,12 @@ function UserToInvite(props) {
             key={props.username}
             onClick={handleClick}
         >
-            <img className="invite-user-profile-picture" src={props.ProfileP} alt="User profile pic" />
+            {window.innerWidth >= 1000 && 
+                <img 
+                className="invite-user-profile-picture" 
+                src={props.ProfileP} 
+                alt="User profile pic" 
+            />}
             <h4>{props.username}</h4>
         </div>
         }
@@ -26,7 +31,12 @@ function UserToInvite(props) {
             key={props.username}
             onClick={handleClick}
         >
-            <img className="invite-user-profile-picture"src={props.ProfileP} alt="User profile pic" />
+            {window.innerWidth >= 1000 && 
+                <img 
+                className="invite-user-profile-picture" 
+                src={props.ProfileP} 
+                alt="User profile pic" 
+            />}
             <h4>{props.username}</h4>
         </div>
         }
