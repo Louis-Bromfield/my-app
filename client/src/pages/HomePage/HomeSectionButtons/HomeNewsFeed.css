@@ -304,6 +304,11 @@
     .create-post-button {
         font-size: 1.1em;
     }
+    .post-author-left > img {
+        width: 20%;
+        max-width: 20%;
+        min-width: 20%;
+    }
 }
 
 .post-control-btn[animation='1'] {
