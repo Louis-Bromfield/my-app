@@ -22,11 +22,11 @@
     border-bottom: 1px solid lightgray;
 }
 
-.leaderboard-title-row > th,
-.leaderboard-row > td,
-.leaderboard-row-matching-username > td {
+/* .leaderboard-title-row > th, */
+/* .leaderboard-row > td, */
+/* .leaderboard-row-matching-username > td { */
     /* border-left: 1px solid lightgrey; */
-}
+/* } */
 
 .leaderboard-title-row > th:first-child,
 .leaderboard-row > td:first-child,
@@ -111,5 +111,31 @@
     }
     .leaderboards-profile-pic {
         width: 5%;
+    }
+}
+
+@media (max-width: 800px) {
+    .leaderboard {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 700px) {
+    .leaderboard-title-row {
+        height: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .leaderboards-profile-pic {
+        width: 10%;
+        min-width: 10%;
+        max-width: 10%;
+    }
+}
+
+@media (max-width: 500px) {
+    .leaderboard {
+        font-size: 0.5em;
     }
 }

@@ -102,16 +102,14 @@
 }
 
 .leaderboard-title-and-navigation {
-    display: grid;
-    grid-template-columns: 70% 30%;
+    width: 100%;
     margin-bottom: 3vh;
 }
 
 .leaderboard-spotlight-row {
     display: grid;
-    grid-template-columns: 70% 25%;
+    grid-template-columns: 80% 15%;
     padding: 1%;
-    column-gap: 5%;
 }
 
 .leaderboard-navigation {
@@ -153,7 +151,46 @@
     .leaderboard-title-and-navigation {
         font-size: 0.95em;
     }
-    .return-to-leaderboard-menu-btn {
-        width: 20%;
+    .leaderboard-spotlight-row {
+        font-size: 0.90em;
+    }
+    .button-container {
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        row-gap: 1vh;
+    }
+    .button-container > button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 800px) {
+    .leaderboard-spotlight-row {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 700px) {
+    .button-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        row-gap: 1vh;
+    }
+    .button-container > button {
+        width: 100%;
+    }
+    .leaderboard-title-and-navigation {
+        margin-top: 2vh;
+        font-size: 0.7em;
+        text-align: center;
+    }
+    .leaderboard-spotlight-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 2vh;
     }
 }

@@ -6,10 +6,18 @@ import ProfileP from '../../../../media/ProfileP.png';
 
 function Leaderboard(props) {
     const [usersData, setUsersData] = useState([]);
+    const [width, setWidth] = useState(window.innerWidth >= 600);
+
+    const updateWidth = () => {
+        setWidth(window.innerWidth >= 600);
+    };
 
     useEffect(() => {
         getAllUserFFPoints(props.leaderboardRankings);
         console.log("Leaderboard UE");
+        setWidth(window.innerWidth > 600);
+        window.addEventListener("resize", updateWidth);
+        return () => window.addEventListener("resize", updateWidth);
     }, [props.leaderboardRankings, props.isFFLeaderboard, props.leaderboardTitle]);
 
     const getAllUserFFPoints = async (rankings) => {
@@ -106,7 +114,7 @@ function Leaderboard(props) {
                         <th className="username-column">Username</th>
                         <th className="ffpoints-column">Market Points</th>
                         <th className="avg-brier-column">Average Brier Score</th>
-                        <th className="last-five-briers-column">Last 5 Forecasts (&nbsp;&nbsp;/110&nbsp;&nbsp;)</th>
+                        {width && <th className="last-five-briers-column">Last 5 Forecasts (&nbsp;&nbsp;/110&nbsp;&nbsp;)</th>}
                     </tr>
                     {usersData.map((item, index) => {
                         if (item.username === props.username) {
@@ -121,7 +129,7 @@ function Leaderboard(props) {
                                     </td>
                                     <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
                                     <td className="leaderboard-avgBrierScore-data">{Number(item.avgBrierScore).toFixed(1)}</td>
-                                    <td className="leaderboard-last5Forecasts-data">
+                                    {width && <td className="leaderboard-last5Forecasts-data">
                                         <span className="last-five-data-span">
                                             {item.brierScores.map((item2, index) => {
                                                 if (index >= item.brierScores.length - 5) {
@@ -135,7 +143,7 @@ function Leaderboard(props) {
                                                 } else return null;
                                             })}
                                         </span>
-                                    </td>
+                                    </td>}
                                 </tr>
                             )
                         } else if (item.username !== props.username && item.acceptedInvite === true) {
@@ -150,7 +158,7 @@ function Leaderboard(props) {
                                     </td>
                                     <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
                                     <td className="leaderboard-avgBrierScore-data">{Number(item.avgBrierScore).toFixed(1)}</td>
-                                    <td className="leaderboard-last5Forecasts-data">
+                                    {width && <td className="leaderboard-last5Forecasts-data">
                                         <span className="last-five-data-span">
                                             {item.brierScores.map((item2, index) => {
                                                 if (index >= item.brierScores.length - 5) {
@@ -164,7 +172,7 @@ function Leaderboard(props) {
                                                 } else return null;
                                             })}
                                         </span>
-                                    </td>
+                                    </td>}
                                 </tr>
                             )
                         }
@@ -211,7 +219,7 @@ function Leaderboard(props) {
                         <th className="username-column">Username</th>
                         <th className="ffpoints-column">Fantasy Forecast Points</th>
                         <th className="avg-brier-column">AVG Brier Score (All Markets)</th>
-                        <th className="last-five-briers-column">Last 5 Forecasts (All Markets)</th>
+                        {width && <th className="last-five-briers-column">Last 5 Forecasts (All Markets)</th>}
                     </tr>
                     {usersData.map((item, index) => {
                         if (item.username === props.username) {
@@ -226,7 +234,7 @@ function Leaderboard(props) {
                                     </td>
                                     <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
                                     <td className="leaderboard-avgBrierScore-data">{Number(item.avgAllTimeBrier).toFixed(1)}</td>
-                                    <td className="leaderboard-last5Forecasts-data">
+                                    {width && <td className="leaderboard-last5Forecasts-data">
                                         <span className="last-five-data-span">
                                             {item.brierScores.map((item2, index) => {
                                                 if (index >= item.brierScores.length - 5) {
@@ -240,7 +248,7 @@ function Leaderboard(props) {
                                                 } else return null;
                                             })}
                                         </span>
-                                    </td>
+                                    </td>}
                                 </tr>
                             )
                         } else if (item.username !== props.username) {
@@ -255,7 +263,7 @@ function Leaderboard(props) {
                                     </td>
                                     <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
                                     <td className="leaderboard-avgBrierScore-data">{Number(item.avgAllTimeBrier).toFixed(1)}</td>
-                                    <td className="leaderboard-last5Forecasts-data">
+                                    {width && <td className="leaderboard-last5Forecasts-data">
                                         <span className="last-five-data-span">
                                             {item.brierScores.map((item2, index) => {
                                                 if (index >= item.brierScores.length - 5) {
@@ -269,7 +277,7 @@ function Leaderboard(props) {
                                                 } else return null;
                                             })}
                                         </span>
-                                    </td>
+                                    </td>}
                                 </tr>
                             )
                         }
