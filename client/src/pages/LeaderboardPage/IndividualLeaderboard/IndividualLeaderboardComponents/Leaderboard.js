@@ -7,15 +7,18 @@ import ProfileP from '../../../../media/ProfileP.png';
 function Leaderboard(props) {
     const [usersData, setUsersData] = useState([]);
     const [width, setWidth] = useState(window.innerWidth >= 600);
+    const [biggerWidth, setBiggerWidth] = useState(window.innerWidth >= 1030);
 
     const updateWidth = () => {
         setWidth(window.innerWidth >= 600);
+        setBiggerWidth(window.innerWidth >= 1030);
     };
 
     useEffect(() => {
         getAllUserFFPoints(props.leaderboardRankings);
         console.log("Leaderboard UE");
         setWidth(window.innerWidth > 600);
+        setBiggerWidth(window.innerWidth > 1030);
         window.addEventListener("resize", updateWidth);
         return () => window.addEventListener("resize", updateWidth);
     }, [props.leaderboardRankings, props.isFFLeaderboard, props.leaderboardTitle]);
@@ -124,7 +127,7 @@ function Leaderboard(props) {
                                         {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1}
                                     </td>
                                     <td className="leaderboard-username-data">
-                                        <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic"/>
+                                        {biggerWidth && <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic" />}
                                         {item.username}
                                     </td>
                                     <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
@@ -153,7 +156,7 @@ function Leaderboard(props) {
                                         {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1}
                                     </td>
                                     <td className="leaderboard-username-data">
-                                        <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic"/>
+                                        {biggerWidth && <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic" />}
                                         {item.username}
                                     </td>
                                     <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
@@ -229,7 +232,7 @@ function Leaderboard(props) {
                                         {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1}
                                     </td>
                                     <td className="leaderboard-username-data">
-                                        <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic"/>
+                                        {biggerWidth && <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic" />}
                                         {item.username}
                                     </td>
                                     <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
@@ -258,7 +261,7 @@ function Leaderboard(props) {
                                         {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1}
                                     </td>
                                     <td className="leaderboard-username-data">
-                                        <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic"/>
+                                        {biggerWidth && <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic" />}
                                         {item.username}
                                     </td>
                                     <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
