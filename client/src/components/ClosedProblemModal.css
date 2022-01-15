@@ -34,14 +34,16 @@
     display: none;
 }
 
-.close-modal-btn {
+.close-modal-btn,
+.next-problem-btn {
     background-color: rgb(96, 209, 96);
     color: #fff;
     border: none;
     outline: none;
-    padding: 0.5%;
-    width: 10%;
+    padding: 1%;
+    width: 40%;
     margin-top: 1vh;
+    cursor: pointer;
 }
 
 .close-modal-btn:hover {
@@ -55,28 +57,29 @@
     color: #fff;
     border: none;
     outline: none;
-    padding: 0.5%;
-    width: 10%;
+    padding: 1%;
+    width: 40%;
     margin-top: 1vh;
 }
 
-.close-modal-btn-close:hover {
+.close-modal-btn-close:hover,
+.next-problem-btn:hover {
     cursor: pointer;
-    background-color: rgb(189, 104, 104);
+    background-color: rgb(54, 106, 54);
     transition: 0.2s ease;
 }
 
 .grid-layout {
     display: grid;
     grid-template-columns: 50% 50%;
-    column-gap: 0.5%;
-    width: 80%;
+    /* column-gap: 5%; */
+    width: 100%;
 }
 
 .non-grid-layout {
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 80%;
 }
 
 .closed-forecast-container {
@@ -103,4 +106,26 @@
 .boost-div {
     display: flex;
     flex-direction: column;
+}
+
+@media (max-width: 1000px) {
+    .modal {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 600px) {
+    .modal-main > img {
+        width: 10%;
+        max-width: 10%;
+        min-width: 10%;
+    }
+    .modal {
+        font-size: 0.8em;
+    }
+    .grid-layout {
+        grid-template-columns: 100%;
+        row-gap: 5vh;
+        overflow-y: initial;
+    }
 }
