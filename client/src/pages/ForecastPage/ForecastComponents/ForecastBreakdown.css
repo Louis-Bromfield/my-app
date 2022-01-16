@@ -58,3 +58,21 @@
     flex-direction: column;
     border: 1px solid lightgray;
 }
+
+@media (max-width: 700px) {
+    .predictions-container {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 600px) {
+    .hypothetical-results-container {
+        grid-template-columns: 100%;
+    }
+}
+
+@media (max-width: 500px) {
+    .predictions-container {
+        font-size: 0.8em;
+    }
+}
