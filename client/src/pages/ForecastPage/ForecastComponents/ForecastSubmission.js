@@ -585,10 +585,10 @@ console.log("Here1");
                                 <h4>{userPreviousAttemptComments}</h4>
                             </div>
                         </div>
-                        <div className="scores">
+                        {/* <div className="scores">
                             <h4 className="brier-info">FF Scores range from 0-110, and are made up of the accuracy of your prediction and when you submitted it, 
                             meaning more accuracy earlier is more rewarding! For more info, visit the Brier Scores tab on the Learn page!</h4>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             }
