@@ -10,7 +10,7 @@
     border: 1px solid black;
     border-radius: 10px;
     padding: 1%;
-    width: 75%;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -34,7 +34,7 @@
     flex-direction: column;
     padding: 1%;
     padding-bottom: 0%;
-    width: 65%;
+    width: 70%;
     border: 1px solid black;
     border-top-style: none;
     border-radius: 10px;
@@ -65,7 +65,8 @@
 .forecast-submission-and-error-container {
     display: flex;
     flex-direction: column;
-    border: 1px solid lightgray;
+    border: 1px solid darkgray;
+    background-color: rgba(211, 211, 211, 0.233);
     border-radius: 8px;
     margin-bottom: 1vh;
 }
@@ -100,13 +101,6 @@
     text-align: center;
     width: 100%;
     padding: 1%;
-}
-
-.placeholder-container-error,
-.placeholder-container-no-error {
-    border-bottom: 1px solid lightgray;
-    padding-bottom: 1vh;
-    margin-bottom: 1vh;
 }
 
 .placeholder-container-error {
@@ -168,7 +162,7 @@
 
 .brier-info {
     margin: 0 auto;
-    width: 55%;
+    width: 90%;
     text-align: center;
     margin-top: 1vh;
 }
@@ -215,5 +209,73 @@
 @media (max-width: 1100px) {
     .forecast-selection-select {
         width: 85%;
+    }
+}
+
+@media (max-width: 900px) {
+    .header-label > h2, h3 {
+        font-size: 1em;
+    }
+    .forecast-submission-and-selection-div {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 700px) {
+    .forecast-top-bar {
+        width: 80%;
+    }
+    .forecast-submission-div {
+        width: 80%;
+    }
+    .selected-forecast {
+        font-size: 1.2em;
+    }
+}
+
+@media (max-width: 500px) {
+    .header-label {
+        font-size: 0.9em;
+    }
+    .forecast-top-bar {
+        width: 90%;
+    }
+    .forecast-submission-div {
+        width: 90%;
+    }
+    .selected-forecast {
+        font-size: 1.1em;
+    }
+    .forecast-review-div {
+        display: flex;
+        flex-direction: column;
+        row-gap: 2vh;
+    }
+    .previous-attempt-titles {
+        font-size: 0.95em;
+    }
+    .last-certainty-div > h4,
+    .last-comments-div > h4 {
+        font-size: 0.95em;
+    }
+    .placeholder-container-error,
+    .placeholder-container-no-error {
+        display: flex;
+        flex-direction: column;
+        row-gap: 2vh;
+    }
+    .forecast-submission-input {
+        display: flex;
+        flex-direction: column;
+    }
+    .submit-forecast-btn {
+        width: 50%;
+        margin-top: 2vh;
+    }
+}
+
+@media (max-width: 400px) {
+    .header-label {
+        font-size: 0.9em;
     }
 }

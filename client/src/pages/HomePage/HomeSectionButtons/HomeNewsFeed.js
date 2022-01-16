@@ -452,7 +452,7 @@ function HomeNewsFeed(props) {
                                 </div>
                                 <p className="post-author-description">{newPostDescription}</p>
                                 <div className="post-news-preview">
-                                    <a href={newPostURL} target="_blank" rel="noreferrer nofollow">
+                                    <a href={newPostURL} target="_blank" rel="noreferrer nofollow" className="post-news-a">
                                             {postPreviewImage !== "" && <img src={postPreviewImage} className="post-news-image" alt="News pic"/>}
                                             {postPreviewImage === "" && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
                                     </a>

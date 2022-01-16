@@ -32,8 +32,8 @@ const trimArticleText = (articles) => {
             articles[i].title = `${articles[i].title.slice(0, 99)}...`;
         };
         // Trim descriptions
-        if (articles[i].description.length >= 170) {
-            articles[i].description = `${articles[i].description.slice(0, 169)}...`;
+        if (articles[i].description.length >= 120) {
+            articles[i].description = `${articles[i].description.slice(0, 119)}...`;
         };
         // Destructure publishers object
         const {_, $} = articles[i].source;

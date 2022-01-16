@@ -324,14 +324,12 @@
     .post-news-preview {
         grid-template-columns: 30% 70%;
         font-size: 0.75em;
-
     }
     .post-news-preview > img, a {
         width: 40vw;
         max-width: 40vw;
         min-width: 40vw;
         max-height: 20vh;
-        min-width: 20vh;
     }
 }
 

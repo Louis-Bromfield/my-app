@@ -603,7 +603,6 @@ console.log("Here1");
                                 <h3># of Forecasts Submitted: {numberOfForecastsSubmitted}</h3>
                                 <h3>Highest Certainty: {highestCertainty}</h3>
                                 <h3>Lowest Certainty: {lowestCertainty}</h3>
-                                <h3 style={{ color: "#404d72" }}>Final Certainty: {finalCertainty}</h3>
                             </div>
                             <div className="forecast-review-div-right">
                                 <h1>{closedForecastScore}</h1>

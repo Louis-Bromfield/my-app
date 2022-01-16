@@ -37,7 +37,7 @@ function ForecastArticlesDisplay(props) {
                         }
                         return (
                             <a href={article.link} rel="noreferrer" target="_blank" key={index} style={{ "textDecoration": "none"}}>
-                                <li className="article-list-item">
+                                <div className="article-list-item">
                                     <div className="article-list-item-img-container">
                                         <img className="article-list-item-img" src={article.img} alt="" />
                                     </div>
@@ -47,7 +47,7 @@ function ForecastArticlesDisplay(props) {
                                         <hr />
                                         <h5 className="article-list-item-publisher">{article.source}</h5>
                                     </div>
-                                </li>
+                                </div>
                             </a>
                         )
                     })}

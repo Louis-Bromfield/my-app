@@ -163,15 +163,16 @@ function ForecastBreakdown(props) {
                                                     <li key={index} className="prediction-li">
                                                         <h3 style={{ color: "#404d72" }}><u>Prediction #{index}</u></h3>
                                                         <h4>Certainty: {(item.certainty*100).toFixed(2)}%&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Brier Score: {item.newBrier.toFixed(0)} / 100</h4>
-                                                        <h4>Date: {item.date}</h4>
-                                                        <h4>Duration (Time spent as latest prediction): {duration.weeks} week(s), {duration.days} day(s), {duration.hours} hour(s), {duration.minutes} minute(s), {duration.seconds} second(s).</h4>
-                                                        <h4>% of the entire forecast window spent at this prediction: {item.percentageOfTimeAtThisScore.toFixed(2)}%~</h4>
                                                         <h4>Comments: <i>{item.comments}</i></h4>
+                                                        <br />
+                                                        <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
+                                                        <h4>Date: {item.date.slice(0, 24)}</h4>
+                                                        <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
                                                         <br />
                                                         <h4>This forecast scored you: {item.newBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
                                                         <br />
                                                         <h2 style={{ color: "#404d72"}}>Time Score - {tScore.toFixed(2)} / 10</h2>
-                                                        <h4>As this was your first prediction, it determines your Time Score (aka how early was this prediction made?)</h4>
+                                                        <h4>As this was your first prediction, it determines your Time Score (Earlier = Higher Score)</h4>
                                                         <br />
                                                         <hr />
                                                     </li>
@@ -184,10 +185,11 @@ function ForecastBreakdown(props) {
                                                     <li key={index} className="prediction-li">
                                                         <h3 style={{ color: "#404d72" }}><u>Prediction #{index}</u></h3>
                                                         <h4>Certainty: {(item.certainty*100).toFixed(2)}%&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Brier Score: {item.newBrier.toFixed(0)} / 100</h4>
-                                                        <h4>Date: {item.date}</h4>
-                                                        <h4>Duration (Time spent as latest prediction): {duration.weeks} week(s), {duration.days} day(s), {duration.hours} hour(s), {duration.minutes} minute(s), {duration.seconds} second(s).</h4>
-                                                        <h4>% of the entire forecast window spent at this prediction: {item.percentageOfTimeAtThisScore.toFixed(2)}%~</h4>
                                                         <h4>Comments: <i>{item.comments}</i></h4>
+                                                        <br />
+                                                        <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
+                                                        <h4>Date: {item.date.slice(0, 24)}</h4>
+                                                        <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
                                                         <br />
                                                         <h4>This forecast scored you: {item.newBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
                                                         <br />
@@ -214,29 +216,22 @@ function ForecastBreakdown(props) {
                                     // Index !== 0 is because at element 0 is an object containing start and close dates
                                     // Predictions submitted after closing date will still be in DB so must be filtered
                                     if (index !== 0 && new Date(item.date) < new Date(predictionData[0].closeDate)) {
-                                        const duration = timeFormatter(item.duration);
                                         if (index === 1) {
                                             totalIfHappenedNoBoost += (item.newHappenedBrier * (item.percentageOfTimeAtThisScore/100));
-                                            // totalIfHappenedAndBoost += item.happenedBrierWeightedAndCaptained;
                                             totalIfNotHappenedNoBoost += (item.newNotHappenedBrier * (item.percentageOfTimeAtThisScore/100));
-                                            // totalIfNotHappenedAndBoost += item.notHappenedBrierWeightedAndCaptained;
                                             if (showForecastByForecastBreakdown === true) {
                                                 return (
                                                     <li key={index} className="prediction-li">
                                                         <h3 style={{ color: "#404d72" }}><u>Prediction #{index}</u></h3>
                                                         <h4>Certainty: {(item.certainty*100).toFixed(2)}%</h4>
-                                                        <h4>Date: {item.date}</h4>
-                                                        <h4>Duration (Time spent as latest prediction): {duration.weeks} week(s), {duration.days} day(s), {duration.hours} hour(s), {duration.minutes} minute(s), {duration.seconds} second(s).</h4>
-                                                        <h4>% of the entire forecast window spent at this prediction: {item.percentageOfTimeAtThisScore.toFixed(2)}%~</h4>
                                                         <h4>Comments: <i>{item.comments}</i></h4>
                                                         <br />
+                                                        <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
+                                                        <h4>Date: {item.date.slice(0, 24)}</h4>
+                                                        <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
                                                         <h3 style={{ color: "#404d72" }}>What Will This Forecast Score Me?</h3>
                                                         <h4>If this problem <u>does</u> happen: {item.newHappenedBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newHappenedBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
-                                                        {/* <h4>If this problem does happen, and you boost your prediction, this forecast will score you: {item.newHappenedBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newHappenedBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4> */}
-                                                        {/* <h4>If this problem <u>does</u> happen, and you boost this problem: {item.happenedBrierWeightedAndCaptained.toFixed(2)}</h4> */}
                                                         <h4>If this problem does <u>not</u> happen: {item.newNotHappenedBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newNotHappenedBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
-                                                        {/* <h4>If this problem does not happen, and you boost your prediction,  this forecast will score you: {item.newNotHappenedBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newNotHappenedBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4> */}
-                                                        {/* <h4>If this problem does <u>not</u> happen, and you boost this problem: {item.notHappenedBrierWeightedAndCaptained.toFixed(2)}</h4> */}
                                                         <br />
                                                         <h2 style={{ color: "#404d72"}}>Time Score - {tScore.toFixed(2)} / 10</h2>
                                                         <h4>As this was your first prediction, it determines your Time Score (aka how early was this prediction made?)</h4>
@@ -247,26 +242,21 @@ function ForecastBreakdown(props) {
                                             } else return null;
                                         } else {
                                             totalIfHappenedNoBoost += (item.newHappenedBrier * (item.percentageOfTimeAtThisScore/100));
-                                            // totalIfHappenedAndBoost += item.happenedBrierWeightedAndCaptained;
                                             totalIfNotHappenedNoBoost += (item.newNotHappenedBrier * (item.percentageOfTimeAtThisScore/100));
-                                            // totalIfNotHappenedAndBoost += item.notHappenedBrierWeightedAndCaptained;
                                             if (showForecastByForecastBreakdown === true) {
                                                 return (
                                                     <li key={index} className="prediction-li">
                                                         <h3 style={{ color: "#404d72" }}><u>Prediction #{index}</u></h3>
                                                         <h4>Certainty: {(item.certainty*100).toFixed(2)}%</h4>
-                                                        <h4>Date: {item.date}</h4>
-                                                        <h4>Duration (Time spent as latest prediction): {duration.weeks} week(s), {duration.days} day(s), {duration.hours} hour(s), {duration.minutes} minute(s), {duration.seconds} second(s).</h4>
-                                                        <h4>% of the entire forecast window spent at this prediction: {item.percentageOfTimeAtThisScore.toFixed(2)}%~</h4>
                                                         <h4>Comments: <i>{item.comments}</i></h4>
+                                                        <br />
+                                                        <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
+                                                        <h4>Date: {item.date.slice(0, 24)}</h4>
+                                                        <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>What Will This Forecast Score Me?</h3>
                                                         <h4>If this problem <u>does</u> happen: {item.newHappenedBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newHappenedBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
-                                                        {/* <h4>If this problem does happen, and you boost your prediction, this forecast will score you: {item.newHappenedBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newHappenedBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4> */}
-                                                        {/* <h4>If this problem <u>does</u> happen, and you boost this problem: {item.happenedBrierWeightedAndCaptained.toFixed(2)}</h4> */}
                                                         <h4>If this problem does <u>not</u> happen: {item.newNotHappenedBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newNotHappenedBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
-                                                        {/* <h4>If this problem does not happen, and you boost your prediction,  this forecast will score you: {item.newNotHappenedBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newNotHappenedBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4> */}
-                                                        {/* <h4>If this problem does <u>not</u> happen, and you boost this problem: {item.notHappenedBrierWeightedAndCaptained.toFixed(2)}</h4> */}
                                                         <br />
                                                         <hr />
                                                     </li>

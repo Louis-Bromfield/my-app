@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 function ForecastResultsBreakdown(props) {
     console.log(`the forecastClosed prop is currently = ${props.forecastClosed}`);
