@@ -115,8 +115,12 @@
 }
 
 @media (max-width: 600px) {
+    .articles-grid {
+        row-gap: 0vh;
+    }
     .articles-grid a {
         width: 100%;
+        height: 13vh;
     }
     .article-list-item-img {
         min-width: 70%;

@@ -223,10 +223,10 @@
 
 @media (max-width: 700px) {
     .forecast-top-bar {
-        width: 80%;
+        width: 100%;
     }
     .forecast-submission-div {
-        width: 80%;
+        width: 100%;
     }
     .selected-forecast {
         font-size: 1.2em;
