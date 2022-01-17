@@ -43,7 +43,9 @@
 }
 
 @media (max-width: 1100px) {
-    .leaderboard-shortcut {
+    .leaderboard-shortcut,
+    .leaderboard-shortcut-blue,
+    .leaderboard-shortcut-red {
         margin-bottom: 4vh;
         height: 15vh;
         font-size: 0.9em;
