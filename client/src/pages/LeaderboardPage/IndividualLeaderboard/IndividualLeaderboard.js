@@ -85,7 +85,7 @@ console.log("Individual Leaderboard UE");
             setIsFFLeaderboard(leaderboardObj.isFFLeaderboard);
         } else if (props.location.user === false) {
             const leaderboardObj = props.location.navigationOrderUnsorted.find(el => el[0] === localStorage.getItem('currentLeaderboardName'));
-            setIsFFLeaderboard(leaderboardObj[1]);
+            setIsFFLeaderboard(leaderboardObj[2]);
         }
         console.log("2nd Individual Leaderboard UE");
     }, [currentLeaderboardName, props.location.navigationOrderUnsorted, props.location.user]);
@@ -99,53 +99,6 @@ console.log("Individual Leaderboard UE");
         };
         return filteredArr;
     }
-
-    const onNextClick = (isUserMarkets) => {
-        if (index + 1 === navigationOrder.length) {
-            index = 0;
-        } else {
-            index++;
-        };
-        if (isUserMarkets === true) {
-            setCurrentLeaderboardName(navigationOrder[index]);
-            localStorage.setItem("currentLeaderboardName", navigationOrder[index])
-            getLeaderboardData(navigationOrder[index]);
-            setIsFFLeaderboard(props.location.navigationOrderUnsorted[props.location.navigationOrderUnsorted.findIndex(lb => lb.leaderboardName === navigationOrder[index])].isFFLeaderboard);
-        } else if (isUserMarkets === false) {
-            if (navigationOrder[index][1] === true) {
-                setCurrentLeaderboardName(navigationOrder[index][0]);
-                localStorage.setItem("currentLeaderboardName", navigationOrder[index][0])
-                getLeaderboardData(navigationOrder[index][0]);
-                setIsFFLeaderboard(navigationOrder[index][2]);
-            } else if (navigationOrder[index][1] === false) {
-                onNextClick(isUserMarkets);
-            };
-        };
-    };
-
-    const onPrevClick = (isUserMarkets) => {
-        if (index - 1 < 0) {
-            index = navigationOrder.length-1;
-        } else {
-            index--;
-        };
-        if (isUserMarkets === true) {
-            setCurrentLeaderboardName(navigationOrder[index]);
-            localStorage.setItem("currentLeaderboardName", navigationOrder[index])
-            getLeaderboardData(navigationOrder[index]);
-            setIsFFLeaderboard(props.location.navigationOrderUnsorted[props.location.navigationOrderUnsorted.findIndex(lb => lb.leaderboardName === navigationOrder[index])].isFFLeaderboard);
-        } else if (isUserMarkets === false) {
-            if (navigationOrder[index][1] === true) {
-                setCurrentLeaderboardName(navigationOrder[index][0]);
-                localStorage.setItem("currentLeaderboardName", navigationOrder[index][0])
-                getLeaderboardData(navigationOrder[index][0]);
-                setIsFFLeaderboard(navigationOrder[index][2]);
-            } else if (navigationOrder[index][1] === false) {
-                onPrevClick(isUserMarkets);
-            }
-        }
-        setCauseRefresh(causeRefresh+1);
-    };
     
     const getLeaderboardData = async (leaderboard) => {
         try {
