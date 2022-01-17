@@ -22,9 +22,8 @@
 @media (max-width: 700px) {
     .leaderboard-grid {
         margin: 0 auto;
-        grid-template-columns: 49% 49%;
-        column-gap: 2%;
-        /* grid-template-rows: 15vh; */
+        display: flex;
+        flex-direction: column;
         row-gap: 2vh;
     }
 }
