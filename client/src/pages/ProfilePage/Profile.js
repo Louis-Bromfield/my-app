@@ -145,14 +145,11 @@ console.log("Profile.js UE");
                             </ul>
                         </div>
                     </div>
-                    <br/>
-                    <hr/>
                     <ProfileStats 
                         username={props.username} 
                         brierScores={brierScoresArr} 
                         userObj={userObj} 
                     />
-                    <hr />
                     <ProfileDetails 
                         username={props.username} 
                         updateUsername={props.updateUsername} 
