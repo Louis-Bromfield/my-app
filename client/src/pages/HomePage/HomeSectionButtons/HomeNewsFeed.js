@@ -548,7 +548,7 @@ function HomeNewsFeed(props) {
                                                 {item.articleImage !== "" && <img src={item.articleImage} className="post-news-image" alt="News pic"/>}
                                                 {item.articleImage === "" && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
                                             </a>
-                                            <a href={item.articleURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{item.articleTitle}</h3></a>
+                                            <a href={item.articleURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{item.articleTitle} - Comments ({item.comments.length})</h3></a>
                                         </div>
                                         <div className="post-markets">
                                             {item.markets.map((market, index) => {
@@ -627,7 +627,7 @@ function HomeNewsFeed(props) {
                                                     {item.articleImage !== "" && <img src={item.articleImage} className="post-news-image" alt="News pic"/>}
                                                     {item.articleImage === "" && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
                                                 </a>
-                                                <a href={item.articleURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{item.articleTitle}</h3></a>
+                                                <a href={item.articleURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{item.articleTitle} - Comments ({item.comments.length})</h3></a>
                                             </div>
                                             <div className="post-markets">
                                                 {item.markets.map((market, index) => {
