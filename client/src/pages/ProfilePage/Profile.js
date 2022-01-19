@@ -118,10 +118,10 @@ console.log("Profile.js UE");
                         <img className="profile-profile-pic" src={props.profilePicture || localStorage.getItem("profilePicture")} alt="Temporary profile pic"/>
                         <div className="profile-summary">
                             <ul className="profile-summary-list">
-                                <li key={0} className="profile-summary-list-item">
+                                {/* <li key={0} className="profile-summary-list-item">
                                     <h3>Name:</h3>
                                     <h4>{props.user.name === undefined ? localStorage.getItem('name') : props.user.name}</h4>
-                                </li>
+                                </li> */}
                                 <li key={1} className="profile-summary-list-item">
                                     <h3>Fantasy Forecast Points:</h3>
                                     <h4>{fantasyForecastPoints === undefined ? props.user.fantasyForecastPoints.toFixed(0): fantasyForecastPoints.toFixed(0)}</h4>

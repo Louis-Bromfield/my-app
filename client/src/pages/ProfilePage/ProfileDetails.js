@@ -60,21 +60,21 @@ function ProfileDetails(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log("1");
+            console.log("1 - Initial Step");
             const formData = new FormData();
-            console.log("2");
+            console.log("2 - Creation of formData");
             formData.append("image", fileData);
-            console.log("3");
+            console.log("3 - Appended Image");
             formData.append("username", props.username === undefined ? localStorage.getItem("username") : props.username);
-            console.log("4");
+            console.log("4 - Appeneed Username");
             const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/imageAPI/${localStorage.getItem("username")}`, formData);
-            console.log("5");
+            console.log("5 - API Request Successful");
             localStorage.setItem("profilePicture", res.data.profilePicture);
-            console.log("6");
+            console.log("6 - Updated LS");
             props.setShowModal(true);
-            console.log("7");
+            console.log("7 - showModal");
             props.setModalContent(`Your profile picture has been updated. Refresh the page to see!`);
-            console.log("8");
+            console.log("8 - setModalContent");
         } catch (error) {
             console.log("error in handleSubmit");
             console.log(error);
@@ -85,7 +85,7 @@ function ProfileDetails(props) {
         <div className="profile-details">
             <h1 className="profile-header">Profile Details</h1>
             <div className="profile-details-grid">
-                <div className="edit-profile-field">
+                {/* <div className="edit-profile-field">
                     <h4>Change Username:</h4>
                     <div className="submit-field">
                         <input 
@@ -99,7 +99,7 @@ function ProfileDetails(props) {
                                 Submit
                         </button>
                     </div>
-                </div>
+                </div> */}
                 <div className="edit-profile-field">
                     <h4>Change Password:</h4>
                     <div className="submit-field">
