@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './IndividualNewsFeedPost.css';
 import * as AiIcons from 'react-icons/ai';
 import ImagePlaceholder from '../../../media/sd.png';
+import Modal from '../../components/Modal';
 import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -20,6 +21,8 @@ function IndividualNewsFeedPost(props) {
     const [articleURL, setArticleURL] = useState("");
     const [markets, setMarkets] = useState([]);
     const [comments, setComments] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState("");
     const history = useHistory();
 
     useEffect(async () => {
@@ -69,8 +72,23 @@ function IndividualNewsFeedPost(props) {
             setNewCommentStatus(true);
             setNewCommentToRender(comment)
             setComment("");
+            giveUserPoints(localStorage.getItem("username"));
         } catch (error) {
             console.error("Error in IndividualNewsFeedPost > submitComment");
+            console.error(error);
+        };
+    };
+
+    const giveUserPoints = async (username) => {
+        try {
+            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 20
+            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, {
+                fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints
+            });
+            setShowModal(true);
+            setModalContent("You just earned 20 Fantasy Forecast Points for commenting!");
+        } catch (error) {
             console.error(error);
         };
     };
@@ -93,6 +111,9 @@ function IndividualNewsFeedPost(props) {
 
     return (
         <div className="individual-post-container">
+            <Modal show={showModal} handleClose={() => setShowModal(false)}>
+                <p>{modalContent}</p>
+            </Modal>
             <button 
                 className="post-button"
                 onClick={() => history.push("/")}>
