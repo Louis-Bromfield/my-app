@@ -67,7 +67,7 @@
 .create-post-submit, 
 .create-post-close {
     color: #242d75;
-    width: 30%;
+    width: 100%;
     padding: 1%;
     cursor: pointer;
     outline: none;
