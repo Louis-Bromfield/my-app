@@ -381,23 +381,25 @@ function HomeNewsFeed(props) {
                                     </div>
                                 }
                                 {postMessage !== "" && <h3 style={{ color: "red" }}>{postMessage}</h3>}
-                                {editingPost === false &&
-                                    <input 
-                                        type="submit" 
-                                        id="post-2" 
-                                        className="create-post-submit" 
-                                        value="Post to your feed" 
-                                        onClick={(e) => submitNewsFeedPost(e)}/>
-                                }
-                                {editingPost === true &&
-                                    <input 
-                                        type="submit" 
-                                        id="post-2" 
-                                        className="create-post-submit" 
-                                        value="Confirm Edits" 
-                                        onClick={(e) => persistEditPostToDB(e, editingPostID, newPostURL, newPostDescription, userMarketsForPost)}/>
-                                }
-                                <button className="create-post-close" onClick={() => {setPost(false); setPostPreview(false)}}>Close</button>
+                                <div className="post-buttons">
+                                    {editingPost === false &&
+                                        <input 
+                                            type="submit" 
+                                            id="post-2" 
+                                            className="create-post-submit" 
+                                            value="Post to your feed" 
+                                            onClick={(e) => submitNewsFeedPost(e)}/>
+                                    }
+                                    {editingPost === true &&
+                                        <input 
+                                            type="submit" 
+                                            id="post-2" 
+                                            className="create-post-submit" 
+                                            value="Confirm Edits" 
+                                            onClick={(e) => persistEditPostToDB(e, editingPostID, newPostURL, newPostDescription, userMarketsForPost)}/>
+                                    }
+                                    <button className="create-post-close" onClick={() => {setPost(false); setPostPreview(false)}}>Close</button>
+                                </div>
                             </fieldset>
                         </form>
                     }
