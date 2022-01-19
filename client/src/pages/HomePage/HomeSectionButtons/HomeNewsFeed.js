@@ -542,7 +542,7 @@ function HomeNewsFeed(props) {
                                         </div>
                                     </div>
                                     <Link style={{ textDecoration: "none", color: "black" }} to={articleProps} onClick={() => localStorage.setItem("postID", item._id)}>
-                                        <p className="post-author-description">{item.postDescription} <i>See Comments ({item.comments.length})</i></p>
+                                        <p className="post-author-description">{item.postDescription} <i style={{"color":"#404d72"}}><u>See Comments ({item.comments.length})</u></i></p>
                                         <div className="post-news-preview">
                                             <a href={item.articleURL} target="_blank" rel="noreferrer nofollow">
                                                 {item.articleImage !== "" && <img src={item.articleImage} className="post-news-image" alt="News pic"/>}
@@ -621,7 +621,7 @@ function HomeNewsFeed(props) {
                                             </div>
                                         </div>
                                         <Link style={{ textDecoration: "none", color: "black"}} to={articleProps} onClick={() => localStorage.setItem("postID", item._id)}>
-                                            <p className="post-author-description">{item.postDescription} <i>See Comments ({item.comments.length})</i></p>
+                                            <p className="post-author-description">{item.postDescription} <i style={{"color":"#404d72"}}><u>See Comments ({item.comments.length})</u></i></p>
                                             <div className="post-news-preview">
                                                 <a href={item.articleURL} target="_blank" rel="noreferrer nofollow">
                                                     {item.articleImage !== "" && <img src={item.articleImage} className="post-news-image" alt="News pic"/>}
