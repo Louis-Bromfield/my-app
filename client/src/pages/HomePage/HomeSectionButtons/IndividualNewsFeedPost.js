@@ -86,8 +86,12 @@ function IndividualNewsFeedPost(props) {
             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, {
                 fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints
             });
-            setShowModal(true);
             setModalContent("You just earned 20 Fantasy Forecast Points for commenting!");
+            setShowModal(true);
+            setTimeout(() => {
+                setShowModal("false");
+                setModalContent("");
+            }, 2500);
         } catch (error) {
             console.error(error);
         };
@@ -111,9 +115,6 @@ function IndividualNewsFeedPost(props) {
 
     return (
         <div className="individual-post-container">
-            <Modal show={showModal} handleClose={() => setShowModal(false)}>
-                <p>{modalContent}</p>
-            </Modal>
             <button 
                 className="post-button"
                 onClick={() => history.push("/")}>
@@ -189,6 +190,9 @@ function IndividualNewsFeedPost(props) {
                     </button>
                 </div>
                 <div className="comments-sub-container">
+                    {showModal === true &&
+                        <h3 style={{ "color": "#404d72"}}>You just earned 20 Fantasy Forecast Points for commenting!</h3>
+                    }
                     {newCommentStatus === true && 
                         <div className="comment-in-chain">
                             <Link 
