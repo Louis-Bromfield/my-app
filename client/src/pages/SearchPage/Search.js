@@ -347,7 +347,7 @@ function Search(props) {
                                         <h4># of Markets In:</h4>
                                         <h3 style={{ color: "#404d72" }}>{marketsIn}</h3>
                                         <h4>Onboarding Tasks Complete:</h4>
-                                        <h3 style={{ color: "#404d72" }}>{onboardingProgress} / 6</h3>
+                                        <h3 style={{ color: "#404d72" }}>{onboardingProgress} / 5</h3>
                                     </div>
                                 </div>
                             </div>

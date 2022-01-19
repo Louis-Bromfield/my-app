@@ -288,7 +288,7 @@ span {
 .mobile-nav-text-stats {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     list-style: none;
     color: #fff;
     font-size: 18px;

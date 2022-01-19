@@ -32,11 +32,15 @@
     margin-left: 3vw;
 }
 
+.chart {
+    width: 100%;
+}
+
 @media (max-width: 1100px) {
-    .chart {
+    /* .chart {
         width: 150%;
         margin-left: -10vw;
-    }
+    } */
     .topic-text-paragraph {
         padding: 2%;
     }

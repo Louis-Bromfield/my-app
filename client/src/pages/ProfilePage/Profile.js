@@ -120,7 +120,7 @@ console.log("Profile.js UE");
                             <ul className="profile-summary-list">
                                 <li key={0} className="profile-summary-list-item">
                                     <h3>Name:</h3>
-                                    <h4>{props.user.name === undefined ? props.username : localStorage.getItem('name')}</h4>
+                                    <h4>{props.user.name === undefined ? localStorage.getItem('name') : props.user.name}</h4>
                                 </li>
                                 <li key={1} className="profile-summary-list-item">
                                     <h3>Fantasy Forecast Points:</h3>
