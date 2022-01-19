@@ -81,7 +81,7 @@ function Home(props) {
 
     return (
         <div className="home">
-            <HomeHeader name={props.name} width={width} height={height}/>
+            <HomeHeader name={props.username} width={width} height={height}/>
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>
