@@ -61,7 +61,7 @@
 .post-buttons {
     width: 100%;
     display: grid;
-    grid-template-columns: 40% 40%;
+    grid-template-columns: 30% 30%;
 }
 
 .create-post-submit, 
