@@ -33,7 +33,7 @@
     display: none;
 }
 
-.close-modal-btn {
+.close-modal2-btn {
     background-color: rgb(96, 209, 96);
     color: #fff;
     border: none;
@@ -43,7 +43,7 @@
     margin-top: 1vh;
 }
 
-.close-modal-btn:hover {
+.close-modal2-btn:hover {
     cursor: pointer;
     background-color: rgb(104, 189, 104);
     transition: 0.2s ease;

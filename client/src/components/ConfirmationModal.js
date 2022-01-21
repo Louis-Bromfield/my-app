@@ -10,10 +10,10 @@ const ConfirmationModal = ({ handleClose, justClose, show, children }) => {
         <section className="modal-main">
             <img src={FFLogo} alt="" />
             <p>Are you sure you want to do this?</p>
-            <button type="button" onClick={handleClose} className="close-modal-btn">
+            <button type="button" onClick={handleClose} className="close-modal2-btn">
                 Yes
             </button>
-            <button type="button" onClick={justClose} className="close-modal-btn-close">
+            <button type="button" onClick={justClose} className="close-modal2-btn-close">
                 No
             </button>
         </section>
