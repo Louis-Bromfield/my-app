@@ -47,6 +47,10 @@
     cursor: pointer;
 }
 
+.close-modal2-btn {
+    padding: 0.5%;
+}
+
 .close-modal-btn:hover,
 .close-modal2-btn:hover {
     cursor: pointer;
@@ -69,7 +73,7 @@
     color: #fff;
     border: none;
     outline: none;
-    padding: 1%;
+    padding: 0.5%;
     width: 10%;
     margin-top: 1vh;
 }
