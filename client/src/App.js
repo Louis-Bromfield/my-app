@@ -1,3 +1,4 @@
+require('newrelic');
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
@@ -13,7 +14,6 @@ import Learn from './pages/LearnPage/Learn';
 import Search from './pages/SearchPage/Search';
 import Profile from './pages/ProfilePage/Profile';
 import Login from './pages/LoginPage/Login';
-require('newrelic');
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
