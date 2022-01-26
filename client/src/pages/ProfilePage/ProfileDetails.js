@@ -45,7 +45,7 @@ function ProfileDetails(props) {
         try {
             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${currentUsername}`, { password: newPasswordToPersist });
             props.setShowModal(true);
-            props.setModalContent(`Password changed to ${newPasswordToPersist}!`);
+            props.setModalContent(`Password changed to ${newPasswordToPersist}`);
         } catch (error) {
             console.error("Error in ProfileDetails > persistNewPasswordToDB");
             console.error(error);

@@ -129,6 +129,13 @@ function HomeNewsFeed(props) {
 
     const submitNewsFeedPost = (e) => {
         e.preventDefault();
+        if (newPostURL === "" || newPostURL.length === 0) {
+            setPostMessage("Please enter a valid link.");
+            setTimeout(() => {
+                setPostMessage("");
+            }, 3000);
+            return;
+        };
         if (userMarketsForPost.length === 0) {
             setPostMessage("You must select at least one market.");
             setTimeout(() => {

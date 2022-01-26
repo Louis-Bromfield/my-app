@@ -24,6 +24,7 @@ function Home(props) {
     const [modalContent, setModalContent] = useState("");
     const [userObj, setUserObj] = useState(props.user);
     const [onboardingClassName, setOnboardingClassName] = useState("onboarding-div-closed");
+    const [currentAvgBrier, setCurrentAvgBrier] = useState(0);
 
     const onboardingButtonClick = (showOnboarding, buttonText) => {
         setShowOnboarding(!showOnboarding);
@@ -46,11 +47,15 @@ function Home(props) {
     const getClosedForecastCount = async (username) => {
         try {
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
-            console.log(userDocument.data[0]);
-            console.log(userDocument.data[0].numberOfClosedForecasts > 0 ? true : false)
             if (userDocument.data[0].numberOfClosedForecasts > 0) {
                 setShowClosedProblemModal(true);
             };
+            let avgBrier = 0;
+            for (let i = 0; i < userDocument.data[0].brierScores.length; i++) {
+                totalBrier += userDocument.data[0].brierScores[i].brierScore;
+            };
+            avgBrier = avgBrier / userDocument.data[0].brierScores.length;
+            setCurrentAvgBrier(avgBrier);
             setUserObj(userDocument.data[0]);
         } catch (error) {
             console.log("Error in getClosedForecastCount");
@@ -124,6 +129,7 @@ function Home(props) {
                             username={props.username} 
                             user={props.user} 
                             forecasts={props.forecasts}
+                            currentAvgBrier={currentAvgBrier}
                         />
                         <HomeButtonLarge 
                             title="Your Recent Stats"

@@ -269,10 +269,6 @@ function Search(props) {
                             <img className="profile-profile-pic" src={playerProfilePic || FakeProfilePic2} alt="Temporary profile pic"/>
                             <div className="profile-summary">
                                 <ul className="profile-summary-list">
-                                    <li key={0} className="profile-summary-list-item">
-                                        <h3>Name:</h3>
-                                        <h4>{playerName}</h4>
-                                    </li>
                                     <li key={1} className="profile-summary-list-item">
                                         <h3>Fantasy Forecast Points:</h3>
                                         <h4>{playerPoints}</h4>
