@@ -91,7 +91,7 @@ function Leaderboard(props) {
                     } else if (!isNaN(avgBrierScore)) {
                         rankings[i].avgBrierScore = totalBrier / numberOfBriersInThisMarket;
                     }
-                    totalAverageBrier += (totalBrier / userDocument.data[0].brierScores.length);
+                    totalAverageBrier += avgBrierScore;
                 };
                 rankings = rankings.sort((a, b) => b.marketPoints - a.marketPoints);
             };
@@ -111,7 +111,7 @@ function Leaderboard(props) {
             <table className="leaderboard-table">
             {(props.isFFLeaderboard === true && props.leaderboardTitle !== "Fantasy Forecast All-Time") &&
                 <tbody>
-                    {console.log("Here1")}
+                    {/* {console.log("Here1")} */}
                     <tr className="leaderboard-title-row">
                         <th className="position-column">#</th>
                         <th className="username-column">Username</th>
@@ -216,7 +216,7 @@ function Leaderboard(props) {
                 }
                 {(props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") &&
                 <tbody>
-                    {console.log("Here2")}
+                    {/* {console.log("Here2")} */}
                     <tr className="leaderboard-title-row">
                         <th className="position-column">#</th>
                         <th className="username-column">Username</th>

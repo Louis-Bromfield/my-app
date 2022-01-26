@@ -8,7 +8,7 @@ function LeaderboardSpecificStats(props) {
             <hr/>
             <ul className="leaderboard-stats-list">
                 {(props.isFFLeaderboard === true && props.leaderboardTitle !== "Fantasy Forecast All-Time") &&
-                    <li><strong>Average Brier Score: </strong>{props.averageBrier.toFixed(2)}</li>
+                    <li><strong>Average Brier Score: </strong>{props.averageBrier.toFixed(1)}</li>
                 }
                 <li><strong># of Forecasters: </strong>{props.numberOfForecasters}</li>
             </ul>
