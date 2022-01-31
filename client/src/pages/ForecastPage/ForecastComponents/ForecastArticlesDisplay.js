@@ -7,10 +7,15 @@ import ReactLoading from 'react-loading';
 function ForecastArticlesDisplay(props) {
     const [articles, setArticles] = useState("loading");
 
-    const googleNewsScrape = async (searchTerm) => {
+    const googleNewsScrape = async (searchTerm, market) => {
         try {
-            const googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${searchTerm}`);
-            setArticles(googleNewsScrapeResult.data);
+            if (market === "French Presidential Election 2022") {
+                const googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${market}`);
+                setArticles(googleNewsScrapeResult.data);
+            } else {
+                const googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${searchTerm}`);
+                setArticles(googleNewsScrapeResult.data);
+            }
         } catch (error) {
             console.error(error);
         };
@@ -29,7 +34,7 @@ function ForecastArticlesDisplay(props) {
     } else {
         return (
             <div className="articles">
-                <h3>The articles shown below are generated from a web scrape of the problem, exactly as it is worded above. This can result in a wide variety in terms of their relevance and usefulness.</h3>
+                <h3>The articles shown below are generated from a web scrape of the market. This can result in a wide variety in terms of their relevance and usefulness.</h3>
                 {articles !== "loading" && <div className="articles-grid">
                     {articles.map((article, index) => {
                         if (article.img === "N/A") {
