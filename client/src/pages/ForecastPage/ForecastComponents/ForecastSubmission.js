@@ -32,8 +32,11 @@ function ForecastSubmission(props) {
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
     const [modalContent2, setModalContent2] = useState("");
-    const [userCaptainedProblem, setUserCaptainedProblem] = useState();
     const [marketWarning, setMarketWarning] = useState(false);
+    const [forecastSingleCertainty, setForecastSingleCertainty] = useState();
+    const [certaintyOne, setCertaintyOne] = useState(0);
+    const [certaintyTwo, setCertaintyTwo] = useState(0);
+    const [certaintyThree, setCertaintyThree] = useState(0);
 
     let alertStyle;
     if (dropdownHighlight === true) {
@@ -76,7 +79,7 @@ function ForecastSubmission(props) {
                     forecastsAreAvailable = true;
                 };
             };
-            console.log(`if they have no problems, this should be false ==> ${forecastsAreAvailable}, otherwise true`);
+            // console.log(`if they have no problems, this should be false ==> ${forecastsAreAvailable}, otherwise true`);
             if (forecastsAreAvailable === false) {
                 setMarketWarning(true)
             } else {
@@ -118,10 +121,12 @@ function ForecastSubmission(props) {
             props.toggleDiv(true);
             setHasAForecastBeenSelected(true);
             setSelectedForecast(e.target.value);
+            // console.log(e.target.value);
             pullForecastDetailsAndCheckIfAlreadyAttempted(e.target.value);
             setIsInputDisabled(false);
             getForecastDetails(e.target.value);
         };
+
     };
 
     const getForecastDetails = (etv) => {
@@ -130,6 +135,7 @@ function ForecastSubmission(props) {
             getBrierForClosedForecast(props.username, etv);
             setButtonDisabled(true);
             setForecastClosed(true);
+console.log("the problem is closed, so setForecastClosed(true)");
             setForecastCloseDate(`FORECAST CLOSED: ${new Date(forecast.closeDate).toString()}`);
             let highest = 0;
             let lowest = 100;
@@ -174,6 +180,7 @@ console.log("Here1");
         } else {
             setButtonDisabled(false);
             setForecastClosed(false);
+            // console.log("the problem is open, so setForecastClosed(false)");
             setForecastCloseDate(`Deadline: ${new Date(forecast.closeDate).toString()}`);
         };
     };
@@ -213,9 +220,13 @@ console.log("Here1");
     const pullForecastDetailsAndCheckIfAlreadyAttempted = (forecast) => {
         for (let i = 0; i < forecastProblems.length; i++) {
             if (forecastProblems[i].problemName === forecast) {
-                // console.log(forecastProblems[i]);
+                console.log(forecastProblems[i]);
+                console.log(`forecastProblems[i].singleCertainty = ${forecastProblems[i].singleCertainty}`);
                 setSelectedForecastMarket(forecastProblems[i].market);
                 props.changeForecast(forecastProblems[i]);
+                // If only one certainty, this = true. False is multiple certainties are required from user.
+                setForecastSingleCertainty(forecastProblems[i].singleCertainty);
+                props.setForecastSingleCertainty(forecastProblems[i].singleCertainty);
                 if (forecastProblems[i].submittedForecasts.length === 0) {
                     setUserHasAttempted(false);
                     setUserPreviousAttemptCertainty("-");
@@ -229,9 +240,12 @@ console.log("Here1");
                     for (let j = 0; j < forecastProblems[i].submittedForecasts.length; j++) {
                         if (forecastProblems[i].submittedForecasts[j].username === props.username) {
                             setUserHasAttempted(true);
-                            setUserPreviousAttemptCertainty((forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].certainty*100).toFixed(2));
+                            if (forecastProblems[i].singleCertainty === true) {
+                                setUserPreviousAttemptCertainty((forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].certainty*100).toFixed(2));    
+                            } else if (forecastProblems[i].singleCertainty === false) {
+                                setUserPreviousAttemptCertainty(`${(forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].certainties.certaintyHigher*100).toFixed(2)}% / ${(forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].certainties.certaintySame*100).toFixed(2)}% / ${(forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].certainties.certaintyLower*100).toFixed(2)}`);
+                            }
                             setUserPreviousAttemptComments(forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].comments);
-                            setUserCaptainedProblem(forecastProblems[i].submittedForecasts[j].captainedStatus);
                             return;
                         } else {
                             setUserHasAttempted(false);
@@ -270,6 +284,59 @@ console.log("Here1");
         };
         let currentPrediction = certainty/100;
         setCertainty(currentPrediction);
+    };
+
+    const handleMultipleCertaintyChange = (certaintyVal, e) => {
+        const certainty = e.target.value;
+        if (certainty > 100) {
+            setButtonDisabled(true);
+            setForecastResponseMessage("Please enter a certainty BELOW or equal to 100");
+            return;
+        } else if (certainty < 0) {
+            setForecastResponseMessage("Please enter a certainty ABOVE or equal to 100");
+            setButtonDisabled(true);
+            return;
+        } else if (e.target.value.length === 0) {
+            setButtonDisabled(true);
+            setForecastResponseMessage("Please input a certainty between 0 and 100");
+        } else {
+            setForecastResponseMessage("");
+            setButtonDisabled(false);
+            if (certaintyVal === 1) {
+                if ((Number(certainty) + Number((certaintyTwo*100)) + Number((certaintyThree*100))) > 100) {
+                    setForecastResponseMessage("The three certainties cannot exceed 100.");
+                    setCertaintyOne(Number(certainty/100));
+                    setButtonDisabled(true);
+                    return;
+                } else {
+                    setButtonDisabled(false);
+                    setCertaintyOne(Number(certainty/100));
+                    return;
+                }
+            } else if (certaintyVal === 2) {
+                if ((Number((certaintyOne*100)) + Number(certainty) + Number((certaintyThree*100))) > 100) {
+                    setForecastResponseMessage("The three certainties cannot exceed 100.");
+                    setCertaintyTwo(Number(certainty/100));
+                    setButtonDisabled(true);
+                    return;
+                } else {
+                    setButtonDisabled(false);
+                    setCertaintyTwo(Number(certainty/100));
+                    return;
+                };
+            } else if (certaintyVal === 3) {
+                if ((Number((certaintyOne*100)) + Number((certaintyTwo*100)) + Number(certainty)) > 100) {
+                    setForecastResponseMessage("The three certainties cannot exceed 100.");
+                    setCertaintyThree(Number(certainty/100));
+                    setButtonDisabled(true);
+                    return;
+                } else {
+                    setButtonDisabled(false);
+                    setCertaintyThree(Number(certainty/100));
+                    return;
+                };
+            };
+        };
     };
 
     const handleCommentsChange = (e) => {
@@ -322,8 +389,75 @@ console.log("Here1");
                 username: username,
                 certainty: certainty,
                 comments: comments,
-                date: new Date().toString(),
-                captainedStatus: false
+                date: new Date().toString()
+            });
+            setForecastResponseMessage("Forecast successfully submitted!")
+            updateOnboarding(username);
+            props.changeForecast(submittedForecast.data);
+            setUserHasAttempted(true);
+        } catch (error) {
+            console.error("error in ForecastSubmission.js > handleForecastSubmit")
+            console.error(error);
+        };
+    };
+
+    // Add the loading animation until it's submitted?
+    const handleMultipleForecastUpdate = async (forecast, newCertainty1, newCertainty2, newCertainty3, newComments, username) => {
+        if (newCertainty1 === undefined || newCertainty2 === undefined || newCertainty3 === undefined) {
+            setForecastResponseMessage("One or more certainties is missing.");
+            return;
+        };
+        if (((newCertainty1*100) > 100 || (newCertainty1*100) < 0) || ((newCertainty2*100) > 100 || (newCertainty2*100) < 0) || ((newCertainty3*100) > 100 || (newCertainty3*100) < 0)) {
+            setForecastResponseMessage("One or more certainties is not between 0 and 100.");
+            return;
+        };
+        if (newComments === "") {
+            setForecastResponseMessage("Please enter a comment");
+            return;
+        }
+        try {
+            const document = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${forecast}`);
+            const documentForecastData = document.data[0].submittedForecasts;
+            let index = 0;
+            for (let i = 0; i < documentForecastData.length; i++) {
+                if (documentForecastData[i].username === username) {
+                    index = i;
+                };
+            };
+            const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple/${forecast}`, {
+                updatedForecastsForUser: {
+                    certainty1: newCertainty1, 
+                    certainty2: newCertainty2, 
+                    certainty3: newCertainty3, 
+                    comments: newComments, 
+                    date: new Date().toString()
+                },
+                locationOfForecasts: `submittedForecasts.${index}.forecasts`,
+                locationOfForecastCount: `submittedForecasts.${index}.numberOfForecastsSubmittedByUser`
+            });
+            props.changeForecast(newForecast.data);
+        } catch (error) {
+            console.error("error in ForecastSubmission.js > handleForecastUpdate");
+            console.error(error);
+        };
+    };
+
+    const handleMultipleForecastSubmit = async (forecast, certainty1, certainty2, certainty3, comments, username) => {
+        if ((certainty1*100) + (certainty2*100) + (certainty3*100) !== 100) {
+            setForecastResponseMessage("Your certainties do not equal 100.");
+            return;
+        };
+        console.log(certainty1);
+        console.log(certainty2);
+        console.log(certainty3);
+        try {
+            const submittedForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/submitMultiple/${forecast}`, {
+                username: username,
+                certainty1: certainty1,
+                certainty2: certainty2,
+                certainty3: certainty3,
+                comments: comments,
+                date: new Date().toString()
             });
             setForecastResponseMessage("Forecast successfully submitted!")
             updateOnboarding(username);
@@ -365,17 +499,6 @@ console.log("Here1");
         };
     };
 
-    const handleCaptainChange = async (captainedStatus, username) => {
-        try {
-            let newStatus = !captainedStatus;
-            setUserCaptainedProblem(!userCaptainedProblem);
-            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/captainAProblem/${selectedForecast}/${username}/${newStatus}`);
-        } catch (error) {
-            console.error("ForecastSubmission > handleCaptainChange");
-            console.error(error);
-        }
-    };
-
     return (
         <div className="forecast-submission-and-selection-div">
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
@@ -385,11 +508,11 @@ console.log("Here1");
             </Modal>
             <div className="forecast-top-bar">
                 {marketWarning === true &&
-                        <div className="forecast-selection-div">
-                            <h3>You are not currently in any markets, so no forecasts are available. To join a market, go to the Leaderboards page and press the Join A Market button.</h3>
-                        </div>
-                    }
-                    {marketWarning === false && 
+                    <div className="forecast-selection-div">
+                        <h3>You are not currently in any markets, so no forecasts are available. To join a market, go to the Leaderboards page and press the Join A Market button.</h3>
+                    </div>
+                }
+                {marketWarning === false && 
                     <div className="forecast-selection-div">
                         <label htmlFor="forecast-selection"><h2 className="header-label">Select a Problem</h2></label>
                         <select 
@@ -459,114 +582,228 @@ console.log("Here1");
                     </h2>
                     <h4 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 38)}</h4>
                     <div className="forecast-submission-and-error-container">
-                        <div className="forecast-submission-input">
-                            <div className="forecast-submission-input-certainty-section">
-                                <h3>Your Certainty (0.00 - 100.00%)</h3>
-                                {userHasAttempted === false && 
-                                    <input 
-                                        type="number" 
-                                        placeholder="Enter Your Prediction" 
-                                        className="forecast-certainty-input" 
-                                        onChange={handleCertaintyChange}
-                                        min="0"
-                                        max="100"
-                                        step="0.05"
-                                        disabled={isInputDisabled}
-                                    />
+                        {forecastSingleCertainty === true &&
+                            <div className="forecast-submission-input">
+                                <div className="forecast-submission-input-certainty-section">
+                                    <h3>Your Certainty (0.00 - 100.00%)</h3>
+                                    {userHasAttempted === false && 
+                                        <input 
+                                            type="number" 
+                                            placeholder="Enter Your Prediction" 
+                                            className="forecast-certainty-input" 
+                                            onChange={handleCertaintyChange}
+                                            min="0"
+                                            max="100"
+                                            step="0.05"
+                                            disabled={isInputDisabled}
+                                        />
+                                    }
+                                    {userHasAttempted === true && 
+                                        <input 
+                                            type="number" 
+                                            className="forecast-certainty-input" 
+                                            onChange={handleCertaintyChange}
+                                            min="0"
+                                            max="100"
+                                            step="0.05"
+                                            disabled={isInputDisabled}
+                                        />
+                                    }
+                                </div>
+                                <div className="forecast-submission-input-explanation-section">
+                                    <h3>
+                                        Forecast Explanation
+                                        <FaInfoCircle 
+                                        color={"orange"} 
+                                        className="modal-i-btn"
+                                        onClick={() => { setShowModal(true); setModalContent(`Feel free to note what resources, articles, key events or info helped to inform your prediction. This will be helpful for when you update your predictions (to see how you justified prior forecasts).`)}}/>
+                                    </h3>
+                                    {userHasAttempted === true &&
+                                        <textarea 
+                                            className="forecast-submission-explanation-input"
+                                            name="forecast-explanation"
+                                            disabled={isInputDisabled}
+                                            onChange={handleCommentsChange}>
+                                        </textarea>
+                                    }
+                                    {userHasAttempted === false &&
+                                        <textarea 
+                                            placeholder="Explain why you gave the above certainty"
+                                            className="forecast-submission-explanation-input"
+                                            name="forecast-explanation"
+                                            disabled={isInputDisabled}
+                                            onChange={handleCommentsChange}>
+                                        </textarea>
+                                    }
+                                </div>
+                                {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
+                                    <button 
+                                        className="disabled-submit-forecast-btn" 
+                                        disabled={buttonDisabled}>
+                                            Error
+                                    </button>
                                 }
-                                {userHasAttempted === true && 
-                                    <input 
-                                        type="number" 
-                                        className="forecast-certainty-input" 
-                                        onChange={handleCertaintyChange}
-                                        min="0"
-                                        max="100"
-                                        step="0.05"
-                                        disabled={isInputDisabled}
-                                    />
+                                {(buttonDisabled === false && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
+                                    <button 
+                                        className="submit-forecast-btn" 
+                                        disabled={buttonDisabled}
+                                        onClick={() => {
+                                            handleForecastUpdate(selectedForecast, certainty, forecastComments, props.username); 
+                                            setForecastResponseMessage("Forecast successfully updated!");
+                                            setUserPreviousAttemptCertainty(certainty*100);
+                                            setUserPreviousAttemptComments(forecastComments);
+                                            props.causeRefresh();
+                                        }}>
+                                            Update Forecast
+                                    </button>
+                                }
+                                {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === false)) &&
+                                    <button 
+                                        className="disabled-submit-forecast-btn" 
+                                        disabled={buttonDisabled}>
+                                            ERROR
+                                    </button>
+                                }
+                                {(buttonDisabled === false && (hasAForecastBeenSelected === true && userHasAttempted === false)) &&
+                                    <button 
+                                        className="submit-forecast-btn" 
+                                        disabled={buttonDisabled}
+                                        onClick={() => {
+                                            handleForecastSubmit(selectedForecast, certainty, forecastComments, props.username); 
+                                            setForecastResponseMessage("Forecast successfully submitted!");
+                                            setUserPreviousAttemptCertainty(certainty*100);
+                                            setUserPreviousAttemptComments(forecastComments);
+                                            props.causeRefresh();
+                                        }}>
+                                            Submit Forecast
+                                    </button>
                                 }
                             </div>
-                            <div className="forecast-submission-input-explanation-section">
-                                <h3>
-                                    Forecast Explanation
-                                    <FaInfoCircle 
-                                    color={"orange"} 
-                                    className="modal-i-btn"
-                                    onClick={() => { setShowModal(true); setModalContent(`Feel free to note what resources, articles, key events or info helped to inform your prediction. This will be helpful for when you update your predictions (to see how you justified prior forecasts).`)}}/>
-                                </h3>
-                                {userHasAttempted === true &&
-                                    <textarea 
-                                        className="forecast-submission-explanation-input"
-                                        name="forecast-explanation"
-                                        disabled={isInputDisabled}
-                                        onChange={handleCommentsChange}>
-                                    </textarea>
-                                }
-                                {userHasAttempted === false &&
-                                    <textarea 
-                                        placeholder="Explain why you gave the above certainty"
-                                        className="forecast-submission-explanation-input"
-                                        name="forecast-explanation"
-                                        disabled={isInputDisabled}
-                                        onChange={handleCommentsChange}>
-                                    </textarea>
-                                }
+                        }
+                        {forecastSingleCertainty === false && 
+                            <div className="multiple-forecast-submission-input">
+                                <div className="forecast-submission-input-certainty-section">
+                                    <h3>
+                                        Your Certainty (0.00 - 100.00%)
+                                        <FaInfoCircle 
+                                            onClick={() => {
+                                                setShowModal(true);
+                                                setModalContent("You have 100 points to allocate between these three outcomes.")
+                                            }}
+                                            style={{ "color": "orange", "cursor": "pointer" }}
+                                        />
+                                    </h3>
+                                    <div className="multiple-input-fields">
+                                        <div className="input-header-container">
+                                            <h3>Increased by 2+</h3>
+                                            <input 
+                                                type="number" 
+                                                className="forecast-certainty-input" 
+                                                onChange={(e) => handleMultipleCertaintyChange(1, e)}
+                                                min="0"
+                                                max="100"
+                                                step="0.05"
+                                                disabled={isInputDisabled}
+                                            />
+                                        </div>
+                                        <div className="input-header-container">
+                                            <h3>Stayed within +/- 2</h3>
+                                            <input 
+                                                type="number" 
+                                                className="forecast-certainty-input" 
+                                                onChange={(e) => handleMultipleCertaintyChange(2, e)}
+                                                min="0"
+                                                max="100"
+                                                step="0.05"
+                                                disabled={isInputDisabled}
+                                            />
+                                        </div>
+                                        <div className="input-header-container">
+                                            <h3>Decreased by 2+</h3>
+                                            <input 
+                                                type="number" 
+                                                className="forecast-certainty-input" 
+                                                onChange={(e) => handleMultipleCertaintyChange(3, e)}
+                                                min="0"
+                                                max="100"
+                                                step="0.05"
+                                                disabled={isInputDisabled}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="forecast-submission-explanation-and-btn-container">
+                                    <div className="forecast-submission-input-explanation-section">
+                                        <h3>
+                                            Forecast Explanation
+                                            <FaInfoCircle 
+                                            color={"orange"} 
+                                            className="modal-i-btn"
+                                            onClick={() => { setShowModal(true); setModalContent(`Feel free to note what resources, articles, key events or info helped to inform your prediction. This will be helpful for when you update your predictions (to see how you justified prior forecasts).`)}}/>
+                                        </h3>
+                                        {userHasAttempted === true &&
+                                            <textarea 
+                                                className="forecast-submission-explanation-input"
+                                                name="forecast-explanation"
+                                                disabled={isInputDisabled}
+                                                onChange={handleCommentsChange}>
+                                            </textarea>
+                                        }
+                                        {userHasAttempted === false &&
+                                            <textarea 
+                                                placeholder="Explain why you gave the above certainty"
+                                                className="forecast-submission-explanation-input"
+                                                name="forecast-explanation"
+                                                disabled={isInputDisabled}
+                                                onChange={handleCommentsChange}>
+                                            </textarea>
+                                        }
+                                    </div>
+                                    {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
+                                        <button 
+                                            className="disabled-submit-forecast-btn" 
+                                            disabled={buttonDisabled}>
+                                                Error
+                                        </button>
+                                    }
+                                    {(buttonDisabled === false && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
+                                        <button 
+                                            className="submit-forecast-btn" 
+                                            disabled={buttonDisabled}
+                                            onClick={() => {
+                                                handleMultipleForecastUpdate(selectedForecast, certaintyOne, certaintyTwo, certaintyThree, forecastComments, props.username); 
+                                                setForecastResponseMessage("Forecast successfully updated!");
+                                                setUserPreviousAttemptCertainty(`${certaintyOne*100} / ${certaintyTwo*100} / ${certaintyThree*100}`);
+                                                setUserPreviousAttemptComments(forecastComments);
+                                                props.causeRefresh();
+                                            }}>
+                                                Update Forecast
+                                        </button>
+                                    }
+                                    {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === false)) &&
+                                        <button 
+                                            className="disabled-submit-forecast-btn" 
+                                            disabled={buttonDisabled}>
+                                                ERROR
+                                        </button>
+                                    }
+                                    {(buttonDisabled === false && (hasAForecastBeenSelected === true && userHasAttempted === false)) &&
+                                        <button 
+                                            className="submit-forecast-btn" 
+                                            disabled={buttonDisabled}
+                                            onClick={() => {
+                                                handleMultipleForecastSubmit(selectedForecast, certaintyOne, certaintyTwo, certaintyThree, forecastComments, props.username); 
+                                                setForecastResponseMessage("Forecast successfully submitted!");
+                                                setUserPreviousAttemptCertainty(`${certaintyOne*100} / ${certaintyTwo*100} / ${certaintyThree*100}`);
+                                                setUserPreviousAttemptComments(forecastComments);
+                                                props.causeRefresh();
+                                            }}>
+                                                Submit Forecast
+                                        </button>
+                                    }
+                                </div>
                             </div>
-                            {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
-                                <button 
-                                    className="disabled-submit-forecast-btn" 
-                                    disabled={buttonDisabled}>
-                                        Error
-                                </button>
-                            }
-                            {(buttonDisabled === false && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
-                                <button 
-                                    className="submit-forecast-btn" 
-                                    disabled={buttonDisabled}
-                                    onClick={() => {
-                                        handleForecastUpdate(selectedForecast, certainty, forecastComments, props.username); 
-                                        setForecastResponseMessage("Forecast successfully updated!");
-                                        setUserPreviousAttemptCertainty(certainty*100);
-                                        setUserPreviousAttemptComments(forecastComments);
-                                        props.causeRefresh();
-                                    }}>
-                                        Update Forecast
-                                </button>
-                            }
-                            {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === false)) &&
-                                <button 
-                                    className="disabled-submit-forecast-btn" 
-                                    disabled={buttonDisabled}>
-                                        ERROR
-                                </button>
-                            }
-                            {(buttonDisabled === false && (hasAForecastBeenSelected === true && userHasAttempted === false)) &&
-                                <button 
-                                    className="submit-forecast-btn" 
-                                    disabled={buttonDisabled}
-                                    onClick={() => {
-                                        handleForecastSubmit(selectedForecast, certainty, forecastComments, props.username); 
-                                        setForecastResponseMessage("Forecast successfully submitted!");
-                                        setUserPreviousAttemptCertainty(certainty*100);
-                                        setUserPreviousAttemptComments(forecastComments);
-                                        props.causeRefresh();
-                                    }}>
-                                        Submit Forecast
-                                </button>
-                            }
-                        </div>
-                        {/* {userHasAttempted === true && 
-                            <div className="captain-a-problem-div">
-                                <h3>
-                                    <FaInfoCircle 
-                                    color={"orange"} 
-                                    className="modal-i-btn"
-                                    onClick={() => { setShowModal(true); setModalContent(`When we calculate your score, every certainty you submit is converted into a score from 0-100 and then multiplied by the amount of time it was your newest prediction. If this 'Boost Your Prediction' button is selected when the problem closes, each of those scores will be modified. You do not have to tick this box every time you make a new prediction, once checked this will stay checked until you uncheck it or the problem reaches the deadline.`); setModalContent2(`If the problem DOES happen, every score you get from a certainty ABOVE 50% will be doubled, and every score from a certainty BELOW 50% will be halved. If the problem DOES NOT happen, every score you get from a certainty ABOVE 50% will be halved, and every score from a certainty BELOW 50% will be doubled. You can use this boost option on every problem.`)}}/>
-                                    Boost My Prediction&nbsp;
-                                </h3>
-                                <input type="checkbox" defaultChecked={userCaptainedProblem} onChange={() => handleCaptainChange(userCaptainedProblem, props.username)}/>
-                            </div>
-                        } */}
+                        }
                         {(forecastResponseMessage === "Forecast successfully updated!" || forecastResponseMessage === "Forecast successfully submitted!") && 
                             <h3 className="forecast-message" style={{ color: "green" }}>{forecastResponseMessage}</h3>
                         }
@@ -585,10 +822,6 @@ console.log("Here1");
                                 <h4>{userPreviousAttemptComments}</h4>
                             </div>
                         </div>
-                        {/* <div className="scores">
-                            <h4 className="brier-info">FF Scores range from 0-110, and are made up of the accuracy of your prediction and when you submitted it, 
-                            meaning more accuracy earlier is more rewarding! For more info, visit the Brier Scores tab on the Learn page!</h4>
-                        </div> */}
                     </div>
                 </div>
             }
@@ -621,6 +854,7 @@ console.log("Here1");
                         selectedForecast={selectedForecast}
                         userHasAttempted={userHasAttempted}
                         forecastClosed={true}
+                        forecastSingleCertainty={forecastSingleCertainty}
                     />
                 }
                 {(hasAForecastBeenSelected === true && forecastClosed === false) &&
@@ -629,6 +863,7 @@ console.log("Here1");
                         selectedForecast={selectedForecast}
                         userHasAttempted={userHasAttempted}
                         forecastClosed={false}
+                        forecastSingleCertainty={forecastSingleCertainty}
                     />
                 }
             </div>

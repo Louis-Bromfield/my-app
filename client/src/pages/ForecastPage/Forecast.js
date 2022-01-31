@@ -9,6 +9,7 @@ function Forecast(props) {
     const [forecast, setForecast] = useState("");
     const [leaderboardData, setLeaderboardData] = useState([]);
     const [refresh, setRefresh] = useState(0);
+    const [forecastSingleCertainty, setForecastSingleCertainty] = useState();
 
     const handleForecastChange = (newForecast) => {
         setForecast(newForecast);
@@ -40,6 +41,7 @@ console.log("Forecast.js UE")
             {props.username === "admin" && <ForecastAdmin />}
             <ForecastSubmission 
                 toggleDiv={setForecastSelected} 
+                setForecastSingleCertainty={setForecastSingleCertainty}
                 changeForecast={handleForecastChange} 
                 handleLeaderboardChange={handleLeaderboardChange}
                 markets={props.markets} 
@@ -53,6 +55,7 @@ console.log("Forecast.js UE")
                     username={props.username} 
                     leaderboard={leaderboardData}
                     refresh={refresh} 
+                    forecastSingleCertainty={forecastSingleCertainty}
                 />
             }
             {!forecastSelected &&

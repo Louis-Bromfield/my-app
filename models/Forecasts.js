@@ -37,6 +37,12 @@ const ForecastsSchema = mongoose.Schema({
     happened: {
         type: Boolean,
         default: false
+    },
+    singleCertainty: {
+        type: Boolean
+    },
+    outcome: {
+        type: String
     }
 });
 

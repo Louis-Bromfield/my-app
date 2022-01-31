@@ -19,6 +19,7 @@ function ForecastTabPane(props) {
                 username={props.username} 
                 leaderboard={props.leaderboard}
                 refresh={props.refresh}
+                forecastSingleCertainty={props.forecastSingleCertainty}
             />
         </div>
     )

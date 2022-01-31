@@ -35,6 +35,7 @@ function ForecastTabPaneDisplay(props) {
                             updateTodayStats={updateTodayStats} 
                             username={props.username} 
                             refresh={props.refresh} 
+                            forecastSingleCertainty={props.forecastSingleCertainty}
                         />
                     </div>
                     <div className="forecast-stats-div-four-container">
@@ -46,12 +47,14 @@ function ForecastTabPaneDisplay(props) {
                         <ForecastStatistics 
                             selectedForecast={props.selectedForecast} 
                             today={false} 
+                            forecastSingleCertainty={props.forecastSingleCertainty}
                         />
                         <ForecastStatistics 
                             selectedForecast={props.selectedForecast} 
                             today={true} 
                             todayAverage={todayAverage} 
                             todayForecastCount={todayForecastCount} 
+                            forecastSingleCertainty={props.forecastSingleCertainty}
                         />
                         <MarketStatistics 
                             leaderboard={props.leaderboard} 

@@ -294,11 +294,6 @@ function Search(props) {
                         </div>
                         <br/>
                         <hr/>
-                        {/* <SearchProfileStats 
-                            searchedUser={playerUsername}
-                            brierScores={searchedUserBrierScoresArr}
-                            userObj={searchedUserObj}
-                        /> */}
                         <div className="profile-stats">
                             <h1 className="profile-header">{playerUsername !== "" ? `${playerUsername}'s Stats` : "Player Stats"}</h1>
                             <div className="profile-stats-inner">

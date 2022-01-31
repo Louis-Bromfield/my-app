@@ -177,7 +177,9 @@ router.patch("/imageAPI/:username", parser.single("image"), async (req, res) => 
             image: req.file.path,
         });
         // Update User Document
+        console.log(req.params.username);
         const userDocument = await Users.findOne({ username: req.params.username });
+        console.log(userDocument);
         const response = await Users.findByIdAndUpdate(userDocument._id, {
             profilePicture: imageUploaded.image
         },
@@ -271,8 +273,6 @@ router.patch("/:username/removeMarket/:marketName", async (req, res) => {
 
 router.patch("/calculateBrier/:problemName/:happenedStatus/:marketName/:closeEarly", async (req, res) => {
     try {
-        // Get usernames of everyone who made a forecast + their forecasts
-        // const forecastDocument = await Forecasts.find();
         const forecastObj = await Forecasts.findOne({ problemName: req.params.problemName });
         let happened;
         if (req.params.happenedStatus === "true") {
@@ -288,13 +288,14 @@ router.patch("/calculateBrier/:problemName/:happenedStatus/:marketName/:closeEar
             // Close Forecast
             await Forecasts.findByIdAndUpdate(forecastObj._id, { isClosed: true, happened: happened });
         };
-        const calculatedBriers = calculateBriers(forecastObj, happened);
+        const calculatedBriers = calculateBriers(forecastObj, happened, "N/A");
         let scoresToReturn = [];
+        let newScorePerformanceBoosted;
         for (let i = 0; i < calculatedBriers.length; i++) {
             const user = await Users.findOne({ username: calculatedBriers[i].username });
             // Work out if they should receive a performance bonus for this Brier Score
             let scoreChain = 1;
-            if (calculatedBriers[i].finalScore >= 90 || (calculatedBriers[i].captainedStatus === true && calculatedBriers[i].finalScore >= 180)) {
+            if (calculatedBriers[i].finalScore >= 75) {
                 for (let i = user.brierScores.length-1; i >= 0; i--) {
                     if (user.brierScores[i].marketName === req.params.marketName) {
                         if (user.brierScores[i].brierScore >= 90) {
@@ -311,15 +312,84 @@ router.patch("/calculateBrier/:problemName/:happenedStatus/:marketName/:closeEar
                 } else {
                     boost = 0.03 + (scoreChain/100);
                 }
+                console.log(`boost = ${boost}`);
                 newScorePerformanceBoosted = calculatedBriers[i].finalScore + (calculatedBriers[i].finalScore * boost);
             } else {
                 newScorePerformanceBoosted = calculatedBriers[i].finalScore;
-            };
+            }
             const toPush = {
                 brierScore: newScorePerformanceBoosted,
                 problemName: req.params.problemName,
                 marketName: req.params.marketName,
-                captainedStatus: calculatedBriers[i].captainedStatus
+                captainedStatus: calculatedBriers[i].captainedStatus,
+                performanceBoost: scoreChain
+            };
+            await Users.findOneAndUpdate({ username: calculatedBriers[i].username }, {
+                $push: { brierScores: toPush },
+                fantasyForecastPoints: Number(user.fantasyForecastPoints) + toPush.brierScore,
+                forecastClosedStatus: true,
+                numberOfClosedForecasts: Number(user.numberOfClosedForecasts) + 1
+            },
+            { new: true }
+            );
+            toPush.username = calculatedBriers[i].username;
+            scoresToReturn.push(toPush);
+        };
+        res.json({ scores: scoresToReturn });
+    } catch (error) {
+        console.error("error in users > patch calculateBriers");
+        console.error(error);
+    };
+});
+
+router.patch("/calculateBriersMultipleOutcomes/:problemName/:outcome/:marketName/:closeEarly", async (req, res) => {
+    try {
+        const forecastObj = await Forecasts.findOne({ problemName: req.params.problemName });
+        let outcome = req.params.outcome;
+        // If a problem is being closed early, update the date in the obj and then persist to DB
+        if (req.params.closeEarly === "true") {
+            forecastObj.closeDate = req.body.newProblemCloseDateTime;
+            await Forecasts.findByIdAndUpdate(forecastObj._id, { closeDate: req.body.newProblemCloseDateTime, outcome: outcome, isClosed: true});
+        } else if (req.params.closeEarly === "false") {
+            // Close Forecast
+            await Forecasts.findByIdAndUpdate(forecastObj._id, { isClosed: true, outcome: outcome });
+        };
+        const calculatedBriers = calculateBriers(forecastObj, "N/A", outcome);
+
+        let scoresToReturn = [];
+        let newScorePerformanceBoosted;
+        for (let i = 0; i < calculatedBriers.length; i++) {
+            const user = await Users.findOne({ username: calculatedBriers[i].username });
+            // Work out if they should receive a performance bonus for this Brier Score
+            let scoreChain = 1;
+            if (calculatedBriers[i].finalScore >= 75) {
+                for (let i = user.brierScores.length-1; i >= 0; i--) {
+                    if (user.brierScores[i].marketName === req.params.marketName) {
+                        if (user.brierScores[i].brierScore >= 90) {
+                            scoreChain++;
+                        } else {
+                            break;
+                        }
+                    }
+                };
+                // if scoreChain is 1, then only their current prediction is above 90 or 180, just a 1x streak, bonuses only start at 2x streak
+                if (scoreChain === 1) {
+                    boost = 0;
+                // 2x streak = 0.03 + 0.02 = 0.05, 5% boost 
+                } else {
+                    boost = 0.03 + (scoreChain/100);
+                }
+                console.log(`boost = ${boost}`);
+                newScorePerformanceBoosted = calculatedBriers[i].finalScore + (calculatedBriers[i].finalScore * boost);
+            } else {
+                newScorePerformanceBoosted = calculatedBriers[i].finalScore;
+            }
+            const toPush = {
+                brierScore: newScorePerformanceBoosted,
+                problemName: req.params.problemName,
+                marketName: req.params.marketName,
+                captainedStatus: calculatedBriers[i].captainedStatus,
+                performanceBoost: scoreChain
             };
             await Users.findOneAndUpdate({ username: calculatedBriers[i].username }, {
                 $push: { brierScores: toPush },
@@ -340,7 +410,7 @@ router.patch("/calculateBrier/:problemName/:happenedStatus/:marketName/:closeEar
 });
 
 // New version without comments
-const calculateBriers = (forecastObj, happened) => {
+const calculateBriers = (forecastObj, happened, outcome) => {
     const startDate = new Date(forecastObj.startDate);
     const closeDate = new Date(forecastObj.closeDate);
 
@@ -369,18 +439,34 @@ const calculateBriers = (forecastObj, happened) => {
         // Sum of Weighted Briers
         let sumOfNewWeightedBriers = 0;
         for (let j = 0; j < forecastObj.submittedForecasts[i].forecasts.length; j++) {
-            // Double check to make sure that no forecasts submitted after the problem has closed are included
-            // This is especially important for instances where I have had to close the problem early 
-            // as someone may have submitted a forecast before I had a chance to close it
-
             // Forecast WAS made before close date
             console.log(`${new Date(forecastObj.submittedForecasts[i].forecasts[j].date)} < ${closeDate}`);
             if (new Date(forecastObj.submittedForecasts[i].forecasts[j].date) < closeDate) {
+console.log("This forecast counts");
                 let originalBrier;
-                if (happened === true) {
-                    originalBrier = (((1 - forecastObj.submittedForecasts[i].forecasts[j].certainty) * (1 - forecastObj.submittedForecasts[i].forecasts[j].certainty)) + ((0 - (1 - forecastObj.submittedForecasts[i].forecasts[j].certainty)) * (0 - (1 -forecastObj.submittedForecasts[i].forecasts[j].certainty))));
-                } else if (happened === false) {
-                    originalBrier = (((0 - forecastObj.submittedForecasts[i].forecasts[j].certainty) * (0 - forecastObj.submittedForecasts[i].forecasts[j].certainty)) + ((1 - (1 - forecastObj.submittedForecasts[i].forecasts[j].certainty)) * (1 - (1 -forecastObj.submittedForecasts[i].forecasts[j].certainty))));
+                // Single Cert Problem - using happened
+                if (happened !== "N/A") {
+                    if (happened === true) {
+                        originalBrier = (((1 - forecastObj.submittedForecasts[i].forecasts[j].certainty) * (1 - forecastObj.submittedForecasts[i].forecasts[j].certainty)) + ((0 - (1 - forecastObj.submittedForecasts[i].forecasts[j].certainty)) * (0 - (1 -forecastObj.submittedForecasts[i].forecasts[j].certainty))));
+                    } else if (happened === false) {
+                        originalBrier = (((0 - forecastObj.submittedForecasts[i].forecasts[j].certainty) * (0 - forecastObj.submittedForecasts[i].forecasts[j].certainty)) + ((1 - (1 - forecastObj.submittedForecasts[i].forecasts[j].certainty)) * (1 - (1 -forecastObj.submittedForecasts[i].forecasts[j].certainty))));
+                    };
+                // Multi Cert Problem - using outcome
+                } else if (happened === "N/A") {
+                    let higherBrierIfCorrect = Math.pow(1 - forecastObj.submittedForecasts[i].forecasts[j].certainties.certaintyHigher, 2);
+                    let higherBrierIfIncorrect = Math.pow(0 - forecastObj.submittedForecasts[i].forecasts[j].certainties.certaintyHigher, 2)
+                    let sameBrierIfCorrect = Math.pow(1 - forecastObj.submittedForecasts[i].forecasts[j].certainties.certaintySame, 2);
+                    let sameBrierIfIncorrect = Math.pow(0 - forecastObj.submittedForecasts[i].forecasts[j].certainties.certaintySame, 2)
+                    let lowerBrierIfCorrect = Math.pow(1 - forecastObj.submittedForecasts[i].forecasts[j].certainties.certaintyLower, 2);
+                    let lowerBrierIfIncorrect = Math.pow(0 - forecastObj.submittedForecasts[i].forecasts[j].certainties.certaintyLower, 2)
+
+                    if (outcome === "increase") {
+                        originalBrier = higherBrierIfCorrect + sameBrierIfIncorrect + lowerBrierIfIncorrect;
+                    } else if (outcome === "same") {
+                        originalBrier = sameBrierIfCorrect + higherBrierIfIncorrect + lowerBrierIfIncorrect;
+                    } else if (outcome === "decrease") {
+                        originalBrier = lowerBrierIfCorrect + higherBrierIfIncorrect + sameBrierIfIncorrect;
+                    };
                 };
                 let newBrier = (2 - originalBrier) * 50;
 
@@ -391,64 +477,21 @@ const calculateBriers = (forecastObj, happened) => {
                     let forecastTimeFrame = (closeDate - startDate)/1000;
                     let duration = (nextForecastTimeDate - thisForecastTimeDate)/1000;
                     let percentageOfTimeAtThisScore = ((duration/forecastTimeFrame)*100);
-
-                    // Boosting
-                    // if (forecastObj.submittedForecasts[i].captainedStatus === true) {
-                    //     if (happened === true) {
-                    //         if (forecastObj.submittedForecasts[i].forecasts[j].certainty > 0.5) {
-                    //             newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))*2);
-                    //         } else if (forecastObj.submittedForecasts[i].forecasts[j].certainty < 0.5) {
-                    //             newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))/2);
-                    //         } else {
-                    //             newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
-                    //         }
-                    //     } else if (happened === false) {
-                    //         if (forecastObj.submittedForecasts[i].forecasts[j].certainty > 0.5) {
-                    //             newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))/2);
-                    //         } else if (forecastObj.submittedForecasts[i].forecasts[j].certainty < 0.5) {
-                    //             newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))*2);
-                    //         } else {
-                    //             newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
-                    //         }
-                    //     }
-                    // } else if (forecastObj.submittedForecasts[i].captainedStatus === false) {
-                        newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
-                    // }
+                    newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
                     sumOfNewWeightedBriers = sumOfNewWeightedBriers + newBrierWeightedByDuration;
                 }
                 else if (j === forecastObj.submittedForecasts[i].forecasts.length-1) {
                     let forecastTimeFrame = (closeDate - startDate)/1000;
                     let duration = (closeDate - thisForecastTimeDate)/1000;
                     let percentageOfTimeAtThisScore = ((duration/forecastTimeFrame)*100);
-
-                    // Boosting
-                    // if (forecastObj.submittedForecasts[i].captainedStatus === true) {
-                    //     if (happened === true) {
-                    //         if (forecastObj.submittedForecasts[i].forecasts[j].certainty > 0.5) {
-                    //             newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))*2);
-                    //         } else if (forecastObj.submittedForecasts[i].forecasts[j].certainty < 0.5) {
-                    //             newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))/2);
-                    //         } else {
-                    //             newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
-                    //         }
-                    //     } else if (happened === false) {
-                    //         if (forecastObj.submittedForecasts[i].forecasts[j].certainty > 0.5) {
-                    //             newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))/2);
-                    //         } else if (forecastObj.submittedForecasts[i].forecasts[j].certainty < 0.5) {
-                    //             newBrierWeightedByDuration = ((newBrier * (percentageOfTimeAtThisScore/100))*2);
-                    //         } else {
-                    //             newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
-                    //         }
-                    //     }
-                    // } else if (forecastObj.submittedForecasts[i].captainedStatus === false) {
-                        newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
-                    // }
+                    newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
 
                     sumOfNewWeightedBriers = sumOfNewWeightedBriers + newBrierWeightedByDuration;
                     formulaComponents[i].finalBrierSum = sumOfNewWeightedBriers;
                 };
             // Forecast was NOT made before close date
             } else if (new Date(forecastObj.submittedForecasts[i].forecasts[j].date) > closeDate) {
+console.log("Forecast submitted after the problem's close date");
                 sumOfNewWeightedBriers = sumOfNewWeightedBriers + 0;
                 if (j === forecastObj.submittedForecasts[i].forecasts.length-1) {
                     formulaComponents[i].finalBrierSum = sumOfNewWeightedBriers;
@@ -456,17 +499,12 @@ const calculateBriers = (forecastObj, happened) => {
             };
         };
         formulaComponents[i].brierSumPlusTScore = formulaComponents[i].finalBrierSum + formulaComponents[i].tScore;
-        // Just 75 boosting
-        // if (forecastObj.submittedForecasts[i].captainedStatus === true) {
-        //     if (formulaComponents[i].brierSumPlusTScore >= 75) {
-        //         formulaComponents[i].brierSumPlusTScore = (formulaComponents[i].brierSumPlusTScore*2);
-        //     } else if (formulaComponents[i].brierSumPlusTScore < 75) {
-        //         formulaComponents[i].brierSumPlusTScore = (formulaComponents[i].brierSumPlusTScore/2);
-        //     };
-        // };
         arrToReturn[i].finalScore = formulaComponents[i].brierSumPlusTScore;
+        console.log(`arrToReturn[i].finalScore = ${arrToReturn[i].finalScore}`)
         arrToReturn[i].captainedStatus = forecastObj.submittedForecasts[i].captainedStatus;
     };
+    console.log(formulaComponents);
+    console.log(arrToReturn);
     return arrToReturn;
 };
 

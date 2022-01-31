@@ -89,6 +89,20 @@
     flex-direction: column;
 }
 
+.multiple-input-fields {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.input-header-container {
+    display: flex;
+    flex-direction: column;
+    margin: 1%;
+}
+
 .forecast-certainty-input {
     /* padding: 1%; */
     text-align: center;

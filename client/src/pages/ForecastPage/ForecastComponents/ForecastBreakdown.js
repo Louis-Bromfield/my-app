@@ -9,22 +9,25 @@ function ForecastBreakdown(props) {
     const [showBreakdown, setShowBreakdown] = useState(false);
     const [forecastClosed, setForecastClosed] = useState(props.forecastClosed);
     const [showForecastByForecastBreakdown, setShowForecastByForecastBreakdown] = useState(true);
-
+    const [singleCertainty, setSingleCertainty] = useState(props.forecastSingleCertainty);
 
     useEffect(() => {
+        console.log(`props.fSC = ${props.forecastSingleCertainty}`);
         if (props.userHasAttempted === true) {
             getPredictionData(props.selectedForecast, props.username, forecastClosed);
         };
     }, [props.selectedForecast, props.username, props.userHasAttempted, forecastClosed]);
 
-    const getPredictionData = async (selectedForecast, username) => {
+    const getPredictionData = async (selectedForecast, username, forecastClosed) => {
         try {
-            if (props.forecastClosed === true) {
-                const userForecastsDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${selectedForecast}/${true}/${username}`);
+            console.log(`forecastClosed === ${forecastClosed}`)
+            if (forecastClosed === true) {
+                const userForecastsDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${selectedForecast}/${true}/${username}/${singleCertainty}`);
                 setPredictionData(userForecastsDocument.data);
                 calculateTScore(userForecastsDocument.data);
-            } else if (props.forecastClosed === false) {
-                const userForecastsDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${selectedForecast}/${false}/${username}`);
+            } else if (forecastClosed === false) {
+                const userForecastsDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${selectedForecast}/${false}/${username}/${singleCertainty}`);
+                console.log(userForecastsDocument.data);
                 setPredictionData(userForecastsDocument.data);
                 calculateTScore(userForecastsDocument.data);
             }
@@ -114,12 +117,15 @@ function ForecastBreakdown(props) {
     let totalScore = 0;
     let totalIfHappenedNoBoost = 0;
     let totalIfNotHappenedNoBoost = 0;
+    let totalIfIncrease = 0;
+    let totalIfSame = 0;
+    let totalIfDecrease = 0;
     return (
         <div className="predictions-container">
             {showBreakdown === false && 
                 <button className="show-btn" onClick={() => setShowBreakdown(!showBreakdown)}>Show Prediction Breakdown</button>
             }
-            {(props.userHasAttempted === true && showBreakdown === true) &&
+            {(props.userHasAttempted === true && showBreakdown === true && singleCertainty === true) &&
                 <div className="to-show">
                     <button className="hide-btn" onClick={() => setShowBreakdown(!showBreakdown)}>Hide Prediction Breakdown</button>
                     <h2 style={{ color: "#404d72" }}><u>Your Predictions</u></h2>
@@ -145,17 +151,13 @@ function ForecastBreakdown(props) {
                     <hr />
                     {forecastClosed === true && 
                         <div className="container">
-                            <button 
-                                className={showForecastByForecastBreakdown === true ? "show-btn" : "hide-btn"} 
-                                onClick={() => setShowForecastByForecastBreakdown(!showForecastByForecastBreakdown)}>
-                                    {showForecastByForecastBreakdown === true ? "Hide" : "Show"} Individual Predictions
-                            </button>
+                            <button className="show-btn" onClick={() => setShowForecastByForecastBreakdown(!showForecastByForecastBreakdown)}>{showForecastByForecastBreakdown === true ? "Hide" : "Show"} Individual Predictions</button>
                             <ul className="prediction-ul">
                                 {predictionData.map((item, index) => {
                                     // Index !== 0 is because at element 0 is an object containing start and close dates
                                     // Predictions submitted after closing date will still be in DB so must be filtered
                                     if (index !== 0 && new Date(item.date) < new Date(predictionData[0].closeDate)) {
-                                        const duration = timeFormatter(item.duration);
+                                        // const duration = timeFormatter(item.duration);
                                         if (index === 1) {
                                             totalScore += (item.newBrier * (item.percentageOfTimeAtThisScore/100));
                                             if (showForecastByForecastBreakdown === true) {
@@ -167,6 +169,7 @@ function ForecastBreakdown(props) {
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
                                                         <h4>Date: {item.date.slice(0, 24)}</h4>
+                                                        {/* <h4>Duration (Time spent as latest prediction): {duration.weeks} week(s), {duration.days} day(s), {duration.hours} hour(s), {duration.minutes} minute(s), {duration.seconds} second(s).</h4> */}
                                                         <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
                                                         <br />
                                                         <h4>This forecast scored you: {item.newBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
@@ -203,6 +206,7 @@ function ForecastBreakdown(props) {
                             </ul>
                             <ForecastResultsBreakdown 
                                 forecastClosed={true}
+                                singleCertainty={singleCertainty}
                                 totalScore={totalScore}
                                 tScore={tScore}
                             />
@@ -235,7 +239,7 @@ function ForecastBreakdown(props) {
                                                         <h4>If this problem does <u>not</u> happen: {item.newNotHappenedBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newNotHappenedBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
                                                         <br />
                                                         <h2 style={{ color: "#404d72"}}>Time Score - {tScore.toFixed(2)} / 10</h2>
-                                                        <h4>As this was your first prediction, it determines your Time Score (aka how early was this prediction made?)</h4>
+                                                        <h4>As this was your first prediction, it determines your Time Score (Earlier = Higher Score)</h4>
                                                         <br />
                                                         <hr />
                                                     </li>
@@ -269,9 +273,188 @@ function ForecastBreakdown(props) {
                             </ul>
                             <ForecastResultsBreakdown 
                                 forecastClosed={false}
+                                singleCertainty={singleCertainty}
                                 totalIfHappenedNoBoost={totalIfHappenedNoBoost}
                                 totalIfNotHappenedNoBoost={totalIfNotHappenedNoBoost}
-                                tScore={tScore}                                
+                                tScore={tScore}
+                            />
+                        </div>
+                    }
+                </div>
+            }
+            {(props.userHasAttempted === true && showBreakdown === true && singleCertainty === false) &&
+                <div className="to-show">
+                    <button className="hide-btn" onClick={() => setShowBreakdown(!showBreakdown)}>Hide Prediction Breakdown</button>
+                    <h2 style={{ color: "#404d72" }}><u>Your Predictions</u></h2>
+                    <hr />
+                    {predictionData[0] !== undefined && 
+                        <div className="date-container">
+                            <div className="sub-date-container">
+                                <h3 style={{ color: "#404d72" }}>{predictionData[0].startDate}</h3>
+                                <h4>Start Date</h4>
+                            </div>
+                            <div className="sub-date-container">
+                                <h3 style={{ color: "#404d72" }}>{predictionData[0].closeDate}</h3>
+                                <h4>Close Date</h4>
+                            </div>
+                        </div>
+                    }
+                    <hr />
+
+                    {/* BELOW */}
+                    {/* Do second! */}
+                    {forecastClosed === true && 
+                        <div className="container">
+                            <button 
+                                className="show-btn" 
+                                onClick={() => setShowForecastByForecastBreakdown(!showForecastByForecastBreakdown)}>
+                                    {showForecastByForecastBreakdown === true ? "Hide" : "Show"} Individual Predictions
+                            </button>
+                            <ul className="prediction-ul">
+                                {predictionData.map((item, index) => {
+                                    if (index !== 0 && new Date(item.date) < new Date(predictionData[0].closeDate)) {
+                                        if (index === 1) {
+                                            totalScore += (item.newBrier * (item.percentageOfTimeAtThisScore/100));
+                                            if (showForecastByForecastBreakdown === true) {
+                                                return (
+                                                    <li key={index} className="prediction-li">
+                                                        <h3 style={{ color: "#404d72" }}><u>Prediction #{index}</u></h3>
+                                                        <h4>Increase by 2+: {(item.certaintyHigher*100).toFixed(2)}%</h4>
+                                                        <h4>Stay within +/- 2: {(item.certaintySame*100).toFixed(2)}%</h4>
+                                                        <h4>Decrease by 2+: {(item.certaintyLower*100).toFixed(2)}%</h4>
+                                                        <br />
+                                                        <h4>Brier Score: {item.newBrier.toFixed(0)} / 100</h4>
+                                                        <h4>Comments: <i>{item.comments}</i></h4>
+                                                        <br />
+                                                        <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
+                                                        <h4>Date: {item.date.slice(0, 24)}</h4>
+                                                        <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
+                                                        <br />
+                                                        <h4>This forecast scored you: {item.newBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <br />
+                                                        <h2 style={{ color: "#404d72"}}>Time Score - {tScore.toFixed(2)} / 10</h2>
+                                                        <h4>As this was your first prediction, it determines your Time Score (Earlier = Higher Score)</h4>
+                                                        <br />
+                                                        <hr />
+                                                    </li>
+                                                )
+                                            } else return null;
+                                        } else {
+                                            totalScore += (item.newBrier * (item.percentageOfTimeAtThisScore/100));
+                                            if (showForecastByForecastBreakdown === true) {
+                                                return (
+                                                    <li key={index} className="prediction-li">
+                                                        <h3 style={{ color: "#404d72" }}><u>Prediction #{index}</u></h3>
+                                                        <h4>Increase by 2+: {(item.certaintyHigher*100).toFixed(2)}%</h4>
+                                                        <h4>Stay within +/- 2: {(item.certaintySame*100).toFixed(2)}%</h4>
+                                                        <h4>Decrease by 2+: {(item.certaintyLower*100).toFixed(2)}%</h4>
+                                                        <h4>Brier Score: {item.newBrier.toFixed(0)} / 100</h4>
+                                                        <h4>Comments: <i>{item.comments}</i></h4>
+                                                        <br />
+                                                        <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
+                                                        <h4>Date: {item.date.slice(0, 24)}</h4>
+                                                        {/* <h4>Duration (Time spent as latest prediction): {duration.weeks} week(s), {duration.days} day(s), {duration.hours} hour(s), {duration.minutes} minute(s), {duration.seconds} second(s).</h4> */}
+                                                        <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
+                                                        <br />
+                                                        <h4>This forecast scored you: {item.newBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <br />
+                                                        <hr />
+                                                    </li>
+                                                )
+                                            } else return null;
+                                        }
+                                    } else return null;
+                                })}
+                            </ul>
+                            <ForecastResultsBreakdown 
+                                forecastClosed={true}
+                                singleCertainty={singleCertainty}
+                                totalScore={totalScore}
+                                tScore={tScore}
+                            />
+                        </div>
+                    }
+                    {/* ABOVE */}
+
+
+                    {/* Do first! */}
+                    {forecastClosed === false && 
+                        <div className="container">
+                            <button className="show-btn" onClick={() => setShowForecastByForecastBreakdown(!showForecastByForecastBreakdown)}>{showForecastByForecastBreakdown === true ? "Hide" : "Show"} Individual Predictions</button>
+                            <ul className="prediction-ul">
+                                {predictionData.map((item, index) => {
+                                    // Index !== 0 is because at element 0 is an object containing start and close dates
+                                    // Predictions submitted after closing date will still be in DB so must be filtered
+                                    if (index !== 0 && new Date(item.date) < new Date(predictionData[0].closeDate)) {
+                                        if (index === 1) {
+                                            totalIfIncrease += (item.newHigherBrier * (item.percentageOfTimeAtThisScore/100));
+                                            totalIfSame += (item.newSameBrier * (item.percentageOfTimeAtThisScore/100));
+                                            totalIfDecrease += (item.newLowerBrier * (item.percentageOfTimeAtThisScore/100));
+                                            if (showForecastByForecastBreakdown === true) {
+                                                return (
+                                                    <li key={index} className="prediction-li">
+                                                        <h3 style={{ color: "#404d72" }}><u>Prediction #{index}</u></h3>
+                                                        <h4>Increase by 2+: {(item.certaintyHigher*100).toFixed(2)}%</h4>
+                                                        <h4>Stay within +/- 2: {(item.certaintySame*100).toFixed(2)}%</h4>
+                                                        <h4>Decrease by 2+: {(item.certaintyLower*100).toFixed(2)}%</h4>
+                                                        <h4>Comments: <i>{item.comments}</i></h4>
+                                                        <br />
+                                                        <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
+                                                        <h4>Date: {item.date.slice(0, 24)}</h4>
+                                                        <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
+                                                        <br />
+                                                        <h3 style={{ color: "#404d72" }}>What Will This Forecast Score Me?</h3>
+                                                        <h4>If Increase Happens: {item.newHigherBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newHigherBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <h4>If Stay Within Happens: {item.newSameBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newSameBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <h4>If Decrease Happens: {item.newLowerBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newLowerBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <br />
+                                                        <h2 style={{ color: "#404d72"}}>Time Score - {tScore.toFixed(2)} / 10</h2>
+                                                        <h4>As this was your first prediction, it determines your Time Score (Earlier = Higher Score)</h4>
+                                                        <br />
+                                                        <hr />
+                                                    </li>
+                                                )
+                                            } else return null;
+                                        } else {
+                                            totalIfIncrease += (item.newHigherBrier * (item.percentageOfTimeAtThisScore/100));
+                                            totalIfSame += (item.newSameBrier * (item.percentageOfTimeAtThisScore/100));
+                                            totalIfDecrease += (item.newLowerBrier * (item.percentageOfTimeAtThisScore/100));
+                                            if (showForecastByForecastBreakdown === true) {
+                                                return (
+                                                    <li key={index} className="prediction-li">
+                                                        <h3 style={{ color: "#404d72" }}><u>Prediction #{index}</u></h3>
+                                                        <h4>Increase by 2+: {(item.certaintyHigher*100).toFixed(2)}%</h4>
+                                                        <h4>Stay within +/- 2: {(item.certaintySame*100).toFixed(2)}%</h4>
+                                                        <h4>Decrease by 2+: {(item.certaintyLower*100).toFixed(2)}%</h4>
+                                                        <h4>Comments: <i>{item.comments}</i></h4>
+                                                        <br />
+                                                        <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
+                                                        <h4>Date: {item.date.slice(0, 24)}</h4>
+                                                        <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
+                                                        <br />
+                                                        <h3 style={{ color: "#404d72" }}>What Will This Forecast Score Me?</h3>
+                                                        <h4>If Increase Happens: {item.newHigherBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newHigherBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <h4>If Stay Within Happens: {item.newSameBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newSameBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <h4>If Decrease Happens: {item.newLowerBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newLowerBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <br />
+                                                        <hr />
+                                                    </li>
+                                                )
+                                            } else return null;
+                                        }
+                                    } else return null;
+                                })}
+                            </ul>
+                            {console.log(totalIfIncrease)}
+                            {console.log(totalIfSame)}
+                            {console.log(totalIfDecrease)}
+                            <ForecastResultsBreakdown 
+                                forecastClosed={false}
+                                singleCertainty={singleCertainty}
+                                totalIfIncrease={totalIfIncrease}
+                                totalIfSame={totalIfSame}
+                                totalIfDecrease={totalIfDecrease}
+                                tScore={tScore}
                             />
                         </div>
                     }
