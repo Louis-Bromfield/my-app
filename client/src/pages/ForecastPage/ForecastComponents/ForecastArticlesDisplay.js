@@ -13,12 +13,12 @@ function ForecastArticlesDisplay(props) {
             let googleNewsScrapeResult;
             if (searchTerm.includes("Le Pen")) {
                 term = "Le Pen";
-                googleNewsScrapeResult = await axios.get(`http://localhost:5000/googleNewsScraper/${term}`);
+                googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${term}`);
             } else if (searchTerm.includes("Pécresse") || (searchTerm.includes("Pecresse"))) {
                 term = "Pecresse"
-                googleNewsScrapeResult = await axios.get(`http://localhost:5000/googleNewsScraper/${term}`);
+                googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${term}`);
             } else {
-                googleNewsScrapeResult = await axios.get(`http://localhost:5000/googleNewsScraper/${market}`);
+                googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${market}`);
             };
             setArticles(googleNewsScrapeResult.data);
         } catch (error) {
