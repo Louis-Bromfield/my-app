@@ -275,7 +275,7 @@ function Search(props) {
                                     </li>
                                     <li key={2} className="profile-summary-list-item">
                                         <h3>Brier Score Average:</h3>
-                                        <h4>{brierAverage}</h4>
+                                        <h4>{isNaN(brierAverage) ? "N/A" : brierAverage}</h4>
                                     </li>
                                     <li key={3} className="profile-summary-list-item">
                                         <h3>Best Forecast:</h3>
