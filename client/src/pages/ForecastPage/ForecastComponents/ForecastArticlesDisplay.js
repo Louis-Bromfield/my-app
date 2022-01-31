@@ -9,13 +9,18 @@ function ForecastArticlesDisplay(props) {
 
     const googleNewsScrape = async (searchTerm, market) => {
         try {
-            if (market === "French Presidential Election 2022") {
-                const googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${market}`);
-                setArticles(googleNewsScrapeResult.data);
+            let term;
+            let googleNewsScrapeResult;
+            if (searchTerm.includes("Le Pen")) {
+                term = "Le Pen";
+                googleNewsScrapeResult = await axios.get(`http://localhost:5000/googleNewsScraper/${term}`);
+            } else if (searchTerm.includes("Pécresse") || (searchTerm.includes("Pecresse"))) {
+                term = "Pecresse"
+                googleNewsScrapeResult = await axios.get(`http://localhost:5000/googleNewsScraper/${term}`);
             } else {
-                const googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${searchTerm}`);
-                setArticles(googleNewsScrapeResult.data);
-            }
+                googleNewsScrapeResult = await axios.get(`http://localhost:5000/googleNewsScraper/${market}`);
+            };
+            setArticles(googleNewsScrapeResult.data);
         } catch (error) {
             console.error(error);
         };
