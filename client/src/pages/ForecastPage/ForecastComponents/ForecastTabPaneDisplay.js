@@ -24,7 +24,10 @@ function ForecastTabPaneDisplay(props) {
             }
             {props.chosenTab === "articles" &&
                 <div className="articles-div">
-                    <ForecastArticlesDisplay searchTerm={props.selectedForecast.problemName} />
+                    <ForecastArticlesDisplay 
+                        searchTerm={props.selectedForecast.problemName}
+                        market={props.selectedForecast.market}
+                    />
                 </div>
             }
             {props.chosenTab === "forecastStats" &&
