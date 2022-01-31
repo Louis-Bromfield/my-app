@@ -23,7 +23,7 @@ function ForecastArticlesDisplay(props) {
 
     useEffect(() => {
         setArticles("loading");
-        googleNewsScrape(props.searchTerm);
+        googleNewsScrape(props.searchTerm, props.market);
     }, [props.searchTerm]);
 
     if (articles === "loading") {
