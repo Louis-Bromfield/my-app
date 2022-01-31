@@ -96,22 +96,6 @@ function IndividualNewsFeedPost(props) {
         };
     };
 
-    // const submitReplyComment = async (comment, commentToReplyTo) => {
-    //     try {
-    //         const res = await axios.patch(`http://localhost:5000/homePageNewsFeedPosts/postComment/${props.location.postObject._id}`, 
-    //         {
-    //             postID: props.location.postObject._id,
-    //             isNewComment: false,
-    //             commentToReplyTo: commentToReplyTo,
-    //             newComment: comment,
-    //             author: localStorage.getItem("username")
-    //         });
-    //     } catch (error) {
-    //         console.error("Error in IndividualNewsFeedPost > submitComment");
-    //         console.error(error);
-    //     };
-    // };
-
     return (
         <div className="individual-post-container">
             <button 
