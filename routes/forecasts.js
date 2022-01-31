@@ -28,7 +28,6 @@ router.get("/:problemName", async (req, res) => {
 
 // Get a specific user's forecast object for a given problem
 router.get("/:problemName/:closedStatus/:username/:singleCertainty", async (req, res) => {
-    console.log()
     console.log(`req.params.singleCertainty === ${req.params.singleCertainty}`);
     try {
         if (req.params.closedStatus === "true") {
@@ -472,9 +471,9 @@ router.post("/newProblem", async (req, res) => {
 
 
 // Submit a prediction to a problem for the first time
-router.patch("/submit/:problemName", async (req, res) => {
+router.patch("/submit", async (req, res) => {
     try {
-        const document = await Forecasts.findOne({ problemName: req.params.problemName });
+        const document = await Forecasts.findOne({ problemName: req.body.problemName });
         const toPushToDB = {
             username: req.body.username, 
             forecasts: [
@@ -501,10 +500,10 @@ router.patch("/submit/:problemName", async (req, res) => {
 });
 
 // Submit a prediction to a problem for the first time
-router.patch("/submitMultiple/:problemName", async (req, res) => {
+router.patch("/submitMultiple", async (req, res) => {
     try {
-        const document = await Forecasts.findOne({ problemName: req.params.problemName });
-        console.log(req.params.problemName);
+        const document = await Forecasts.findOne({ problemName: req.body.problemName });
+        console.log(req.body.problemName);
         const toPushToDB = {
             username: req.body.username, 
             forecasts: [
@@ -535,10 +534,10 @@ router.patch("/submitMultiple/:problemName", async (req, res) => {
 });
 
 // Update a prediction to a single certainty problem
-router.patch("/update/:problemName", async (req, res) => {
+router.patch("/update", async (req, res) => {
     try {
         // find the Object in submittedForecasts[] where username = username
-        const document = await Forecasts.findOne({ problemName: req.params.problemName });
+        const document = await Forecasts.findOne({ problemName: req.body.problemName });
         // push the passed in {certainty, comments} object to the end of the submittedForecasts.forecasts array
         // increase numberOfForecastsSubmittedByUser by 1 - not essential, as we could just take submittedForecasts.forecasts.length
         const updatedForecastPushedToDB = await Forecasts.findByIdAndUpdate(document._id, 
@@ -559,10 +558,10 @@ router.patch("/update/:problemName", async (req, res) => {
 });
 
 // Update a prediction to a multiple certainty problem
-router.patch("/updateMultiple/:problemName", async (req, res) => {
+router.patch("/updateMultiple", async (req, res) => {
     try {
         // find the Object in submittedForecasts[] where username = username
-        const document = await Forecasts.findOne({ problemName: req.params.problemName });
+        const document = await Forecasts.findOne({ problemName: req.body.problemName });
         // push the passed in {certainty, comments} object to the end of the submittedForecasts.forecasts array
         // increase numberOfForecastsSubmittedByUser by 1 - not essential, as we could just take submittedForecasts.forecasts.length
         const updatedForecastPushedToDB = await Forecasts.findByIdAndUpdate(document._id, 

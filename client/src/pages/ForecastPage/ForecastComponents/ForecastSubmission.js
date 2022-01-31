@@ -371,8 +371,9 @@ console.log("Here1");
                     index = i;
                 };
             };
-            const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update/${forecast}`, {
-                updatedForecastsForUser: {certainty: newCertainty, comments: newComments, date: new Date().toString()},
+            const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
+                problemName: forecast,
+                updatedForecastsForUser: { certainty: newCertainty, comments: newComments, date: new Date().toString() },
                 locationOfForecasts: `submittedForecasts.${index}.forecasts`,
                 locationOfForecastCount: `submittedForecasts.${index}.numberOfForecastsSubmittedByUser`
             });
@@ -385,7 +386,8 @@ console.log("Here1");
 
     const handleForecastSubmit = async (forecast, certainty, comments, username) => {
         try {
-            const submittedForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/submit/${forecast}`, {
+            const submittedForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/submit`, {
+                problemName: forecast,
                 username: username,
                 certainty: certainty,
                 comments: comments,
@@ -416,7 +418,7 @@ console.log("Here1");
             return;
         }
         try {
-            const document = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${forecast}`);
+            const document = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts`, { problemName: forecast });
             const documentForecastData = document.data[0].submittedForecasts;
             let index = 0;
             for (let i = 0; i < documentForecastData.length; i++) {
@@ -424,7 +426,8 @@ console.log("Here1");
                     index = i;
                 };
             };
-            const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple/${forecast}`, {
+            const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple`, {
+                problemName: forecast,
                 updatedForecastsForUser: {
                     certainty1: newCertainty1, 
                     certainty2: newCertainty2, 
@@ -451,7 +454,8 @@ console.log("Here1");
         console.log(certainty2);
         console.log(certainty3);
         try {
-            const submittedForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/submitMultiple/${forecast}`, {
+            const submittedForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/submitMultiple`, {
+                problemName: forecast,
                 username: username,
                 certainty1: certainty1,
                 certainty2: certainty2,

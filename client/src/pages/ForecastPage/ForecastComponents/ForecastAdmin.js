@@ -108,12 +108,15 @@ function ForecastAdmin() {
             let scores;
             if (closeEarly === true) {
                 console.log("Here2");
-                scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBrier/${problemName}/${happenedStatus}/${market}/${closeEarly}`, {
+                scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
+                    problemName: problemName,
                     newProblemCloseDateTime: newProblemCloseDateTime
                 });
             } else if (closeEarly === false) {
                 console.log("Here3");
-                scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBrier/${problemName}/${happenedStatus}/${market}/${closeEarly}`);
+                scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
+                    problemName: problemName
+                });
             };
 
             // Market Points

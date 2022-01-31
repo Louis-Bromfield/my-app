@@ -271,9 +271,9 @@ router.patch("/:username/removeMarket/:marketName", async (req, res) => {
     };
 });
 
-router.patch("/calculateBrier/:problemName/:happenedStatus/:marketName/:closeEarly", async (req, res) => {
+router.patch("/calculateBrier/:happenedStatus/:marketName/:closeEarly", async (req, res) => {
     try {
-        const forecastObj = await Forecasts.findOne({ problemName: req.params.problemName });
+        const forecastObj = await Forecasts.findOne({ problemName: req.body.problemName });
         let happened;
         if (req.params.happenedStatus === "true") {
             happened = true;
@@ -319,7 +319,7 @@ router.patch("/calculateBrier/:problemName/:happenedStatus/:marketName/:closeEar
             }
             const toPush = {
                 brierScore: newScorePerformanceBoosted,
-                problemName: req.params.problemName,
+                problemName: req.body.problemName,
                 marketName: req.params.marketName,
                 captainedStatus: calculatedBriers[i].captainedStatus,
                 performanceBoost: scoreChain
@@ -342,9 +342,9 @@ router.patch("/calculateBrier/:problemName/:happenedStatus/:marketName/:closeEar
     };
 });
 
-router.patch("/calculateBriersMultipleOutcomes/:problemName/:outcome/:marketName/:closeEarly", async (req, res) => {
+router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly", async (req, res) => {
     try {
-        const forecastObj = await Forecasts.findOne({ problemName: req.params.problemName });
+        const forecastObj = await Forecasts.findOne({ problemName: req.body.problemName });
         let outcome = req.params.outcome;
         // If a problem is being closed early, update the date in the obj and then persist to DB
         if (req.params.closeEarly === "true") {
@@ -386,7 +386,7 @@ router.patch("/calculateBriersMultipleOutcomes/:problemName/:outcome/:marketName
             }
             const toPush = {
                 brierScore: newScorePerformanceBoosted,
-                problemName: req.params.problemName,
+                problemName: req.body.problemName,
                 marketName: req.params.marketName,
                 captainedStatus: calculatedBriers[i].captainedStatus,
                 performanceBoost: scoreChain
