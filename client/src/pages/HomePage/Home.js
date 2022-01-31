@@ -52,7 +52,7 @@ function Home(props) {
             };
             let avgBrier = 0;
             for (let i = 0; i < userDocument.data[0].brierScores.length; i++) {
-                totalBrier += userDocument.data[0].brierScores[i].brierScore;
+                avgBrier += userDocument.data[0].brierScores[i].brierScore;
             };
             avgBrier = avgBrier / userDocument.data[0].brierScores.length;
             setCurrentAvgBrier(avgBrier);
