@@ -486,6 +486,7 @@ console.log("Here1");
                 );
                 setShowModal(true);
                 setModalContent("You just got 75 points for submitting a forecast!");
+                setModalContent2("");
             } else {
                 userDocument.data[0].onboarding.submitAForecast = true;
                 userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 300
@@ -497,6 +498,7 @@ console.log("Here1");
                 );
                 setShowModal(true);
                 setModalContent("You just got 300 Fantasy Forecast Points for submitting your first forecast! Any forecasts submitted from now on will yield 25 points. You can see your latest prediction from each day outlined in orange in the 'Forecast Stats' tab below.");
+                setModalContent2("");
             };
         } catch (error) {
             console.error(error);
@@ -581,7 +583,11 @@ console.log("Here1");
                         <FaInfoCircle 
                             color={"orange"} 
                             className="modal-i-btn"
-                            onClick={() => { setShowModal(true); setModalContent(`This is where you will submit all of your predictions. Each problem has a deadline, found below the button that opened this box, and you are able to submit as many predictions as you want before said deadline. EVERY forecast you make contributes to your final score for the problem, so getting it right earlier will be more rewarding! We also ask that you submit an explanation of your 0-100% forecast, this will help remind you why you forecasted what you did in case you come back to update it.`); setModalContent2(`The Articles tab below returns articles based on a web scrape of the problem, so they may vary in terms of usefulness. The Forecast Stats tab will show you what other forecasters are saying for this problem.`)}}
+                            onClick={() => { 
+                                setShowModal(true); 
+                                setModalContent(`This is where you will submit all of your predictions. Each problem has a deadline, found below the button that opened this box, and you are able to submit as many predictions as you want before said deadline. EVERY forecast you make contributes to your final score for the problem, so getting it right earlier will be more rewarding! We also ask that you submit an explanation of your 0-100% forecast, this will help remind you why you forecasted what you did in case you come back to update it.`); 
+                                setModalContent2(`The Articles tab below returns articles based on a web scrape of the problem, so they may vary in terms of usefulness. The Forecast Stats tab will show you what other forecasters are saying for this problem.`)
+                            }}
                         />
                     </h2>
                     <h4 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 38)}</h4>
@@ -620,7 +626,12 @@ console.log("Here1");
                                         <FaInfoCircle 
                                         color={"orange"} 
                                         className="modal-i-btn"
-                                        onClick={() => { setShowModal(true); setModalContent(`Feel free to note what resources, articles, key events or info helped to inform your prediction. This will be helpful for when you update your predictions (to see how you justified prior forecasts).`)}}/>
+                                        onClick={() => { 
+                                            setShowModal(true); 
+                                            setModalContent(`Feel free to note what resources, articles, key events or info helped to inform your prediction. This will be helpful for when you update your predictions (to see how you justified prior forecasts).`)
+                                            setModalContent2("");
+                                            }}
+                                        />
                                     </h3>
                                     {userHasAttempted === true &&
                                         <textarea 
@@ -692,7 +703,8 @@ console.log("Here1");
                                         <FaInfoCircle 
                                             onClick={() => {
                                                 setShowModal(true);
-                                                setModalContent("You have 100 points to allocate between these three outcomes.")
+                                                setModalContent("You have 100 points to allocate between these three outcomes.");
+                                                setModalContent2("");
                                             }}
                                             style={{ "color": "orange", "cursor": "pointer" }}
                                         />
@@ -743,7 +755,11 @@ console.log("Here1");
                                             <FaInfoCircle 
                                             color={"orange"} 
                                             className="modal-i-btn"
-                                            onClick={() => { setShowModal(true); setModalContent(`Feel free to note what resources, articles, key events or info helped to inform your prediction. This will be helpful for when you update your predictions (to see how you justified prior forecasts).`)}}/>
+                                            onClick={() => { 
+                                                setShowModal(true); 
+                                                setModalContent(`Feel free to note what resources, articles, key events or info helped to inform your prediction. This will be helpful for when you update your predictions (to see how you justified prior forecasts).`);
+                                                setModalContent2("")}}
+                                            />
                                         </h3>
                                         {userHasAttempted === true &&
                                             <textarea 
