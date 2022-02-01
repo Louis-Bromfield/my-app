@@ -283,11 +283,11 @@ function ForecastProblemLineChart(props) {
                 let decreaseY = decreaseData[decreaseData.length-1].y;
 
                 console.log(`let d = ${new Date(increaseData[increaseData.length-1].x)}`);
-                console.log(`d <= ${new Date().toString().slice(0, 15)}`)
-                console.log(new Date(increaseData[increaseData.length-1].x.slice(0, 15)) <= new Date().toString().slice(0, 15))
+                console.log(`d <= ${new Date()}`)
+                console.log(new Date(increaseData[increaseData.length-1].x) <= new Date())
 
 
-                for (let d = new Date(increaseData[increaseData.length-1].x); d <= new Date().toString().slice(0, 15); d.setDate(d.getDate() + 1)) {
+                for (let d = new Date(increaseData[increaseData.length-1].x); d <= new Date(); d.setDate(d.getDate() + 1)) {
                     let newDate = new Date(d).toString().slice(0, 15);
                     console.log(`newDate = ${newDate}`)
 
