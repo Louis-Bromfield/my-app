@@ -281,21 +281,29 @@ function ForecastProblemLineChart(props) {
                 let increaseY = increaseData[increaseData.length-1].y;
                 let sameY = sameData[sameData.length-1].y;
                 let decreaseY = decreaseData[decreaseData.length-1].y;
-                
+
                 for (let d = new Date(increaseData[increaseData.length-1].x); d <= new Date().toString().slice(0, 15); d.setDate(d.getDate() + 1)) {
                     let newDate = new Date(d).toString().slice(0, 15);
+                    console.log(`newDate = ${newDate}`)
+
+                    console.log(`pushing this to increaseData`);
                     increaseData.push({
                         y: increaseY,
                         x: newDate
                     });
+                    console.log(increaseData[increaseData.length-1]);
+                    console.log(`pushing this to sameData`);
                     sameData.push({
                         y: sameY,
                         x: newDate
                     });
+                    console.log(sameData[sameData.length-1]);
+                    console.log(`pushing this to decreaseData`);
                     decreaseData.push({
                         y: decreaseY,
                         x: newDate
                     });
+                    console.log(decreaseData[decreaseData.length-1]);
                 };
             };
             // increaseData.sort((a, b) => a.x < b.x);
