@@ -126,12 +126,12 @@ function Leaderboard(props) {
                                         {/* {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1} */}
                                         {(() => {
                                             if (index === 0) {
-                                                numOfConsecutiveSameIndices = 0;
-                                                return index+1;
+                                                // numOfConsecutiveSameIndices = 0;
+                                                return (index+2) - numOfConsecutiveSameIndices;
                                             } else {
                                                 if (item.marketPoints === usersData[index-1].marketPoints) {
                                                     numOfConsecutiveSameIndices++;
-                                                    return (index+1) - numOfConsecutiveSameIndices;
+                                                    return `=${(index+1) - numOfConsecutiveSameIndices}`;
                                                 } else {
                                                     return index+1;
                                                 }
@@ -168,12 +168,12 @@ function Leaderboard(props) {
                                         {/* {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1} */}
                                         {(() => {
                                             if (index === 0) {
-                                                numOfConsecutiveSameIndices = 0;
-                                                return index+1;
+                                                // numOfConsecutiveSameIndices = 0;
+                                                return (index+2) - numOfConsecutiveSameIndices;
                                             } else {
                                                 if (item.marketPoints === usersData[index-1].marketPoints) {
                                                     numOfConsecutiveSameIndices++;
-                                                    return (index+1) - numOfConsecutiveSameIndices;
+                                                    return `=${(index+1) - numOfConsecutiveSameIndices}`;
                                                 } else {
                                                     return index+1;
                                                 }
@@ -257,12 +257,12 @@ function Leaderboard(props) {
                                         {/* {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1} */}
                                         {(() => {
                                             if (index === 0) {
-                                                numOfConsecutiveSameIndices = 0;
-                                                return index+1;
+                                                // numOfConsecutiveSameIndices = 0;
+                                                return (index+2) - numOfConsecutiveSameIndices;
                                             } else {
                                                 if (item.marketPoints === usersData[index-1].marketPoints) {
                                                     numOfConsecutiveSameIndices++;
-                                                    return (index+1) - numOfConsecutiveSameIndices;
+                                                    return `=${(index+1) - numOfConsecutiveSameIndices}`;
                                                 } else {
                                                     return index+1;
                                                 }
@@ -299,12 +299,12 @@ function Leaderboard(props) {
                                         {/* {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1} */}
                                         {(() => {
                                             if (index === 0) {
-                                                numOfConsecutiveSameIndices = 0;
-                                                return index+1;
+                                                // numOfConsecutiveSameIndices = 0;
+                                                return (index+2) - numOfConsecutiveSameIndices;
                                             } else {
                                                 if (item.marketPoints === usersData[index-1].marketPoints) {
                                                     numOfConsecutiveSameIndices++;
-                                                    return (index+1) - numOfConsecutiveSameIndices;
+                                                    return `=${(index+1) - numOfConsecutiveSameIndices}`;
                                                 } else {
                                                     return index+1;
                                                 }
