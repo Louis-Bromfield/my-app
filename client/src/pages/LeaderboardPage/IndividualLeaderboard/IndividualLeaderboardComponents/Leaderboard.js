@@ -109,7 +109,6 @@ function Leaderboard(props) {
             <table className="leaderboard-table">
             {(props.isFFLeaderboard === true && props.leaderboardTitle !== "Fantasy Forecast All-Time") &&
                 <tbody>
-                    {/* {console.log("Here1")} */}
                     <tr className="leaderboard-title-row">
                         <th className="position-column">#</th>
                         <th className="username-column">Username</th>
@@ -122,7 +121,7 @@ function Leaderboard(props) {
                             return (
                                 <tr className="leaderboard-row-matching-username" key={index}>
                                     <td className="leaderboard-rank-data">
-                                        {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1}
+                                        {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index-1 : index}
                                     </td>
                                     <td className="leaderboard-username-data">
                                         {biggerWidth && <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic" />}
@@ -151,7 +150,7 @@ function Leaderboard(props) {
                             return (
                                 <tr className="leaderboard-row" key={index}>
                                     <td className="leaderboard-rank-data">
-                                        {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1}
+                                        {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index-1 : index}
                                     </td>
                                     <td className="leaderboard-username-data">
                                         {biggerWidth && <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic" />}
@@ -227,7 +226,7 @@ function Leaderboard(props) {
                             return (
                                 <tr className="leaderboard-row-matching-username" key={index}>
                                     <td className="leaderboard-rank-data">
-                                        {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1}
+                                        {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index-1 : index}
                                     </td>
                                     <td className="leaderboard-username-data">
                                         {biggerWidth && <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic" />}
@@ -256,7 +255,7 @@ function Leaderboard(props) {
                             return (
                                 <tr className="leaderboard-row" key={index}>
                                     <td className="leaderboard-rank-data">
-                                        {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1}
+                                        {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index-1 : index}
                                     </td>
                                     <td className="leaderboard-username-data">
                                         {biggerWidth && <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic" />}
