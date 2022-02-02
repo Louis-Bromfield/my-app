@@ -54,8 +54,10 @@ function Home(props) {
             let avgBrier = 0;
             for (let i = 0; i < userDocument.data[0].brierScores.length; i++) {
                 avgBrier += userDocument.data[0].brierScores[i].brierScore;
+                console.log(`avgBrier now = ${avgBrier}`);
             };
             avgBrier = avgBrier / userDocument.data[0].brierScores.length;
+            console.log(avgBrier);
             setCurrentAvgBrier(avgBrier);
             setUserObj(userDocument.data[0]);
         } catch (error) {

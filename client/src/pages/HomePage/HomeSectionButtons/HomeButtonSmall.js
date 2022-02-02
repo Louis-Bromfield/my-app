@@ -18,18 +18,24 @@ function HomeButtonSmall(props) {
     let mainData, subtitle, path;
     
     const getBrierScore = (userObj) => {
+        console.log(`props.currentAvgBrier = ${props.currentAvgBrier}`);
         if (userObj.length === 15) {
+            console.log("here!");
             setBrierScore(props.currentAvgBrier);
             localStorage.setItem("brierScore", props.currentAvgBrier);
+            console.log(`localStorage brierScore now = ${localStorage.getItem("brierScore")}`);
             return;
         } else {
             let brierTotal = 0;
             for (let i = 0; i < userObj.brierScores.length; i++) {
                 brierTotal += userObj.brierScores[i].brierScore;
+                console.log(`brierTotal now = ${brierTotal}`);
             };
             const brierForState = (brierTotal / userObj.brierScores.length).toFixed(0);
+            console.log(`brierforstate = ${brierForState}`);
             setBrierScore(isNaN(brierForState) ? "N/A" : brierForState);
             localStorage.setItem("brierScore", isNaN(brierForState) ? "N/A" : brierForState);
+            console.log(`brierinState = ${localStorage.getItem("brierScore")}`);
         };
     };
 
