@@ -12,7 +12,6 @@ function ForecastBreakdown(props) {
     const [singleCertainty, setSingleCertainty] = useState(props.forecastSingleCertainty);
 
     useEffect(() => {
-        console.log(`props.fSC = ${props.forecastSingleCertainty}`);
         if (props.userHasAttempted === true) {
             getPredictionData(props.selectedForecast, props.username, forecastClosed);
         };
@@ -129,12 +128,6 @@ function ForecastBreakdown(props) {
                 <div className="to-show">
                     <button className="hide-btn" onClick={() => setShowBreakdown(!showBreakdown)}>Hide Prediction Breakdown</button>
                     <h2 style={{ color: "#404d72" }}><u>Your Predictions</u></h2>
-                    {(props.userHasAttempted === true && predictionData[0].happened === true) && 
-                        <h2>This problem did happen - higher certainties will have scored you more points.</h2>
-                    }
-                    {(props.userHasAttempted === true && predictionData[0].happened === false) && 
-                        <h2>This problem did happen - lower certainties will have scored you more points.</h2>
-                    }
                     <hr />
                     {predictionData[0] !== undefined && 
                         <div className="date-container">
