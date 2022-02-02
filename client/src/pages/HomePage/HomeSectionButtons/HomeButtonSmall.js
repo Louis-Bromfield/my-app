@@ -94,7 +94,7 @@ function HomeButtonSmall(props) {
         getBrierScore(props.user);
         getLearnProgress(props.username);
         getLeaderboardRank(props.username);
-    }, [props.user, props.username]);
+    }, [props.user, props.username, props.currentAvgBrier]);
 
     switch(props.title) {
         case("Your Average Brier Score"):
