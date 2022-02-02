@@ -133,6 +133,7 @@ function Leaderboard(props) {
                                                     numOfConsecutiveSameIndices++;
                                                     return (index+1) - numOfConsecutiveSameIndices;
                                                 } else {
+                                                    numOfConsecutiveSameIndices = 0;
                                                     return index+1;
                                                 }
                                             }
@@ -175,6 +176,7 @@ function Leaderboard(props) {
                                                     numOfConsecutiveSameIndices++;
                                                     return (index+1) - numOfConsecutiveSameIndices;
                                                 } else {
+                                                    numOfConsecutiveSameIndices = 0;
                                                     return index+1;
                                                 }
                                             }
@@ -264,6 +266,7 @@ function Leaderboard(props) {
                                                     numOfConsecutiveSameIndices++;
                                                     return (index+1) - numOfConsecutiveSameIndices;
                                                 } else {
+                                                    numOfConsecutiveSameIndices = 0;
                                                     return index+1;
                                                 }
                                             }
@@ -306,6 +309,7 @@ function Leaderboard(props) {
                                                     numOfConsecutiveSameIndices++;
                                                     return (index+1) - numOfConsecutiveSameIndices;
                                                 } else {
+                                                    numOfConsecutiveSameIndices = 0;
                                                     return index+1;
                                                 }
                                             }
