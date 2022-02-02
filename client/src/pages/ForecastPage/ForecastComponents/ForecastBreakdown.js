@@ -293,9 +293,6 @@ function ForecastBreakdown(props) {
                         </div>
                     }
                     <hr />
-
-                    {/* BELOW */}
-                    {/* Do second! */}
                     {forecastClosed === true && 
                         <div className="container">
                             <button 
@@ -346,7 +343,6 @@ function ForecastBreakdown(props) {
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
                                                         <h4>Date: {item.date.slice(0, 24)}</h4>
-                                                        {/* <h4>Duration (Time spent as latest prediction): {duration.weeks} week(s), {duration.days} day(s), {duration.hours} hour(s), {duration.minutes} minute(s), {duration.seconds} second(s).</h4> */}
                                                         <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
                                                         <br />
                                                         <h4>This forecast scored you: {item.newBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
@@ -367,10 +363,6 @@ function ForecastBreakdown(props) {
                             />
                         </div>
                     }
-                    {/* ABOVE */}
-
-
-                    {/* Do first! */}
                     {forecastClosed === false && 
                         <div className="container">
                             <button className="show-btn" onClick={() => setShowForecastByForecastBreakdown(!showForecastByForecastBreakdown)}>{showForecastByForecastBreakdown === true ? "Hide" : "Show"} Individual Predictions</button>
@@ -438,9 +430,6 @@ function ForecastBreakdown(props) {
                                     } else return null;
                                 })}
                             </ul>
-                            {console.log(totalIfIncrease)}
-                            {console.log(totalIfSame)}
-                            {console.log(totalIfDecrease)}
                             <ForecastResultsBreakdown 
                                 forecastClosed={false}
                                 singleCertainty={singleCertainty}

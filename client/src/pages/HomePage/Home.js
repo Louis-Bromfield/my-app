@@ -47,6 +47,7 @@ function Home(props) {
     const getClosedForecastCount = async (username) => {
         try {
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            console.log(userDocument.data[0]);
             if (userDocument.data[0].numberOfClosedForecasts > 0) {
                 setShowClosedProblemModal(true);
             };
