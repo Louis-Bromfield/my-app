@@ -104,6 +104,8 @@ function Leaderboard(props) {
         }
     };
 
+    let numOfConsecutiveSameIndices = 0;
+
     return (
         <div className="leaderboard">
             <table className="leaderboard-table">
@@ -121,7 +123,19 @@ function Leaderboard(props) {
                             return (
                                 <tr className="leaderboard-row-matching-username" key={index}>
                                     <td className="leaderboard-rank-data">
-                                        {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index-1 : index}
+                                        {/* {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1} */}
+                                        {(() => {
+                                            if (index === 0) {
+                                                return index+1;
+                                            } else {
+                                                if (item.marketPoints === usersData[index-1].marketPoints) {
+                                                    numOfConsecutiveSameIndices++;
+                                                    return (index+1) - numOfConsecutiveSameIndices;
+                                                } else {
+                                                    return index+1;
+                                                }
+                                            }
+                                        })()}
                                     </td>
                                     <td className="leaderboard-username-data">
                                         {biggerWidth && <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic" />}
@@ -150,7 +164,19 @@ function Leaderboard(props) {
                             return (
                                 <tr className="leaderboard-row" key={index}>
                                     <td className="leaderboard-rank-data">
-                                        {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index-1 : index}
+                                        {/* {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1} */}
+                                        {(() => {
+                                            if (index === 0) {
+                                                return index+1;
+                                            } else {
+                                                if (item.marketPoints === usersData[index-1].marketPoints) {
+                                                    numOfConsecutiveSameIndices++;
+                                                    return (index+1) - numOfConsecutiveSameIndices;
+                                                } else {
+                                                    return index+1;
+                                                }
+                                            }
+                                        })()}
                                     </td>
                                     <td className="leaderboard-username-data">
                                         {biggerWidth && <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic" />}
@@ -226,7 +252,19 @@ function Leaderboard(props) {
                             return (
                                 <tr className="leaderboard-row-matching-username" key={index}>
                                     <td className="leaderboard-rank-data">
-                                        {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index-1 : index}
+                                        {/* {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1} */}
+                                        {(() => {
+                                            if (index === 0) {
+                                                return index+1;
+                                            } else {
+                                                if (item.marketPoints === usersData[index-1].marketPoints) {
+                                                    numOfConsecutiveSameIndices++;
+                                                    return (index+1) - numOfConsecutiveSameIndices;
+                                                } else {
+                                                    return index+1;
+                                                }
+                                            }
+                                        })()}
                                     </td>
                                     <td className="leaderboard-username-data">
                                         {biggerWidth && <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic" />}
@@ -255,7 +293,19 @@ function Leaderboard(props) {
                             return (
                                 <tr className="leaderboard-row" key={index}>
                                     <td className="leaderboard-rank-data">
-                                        {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index-1 : index}
+                                        {/* {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1} */}
+                                        {(() => {
+                                            if (index === 0) {
+                                                return index+1;
+                                            } else {
+                                                if (item.marketPoints === usersData[index-1].marketPoints) {
+                                                    numOfConsecutiveSameIndices++;
+                                                    return (index+1) - numOfConsecutiveSameIndices;
+                                                } else {
+                                                    return index+1;
+                                                }
+                                            }
+                                        })()}
                                     </td>
                                     <td className="leaderboard-username-data">
                                         {biggerWidth && <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic" />}
