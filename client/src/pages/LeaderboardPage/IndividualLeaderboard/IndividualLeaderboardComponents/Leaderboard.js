@@ -126,6 +126,7 @@ function Leaderboard(props) {
                                         {/* {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1} */}
                                         {(() => {
                                             if (index === 0) {
+                                                numOfConsecutiveSameIndices = 0;
                                                 return index+1;
                                             } else {
                                                 if (item.marketPoints === usersData[index-1].marketPoints) {
@@ -167,6 +168,7 @@ function Leaderboard(props) {
                                         {/* {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1} */}
                                         {(() => {
                                             if (index === 0) {
+                                                numOfConsecutiveSameIndices = 0;
                                                 return index+1;
                                             } else {
                                                 if (item.marketPoints === usersData[index-1].marketPoints) {
@@ -255,6 +257,7 @@ function Leaderboard(props) {
                                         {/* {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1} */}
                                         {(() => {
                                             if (index === 0) {
+                                                numOfConsecutiveSameIndices = 0;
                                                 return index+1;
                                             } else {
                                                 if (item.marketPoints === usersData[index-1].marketPoints) {
@@ -296,6 +299,7 @@ function Leaderboard(props) {
                                         {/* {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1} */}
                                         {(() => {
                                             if (index === 0) {
+                                                numOfConsecutiveSameIndices = 0;
                                                 return index+1;
                                             } else {
                                                 if (item.marketPoints === usersData[index-1].marketPoints) {
