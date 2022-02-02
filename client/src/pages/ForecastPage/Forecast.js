@@ -26,7 +26,7 @@ function Forecast(props) {
     useEffect(() => {
         handleForecastChange(forecast);
         handleLeaderboardChange(leaderboardData);
-console.log("Forecast.js UE")
+        console.log("Forecast.js UE")
     }, [refresh, forecast, leaderboardData]);
 
     return (

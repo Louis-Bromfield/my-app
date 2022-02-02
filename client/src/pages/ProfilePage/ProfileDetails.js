@@ -3,43 +3,43 @@ import axios from 'axios';
 import './ProfileDetails.css';
 
 function ProfileDetails(props) {
-    const [newUsername, setNewUsername] = useState("");
+    // const [newUsername, setNewUsername] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [fileData, setFileData] = useState();
     const [file, setFile] = useState("");
 
-    const handleUsernameChange = (e) => {
-        setNewUsername(e.target.value);
-    }
+    // const handleUsernameChange = (e) => {
+    //     setNewUsername(e.target.value);
+    // }
 
     const handlePasswordChange = (e) => {
         setNewPassword(e.target.value);
     }
 
-    const persistNewUsernameToDB = async (currentUsername, newUsernameToPersist) => {
-        try {
-            props.updateUsername(newUsernameToPersist);
-            console.log("done0");
-            // forecasts
-            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/changeUsername/${currentUsername}`, { username: newUsernameToPersist });
-            console.log("done1");
-            // homepagenewsfeedposts (all posts where user = author)
-            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/changeUsernameOrProfilePic/${currentUsername}`, { changeUsername: true, username: newUsernameToPersist });
-            console.log("done2");
-            // all leaderboards/markets the user is in
-            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/changeUsername/${currentUsername}`, { username: newUsernameToPersist });
+    // const persistNewUsernameToDB = async (currentUsername, newUsernameToPersist) => {
+    //     try {
+    //         props.updateUsername(newUsernameToPersist);
+    //         console.log("done0");
+    //         // forecasts
+    //         await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/changeUsername/${currentUsername}`, { username: newUsernameToPersist });
+    //         console.log("done1");
+    //         // homepagenewsfeedposts (all posts where user = author)
+    //         await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/changeUsernameOrProfilePic/${currentUsername}`, { changeUsername: true, username: newUsernameToPersist });
+    //         console.log("done2");
+    //         // all leaderboards/markets the user is in
+    //         await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/changeUsername/${currentUsername}`, { username: newUsernameToPersist });
 
-            // learn quizzes - still need to write backend code for this
-            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/learnquizzes/${currentUsername}`, { username: newUsernameToPersist });
-            console.log("done3");
+    //         // learn quizzes - still need to write backend code for this
+    //         await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/learnquizzes/${currentUsername}`, { username: newUsernameToPersist });
+    //         console.log("done3");
 
-            props.setShowModal(true);
-            props.setModalContent(`Username changed to ${newUsernameToPersist}!`);
-        } catch (error) {
-            console.error("Error in ProfileDetails > persistNewUsernameToDB");
-            console.error(error);
-        };
-    };
+    //         props.setShowModal(true);
+    //         props.setModalContent(`Username changed to ${newUsernameToPersist}!`);
+    //     } catch (error) {
+    //         console.error("Error in ProfileDetails > persistNewUsernameToDB");
+    //         console.error(error);
+    //     };
+    // };
 
     const persistNewPasswordToDB = async (currentUsername, newPasswordToPersist) => {
         try {

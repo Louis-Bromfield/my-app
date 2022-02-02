@@ -48,70 +48,70 @@ function ForecastBreakdown(props) {
         setTScore(tScore);
     };
 
-    const timeFormatter = (time) => {
-        let timeArray = {weeks: 0, days: 0, hours: 0, minutes: 0, seconds: 0};
-        // At least one week
-        if (time >= 604800) {
-            timeArray.weeks = Math.floor(time / 604800);
-            time -= timeArray.weeks * 604800;
-            if (time > 0) {
-                timeArray.days = Math.floor(time / 86400);
-                time -= timeArray.days * 86400;
-                if (time > 0) {
-                    timeArray.hours = Math.floor(time / 3600);
-                    time -= timeArray.hours * 3600;
-                    if (time > 0) {
-                        timeArray.minutes = Math.floor(time / 60);
-                        time -= timeArray.minutes * 60;
-                        if (time > 0) {
-                            timeArray.seconds = time;
-                        };
-                    };
-                };
-            }
-        }
-        // At least one day
-        else if (time >= 86400) {
-            timeArray.days = Math.floor(time / 86400);
-            time -= timeArray.days * 86400;
-            if (time > 0) {
-                timeArray.hours = Math.floor(time / 3600);
-                time -= timeArray.hours * 3600;
-                if (time > 0) {
-                    timeArray.minutes = Math.floor(time / 60);
-                    time -= timeArray.minutes * 60;
-                    if (time > 0) {
-                        timeArray.seconds = time;
-                    };
-                };
-            };
-        }
-        // At least one hour
-        else if (time >= 3600) {
-            timeArray.hours = Math.floor(time / 3600);
-            time -= timeArray.hours * 3600;
-            if (time > 0) {
-                timeArray.minutes = Math.floor(time / 60);
-                time -= timeArray.minutes * 60;
-                if (time > 0) {
-                    timeArray.seconds = time;
-                }
-            }
-        }
-        // At least one minute
-        else if (time >= 60) {
-            timeArray.minutes = Math.floor(time / 60);
-            time -= timeArray.minutes * 60;
-            if (time > 0) {
-                timeArray.seconds = time;
-            }
-        }
-        // At least one second
-        else if (time >= 1) {
-            timeArray.seconds = time;
-        };
-        return timeArray;
-    };
+    // const timeFormatter = (time) => {
+    //     let timeArray = {weeks: 0, days: 0, hours: 0, minutes: 0, seconds: 0};
+    //     // At least one week
+    //     if (time >= 604800) {
+    //         timeArray.weeks = Math.floor(time / 604800);
+    //         time -= timeArray.weeks * 604800;
+    //         if (time > 0) {
+    //             timeArray.days = Math.floor(time / 86400);
+    //             time -= timeArray.days * 86400;
+    //             if (time > 0) {
+    //                 timeArray.hours = Math.floor(time / 3600);
+    //                 time -= timeArray.hours * 3600;
+    //                 if (time > 0) {
+    //                     timeArray.minutes = Math.floor(time / 60);
+    //                     time -= timeArray.minutes * 60;
+    //                     if (time > 0) {
+    //                         timeArray.seconds = time;
+    //                     };
+    //                 };
+    //             };
+    //         }
+    //     }
+    //     // At least one day
+    //     else if (time >= 86400) {
+    //         timeArray.days = Math.floor(time / 86400);
+    //         time -= timeArray.days * 86400;
+    //         if (time > 0) {
+    //             timeArray.hours = Math.floor(time / 3600);
+    //             time -= timeArray.hours * 3600;
+    //             if (time > 0) {
+    //                 timeArray.minutes = Math.floor(time / 60);
+    //                 time -= timeArray.minutes * 60;
+    //                 if (time > 0) {
+    //                     timeArray.seconds = time;
+    //                 };
+    //             };
+    //         };
+    //     }
+    //     // At least one hour
+    //     else if (time >= 3600) {
+    //         timeArray.hours = Math.floor(time / 3600);
+    //         time -= timeArray.hours * 3600;
+    //         if (time > 0) {
+    //             timeArray.minutes = Math.floor(time / 60);
+    //             time -= timeArray.minutes * 60;
+    //             if (time > 0) {
+    //                 timeArray.seconds = time;
+    //             }
+    //         }
+    //     }
+    //     // At least one minute
+    //     else if (time >= 60) {
+    //         timeArray.minutes = Math.floor(time / 60);
+    //         time -= timeArray.minutes * 60;
+    //         if (time > 0) {
+    //             timeArray.seconds = time;
+    //         }
+    //     }
+    //     // At least one second
+    //     else if (time >= 1) {
+    //         timeArray.seconds = time;
+    //     };
+    //     return timeArray;
+    // };
 
     let totalScore = 0;
     let totalIfHappenedNoBoost = 0;

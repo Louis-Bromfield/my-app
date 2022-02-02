@@ -3,7 +3,6 @@ import axios from 'axios';
 import './LeaderboardMenu.css';
 import LeaderboardGrid from './LeaderboardComponents/LeaderboardGrid';
 import ReactLoading from 'react-loading';
-import ProfileP from '../../media/ProfileP.png';
 import UserToInvite from './LeaderboardComponents/UserToInvite';
 import Modal from '../../components/Modal';
 import { FaInfoCircle } from 'react-icons/fa';
@@ -291,7 +290,7 @@ function LeaderboardMenu(props) {
             };
             setCauseRefresh(causeRefresh+1);
         } catch (error) {
-            console.error("Error in LeaderboardMeny > respondToInvite");
+            console.error("Error in LeaderboardMenu > respondToInvite");
             console.error(error);
         }
     }
@@ -312,9 +311,6 @@ function LeaderboardMenu(props) {
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>
-            {/* <button type="button" onClick={() => setShowModal(true)}>
-                Open
-            </button> */}
             <div className="your-markets-button-div">
                 <div></div>
                 {joinAMarketMenu === false &&

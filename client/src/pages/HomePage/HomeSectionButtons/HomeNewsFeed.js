@@ -45,7 +45,6 @@ function HomeNewsFeed(props) {
                 setNewPostLoading(false);
             }, 1000);
         };
-        // setCauseFeedNewsFeedRefreshWithoutAnimation(false);
     }, [causeNewsFeedRefresh, causeFeedNewsFeedRefreshWithoutAnimation, props.username]);
 
     const getAllNewsFeedPostsFromDB = async () => {
@@ -64,10 +63,8 @@ function HomeNewsFeed(props) {
             let filtersArr = [];
             let userMarketsArr = [];
             for (let i = 0; i < allMarkets.data.length; i++) {
-                // if (allMarkets.data[i].leaderboardName !== 'Fantasy Forecast All-Time') {
-                    filtersArr.push(allMarkets.data[i].leaderboardName);
-                    userMarketsArr.push(allMarkets.data[i].leaderboardName);
-                // };
+                filtersArr.push(allMarkets.data[i].leaderboardName);
+                userMarketsArr.push(allMarkets.data[i].leaderboardName);
             };
             setUserMarkets(userMarketsArr);
             setFilters(filtersArr);
@@ -327,7 +324,6 @@ function HomeNewsFeed(props) {
                                 {/* <legend></legend> */}
                                 <label htmlFor="post-1"><strong>Link:</strong></label>
                                 <br/>
-                                {/* Add error checking to ensure a link is posted? */}
                                 <input 
                                     type="link" 
                                     className="source-field" 
@@ -405,7 +401,13 @@ function HomeNewsFeed(props) {
                                             value="Confirm Edits" 
                                             onClick={(e) => persistEditPostToDB(e, editingPostID, newPostURL, newPostDescription, userMarketsForPost)}/>
                                     }
-                                    <button className="create-post-close" onClick={() => {setPost(false); setPostPreview(false)}}>Close</button>
+                                    <button 
+                                    className="create-post-close" 
+                                    onClick={() => {
+                                        setPost(false); 
+                                        setPostPreview(false)}}>
+                                            Close
+                                    </button>
                                 </div>
                             </fieldset>
                         </form>
@@ -478,25 +480,6 @@ function HomeNewsFeed(props) {
                         </div>
                     }
                 </div>
-                {/* <div className="news-feed-filter-div">
-                    <h3>Filter Your Feed:</h3>
-                    <div className="checkbox-div">
-                        {userMarkets.map((item, index) => {
-                            return (
-                                <div className="filter-market-checkbox" key={index} >
-                                    <label htmlFor={item}><h4>{item}</h4></label>
-                                    <input 
-                                        type="checkbox" 
-                                        name={item} 
-                                        id={item} 
-                                        defaultChecked={true}
-                                        onClick={() => filterNewsFeed(item, feed, filters)}
-                                    />
-                                </div>
-                            )
-                        })}
-                    </div>
-                </div> */}
                 {newPostLoading === true && <div className="loading-div"><ReactLoading type="bars" color="#404d72" height="20%" width="20%"/></div>}
                 {filtersApplied === true &&
                     <ul className="home-page-rss-feed">

@@ -37,9 +37,6 @@ function Learn(props) {
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>
-            {/* <button type="button" onClick={() => setShowModal(true)}>
-                Open
-            </button> */}
             <h1>Learn</h1>
             <p>Welcome to the Learn page. Here you'll find a selection of topics that relate to political forecasting. 
                 Brier Scores will tell you about how we assess forecast accuracy; The Good Judgment Project is a 
@@ -52,7 +49,8 @@ function Learn(props) {
                     <TopicsMenu 
                         topicsArray={topicsArray} 
                         handleClick={changeTopic} 
-                        topic={topic} />
+                        topic={topic} 
+                    />
                 </div>
                 <div className="topic-pane">
                     <Topic 
@@ -64,7 +62,7 @@ function Learn(props) {
                         username={props.username} 
                         handleQuizCompletion={setShowModal}
                         handleQuizCompletionModalContent={setModalContent}
-                        />
+                    />
                 </div>
             </div>
         </div>

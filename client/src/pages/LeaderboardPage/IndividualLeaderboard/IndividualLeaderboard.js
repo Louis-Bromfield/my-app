@@ -11,15 +11,11 @@ import ConfirmationModal from '../../../components/ConfirmationModal';
 
 function IndividualLeaderboard(props) {
     const history = useHistory();
-    const [leaderboardRankings, setLeaderboardRankings] = useState([]);
     const [currentLeaderboardName, setCurrentLeaderboardName] = useState();
-    const [navigationOrder, setNavigationOrder] = useState([]);
     const [filteredRankings, setFilteredRankings] = useState([]);
     const [isFFLeaderboard, setIsFFLeaderboard] = useState();
-    const [causeRefresh, setCauseRefresh] = useState(0);
     const [userInMarket, setUserInMarket] = useState(false);
     const [memberMenuStatus, setMemberMenuStatus] = useState(false);
-    const [usersArray, setUsersArray] = useState([]);
     const [inviteList, setInviteList] = useState([]);
     const [kickList, setKickList] = useState([]);
     const [inviteUser, setInviteUser] = useState("");
@@ -30,14 +26,14 @@ function IndividualLeaderboard(props) {
     const [averageBrier, setAverageBrier] = useState(0);
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);
     
-    let index = 0;
-    for (let i = 0; i < navigationOrder.length; i++) {
-        if (props.location.user === true && navigationOrder[i] === currentLeaderboardName) {
-            index = i;
-        } else if (props.location.user === false && navigationOrder[i][0] === currentLeaderboardName) {
-            index = i;
-        };
-    };
+    // let index = 0;
+    // for (let i = 0; i < navigationOrder.length; i++) {
+    //     if (props.location.user === true && navigationOrder[i] === currentLeaderboardName) {
+    //         index = i;
+    //     } else if (props.location.user === false && navigationOrder[i][0] === currentLeaderboardName) {
+    //         index = i;
+    //     };
+    // };
 
     useEffect(() => {
         if (props.location.leaderboardName === undefined) {
@@ -48,35 +44,35 @@ function IndividualLeaderboard(props) {
             setCurrentLeaderboardName(localStorage.getItem('currentLeaderboardName'));
             getLeaderboardData(props.location.leaderboardName);
         }
-        if (props.location.user === false) {
-            if (props.location.navigationOrderUnsorted === undefined) {
-                const arrFromLS = localStorage.getItem('navigationOrder').split(",");
-                let sortedArrFromLS = [];
-                for (let i = 0; i < arrFromLS.length; i += 2) {
-                    sortedArrFromLS.push([arrFromLS[i], Boolean(arrFromLS[i+1])]);
-                };
-                setNavigationOrder(sortedArrFromLS);
-                return;
-            } else {
-                localStorage.setItem('navigationOrder', props.location.navigationOrderUnsorted);
-                setNavigationOrder(props.location.navigationOrderUnsorted);
-                return;
-            }
-        } else if (props.location.user === true) {
-            if (props.location.navigationOrderUnsorted === undefined) {
-                setNavigationOrder(localStorage.getItem('navigationOrder').split(","));
-                return;
-            } else {
-                let navOrder = [];
-                for (let i = 0; i < props.location.navigationOrderUnsorted.length; i++) {
-                    navOrder.push(props.location.navigationOrderUnsorted[i].leaderboardName);
-                }
-                localStorage.setItem('navigationOrder', navOrder);
-                setNavigationOrder(localStorage.getItem('navigationOrder').split(","));
-                return;
-            };
-        };
-console.log("Individual Leaderboard UE");
+        // if (props.location.user === false) {
+        //     if (props.location.navigationOrderUnsorted === undefined) {
+        //         const arrFromLS = localStorage.getItem('navigationOrder').split(",");
+        //         let sortedArrFromLS = [];
+        //         for (let i = 0; i < arrFromLS.length; i += 2) {
+        //             sortedArrFromLS.push([arrFromLS[i], Boolean(arrFromLS[i+1])]);
+        //         };
+        //         setNavigationOrder(sortedArrFromLS);
+        //         return;
+        //     } else {
+        //         localStorage.setItem('navigationOrder', props.location.navigationOrderUnsorted);
+        //         setNavigationOrder(props.location.navigationOrderUnsorted);
+        //         return;
+        //     }
+        // } else if (props.location.user === true) {
+        //     if (props.location.navigationOrderUnsorted === undefined) {
+        //         setNavigationOrder(localStorage.getItem('navigationOrder').split(","));
+        //         return;
+        //     } else {
+        //         let navOrder = [];
+        //         for (let i = 0; i < props.location.navigationOrderUnsorted.length; i++) {
+        //             navOrder.push(props.location.navigationOrderUnsorted[i].leaderboardName);
+        //         }
+        //         localStorage.setItem('navigationOrder', navOrder);
+        //         setNavigationOrder(localStorage.getItem('navigationOrder').split(","));
+        //         return;
+        //     };
+        // };
+        console.log("Individual Leaderboard UE");
     }, []);
 
     useEffect(() => {
@@ -112,42 +108,11 @@ console.log("Individual Leaderboard UE");
             };
             setAveragePoints(total / filtered.length);
             setFilteredRankings(filtered);
-            // getUserSpecificData(filtered);
         } catch (error) {
             console.error("Error occured in getLeaderboardData func in IndividualLeaderboard");
             console.error(error);
         };
     };
-
-    // const getUserSpecificData = async (rankings) => {
-    //     try {
-    //         for (let i = 0; i < rankings.length; i++) {
-    //             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${rankings[i].username}`);
-    //             rankings[i].brierScores = [];
-    //             let totalBrier = 0;
-    //             if (userDocument.data[0].brierScores.length > 0) {
-    //                 for (let j = 0; j < userDocument.data[0].brierScores.length; j++) {
-    //                     if (userDocument.data[0].brierScores[j].marketName === props.leaderboardTitle || userDocument.data[0].brierScores[j].marketName === localStorage.getItem('currentLeaderboardName')) {
-    //                         rankings[i].brierScores.push(userDocument.data[0].brierScores[j].brierScore);
-    //                         totalBrier += userDocument.data[0].brierScores[j].brierScore;
-    //                     };
-    //                 };
-    //             };
-    //             rankings[i].brierScores.reverse();
-    //             if (userDocument.data[0].brierScores.length === 0) {
-    //                 rankings[i].avgBrierScore = 0;
-    //             } else {
-    //                 rankings[i].avgBrierScore = totalBrier / userDocument.data[0].brierScores.length;
-    //             }
-    //             rankings = rankings.sort((a, b) => b.marketPoints - a.marketPoints);
-    //             // setUsersData(rankings);
-    //         };
-    //         setFilteredRankings(rankings);
-    //     } catch (error) {
-    //         console.error("Error occured in getUserSpecificData func in IndividualLeaderboard");
-    //         console.error(error);
-    //     }
-    // };
 
     const leaveMarket = async (leaderboard, username) => {
         try {
@@ -183,7 +148,7 @@ console.log("Individual Leaderboard UE");
                         };
                     };
                 };
-                setUsersArray(allUsers.data);
+                // setUsersArray(allUsers.data);
                 setInviteList(inviteList);
                 setKickList(kickList);
             } catch (error) {
@@ -199,7 +164,7 @@ console.log("Individual Leaderboard UE");
                 await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${market}`, { username: user });
                 setSendResponseText(`You have invited ${user}.`);
             } else if (inviteOrKick === "kick") {
-                const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/kick/${market}`, { username: user });
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/kick/${market}`, { username: user });
                 console.log("user kicked!");
                 setSendResponseText(`You have kicked ${user}.`);
             };
@@ -301,16 +266,6 @@ console.log("Individual Leaderboard UE");
             }
             <div className="leaderboard-title-and-navigation">
                 <h1>{currentLeaderboardName} Leaderboard</h1>
-                {/* <div className="leaderboard-navigation">
-                    <button className="navigation-button" onClick={() => onPrevClick(props.location.user)}>
-                        <h2>Previous Leaderboard</h2>
-                        <AiIcons.AiOutlineCaretLeft size={30} color={"#404d75"} />
-                    </button>
-                    <button className="navigation-button" onClick={() => onNextClick(props.location.user)}>
-                        <AiIcons.AiOutlineCaretRight size={30} color={"#404d75"} />
-                        <h2>Next Leaderboard</h2>
-                    </button>
-                </div> */}
             </div>
             <div className="leaderboard-spotlight-row">
                 <Top3Users rankings={filteredRankings} />

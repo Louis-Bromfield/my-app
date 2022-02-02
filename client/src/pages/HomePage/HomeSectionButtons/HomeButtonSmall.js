@@ -54,6 +54,7 @@ function HomeButtonSmall(props) {
             setLearnProgress(completeQuizzes);
             setTotalQuizCount(totalQuizzes);
         } catch (error) {
+            console.error("Error in getLearnProgress > HomeButtonSmall");
             console.error(error);
         };
     };
@@ -80,6 +81,7 @@ function HomeButtonSmall(props) {
                 };
             };
         } catch (error) {
+            console.error("Error in getLeaderboardRank > HomeButtonSmall");
             console.error(error);
         };
     };

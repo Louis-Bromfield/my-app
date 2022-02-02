@@ -276,7 +276,6 @@ function ForecastProblemLineChart(props) {
                 };
             };
             if (increaseData[increaseData.length-1].x !== new Date().toString().slice(0, 15)) {
-
                 let increaseY = increaseData[increaseData.length-1].y;
                 let sameY = sameData[sameData.length-1].y;
                 let decreaseY = decreaseData[decreaseData.length-1].y;
@@ -284,31 +283,21 @@ function ForecastProblemLineChart(props) {
                 lastDayWithData.setDate(lastDayWithData.getDate() + 1);
                 for (let d = lastDayWithData; d <= new Date(); d.setDate(d.getDate() + 1)) {
                     let newDate = new Date(d).toString().slice(0, 15);
-                    console.log(`newDate = ${newDate}`)
 
-                    console.log(`pushing this to increaseData`);
                     increaseData.push({
                         y: increaseY,
                         x: newDate
                     });
-                    console.log(increaseData[increaseData.length-1]);
-                    console.log(`pushing this to sameData`);
                     sameData.push({
                         y: sameY,
                         x: newDate
                     });
-                    console.log(sameData[sameData.length-1]);
-                    console.log(`pushing this to decreaseData`);
                     decreaseData.push({
                         y: decreaseY,
                         x: newDate
                     });
-                    console.log(decreaseData[decreaseData.length-1]);
                 };
             };
-            // increaseData.sort((a, b) => a.x < b.x);
-            // sameData.sort((a, b) => a.x < b.x);
-            // decreaseData.sort((a, b) => a.x < b.x);
             allData = increaseData.concat(sameData, decreaseData);
             allData.sort((a, b) => a.x < b.x);
             let avgIncreaseArr = getDailyAverages(increaseData);
@@ -420,9 +409,6 @@ function ForecastProblemLineChart(props) {
     };
 
     const getDailyAverages = (certainties) => {
-        // console.log("Unsorted array:");
-        // console.log(certainties);
-
         // Sort main array by date
         let sortedCertainties = certainties.sort((a, b) => new Date(a.x) - new Date(b.x));
         let arr = [[sortedCertainties[0]]];

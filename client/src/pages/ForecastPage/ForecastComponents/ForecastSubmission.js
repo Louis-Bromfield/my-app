@@ -93,7 +93,6 @@ function ForecastSubmission(props) {
     };
 
     const getLeaderboardFromDB = async (marketName) => {
-        // marketName === undefined when useEffect runs before a problem is selected
         if (marketName === undefined) return;
         try {
             const leaderboardResponse = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${marketName}`);
@@ -135,7 +134,6 @@ function ForecastSubmission(props) {
             getBrierForClosedForecast(props.username, etv);
             setButtonDisabled(true);
             setForecastClosed(true);
-console.log("the problem is closed, so setForecastClosed(true)");
             setForecastCloseDate(`FORECAST CLOSED: ${new Date(forecast.closeDate).toString()}`);
             let highest = 0;
             let lowest = 100;
@@ -145,7 +143,6 @@ console.log("the problem is closed, so setForecastClosed(true)");
             for (let i = 0; i < forecast.submittedForecasts.length; i++) {
                 if (forecast.submittedForecasts[i].username === props.username) {
                     if (forecast.submittedForecasts[i].forecasts.length === 0) {
-console.log("Here1");
                         highest = "N/A";
                         lowest = "N/A";
                         setFinalCertainty("N/A");
@@ -180,7 +177,6 @@ console.log("Here1");
         } else {
             setButtonDisabled(false);
             setForecastClosed(false);
-            // console.log("the problem is open, so setForecastClosed(false)");
             setForecastCloseDate(`Deadline: ${new Date(forecast.closeDate).toString()}`);
         };
     };
@@ -220,8 +216,6 @@ console.log("Here1");
     const pullForecastDetailsAndCheckIfAlreadyAttempted = (forecast) => {
         for (let i = 0; i < forecastProblems.length; i++) {
             if (forecastProblems[i].problemName === forecast) {
-                console.log(forecastProblems[i]);
-                console.log(`forecastProblems[i].singleCertainty = ${forecastProblems[i].singleCertainty}`);
                 setSelectedForecastMarket(forecastProblems[i].market);
                 props.changeForecast(forecastProblems[i]);
                 // If only one certainty, this = true. False is multiple certainties are required from user.
@@ -264,8 +258,6 @@ console.log("Here1");
 
     const handleCertaintyChange = (e) => {
         const certainty = e.target.value;
-        // setPotentialCorrectBrier(certainty);
-
         if (certainty > 100) {
             setButtonDisabled(true);
             setForecastResponseMessage("Please enter a certainty BELOW or equal to 100");

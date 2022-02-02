@@ -3,7 +3,6 @@ import axios from 'axios';
 import './Profile.css';
 import ProfileStats from './ProfileStats';
 import ProfileDetails from './ProfileDetails';
-import FakeProfilePic2 from '../../media/ProfileP.png';
 import Modal from '../../components/Modal';
 
 function Profile(props) {
@@ -108,9 +107,6 @@ console.log("Profile.js UE");
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>
-            {/* <button type="button" onClick={() => setShowModal(true)}>
-                Open
-            </button> */}
             <div className="main-profile-grid">
                 <div className="profile-grid">
                     <h1 className="profile-header">{props.username}</h1>
@@ -118,10 +114,6 @@ console.log("Profile.js UE");
                         <img className="profile-profile-pic" src={props.profilePicture || localStorage.getItem("profilePicture")} alt="Temporary profile pic"/>
                         <div className="profile-summary">
                             <ul className="profile-summary-list">
-                                {/* <li key={0} className="profile-summary-list-item">
-                                    <h3>Name:</h3>
-                                    <h4>{props.user.name === undefined ? localStorage.getItem('name') : props.user.name}</h4>
-                                </li> */}
                                 <li key={1} className="profile-summary-list-item">
                                     <h3>Fantasy Forecast Points:</h3>
                                     <h4>{fantasyForecastPoints === undefined ? props.user.fantasyForecastPoints.toFixed(0): fantasyForecastPoints.toFixed(0)}</h4>
@@ -156,8 +148,6 @@ console.log("Profile.js UE");
                         setShowModal={setShowModal}
                         setModalContent={setModalContent}
                     />
-                    {/* <hr /> */}
-                    {/* <Settings /> */}
                 </div>
             </div>
         </div>

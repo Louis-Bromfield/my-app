@@ -29,23 +29,24 @@ function Leaderboard(props) {
                 let ffRankings = [];
                 for (let i = 0; i < rankings.length; i++) {
                     const userDocumentFF = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${rankings[i].username}`);
-
                     if (userDocumentFF.data[0].username === props.username) {
                         props.setUserInMarket(true);
-                    }
-
-                    ffRankings[i] = {};
+                    };
+                    ffRankings[i] = {
+                        profilePicture: "",
+                        username: "",
+                        marketPoints: 0,
+                        brierScores: [],
+                        avgAllTimeBrier: 0.0,
+                    };
                     ffRankings[i].profilePicture = userDocumentFF.data[0].profilePicture;
                     ffRankings[i].username = rankings[i].username;
-                    ffRankings[i].marketPoints = 0;
                     ffRankings[i].marketPoints = userDocumentFF.data[0].fantasyForecastPoints;
-                    ffRankings[i].brierScores = [];
                     ffRankings[i].brierScores = userDocumentFF.data[0].brierScores;
                     let totalBrierForUser = 0;
                     for (let j = 0; j < userDocumentFF.data[0].brierScores.length; j++) {
                         totalBrierForUser += userDocumentFF.data[0].brierScores[j].brierScore;
                     }
-                    // ffRankings[i].avgAllTimeBrier = (totalBrierForUser / userDocumentFF.data[0].brierScores.length);
                     let avgAllTimeBrier = (totalBrierForUser / userDocumentFF.data[0].brierScores.length);
                     if (isNaN(avgAllTimeBrier)) {
                         ffRankings[i].avgAllTimeBrier = 0.0
@@ -54,18 +55,15 @@ function Leaderboard(props) {
                     };
                 };
                 ffRankings = ffRankings.sort((a, b) => b.marketPoints - a.marketPoints);
-                // props.setAverageBrier(totalAverageBrier / rankings.length);
                 setUsersData(ffRankings);
                 return;
             };
             let totalAverageBrier = 0;
             for (let i = 0; i < rankings.length; i++) {
                 const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${rankings[i].username}`);
-
                 if (userDocument.data[0].username === props.username) {
                     props.setUserInMarket(true);
-                }
-
+                };
                 if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
                     rankings[i].marketPoints = userDocument.data[0].fantasyForecastPoints;
                 };

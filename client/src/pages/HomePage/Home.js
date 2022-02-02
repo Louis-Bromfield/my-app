@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Home.css';
 import axios from 'axios';
-import HomeHeader from './HomeSectionButtons/HomeHeader';
 import HomeNewsFeed from './HomeSectionButtons/HomeNewsFeed';
 import HomeButtonSmall from './HomeSectionButtons/HomeButtonSmall';
 import HomeButtonLarge from './HomeSectionButtons/HomeButtonLarge';
@@ -54,7 +53,7 @@ function Home(props) {
                 avgBrier += userDocument.data[0].brierScores[i].brierScore;
             };
             avgBrier = avgBrier / userDocument.data[0].brierScores.length;
-            setCurrentAvgBrier(avgBrier.toFixed(2));
+            setCurrentAvgBrier(isNaN(avgBrier.toFixed(2)) ? 0 : avgBrier.toFixed(2));
             setUserObj(userDocument.data[0]);
         } catch (error) {
             console.log("Error in getClosedForecastCount");
@@ -85,7 +84,14 @@ function Home(props) {
 
     return (
         <div className="home">
-            <HomeHeader username={props.username} width={width} height={height}/>
+            <div className="home-header-intro">
+                <h1>Welcome back, {props.username}!</h1>
+                <p>This is the home page for Fantasy Forecast. Use this as a central hub for 
+                    navigating the site! Check out the news feed to see the latest stories that
+                    your fellow forecasters have shared, or use any of the shortcuts to visit the 
+                    forecasting, learn, and profile pages or the leaderboards! (W:{width} H:{height})
+                </p>
+            </div>
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>

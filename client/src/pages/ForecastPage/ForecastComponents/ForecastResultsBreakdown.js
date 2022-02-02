@@ -1,7 +1,7 @@
 import React from 'react';
 
 function ForecastResultsBreakdown(props) {
-    console.log(`the forecastClosed prop is currently = ${props.forecastClosed}`);
+    // console.log(`the forecastClosed prop is currently = ${props.forecastClosed}`);
     return (
         <div>
             {props.forecastClosed === true &&
