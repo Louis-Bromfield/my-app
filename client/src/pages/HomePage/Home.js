@@ -39,7 +39,6 @@ function Home(props) {
             localStorage.setItem("firstVisit", false);
         };
         if (props.user.numberOfClosedForecasts === undefined) {
-            console.log("yes");
             getClosedForecastCount(localStorage.getItem("username") || props.username);
         };
     }, [props.user.numberOfClosedForecasts, props.username]);
@@ -47,18 +46,15 @@ function Home(props) {
     const getClosedForecastCount = async (username) => {
         try {
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
-            console.log(userDocument.data[0]);
             if (userDocument.data[0].numberOfClosedForecasts > 0) {
                 setShowClosedProblemModal(true);
             };
             let avgBrier = 0;
             for (let i = 0; i < userDocument.data[0].brierScores.length; i++) {
                 avgBrier += userDocument.data[0].brierScores[i].brierScore;
-                console.log(`avgBrier now = ${avgBrier}`);
             };
             avgBrier = avgBrier / userDocument.data[0].brierScores.length;
-            console.log(avgBrier);
-            setCurrentAvgBrier(avgBrier);
+            setCurrentAvgBrier(avgBrier.toFixed(2));
             setUserObj(userDocument.data[0]);
         } catch (error) {
             console.log("Error in getClosedForecastCount");
