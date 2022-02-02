@@ -24,8 +24,7 @@ function IndividualNewsFeedPost(props) {
     const [modalContent, setModalContent] = useState("");
     const history = useHistory();
 
-    useEffect(() => 
-        async function doEffect() {
+    useEffect(async () => {
         if (props.location.postObject === undefined) {
             const res = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/${localStorage.getItem("postID")}`);
             setAuthor(res.data.author);
@@ -52,9 +51,7 @@ function IndividualNewsFeedPost(props) {
             setMarkets(props.location.postObject.markets);
             setComments(props.location.postObject.comments.reverse());
         }
-        console.log("IndividualNewsFeedPost UE");
-        doEffect();
-    }, [props.location.postObject]);
+    }, []);
 
     const handleCommentChange = (e) => {
         setComment(e.target.value);
@@ -64,7 +61,7 @@ function IndividualNewsFeedPost(props) {
     const submitNewComment = async (comment) => {
         const ID = props.location.postObject === undefined ? localStorage.getItem("postID") : props.location.postObject._id;
         try {
-            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/postComment/${ID}`, 
+            const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/postComment/${ID}`, 
             {
                 postID: ID,
                 isNewComment: true,
