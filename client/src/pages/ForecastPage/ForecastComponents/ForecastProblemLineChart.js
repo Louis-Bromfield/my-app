@@ -209,7 +209,7 @@ function ForecastProblemLineChart(props) {
                 // If the forecast was made by the logged in user, add to user array but check if date is same (replace) or different (append)
                 if (selectedForecast.submittedForecasts[i].username === username) {
                     // Same date as last forecast, so replace
-                    if (i === 0) {
+                    if (userIncreaseData.length === 0) {
                         userIncreaseData.push({
                             username: selectedForecast.submittedForecasts[i].username,
                             y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
@@ -225,7 +225,7 @@ function ForecastProblemLineChart(props) {
                             y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
                             x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
                         });
-                    } else if (i > 0) {
+                    } else if (userIncreaseData.length > 0) {
                         if (selectedForecast.submittedForecasts[i].forecasts[j].date === userIncreaseData[userIncreaseData.length-1].x) {
                             userIncreaseData[userIncreaseData.length-1] = {
                                 username: selectedForecast.submittedForecasts[i].username,
@@ -243,7 +243,7 @@ function ForecastProblemLineChart(props) {
                                 x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
                             };
                         // Different date as last forecast so append
-                        } else if (i > 0 && selectedForecast.submittedForecasts[i].forecasts[j].date !== userIncreaseData[userIncreaseData.length-1].x) {
+                        } else if (selectedForecast.submittedForecasts[i].forecasts[j].date !== userIncreaseData[userIncreaseData.length-1].x) {
                             // Different date, append
                             userIncreaseData.push({
                                 username: selectedForecast.submittedForecasts[i].username,
