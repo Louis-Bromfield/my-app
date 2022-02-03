@@ -489,7 +489,7 @@ function ForecastSubmission(props) {
                     }
                 );
                 setShowModal(true);
-                setModalContent("You just got 300 Fantasy Forecast Points for submitting your first forecast! Any forecasts submitted from now on will yield 25 points. You can see your latest prediction from each day outlined in orange in the 'Forecast Stats' tab below.");
+                setModalContent("You just got 300 Fantasy Forecast Points for submitting your first forecast! Any forecasts submitted from now on will yield 25 points. You can see your predictions from each day in the 'Forecast Stats' tab below.");
                 setModalContent2("");
             };
         } catch (error) {

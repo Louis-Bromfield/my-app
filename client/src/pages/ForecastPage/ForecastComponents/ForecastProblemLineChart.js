@@ -149,21 +149,39 @@ function ForecastProblemLineChart(props) {
                             x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
                         });
                         if (selectedForecast.submittedForecasts[i].username === username) {
-                            userIncreaseData.push({
-                                username: selectedForecast.submittedForecasts[i].username,
-                                y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
-                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
-                            });
-                            userSameData.push({
-                                username: selectedForecast.submittedForecasts[i].username,
-                                y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
-                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
-                            });
-                            userDecreaseData.push({
-                                username: selectedForecast.submittedForecasts[i].username,
-                                y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
-                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
-                            });
+                            if (selectedForecast.submittedForecasts[i].forecasts[j].date === userIncreaseData[userIncreaseData.length-1].x) {
+                                userIncreaseData[userIncreaseData.length-1] = {
+                                    username: selectedForecast.submittedForecasts[i].username,
+                                    y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
+                                    x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
+                                };
+                                userSameData[userSameData.length-1] = {
+                                    username: selectedForecast.submittedForecasts[i].username,
+                                    y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
+                                    x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
+                                };
+                                userDecreaseData[userDecreaseData.length-1] = {
+                                    username: selectedForecast.submittedForecasts[i].username,
+                                    y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
+                                    x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
+                                };
+                            } else {
+                                userIncreaseData.push({
+                                    username: selectedForecast.submittedForecasts[i].username,
+                                    y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
+                                    x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                });
+                                userSameData.push({
+                                    username: selectedForecast.submittedForecasts[i].username,
+                                    y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
+                                    x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                });
+                                userDecreaseData.push({
+                                    username: selectedForecast.submittedForecasts[i].username,
+                                    y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
+                                    x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                });
+                            };
                         };
                     } else if (increaseData.length > 0) {
                         if (selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) !== increaseData[increaseData.length-1].x) {
@@ -184,21 +202,39 @@ function ForecastProblemLineChart(props) {
                                 x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
                             });
                             if (selectedForecast.submittedForecasts[i].username === username) {
-                                userIncreaseData.push({
-                                    username: selectedForecast.submittedForecasts[i].username,
-                                    y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
-                                    x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
-                                });
-                                userSameData.push({
-                                    username: selectedForecast.submittedForecasts[i].username,
-                                    y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
-                                    x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
-                                });
-                                userDecreaseData.push({
-                                    username: selectedForecast.submittedForecasts[i].username,
-                                    y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
-                                    x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
-                                });
+                                if (selectedForecast.submittedForecasts[i].forecasts[j].date === userIncreaseData[userIncreaseData.length-1].x) {
+                                    userIncreaseData[userIncreaseData.length-1] = {
+                                        username: selectedForecast.submittedForecasts[i].username,
+                                        y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
+                                        x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
+                                    };
+                                    userSameData[userSameData.length-1] = {
+                                        username: selectedForecast.submittedForecasts[i].username,
+                                        y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
+                                        x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
+                                    };
+                                    userDecreaseData[userDecreaseData.length-1] = {
+                                        username: selectedForecast.submittedForecasts[i].username,
+                                        y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
+                                        x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
+                                    };
+                                } else {
+                                    userIncreaseData.push({
+                                        username: selectedForecast.submittedForecasts[i].username,
+                                        y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
+                                        x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                    });
+                                    userSameData.push({
+                                        username: selectedForecast.submittedForecasts[i].username,
+                                        y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
+                                        x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                    });
+                                    userDecreaseData.push({
+                                        username: selectedForecast.submittedForecasts[i].username,
+                                        y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
+                                        x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                    });
+                                };
                             };
                         // Same day
                         } else if (selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) === increaseData[increaseData.length-1].x) {
@@ -220,21 +256,39 @@ function ForecastProblemLineChart(props) {
                                     x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
                                 };
                                 if (selectedForecast.submittedForecasts[i].username === username) {
-                                    userIncreaseData.push({
-                                        username: selectedForecast.submittedForecasts[i].username,
-                                        y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
-                                        x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
-                                    });
-                                    userSameData.push({
-                                        username: selectedForecast.submittedForecasts[i].username,
-                                        y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
-                                        x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
-                                    });
-                                    userDecreaseData.push({
-                                        username: selectedForecast.submittedForecasts[i].username,
-                                        y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
-                                        x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
-                                    });
+                                    if (selectedForecast.submittedForecasts[i].forecasts[j].date === userIncreaseData[userIncreaseData.length-1].x) {
+                                        userIncreaseData[userIncreaseData.length-1] = {
+                                            username: selectedForecast.submittedForecasts[i].username,
+                                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
+                                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
+                                        };
+                                        userSameData[userSameData.length-1] = {
+                                            username: selectedForecast.submittedForecasts[i].username,
+                                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
+                                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
+                                        };
+                                        userDecreaseData[userDecreaseData.length-1] = {
+                                            username: selectedForecast.submittedForecasts[i].username,
+                                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
+                                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
+                                        };
+                                    } else {
+                                        userIncreaseData.push({
+                                            username: selectedForecast.submittedForecasts[i].username,
+                                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
+                                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                        });
+                                        userSameData.push({
+                                            username: selectedForecast.submittedForecasts[i].username,
+                                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
+                                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                        });
+                                        userDecreaseData.push({
+                                            username: selectedForecast.submittedForecasts[i].username,
+                                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
+                                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                        });
+                                    };
                                 };
                             // Different User - add to entries
                             } else if (selectedForecast.submittedForecasts[i].username !== increaseData[increaseData.length-1].username) {
@@ -254,21 +308,39 @@ function ForecastProblemLineChart(props) {
                                     x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
                                 });
                                 if (selectedForecast.submittedForecasts[i].username === username) {
-                                    userIncreaseData.push({
-                                        username: selectedForecast.submittedForecasts[i].username,
-                                        y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
-                                        x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
-                                    });
-                                    userSameData.push({
-                                        username: selectedForecast.submittedForecasts[i].username,
-                                        y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
-                                        x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
-                                    });
-                                    userDecreaseData.push({
-                                        username: selectedForecast.submittedForecasts[i].username,
-                                        y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
-                                        x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
-                                    });
+                                    if (selectedForecast.submittedForecasts[i].forecasts[j].date === userIncreaseData[userIncreaseData.length-1].x) {
+                                        userIncreaseData[userIncreaseData.length-1] = {
+                                            username: selectedForecast.submittedForecasts[i].username,
+                                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
+                                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
+                                        };
+                                        userSameData[userSameData.length-1] = {
+                                            username: selectedForecast.submittedForecasts[i].username,
+                                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
+                                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
+                                        };
+                                        userDecreaseData[userDecreaseData.length-1] = {
+                                            username: selectedForecast.submittedForecasts[i].username,
+                                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
+                                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
+                                        };
+                                    } else {
+                                        userIncreaseData.push({
+                                            username: selectedForecast.submittedForecasts[i].username,
+                                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
+                                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                        });
+                                        userSameData.push({
+                                            username: selectedForecast.submittedForecasts[i].username,
+                                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
+                                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                        });
+                                        userDecreaseData.push({
+                                            username: selectedForecast.submittedForecasts[i].username,
+                                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
+                                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                        });
+                                    };
                                 };
                             }
                         };
