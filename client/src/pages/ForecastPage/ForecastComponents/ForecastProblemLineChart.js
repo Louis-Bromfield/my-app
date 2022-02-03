@@ -226,7 +226,7 @@ function ForecastProblemLineChart(props) {
                             x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
                         });
                     } else if (userIncreaseData.length > 0) {
-                        if (selectedForecast.submittedForecasts[i].forecasts[j].date === userIncreaseData[userIncreaseData.length-1].x) {
+                        if (selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) === userIncreaseData[userIncreaseData.length-1].x) {
                             userIncreaseData[userIncreaseData.length-1] = {
                                 username: selectedForecast.submittedForecasts[i].username,
                                 y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
@@ -243,7 +243,7 @@ function ForecastProblemLineChart(props) {
                                 x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
                             };
                         // Different date as last forecast so append
-                        } else if (selectedForecast.submittedForecasts[i].forecasts[j].date !== userIncreaseData[userIncreaseData.length-1].x) {
+                        } else if (selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) !== userIncreaseData[userIncreaseData.length-1].x) {
                             // Different date, append
                             userIncreaseData.push({
                                 username: selectedForecast.submittedForecasts[i].username,
