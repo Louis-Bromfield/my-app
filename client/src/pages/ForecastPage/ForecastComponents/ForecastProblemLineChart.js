@@ -203,44 +203,45 @@ function ForecastProblemLineChart(props) {
                                 x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
                             });
                         };
-                        // If the forecast was made by the logged in user, add to user array but check if date is same (replace) or different (append)
-                        if (selectedForecast.submittedForecasts[i].username === username) {
-                            // Same date as last forecast, so replace
-                            if (selectedForecast.submittedForecasts[i].forecasts[j].date === userIncreaseData[userIncreaseData.length-1].x) {
-                                userIncreaseData[userIncreaseData.length-1] = {
-                                    username: selectedForecast.submittedForecasts[i].username,
-                                    y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
-                                    x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
-                                };
-                                userSameData[userSameData.length-1] = {
-                                    username: selectedForecast.submittedForecasts[i].username,
-                                    y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
-                                    x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
-                                };
-                                userDecreaseData[userDecreaseData.length-1] = {
-                                    username: selectedForecast.submittedForecasts[i].username,
-                                    y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
-                                    x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
-                                };
-                            } else {
-                                // Different date, append
-                                userIncreaseData.push({
-                                    username: selectedForecast.submittedForecasts[i].username,
-                                    y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
-                                    x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
-                                });
-                                userSameData.push({
-                                    username: selectedForecast.submittedForecasts[i].username,
-                                    y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
-                                    x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
-                                });
-                                userDecreaseData.push({
-                                    username: selectedForecast.submittedForecasts[i].username,
-                                    y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
-                                    x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
-                                });
-                            };
+                    };
+                };
+                // Here
+                // If the forecast was made by the logged in user, add to user array but check if date is same (replace) or different (append)
+                if (selectedForecast.submittedForecasts[i].username === username) {
+                    // Same date as last forecast, so replace
+                    if (selectedForecast.submittedForecasts[i].forecasts[j].date === userIncreaseData[userIncreaseData.length-1].x) {
+                        userIncreaseData[userIncreaseData.length-1] = {
+                            username: selectedForecast.submittedForecasts[i].username,
+                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
+                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
                         };
+                        userSameData[userSameData.length-1] = {
+                            username: selectedForecast.submittedForecasts[i].username,
+                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
+                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
+                        };
+                        userDecreaseData[userDecreaseData.length-1] = {
+                            username: selectedForecast.submittedForecasts[i].username,
+                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
+                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
+                        };
+                    } else {
+                        // Different date, append
+                        userIncreaseData.push({
+                            username: selectedForecast.submittedForecasts[i].username,
+                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
+                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                        });
+                        userSameData.push({
+                            username: selectedForecast.submittedForecasts[i].username,
+                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
+                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                        });
+                        userDecreaseData.push({
+                            username: selectedForecast.submittedForecasts[i].username,
+                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
+                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                        });
                     };
                 };
             };
