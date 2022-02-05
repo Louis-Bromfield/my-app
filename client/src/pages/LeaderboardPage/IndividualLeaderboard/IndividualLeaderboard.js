@@ -118,6 +118,7 @@ function IndividualLeaderboard(props) {
         try {
             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/removeUser/${leaderboard}/${username}`);
             let markets = localStorage.getItem("markets").split(",");
+            console.log(markets);
             let index = markets.findIndex(market => market === leaderboard);
             markets.splice(index, 1);
             let newMarkets = [];
