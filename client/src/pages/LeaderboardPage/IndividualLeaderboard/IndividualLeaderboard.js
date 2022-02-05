@@ -120,7 +120,13 @@ function IndividualLeaderboard(props) {
             let markets = localStorage.getItem("markets").split(",");
             let index = markets.findIndex(market => market === leaderboard);
             markets.splice(index, 1);
-            localStorage.setItem("markets", markets);
+            let newMarkets = [];
+            for (let i = 0; i < markets.length; i++) {
+                if (markets[i] !== "leaderboard") {
+                    newMarkets.push(markets[i]);
+                };
+            };
+            localStorage.setItem("markets", newMarkets);
             history.push("/leaderboard-select");
         } catch (error) {
             console.error("Error in IndividualLeaderboard > leaveMarket");
