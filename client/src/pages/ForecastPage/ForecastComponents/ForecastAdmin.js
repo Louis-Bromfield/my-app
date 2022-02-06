@@ -153,7 +153,7 @@ function ForecastAdmin() {
             });
             console.log(updatedMarket.data);
         } catch (error) {
-            console.error("Error in closeAndCalculateMultipleOutcomes");
+            console.error("Error in closeAndCalculateBriersMultipleOutcomes");
             console.error(error);
         };
     };

@@ -69,7 +69,7 @@ function Search(props) {
             formatBrierData(userDocument.data.userObj, playerUsername);
             findUniquePlayerStats(userDocument.data.userObj, playerUsername);
             setBrierAverage(userDocument.data.averageBrier);
-            setBestForecast(`${userDocument.data.bestBrier} - ${userDocument.data.bestForecastProblem}`);
+            setBestForecast(`${(userDocument.data.bestBrier).toFixed(2)} / 110 - ${userDocument.data.bestForecastProblem}`);
         } catch (error) {
             console.error("Error in Profile.js > retrieveUserInfoFromDB");
             console.error(error);
