@@ -56,6 +56,7 @@ function Leaderboard(props) {
                 };
                 ffRankings = ffRankings.sort((a, b) => b.marketPoints - a.marketPoints);
                 setUsersData(ffRankings);
+                props.setFFData(ffRankings);
                 return;
             };
             let totalAverageBrier = 0;

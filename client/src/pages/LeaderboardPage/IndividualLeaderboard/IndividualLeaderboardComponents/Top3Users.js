@@ -8,8 +8,12 @@ function Top3Users(props) {
     const [topThreeUsers, setTopThreeUsers] = useState([]);
 
     useEffect(() => {
-        setTopThreeUsers(props.rankings);
-    }, [props.rankings]);
+        if (props.ffData.length === 0) {
+            setTopThreeUsers(props.rankings);   
+        } else {
+            setTopThreeUsers(props.ffData);
+        }
+    }, [props.rankings, props.ffData]);
 
     return (
         <div className="top-three-users-highlight">

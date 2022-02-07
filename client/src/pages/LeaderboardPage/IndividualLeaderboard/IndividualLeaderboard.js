@@ -25,6 +25,7 @@ function IndividualLeaderboard(props) {
     const [averagePoints, setAveragePoints] = useState(0);
     const [averageBrier, setAverageBrier] = useState(0);
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+    const [ffData, setFFData] = useState([]);
     
     // let index = 0;
     // for (let i = 0; i < navigationOrder.length; i++) {
@@ -275,7 +276,10 @@ function IndividualLeaderboard(props) {
                 <h1>{currentLeaderboardName} Leaderboard</h1>
             </div>
             <div className="leaderboard-spotlight-row">
-                <Top3Users rankings={filteredRankings} />
+                <Top3Users 
+                    rankings={filteredRankings}
+                    ffData={ffData}
+                />
                 <LeaderboardSpecificStats 
                     numberOfForecasters={filteredRankings.length} 
                     averageBrier={averageBrier}
@@ -290,6 +294,7 @@ function IndividualLeaderboard(props) {
                 isFFLeaderboard={isFFLeaderboard}
                 setUserInMarket={setUserInMarket}
                 setAverageBrier={setAverageBrier}
+                setFFData={setFFData}
             />
         </div>
     )
