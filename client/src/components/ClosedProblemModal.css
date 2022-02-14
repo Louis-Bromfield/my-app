@@ -52,7 +52,8 @@
 }
 
 .close-modal-btn:hover,
-.close-modal2-btn:hover {
+.close-modal2-btn:hover,
+.next-problem-btn:hover {
     cursor: pointer;
     background-color: rgb(104, 189, 104);
     transition: 0.2s ease;
@@ -79,7 +80,6 @@
 }
 
 .close-modal-btn-close:hover,
-.next-problem-btn:hover,
 .close-modal2-btn-close:hover {
     cursor: pointer;
     background-color: rgb(206, 71, 62);
