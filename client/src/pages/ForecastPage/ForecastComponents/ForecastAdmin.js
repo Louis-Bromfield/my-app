@@ -140,12 +140,14 @@ function ForecastAdmin() {
             // to find out
             let scores;
             if (closeEarly === true) {
-                scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBriersMultipleOutcomes/${problemName}/${outcome}/${market}/${closeEarly}`, {
+                scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
+                    problemName: problemName,
                     newProblemCloseDateTime: newProblemCloseDateTime
                 });
             } else if (closeEarly === false) {
-                scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBriersMultipleOutcomes/${problemName}/${outcome}/${market}/${closeEarly}`);
-            }
+                scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
+                    problemName: problemName
+                });
 
             // Market Points
             const updatedMarket = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/closedProblem/${market}`, {
