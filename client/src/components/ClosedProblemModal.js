@@ -49,7 +49,7 @@ const ClosedProblemModal = (props) => {
                 Close
             </button>
             {/* Add condition to only render this if there is another problem to show */}
-            {brierArr.length > 0 &&
+            {brierArr.length > 1 &&
                 <button onClick={setNewProblem} className="next-problem-btn">
                     Next Problem
                 </button>
