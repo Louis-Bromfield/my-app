@@ -148,7 +148,7 @@ function ForecastAdmin() {
                 scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
                     problemName: problemName
                 });
-
+            };
             // Market Points
             const updatedMarket = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/closedProblem/${market}`, {
                 scores: scores.data
