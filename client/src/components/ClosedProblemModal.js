@@ -48,9 +48,12 @@ const ClosedProblemModal = (props) => {
             <button onClick={() => closeModal(props.userObj.username)} className="close-modal-btn">
                 Close
             </button>
-            <button onClick={setNewProblem} className="next-problem-btn">
-                Next Problem
-            </button>
+            {/* Add condition to only render this if there is another problem to show */}
+            {brierArr.length > 0 &&
+                <button onClick={setNewProblem} className="next-problem-btn">
+                    Next Problem
+                </button>
+            }
             <br />
             <div className="non-grid-layout">
                 <div className="closed-forecast-container">
