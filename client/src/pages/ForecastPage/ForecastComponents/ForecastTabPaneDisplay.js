@@ -42,11 +42,6 @@ function ForecastTabPaneDisplay(props) {
                         />
                     </div>
                     <div className="forecast-stats-div-four-container">
-                        <ForecastMarketLeaderboard 
-                            market={props.selectedForecast.market} 
-                            leaderboard={props.leaderboard} 
-                            username={props.username} 
-                        />
                         <ForecastStatistics 
                             selectedForecast={props.selectedForecast} 
                             today={false} 
@@ -64,6 +59,11 @@ function ForecastTabPaneDisplay(props) {
                             username={props.username} 
                             refresh={props.refresh} 
                             market={props.selectedForecast.market}
+                        />
+                        <ForecastMarketLeaderboard 
+                            market={props.selectedForecast.market} 
+                            leaderboard={props.leaderboard} 
+                            username={props.username} 
                         />
                     </div>
                 </div>

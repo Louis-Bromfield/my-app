@@ -32,7 +32,7 @@ function ForecastMarketLeaderboard(props) {
 
     return (
         <div className="leaderboard-snapshot">
-            <h2 className="leaderboard-title">{props.market} Snapshot</h2>
+            <h2 className="leaderboard-title">Leaderboard Snapshot</h2>
             <table className="leaderboard-snapshot-table">
                 <tbody>
                     <tr className="leaderboard-snapshot-title-row">
