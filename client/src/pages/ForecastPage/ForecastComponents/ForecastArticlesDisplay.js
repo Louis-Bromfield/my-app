@@ -17,6 +17,9 @@ function ForecastArticlesDisplay(props) {
             } else if (searchTerm.includes("Pécresse") || (searchTerm.includes("Pecresse"))) {
                 term = "Pecresse"
                 googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${term}`);
+            } else if (searchTerm.includes("Zemmour")) {
+                term = "Zemmour"
+                googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${term}`);
             } else {
                 googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${market}`);
             };
