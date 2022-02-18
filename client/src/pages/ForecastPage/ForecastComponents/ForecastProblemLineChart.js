@@ -45,7 +45,7 @@ function ForecastProblemLineChart(props) {
             backgroundColor: "green",
             borderColor: "orange",
             showLine: true,
-            borderWidth: 7,
+            borderWidth: 4,
             pointRadius: 4
         }
         let data = {
