@@ -27,7 +27,6 @@ function ForecastProblemLineChart(props) {
   }, [props.selectedForecast, props.refresh]);
 
   const formatCertainties = (selectedForecast, updateTodayStats, username) => {
-
     // No forecasts yet submitted
     if (selectedForecast.submittedForecasts.length === 0) {
         setChartData({ label: "All Forecasts", data: [] });
@@ -92,7 +91,7 @@ function ForecastProblemLineChart(props) {
                     todayForecasts.push(data.data[i].x);
                 };
             };
-            const dailyAverages = getDailyAverages(data.data);
+            const dailyAverages = getNewDailyAverages(data.data, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
             updateTodayStats(`${dailyAverages[dailyAverages.length-1].y.toFixed(2)}%`, todayForecasts.length);
             setChartData(data);
             setUserChartData(userData);
@@ -397,6 +396,46 @@ function ForecastProblemLineChart(props) {
     //     };
     //   }
     //   setLabelsArray(labelsToReturn);
+    };
+
+    const createNewLabelsArray = (start, end) => {
+        let labelsToReturn = [];
+        for (let d = start; d <= new Date(); d.setDate(d.getDate() + 1)) {
+            let newDate = new Date(d).toString().slice(0, 15);
+            labelsToReturn.push(newDate);
+        };
+        return labelsToReturn;
+    };
+
+    const getNewDailyAverages = (certainties, start, end) => {
+        // Create labels array
+        let days = createNewLabelsArray(start, end);
+        // Sort main array by date
+        let sortedCertainties = certainties.sort((a, b) => new Date(a.x) - new Date(b.x));
+        let averageArr = [];         
+        for (let i = 0; i < days.length; i++) {
+            // formatting array of dates into objects containing said dates
+            averageArr[i] = { x: days[i], y: null };
+        };
+        let arrOfAllForecastValues = [];
+        for (let i = 0; i < days.length; i++) {
+            for (let j = 0; j < sortedCertainties.length; j++) {
+                // If the forecast we're looking at right now is EARLIER than the date we want
+                
+                // If the forecast we're looking at right now is EXACTLY the date we want
+                if (days[i] === sortedCertainties[j].x) {
+                    arrOfAllForecastValues.push(sortedCertainties[j].y);
+                };
+                // If the forecast we're looking at right now is LATER than the date we want
+                if (days[i] > sortedCertainties[j].x || j === sortedCertainties.length-1) {
+                    averageArr[i].y = (arrOfAllForecastValues.reduce((partialSum, a) => partialSum + a, 0) / arrOfAllForecastValues.length);
+                };
+            };
+            if (averageArr[i].y === null && i > 0) {
+                averageArr[i].y = averageArr[i-1].y;
+            }
+        };
+        return averageArr;
     };
 
     const getDailyAverages = (certainties) => {
