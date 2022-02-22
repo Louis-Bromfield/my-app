@@ -265,6 +265,7 @@ function ForecastProblemLineChart(props) {
             };
         };
 
+        // Adding in simulated data for days with no predictions (copying last data over to all days)
         if (increaseData[increaseData.length-1].x !== new Date().toString().slice(0, 15)) {
             let increaseY = increaseData[increaseData.length-1].y;
             let sameY = sameData[sameData.length-1].y;
@@ -290,9 +291,9 @@ function ForecastProblemLineChart(props) {
         };
         allData = increaseData.concat(sameData, decreaseData);
         allData.sort((a, b) => a.x < b.x);
-        let avgIncreaseArr = getDailyAverages(increaseData);
-        let avgSameArr = getDailyAverages(sameData);
-        let avgDecreaseArr = getDailyAverages(decreaseData);
+        let avgIncreaseArr = getNewDailyAverages(increaseData, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
+        let avgSameArr = getNewDailyAverages(sameData, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
+        let avgDecreaseArr = getNewDailyAverages(decreaseData, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
 
         let allChData = {
             label: "All Data",
