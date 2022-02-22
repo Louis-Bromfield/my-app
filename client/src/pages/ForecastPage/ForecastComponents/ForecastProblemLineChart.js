@@ -401,7 +401,9 @@ function ForecastProblemLineChart(props) {
 
     const createNewLabelsArray = (start, end) => {
         let labelsToReturn = [];
-        for (let d = start; d <= new Date(); d.setDate(d.getDate() + 1)) {
+        // I think the reason why the blue line is stopping a day early is because it might be going to the minute 
+        // If the start date is 8am and we're at 7.30am, it might not think we are on the same day
+        for (let d = new Date(start.toString().slice(0, 15)); d <= new Date(new Date().toString().slice(0, 15)); d.setDate(d.getDate() + 1)) {
             let newDate = new Date(d).toString().slice(0, 15);
             labelsToReturn.push(newDate);
         };
