@@ -19,6 +19,7 @@ function ForecastProblemLineChart(props) {
   const [userSameChartData, setUserSameChartData] = useState([]);
   const [userDecreaseChartData, setUserDecreaseChartData] = useState([]);      
   const [allChartData, setAllChartData] = useState([]);
+  const [simulatedUserData, setSimulatedUserData] = useState([]);
 
   useEffect(() => {
     formatCertainties(props.selectedForecast, props.updateTodayStats, props.username);
@@ -93,6 +94,27 @@ function ForecastProblemLineChart(props) {
             };
             const dailyAverages = getNewDailyAverages(data.data, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
             updateTodayStats(`${dailyAverages[dailyAverages.length-1].y.toFixed(2)}%`, todayForecasts.length);
+            // Simulate data for days with no predictions
+            let simulatedUserData = {
+                label: "Your Certainty Since Last Forecast",
+                data: [],
+                backgroundColor: "green",
+                borderColor: "orange",
+                showLine: true,
+                borderWidth: 4,
+                pointRadius: 0
+            };
+            if (userData.data[userData.data.length-1].x < new Date().toString().slice(0, 15)) {
+                simulatedUserData.data.push(
+                    {
+                        y: userData.data[userData.data.length-1].y,
+                        x: userData.data[userData.data.length-1].x
+                    }, {
+                        y: userData.data[userData.data.length-1].y,
+                        x: new Date().toString().slice(0, 15)
+                    }
+                );
+            };
             setChartData(data);
             setUserChartData(userData);
             setAverageChartData({
@@ -271,7 +293,7 @@ function ForecastProblemLineChart(props) {
         let avgSameArr = getNewDailyAverages(sameData, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
         let avgDecreaseArr = getNewDailyAverages(decreaseData, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
 
-        // Adding in simulated data for days with no predictions (copying last data over to all days)
+        // Adding in simulated data for days with no predictions (copying last data over to all days) - for AVERAGE
         if (avgIncreaseArr[avgIncreaseArr.length-1].x !== new Date().toString().slice(0, 15)) {
             // We need to not use the data.length-1.x value, this is just copying over the 
             // last prediction, we want it to copy over the average from the day before
@@ -297,6 +319,26 @@ function ForecastProblemLineChart(props) {
                 });
             };
         };
+
+        // Adding in simulated data for days with no predictions (copying last data over to all days) - for SPECIFIC PREDICTIONS
+        // if (increaseData[increaseData.length-1].x !== new Date().toString().slice(0, 15)) {
+        //     let increaseY = increaseData[increaseData.length-1].y;
+        //     let sameY = sameData[sameData.length-1].y;
+        //     let decreaseY = decreaseData[decreaseData.length-1].y;
+        //     let newDate = new Date(d).toString().slice(0, 15);
+        //     increaseData.push({
+        //         y: increaseY,
+        //         x: newDate
+        //     });
+        //     sameData.push({
+        //         y: sameY,
+        //         x: newDate
+        //     });
+        //     decreaseData.push({
+        //         y: decreaseY,
+        //         x: newDate
+        //     });
+        // };
 
         let allChData = {
             label: "All Data",
@@ -496,6 +538,14 @@ function ForecastProblemLineChart(props) {
             borderWidth: userChartData.borderWidth,
             showLine: userChartData.showLine,
             pointRadius: userChartData.pointRadius
+        }, {
+            label: simulatedUserData.label,
+            data: simulatedUserData.data,
+            backgroundColor: simulatedUserData.backgroundColor,
+            borderColor: simulatedUserData.borderColor,
+            borderWidth: simulatedUserData.borderWidth,
+            showLine: simulatedUserData.showLine,
+            pointRadius: simulatedUserData.pointRadius
         // }, {
         //     label: averageSinceLastPrediction.label,
         //     data: averageSinceLastPrediction.data,
