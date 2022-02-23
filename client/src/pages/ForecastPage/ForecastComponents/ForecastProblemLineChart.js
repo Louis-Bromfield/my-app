@@ -326,7 +326,7 @@ function ForecastProblemLineChart(props) {
             let increaseY = increaseData[increaseData.length-1].y;
             let sameY = sameData[sameData.length-1].y;
             let decreaseY = decreaseData[decreaseData.length-1].y;
-            let newDate = new Date(d).toString().slice(0, 15);
+            let newDate = new Date().toString().slice(0, 15);
             increaseData.push({
                 y: increaseY,
                 x: newDate
