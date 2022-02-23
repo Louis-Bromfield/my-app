@@ -117,6 +117,7 @@ function ForecastProblemLineChart(props) {
             };
             setChartData(data);
             setUserChartData(userData);
+            setSimulatedUserData(simulatedUserData);
             setAverageChartData({
                 label: "Average Certainty",
                 data: ((new Date(selectedForecast.closeDate) - new Date(selectedForecast.startDate))/1000 >= 0) ? dailyAverages : [],
