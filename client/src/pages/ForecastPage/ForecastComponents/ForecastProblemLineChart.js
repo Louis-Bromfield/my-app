@@ -265,35 +265,38 @@ function ForecastProblemLineChart(props) {
             };
         };
 
-        // Adding in simulated data for days with no predictions (copying last data over to all days)
-        if (increaseData[increaseData.length-1].x !== new Date().toString().slice(0, 15)) {
-            let increaseY = increaseData[increaseData.length-1].y;
-            let sameY = sameData[sameData.length-1].y;
-            let decreaseY = decreaseData[decreaseData.length-1].y;
-            let lastDayWithData = new Date(increaseData[increaseData.length-1].x);
-            lastDayWithData.setDate(lastDayWithData.getDate() + 1);
-            for (let d = lastDayWithData; d <= new Date(); d.setDate(d.getDate() + 1)) {
-                let newDate = new Date(d).toString().slice(0, 15);
-
-                increaseData.push({
-                    y: increaseY,
-                    x: newDate
-                });
-                sameData.push({
-                    y: sameY,
-                    x: newDate
-                });
-                decreaseData.push({
-                    y: decreaseY,
-                    x: newDate
-                });
-            };
-        };
         allData = increaseData.concat(sameData, decreaseData);
         allData.sort((a, b) => a.x < b.x);
         let avgIncreaseArr = getNewDailyAverages(increaseData, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
         let avgSameArr = getNewDailyAverages(sameData, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
         let avgDecreaseArr = getNewDailyAverages(decreaseData, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
+
+        // Adding in simulated data for days with no predictions (copying last data over to all days)
+        if (avgIncreaseArr[avgIncreaseArr.length-1].x !== new Date().toString().slice(0, 15)) {
+            // We need to not use the data.length-1.x value, this is just copying over the 
+            // last prediction, we want it to copy over the average from the day before
+            let increaseY = avgIncreaseArr[avgIncreaseArr.length-1].y;
+            let sameY = avgSameArr[avgSameArr.length-1].y;
+            let decreaseY = avgDecreaseArr[avgDecreaseArr.length-1].y;
+            let lastDayWithData = new Date(avgIncreaseArr[avgIncreaseArr.length-1].x);
+            lastDayWithData.setDate(lastDayWithData.getDate() + 1);
+            for (let d = lastDayWithData; d <= new Date(); d.setDate(d.getDate() + 1)) {
+                let newDate = new Date(d).toString().slice(0, 15);
+
+                avgIncreaseArr.push({
+                    y: increaseY,
+                    x: newDate
+                });
+                avgSameArr.push({
+                    y: sameY,
+                    x: newDate
+                });
+                avgDecreaseArr.push({
+                    y: decreaseY,
+                    x: newDate
+                });
+            };
+        };
 
         let allChData = {
             label: "All Data",
