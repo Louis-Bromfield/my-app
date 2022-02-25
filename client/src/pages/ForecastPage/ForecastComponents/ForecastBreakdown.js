@@ -158,7 +158,7 @@ function ForecastBreakdown(props) {
                                                     <li key={index} className="prediction-li">
                                                         <h3 style={{ color: "#404d72" }}><u>Prediction #{index}</u></h3>
                                                         <h4>Certainty: {(item.certainty*100).toFixed(2)}%&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Brier Score: {item.newBrier.toFixed(0)} / 100</h4>
-                                                        <h4>Comments: <i>{item.comments}</i></h4>
+                                                        <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
                                                         <h4>Date: {item.date.slice(0, 24)}</h4>
@@ -181,7 +181,7 @@ function ForecastBreakdown(props) {
                                                     <li key={index} className="prediction-li">
                                                         <h3 style={{ color: "#404d72" }}><u>Prediction #{index}</u></h3>
                                                         <h4>Certainty: {(item.certainty*100).toFixed(2)}%&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Brier Score: {item.newBrier.toFixed(0)} / 100</h4>
-                                                        <h4>Comments: <i>{item.comments}</i></h4>
+                                                        <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
                                                         <h4>Date: {item.date.slice(0, 24)}</h4>
@@ -221,7 +221,7 @@ function ForecastBreakdown(props) {
                                                     <li key={index} className="prediction-li">
                                                         <h3 style={{ color: "#404d72" }}><u>Prediction #{index}</u></h3>
                                                         <h4>Certainty: {(item.certainty*100).toFixed(2)}%</h4>
-                                                        <h4>Comments: <i>{item.comments}</i></h4>
+                                                        <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
                                                         <h4>Date: {item.date.slice(0, 24)}</h4>
@@ -246,7 +246,7 @@ function ForecastBreakdown(props) {
                                                     <li key={index} className="prediction-li">
                                                         <h3 style={{ color: "#404d72" }}><u>Prediction #{index}</u></h3>
                                                         <h4>Certainty: {(item.certainty*100).toFixed(2)}%</h4>
-                                                        <h4>Comments: <i>{item.comments}</i></h4>
+                                                        <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
                                                         <h4>Date: {item.date.slice(0, 24)}</h4>
@@ -314,7 +314,7 @@ function ForecastBreakdown(props) {
                                                         <h4>Decrease by 2+: {(item.certaintyLower*100).toFixed(2)}%</h4>
                                                         <br />
                                                         <h4>Brier Score: {item.newBrier.toFixed(0)} / 100</h4>
-                                                        <h4>Comments: <i>{item.comments}</i></h4>
+                                                        <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
                                                         <h4>Date: {item.date.slice(0, 24)}</h4>
@@ -339,7 +339,7 @@ function ForecastBreakdown(props) {
                                                         <h4>Stay within +/- 2: {(item.certaintySame*100).toFixed(2)}%</h4>
                                                         <h4>Decrease by 2+: {(item.certaintyLower*100).toFixed(2)}%</h4>
                                                         <h4>Brier Score: {item.newBrier.toFixed(0)} / 100</h4>
-                                                        <h4>Comments: <i>{item.comments}</i></h4>
+                                                        <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
                                                         <h4>Date: {item.date.slice(0, 24)}</h4>
@@ -382,7 +382,7 @@ function ForecastBreakdown(props) {
                                                         <h4>Increase by 2+: {(item.certaintyHigher*100).toFixed(2)}%</h4>
                                                         <h4>Stay within +/- 2: {(item.certaintySame*100).toFixed(2)}%</h4>
                                                         <h4>Decrease by 2+: {(item.certaintyLower*100).toFixed(2)}%</h4>
-                                                        <h4>Comments: <i>{item.comments}</i></h4>
+                                                        <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
                                                         <h4>Date: {item.date.slice(0, 24)}</h4>
@@ -411,7 +411,7 @@ function ForecastBreakdown(props) {
                                                         <h4>Increase by 2+: {(item.certaintyHigher*100).toFixed(2)}%</h4>
                                                         <h4>Stay within +/- 2: {(item.certaintySame*100).toFixed(2)}%</h4>
                                                         <h4>Decrease by 2+: {(item.certaintyLower*100).toFixed(2)}%</h4>
-                                                        <h4>Comments: <i>{item.comments}</i></h4>
+                                                        <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
                                                         <h4>Date: {item.date.slice(0, 24)}</h4>
