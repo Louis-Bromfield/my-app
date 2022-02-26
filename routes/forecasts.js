@@ -562,22 +562,31 @@ router.patch("/updateMultiple", async (req, res) => {
     try {
         // find the Object in submittedForecasts[] where username = username
         const document = await Forecasts.findOne({ problemName: req.body.problemName });
-        // push the passed in {certainty, comments} object to the end of the submittedForecasts.forecasts array
-        // increase numberOfForecastsSubmittedByUser by 1 - not essential, as we could just take submittedForecasts.forecasts.length
-        const updatedForecastPushedToDB = await Forecasts.findByIdAndUpdate(document._id, 
-            { 
-                $push: { [req.body.locationOfForecasts]: {
-                    "certainties": {
-                        certaintyHigher: req.body.updatedForecastsForUser.certainty1, 
-                        certaintySame: req.body.updatedForecastsForUser.certainty2,
-                        certaintyLower: req.body.updatedForecastsForUser.certainty3
-                    },
-                    "comments": req.body.updatedForecastsForUser.comments, 
-                    "date": req.body.updatedForecastsForUser.date 
-                }}
-            }, 
+        
+        const updatedForecastDocument = await Forecasts.findByIdAndUpdate(document._id, 
+            {
+                submittedForecasts: req.body.newSubmittedForecasts,
+            },
             { new: true }
         );
+        res.json(updatedForecastDocument);
+        
+        // push the passed in {certainty, comments} object to the end of the submittedForecasts.forecasts array
+        // increase numberOfForecastsSubmittedByUser by 1 - not essential, as we could just take submittedForecasts.forecasts.length
+        // const updatedForecastPushedToDB = await Forecasts.findByIdAndUpdate(document._id, 
+        //     { 
+        //         $push: { [req.body.locationOfForecasts]: {
+        //             "certainties": {
+        //                 certaintyHigher: req.body.updatedForecastsForUser.certainty1, 
+        //                 certaintySame: req.body.updatedForecastsForUser.certainty2,
+        //                 certaintyLower: req.body.updatedForecastsForUser.certainty3
+        //             },
+        //             "comments": req.body.updatedForecastsForUser.comments, 
+        //             "date": req.body.updatedForecastsForUser.date 
+        //         }}
+        //     }, 
+        //     { new: true }
+        // );
         res.json(updatedForecastPushedToDB);
     } catch (error) {
         console.error("Error in forecasts.js > update");
