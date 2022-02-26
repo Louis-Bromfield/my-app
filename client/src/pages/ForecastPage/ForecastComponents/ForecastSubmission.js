@@ -369,7 +369,7 @@ function ForecastSubmission(props) {
                 date: new Date().toString()
             });
             const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
-                problemName: forecast,
+                problemID: document.data[0]._id,
                 newSubmittedForecasts: documentForecastData
             });
             console.log(newForecast);
@@ -439,7 +439,7 @@ function ForecastSubmission(props) {
                 date: new Date().toString()
             });
             const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple`, {
-                problemName: forecast,
+                problemID: document.data[0]._id,
                 newSubmittedForecasts: documentForecastData
             });
             console.log(newForecast);

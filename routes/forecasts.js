@@ -537,20 +537,29 @@ router.patch("/submitMultiple", async (req, res) => {
 router.patch("/update", async (req, res) => {
     try {
         // find the Object in submittedForecasts[] where username = username
-        const document = await Forecasts.findOne({ problemName: req.body.problemName });
-        // push the passed in {certainty, comments} object to the end of the submittedForecasts.forecasts array
-        // increase numberOfForecastsSubmittedByUser by 1 - not essential, as we could just take submittedForecasts.forecasts.length
-        const updatedForecastPushedToDB = await Forecasts.findByIdAndUpdate(document._id, 
-            { 
-                $push: { [req.body.locationOfForecasts]: {
-                    "certainty": req.body.updatedForecastsForUser.certainty, 
-                    "comments": req.body.updatedForecastsForUser.comments, 
-                    "date": req.body.updatedForecastsForUser.date 
-                }}
-            }, 
+        // const document = await Forecasts.findOne({ _id: req.body.problemID });
+        
+        const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.problemID, 
+            {
+                submittedForecasts: req.body.newSubmittedForecasts,
+            },
             { new: true }
         );
-        res.json(updatedForecastPushedToDB);
+        res.json(updatedForecastDocument);
+        
+        // push the passed in {certainty, comments} object to the end of the submittedForecasts.forecasts array
+        // increase numberOfForecastsSubmittedByUser by 1 - not essential, as we could just take submittedForecasts.forecasts.length
+        // const updatedForecastPushedToDB = await Forecasts.findByIdAndUpdate(document._id, 
+        //     { 
+        //         $push: { [req.body.locationOfForecasts]: {
+        //             "certainty": req.body.updatedForecastsForUser.certainty, 
+        //             "comments": req.body.updatedForecastsForUser.comments, 
+        //             "date": req.body.updatedForecastsForUser.date 
+        //         }}
+        //     }, 
+        //     { new: true }
+        // );
+        // res.json(updatedForecastPushedToDB);
     } catch (error) {
         console.error("Error in forecasts.js > update");
         console.error(error);
@@ -561,16 +570,16 @@ router.patch("/update", async (req, res) => {
 router.patch("/updateMultiple", async (req, res) => {
     try {
         // find the Object in submittedForecasts[] where username = username
-        const document = await Forecasts.findOne({ problemName: req.body.problemName });
+        // const document = await Forecasts.findOne({ _id: req.body.problemID });
         
-        const updatedForecastDocument = await Forecasts.findByIdAndUpdate(document._id, 
+        const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.problemID, 
             {
                 submittedForecasts: req.body.newSubmittedForecasts,
             },
             { new: true }
         );
         res.json(updatedForecastDocument);
-        
+
         // push the passed in {certainty, comments} object to the end of the submittedForecasts.forecasts array
         // increase numberOfForecastsSubmittedByUser by 1 - not essential, as we could just take submittedForecasts.forecasts.length
         // const updatedForecastPushedToDB = await Forecasts.findByIdAndUpdate(document._id, 
