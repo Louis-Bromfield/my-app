@@ -363,12 +363,23 @@ function ForecastSubmission(props) {
                     index = i;
                 };
             };
+            documentForecastData[index].forecasts.push({
+                certainty: newCertainty, 
+                comments: `(${username})~ ${newComments}`, 
+                date: new Date().toString()
+            });
             const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
                 problemName: forecast,
-                updatedForecastsForUser: { certainty: newCertainty, comments: `(${username})~ ${newComments}`, date: new Date().toString() },
-                locationOfForecasts: `submittedForecasts.${index}.forecasts`,
-                locationOfForecastCount: `submittedForecasts.${index}.numberOfForecastsSubmittedByUser`
+                newSubmittedForecasts: documentForecastData
             });
+            console.log(newForecast);
+
+            // const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
+            //     problemName: forecast,
+            //     updatedForecastsForUser: { certainty: newCertainty, comments: `(${username})~ ${newComments}`, date: new Date().toString() },
+            //     locationOfForecasts: `submittedForecasts.${index}.forecasts`,
+            //     locationOfForecastCount: `submittedForecasts.${index}.numberOfForecastsSubmittedByUser`
+            // });
             props.changeForecast(newForecast.data);
         } catch (error) {
             console.error("error in ForecastSubmission.js > handleForecastUpdate");
@@ -418,18 +429,33 @@ function ForecastSubmission(props) {
                     index = i;
                 };
             };
+            documentForecastData[index].forecasts.push({
+                certainties: {
+                    certaintyHigher: newCertainty1, 
+                    certaintySame: newCertainty2, 
+                    certaintyLower: newCertainty3, 
+                },
+                comments: `(${username})~ ${newComments}`, 
+                date: new Date().toString()
+            });
             const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple`, {
                 problemName: forecast,
-                updatedForecastsForUser: {
-                    certainty1: newCertainty1, 
-                    certainty2: newCertainty2, 
-                    certainty3: newCertainty3, 
-                    comments: `(${username})~ ${newComments}`,
-                    date: new Date().toString()
-                },
-                locationOfForecasts: `submittedForecasts.${index}.forecasts`,
-                locationOfForecastCount: `submittedForecasts.${index}.numberOfForecastsSubmittedByUser`
+                newSubmittedForecasts: documentForecastData
             });
+            console.log(newForecast);
+
+            // const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple`, {
+            //     problemName: forecast,
+            //     updatedForecastsForUser: {
+            //         certainty1: newCertainty1, 
+            //         certainty2: newCertainty2, 
+            //         certainty3: newCertainty3, 
+            //         comments: `(${username})~ ${newComments}`,
+            //         date: new Date().toString()
+            //     },
+            //     locationOfForecasts: `submittedForecasts.${index}.forecasts`,
+            //     locationOfForecastCount: `submittedForecasts.${index}.numberOfForecastsSubmittedByUser`
+            // });
             props.changeForecast(newForecast.data);
         } catch (error) {
             console.error("error in ForecastSubmission.js > handleForecastUpdate");
@@ -831,7 +857,7 @@ function ForecastSubmission(props) {
                             </div>
                             <div className="last-comments-div">
                                 <h2 className="previous-attempt-titles">Your Last Comments:</h2>
-                                <h4>{userPreviousAttemptComments.split("~")[1]}</h4>
+                                <h4>{userPreviousAttemptComments.includes("~") ? userPreviousAttemptComments.split("~")[1] : userPreviousAttemptComments}</h4>
                             </div>
                         </div>
                     </div>
