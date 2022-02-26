@@ -365,7 +365,7 @@ function ForecastSubmission(props) {
             };
             const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
                 problemName: forecast,
-                updatedForecastsForUser: { certainty: newCertainty, comments: `(${username})_ ${newComments}`, date: new Date().toString() },
+                updatedForecastsForUser: { certainty: newCertainty, comments: `(${username})~ ${newComments}`, date: new Date().toString() },
                 locationOfForecasts: `submittedForecasts.${index}.forecasts`,
                 locationOfForecastCount: `submittedForecasts.${index}.numberOfForecastsSubmittedByUser`
             });
@@ -382,7 +382,7 @@ function ForecastSubmission(props) {
                 problemName: forecast,
                 username: username,
                 certainty: certainty,
-                comments: `(${username})_ ${comments}`,
+                comments: `(${username})~ ${comments}`,
                 date: new Date().toString()
             });
             setForecastResponseMessage("Forecast successfully submitted!")
@@ -424,7 +424,7 @@ function ForecastSubmission(props) {
                     certainty1: newCertainty1, 
                     certainty2: newCertainty2, 
                     certainty3: newCertainty3, 
-                    comments: `(${username})_ ${newComments}`,
+                    comments: `(${username})~ ${newComments}`,
                     date: new Date().toString()
                 },
                 locationOfForecasts: `submittedForecasts.${index}.forecasts`,
@@ -452,7 +452,7 @@ function ForecastSubmission(props) {
                 certainty1: certainty1,
                 certainty2: certainty2,
                 certainty3: certainty3,
-                comments: `(${username})_ ${comments}`,
+                comments: `(${username})~ ${comments}`,
                 date: new Date().toString()
             });
             setForecastResponseMessage("Forecast successfully submitted!")
