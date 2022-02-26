@@ -422,6 +422,8 @@ function ForecastSubmission(props) {
         }
         try {
             const document = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts`, { problemName: forecast });
+            console.log("the document you just got was this one:");
+            console.log(document);
             const documentForecastData = document.data[0].submittedForecasts;
             let index = 0;
             for (let i = 0; i < documentForecastData.length; i++) {
