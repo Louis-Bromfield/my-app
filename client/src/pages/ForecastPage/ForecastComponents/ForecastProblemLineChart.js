@@ -104,7 +104,7 @@ function ForecastProblemLineChart(props) {
                 borderWidth: 4,
                 pointRadius: 0
             };
-            if (userData.data[userData.data.length-1].x < new Date().toString().slice(0, 15)) {
+            if ((userData.data.length > 0) && (userData.data[userData.data.length-1].x < new Date().toString().slice(0, 15))) {
                 simulatedUserData.data.push(
                     {
                         y: userData.data[userData.data.length-1].y,
@@ -295,7 +295,7 @@ function ForecastProblemLineChart(props) {
         let avgDecreaseArr = getNewDailyAverages(decreaseData, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
 
         // Adding in simulated data for days with no predictions (copying last data over to all days) - for AVERAGE
-        if (avgIncreaseArr[avgIncreaseArr.length-1].x !== new Date().toString().slice(0, 15)) {
+        if ((avgIncreaseArr.length > 0) && (avgIncreaseArr[avgIncreaseArr.length-1].x !== new Date().toString().slice(0, 15))) {
             // We need to not use the data.length-1.x value, this is just copying over the 
             // last prediction, we want it to copy over the average from the day before
             let increaseY = avgIncreaseArr[avgIncreaseArr.length-1].y;
@@ -342,7 +342,7 @@ function ForecastProblemLineChart(props) {
         // };
 
         // Adding in simulated data for days with no predictions (copying last data over to all days) - for SPECIFIC PREDICTIONS
-        if (userIncreaseData[userIncreaseData.length-1].x !== new Date().toString().slice(0, 15)) {
+        if ((userIncreaseData.length > 0) && (userIncreaseData[userIncreaseData.length-1].x !== new Date().toString().slice(0, 15))) {
             let increaseY = userIncreaseData[userIncreaseData.length-1].y;
             let sameY = userSameData[userSameData.length-1].y;
             let decreaseY = userDecreaseData[userDecreaseData.length-1].y;
