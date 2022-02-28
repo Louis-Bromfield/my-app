@@ -731,7 +731,7 @@ function ForecastSubmission(props) {
                                     </h3>
                                     <div className="multiple-input-fields">
                                         <div className="input-header-container">
-                                            <h3>Increased by 2+</h3>
+                                            <h3>Increased by ≥2</h3>
                                             <input 
                                                 type="number" 
                                                 className="forecast-certainty-input" 
@@ -755,7 +755,7 @@ function ForecastSubmission(props) {
                                             />
                                         </div>
                                         <div className="input-header-container">
-                                            <h3>Decreased by 2+</h3>
+                                            <h3>Decreased by ≥2</h3>
                                             <input 
                                                 type="number" 
                                                 className="forecast-certainty-input" 
