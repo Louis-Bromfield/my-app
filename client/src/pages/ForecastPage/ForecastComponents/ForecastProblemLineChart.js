@@ -347,7 +347,13 @@ function ForecastProblemLineChart(props) {
             let comments = avgIncreaseArr[avgIncreaseArr.length-1].description;
             let lastDayWithData = new Date(avgIncreaseArr[avgIncreaseArr.length-1].x);
             lastDayWithData.setDate(lastDayWithData.getDate() + 1);
-            for (let d = lastDayWithData; d <= new Date(); d.setDate(d.getDate() + 1)) {
+            let lastDay;
+            if (new Date() < selectedForecast.closeDate) {
+                lastDay = new Date().toString().slice(0, 15)
+            } else {
+                lastDay = selectedForecast.closeDate.slice(0, 15);
+            };
+            for (let d = lastDayWithData; d <= lastDay; d.setDate(d.getDate() + 1)) {
                 let newDate = new Date(d).toString().slice(0, 15);
 
                 avgIncreaseArr.push({
@@ -394,7 +400,12 @@ function ForecastProblemLineChart(props) {
             let sameY = userSameData[userSameData.length-1].y;
             let decreaseY = userDecreaseData[userDecreaseData.length-1].y;
             let comments = avgIncreaseArr[avgIncreaseArr.length-1].description;
-            let newDate = new Date().toString().slice(0, 15);
+            let newDate;
+            if (new Date() < selectedForecast.closeDate) {
+                newDate = new Date().toString().slice(0, 15)
+            } else {
+                newDate = selectedForecast.closeDate.slice(0, 15);
+            };
             userIncreaseData.push({
                 y: increaseY,
                 x: newDate,
@@ -520,7 +531,8 @@ function ForecastProblemLineChart(props) {
         let labelsToReturn = [];
         // I think the reason why the blue line is stopping a day early is because it might be going to the minute 
         // If the start date is 8am and we're at 7.30am, it might not think we are on the same day
-        for (let d = new Date(start.toString().slice(0, 15)); d <= new Date(new Date().toString().slice(0, 15)); d.setDate(d.getDate() + 1)) {
+        let finalDay = new Date() < end ? new Date() : end;
+        for (let d = new Date(start.toString().slice(0, 15)); d <= finalDay; d.setDate(d.getDate() + 1)) {
             let newDate = new Date(d).toString().slice(0, 15);
             labelsToReturn.push(newDate);
         };
