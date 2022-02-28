@@ -67,18 +67,38 @@ function ForecastProblemLineChart(props) {
             for (let i = 0; i < newCertainties.length; i++) {
                 for (let j = 0; j < newCertainties[i].forecasts.length; j++) {
                     if (newCertainties[i].forecasts[j].date.slice(0, sliceIndex) !== lastForecastDate) {
-                        data.data.push({x: newCertainties[i].forecasts[j].date.slice(0, sliceIndex), y: ((newCertainties[i].forecasts[j].certainty)*100)});
+                        data.data.push({
+                            x: newCertainties[i].forecasts[j].date.slice(0, sliceIndex),
+                            y: ((newCertainties[i].forecasts[j].certainty)*100),
+                            description: newCertainties[i].forecasts[j].comments
+                        });
                         lastForecastDate = data.data[data.data.length-1].x;
                         if (newCertainties[i].username === username) {
-                            userData.data.push({x: newCertainties[i].forecasts[j].date.slice(0, sliceIndex), y: ((newCertainties[i].forecasts[j].certainty)*100)});
+                            userData.data.push({
+                                x: newCertainties[i].forecasts[j].date.slice(0, sliceIndex), 
+                                y: ((newCertainties[i].forecasts[j].certainty)*100),
+                                description: newCertainties[i].forecasts[j].comments
+                            });
                         }
                     } else if (newCertainties[i].forecasts[j].date.slice(0, sliceIndex) === lastForecastDate) {
-                        data.data[data.data.length-1] = ({x: newCertainties[i].forecasts[j].date.slice(0, sliceIndex), y: ((newCertainties[i].forecasts[j].certainty)*100)});
+                        data.data[data.data.length-1] = ({
+                            x: newCertainties[i].forecasts[j].date.slice(0, sliceIndex), 
+                            y: ((newCertainties[i].forecasts[j].certainty)*100),
+                            description: newCertainties[i].forecasts[j].comments
+                        });
                         if (newCertainties[i].username === username) {
                             if (userData.data.length === 0) {
-                                userData.data.push({x: newCertainties[i].forecasts[j].date.slice(0, sliceIndex), y: ((newCertainties[i].forecasts[j].certainty)*100)});
+                                userData.data.push({
+                                    x: newCertainties[i].forecasts[j].date.slice(0, sliceIndex), 
+                                    y: ((newCertainties[i].forecasts[j].certainty)*100),
+                                    description: newCertainties[i].forecasts[j].comments
+                                });
                             } else if (userData.data.length !== 0) {
-                                userData.data[userData.data.length-1] = ({x: newCertainties[i].forecasts[j].date.slice(0, sliceIndex), y: ((newCertainties[i].forecasts[j].certainty)*100)});
+                                userData.data[userData.data.length-1] = ({
+                                    x: newCertainties[i].forecasts[j].date.slice(0, sliceIndex), 
+                                    y: ((newCertainties[i].forecasts[j].certainty)*100),
+                                    description: newCertainties[i].forecasts[j].comments
+                                });
                             };
                         };
                     };
@@ -108,10 +128,12 @@ function ForecastProblemLineChart(props) {
                 simulatedUserData.data.push(
                     {
                         y: userData.data[userData.data.length-1].y,
-                        x: userData.data[userData.data.length-1].x
+                        x: userData.data[userData.data.length-1].x,
+                        description: userData.data[userData.data.length-1].description
                     }, {
                         y: userData.data[userData.data.length-1].y,
-                        x: new Date().toString().slice(0, 15)
+                        x: new Date().toString().slice(0, 15),
+                        description: userData.data[userData.data.length-1].description
                     }
                 );
             };
@@ -158,17 +180,20 @@ function ForecastProblemLineChart(props) {
                     increaseData.push({ 
                         username: selectedForecast.submittedForecasts[i].username,
                         y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
-                        x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                        x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                        description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
                     });
                     sameData.push({ 
                         username: selectedForecast.submittedForecasts[i].username,
                         y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
-                        x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                        x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                        description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
                     });
                     decreaseData.push({ 
                         username: selectedForecast.submittedForecasts[i].username,
                         y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
-                        x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                        x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                        description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
                     });
                 } else if (increaseData.length > 0) {
                     if (selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) !== increaseData[increaseData.length-1].x) {
@@ -176,17 +201,20 @@ function ForecastProblemLineChart(props) {
                         increaseData.push({ 
                             username: selectedForecast.submittedForecasts[i].username,
                             y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
-                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                            description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
                         });
                         sameData.push({ 
                             username: selectedForecast.submittedForecasts[i].username,
                             y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
-                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                            description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
                         });
                         decreaseData.push({ 
                             username: selectedForecast.submittedForecasts[i].username,
                             y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
-                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                            description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
                         });
                     // Same day - so we need to check if it's from the same user as the last forecast (replace) or not (append)
                     } else if (selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) === increaseData[increaseData.length-1].x) {
@@ -195,34 +223,40 @@ function ForecastProblemLineChart(props) {
                             increaseData[increaseData.length-1] = { 
                                 username: selectedForecast.submittedForecasts[i].username,
                                 y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
-                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
                             };
                             sameData[sameData.length-1] = { 
                                 username: selectedForecast.submittedForecasts[i].username,
                                 y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
-                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
                             };
                             decreaseData[decreaseData.length-1] = { 
                                 username: selectedForecast.submittedForecasts[i].username,
                                 y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
-                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
                             };
                         // Different User - add to entries
                         } else if (selectedForecast.submittedForecasts[i].username !== increaseData[increaseData.length-1].username) {
                             increaseData.push({ 
                                 username: selectedForecast.submittedForecasts[i].username,
                                 y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
-                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
                             });
                             sameData.push({ 
                                 username: selectedForecast.submittedForecasts[i].username,
                                 y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
-                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
                             });
                             decreaseData.push({ 
                                 username: selectedForecast.submittedForecasts[i].username,
                                 y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
-                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
                             });
                         };
                     };
@@ -235,34 +269,40 @@ function ForecastProblemLineChart(props) {
                         userIncreaseData.push({
                             username: selectedForecast.submittedForecasts[i].username,
                             y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
-                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                            description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
                         });
                         userSameData.push({
                             username: selectedForecast.submittedForecasts[i].username,
                             y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
-                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                            description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
                         });
                         userDecreaseData.push({
                             username: selectedForecast.submittedForecasts[i].username,
                             y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
-                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                            x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                            description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
                         });
                     } else if (userIncreaseData.length > 0) {
                         if (selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) === userIncreaseData[userIncreaseData.length-1].x) {
                             userIncreaseData[userIncreaseData.length-1] = {
                                 username: selectedForecast.submittedForecasts[i].username,
                                 y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
-                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
+                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments
                             };
                             userSameData[userSameData.length-1] = {
                                 username: selectedForecast.submittedForecasts[i].username,
                                 y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
-                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
+                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments
                             };
                             userDecreaseData[userDecreaseData.length-1] = {
                                 username: selectedForecast.submittedForecasts[i].username,
                                 y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
-                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15)
+                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments
                             };
                         // Different date as last forecast so append
                         } else if (selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) !== userIncreaseData[userIncreaseData.length-1].x) {
@@ -270,17 +310,20 @@ function ForecastProblemLineChart(props) {
                             userIncreaseData.push({
                                 username: selectedForecast.submittedForecasts[i].username,
                                 y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100, 
-                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
                             });
                             userSameData.push({
                                 username: selectedForecast.submittedForecasts[i].username,
                                 y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100, 
-                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
                             });
                             userDecreaseData.push({
                                 username: selectedForecast.submittedForecasts[i].username,
                                 y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100, 
-                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) 
+                                x: selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15),
+                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
                             });
                         };
                     };
@@ -301,6 +344,7 @@ function ForecastProblemLineChart(props) {
             let increaseY = avgIncreaseArr[avgIncreaseArr.length-1].y;
             let sameY = avgSameArr[avgSameArr.length-1].y;
             let decreaseY = avgDecreaseArr[avgDecreaseArr.length-1].y;
+            let comments = avgIncreaseArr[avgIncreaseArr.length-1].description;
             let lastDayWithData = new Date(avgIncreaseArr[avgIncreaseArr.length-1].x);
             lastDayWithData.setDate(lastDayWithData.getDate() + 1);
             for (let d = lastDayWithData; d <= new Date(); d.setDate(d.getDate() + 1)) {
@@ -308,15 +352,18 @@ function ForecastProblemLineChart(props) {
 
                 avgIncreaseArr.push({
                     y: increaseY,
-                    x: newDate
+                    x: newDate,
+                    description: comments
                 });
                 avgSameArr.push({
                     y: sameY,
-                    x: newDate
+                    x: newDate,
+                    description: comments
                 });
                 avgDecreaseArr.push({
                     y: decreaseY,
-                    x: newDate
+                    x: newDate,
+                    description: comments
                 });
             };
         };
@@ -346,18 +393,22 @@ function ForecastProblemLineChart(props) {
             let increaseY = userIncreaseData[userIncreaseData.length-1].y;
             let sameY = userSameData[userSameData.length-1].y;
             let decreaseY = userDecreaseData[userDecreaseData.length-1].y;
+            let comments = avgIncreaseArr[avgIncreaseArr.length-1].description;
             let newDate = new Date().toString().slice(0, 15);
             userIncreaseData.push({
                 y: increaseY,
-                x: newDate
+                x: newDate,
+                description: comments
             });
             userSameData.push({
                 y: sameY,
-                x: newDate
+                x: newDate,
+                description: comments
             });
             userDecreaseData.push({
                 y: decreaseY,
-                x: newDate
+                x: newDate,
+                description: comments
             });
         };
 
@@ -658,6 +709,23 @@ function ForecastProblemLineChart(props) {
             },
             tooltips: {
                 enabled: false,
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        // Need handling for hovering over average lines, it currently crashes
+                        if (context.dataset.label === "Average Certainty" || context.dataset.label.includes("(Avg)") || context.raw.description === undefined) {
+                            return `${context.dataset.label}: ${context.formattedValue}%`;
+                        }
+                        // Need handling for undefined
+                        let label = context.dataset.label || '';
+                        // console.log(context);
+                        if (label) {
+                            label += `: ${context.formattedValue}% -${context.raw.description.includes("~") ? context.raw.description.split("~")[1] : ` ${context.raw.description}`}`;
+                        }
+                        return label;
+                    }
+                }
             }
         }
     };
