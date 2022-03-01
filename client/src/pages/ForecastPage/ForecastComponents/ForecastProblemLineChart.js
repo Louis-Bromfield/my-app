@@ -112,7 +112,7 @@ function ForecastProblemLineChart(props) {
                     todayForecasts.push(data.data[i].x);
                 };
             };
-            const dailyAverages = getNewDailyAverages(data.data, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate),s);
+            const dailyAverages = getNewDailyAverages(data.data, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate), selectedForecast.isClosed);
             updateTodayStats(`${dailyAverages[dailyAverages.length-1].y.toFixed(2)}%`, todayForecasts.length);
             // Simulate data for days with no predictions
             let simulatedUserData = {
@@ -527,7 +527,7 @@ function ForecastProblemLineChart(props) {
     //   setLabelsArray(labelsToReturn);
     };
 
-    const createNewLabelsArray = (start, end) => {
+    const createNewLabelsArray = (start, end, isClosed) => {
         let labelsToReturn = [];
         // I think the reason why the blue line is stopping a day early is because it might be going to the minute 
         // If the start date is 8am and we're at 7.30am, it might not think we are on the same day
