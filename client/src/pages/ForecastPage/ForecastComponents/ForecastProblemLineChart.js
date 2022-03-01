@@ -112,7 +112,7 @@ function ForecastProblemLineChart(props) {
                     todayForecasts.push(data.data[i].x);
                 };
             };
-            const dailyAverages = getNewDailyAverages(data.data, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
+            const dailyAverages = getNewDailyAverages(data.data, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate),s);
             updateTodayStats(`${dailyAverages[dailyAverages.length-1].y.toFixed(2)}%`, todayForecasts.length);
             // Simulate data for days with no predictions
             let simulatedUserData = {
@@ -333,9 +333,9 @@ function ForecastProblemLineChart(props) {
 
         allData = increaseData.concat(sameData, decreaseData);
         allData.sort((a, b) => a.x < b.x);
-        let avgIncreaseArr = getNewDailyAverages(increaseData, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
-        let avgSameArr = getNewDailyAverages(sameData, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
-        let avgDecreaseArr = getNewDailyAverages(decreaseData, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
+        let avgIncreaseArr = getNewDailyAverages(increaseData, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate), selectedForecast.isClosed);
+        let avgSameArr = getNewDailyAverages(sameData, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate), selectedForecast.isClosed);
+        let avgDecreaseArr = getNewDailyAverages(decreaseData, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate), selectedForecast.isClosed);
 
         // Adding in simulated data for days with no predictions (copying last data over to all days) - for AVERAGE
         if ((avgIncreaseArr.length > 0) && (avgIncreaseArr[avgIncreaseArr.length-1].x !== new Date().toString().slice(0, 15))) {
@@ -531,7 +531,7 @@ function ForecastProblemLineChart(props) {
         let labelsToReturn = [];
         // I think the reason why the blue line is stopping a day early is because it might be going to the minute 
         // If the start date is 8am and we're at 7.30am, it might not think we are on the same day
-        let finalDay = new Date() < end ? new Date() : end;
+        let finalDay = isClosed === true ? end : new Date();
         for (let d = new Date(start.toString().slice(0, 15)); d <= finalDay; d.setDate(d.getDate() + 1)) {
             let newDate = new Date(d).toString().slice(0, 15);
             labelsToReturn.push(newDate);
@@ -539,9 +539,9 @@ function ForecastProblemLineChart(props) {
         return labelsToReturn;
     };
 
-    const getNewDailyAverages = (certainties, start, end) => {
+    const getNewDailyAverages = (certainties, start, end, isClosed) => {
         // Create labels array
-        let days = createNewLabelsArray(start, end);
+        let days = createNewLabelsArray(start, end, isClosed);
         // Sort main array by date
         let sortedCertainties = certainties.sort((a, b) => new Date(a.x) - new Date(b.x));
         let averageArr = [];         
