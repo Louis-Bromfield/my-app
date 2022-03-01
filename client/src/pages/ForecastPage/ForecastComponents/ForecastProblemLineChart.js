@@ -401,7 +401,7 @@ function ForecastProblemLineChart(props) {
             let decreaseY = userDecreaseData[userDecreaseData.length-1].y;
             let comments = avgIncreaseArr[avgIncreaseArr.length-1].description;
             let newDate;
-            if (new Date() < selectedForecast.closeDate) {
+            if (new Date().toString().slice(0, 15) > selectedForecast.closeDate) {
                 newDate = new Date().toString().slice(0, 15)
             } else {
                 newDate = selectedForecast.closeDate.slice(0, 15);
