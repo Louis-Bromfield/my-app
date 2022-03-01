@@ -401,11 +401,11 @@ function ForecastProblemLineChart(props) {
             let decreaseY = userDecreaseData[userDecreaseData.length-1].y;
             let comments = userIncreaseData[userIncreaseData.length-1].description;
             let newDate;
-            if (new Date().toString().slice(0, 15) < selectedForecast.closeDate) {
-                newDate = new Date().toString().slice(0, 15)
-            } else {
+            if (selectedForecast.isClosed === false) {
+                newDate = new Date().toString().slice(0, 15);
+            } else if (selectedForecast.isClosed === true) {
                 newDate = selectedForecast.closeDate.slice(0, 15);
-            };
+            }
             userIncreaseData.push({
                 y: increaseY,
                 x: newDate,
