@@ -141,7 +141,7 @@ function Leaderboard(props) {
                                         })()}
                                     </td>
                                     <td className="leaderboard-username-data">
-                                        {biggerWidth && <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic" />}
+                                        {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
                                         {item.username}
                                     </td>
                                     <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
@@ -184,7 +184,7 @@ function Leaderboard(props) {
                                         })()}
                                     </td>
                                     <td className="leaderboard-username-data">
-                                        {biggerWidth && <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic" />}
+                                        {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
                                         {item.username}
                                     </td>
                                     <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
@@ -215,7 +215,7 @@ function Leaderboard(props) {
                     //             <tr className="leaderboard-row-matching-username" key={index}>
                     //                 <td className="leaderboard-rank-data">{index+1}</td>
                     //                 <td className="leaderboard-username-data">
-                    //                     <img src={ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic"/>
+                    //                     <img src={ProfileP} className="leaderboards-profile-pic"/>
                     //                     {item.username}
                     //                 </td>
                     //                 <td className="leaderboard-ffPoints-data">{item.marketPoints.toFixed(0)}</td>
@@ -228,7 +228,7 @@ function Leaderboard(props) {
                     //             <tr className="leaderboard-row" key={index}>
                     //                 <td className="leaderboard-rank-data">{index+1}</td>
                     //                 <td className="leaderboard-username-data">
-                    //                     <img src={ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic"/>
+                    //                     <img src={ProfileP} className="leaderboards-profile-pic"/>
                     //                     {item.username}
                     //                 </td>
                     //                 <td className="leaderboard-ffPoints-data">{item.marketPoints.toFixed(0)}</td>
@@ -274,7 +274,7 @@ function Leaderboard(props) {
                                         })()}
                                     </td>
                                     <td className="leaderboard-username-data">
-                                        {biggerWidth && <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic" />}
+                                        {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
                                         {item.username}
                                     </td>
                                     <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
@@ -317,7 +317,7 @@ function Leaderboard(props) {
                                         })()}
                                     </td>
                                     <td className="leaderboard-username-data">
-                                        {biggerWidth && <img src={item.profilePicture || ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic" />}
+                                        {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
                                         {item.username}
                                     </td>
                                     <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
@@ -348,7 +348,7 @@ function Leaderboard(props) {
                     //             <tr className="leaderboard-row-matching-username" key={index}>
                     //                 <td className="leaderboard-rank-data">{index+1}</td>
                     //                 <td className="leaderboard-username-data">
-                    //                     <img src={ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic"/>
+                    //                     <img src={ProfileP} className="leaderboards-profile-pic"/>
                     //                     {item.username}
                     //                 </td>
                     //                 <td className="leaderboard-ffPoints-data">{item.marketPoints.toFixed(0)}</td>
@@ -361,7 +361,7 @@ function Leaderboard(props) {
                     //             <tr className="leaderboard-row" key={index}>
                     //                 <td className="leaderboard-rank-data">{index+1}</td>
                     //                 <td className="leaderboard-username-data">
-                    //                     <img src={ProfileP} alt="Mini user profile pic" className="leaderboards-profile-pic"/>
+                    //                     <img src={ProfileP} className="leaderboards-profile-pic"/>
                     //                     {item.username}
                     //                 </td>
                     //                 <td className="leaderboard-ffPoints-data">{item.marketPoints.toFixed(0)}</td>
