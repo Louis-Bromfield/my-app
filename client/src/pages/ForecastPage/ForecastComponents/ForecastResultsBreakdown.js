@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { FaInfoCircle } from 'react-icons/fa';
+import Modal from '../../../components/Modal';
 
 function ForecastResultsBreakdown(props) {
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState("");
     // console.log(`the forecastClosed prop is currently = ${props.forecastClosed}`);
     return (
         <div>
+            <Modal show={showModal} handleClose={() => setShowModal(false)}>
+                <p>{modalContent}</p>
+            </Modal>
             {props.forecastClosed === true &&
                 <div>
                     <h2 style={{ color: "#404d72"}}>Combined Brier Score: <u>{props.totalScore.toFixed(2)} / 100</u></h2>
@@ -15,7 +22,17 @@ function ForecastResultsBreakdown(props) {
             }
             {props.forecastClosed === false &&
                 <div>
-                <h2 style={{ color: "#404d72" }}>As things stand, what will I score?</h2>
+                <h2 style={{ color: "#404d72" }}>
+                    As things stand, what will I score?
+                    <FaInfoCircle 
+                        color={"orange"} 
+                        className="modal-i-btn"
+                        onClick={() => {
+                            setShowModal(true);
+                            setModalContent(<a href="https://youtu.be/0TtfLVADR-I" target="_blank" rel="noreferrer nofollow" style={{ color: "#fff" }}><h4>Want to know more about how your scores are calculated? Click here, or visit the Learn page and select the Brier Scores tab.</h4></a>)
+                        }}
+                    />
+                </h2>
                 {props.singleCertainty === true &&
                     <div className="hypothetical-results-container">
                         <div className="hypothetical-results-subcontainer">
