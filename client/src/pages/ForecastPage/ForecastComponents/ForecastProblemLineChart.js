@@ -41,7 +41,7 @@ function ForecastProblemLineChart(props) {
         let lastForecastDate = "";
         let newCertainties = selectedForecast.submittedForecasts;
         let userData = {
-        label: "Your Forecasts",
+            label: "Your Forecasts",
             data: [],
             backgroundColor: "green",
             borderColor: "orange",
