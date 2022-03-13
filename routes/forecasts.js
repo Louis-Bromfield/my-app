@@ -159,11 +159,11 @@ router.get("/:problemName/:closedStatus/:username/:singleCertainty", async (req,
 
                         // Change to working out Brier for if higher is correct, same is correct, or lower is correct
                         // .happened needs to be changed to .outcome === "higher" / .outcome === "same" / .outcome === "lower"
-                        if (forecastObj[0].outcome === "higher") {
+                        if (forecastObj[0].outcome === "increase") {
                             originalBrier = higherBrierIfCorrect + sameBrierIfIncorrect + lowerBrierIfIncorrect;
                         } else if (forecastObj[0].outcome === "same") {
                             originalBrier = sameBrierIfCorrect + higherBrierIfIncorrect + lowerBrierIfIncorrect;
-                        } else if (forecastObj[0].outcome === "lower") {
+                        } else if (forecastObj[0].outcome === "decrease") {
                             originalBrier = lowerBrierIfCorrect + higherBrierIfIncorrect + sameBrierIfIncorrect;
                         }
 
