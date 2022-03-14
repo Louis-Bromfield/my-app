@@ -148,7 +148,7 @@ function ForecastAnalysisPage(props) {
             </button>
             <h1 className="forecast-analysis-header">Forecast Analysis</h1>
             <p className="forecast-analysis-para">This page is designed around giving you more detailed feedback on your forecast performance. Your predictions are assessed based on three key metrics - 
-                Reactiveness (how big or small are your forecast updates?), Confidence (how close to 0 or 100 are your forecasts?) and X (explanation_here). Under each
+                Reactiveness (how big or small are your forecast updates?), Confidence (how close to 0 or 100 are your forecasts?) and Timeliness (how early was your first forecast submitted?). Under each
                 sub-heading you'll find more information that corresponds to your specific scores in each dimension.
             </p>
             <div className="problem-and-scores-container">
