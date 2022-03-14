@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './ForecastBreakdown.css';
 import axios from 'axios';
 import ForecastResultsBreakdown from './ForecastResultsBreakdown';
+import { Link } from 'react-router-dom';
 
 function ForecastBreakdown(props) {
     const [predictionData, setPredictionData] = useState([]);
