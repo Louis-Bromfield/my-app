@@ -26,6 +26,18 @@ router.get("/:problemName", async (req, res) => {
     };
 });
 
+// Get one forecast using ID
+router.get("/getByID/:problemID", async (req, res) => {
+    console.log("get3");
+    try {
+        const forecast = await Forecasts.find({ _id: req.params.problemID });
+        res.json(forecast);
+    } catch (error) {
+        console.error("error in forecasts.js > get /:problemName");
+        console.error(error);
+    };
+});
+
 // Get a specific user's forecast object for a given problem
 router.get("/:problemName/:closedStatus/:username/:singleCertainty", async (req, res) => {
     console.log(`req.params.singleCertainty === ${req.params.singleCertainty}`);

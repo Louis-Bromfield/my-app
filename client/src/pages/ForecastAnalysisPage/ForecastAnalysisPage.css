@@ -1,0 +1,87 @@
+.forecast-analysis {
+    flex-direction: column;
+    /* border: 2px dashed blue; */
+    width: 85%;
+}
+
+.forecast-analysis-header-container {
+    display: grid;
+    grid-template-columns: 30% 25%;
+    column-gap: 45%;
+}
+
+.forecast-analysis-para {
+    margin-bottom: 3vh;
+}
+
+.forecast-analysis-header-link {
+    background-color: #404d72;
+    color: #fff;
+    border: none;
+    width: 20%;
+    text-decoration: none;
+    height: 5vh;
+    margin-bottom: 2vh;
+}
+
+.forecast-analysis-header-link:hover {
+    background-color: #425ca3;
+    cursor: pointer;
+}
+
+.problem-and-scores-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin-bottom: 4vh;
+    width: 100%;
+    height: 15vh;
+    /* border-top: 1px solid #404d72; */
+    /* border-bottom: 1px solid #404d72; */
+    padding: 2%;
+    background-color: rgb(238, 237, 237);
+    height: 100%;
+    box-shadow: 0.5px 1px 2.5px 0.5px #888888;
+}
+
+.selected-problem {
+    color: #404d72;
+}
+
+.scores-container {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+
+.individual-score-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    /* border: 1px solid red; */
+}
+
+.full-explanation-of-scores-container {
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid green; */
+}
+
+.individual-score-explanation-container {
+    padding-bottom: 2vh;
+}
+
+.explanatory-paragraph {
+    padding-bottom: 2vh;
+}
+
+.highlighted-header {
+    color: #404d72;
+}
+
+.bar-container {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    height: 100%;
+}

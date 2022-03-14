@@ -10,11 +10,22 @@ function ForecastBreakdown(props) {
     const [forecastClosed, setForecastClosed] = useState(props.forecastClosed);
     const [showForecastByForecastBreakdown, setShowForecastByForecastBreakdown] = useState(true);
     const [singleCertainty, setSingleCertainty] = useState(props.forecastSingleCertainty);
+    const [linkObject, setLinkObject] = useState({});
+    const [needLocalStorage, setNeedLocalStorage] = useState(true);
 
     useEffect(() => {
         if (props.userHasAttempted === true) {
             getPredictionData(props.selectedForecast, props.username, forecastClosed);
         };
+        if (forecastClosed === true) {
+            setNeedLocalStorage(false);
+            setLinkObject({
+                forecastObj: props.forecastObjForAnalysis,
+                pathname: "/forecast-analysis",
+                needLocalStorage: false
+            });
+        };
+        console.log(linkObject);
     }, [props.selectedForecast, props.username, props.userHasAttempted, forecastClosed]);
 
     const getPredictionData = async (selectedForecast, username, forecastClosed) => {
@@ -122,7 +133,20 @@ function ForecastBreakdown(props) {
     return (
         <div className="predictions-container">
             {showBreakdown === false && 
-                <button className="show-btn" onClick={() => setShowBreakdown(!showBreakdown)}>Show Prediction Breakdown</button>
+                <div className="show-prediction-breakdown-buttons">
+                    <button 
+                        className="show-btn" 
+                        onClick={() => setShowBreakdown(!showBreakdown)}>
+                            Show Prediction Breakdown
+                    </button>
+                    {forecastClosed === true &&
+                        <Link  
+                            className="go-to-analysis-page-btn" 
+                            to={linkObject}>
+                                Open Forecast Analysis Page
+                        </Link>
+                    }
+                </div>
             }
             {(props.userHasAttempted === true && showBreakdown === true && singleCertainty === true) &&
                 <div className="to-show">

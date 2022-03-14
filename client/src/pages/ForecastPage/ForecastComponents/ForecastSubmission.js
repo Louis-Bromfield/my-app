@@ -37,6 +37,7 @@ function ForecastSubmission(props) {
     const [certaintyOne, setCertaintyOne] = useState(0);
     const [certaintyTwo, setCertaintyTwo] = useState(0);
     const [certaintyThree, setCertaintyThree] = useState(0);
+    const [forecastObjForAnalysis, setForecastObjForAnalysis] = useState({});
 
     let alertStyle;
     if (dropdownHighlight === true) {
@@ -130,6 +131,8 @@ function ForecastSubmission(props) {
 
     const getForecastDetails = (etv) => {
         const forecast = forecastProblems[forecastProblems.findIndex(fP => fP.problemName === etv)];
+        setForecastObjForAnalysis(forecast);
+        localStorage.setItem("selectedForecastID", forecast._id);
         if (new Date(forecast.closeDate) < new Date()) {
             getBrierForClosedForecast(props.username, etv);
             setButtonDisabled(true);
@@ -895,6 +898,7 @@ function ForecastSubmission(props) {
                         userHasAttempted={userHasAttempted}
                         forecastClosed={true}
                         forecastSingleCertainty={forecastSingleCertainty}
+                        forecastObjForAnalysis={forecastObjForAnalysis}
                     />
                 }
                 {(hasAForecastBeenSelected === true && forecastClosed === false) &&
@@ -904,6 +908,7 @@ function ForecastSubmission(props) {
                         userHasAttempted={userHasAttempted}
                         forecastClosed={false}
                         forecastSingleCertainty={forecastSingleCertainty}
+                        forecastObjForAnalysis={forecastObjForAnalysis}
                     />
                 }
             </div>
