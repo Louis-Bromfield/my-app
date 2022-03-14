@@ -46,7 +46,7 @@ function ForecastAnalysisPage(props) {
             if (forecastObj.forecasts.length > 1) {
                 calculateReactivenessScore(forecastObj, props.username, forecastInfo.singleCertainty);
             } else {
-                setReactivityScore("N/A - Only 1 prediction submitted");
+                setReactivenessScore("N/A - Only 1 prediction submitted");
             }
             // calculateThirdScore(props.location.forecastObj.submittedForecasts, props.username);
         } else {
