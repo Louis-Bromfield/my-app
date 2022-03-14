@@ -3,7 +3,8 @@
 }
 
 .show-btn,
-.hide-btn {
+.hide-btn,
+.go-to-analysis-page-btn {
     color: #fff;
     padding: 1%;
     border: none;
@@ -11,8 +12,18 @@
     font-size: 1em;
 }
 
+.show-prediction-breakdown-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .show-btn {
     background-color: #404d72;
+}
+
+.go-to-analysis-page-btn {
+    background-color: #40726e;
 }
 
 .hide-btn {

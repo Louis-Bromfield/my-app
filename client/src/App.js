@@ -7,6 +7,7 @@ import ScrollToTop from './ScrollToTop';
 import Home from './pages/HomePage/Home';
 import IndividualNewsFeedPost from './pages/HomePage/HomeSectionButtons/IndividualNewsFeedPost';
 import Forecast from './pages/ForecastPage/Forecast';
+import ForecastAnalysisPage from './pages/ForecastAnalysisPage/ForecastAnalysisPage';
 import LeaderboardMenu from './pages/LeaderboardPage/LeaderboardMenu';
 import IndividualLeaderboard from './pages/LeaderboardPage/IndividualLeaderboard/IndividualLeaderboard';
 import Learn from './pages/LearnPage/Learn';
@@ -84,6 +85,7 @@ function App() {
             <Route exact path='/' render={(props) => <Home {...props} username={username} name={name} user={userObject} />} />
             <Route path="/news-post" render={(props) => <IndividualNewsFeedPost {...props} />} />
             <Route path='/forecast' render={(props) => <Forecast {...props} markets={markets} username={username} />} />
+            <Route path='/forecast-analysis' render ={(props) => <ForecastAnalysisPage {...props} username={username} />} />
             <Route path='/leaderboard-select' render={(props) => <LeaderboardMenu {...props} username={username} />} />
             <Route path='/leaderboard' render={(props) => <IndividualLeaderboard {...props} username={username} />} />
             <Route path='/learn' render={(props) => <Learn {...props} username={username} isLoggedIn={isLoggedIn} />} />
