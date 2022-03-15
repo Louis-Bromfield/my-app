@@ -1,0 +1,9 @@
+.change-log {
+    flex-direction: column;
+    width: 85%;
+}
+
+.full-list-item {
+    border-bottom: 1px solid darkgray;
+    margin: 1%;
+}

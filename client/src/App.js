@@ -5,6 +5,7 @@ import axios from 'axios';
 import Navbar from './components/Navbar/Navbar';
 import ScrollToTop from './ScrollToTop';
 import Home from './pages/HomePage/Home';
+import ChangeLog from './pages/ChangeLogPage/ChangeLog';
 import IndividualNewsFeedPost from './pages/HomePage/HomeSectionButtons/IndividualNewsFeedPost';
 import Forecast from './pages/ForecastPage/Forecast';
 import ForecastAnalysisPage from './pages/ForecastAnalysisPage/ForecastAnalysisPage';
@@ -83,6 +84,7 @@ function App() {
             {/* <Route path='/learn' component={Learn} /> */}
             {/* <Route path='/my-profile' component={Profile} /> */}
             <Route exact path='/' render={(props) => <Home {...props} username={username} name={name} user={userObject} />} />
+            <Route path="/change-log" render={(props) => <ChangeLog {...props} />} />
             <Route path="/news-post" render={(props) => <IndividualNewsFeedPost {...props} />} />
             <Route path='/forecast' render={(props) => <Forecast {...props} markets={markets} username={username} />} />
             <Route path='/forecast-analysis' render ={(props) => <ForecastAnalysisPage {...props} username={username} />} />

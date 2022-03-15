@@ -1,0 +1,10 @@
+.change-log-list {
+    padding: 0.5vw;
+}
+
+.list-span {
+    display: grid;
+    grid-template-columns: 11% 80%;
+    column-gap: 9%;
+    margin-left: 0;
+}
