@@ -19,6 +19,7 @@ function ForecastAnalysisPage(props) {
     const [oppositeReactivenessScoreForCSS, setOppositeReactivenessScoreForCSS] = useState("100%");
     const [oppositeConfidenceScoreForCSS, setOppositeConfidenceScoreForCSS] = useState("100%");
     const [oppositeTimelinessScoreForCSS, setOppositeTimelinessScoreForCSS] = useState("100%");
+    const [numberOfForecastsSubmitted, setNumberOfForecastsSubmitted] = useState(0);
 
     useEffect(async () => {
         console.log("ForecastAnalysisPage UE");
@@ -41,6 +42,7 @@ function ForecastAnalysisPage(props) {
         const forecastObj = submittedForecasts[submittedForecasts.findIndex(sF => sF.username === props.username)];
         if (forecastObj.forecasts.length > 0) {
             setAtLeastOneForecast(true);
+            setNumberOfForecastsSubmitted(forecastObj.forecasts.length);
             calculateConfidenceScore(forecastObj, props.username, forecastInfo.singleCertainty);
             calculateTimelinessScore(forecastObj, props.username, forecastInfo.startDate, forecastInfo.closeDate);
             if (forecastObj.forecasts.length > 1) {
@@ -192,6 +194,7 @@ function ForecastAnalysisPage(props) {
                     <ReactivenessFeedback 
                         finalScore={Number(localStorage.getItem("closedForecastScore")).toFixed(0)} 
                         reactivenessScore={reactivenessScore}
+                        numberOfForecastsSubmitted={numberOfForecastsSubmitted}
                     />
                     <hr />
                 </div>

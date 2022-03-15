@@ -25,40 +25,44 @@ function ReactivenessFeedback(props) {
     ];
 
     useEffect(() => {
-        if (props.finalScore >= 90) {
-            if (props.reactivenessScore >= 70) {
-                // High Accuracy + High Reactiveness
-                setFeedback(feedbackArr[0]);
-            } else if (props.reactivenessScore < 70 && props.reactivenessScore > 30) {
-                // High Accuracy + Medium Reactiveness
-                setFeedback(feedbackArr[1]);
+        if (props.numberOfForecastsSubmitted !== 1) {
+            if (props.finalScore >= 90) {
+                if (props.reactivenessScore >= 70) {
+                    // High Accuracy + High Reactiveness
+                    setFeedback(feedbackArr[0]);
+                } else if (props.reactivenessScore < 70 && props.reactivenessScore > 30) {
+                    // High Accuracy + Medium Reactiveness
+                    setFeedback(feedbackArr[1]);
+                } else {
+                    // High Accuracy + Low Reactiveness
+                    setFeedback(feedbackArr[2]);
+                };
+            } else if (props.finalScore < 90 && props.finalScore >= 70) {
+                if (props.reactivenessScore >= 70) {
+                    // Medium Accuracy + High Reactiveness
+                    setFeedback(feedbackArr[3]);
+                } else if (props.reactivenessScore < 70 && props.reactivenessScore > 30) {
+                    // Medium Accuracy + Medium Reactiveness
+                    setFeedback(feedbackArr[4]);
+                } else {
+                    // Medium Accuracy + Low Reactiveness
+                    setFeedback(feedbackArr[5]);
+                };
             } else {
-                // High Accuracy + Low Reactiveness
-                setFeedback(feedbackArr[2]);
-            };
-        } else if (props.finalScore < 90 && props.finalScore >= 70) {
-            if (props.reactivenessScore >= 70) {
-                // Medium Accuracy + High Reactiveness
-                setFeedback(feedbackArr[3]);
-            } else if (props.reactivenessScore < 70 && props.reactivenessScore > 30) {
-                // Medium Accuracy + Medium Reactiveness
-                setFeedback(feedbackArr[4]);
-            } else {
-                // Medium Accuracy + Low Reactiveness
-                setFeedback(feedbackArr[5]);
+                if (props.reactivenessScore >= 70) {
+                    // Low Accuracy + High Reactiveness
+                    setFeedback(feedbackArr[6]);
+                } else if (props.reactivenessScore < 70 && props.reactivenessScore > 30) {
+                    // Low Accuracy + Medium Reactiveness
+                    setFeedback(feedbackArr[7]);
+                } else {
+                    // Low Accuracy + Low Reactiveness
+                    setFeedback(feedbackArr[8]);
+                };
             };
         } else {
-            if (props.reactivenessScore >= 70) {
-                // Low Accuracy + High Reactiveness
-                setFeedback(feedbackArr[6]);
-            } else if (props.reactivenessScore < 70 && props.reactivenessScore > 30) {
-                // Low Accuracy + Medium Reactiveness
-                setFeedback(feedbackArr[7]);
-            } else {
-                // Low Accuracy + Low Reactiveness
-                setFeedback(feedbackArr[8]);
-            };
-        };
+            setFeedback("You only submitted one forecast for this problem, so we can't give you any feedback on this measure.");
+        }
     }, [props.reactivenessScore]);
 
     return (
