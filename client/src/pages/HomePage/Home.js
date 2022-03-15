@@ -8,7 +8,7 @@ import NewForecastsCallToAction from './HomeSectionButtons/NewForecastsCallToAct
 import Onboarding from './HomeSectionButtons/Onboarding';
 import Modal from '../../components/Modal';
 import ClosedProblemModal from '../../components/ClosedProblemModal';
-import ChangeLog from '../ChangeLogPage/ChangeLog';
+import HomeChangeLogPreview from './HomeSectionButtons/HomeChangeLogPreview';
 
 function Home(props) {
     let width, height;
@@ -141,7 +141,7 @@ function Home(props) {
                             title="Your Recent Stats"
                             user={props.user} 
                         /> 
-                        <ChangeLog />
+                        <HomeChangeLogPreview />
                     </div>
                 </div>
             </div>
