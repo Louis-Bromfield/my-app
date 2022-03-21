@@ -3,6 +3,7 @@ import axios from 'axios';
 import './Leaderboard.css';
 import PropTypes from 'prop-types';
 import ProfileP from '../../../../media/ProfileP.png';
+import ToolTip from "@material-ui/core/Tooltip";
 
 function Leaderboard(props) {
     const [usersData, setUsersData] = useState([]);
@@ -68,14 +69,17 @@ function Leaderboard(props) {
                 if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
                     rankings[i].marketPoints = userDocument.data[0].fantasyForecastPoints;
                 };
-                rankings[i].brierScores = [];
+                rankings[i].brierScores = [{}];
                 let totalBrier = 0;
                 let numberOfBriersInThisMarket = 0;
                 if (userDocument.data[0].brierScores.length > 0) {
                     for (let j = 0; j < userDocument.data[0].brierScores.length; j++) {
                         if (userDocument.data[0].brierScores[j].marketName === props.leaderboardTitle || userDocument.data[0].brierScores[j].marketName === localStorage.getItem('currentLeaderboardName')) {
                             numberOfBriersInThisMarket++;
-                            rankings[i].brierScores.push(userDocument.data[0].brierScores[j].brierScore);
+                            rankings[i].brierScores.push({
+                                problemName: userDocument.data[0].brierScores[j].problemName,
+                                brierScore: userDocument.data[0].brierScores[j].brierScore
+                            });
                             totalBrier += userDocument.data[0].brierScores[j].brierScore;
                         };
                     };
@@ -151,11 +155,11 @@ function Leaderboard(props) {
                                             {item.brierScores.map((item2, index) => {
                                                 if (index >= item.brierScores.length - 5) {
                                                     return (
-                                                        <h4 
-                                                            key={index} 
-                                                            className="last-five-data-single-result">
-                                                                &nbsp;&nbsp;{Number(item2).toFixed(1)}&nbsp;&nbsp;
-                                                        </h4> 
+                                                        <ToolTip title={item2.problemName} key={index}>
+                                                            <h4 className="last-five-data-single-result">
+                                                                &nbsp;&nbsp;{Number(item2.brierScore).toFixed(1)}&nbsp;&nbsp;
+                                                            </h4>
+                                                        </ToolTip>
                                                     )
                                                 } else return null;
                                             })}
@@ -194,11 +198,11 @@ function Leaderboard(props) {
                                             {item.brierScores.map((item2, index) => {
                                                 if (index >= item.brierScores.length - 5) {
                                                     return (
-                                                        <h4 
-                                                            key={index} 
-                                                            className="last-five-data-single-result">
-                                                                &nbsp;&nbsp;{Number(item2).toFixed(1)}&nbsp;&nbsp;
-                                                        </h4> 
+                                                        <ToolTip title={item2.problemName} key={index}>
+                                                            <h4 className="last-five-data-single-result">
+                                                                &nbsp;&nbsp;{Number(item2.brierScore).toFixed(1)}&nbsp;&nbsp;
+                                                            </h4>
+                                                        </ToolTip>
                                                     )
                                                 } else return null;
                                             })}
@@ -284,11 +288,11 @@ function Leaderboard(props) {
                                             {item.brierScores.map((item2, index) => {
                                                 if (index >= item.brierScores.length - 5) {
                                                     return (
-                                                        <h4 
-                                                            key={index} 
-                                                            className="last-five-data-single-result">
+                                                        <ToolTip title={item2.problemName} key={index}>
+                                                            <h4 className="last-five-data-single-result">
                                                                 &nbsp;&nbsp;{Number(item2.brierScore).toFixed(1)}&nbsp;&nbsp;
-                                                        </h4> 
+                                                            </h4>
+                                                        </ToolTip>
                                                     )
                                                 } else return null;
                                             })}
@@ -327,11 +331,11 @@ function Leaderboard(props) {
                                             {item.brierScores.map((item2, index) => {
                                                 if (index >= item.brierScores.length - 5) {
                                                     return (
-                                                        <h4 
-                                                            key={index} 
-                                                            className="last-five-data-single-result">
+                                                        <ToolTip title={item2.problemName} key={index}>
+                                                            <h4 className="last-five-data-single-result">
                                                                 &nbsp;&nbsp;{Number(item2.brierScore).toFixed(1)}&nbsp;&nbsp;
-                                                        </h4> 
+                                                            </h4>
+                                                        </ToolTip>
                                                     )
                                                 } else return null;
                                             })}
