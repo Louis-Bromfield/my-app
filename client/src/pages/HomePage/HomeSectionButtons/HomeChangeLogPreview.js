@@ -4,6 +4,7 @@ import './HomeChangeLogPreview.css';
 
 function HomeChangeLogPreview() {
     const changeLogArr = [
+        `21.03.2022 Replaced the market name with just "Macron" when the "Articles" button is selected on the weekly problem. Using the market name was causing issues but just "Macron" is working`,
         `15.03.2022 Added the change log!`,
         `14.03.2022 Added a Forecast Analysis page. Now, when a problem closes, users have the ability to see more detailed feedback on their performance based on three dimensions of Reactiveness, Confidence and Timeliness. To see this, select any closed problem and then click the "Open Forecast Analysis Page" button.`,
         `07.03.2022 Backend code fixes.`,
