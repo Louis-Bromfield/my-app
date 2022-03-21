@@ -361,26 +361,30 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
         for (let i = 0; i < calculatedBriers.length; i++) {
             const user = await Users.findOne({ username: calculatedBriers[i].username });
             // Work out if they should receive a performance bonus for this Brier Score
-            let scoreChain = 1;
+            // let scoreChain = 1;
             if (calculatedBriers[i].finalScore >= 75) {
-                for (let i = user.brierScores.length-1; i >= 0; i--) {
-                    if (user.brierScores[i].marketName === req.params.marketName) {
-                        if (user.brierScores[i].brierScore >= 90) {
-                            scoreChain++;
-                        } else {
-                            break;
-                        }
-                    }
-                };
-                // if scoreChain is 1, then only their current prediction is above 90 or 180, just a 1x streak, bonuses only start at 2x streak
-                if (scoreChain === 1) {
-                    boost = 0;
-                // 2x streak = 0.03 + 0.02 = 0.05, 5% boost 
-                } else {
-                    boost = 0.03 + (scoreChain/100);
-                }
+            //     for (let i = user.brierScores.length-1; i >= 0; i--) {
+            //         if (user.brierScores[i].marketName === req.params.marketName) {
+            //             if (user.brierScores[i].brierScore >= 90) {
+            //                 scoreChain++;
+            //             } else {
+            //                 break;
+            //             }
+            //         }
+            //     };
+            //     // if scoreChain is 1, then only their current prediction is above 90 or 180, just a 1x streak, bonuses only start at 2x streak
+            //     if (scoreChain === 1) {
+            //         boost = 0;
+            //     // 2x streak = 0.03 + 0.02 = 0.05, 5% boost 
+            //     } else {
+            //         boost = 0.03 + (scoreChain/100);
+            //     }
+                // console.log(`boost = ${boost}`);
+                // newScorePerformanceBoosted = calculatedBriers[i].finalScore + (calculatedBriers[i].finalScore * boost);
+                let boost = (calculatedBriers[i].finalScore/100)*5;
                 console.log(`boost = ${boost}`);
-                newScorePerformanceBoosted = calculatedBriers[i].finalScore + (calculatedBriers[i].finalScore * boost);
+                newScorePerformanceBoosted = (calculatedBriers[i].finalScore + boost);
+                console.log(`so the boosted score is = ${newScorePerformanceBoosted}`);
             } else {
                 newScorePerformanceBoosted = calculatedBriers[i].finalScore;
             }
@@ -389,7 +393,7 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
                 problemName: req.body.problemName,
                 marketName: req.params.marketName,
                 captainedStatus: calculatedBriers[i].captainedStatus,
-                performanceBoost: scoreChain
+                performanceBoost: 1
             };
             await Users.findOneAndUpdate({ username: calculatedBriers[i].username }, {
                 $push: { brierScores: toPush },
