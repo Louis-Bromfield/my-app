@@ -69,7 +69,7 @@ function Leaderboard(props) {
                 if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
                     rankings[i].marketPoints = userDocument.data[0].fantasyForecastPoints;
                 };
-                rankings[i].brierScores = [{}];
+                rankings[i].brierScores = [];
                 let totalBrier = 0;
                 let numberOfBriersInThisMarket = 0;
                 if (userDocument.data[0].brierScores.length > 0) {
