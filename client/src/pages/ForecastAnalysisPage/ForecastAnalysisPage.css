@@ -105,3 +105,15 @@
         height: 100%;
     }
 }
+
+@media (max-height: 650px) {
+    .problem-and-scores-container {
+        height: 35%;
+    }
+}
+
+@media (max-height: 400px) {
+    .problem-and-scores-container {
+        height: 50vh;
+    }
+}
