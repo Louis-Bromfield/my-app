@@ -5,6 +5,8 @@ import './ForecastAnalysisPage.css';
 import ConfidenceFeedback from './ForecastAnalysisPageComponents/ConfidenceFeedback';
 import ReactivenessFeedback from './ForecastAnalysisPageComponents/ReactivenessFeedback';
 import TimelinessFeedback from './ForecastAnalysisPageComponents/TimelinessFeedback';
+import Modal from '../../components/Modal';
+import { FaInfoCircle } from 'react-icons/fa';
 
 function ForecastAnalysisPage(props) {
     const history = useHistory();
@@ -20,6 +22,8 @@ function ForecastAnalysisPage(props) {
     const [oppositeConfidenceScoreForCSS, setOppositeConfidenceScoreForCSS] = useState("100%");
     const [oppositeTimelinessScoreForCSS, setOppositeTimelinessScoreForCSS] = useState("100%");
     const [numberOfForecastsSubmitted, setNumberOfForecastsSubmitted] = useState(0);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState("");
 
     useEffect(async () => {
         console.log("ForecastAnalysisPage UE");
@@ -143,6 +147,9 @@ function ForecastAnalysisPage(props) {
 
     return (
         <div className="forecast-analysis">
+            <Modal show={showModal} handleClose={() => setShowModal(false)}>
+                <p>{modalContent}</p>
+            </Modal>
             <button 
                 onClick={() => history.push("forecast")} 
                 className="forecast-analysis-header-link">
@@ -157,7 +164,16 @@ function ForecastAnalysisPage(props) {
                 {/* Problem name and what user scored */}
                 <div className="problem-container">
                     <h2 className="selected-problem">{props.location.forecastObj === undefined ? forecastObj.problemName : props.location.forecastObj.problemName }</h2>
-                    <h3>You Scored: {Number(localStorage.getItem("closedForecastScore")).toFixed(0)} / 110</h3>
+                    <h3>
+                        You Scored: {Number(localStorage.getItem("closedForecastScore")).toFixed(0)} / 110
+                        <FaInfoCircle 
+                            onClick={() => {
+                                setShowModal(true);
+                                setModalContent(`Note that your Reactiveness and Confidence scores do not contribute to your overall score for this problem (${Number(localStorage.getItem("closedForecastScore")).toFixed(0)} / 110), but exist purely for evaluative purposes. Your Timeliness score here is identical to your Time Score that can be seen on the forecast submission page under your first forecast for this problem (this can be found by going back to My Forecasts, selecting a problem from the dropdown, and pressing "Show Prediction Breakdown".).`)
+                            }}
+                            style={{ "color": "orange", "cursor": "pointer" }}
+                        />
+                    </h3>
                 </div>
                 {/* Scores w/ bars visualisation */}
                 <div className="scores-container">
