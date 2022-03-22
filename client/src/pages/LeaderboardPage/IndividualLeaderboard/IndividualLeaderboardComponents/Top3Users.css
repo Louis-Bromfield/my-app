@@ -1,6 +1,6 @@
 .top-three-users-highlight {
-    width: 80%;
-    max-width: 80%;
+    width: 65%;
+    max-width: 65%;
     display: flex;
     flex-direction: row;
     column-gap: 5%;
@@ -46,7 +46,7 @@
 
 @media (max-width: 1500px) {
     .top-three-users-highlight {
-        width: 90%;
+        width: 100%;
         font-size: 0.85em;
         margin-bottom: 1vh;
     }
