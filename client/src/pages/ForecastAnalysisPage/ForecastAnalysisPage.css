@@ -98,6 +98,9 @@
         text-align: center;
         height: 25vh;
     }
+    .selected-problem {
+        font-size: 0.9em;
+    }
     .scores-container {
         height: 100%;
     }
