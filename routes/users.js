@@ -358,6 +358,7 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
 
         let scoresToReturn = [];
         let newScorePerformanceBoosted;
+        let performanceBoostVal = 0;
         for (let i = 0; i < calculatedBriers.length; i++) {
             const user = await Users.findOne({ username: calculatedBriers[i].username });
             // Work out if they should receive a performance bonus for this Brier Score
@@ -385,15 +386,17 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
                 console.log(`boost = ${boost}`);
                 newScorePerformanceBoosted = (calculatedBriers[i].finalScore + boost);
                 console.log(`so the boosted score is = ${newScorePerformanceBoosted}`);
+                performanceBoostVal = 1;
             } else {
                 newScorePerformanceBoosted = calculatedBriers[i].finalScore;
+                performanceBoostVal = 0;
             }
             const toPush = {
                 brierScore: newScorePerformanceBoosted,
                 problemName: req.body.problemName,
                 marketName: req.params.marketName,
                 captainedStatus: calculatedBriers[i].captainedStatus,
-                performanceBoost: 1
+                performanceBoost: performanceBoostVal
             };
             await Users.findOneAndUpdate({ username: calculatedBriers[i].username }, {
                 $push: { brierScores: toPush },
