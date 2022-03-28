@@ -4,6 +4,7 @@ import './HomeChangeLogPreview.css';
 
 function HomeChangeLogPreview() {
     const changeLogArr = [
+        `28.03.2022 Updating code to be able to handle international user-based input. Forecasts were previously susceptible to not being properly dealt with if from a non-GMT/BST timezone. Additional updates include text styling, updated backend code, a typo fix, cleaning up client code, and date formatting in the Forecast Breakdown. This last one was chosen instead of converting to a British-based timezone as it's purpose is for rendering only and so can stay as initially persisted to the database for the user's convenience ("I didn't submit a forecast at 3am?" --> It was actually submitted at 11pm but converting to GMT could lead to this confusion)`,
         `27.03.2022 Fixed code that was informing users they got a boost on their prediction no matter what. Fixed it to ensure it's just for 75 or above scores.`,
         `22.03.2022 Added styling to the forecast analysis page so it is more responsive to screen sizes (smaller laptops and mobile specifically)`,
         `21.03.2022 Added the ability to hover over any of a user's Last 5 Forecasts on the leaderboards to see the problem name.`,
