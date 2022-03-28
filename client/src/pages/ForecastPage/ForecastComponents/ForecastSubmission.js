@@ -877,8 +877,19 @@ function ForecastSubmission(props) {
                             <div className="forecast-review-div-left">
                                 <h2 style={{ color: "#404d72" }}><u>Your Stats</u></h2>
                                 <h3># of Forecasts Submitted: {numberOfForecastsSubmitted}</h3>
-                                <h3>Highest Certainty: {highestCertainty}</h3>
-                                <h3>Lowest Certainty: {lowestCertainty}</h3>
+                                {/* Add a check to see if it's multiple outcomes or not, if true: */}
+                                {forecastSingleCertainty === true &&
+                                <div>
+                                    <h3>Highest Certainty: {highestCertainty}</h3>
+                                    <h3>Lowest Certainty: {lowestCertainty}</h3>
+                                </div>
+                                }
+                                {/* And if false */}
+                                {forecastSingleCertainty === false &&
+                                <div>
+                                    
+                                </div>
+                                }
                             </div>
                             <div className="forecast-review-div-right">
                                 <h1>{closedForecastScore}</h1>

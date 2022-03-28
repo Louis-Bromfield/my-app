@@ -186,7 +186,7 @@ function ForecastBreakdown(props) {
                                                         <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
-                                                        <h4>Date: {item.date.slice(0, 24)}</h4>
+                                                        <h4>Date: {item.date}</h4>
                                                         {/* <h4>Duration (Time spent as latest prediction): {duration.weeks} week(s), {duration.days} day(s), {duration.hours} hour(s), {duration.minutes} minute(s), {duration.seconds} second(s).</h4> */}
                                                         <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
                                                         <br />
@@ -209,7 +209,7 @@ function ForecastBreakdown(props) {
                                                         <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
-                                                        <h4>Date: {item.date.slice(0, 24)}</h4>
+                                                        <h4>Date: {item.date}</h4>
                                                         <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
                                                         <br />
                                                         <h4>This forecast scored you: {item.newBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
@@ -249,7 +249,7 @@ function ForecastBreakdown(props) {
                                                         <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
-                                                        <h4>Date: {item.date.slice(0, 24)}</h4>
+                                                        <h4>Date: {item.date}</h4>
                                                         <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>What Will This Forecast Score Me?</h3>
@@ -274,7 +274,7 @@ function ForecastBreakdown(props) {
                                                         <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
-                                                        <h4>Date: {item.date.slice(0, 24)}</h4>
+                                                        <h4>Date: {item.date}</h4>
                                                         <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>What Will This Forecast Score Me?</h3>
@@ -342,7 +342,7 @@ function ForecastBreakdown(props) {
                                                         <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
-                                                        <h4>Date: {item.date.slice(0, 24)}</h4>
+                                                        <h4>Date: {item.date}</h4>
                                                         <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
                                                         <br />
                                                         <h4>This forecast scored you: {item.newBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
@@ -367,7 +367,7 @@ function ForecastBreakdown(props) {
                                                         <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
-                                                        <h4>Date: {item.date.slice(0, 24)}</h4>
+                                                        <h4>Date: {item.date}</h4>
                                                         <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
                                                         <br />
                                                         <h4>This forecast scored you: {item.newBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
@@ -410,7 +410,7 @@ function ForecastBreakdown(props) {
                                                         <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
-                                                        <h4>Date: {item.date.slice(0, 24)}</h4>
+                                                        <h4>Date: {item.date}</h4>
                                                         <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>What Will This Forecast Score Me?</h3>
@@ -439,7 +439,7 @@ function ForecastBreakdown(props) {
                                                         <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
-                                                        <h4>Date: {item.date.slice(0, 24)}</h4>
+                                                        <h4>Date: {item.date}</h4>
                                                         <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>What Will This Forecast Score Me?</h3>

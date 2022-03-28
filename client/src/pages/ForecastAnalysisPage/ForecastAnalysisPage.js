@@ -54,7 +54,6 @@ function ForecastAnalysisPage(props) {
             } else {
                 setReactivenessScore("N/A");
             }
-            // calculateThirdScore(props.location.forecastObj.submittedForecasts, props.username);
         } else {
             setAtLeastOneForecast(false);
         };
@@ -93,7 +92,7 @@ function ForecastAnalysisPage(props) {
         for (let i = 0; i < reactiveness.length; i++) {
             sum += reactiveness[i];
         };
-        let finalReactivenessScore = (sum / reactiveness.length).toFixed(0);
+        let finalReactivenessScore = (sum / reactiveness.length).toFixed(2);
         setReactivenessScore(finalReactivenessScore);
         setReactivenessScoreForCSS(`${finalReactivenessScore}%`);
         setOppositeReactivenessScoreForCSS(`${100-finalReactivenessScore}%`);
