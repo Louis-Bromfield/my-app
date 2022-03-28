@@ -92,7 +92,7 @@ function ForecastAnalysisPage(props) {
         for (let i = 0; i < reactiveness.length; i++) {
             sum += reactiveness[i];
         };
-        let finalReactivenessScore = (sum / reactiveness.length).toFixed(2);
+        let finalReactivenessScore = (sum / reactiveness.length).toFixed(0);
         setReactivenessScore(finalReactivenessScore);
         setReactivenessScoreForCSS(`${finalReactivenessScore}%`);
         setOppositeReactivenessScoreForCSS(`${100-finalReactivenessScore}%`);
@@ -134,7 +134,7 @@ function ForecastAnalysisPage(props) {
             console.log(tValue);
             let timeFrame = (new Date(closeDate) - new Date(startDate))/1000;
             console.log(timeFrame);
-            tScore = ((tValue/timeFrame)*10).toFixed(0)*10;
+            tScore = ((tValue/timeFrame)*10).toFixed(2)*10;
         } else {
             console.log("no");
             tScore = 0;
