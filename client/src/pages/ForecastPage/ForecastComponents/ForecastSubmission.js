@@ -143,6 +143,9 @@ function ForecastSubmission(props) {
             setForecastCloseDate(`FORECAST CLOSED: ${new Date(forecast.closeDate).toString()}`);
             let highest = 0;
             let lowest = 100;
+            let totalOutcomeOne = 0;
+            let totalOutcomeTwo = 0;
+            let totalOutcomeThree = 0;
             let highestChanged, lowestChanged = false;
             let totalNumOfForecasts = 0;
             let finalCertainty = 0;
