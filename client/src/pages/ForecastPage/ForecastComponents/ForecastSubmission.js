@@ -38,6 +38,9 @@ function ForecastSubmission(props) {
     const [certaintyTwo, setCertaintyTwo] = useState(0);
     const [certaintyThree, setCertaintyThree] = useState(0);
     const [forecastObjForAnalysis, setForecastObjForAnalysis] = useState({});
+    const [outcomeOneCertainty, setOutcomeOneCertainty] = useState("0%");
+    const [outcomeTwoCertainty, setOutcomeTwoCertainty] = useState("0%");
+    const [outcomeThreeCertainty, setOutcomeThreeCertainty] = useState("0%");
 
     let alertStyle;
     if (dropdownHighlight === true) {
@@ -154,14 +157,21 @@ function ForecastSubmission(props) {
                         for (let j = 0; j < forecast.submittedForecasts[i].forecasts.length; j++) {
                             if (new Date(forecast.submittedForecasts[i].forecasts[j].date) < new Date(forecast.closeDate)) {
                                 totalNumOfForecasts++;
-                                finalCertainty = forecast.submittedForecasts[i].forecasts[j].certainty*100;
-                                if (forecast.submittedForecasts[i].forecasts[j].certainty*100 > highest) {
-                                    highest = forecast.submittedForecasts[i].forecasts[j].certainty*100;
-                                    highestChanged = true;
-                                };
-                                if (forecast.submittedForecasts[i].forecasts[j].certainty*100 < lowest) {
-                                    lowest = forecast.submittedForecasts[i].forecasts[j].certainty*100;
-                                    lowestChanged = true;
+                                if (forecast.singleCertainty === true) {
+                                    finalCertainty = forecast.submittedForecasts[i].forecasts[j].certainty*100;
+                                    if (forecast.submittedForecasts[i].forecasts[j].certainty*100 > highest) {
+                                        highest = forecast.submittedForecasts[i].forecasts[j].certainty*100;
+                                        highestChanged = true;
+                                    };
+                                    if (forecast.submittedForecasts[i].forecasts[j].certainty*100 < lowest) {
+                                        lowest = forecast.submittedForecasts[i].forecasts[j].certainty*100;
+                                        lowestChanged = true;
+                                    };
+                                } else if (forecast.singleCertainty === false) {
+                                    console.log(forecast.submittedForecasts[i].forecasts[j])
+                                    totalOutcomeOne += (forecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100);
+                                    totalOutcomeTwo += (forecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100);
+                                    totalOutcomeThree += (forecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100);
                                 };
                             };
                         };
@@ -169,13 +179,20 @@ function ForecastSubmission(props) {
                     };
                 };
             };
-            if (highestChanged === true && lowestChanged === true) {
-                setHighestCertainty(`${highest}%`);
-                setLowestCertainty(`${lowest}%`);
-            } else {
-                setHighestCertainty("N/A");
-                setLowestCertainty("N/A");
-            }
+            if (forecast.singleCertainty === true) {
+                if (highestChanged === true && lowestChanged === true) {
+                    setHighestCertainty(`${highest}%`);
+                    setLowestCertainty(`${lowest}%`);
+                } else {
+                    setHighestCertainty("N/A");
+                    setLowestCertainty("N/A");
+                }
+            } else if (forecast.singleCertainty === false) {
+                console.log(totalOutcomeOne);
+                setOutcomeOneCertainty(`${(totalOutcomeOne / totalNumOfForecasts).toFixed(2)}%`);
+                setOutcomeTwoCertainty(`${(totalOutcomeTwo / totalNumOfForecasts).toFixed(2)}%`);
+                setOutcomeThreeCertainty(`${(totalOutcomeThree / totalNumOfForecasts).toFixed(2)}%`);
+            };
             setNumberOfForecastsSubmitted(totalNumOfForecasts);
         } else {
             setButtonDisabled(false);
@@ -887,7 +904,9 @@ function ForecastSubmission(props) {
                                 {/* And if false */}
                                 {forecastSingleCertainty === false &&
                                 <div>
-                                    
+                                    <h3>Average Increased: {outcomeOneCertainty}</h3>
+                                    <h3>Average Same: {outcomeTwoCertainty}</h3>
+                                    <h3>Average Decreased: {outcomeThreeCertainty}</h3>
                                 </div>
                                 }
                             </div>
