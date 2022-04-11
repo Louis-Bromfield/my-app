@@ -53,7 +53,7 @@ function TopicQuiz(props) {
                     }
                 );
                 props.handleQuizCompletion(true);
-                props.handleQuizCompletionModalContent("You just got 50 points for completing a quiz!");
+                props.handleQuizCompletionModalContent("You just got 20 points for completing a quiz!");
             } else {
                 userDocument.data[0].onboarding.completeALearnQuiz = true;
                 userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 250;
