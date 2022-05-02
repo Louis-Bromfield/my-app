@@ -72,7 +72,7 @@
 }
 
 .leaderboards-profile-pic {
-    width: 3%;
+    width: 5%;
     height: 3vh;
     border-radius: 40%;
     vertical-align: middle;
@@ -111,7 +111,7 @@
         width: 25%;
     }
     .leaderboards-profile-pic {
-        width: 5%;
+        width: 10%;
     }
 }
 
