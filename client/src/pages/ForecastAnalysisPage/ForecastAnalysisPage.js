@@ -103,11 +103,19 @@ function ForecastAnalysisPage(props) {
         if (singleCertaintyBool === false) {
             for (let i = 0; i < usersForecasts.forecasts.length; i++) {
                 let highestCertainty = Math.max(usersForecasts.forecasts[i].certainties.certaintyHigher*100, usersForecasts.forecasts[i].certainties.certaintySame*100, usersForecasts.forecasts[i].certainties.certaintyLower*100);
-                confidenceArray.push((100 - highestCertainty));
+                if (highestCertainty > 50) {
+                    confidenceArray.push((100 - highestCertainty));
+                } else {
+                    confidenceArray.push(highestCertainty);
+                }
             };
         } else if (singleCertaintyBool === true) {
             for (let i = 0; i < usersForecasts.forecasts.length; i++) {
-                confidenceArray.push((100 - (usersForecasts.forecasts[i].certainty*100)));
+                if (usersForecasts.forecasts[i].certainty*100) {
+                    confidenceArray.push((100 - (usersForecasts.forecasts[i].certainty*100)));
+                } else {
+                    confidenceArray.push(usersForecasts.forecasts[i].certainty*100);
+                }
             };
         };
         let sum = 0;
