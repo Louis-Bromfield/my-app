@@ -45,7 +45,7 @@ const ClosedProblemModal = (props) => {
             <img src={FFLogo} alt="" />
             <h3>We've closed some forecast problems! Go to My Forecasts and select the problem for a breakdown of your performance!</h3>
             <h4>You will receive a 5% boost for every problem where you score 75+!</h4>
-            <a href="https://youtu.be/0TtfLVADR-I" target="_blank" rel="noreferrer nofollow" style={{ color: "#fff" }}>
+            <a href="https://youtu.be/1fJG4NHDmVY" target="_blank" rel="noreferrer nofollow" style={{ color: "#fff" }}>
                 <h4>Want to know more about how your scores are calculated? Click here.</h4>
             </a>
             <button onClick={() => closeModal(props.userObj.username)} className="close-modal-btn">
