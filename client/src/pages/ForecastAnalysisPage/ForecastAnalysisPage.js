@@ -111,7 +111,7 @@ function ForecastAnalysisPage(props) {
             };
         } else if (singleCertaintyBool === true) {
             for (let i = 0; i < usersForecasts.forecasts.length; i++) {
-                if (usersForecasts.forecasts[i].certainty*100) {
+                if (usersForecasts.forecasts[i].certainty*100 > 50) {
                     confidenceArray.push((100 - (usersForecasts.forecasts[i].certainty*100)));
                 } else {
                     confidenceArray.push(usersForecasts.forecasts[i].certainty*100);
