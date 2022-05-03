@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const ClosedProblemModal = (props) => {
     const showHideClassName = props.show ? "modal display-block" : "modal display-none";
-    const layoutClassName = props.userObj.numberOfClosedForecasts > 1 ? "grid-layout" : "non-grid-layout";
+    // const layoutClassName = props.userObj.numberOfClosedForecasts > 1 ? "grid-layout" : "non-grid-layout";
     const [brierArr, setBrierArr] = useState([]);
     const [currentProblem, setCurrentProblem] = useState(props.userObj.brierScores[props.userObj.brierScores.length-1]);
     const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
@@ -67,7 +67,7 @@ const ClosedProblemModal = (props) => {
                         <p>You Scored: <u>{currentProblem.brierScore.toFixed(2)} / 110</u></p>
                         <p>You Scored: <u>{currentProblem.brierScore.toFixed(2).slice(0, -3)}</u> Market Points and FFPoints!</p>
                         <br />
-                        {currentProblem.performanceBoost >= 1 &&
+                        {(currentProblem.performanceBoost >= 1 && currentProblem.brierScore >= 75) &&
                             <p>
                                 As you scored 75 or above on this problem, you received a Boost of <u>5% ({(currentProblem.brierScore - (currentProblem.brierScore / 105) * 100).toFixed(2)} points)</u> on this prediction.
                             </p>
