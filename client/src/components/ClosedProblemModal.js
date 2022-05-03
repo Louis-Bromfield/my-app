@@ -41,40 +41,40 @@ const ClosedProblemModal = (props) => {
 
     return (
         <div className={showHideClassName}>
-        <section className="modal-main">
-            <img src={FFLogo} alt="" />
-            <h3>We've closed some forecast problems! Go to My Forecasts and select the problem for a breakdown of your performance!</h3>
-            <h4>You will receive a 5% boost for every problem where you score 75+!</h4>
-            <a href="https://youtu.be/1fJG4NHDmVY" target="_blank" rel="noreferrer nofollow" style={{ color: "#fff" }}>
-                <h4>Want to know more about how your scores are calculated? Click here.</h4>
-            </a>
-            <button onClick={() => closeModal(props.userObj.username)} className="close-modal-btn">
-                Close
-            </button>
-            {/* Add condition to only render this if there is another problem to show */}
-            {brierArr.length > 1 &&
-                <button onClick={setNewProblem} className="next-problem-btn">
-                    Next Problem
+            <section className="modal-main">
+                <img src={FFLogo} alt="" />
+                <p>We've closed some forecast problems! Go to My Forecasts and select the problem for a breakdown of your performance!</p>
+                <p>You will receive a 5% boost for every problem where you score 75+!</p>
+                <a href="https://youtu.be/1fJG4NHDmVY" target="_blank" rel="noreferrer nofollow" style={{ color: "#fff" }}>
+                    <p>Want to know more about how your scores are calculated? Click here.</p>
+                </a>
+                <button onClick={() => closeModal(props.userObj.username)} className="close-modal-btn">
+                    Close
                 </button>
-            }
-            <br />
-            <div className="non-grid-layout">
-                <div className="closed-forecast-container">
-                    <h3>{currentProblem.problemName}</h3>
-                    <hr />
-                    <h4>{currentProblem.marketName}</h4>
-                    <br />
-                    <h3>You Scored: <u>{currentProblem.brierScore.toFixed(2)} / 110</u></h3>
-                    <h3>You Scored: <u>{currentProblem.brierScore.toFixed(2).slice(0, -3)}</u> Market Points and FFPoints!</h3>
-                    <br />
-                    {currentProblem.performanceBoost >= 1 &&
-                        <h3>
-                            As you scored 75 or above on this problem, you received a Boost of <u>5% ({(currentProblem.brierScore - (currentProblem.brierScore / 105) * 100).toFixed(2)} points)</u> on this prediction.
-                        </h3>
-                    }
+                {/* Add condition to only render this if there is another problem to show */}
+                {brierArr.length > 1 &&
+                    <button onClick={setNewProblem} className="next-problem-btn">
+                        Next Problem
+                    </button>
+                }
+                <br />
+                <div className="non-grid-layout">
+                    <div className="closed-forecast-container">
+                        <p>{currentProblem.problemName}</p>
+                        <hr />
+                        <p>{currentProblem.marketName}</p>
+                        <br />
+                        <p>You Scored: <u>{currentProblem.brierScore.toFixed(2)} / 110</u></p>
+                        <p>You Scored: <u>{currentProblem.brierScore.toFixed(2).slice(0, -3)}</u> Market Points and FFPoints!</p>
+                        <br />
+                        {currentProblem.performanceBoost >= 1 &&
+                            <p>
+                                As you scored 75 or above on this problem, you received a Boost of <u>5% ({(currentProblem.brierScore - (currentProblem.brierScore / 105) * 100).toFixed(2)} points)</u> on this prediction.
+                            </p>
+                        }
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
         </div>
     );
 };
