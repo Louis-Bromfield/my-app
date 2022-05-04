@@ -131,12 +131,28 @@ function ForecastProblemLineChart(props) {
                         y: userData.data[userData.data.length-1].y,
                         x: userData.data[userData.data.length-1].x,
                         description: userData.data[userData.data.length-1].description
-                    }, {
-                        y: userData.data[userData.data.length-1].y,
-                        x: new Date().toString().slice(0, 15),
-                        description: userData.data[userData.data.length-1].description
                     }
                 );
+                // Check if current date is later than the close date
+                // if true, the x value in the 2nd object to push should be the close date
+                // if false, the x value should be the current day
+                if (new Date() < new Date(selectedForecast.closeDate)) {
+                    simulatedUserData.data.push(
+                        {
+                            y: userData.data[userData.data.length-1].y,
+                            x: new Date().toString().slice(0, 15),
+                            description: userData.data[userData.data.length-1].description
+                        }
+                    );
+                } else {
+                    simulatedUserData.data.push(
+                        {
+                            y: userData.data[userData.data.length-1].y,
+                            x: new Date(selectedForecast.closeDate).toString().slice(0, 15),
+                            description: userData.data[userData.data.length-1].description
+                        }
+                    );
+                }
             };
             setChartData(data);
             setUserChartData(userData);
