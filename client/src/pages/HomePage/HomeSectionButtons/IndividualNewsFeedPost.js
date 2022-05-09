@@ -230,7 +230,7 @@ function IndividualNewsFeedPost(props) {
                                                 <h4 className="comment-author">{item.author}</h4>
                                             </Link>
                                         </div>
-                                        <h4>{item.comment}</h4>
+                                        <p>{item.comment}</p>
                                 </div>
                             )
                         } else return null;
