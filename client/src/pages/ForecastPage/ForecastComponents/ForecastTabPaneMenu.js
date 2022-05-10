@@ -12,6 +12,10 @@ function ForecastTabPaneMenu(props) {
                 {props.chosenTab === "forecastStats" && <h2 className="selected-tab">Forecast Stats</h2>}
                 {props.chosenTab !== "forecastStats" && <h2 className="unselected-tab">Forecast Stats</h2>}
             </div>
+            <div className="tab-pane-selector" onClick={() => props.setTab("results")}>
+                {props.chosenTab === "results" && <h2 className="selected-tab">Results</h2>}
+                {props.chosenTab !== "results" && <h2 className="unselected-tab">Results</h2>}
+            </div>
         </div>
     )
 }

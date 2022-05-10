@@ -1,0 +1,36 @@
+.forecast-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.forecast-results-title {
+    background-color: #404d72;
+    color: #fff;
+    margin-bottom: 1vh;
+    padding: 1%;
+}
+
+.forecast-results-table {
+    width: 50%;
+    text-align: center;
+    margin: 1%;
+}
+
+.table-title-row {
+    background-color: #636baa;
+    color: white;
+}
+
+.forecast-results-matching-username-row {
+    background-color: #404d72;
+    color: #fff;
+}
+
+.forecast-results-even-row {
+    background-color: rgba(141, 160, 223, 0.26);
+}
+
+.forecast-results-odd-row {
+    background-color: rgba(141, 160, 223, 0.158);
+}

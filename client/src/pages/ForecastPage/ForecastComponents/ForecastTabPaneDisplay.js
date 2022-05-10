@@ -68,6 +68,14 @@ function ForecastTabPaneDisplay(props) {
                     </div>
                 </div>
             }
+            {props.chosenTab === "results" && 
+                <ForecastResults 
+                    market={props.selectedForecast.market} 
+                    problemName={props.selectedForecast.problemName}
+                    leaderboard={props.leaderboard} 
+                    username={props.username} 
+                />
+            }
         </div>
     )
 }
