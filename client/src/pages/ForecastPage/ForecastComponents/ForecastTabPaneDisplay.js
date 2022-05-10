@@ -4,6 +4,7 @@ import ForecastProblemLineChart from './ForecastProblemLineChart';
 import ForecastMarketLeaderboard from './ForecastMarketLeaderboard';
 import ForecastStatistics from './ForecastStatistics';
 import MarketStatistics from './MarketStatistics';
+import ForecastResults from './ForecastResults';
 import './ForecastTabPaneDisplay.css';
 
 function ForecastTabPaneDisplay(props) {
