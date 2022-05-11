@@ -75,6 +75,7 @@ function ForecastTabPaneDisplay(props) {
                     problemName={props.selectedForecast.problemName}
                     leaderboard={props.leaderboard} 
                     username={props.username} 
+                    isClosed={props.selectedForecast.isClosed}
                 />
             }
         </div>

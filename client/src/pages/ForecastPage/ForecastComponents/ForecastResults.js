@@ -9,11 +9,13 @@ function ForecastResults(props) {
 
     useEffect(async () => {
         console.log("Forecast Results UE");
-        setLoading(true);
-        // get all users
-        const allUsers = await getAllUsers();
-        // scrape all users for those names that appear in the leaderboard
-        findAllScores(allUsers, props.problemName);
+        if (props.isClosed === true) {
+            setLoading(true);
+            // get all users
+            const allUsers = await getAllUsers();
+            // scrape all users for those names that appear in the leaderboard
+            findAllScores(allUsers, props.problemName);
+        };
         setTimeout(() => {
             setLoading(false);
         }, 500);
@@ -51,6 +53,7 @@ function ForecastResults(props) {
     return (
         <div className="forecast-results">
             <h2 className="forecast-results-title">ForecastResults</h2>
+            {props.isClosed === false && <h3>The problem is still live, come back here when it's closed for a breakdown of how everyone fared.</h3>}
             {loading === true && <ReactLoading type="bars" color="#404d72" height="15%" width="15%" />}
             {loading === false && <div className="show-div">
                 <h3>Here's a breakdown of how everyone who attempted this problem fared.</h3>
