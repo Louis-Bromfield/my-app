@@ -56,7 +56,7 @@ function ForecastResults(props) {
             {props.isClosed === false && <h3>The problem is still live, come back here when it's closed for a breakdown of how everyone fared.</h3>}
             {loading === true && <ReactLoading type="bars" color="#404d72" height="15%" width="15%" />}
             {loading === false && <div className="show-div">
-                <h3>Here's a breakdown of how everyone who attempted this problem fared.</h3>
+                {props.isClosed === true && <h3>Here's a breakdown of how everyone who attempted this problem fared.</h3>}
                 <table className="forecast-results-table">
                     <tbody>
                         <tr className="table-title-row">
