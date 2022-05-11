@@ -176,7 +176,7 @@ function ForecastAnalysisPage(props) {
                         <FaInfoCircle 
                             onClick={() => {
                                 setShowModal(true);
-                                setModalContent(`Note that your Reactiveness and Confidence scores do not contribute to your overall score for this problem (${Number(localStorage.getItem("closedForecastScore")).toFixed(0)} / 110), but exist purely for evaluative purposes. Your Timeliness score here is identical to your Time Score that can be seen on the forecast submission page under your first forecast for this problem (this can be found by going back to My Forecasts, selecting a problem from the dropdown, and pressing "Show Prediction Breakdown".).`)
+                                setModalContent(`Note that your Reactiveness and Confidence scores do not contribute to your overall score for this problem (${Number(localStorage.getItem("closedForecastScore")).toFixed(0)} / 110), but exist purely for evaluative purposes, however your Time Score does. Your score (out of 110) was given a boost from 0-10 based on when you submitted your first forecast for this problem (the earlier, the better). You can also find this score on My Forecasts > Select a closed Problem > Show Prediction Breakdown.`)
                             }}
                             style={{ "color": "orange", "cursor": "pointer" }}
                         />
@@ -205,7 +205,7 @@ function ForecastAnalysisPage(props) {
                             <div className="bar-div" style={{ backgroundColor: "lightgray", color: "lightgray", height: `${oppositeTimelinessScoreForCSS}`}}>.</div>
                             <div className="bar-div" style={{ backgroundColor: "#A52A2A", color: "#A52A2A", height: `${timelinessScoreForCSS}`}}>_</div>
                         </div>
-                        <h3 className="highlighted-header">Timeliness</h3>
+                        <h3 className="highlighted-header">Time Score</h3>
                         <h3>{timelinessScore/10} / 10</h3>
                     </div>
                 </div>
