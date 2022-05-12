@@ -16,6 +16,7 @@ function Login(props) {
     const [createAccountText, setCreateAccountText] = useState("");
     const [newProfilePicture, setNewProfilePicture] = useState("");
     const [file, setFile] = useState();
+    const [isGroup, setIsGroup] = useState(false);
 
     const handleUsernameChange = (e) => {
         setLoginError("");
@@ -75,7 +76,7 @@ function Login(props) {
         }
     };
 
-    const createAccount = async (newUsername, newPassword, newFullName, newEmailAddress, newProfilePicture) => {
+    const createAccount = async (newUsername, newPassword, newFullName, newEmailAddress, newProfilePicture, isGroup) => {
         // Check for empty fields
         if (newUsername === "" || newPassword === "" || newFullName === "" || newEmailAddress === "" || /^\s*$/.test(newUsername) || /^\s*$/.test(newPassword) || /^\s*$/.test(newFullName) || /^\s*$/.test(newEmailAddress)) {
             setCreateAccountError("One or more empty fields. Please enter your username and password, then press Create Account.");
@@ -84,18 +85,22 @@ function Login(props) {
             setCreateAccountError("Please upload a profile picture.");
             return;
         }
+        console.log(isGroup);
         try {
             // Get to see if username has already been taken
             const user = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${newUsername}`);
             // If no users with that name exist:
             if (user.data.length === 0) {
                 // Create Account
+                console.log(isGroup);
                 const newUser = await axios.post(`https://fantasy-forecast-politics.herokuapp.com/users`, {
                     username: newUsername,
                     password: newPassword,
                     name: newFullName,
-                    email: newEmailAddress
+                    email: newEmailAddress,
+                    isGroup: isGroup
                 });
+                console.log(newUser);
                 let profilePicResponse = "";
                 if (newUser) {
                     const formData = new FormData();
@@ -143,8 +148,14 @@ function Login(props) {
                     <input type="email" className="input-field" placeholder="Enter Your Email Address" onChange={(e) => handleNewEmailAddressChange(e)} />
                     <h3 className="form-title">Profile Picture:</h3>
                     <input type="file" className="input-field-photo" onChange={(e) => handleNewProfilePictureChange(e)} />
+                    <h3 className="form-title">Account Type:</h3>
+                    <h4 style={{ color: "#fff", textAlign: "center" }}>Tick this if this account will be shared with other forecasters.</h4>
+                    <div className="label-input-container">
+                        <label htmlFor="Individual" onClick={() => setIsGroup(!isGroup)}>Group</label>
+                        <input type="radio" id="Group" name="Group" onClick={() => setIsGroup(!isGroup)} checked={isGroup} />
+                    </div>
                     <h4 className="extra-text" style={{ color: "#fff" }}>Your username, password and profile picture can all be updated from your profile page.</h4>
-                    <button className="signup-btn" onClick={() => createAccount(newUsername, newPassword, newFullName, newEmailAddress, newProfilePicture)}>Create Account</button>
+                    <button className="signup-btn" onClick={() => createAccount(newUsername, newPassword, newFullName, newEmailAddress, newProfilePicture, isGroup)}>Create Account</button>
                     {createAccountError !== "" && <h3 className="error-message">{createAccountError}</h3>}
                     {createAccountText !== "" && <h3 className="text-message">{createAccountText}</h3>}
                 </div> 

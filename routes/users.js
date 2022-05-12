@@ -156,7 +156,8 @@ router.post("/", async (req, res) => {
         onboarding: {},
         brierScores: [],
         numberOfClosedForecasts: 0,
-        profilePicture: req.body.profilePicture
+        profilePicture: req.body.profilePicture,
+        isGroup: req.body.isGroup
     });
     try {
         // Save to DB

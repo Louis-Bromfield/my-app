@@ -53,6 +53,18 @@
     border: 2px solid green;
 }
 
+.label-input-container {
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    justify-content: center;
+    vertical-align: middle;
+    border: 0.5px solid white;
+    padding: 1%;
+    margin: 1%;
+    color: #fff;
+}
+
 .login-btn,
 .signup-btn {
     background-color: rgb(96, 209, 96);

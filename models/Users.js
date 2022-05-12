@@ -37,6 +37,9 @@ const UserSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
+    isGroup: {
+        type: Boolean
+    },
     markets: {
         type: Array,
         default: []
