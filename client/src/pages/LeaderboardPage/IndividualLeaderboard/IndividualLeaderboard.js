@@ -132,13 +132,12 @@ function IndividualLeaderboard(props) {
                 };
             };
             localStorage.setItem("markets", newMarkets);
+            history.push("/leaderboard-select");
             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/removeUser/${leaderboard}/${username}`);
         } catch (error) {
             console.error("Error in IndividualLeaderboard > leaveMarket");
             console.error(error);
-        } finally {
-            history.push("/leaderboard-select");
-        }
+        };
     };
 
     const getAllUsers = async () => {
