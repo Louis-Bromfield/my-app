@@ -226,7 +226,8 @@ router.patch("/:username", async (req, res) => {
             onboarding: req.body.onboarding,
             markets: req.body.markets,
             numberOfClosedForecasts: req.body.numberOfClosedForecasts,
-            profilePicture: req.body.profilePicture
+            profilePicture: req.body.profilePicture,
+            articleVisits: req.body.articleVisits
         },
         { new: true }
     );

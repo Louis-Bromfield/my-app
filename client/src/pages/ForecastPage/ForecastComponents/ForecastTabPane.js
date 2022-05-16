@@ -12,7 +12,11 @@ function ForecastTabPane(props) {
     
     return (
         <div className="forecast-tab-pane">
-            <ForecastTabPaneMenu setTab={changeTab} chosenTab={selectedTab} />
+            <ForecastTabPaneMenu 
+                setTab={changeTab} 
+                chosenTab={selectedTab}
+                username={props.username}
+            />
             <ForecastTabPaneDisplay 
                 chosenTab={selectedTab} 
                 selectedForecast={props.selectedForecast} 

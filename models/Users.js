@@ -61,6 +61,10 @@ const UserSchema = mongoose.Schema({
     profilePicture: {
         type: String,
         default: ""
+    },
+    articleVisits: {
+        type: Number,
+        default: 0
     }
 });
 

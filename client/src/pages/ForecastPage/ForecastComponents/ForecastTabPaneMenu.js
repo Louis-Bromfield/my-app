@@ -1,10 +1,31 @@
+import axios from 'axios';
 import React from 'react';
 import './ForecastTabPaneMenu.css';
 
 function ForecastTabPaneMenu(props) {
+
+    const updateArticleTabVisits = async (username) => {
+        try {
+            console.log("Hello!");
+            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            console.log(userDocument.data[0]);
+            console.log(userDocument.data[0].articleVisits);
+            let increasedVisits = userDocument.data[0].articleVisits + 1;
+            const newUserDocument = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, { 
+                articleVisits: increasedVisits
+            }, 
+                { new: true }
+            );
+            console.log(newUserDocument.data);
+        } catch (error) {
+            console.log("Error in ForecastTabPaneMenu > updateArticleTabVisits");
+            console.log(error);
+        }
+    };
+
     return (
         <div className="forecast-tab-pane-menu">
-            <div className="tab-pane-selector" onClick={() => props.setTab("articles")}>
+            <div className="tab-pane-selector" onClick={() => { props.setTab("articles"); updateArticleTabVisits(props.username) }}>
                 {props.chosenTab === "articles" && <h2 className="selected-tab">Articles</h2>}
                 {props.chosenTab !== "articles" && <h2 className="unselected-tab">Articles</h2>}
             </div>
