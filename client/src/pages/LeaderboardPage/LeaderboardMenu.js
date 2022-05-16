@@ -28,7 +28,7 @@ function LeaderboardMenu(props) {
     const [isPublic, setIsPublic] = useState();
     const [isPublicChecked, setIsPublicChecked] = useState(false);
     const [isPrivateChecked, setIsPrivateChecked] = useState(false);
-    const [usersToInviteToNewLeague, setUsersToInviteToNewLeague] = useState([{username: props.username, marketPoints: 0, acceptedInvite: true}]);
+    const [usersToInviteToNewLeague, setUsersToInviteToNewLeague] = useState([{username: props.username, marketPoints: 0, isGroup: false, acceptedInvite: true}]);
     const [leagueCreationError, setLeagueCreationError] = useState("");
     const [inviteAlert, setInviteAlert] = useState("No message");
     const [showModal, setShowModal] = useState(false);
@@ -43,7 +43,7 @@ function LeaderboardMenu(props) {
     }, [causeRefresh, joinAMarketMenu, props.username, userInNoMarkets]);
 
     // For private leaderboards, their ranking is determined by FantasyForecast Points, or no?
-    const toggleInviteUserToLeague = (username) => {
+    const toggleInviteUserToLeague = (username, isGroup) => {
         let found = false;
         let index = 0;
         for (let i = 0; i < usersToInviteToNewLeague.length; i++) {
@@ -59,7 +59,7 @@ function LeaderboardMenu(props) {
             setUsersToInviteToNewLeague(updatedArray);
         } else if (found === false) {
             let updatedArray = usersToInviteToNewLeague;
-            updatedArray.push({ username: username, marketPoints: 0, acceptedInvite: false});
+            updatedArray.push({ username: username, marketPoints: 0, isGroup: isGroup, acceptedInvite: false});
             setUsersToInviteToNewLeague(updatedArray);
         };
     };
@@ -169,6 +169,9 @@ function LeaderboardMenu(props) {
                 let allUsers = await axios.get('https://fantasy-forecast-politics.herokuapp.com/users');
                 let filteredUsers = [];
                 for (let i = 0; i < allUsers.data.length; i++) {
+                    if (allUsers.data[i].username === username) {
+                        setUsersToInviteToNewLeague([{username: username, marketPoints: 0, isGroup: allUsers.data[i].isGroup, acceptedInvite: true}]);
+                    }
                     if (allUsers.data[i].username !== username) {
                         filteredUsers.push(allUsers.data[i]);
                     };
@@ -224,7 +227,8 @@ function LeaderboardMenu(props) {
             for (let i = 0; i < markets.length; i++) {
                 const leaderboardUpdate = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/marketSignUp/${markets[i]}`, {
                     username: username,
-                    profilePicture: userDocument.data[0].profilePicture
+                    profilePicture: userDocument.data[0].profilePicture,
+                    isGroup: userDocument.data[0].isGroup
                 });
             };
         } catch (error) {
@@ -460,7 +464,8 @@ function LeaderboardMenu(props) {
                                         key={index}
                                         username={user.username} 
                                         ProfileP={user.profilePicture} 
-                                        toggleInviteUserToLeague={toggleInviteUserToLeague}
+                                        userInGroup={user.isGroup}
+                                        toggleInviteUserToLeague={() => toggleInviteUserToLeague(user.username, user.isGroup)}
                                     />
                                 )
                             })}

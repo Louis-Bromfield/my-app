@@ -113,7 +113,7 @@ function Login(props) {
                 // Add user to Global Leaderboard
                 if (profilePicResponse !== "") profilePicResponse = profilePicResponse.data.profilePicture;
                 const lbName = "Fantasy Forecast All-Time"
-                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${lbName}`, { username: newUsername, profilePicture: profilePicResponse });
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${lbName}`, { username: newUsername, profilePicture: profilePicResponse, isGroup: isGroup });
                 // Add user to Learn Quizzes
                 await axios.post(`https://fantasy-forecast-politics.herokuapp.com/learnquizzes/`, { username: newUsername });
             } else if (user.data[0].username === newUsername) {

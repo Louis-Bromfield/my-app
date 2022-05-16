@@ -86,7 +86,7 @@ router.patch("/:leaderboardName", async (req, res) => {
         if (document.rankings.some(user => user.username === req.body.username)) {
             res.json({ message: "User is already in this market"});
         } else if (req.params.leaderboardName === "Fantasy Forecast All-Time") {
-            const toPushToDB = { username: req.body.username, marketPoints: 0, acceptedInvite: true, profilePicture: req.body.profilePicture };
+            const toPushToDB = { username: req.body.username, marketPoints: 0, isGroup: req.body.isGroup, acceptedInvite: true, profilePicture: req.body.profilePicture };
             const newLeaderboardDataPushedToDB = await Leaderboards.findByIdAndUpdate(document._id,
                 {
                     $push: { rankings: toPushToDB },
@@ -95,7 +95,7 @@ router.patch("/:leaderboardName", async (req, res) => {
             );
             res.json(newLeaderboardDataPushedToDB);
         } else {
-            const toPushToDB = { username: req.body.username, marketPoints: 0, acceptedInvite: false };
+            const toPushToDB = { username: req.body.username, marketPoints: 0, isGroup: req.body.isGroup, acceptedInvite: false };
             const newLeaderboardDataPushedToDB = await Leaderboards.findByIdAndUpdate(document._id,
                 {
                     $push: { rankings: toPushToDB },
@@ -136,7 +136,7 @@ router.patch("/marketSignUp/:leaderboardName", async (req, res) => {
         if (document.rankings.some(user => user.username === req.body.username)) {
             res.json({ message: "User is already in this market"});
         } else {
-            const toPushToDB = { username: req.body.username, marketPoints: 0, acceptedInvite: true, profilePicture: req.body.profilePicture };
+            const toPushToDB = { username: req.body.username, marketPoints: 0, isGroup: req.body.isGroup, acceptedInvite: true, profilePicture: req.body.profilePicture };
             const newLeaderboardDataPushedToDB = await Leaderboards.findByIdAndUpdate(document._id,
                 {
                     $push: { rankings: toPushToDB },
