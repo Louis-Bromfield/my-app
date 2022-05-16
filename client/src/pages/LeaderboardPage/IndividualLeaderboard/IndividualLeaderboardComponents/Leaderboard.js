@@ -39,11 +39,13 @@ function Leaderboard(props) {
                         marketPoints: 0,
                         brierScores: [],
                         avgAllTimeBrier: 0.0,
+                        isGroup: null
                     };
                     ffRankings[i].profilePicture = userDocumentFF.data[0].profilePicture;
                     ffRankings[i].username = rankings[i].username;
                     ffRankings[i].marketPoints = userDocumentFF.data[0].fantasyForecastPoints;
                     ffRankings[i].brierScores = userDocumentFF.data[0].brierScores;
+                    ffRankings[i].isGroup = userDocumentFF.data[0].isGroup;
                     let totalBrierForUser = 0;
                     for (let j = 0; j < userDocumentFF.data[0].brierScores.length; j++) {
                         totalBrierForUser += userDocumentFF.data[0].brierScores[j].brierScore;
@@ -124,11 +126,11 @@ function Leaderboard(props) {
                         {width && <th className="last-five-briers-column">Last 5 Forecasts (&nbsp;&nbsp;/110&nbsp;&nbsp;)</th>}
                     </tr>
                     {usersData.map((item, index) => {
+                    if (props.leaderboardFilter === "all") {
                         if (item.username === props.username) {
                             return (
                                 <tr className="leaderboard-row-matching-username" key={index}>
                                     <td className="leaderboard-rank-data">
-                                        {/* {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1} */}
                                         {(() => {
                                             if (index === 0) {
                                                 numOfConsecutiveSameIndices = 0;
@@ -171,7 +173,6 @@ function Leaderboard(props) {
                             return (
                                 <tr className="leaderboard-row" key={index}>
                                     <td className="leaderboard-rank-data">
-                                        {/* {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1} */}
                                         {(() => {
                                             if (index === 0) {
                                                 numOfConsecutiveSameIndices = 0;
@@ -212,56 +213,12 @@ function Leaderboard(props) {
                             )
                         }
                         else return null;
-                    })
-                    // : props.leaderboardRankings.map((item, index) => {
-                    //     if (item.username === props.username) {
-                    //         return (
-                    //             <tr className="leaderboard-row-matching-username" key={index}>
-                    //                 <td className="leaderboard-rank-data">{index+1}</td>
-                    //                 <td className="leaderboard-username-data">
-                    //                     <img src={ProfileP} className="leaderboards-profile-pic"/>
-                    //                     {item.username}
-                    //                 </td>
-                    //                 <td className="leaderboard-ffPoints-data">{item.marketPoints.toFixed(0)}</td>
-                    //                 <td className="leaderboard-avgBrierScore-data">{item.avgBrierScore}</td>
-                    //                 <td className="leaderboard-last5Forecasts-data">[Insert Scores Here]</td>
-                    //             </tr>
-                    //         )
-                    //     } else if (item.username !== props.username && item.acceptedInvite === true) {
-                    //         return (
-                    //             <tr className="leaderboard-row" key={index}>
-                    //                 <td className="leaderboard-rank-data">{index+1}</td>
-                    //                 <td className="leaderboard-username-data">
-                    //                     <img src={ProfileP} className="leaderboards-profile-pic"/>
-                    //                     {item.username}
-                    //                 </td>
-                    //                 <td className="leaderboard-ffPoints-data">{item.marketPoints.toFixed(0)}</td>
-                    //                 <td className="leaderboard-avgBrierScore-data">{item.avgBrierScore}</td>
-                    //                 <td className="leaderboard-last5Forecasts-data">[Insert Scores Here]</td>
-                    //             </tr>
-                    //         )
-                    //     }
-                    //     else return null;
-                    // })
-                    }
-                </tbody>
-                }
-                {(props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") &&
-                <tbody>
-                    {/* {console.log("Here2")} */}
-                    <tr className="leaderboard-title-row">
-                        <th className="position-column">#</th>
-                        <th className="username-column">Username</th>
-                        <th className="ffpoints-column">Fantasy Forecast Points</th>
-                        <th className="avg-brier-column">AVG Brier Score (All Markets)</th>
-                        {width && <th className="last-five-briers-column">Last 5 Forecasts (All Markets)</th>}
-                    </tr>
-                    {usersData.map((item, index) => {
-                        if (item.username === props.username) {
+                    }        
+                    else if (props.leaderboardFilter === "solo") {
+                        if (item.username === props.username && item.isGroup === false) {
                             return (
                                 <tr className="leaderboard-row-matching-username" key={index}>
                                     <td className="leaderboard-rank-data">
-                                        {/* {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1} */}
                                         {(() => {
                                             if (index === 0) {
                                                 numOfConsecutiveSameIndices = 0;
@@ -282,7 +239,7 @@ function Leaderboard(props) {
                                         {item.username}
                                     </td>
                                     <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
-                                    <td className="leaderboard-avgBrierScore-data">{Number(item.avgAllTimeBrier).toFixed(1)}</td>
+                                    <td className="leaderboard-avgBrierScore-data">{Number(item.avgBrierScore).toFixed(1)}</td>
                                     {width && <td className="leaderboard-last5Forecasts-data">
                                         <span className="last-five-data-span">
                                             {item.brierScores.map((item2, index) => {
@@ -300,11 +257,10 @@ function Leaderboard(props) {
                                     </td>}
                                 </tr>
                             )
-                        } else if (item.username !== props.username) {
+                        } else if (item.username !== props.username && item.acceptedInvite === true && item.isGroup === false) {
                             return (
                                 <tr className="leaderboard-row" key={index}>
                                     <td className="leaderboard-rank-data">
-                                        {/* {index === 0 ? index+1 : item.marketPoints === usersData[index-1].marketPoints ? index : index+1} */}
                                         {(() => {
                                             if (index === 0) {
                                                 numOfConsecutiveSameIndices = 0;
@@ -325,7 +281,7 @@ function Leaderboard(props) {
                                         {item.username}
                                     </td>
                                     <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
-                                    <td className="leaderboard-avgBrierScore-data">{Number(item.avgAllTimeBrier).toFixed(1)}</td>
+                                    <td className="leaderboard-avgBrierScore-data">{Number(item.avgBrierScore).toFixed(1)}</td>
                                     {width && <td className="leaderboard-last5Forecasts-data">
                                         <span className="last-five-data-span">
                                             {item.brierScores.map((item2, index) => {
@@ -345,37 +301,374 @@ function Leaderboard(props) {
                             )
                         }
                         else return null;
+                    }
+                    else if (props.leaderboardFilter === "teams") {
+                        if (item.username === props.username && item.isGroup === true) {
+                            return (
+                                <tr className="leaderboard-row-matching-username" key={index}>
+                                    <td className="leaderboard-rank-data">
+                                        {(() => {
+                                            if (index === 0) {
+                                                numOfConsecutiveSameIndices = 0;
+                                                return index+1;
+                                            } else {
+                                                if (item.marketPoints === usersData[index-1].marketPoints) {
+                                                    numOfConsecutiveSameIndices++;
+                                                    return (index+1) - numOfConsecutiveSameIndices;
+                                                } else {
+                                                    numOfConsecutiveSameIndices = 0;
+                                                    return index+1;
+                                                }
+                                            }
+                                        })()}
+                                    </td>
+                                    <td className="leaderboard-username-data">
+                                        {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                        {item.username}
+                                    </td>
+                                    <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
+                                    <td className="leaderboard-avgBrierScore-data">{Number(item.avgBrierScore).toFixed(1)}</td>
+                                    {width && <td className="leaderboard-last5Forecasts-data">
+                                        <span className="last-five-data-span">
+                                            {item.brierScores.map((item2, index) => {
+                                                if (index >= item.brierScores.length - 5) {
+                                                    return (
+                                                        <ToolTip title={item2.problemName} key={index}>
+                                                            <h4 className="last-five-data-single-result">
+                                                                &nbsp;&nbsp;{Number(item2.brierScore).toFixed(1)}&nbsp;&nbsp;
+                                                            </h4>
+                                                        </ToolTip>
+                                                    )
+                                                } else return null;
+                                            })}
+                                        </span>
+                                    </td>}
+                                </tr>
+                            )
+                        } else if (item.username !== props.username && item.acceptedInvite === true && item.isGroup === true) {
+                            return (
+                                <tr className="leaderboard-row" key={index}>
+                                    <td className="leaderboard-rank-data">
+                                        {(() => {
+                                            if (index === 0) {
+                                                numOfConsecutiveSameIndices = 0;
+                                                return index+1;
+                                            } else {
+                                                if (item.marketPoints === usersData[index-1].marketPoints) {
+                                                    numOfConsecutiveSameIndices++;
+                                                    return (index+1) - numOfConsecutiveSameIndices;
+                                                } else {
+                                                    numOfConsecutiveSameIndices = 0;
+                                                    return index+1;
+                                                }
+                                            }
+                                        })()}
+                                    </td>
+                                    <td className="leaderboard-username-data">
+                                        {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                        {item.username}
+                                    </td>
+                                    <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
+                                    <td className="leaderboard-avgBrierScore-data">{Number(item.avgBrierScore).toFixed(1)}</td>
+                                    {width && <td className="leaderboard-last5Forecasts-data">
+                                        <span className="last-five-data-span">
+                                            {item.brierScores.map((item2, index) => {
+                                                if (index >= item.brierScores.length - 5) {
+                                                    return (
+                                                        <ToolTip title={item2.problemName} key={index}>
+                                                            <h4 className="last-five-data-single-result">
+                                                                &nbsp;&nbsp;{Number(item2.brierScore).toFixed(1)}&nbsp;&nbsp;
+                                                            </h4>
+                                                        </ToolTip>
+                                                    )
+                                                } else return null;
+                                            })}
+                                        </span>
+                                    </td>}
+                                </tr>
+                            )
+                        }
+                        else return null;
+                    }
                     })
-                    // : props.leaderboardRankings.map((item, index) => {
-                    //     if (item.username === props.username) {
-                    //         return (
-                    //             <tr className="leaderboard-row-matching-username" key={index}>
-                    //                 <td className="leaderboard-rank-data">{index+1}</td>
-                    //                 <td className="leaderboard-username-data">
-                    //                     <img src={ProfileP} className="leaderboards-profile-pic"/>
-                    //                     {item.username}
-                    //                 </td>
-                    //                 <td className="leaderboard-ffPoints-data">{item.marketPoints.toFixed(0)}</td>
-                    //                 <td className="leaderboard-avgBrierScore-data">{item.avgBrierScore}</td>
-                    //                 <td className="leaderboard-last5Forecasts-data">[Insert Scores Here]</td>
-                    //             </tr>
-                    //         )
-                    //     } else if (item.username !== props.username && item.acceptedInvite === true) {
-                    //         return (
-                    //             <tr className="leaderboard-row" key={index}>
-                    //                 <td className="leaderboard-rank-data">{index+1}</td>
-                    //                 <td className="leaderboard-username-data">
-                    //                     <img src={ProfileP} className="leaderboards-profile-pic"/>
-                    //                     {item.username}
-                    //                 </td>
-                    //                 <td className="leaderboard-ffPoints-data">{item.marketPoints.toFixed(0)}</td>
-                    //                 <td className="leaderboard-avgBrierScore-data">{item.avgBrierScore}</td>
-                    //                 <td className="leaderboard-last5Forecasts-data">[Insert Scores Here]</td>
-                    //             </tr>
-                    //         )
-                    //     }
-                    //     else return null;
-                    // })
+                }
+                </tbody>
+                }
+                {(props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") &&
+                <tbody>
+                    <tr className="leaderboard-title-row">
+                        <th className="position-column">#</th>
+                        <th className="username-column">Username</th>
+                        <th className="ffpoints-column">Fantasy Forecast Points</th>
+                        <th className="avg-brier-column">AVG Brier Score (All Markets)</th>
+                        {width && <th className="last-five-briers-column">Last 5 Forecasts (All Markets)</th>}
+                    </tr>
+                    {usersData.map((item, index) => {
+                        if (props.leaderboardFilter === "all") {
+                            if (item.username === props.username) {
+                                return (
+                                    <tr className="leaderboard-row-matching-username" key={index}>
+                                        <td className="leaderboard-rank-data">
+                                            {(() => {
+                                                if (index === 0) {
+                                                    numOfConsecutiveSameIndices = 0;
+                                                    return index+1;
+                                                } else {
+                                                    if (item.marketPoints === usersData[index-1].marketPoints) {
+                                                        numOfConsecutiveSameIndices++;
+                                                        return (index+1) - numOfConsecutiveSameIndices;
+                                                    } else {
+                                                        numOfConsecutiveSameIndices = 0;
+                                                        return index+1;
+                                                    }
+                                                }
+                                            })()}
+                                        </td>
+                                        <td className="leaderboard-username-data">
+                                            {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                            {item.username}
+                                        </td>
+                                        <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
+                                        <td className="leaderboard-avgBrierScore-data">{Number(item.avgAllTimeBrier).toFixed(1)}</td>
+                                        {width && <td className="leaderboard-last5Forecasts-data">
+                                            <span className="last-five-data-span">
+                                                {item.brierScores.map((item2, index) => {
+                                                    if (index >= item.brierScores.length - 5) {
+                                                        return (
+                                                            <ToolTip title={item2.problemName} key={index}>
+                                                                <h4 className="last-five-data-single-result">
+                                                                    &nbsp;&nbsp;{Number(item2.brierScore).toFixed(1)}&nbsp;&nbsp;
+                                                                </h4>
+                                                            </ToolTip>
+                                                        )
+                                                    } else return null;
+                                                })}
+                                            </span>
+                                        </td>}
+                                    </tr>
+                                )
+                            } else if (item.username !== props.username) {
+                                return (
+                                    <tr className="leaderboard-row" key={index}>
+                                        <td className="leaderboard-rank-data">
+                                            {(() => {
+                                                if (index === 0) {
+                                                    numOfConsecutiveSameIndices = 0;
+                                                    return index+1;
+                                                } else {
+                                                    if (item.marketPoints === usersData[index-1].marketPoints) {
+                                                        numOfConsecutiveSameIndices++;
+                                                        return (index+1) - numOfConsecutiveSameIndices;
+                                                    } else {
+                                                        numOfConsecutiveSameIndices = 0;
+                                                        return index+1;
+                                                    }
+                                                }
+                                            })()}
+                                        </td>
+                                        <td className="leaderboard-username-data">
+                                            {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                            {item.username}
+                                        </td>
+                                        <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
+                                        <td className="leaderboard-avgBrierScore-data">{Number(item.avgAllTimeBrier).toFixed(1)}</td>
+                                        {width && <td className="leaderboard-last5Forecasts-data">
+                                            <span className="last-five-data-span">
+                                                {item.brierScores.map((item2, index) => {
+                                                    if (index >= item.brierScores.length - 5) {
+                                                        return (
+                                                            <ToolTip title={item2.problemName} key={index}>
+                                                                <h4 className="last-five-data-single-result">
+                                                                    &nbsp;&nbsp;{Number(item2.brierScore).toFixed(1)}&nbsp;&nbsp;
+                                                                </h4>
+                                                            </ToolTip>
+                                                        )
+                                                    } else return null;
+                                                })}
+                                            </span>
+                                        </td>}
+                                    </tr>
+                                )
+                            }
+                            else return null;
+                        }
+                        else if (props.leaderboardFilter === "solo") {
+                            if (item.username === props.username && item.isGroup === false) {
+                                return (
+                                    <tr className="leaderboard-row-matching-username" key={index}>
+                                        <td className="leaderboard-rank-data">
+                                            {(() => {
+                                                if (index === 0) {
+                                                    numOfConsecutiveSameIndices = 0;
+                                                    return index+1;
+                                                } else {
+                                                    if (item.marketPoints === usersData[index-1].marketPoints) {
+                                                        numOfConsecutiveSameIndices++;
+                                                        return (index+1) - numOfConsecutiveSameIndices;
+                                                    } else {
+                                                        numOfConsecutiveSameIndices = 0;
+                                                        return index+1;
+                                                    }
+                                                }
+                                            })()}
+                                        </td>
+                                        <td className="leaderboard-username-data">
+                                            {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                            {item.username}
+                                        </td>
+                                        <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
+                                        <td className="leaderboard-avgBrierScore-data">{Number(item.avgAllTimeBrier).toFixed(1)}</td>
+                                        {width && <td className="leaderboard-last5Forecasts-data">
+                                            <span className="last-five-data-span">
+                                                {item.brierScores.map((item2, index) => {
+                                                    if (index >= item.brierScores.length - 5) {
+                                                        return (
+                                                            <ToolTip title={item2.problemName} key={index}>
+                                                                <h4 className="last-five-data-single-result">
+                                                                    &nbsp;&nbsp;{Number(item2.brierScore).toFixed(1)}&nbsp;&nbsp;
+                                                                </h4>
+                                                            </ToolTip>
+                                                        )
+                                                    } else return null;
+                                                })}
+                                            </span>
+                                        </td>}
+                                    </tr>
+                                )
+                            } else if (item.username !== props.username && item.isGroup === false) {
+                                return (
+                                    <tr className="leaderboard-row" key={index}>
+                                        <td className="leaderboard-rank-data">
+                                            {(() => {
+                                                if (index === 0) {
+                                                    numOfConsecutiveSameIndices = 0;
+                                                    return index+1;
+                                                } else {
+                                                    if (item.marketPoints === usersData[index-1].marketPoints) {
+                                                        numOfConsecutiveSameIndices++;
+                                                        return (index+1) - numOfConsecutiveSameIndices;
+                                                    } else {
+                                                        numOfConsecutiveSameIndices = 0;
+                                                        return index+1;
+                                                    }
+                                                }
+                                            })()}
+                                        </td>
+                                        <td className="leaderboard-username-data">
+                                            {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                            {item.username}
+                                        </td>
+                                        <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
+                                        <td className="leaderboard-avgBrierScore-data">{Number(item.avgAllTimeBrier).toFixed(1)}</td>
+                                        {width && <td className="leaderboard-last5Forecasts-data">
+                                            <span className="last-five-data-span">
+                                                {item.brierScores.map((item2, index) => {
+                                                    if (index >= item.brierScores.length - 5) {
+                                                        return (
+                                                            <ToolTip title={item2.problemName} key={index}>
+                                                                <h4 className="last-five-data-single-result">
+                                                                    &nbsp;&nbsp;{Number(item2.brierScore).toFixed(1)}&nbsp;&nbsp;
+                                                                </h4>
+                                                            </ToolTip>
+                                                        )
+                                                    } else return null;
+                                                })}
+                                            </span>
+                                        </td>}
+                                    </tr>
+                                )
+                            }
+                            else return null;
+                        }
+                        if (props.leaderboardFilter === "teams") {
+                            if ((item.username === props.username) && item.isGroup === true) {
+                                return (
+                                    <tr className="leaderboard-row-matching-username" key={index}>
+                                        <td className="leaderboard-rank-data">
+                                            {(() => {
+                                                if (index === 0) {
+                                                    numOfConsecutiveSameIndices = 0;
+                                                    return index+1;
+                                                } else {
+                                                    if (item.marketPoints === usersData[index-1].marketPoints) {
+                                                        numOfConsecutiveSameIndices++;
+                                                        return (index+1) - numOfConsecutiveSameIndices;
+                                                    } else {
+                                                        numOfConsecutiveSameIndices = 0;
+                                                        return index+1;
+                                                    }
+                                                }
+                                            })()}
+                                        </td>
+                                        <td className="leaderboard-username-data">
+                                            {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                            {item.username}
+                                        </td>
+                                        <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
+                                        <td className="leaderboard-avgBrierScore-data">{Number(item.avgAllTimeBrier).toFixed(1)}</td>
+                                        {width && <td className="leaderboard-last5Forecasts-data">
+                                            <span className="last-five-data-span">
+                                                {item.brierScores.map((item2, index) => {
+                                                    if (index >= item.brierScores.length - 5) {
+                                                        return (
+                                                            <ToolTip title={item2.problemName} key={index}>
+                                                                <h4 className="last-five-data-single-result">
+                                                                    &nbsp;&nbsp;{Number(item2.brierScore).toFixed(1)}&nbsp;&nbsp;
+                                                                </h4>
+                                                            </ToolTip>
+                                                        )
+                                                    } else return null;
+                                                })}
+                                            </span>
+                                        </td>}
+                                    </tr>
+                                )
+                            } else if ((item.username !== props.username) && item.isGroup === true) {
+                                return (
+                                    <tr className="leaderboard-row" key={index}>
+                                        <td className="leaderboard-rank-data">
+                                            {(() => {
+                                                if (index === 0) {
+                                                    numOfConsecutiveSameIndices = 0;
+                                                    return index+1;
+                                                } else {
+                                                    if (item.marketPoints === usersData[index-1].marketPoints) {
+                                                        numOfConsecutiveSameIndices++;
+                                                        return (index+1) - numOfConsecutiveSameIndices;
+                                                    } else {
+                                                        numOfConsecutiveSameIndices = 0;
+                                                        return index+1;
+                                                    }
+                                                }
+                                            })()}
+                                        </td>
+                                        <td className="leaderboard-username-data">
+                                            {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                            {item.username}
+                                        </td>
+                                        <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
+                                        <td className="leaderboard-avgBrierScore-data">{Number(item.avgAllTimeBrier).toFixed(1)}</td>
+                                        {width && <td className="leaderboard-last5Forecasts-data">
+                                            <span className="last-five-data-span">
+                                                {item.brierScores.map((item2, index) => {
+                                                    if (index >= item.brierScores.length - 5) {
+                                                        return (
+                                                            <ToolTip title={item2.problemName} key={index}>
+                                                                <h4 className="last-five-data-single-result">
+                                                                    &nbsp;&nbsp;{Number(item2.brierScore).toFixed(1)}&nbsp;&nbsp;
+                                                                </h4>
+                                                            </ToolTip>
+                                                        )
+                                                    } else return null;
+                                                })}
+                                            </span>
+                                        </td>}
+                                    </tr>
+                                )
+                            }
+                            else return null;
+                        }
+                    })
                     }
                 </tbody>
                 }

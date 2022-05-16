@@ -8,6 +8,7 @@ import LeaderboardSpecificStats from './IndividualLeaderboardComponents/Leaderbo
 import Leaderboard from './IndividualLeaderboardComponents/Leaderboard';
 import axios from 'axios';
 import ConfirmationModal from '../../../components/ConfirmationModal';
+import req from 'express/lib/request';
 
 function IndividualLeaderboard(props) {
     const history = useHistory();
@@ -26,6 +27,7 @@ function IndividualLeaderboard(props) {
     const [averageBrier, setAverageBrier] = useState(0);
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);
     const [ffData, setFFData] = useState([]);
+    const [leaderboardFilter, setLeaderboardFilter] = useState("all");
     
     // let index = 0;
     // for (let i = 0; i < navigationOrder.length; i++) {
@@ -169,8 +171,8 @@ function IndividualLeaderboard(props) {
     const send = async (inviteOrKick, user, market) => {
         try {
             if (inviteOrKick === "invite") {
-                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${market}`, { username: user });
-                setSendResponseText(`You have invited ${user}.`);
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${market}`, { username: user.username, isGroup: user.isGroup });
+                setSendResponseText(`You have invited ${user.username}.`);
             } else if (inviteOrKick === "kick") {
                 await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/kick/${market}`, { username: user });
                 console.log("user kicked!");
@@ -227,7 +229,7 @@ function IndividualLeaderboard(props) {
                                             <li 
                                                 key={index} 
                                                 className="user-li" 
-                                                onClick={() => setInviteUser(item.username)}
+                                                onClick={() => setInviteUser({ username: item.username, isGroup: item.isGroup})}
                                             >
                                                 <h3>{item.username}</h3>
                                             </li>
@@ -259,7 +261,7 @@ function IndividualLeaderboard(props) {
                     </div>
                     {inviteUser !== "" && 
                         <div className="submit-container">
-                            <h3>You have selected: {inviteUser} to <u>invite</u> to your leaderboard. Do you want to send this invite?</h3>
+                            <h3>You have selected: {inviteUser.username} to <u>invite</u> to your leaderboard. Do you want to send this invite?</h3>
                             <button className="send-btn" onClick={() => send("invite", inviteUser, currentLeaderboardName)}>Send</button>
                         </div>
                     }
@@ -287,6 +289,22 @@ function IndividualLeaderboard(props) {
                     leaderboardTitle={currentLeaderboardName}     
                 />
             </div>
+            <div className="leaderboard-filter-select">
+                <select name="leaderboard-filter" id="" onChange={(e) => setLeaderboardFilter(e.target.value)}>
+                    <option 
+                        value="all">
+                            All
+                    </option>
+                    <option 
+                        value="solo">
+                            Solo Forecasters
+                    </option>
+                    <option 
+                        value="teams">
+                            Teams
+                    </option>
+                </select>
+            </div>
             <Leaderboard 
                 leaderboardTitle={currentLeaderboardName} 
                 leaderboardRankings={filteredRankings} 
@@ -295,6 +313,7 @@ function IndividualLeaderboard(props) {
                 setUserInMarket={setUserInMarket}
                 setAverageBrier={setAverageBrier}
                 setFFData={setFFData}
+                leaderboardFilter={leaderboardFilter}
             />
         </div>
     )

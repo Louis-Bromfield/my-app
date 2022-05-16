@@ -134,6 +134,16 @@
     background-color: #242d7517;
 }
 
+.leaderboard-filter-select {
+    margin-left: 1vw;
+    width: 30%;
+}
+
+.leaderboard-filter-select > select {
+    width: 100%;
+    font-size: 1.1em;
+}
+
 @media (max-width: 1500px) {
     .leaderboard-title-and-navigation {
         grid-template-columns: 65% 35%;

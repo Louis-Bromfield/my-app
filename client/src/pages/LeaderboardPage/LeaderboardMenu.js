@@ -70,6 +70,10 @@ function LeaderboardMenu(props) {
     };
 
     const persistLeagueToDB = async (league, usersToInvite, publicStatus, username) => {
+        if (isPublicChecked === false && isPrivateChecked === false) {
+            setLeagueCreationError("Please indicate if your league is public or private.");
+            return;
+        };
         if (/^\s*$/.test(league)) {
             setLeagueCreationError("Your league name is only spaces. Please use letters and numbers.");
             return;
@@ -94,6 +98,9 @@ function LeaderboardMenu(props) {
                     isFFLeaderboard: false,
                     leagueCreator: username
                 });
+
+                updateOnboardingAndUserMarkets([league], username);
+
                 setLeagueName("");
                 setCreateLeague(false);
                 setLeagueSetupConfirmation(true);
