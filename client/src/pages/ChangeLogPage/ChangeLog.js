@@ -3,6 +3,7 @@ import './ChangeLog.css';
 
 function ChangeLog() {
     const changeLogArr = [
+        `16.05.2022 Placed Articles tab under construction, also added leaderboard filtering by account type.`,
         `10.05.2022 Added problem-specifc results tab. Go to My Forecasts > Select a problem from the dropdown and select the Results tab.`,
         `03.05.2022 Updated the ClosedProblemModal (pop-up).`,
         `28.03.2022 Updated code to be able to handle international user-based input.`,
