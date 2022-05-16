@@ -100,7 +100,7 @@ function LeaderboardMenu(props) {
                 });
 
                 updateOnboardingAndUserMarkets([league], username);
-
+                localStorage.setItem("markets", localStorage.getItem("markets") + `, ${league}`);
                 setLeagueName("");
                 setCreateLeague(false);
                 setLeagueSetupConfirmation(true);

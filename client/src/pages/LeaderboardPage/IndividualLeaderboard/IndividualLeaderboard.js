@@ -119,23 +119,26 @@ function IndividualLeaderboard(props) {
 
     const leaveMarket = async (leaderboard, username) => {
         try {
-            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/removeUser/${leaderboard}/${username}`);
+            console.log("here");
+            console.log(localStorage.getItem("markets"));
             let markets = localStorage.getItem("markets").split(",");
             console.log(markets);
             let index = markets.findIndex(market => market === leaderboard);
             markets.splice(index, 1);
             let newMarkets = [];
             for (let i = 0; i < markets.length; i++) {
-                if (markets[i] !== "leaderboard") {
+                if (markets[i] !== leaderboard) {
                     newMarkets.push(markets[i]);
                 };
             };
             localStorage.setItem("markets", newMarkets);
-            history.push("/leaderboard-select");
+            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/removeUser/${leaderboard}/${username}`);
         } catch (error) {
             console.error("Error in IndividualLeaderboard > leaveMarket");
             console.error(error);
-        };
+        } finally {
+            history.push("/leaderboard-select");
+        }
     };
 
     const getAllUsers = async () => {
