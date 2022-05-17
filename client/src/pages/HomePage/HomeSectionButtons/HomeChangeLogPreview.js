@@ -4,6 +4,7 @@ import './HomeChangeLogPreview.css';
 
 function HomeChangeLogPreview() {
     const changeLogArr = [
+        `17.05.2022 Added average player data to the My Stats charts on Profile pages, Search pages and the Home page preview.`,
         `16.05.2022 Placed Articles tab under construction, also added leaderboard filtering by account type.`,
         `10.05.2022 Added problem-specifc results tab. Go to My Forecasts > Select a problem from the dropdown and select the Results tab.`,
         `03.05.2022 Updated the ClosedProblemModal (pop-up).`,

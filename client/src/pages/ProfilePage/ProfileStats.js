@@ -22,6 +22,8 @@ function ProfileStats(props) {
     const [averageGlobalBrier, setGlobalAverageBrier] = useState();
     const [selectedStats, setSelectedStats] = useState("selected");
     const [selectedStats2, setSelectedStats2] = useState("unselected");
+    const [allAverageData, setAllAverageData] = useState([]);
+    const [recentAverageData, setRecentAverageData] = useState([]);
 
     useEffect(() => {
         if (props.userObj === undefined) {
@@ -56,6 +58,8 @@ function ProfileStats(props) {
         };
         let allBrierArray = [null];
         let recentBrierArray = [null];
+        let averageScoreBrierArray = [null];
+        let recentAverageArray = [null];
         let bestBrierPlayer = 0;
         let worstBrierPlayer = 110;
         let averageBrierPlayer = 0;
@@ -74,9 +78,11 @@ function ProfileStats(props) {
             };
             averageBrierPlayer += userObj.brierScores[i].brierScore;
             allBrierArray.push(userObj.brierScores[i].brierScore);
+            averageScoreBrierArray.push(userObj.brierScores[i].averageScore);
             if (counter < 10) {
                 recentBrierArray.push(userObj.brierScores[i].brierScore);
                 recentLabelsArray.push(`${userObj.brierScores[i].problemName}`);
+                recentAverageArray.push(userObj.brierScores[i].averageScore);
             };
             counter++;
         };
@@ -87,8 +93,12 @@ function ProfileStats(props) {
         // Recent Data
         allBrierArray.push(null);
         recentBrierArray.push(null);
+        averageScoreBrierArray.push(null);
+        recentAverageArray.push(null);
         setRecentData(recentBrierArray.reverse());
+        setRecentAverageData(recentAverageArray.reverse());
         setAllData(allBrierArray.reverse());
+        setAllAverageData(averageScoreBrierArray.reverse());
         allLabelsArray.push("");
         recentLabelsArray.push("");
         setAllLabels(allLabelsArray.reverse());
@@ -104,6 +114,14 @@ function ProfileStats(props) {
                 fill: false,
                 backgroundColor: "rgba(75, 192, 192, 1)",
                 borderColor: "rgba(75, 192, 192, 1)",
+                pointRadius: 4,
+                borderWidth: 4
+            }, {
+                label: "Average Scores (All Players)",
+                data: recentAverageData,
+                fill: false,
+                backgroundColor: "orange",
+                borderColor: "orange",
                 pointRadius: 4,
                 borderWidth: 4
             }
@@ -123,6 +141,14 @@ function ProfileStats(props) {
                 fill: false,
                 backgroundColor: "rgba(75, 192, 192, 1)",
                 borderColor: "rgba(75, 192, 192, 1)",
+                pointRadius: 4,
+                borderWidth: 4
+            }, {
+                label: "Average Scores (All Players)",
+                data: allAverageData,
+                fill: false,
+                backgroundColor: "orange",
+                borderColor: "orange",
                 pointRadius: 4,
                 borderWidth: 4
             }

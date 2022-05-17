@@ -37,6 +37,8 @@ function Search(props) {
     const [worstChangedMe, setWorstChangedMe] = useState(false);
     const [selectedStats, setSelectedStats] = useState("selected");
     const [selectedStats2, setSelectedStats2] = useState("unselected");
+    const [recentAverageData, setRecentAverageData] = useState([]);
+    const [allAverageData, setAllAverageData] = useState([]);
 
     useEffect(() => {
         console.log(props);
@@ -115,6 +117,8 @@ function Search(props) {
     const formatBrierData = async (userObj, username) => {
         let allBrierArray = [null];
         let recentBrierArray = [null];
+        let allAverageBrierArray = [null];
+        let recentAverageBrierArray = [null];
         let bestBrierPlayer = 0;
         let worstBrierPlayer = 110;
         let averageBrierPlayer = 0;
@@ -133,8 +137,10 @@ function Search(props) {
             };
             averageBrierPlayer += userObj.brierScores[i].brierScore;
             allBrierArray.push(userObj.brierScores[i].brierScore);
+            allAverageBrierArray.push(userObj.brierScores[i].averageScore);
             if (counter < 10) {
                 recentBrierArray.push(userObj.brierScores[i].brierScore);
+                recentAverageBrierArray.push(userObj.brierScores[i].averageScore);
                 recentLabelsArray.push(`${userObj.brierScores[i].problemName}`);
             };
             counter++;
@@ -146,8 +152,12 @@ function Search(props) {
         // Recent Data
         allBrierArray.push(null);
         recentBrierArray.push(null);
+        allAverageBrierArray.push(null);
+        recentAverageBrierArray.push(null);
         setRecentData(recentBrierArray.reverse());
         setAllData(allBrierArray.reverse());
+        setRecentAverageData(recentAverageBrierArray.reverse());
+        setAllAverageData(allAverageBrierArray.reverse());
         allLabelsArray.push("");
         recentLabelsArray.push("");
         setAllLabels(allLabelsArray.reverse());
@@ -185,13 +195,24 @@ function Search(props) {
                 borderColor: "rgba(75, 192, 192, 1)",
                 pointRadius: 4,
                 borderWidth: 4
-            }
+            }, {
+                label: "Average Scores (All Players)",
+                data: recentAverageData,
+                fill: false,
+                backgroundColor: "orange",
+                borderColor: "orange",
+                pointRadius: 4,
+                borderWidth: 4
+            }, 
         ],
         spanGaps: false,
         responsive: true,
         maintainAspectRatio: false,
         redraw: false
     };
+
+    // recentAverageData
+    // allAverageData
 
     const allTimeForecastData = {
         labels: allLabels,
@@ -204,7 +225,15 @@ function Search(props) {
                 borderColor: "rgba(75, 192, 192, 1)",
                 pointRadius: 4,
                 borderWidth: 4
-            }
+            }, {
+                label: "Average Scores (All Players)",
+                data: allAverageData,
+                fill: false,
+                backgroundColor: "orange",
+                borderColor: "orange",
+                pointRadius: 4,
+                borderWidth: 4
+            }, 
         ],
         spanGaps: false,
         responsive: true,
