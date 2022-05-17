@@ -50,7 +50,7 @@ function HomeButtonLarge(props) {
         labels: labels,
         datasets: [
             {
-                label: "Recent Forecast Brier Scores",
+                label: "My Recent Brier Scores",
                 data: data,
                 fill: false,
                 backgroundColor: "rgba(75, 192, 192, 1)",

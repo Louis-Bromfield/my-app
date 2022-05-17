@@ -109,7 +109,7 @@ function ProfileStats(props) {
         labels: recentLabels,
         datasets: [
             {
-                label: "Forecast Scores",
+                label: "My Scores",
                 data: recentData,
                 fill: false,
                 backgroundColor: "rgba(75, 192, 192, 1)",
@@ -136,7 +136,7 @@ function ProfileStats(props) {
         labels: allLabels,
         datasets: [
             {
-                label: "Forecast Scores",
+                label: "My Scores",
                 data: allData,
                 fill: false,
                 backgroundColor: "rgba(75, 192, 192, 1)",

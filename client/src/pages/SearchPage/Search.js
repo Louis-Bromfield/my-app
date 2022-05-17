@@ -188,7 +188,7 @@ function Search(props) {
         labels: recentLabels,
         datasets: [
             {
-                label: "Forecast Scores",
+                label: "Player's Scores",
                 data: recentData,
                 fill: false,
                 backgroundColor: "rgba(75, 192, 192, 1)",
@@ -218,7 +218,7 @@ function Search(props) {
         labels: allLabels,
         datasets: [
             {
-                label: "Forecast Scores",
+                label: "Player's Scores",
                 data: allData,
                 fill: false,
                 backgroundColor: "rgba(75, 192, 192, 1)",
