@@ -15,6 +15,7 @@ import Learn from './pages/LearnPage/Learn';
 import Search from './pages/SearchPage/Search';
 import Profile from './pages/ProfilePage/Profile';
 import Login from './pages/LoginPage/Login';
+import HelpOurResearch from './pages/HelpOurResearchPage/HelpOurResearch';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -92,6 +93,7 @@ function App() {
             <Route path='/leaderboard' render={(props) => <IndividualLeaderboard {...props} username={username} />} />
             <Route path='/learn' render={(props) => <Learn {...props} username={username} isLoggedIn={isLoggedIn} />} />
             <Route path='/search' render={(props) => <Search {...props} />} />
+            <Route path='/help-our-research' render={(props) => <HelpOurResearch {...props} />}/>
             <Route exact path='/loaderio-3453265497ff3bf6dedab322adc3e24e/' render={(props) => <Home {...props} username={username} name={name} user={userObject} />} />
             <Route path='/my-profile' render={(props) => <Profile {...props} user={userObject} username={username} name={name} updateUsername={updateUsername} profilePicture={profilePicture}/>} />
           </Switch>

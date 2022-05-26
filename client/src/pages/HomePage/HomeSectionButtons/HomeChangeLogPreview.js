@@ -4,9 +4,10 @@ import './HomeChangeLogPreview.css';
 
 function HomeChangeLogPreview() {
     const changeLogArr = [
+        `26.05.2022 Added profile preview to the home page. Added levels and use FFPoints as XP. Added a tab to the Profile Page to showcase all rewards earnt and upcoming (currently under construction). Added Help Our Research tab to the Navbar, page currently under construction.`,
         `17.05.2022 Added average player data to the My Stats charts on Profile pages, Search pages and the Home page preview.`,
         `16.05.2022 Placed Articles tab under construction, also added leaderboard filtering by account type.`,
-        `10.05.2022 Added problem-specifc results tab. Go to My Forecasts > Select a problem from the dropdown and select the Results tab.`,
+        `10.05.2022 Added problem-specific results tab. Go to My Forecasts > Select a problem from the dropdown and select the Results tab.`,
         `03.05.2022 Updated the ClosedProblemModal (pop-up).`,
         `28.03.2022 Updated code to be able to handle international user-based input.`,
         `27.03.2022 Fixed code that was informing users they got a boost on their prediction no matter what. Fixed it to ensure it's just for 75 or above scores.`,
@@ -32,13 +33,13 @@ function HomeChangeLogPreview() {
                             return (
                                 <span key={item} className="list-span">
                                     <h4 style={{ color: "#404d72"}}>{item.slice(0, 10)}</h4>
-                                    <h4>{item.slice(11, item.length)}</h4>
+                                    <p>{item.slice(11, item.length)}</p>
                                 </span>
                             )
                         } else return (
                             <span key={item} className="list-span">
                                 <h4 style={{ color: "#404d72"}}>{item.slice(0, 10)}</h4>
-                                <h4>{item.slice(11, 70)}...</h4>
+                                <p>{item.slice(11, 70)}...</p>
                             </span>
                         )
                     } else return null;

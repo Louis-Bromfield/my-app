@@ -50,7 +50,7 @@
 }
 
 .home-page-news-feed {
-    max-height: 130vh;
+    max-height: 153vh;
     -ms-overflow-style: none; /* for Internet Explorer, Edge */
     scrollbar-width: none; /* for Firefox */
     overflow-y: scroll; 

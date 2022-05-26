@@ -4,6 +4,7 @@ import './Profile.css';
 import ProfileStats from './ProfileStats';
 import ProfileDetails from './ProfileDetails';
 import Modal from '../../components/Modal';
+import ProfileRewards from './ProfileRewards';
 
 function Profile(props) {
     const [markets, setMarkets] = useState("");
@@ -15,6 +16,8 @@ function Profile(props) {
     const [userObj, setUserObj] = useState();
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
+    const [level, setLevel] = useState(0);
+    const [profileTab, setProfileTab] = useState("my-stats");
 
     useEffect(() => {
         if (props.user.markets === undefined) {
@@ -57,6 +60,7 @@ console.log("Profile.js UE");
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/profileData/${username}`);
             setUserObj(userDocument.data.userObj);
             setFantasyForecastPoints(userDocument.data.userObj.fantasyForecastPoints);
+            setLevel((userDocument.data.userObj.fantasyForecastPoints/100).toFixed(0));
             setBrierAverage(Number(userDocument.data.averageBrier).toFixed(0));
             setBestForecast(`${(userDocument.data.bestBrier).toFixed(2)} / 110 - ${userDocument.data.bestForecastProblem}`);
             setBrierScoresArr(userDocument.data.userObj.brierScoresArr);
@@ -114,6 +118,10 @@ console.log("Profile.js UE");
                         <img className="profile-profile-pic" src={props.profilePicture || localStorage.getItem("profilePicture")} alt="Temporary profile pic"/>
                         <div className="profile-summary">
                             <ul className="profile-summary-list">
+                                <li key={0} className="profile-summary-list-item">
+                                    <h3>Forecaster Level:</h3>
+                                    <h4>{fantasyForecastPoints === undefined ? (props.user.fantasyForecastPoints/100).toFixed(0): level}</h4>
+                                </li>
                                 <li key={1} className="profile-summary-list-item">
                                     <h3>Fantasy Forecast Points:</h3>
                                     <h4>{fantasyForecastPoints === undefined ? props.user.fantasyForecastPoints.toFixed(0): fantasyForecastPoints.toFixed(0)}</h4>
@@ -137,17 +145,28 @@ console.log("Profile.js UE");
                             </ul>
                         </div>
                     </div>
-                    <ProfileStats 
-                        username={props.username} 
-                        brierScores={brierScoresArr} 
-                        userObj={userObj} 
-                    />
-                    <ProfileDetails 
-                        username={props.username} 
-                        updateUsername={props.updateUsername} 
-                        setShowModal={setShowModal}
-                        setModalContent={setModalContent}
-                    />
+                    <div className="profile-stats-rewards-container">
+                        <div className="profile-nav-menu">
+                            <div className="profile-tab" onClick={() => setProfileTab("my-stats")}><h3>My Stats</h3></div>
+                            <div className="profile-tab" onClick={() => setProfileTab("my-rewards")}><h3>My Rewards</h3></div>
+                        </div>
+                        {profileTab === "my-stats" && <ProfileStats 
+                            username={props.username} 
+                            brierScores={brierScoresArr} 
+                            userObj={userObj} 
+                            profileTab={profileTab}
+                        />}
+                        {profileTab === "my-rewards" && <ProfileRewards />}
+                        </div>
+                        {/* <ProfileDetails 
+                            username={props.username} 
+                            updateUsername={props.updateUsername} 
+                            setShowModal={setShowModal}
+                            setModalContent={setModalContent}
+                        /> */}
+                        {/* Add the ability to download all their data here */}
+                        <h2>Download Your Data</h2>
+                        <h3>This feature is under construction, come back soon!</h3>
                 </div>
             </div>
         </div>

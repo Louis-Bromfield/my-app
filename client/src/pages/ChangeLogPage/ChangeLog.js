@@ -3,6 +3,7 @@ import './ChangeLog.css';
 
 function ChangeLog() {
     const changeLogArr = [
+        `26.05.2022 Added profile preview to the home page. Added levels and use FFPoints as XP. Added a tab to the Profile Page to showcase all rewards earnt and upcoming (currently under construction). Added Help Our Research tab to the Navbar, page currently under construction.`,
         `17.05.2022 Added average player data to the My Stats charts on Profile pages, Search pages and the Home page preview.`,
         `16.05.2022 Placed Articles tab under construction, also added leaderboard filtering by account type.`,
         `10.05.2022 Added problem-specifc results tab. Go to My Forecasts > Select a problem from the dropdown and select the Results tab.`,
@@ -30,7 +31,7 @@ function ChangeLog() {
                     return (
                         <div key={item} className="full-list-item">
                             <h4 style={{ color: "#404d72"}}>{item.slice(0, 10)}</h4>
-                            <h4>{item.slice(11, item.length)}</h4>
+                            <p>{item.slice(11, item.length)}</p>
                         </div>
                     )
                 })}

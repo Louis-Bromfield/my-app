@@ -9,6 +9,7 @@ import Onboarding from './HomeSectionButtons/Onboarding';
 import Modal from '../../components/Modal';
 import ClosedProblemModal from '../../components/ClosedProblemModal';
 import HomeChangeLogPreview from './HomeSectionButtons/HomeChangeLogPreview';
+import HomeProfilePreview from './HomeSectionButtons/HomeProfilePreview';
 
 function Home(props) {
     let width, height;
@@ -116,6 +117,9 @@ function Home(props) {
                         />
                     </div>
                     <div className="home-page-stats-div">
+                        <HomeProfilePreview 
+                            user={userObj}
+                        />
                         <NewForecastsCallToAction username={props.username} /> 
                         <div className={onboardingClassName}>
                             <Onboarding 

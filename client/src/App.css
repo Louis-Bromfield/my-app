@@ -10,6 +10,7 @@
 
 .main-div {
     background-color: rgb(248, 247, 247);
+    padding-bottom: 5vh;
 }
 
 .home,
@@ -20,7 +21,8 @@
 .profile,
 .login,
 .forecast-analysis,
-.change-log {
+.change-log,
+.help-our-research {
   display: flex;
   margin: 3vh 0vw 4vh 8vw;
   background-color: rgb(248, 247, 247);

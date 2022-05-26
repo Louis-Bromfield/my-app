@@ -17,10 +17,10 @@
 
 .navbar-grid {
     display: grid;
-    grid-template-columns: 18% 54% 18%;
+    grid-template-columns: 18% 55% 18%;
     column-gap: 5%;
     justify-content: center;
-    width: 80%;
+    width: 85%;
 }
 
 .nav-bar-title {
@@ -163,7 +163,7 @@
         font-size: 0.85em;
     }
     .navbar-grid {
-        width: 85%;
+        width: 95%;
         grid-template-columns: 16% 59% 18%;
     }
     .navbar-profile-pic {
@@ -189,9 +189,9 @@
     }
     .navbar-grid {
         width: 85%;
-        grid-template-columns: 27% 53% 20%;
+        grid-template-columns: 25% 67% 18%;
         padding-top: 0.5%;
-        /* column-gap: 5%; */
+        column-gap: 2%;
     }
     .user-logout-container {
         padding-top: 2%;
@@ -205,6 +205,12 @@
     .nav-text-profile,
     .nav-logout-btn {
         font-size: 0.9em;
+    }
+}
+
+@media (max-width: 800px) {
+    .navbar-grid {
+        grid-template-columns: 30% 50% 25%;
     }
 }
 

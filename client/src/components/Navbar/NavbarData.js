@@ -1,5 +1,6 @@
 import React from 'react'
 import * as AiIcons from 'react-icons/ai';
+import * as FaIcons from 'react-icons/fa';
 
 export const NavbarData = [
     {
@@ -31,6 +32,12 @@ export const NavbarData = [
         path: "/search",
         icon: <AiIcons.AiOutlineSearch size={20} />,
         iconSelected: <AiIcons.AiOutlineSearch size={20} color={"#fff"} />
+    },
+    {
+        title: "Help Our Research",
+        path: "/help-our-research",
+        icon: <FaIcons.FaHandsHelping size = {20} />,
+        iconSelected: <FaIcons.FaHandsHelping size = {20} color={"#fff"}/>
     },
     {
         title: "My Profile",
