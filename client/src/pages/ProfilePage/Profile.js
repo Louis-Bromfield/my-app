@@ -5,6 +5,7 @@ import ProfileStats from './ProfileStats';
 import ProfileDetails from './ProfileDetails';
 import Modal from '../../components/Modal';
 import ProfileRewards from './ProfileRewards';
+import ProfileForecasts from './ProfileForecasts';
 
 function Profile(props) {
     const [markets, setMarkets] = useState("");
@@ -148,6 +149,7 @@ console.log("Profile.js UE");
                     <div className="profile-stats-rewards-container">
                         <div className="profile-nav-menu">
                             <div className="profile-tab" onClick={() => setProfileTab("my-stats")}><h3>My Stats</h3></div>
+                            <div className="profile-tab" onClick={() => setProfileTab("my-forecasts")}><h3>My Forecasts</h3></div>
                             <div className="profile-tab" onClick={() => setProfileTab("my-rewards")}><h3>My Rewards</h3></div>
                         </div>
                         {profileTab === "my-stats" && <ProfileStats 
@@ -156,6 +158,7 @@ console.log("Profile.js UE");
                             userObj={userObj} 
                             profileTab={profileTab}
                         />}
+                        {profileTab === "my-forecasts" && <ProfileForecasts userObj={userObj}/>}
                         {profileTab === "my-rewards" && <ProfileRewards />}
                         </div>
                         {/* <ProfileDetails 

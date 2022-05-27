@@ -1,0 +1,13 @@
+.profile-forecasts {
+    padding: 1%;
+}
+
+.profile-forecasts-individual-result {
+    padding: 1%;
+}
+
+.problem-header, 
+.score-header {
+    display: flex;
+    flex-direction: row;
+}
