@@ -1,15 +1,27 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import './ReportAnyIssues.css';
 import axios from 'axios';
 
 function ReportAnyIssues() {
+    const history = useHistory();
     const [reportType, setReportType] = useState("General Feedback");
     const [reportComments, setReportComments] = useState("_");
     const [reportResponse, setReportResponse] = useState("");
     const [reportResponseColour, setReportResponseColour] = useState("");
 
     const submitComments = async (type, comments) => {
+        if (reportComments === "") {
+            setReportResponseColour("red");
+            setReportResponse("Please enter a comment in the field above.");
+            return;
+        } else if (/^\s*$/.test(reportComments)) {
+            setReportResponseColour("red");
+            setReportResponse("Please enter text into the comment field above");
+            return;
+        };
         try {
+            setReportResponse("");
             const res = await axios.post('https://fantasy-forecast-politics.herokuapp.com/helpers/submitFeedback', {
                 reportType: type,
                 reportComments: comments
@@ -29,6 +41,11 @@ function ReportAnyIssues() {
 
     return (
         <div className="report-any-issues">
+            <button 
+                className="return-to-home-btn" 
+                onClick={() => history.push("/")}>
+                    Return to Home
+            </button>
             <h1>Fantasy Forecast Feedback Page</h1>
             <p>While a lot of time and care has gone into Fantasy Forecast, we're aware that it's never going to be perfect. That's why we created this page; to allow you to submit any feedback you have, positive or negative, constructive criticism, or to help make us aware of any bugs or errors you've encountered through your use of the site. All feedback is anonymous so there is no way of tracing it back to you, so speak your mind and hopefully we can improve Fantasy Forecast for everyone, together!</p>
                 <form className="report-form">

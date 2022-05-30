@@ -3,6 +3,20 @@
     width: 85%;
 }
 
+.return-to-home-btn {
+    background-color: #404d72;
+    color: #fff;
+    width: 20%;
+    padding: 0.5%;
+    border: none;
+    margin-bottom: 1vh;
+}
+
+.return-to-home-btn:hover {
+    cursor: pointer;
+    background-color: #6e83bd;
+}
+
 .report-fieldset {
     display: flex;
     flex-direction: column;
