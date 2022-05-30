@@ -5,6 +5,8 @@ import axios from 'axios';
 function ReportAnyIssues() {
     const [reportType, setReportType] = useState("General Feedback");
     const [reportComments, setReportComments] = useState("_");
+    const [reportResponse, setReportResponse] = useState("");
+    const [reportResponseColour, setReportResponseColour] = useState("");
 
     const submitComments = async (type, comments) => {
         try {
@@ -12,7 +14,13 @@ function ReportAnyIssues() {
                 reportType: type,
                 reportComments: comments
             });
-            console.log(res);
+            if (res.status === 200) {
+                setReportResponseColour("green");
+                setReportResponse("Your feedback has been submitted! Thank you for your input :)")
+            } else {
+                setReportResponseColour("red");
+                setReportResponse("There was an error (not your fault!). Please try again later");
+            };
         } catch (error) {
             console.error("Error in ReportAnyIssues > submitComments");
             console.error(error);
@@ -31,23 +39,23 @@ function ReportAnyIssues() {
                             name="feedback-type" 
                             id="feedback-type" 
                             className="report-select-field"
-                            onChange={(e) => setReportType(e.target.value)}>
+                            onChange={(e) => { setReportType(e.target.value); setReportResponse("")}}>
                                 <option value="General Feedback">General Feedback</option>
                                 <option value="Suggestion">Suggestion</option>
                                 <option value="Report a bug/error">Report a bug/error</option>
                         </select>
                         <label htmlFor="report-comments-field">Comments</label>
-                        <input type="textarea" onChange={(e) => setReportComments(e.target.value)} className="report-comments-field" />
+                        <input type="textarea" onChange={(e) => { setReportComments(e.target.value); setReportResponse("") }} className="report-comments-field" />
                         <input 
                             type="submit" 
                             className="report-submit-btn" 
                             onClick={(e) => {
                                 e.preventDefault(); 
-                                console.log(reportType + reportComments); 
                                 submitComments(reportType, reportComments)
                             }}/>
                     </fieldset>
                 </form>
+                <h2 style={{ color: reportResponseColour}}>{reportResponse}</h2>
         </div>
     )
 }
