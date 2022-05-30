@@ -37,7 +37,7 @@ function ProfileStats(props) {
         };
         setStats(recentForecastData);
         console.log("Profile Stats UE");
-    }, [props.username, props.brierScores, props.profileTab]);
+    }, [props.username, props.brierScores, props.profileTab, props.userObj]);
 
     const getGlobalData = async () => {
         try {
@@ -204,7 +204,7 @@ function ProfileStats(props) {
                         <h2>|</h2>
                         <li className={selectedStats2} onClick={() => { setStats(allTimeForecastData); setSelectedStats("unselected"); setSelectedStats2("selected")}}><h3>All Forecasts</h3></li>
                     </ul>
-                    <Line className="profile-stats-line-chart" data={recentForecastData || stats} options={options} />
+                    <Line className="profile-stats-line-chart" data={stats || recentForecastData} options={options} />
                 </div>
                 <div className="profile-stats-grid">
                     <br/>
