@@ -6,6 +6,9 @@ const FeedbackSchema = mongoose.Schema({
     },
     reportComments: {
         type: String
+    },
+    reportDate: {
+        type: String
     }
 });
 

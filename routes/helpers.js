@@ -32,8 +32,9 @@ router.get("/getPostInfo", async (req, res) => {
 router.post("/submitFeedback", async (req, res) => {
     try {
         const feedbackToSubmit = new Feedback({
-            feedbackType: req.body.reportType,
-            reportComments: req.body.reportComments
+            reportType: req.body.reportType,
+            reportComments: req.body.reportComments,
+            reportDate: new Date().toString()
         })
         const feedback = await feedbackToSubmit.save();
         res.status(200).json(feedback);
