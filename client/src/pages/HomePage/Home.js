@@ -10,6 +10,7 @@ import Modal from '../../components/Modal';
 import ClosedProblemModal from '../../components/ClosedProblemModal';
 import HomeChangeLogPreview from './HomeSectionButtons/HomeChangeLogPreview';
 import HomeProfilePreview from './HomeSectionButtons/HomeProfilePreview';
+import { Link } from 'react-router-dom';
 
 function Home(props) {
     let width, height;
@@ -146,6 +147,10 @@ function Home(props) {
                             user={props.user} 
                         /> 
                         <HomeChangeLogPreview />
+                        <div className="report-any-issues-container">
+                            <h2 className="home-button-small-title">Got any site issues, feedback, or praise?</h2>
+                            <Link to="/report-any-issues" className="home-button-nav-button">Anonymously Submit Your Views Here</Link>
+                        </div>
                     </div>
                 </div>
             </div>

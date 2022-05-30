@@ -112,8 +112,8 @@ function ProfileStats(props) {
                 label: "My Scores",
                 data: recentData,
                 fill: false,
-                backgroundColor: "rgba(75, 192, 192, 1)",
-                borderColor: "rgba(75, 192, 192, 1)",
+                backgroundColor: "#404d72",
+                borderColor: "#404d72",
                 pointRadius: 4,
                 borderWidth: 4
             }, {
@@ -139,8 +139,8 @@ function ProfileStats(props) {
                 label: "My Scores",
                 data: allData,
                 fill: false,
-                backgroundColor: "rgba(75, 192, 192, 1)",
-                borderColor: "rgba(75, 192, 192, 1)",
+                backgroundColor: "#404d72",
+                borderColor: "#404d72",
                 pointRadius: 4,
                 borderWidth: 4
             }, {
@@ -204,7 +204,7 @@ function ProfileStats(props) {
                         <h2>|</h2>
                         <li className={selectedStats2} onClick={() => { setStats(allTimeForecastData); setSelectedStats("unselected"); setSelectedStats2("selected")}}><h3>All Forecasts</h3></li>
                     </ul>
-                    <Line className="profile-stats-line-chart" data={stats || recentForecastData} options={options} />
+                    <Line className="profile-stats-line-chart" data={recentForecastData || stats} options={options} />
                 </div>
                 <div className="profile-stats-grid">
                     <br/>

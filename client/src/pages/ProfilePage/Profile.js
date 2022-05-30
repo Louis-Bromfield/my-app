@@ -19,6 +19,7 @@ function Profile(props) {
     const [modalContent, setModalContent] = useState("");
     const [level, setLevel] = useState(0);
     const [profileTab, setProfileTab] = useState("my-stats");
+    const [forecasterRank, setForecasterRank] = useState("");
 
     useEffect(() => {
         if (props.user.markets === undefined) {
@@ -65,6 +66,29 @@ console.log("Profile.js UE");
             setBrierAverage(Number(userDocument.data.averageBrier).toFixed(0));
             setBestForecast(`${(userDocument.data.bestBrier).toFixed(2)} / 110 - ${userDocument.data.bestForecastProblem}`);
             setBrierScoresArr(userDocument.data.userObj.brierScoresArr);
+            if (userDocument.data.userObj.fantasyForecastPoints < 500) {
+                setForecasterRank("Guesser");
+            } else if (userDocument.data.userObj.fantasyForecastPoints >= 500 && userDocument.data.userObj.fantasyForecastPoints < 1000) {
+                setForecasterRank("Predictor");
+            } else if (userDocument.data.userObj.fantasyForecastPoints >= 1000 && userDocument.data.userObj.fantasyForecastPoints < 1500) {
+                setForecasterRank("Forecaster");
+            } else if (userDocument.data.userObj.fantasyForecastPoints >= 1500 && userDocument.data.userObj.fantasyForecastPoints < 2000) {
+                setForecasterRank("Seer");
+            } else if (userDocument.data.userObj.fantasyForecastPoints >= 2000 && userDocument.data.userObj.fantasyForecastPoints < 2500) {
+                setForecasterRank("Soothsayer");
+            } else if (userDocument.data.userObj.fantasyForecastPoints >= 2500 && userDocument.data.userObj.fantasyForecastPoints < 3000) {
+                setForecasterRank("Oracle");
+            } else if (userDocument.data.userObj.fantasyForecastPoints >= 3000 && userDocument.data.userObj.fantasyForecastPoints < 3500) {
+                setForecasterRank("Prophet");
+            } else if (userDocument.data.userObj.fantasyForecastPoints >= 3500 && userDocument.data.userObj.fantasyForecastPoints < 4000) {
+                setForecasterRank("Clairvoyant");
+            } else if (userDocument.data.userObj.fantasyForecastPoints >= 4000 && userDocument.data.userObj.fantasyForecastPoints < 4500) {
+                setForecasterRank("Augur");
+            } else if (userDocument.data.userObj.fantasyForecastPoints >= 4500 && userDocument.data.userObj.fantasyForecastPoints < 5000) {
+                setForecasterRank("Omniscient");
+            } else if (userDocument.data.userObj.fantasyForecastPoints >= 5000) {
+                setForecasterRank("Diviner");
+            };
         } catch (error) {
             console.error("Error in Profile.js > retrieveUserInfoFromDB");
             console.error(error);
@@ -118,10 +142,10 @@ console.log("Profile.js UE");
                     <div className="profile-main-info">
                         <img className="profile-profile-pic" src={props.profilePicture || localStorage.getItem("profilePicture")} alt="Temporary profile pic"/>
                         <div className="profile-summary">
-                            <ul className="profile-summary-list">
+                            <ul className="profile-summary-list"> 
                                 <li key={0} className="profile-summary-list-item">
                                     <h3>Forecaster Level:</h3>
-                                    <h4>{fantasyForecastPoints === undefined ? (props.user.fantasyForecastPoints/100).toFixed(0): level}</h4>
+                                    <h4>{fantasyForecastPoints === undefined ? (props.user.fantasyForecastPoints/100).toFixed(0): level} - {forecasterRank}</h4>
                                 </li>
                                 <li key={1} className="profile-summary-list-item">
                                     <h3>Fantasy Forecast Points:</h3>

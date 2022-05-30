@@ -53,8 +53,8 @@ function HomeButtonLarge(props) {
                 label: "My Recent Brier Scores",
                 data: data,
                 fill: false,
-                backgroundColor: "rgba(75, 192, 192, 1)",
-                borderColor: "rgba(75, 192, 192, 1)",
+                backgroundColor: "#404d72",
+                borderColor: "#404d72",
                 pointRadius: 3,
                 borderWidth: 3
             }, {

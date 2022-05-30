@@ -1,0 +1,33 @@
+.report-any-issues {
+    flex-direction: column;
+    width: 85%;
+}
+
+.report-fieldset {
+    display: flex;
+    flex-direction: column;
+    padding: 1%;
+    border: 0px solid none;
+}
+
+.report-select-field {
+    width: 20%;
+}
+
+.report-select-field,
+.report-comments-field {
+    margin-bottom: 1vh;
+}
+
+.report-submit-btn {
+    width: 20%;
+    padding: 0.5%;
+    color: #fff;
+    background-color: #404d72;
+    border: 0px;
+}
+
+.report-submit-btn:hover {
+    background-color: #6e83bd;
+    cursor: pointer;
+}

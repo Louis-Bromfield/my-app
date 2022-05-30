@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { extract } = require('article-parser');
+import Feedback from '../models/Feedback';
 
 const getArticleHeadline = async (url) => {
     try {
@@ -26,5 +27,21 @@ router.get("/getPostInfo", async (req, res) => {
         res.json({ error: "Error" });
     };
 });
+
+// Submit feedback
+router.post("/submitFeedback", async (req, res) => {
+    try {
+        const feedbackToSubmit = new Feedback({
+            feedbackType: req.body.reportType,
+            reportComments: req.body.reportComments
+        })
+        const feedback = await feedbackToSubmit.save();
+        res.status(200).json(feedback);
+    } catch (error) {
+        console.error("Error in helpers > submitFeedback");
+        console.error(error);
+        res.json({ error: "Error" });
+    };
+})
 
 module.exports = router;

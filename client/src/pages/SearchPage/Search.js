@@ -39,6 +39,8 @@ function Search(props) {
     const [selectedStats2, setSelectedStats2] = useState("unselected");
     const [recentAverageData, setRecentAverageData] = useState([]);
     const [allAverageData, setAllAverageData] = useState([]);
+    const [playerLevel, setPlayerLevel] = useState(0);
+    const [forecasterRank, setForecasterRank] = useState("");
 
     useEffect(() => {
         console.log(props);
@@ -101,9 +103,33 @@ function Search(props) {
                 retrieveUserRankFromDB(username);
                 setPlayerUsername(userDocument.data[0].username);
                 setPlayerName(userDocument.data[0].name);
+                setPlayerLevel((userDocument.data[0].fantasyForecastPoints/100).toFixed(0));
                 setPlayerPoints(userDocument.data[0].fantasyForecastPoints.toFixed(0));
                 formatMarketsString(userDocument.data[0].markets);
                 setPlayerProfilePic(userDocument.data[0].profilePicture);
+                if (userDocument.data[0].fantasyForecastPoints < 500) {
+                    setForecasterRank("Guesser");
+                } else if (userDocument.data[0].fantasyForecastPoints >= 500 && userDocument.data[0].fantasyForecastPoints < 1000) {
+                    setForecasterRank("Predictor");
+                } else if (userDocument.data[0].fantasyForecastPoints >= 1000 && userDocument.data[0].fantasyForecastPoints < 1500) {
+                    setForecasterRank("Forecaster");
+                } else if (userDocument.data[0].fantasyForecastPoints >= 1500 && userDocument.data[0].fantasyForecastPoints < 2000) {
+                    setForecasterRank("Seer");
+                } else if (userDocument.data[0].fantasyForecastPoints >= 2000 && userDocument.data[0].fantasyForecastPoints < 2500) {
+                    setForecasterRank("Soothsayer");
+                } else if (userDocument.data[0].fantasyForecastPoints >= 2500 && userDocument.data[0].fantasyForecastPoints < 3000) {
+                    setForecasterRank("Oracle");
+                } else if (userDocument.data[0].fantasyForecastPoints >= 3000 && userDocument.data[0].fantasyForecastPoints < 3500) {
+                    setForecasterRank("Prophet");
+                } else if (userDocument.data[0].fantasyForecastPoints >= 3500 && userDocument.data[0].fantasyForecastPoints < 4000) {
+                    setForecasterRank("Clairvoyant");
+                } else if (userDocument.data[0].fantasyForecastPoints >= 4000 && userDocument.data[0].fantasyForecastPoints < 4500) {
+                    setForecasterRank("Augur");
+                } else if (userDocument.data[0].fantasyForecastPoints >= 4500 && userDocument.data[0].fantasyForecastPoints < 5000) {
+                    setForecasterRank("Omniscient");
+                } else if (userDocument.data[0].fantasyForecastPoints >= 5000) {
+                    setForecasterRank("Diviner");
+                };
             };
             setTimeout(() => {
                 setLoading(false);
@@ -191,8 +217,8 @@ function Search(props) {
                 label: "Player's Scores",
                 data: recentData,
                 fill: false,
-                backgroundColor: "rgba(75, 192, 192, 1)",
-                borderColor: "rgba(75, 192, 192, 1)",
+                backgroundColor: "#404d72",
+                borderColor: "#404d72",
                 pointRadius: 4,
                 borderWidth: 4
             }, {
@@ -221,8 +247,8 @@ function Search(props) {
                 label: "Player's Scores",
                 data: allData,
                 fill: false,
-                backgroundColor: "rgba(75, 192, 192, 1)",
-                borderColor: "rgba(75, 192, 192, 1)",
+                backgroundColor: "#404d72",
+                borderColor: "#404d72",
                 pointRadius: 4,
                 borderWidth: 4
             }, {
@@ -296,6 +322,10 @@ function Search(props) {
                             <img className="profile-profile-pic" src={playerProfilePic || FakeProfilePic2} alt="Temporary profile pic"/>
                             <div className="profile-summary">
                                 <ul className="profile-summary-list">
+                                    <li key={0} className="profile-summary-list-item">
+                                        <h3>Forecaster Level:</h3>
+                                        <h4>{playerLevel} - {forecasterRank}</h4>
+                                    </li>
                                     <li key={1} className="profile-summary-list-item">
                                         <h3>Fantasy Forecast Points:</h3>
                                         <h4>{playerPoints}</h4>
@@ -331,7 +361,7 @@ function Search(props) {
                                         <h2>|</h2>
                                         <li className={selectedStats2} onClick={() => { setStats(allTimeForecastData); setSelectedStats("unselected"); setSelectedStats2("selected")}}><h3>All Forecasts</h3></li>
                                     </ul>
-                                    <Line className="profile-stats-line-chart" data={stats || recentForecastData} options={options} />
+                                    <Line className="profile-stats-line-chart" data={recentForecastData || stats} options={options} />
                                 </div>
                                 <div className="profile-stats-grid">
                                     <br/>

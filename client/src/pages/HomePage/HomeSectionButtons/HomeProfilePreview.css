@@ -3,8 +3,6 @@
     display: flex;
     flex-direction: column;
     box-shadow: 0.5px 1px 2.5px 0.5px #888888;
-    margin-bottom: 1vh;
-    /* margin-bottom: 5%; */
     padding: 2%;
     background-color: #fff;
     font-size: 0.9em;
@@ -19,12 +17,8 @@
 }
 
 .home-profile-preview-img {
-    /* min-width: 15%; */
     width: 15%;
-    /* max-width: 15%; */
-    /* min-height: 35%; */
     height: 35%;
-    /* max-height: 35%; */
     object-fit: cover;
     border-radius: 8px;
 }
@@ -39,6 +33,7 @@
     display: flex;
     justify-content: center;
     border: 1px solid #404d72;
+    border-radius: 10px;
 }
 
 .home-profile-preview-xp {

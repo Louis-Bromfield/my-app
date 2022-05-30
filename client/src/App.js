@@ -16,6 +16,7 @@ import Search from './pages/SearchPage/Search';
 import Profile from './pages/ProfilePage/Profile';
 import Login from './pages/LoginPage/Login';
 import HelpOurResearch from './pages/HelpOurResearchPage/HelpOurResearch';
+import ReportAnyIssues from './pages/ReportAnyIssuesPage/ReportAnyIssues';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -96,6 +97,7 @@ function App() {
             <Route path='/help-our-research' render={(props) => <HelpOurResearch {...props} />}/>
             <Route exact path='/loaderio-3453265497ff3bf6dedab322adc3e24e/' render={(props) => <Home {...props} username={username} name={name} user={userObject} />} />
             <Route path='/my-profile' render={(props) => <Profile {...props} user={userObject} username={username} name={name} updateUsername={updateUsername} profilePicture={profilePicture}/>} />
+            <Route path='/report-any-issues' render={(props) => <ReportAnyIssues {...props} />} />
           </Switch>
         </Router>
       }
