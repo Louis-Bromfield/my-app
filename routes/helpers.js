@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { extract } = require('article-parser');
-import Feedback from '../models/Feedback';
+const Feedback = require('../models/Feedback');
 
 const getArticleHeadline = async (url) => {
     try {
