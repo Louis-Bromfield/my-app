@@ -18,11 +18,6 @@ app.use('/homePageNewsFeedPosts', homePageNewsFeedRoutes);
 const helperRoutes = require('./routes/helpers');
 app.use('/helpers', helperRoutes);
 
-// const onboardingRoutes = require('./routes/onboarding');
-// app.use('/onboarding', onboardingRoutes);
-
-// newest one
-
 const userRoutes = require('./routes/users');
 app.use('/users', userRoutes);
 
@@ -40,6 +35,9 @@ app.use('/forecasts', forecastsRoutes);
 
 const imageUploadRoutes = require("./routes/uploadImageRoute");
 app.use("/api", imageUploadRoutes);
+
+const submitFeedbackRoutes = require("./routes/helpers");
+app.use("/submitFeedback", submitFeedbackRoutes);
 
 app.use(express.static(path.join(__dirname, "client", "build")))
 
