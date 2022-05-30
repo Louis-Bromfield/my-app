@@ -11,13 +11,9 @@ function ReportAnyIssues() {
     const [reportResponseColour, setReportResponseColour] = useState("");
 
     const submitComments = async (type, comments) => {
-        if (reportComments === "") {
+        if (reportComments === "" || /^\s*$/.test(reportComments)) {
             setReportResponseColour("red");
             setReportResponse("Please enter a comment in the field above.");
-            return;
-        } else if (/^\s*$/.test(reportComments)) {
-            setReportResponseColour("red");
-            setReportResponse("Please enter text into the comment field above");
             return;
         };
         try {
@@ -50,7 +46,7 @@ function ReportAnyIssues() {
             <p>While a lot of time and care has gone into Fantasy Forecast, we're aware that it's never going to be perfect. That's why we created this page; to allow you to submit any feedback you have, positive or negative, constructive criticism, or to help make us aware of any bugs or errors you've encountered through your use of the site. All feedback is anonymous so there is no way of tracing it back to you, so speak your mind and hopefully we can improve Fantasy Forecast for everyone, together!</p>
                 <form className="report-form">
                     <fieldset className="report-fieldset">
-                        <h2>Submit Your Feedback Anonymously Here:</h2>
+                        <h2 style={{ color: "#404d72" }}>Submit Your Feedback Anonymously Here:</h2>
                         <label htmlFor="feedback-type">Feedback Type:</label>
                         <select 
                             name="feedback-type" 
@@ -72,7 +68,7 @@ function ReportAnyIssues() {
                             }}/>
                     </fieldset>
                 </form>
-                <h2 style={{ color: reportResponseColour}}>{reportResponse}</h2>
+                <h3 style={{ color: reportResponseColour}}>{reportResponse}</h3>
         </div>
     )
 }
