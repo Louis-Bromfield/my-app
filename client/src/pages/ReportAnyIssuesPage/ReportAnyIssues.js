@@ -8,7 +8,7 @@ function ReportAnyIssues() {
 
     const submitComments = async (type, comments) => {
         try {
-            const res = await axios.post('https://fantasy-forecast-politics.herokuapp.com/feedback', {
+            const res = await axios.post('https://fantasy-forecast-politics.herokuapp.com/helpers/submitFeedback', {
                 reportType: type,
                 reportComments: comments
             });
