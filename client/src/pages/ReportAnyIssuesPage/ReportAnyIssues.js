@@ -6,7 +6,7 @@ import axios from 'axios';
 function ReportAnyIssues() {
     const history = useHistory();
     const [reportType, setReportType] = useState("General Feedback");
-    const [reportComments, setReportComments] = useState("_");
+    const [reportComments, setReportComments] = useState("");
     const [reportResponse, setReportResponse] = useState("");
     const [reportResponseColour, setReportResponseColour] = useState("");
 
