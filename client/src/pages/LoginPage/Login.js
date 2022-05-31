@@ -67,7 +67,12 @@ function Login(props) {
             else if (user.data[0].username === username && user.data[0].password === password) {
                 // add error checking for forbidden symbols/characters in name field
                 const name = user.data[0].name.split(" ");
+
+
+                // If we get it working, all we need is this line as Google will handle all the above issues / won't be an issue if they have a Google Account
                 props.login(username, name[0], user.data[0].markets, user.data[0], user.data[0].profilePicture);
+
+
             }
         } catch (error) {
             console.error("Error in Login.js > login method");
@@ -161,11 +166,11 @@ function Login(props) {
                 </div> 
             </div> */}
             <div className="google-login-container">
-            <form action="https://fantasy-forecast-politics.herokuapp.com/auth/google">
-                <button type="submit" className="google-button">
+            {/* <form action="https://fantasy-forecast-politics.herokuapp.com/auth/google"> */}
+                <button onClick="https://fantasy-forecast-politics.herokuapp.com/auth/google" className="google-button">
                     <span className="google-button__text">Sign in with Google</span>
                 </button>
-            </form>
+            {/* </form> */}
             </div>
         </div>
     )
