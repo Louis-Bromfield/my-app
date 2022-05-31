@@ -81,7 +81,7 @@ function Navbar(props) {
                             className="mobile-nav-logout-btn" 
                             onClick={() => {
                                 signOut(props.logOut); 
-                                history.push("/")
+                                history.push("/sign-in")
                             }}>
                                 Log Out
                         </button>
@@ -180,7 +180,7 @@ function Navbar(props) {
                                                 className="nav-logout-btn" 
                                                 onClick={() => {
                                                     signOut(props.logOut); 
-                                                    history.push("/")
+                                                    history.push("/sign-in")
                                                 }}>
                                                     Log Out
                                                 </button>

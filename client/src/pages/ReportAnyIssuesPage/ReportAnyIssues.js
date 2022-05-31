@@ -39,7 +39,7 @@ function ReportAnyIssues() {
         <div className="report-any-issues">
             <button 
                 className="return-to-home-btn" 
-                onClick={() => history.push("/")}>
+                onClick={() => history.push("/home")}>
                     Return to Home
             </button>
             <h1>Fantasy Forecast Feedback Page</h1>

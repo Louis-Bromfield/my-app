@@ -105,7 +105,7 @@ function IndividualNewsFeedPost(props) {
         <div className="individual-post-container">
             <button 
                 className="post-button"
-                onClick={() => history.push("/")}>
+                onClick={() => history.push("/home")}>
                     Return to Home
             </button>
             <div className="post-container">

@@ -85,7 +85,7 @@ function App() {
             {/* <Route path='/leaderboard' component={IndividualLeaderboard} /> */}
             {/* <Route path='/learn' component={Learn} /> */}
             {/* <Route path='/my-profile' component={Profile} /> */}
-            <Route exact path='/' render={(props) => <Home {...props} username={username} name={name} user={userObject} />} />
+            <Route exact path='/home' render={(props) => <Home {...props} username={username} name={name} user={userObject} />} />
             <Route path="/change-log" render={(props) => <ChangeLog {...props} />} />
             <Route path="/news-post" render={(props) => <IndividualNewsFeedPost {...props} />} />
             <Route path='/forecast' render={(props) => <Forecast {...props} markets={markets} username={username} />} />
@@ -105,7 +105,7 @@ function App() {
         <Router>
           <ScrollToTop /> 
           <Switch>
-            <Route exact path='/' render={(props) => <Login {...props} login={login}/>} />
+            <Route exact path='/sign-in' render={(props) => <Login {...props} login={login}/>} />
           </Switch>
       </Router>
       }
