@@ -130,6 +130,17 @@ function Login(props) {
         }
     }
 
+    const oAuthLogin = async () => {
+        try {
+            const loginObj = await axios.get("https://fantasy-forecast-politics.herokuapp.com/auth/google");
+            console.log(loginObj);
+        } catch (err) {
+            console.error("Error in Login.js > login method");
+            console.error(err);
+            setLoginError("There was an error. Please try again.");
+        }
+    }
+
     return (
         <div className="login-main-div">
             <img className="login-logo" src={FFLogo} alt="" />
@@ -166,11 +177,11 @@ function Login(props) {
                 </div> 
             </div> */}
             <div className="google-login-container">
-            <form action="https://fantasy-forecast-politics.herokuapp.com/auth/google">
-                <button type="submit" className="google-button">
+            {/* <form action="https://fantasy-forecast-politics.herokuapp.com/auth/google"> */}
+                <button onClick={() => oAuthLogin} className="google-button">
                     <span className="google-button__text">Sign in with Google</span>
                 </button>
-            </form>
+            {/* </form> */}
             </div>
         </div>
     )
