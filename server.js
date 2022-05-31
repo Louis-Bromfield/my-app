@@ -25,6 +25,29 @@ app.use(session({
     saveUninitialized: false
 }));
 
+const OnboardingSchema = mongoose.Schema({
+    visitProfilePage: {
+        type: Boolean,
+        default: false
+    },
+    joinAMarket: {
+        type: Boolean,
+        default: false
+    },
+    submitAPost: {
+        type: Boolean,
+        default: false
+    },
+    submitAForecast: {
+        type: Boolean,
+        default: false
+    },
+    completeALearnQuiz: {
+        type: Boolean,
+        default: false
+    },
+});
+
 const UserSchema = mongoose.Schema({
     username: {
         type: String
@@ -64,7 +87,7 @@ const UserSchema = mongoose.Schema({
 UserSchema.plugin(passportLocalMongoose);
 UserSchema.plugin(findOrCreate);
 
-const User = new mongoose.model("User", userSchema);
+const User = new mongoose.model("User", UserSchema);
 
 passport.use(User.createStrategy());
 
