@@ -179,18 +179,21 @@ app.get("/auth/google", passport.authenticate("google", {
 
 app.get("/auth/google/callback", passport.authenticate("google", { 
     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com/sign-in" }), function(req, res) { 
+        console.log("==============================================");
+        console.log("=================REQ=================");
         console.log(req);
+        console.log("=================RES=================");
         console.log(res);
         // localStorage.setItem("isLoggedIn", true);
-        res.status(200).send(true, "You logged in!");
         res.redirect("https://fantasy-forecast-politics.herokuapp.com/home")
+        // res.status(200).send("You logged in!");
     }
 );
 
 app.get("/logout", function(req, res) {
     // localStorage.setItem("isLoggedIn", false);
-    res.status(200).send(false, "You logged out!");
     res.redirect("https://fantasy-forecast-politics.herokuapp.com/sign-in");
+    // res.status(200).send("You logged out!");
 });
 
 app.get("*", (req, res) => {
