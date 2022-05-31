@@ -179,7 +179,7 @@ app.get("/auth/google/callback", passport.authenticate("google", {
         console.log(req);
         console.log(res);
         res.redirect("https://fantasy-forecast-politics.herokuapp.com")
-    };
+    }
 );
 
 app.get("/logout", function(req, res) {
