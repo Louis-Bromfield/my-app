@@ -25,6 +25,9 @@ app.use(session({
     saveUninitialized: false
 }));
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 const OnboardingSchema = mongoose.Schema({
     visitProfilePage: {
         type: Boolean,
@@ -117,9 +120,7 @@ passport.use(new GoogleStrategy({
         // prolificID: prolificIDStateVariable,
         googleID: profile.id, 
         username: profile.displayName, 
-        profilePicture: profile.photos[0].value || "",
-        email: profile.emails[0].value || "No email found", 
-        name: `${profile.name.givenName} ${profile.name.familyName}` 
+        profilePicture: profile.photos[0].value || ""
     }, function (err, user) {
         return cb(err, user);
     });
