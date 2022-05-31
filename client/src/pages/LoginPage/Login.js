@@ -128,7 +128,7 @@ function Login(props) {
     return (
         <div className="login-main-div">
             <img className="login-logo" src={FFLogo} alt="" />
-            <div className="login-signup-container">
+            {/* <div className="login-signup-container">
                 <div className="login-div">
                     <h1 className="form-title">Login</h1>
                     <input type="text" className="input-field" placeholder="Enter Username" onChange={(e) => handleUsernameChange(e)}/>
@@ -159,6 +159,13 @@ function Login(props) {
                     {createAccountError !== "" && <h3 className="error-message">{createAccountError}</h3>}
                     {createAccountText !== "" && <h3 className="text-message">{createAccountText}</h3>}
                 </div> 
+            </div> */}
+            <div className="google-login-container">
+            <form action="http://localhost:4000/auth/google">
+                <button type="submit" className="google-button">
+                    <span className="google-button__text">Sign in with Google</span>
+                </button>
+            </form>
             </div>
         </div>
     )

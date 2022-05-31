@@ -23,14 +23,55 @@ const OnboardingSchema = mongoose.Schema({
     },
 });
 
+// Non-OAuth Schema
+// const UserSchema = mongoose.Schema({
+//     username: {
+//         type: String
+//     },
+//     password: {
+//         type: String
+//     },
+//     email: {
+//         type: String
+//     },
+//     fantasyForecastPoints: {
+//         type: Number,
+//         default: 0
+//     },
+//     isGroup: {
+//         type: Boolean
+//     },
+//     markets: {
+//         type: Array,
+//         default: []
+//     },
+//     name: {
+//         type: String
+//     },
+//     onboarding: {
+//         type: OnboardingSchema,
+//     },
+//     brierScores: {
+//         type: Array,
+//         default: []
+//     },
+//     numberOfClosedForecasts: {
+//         type: Number,
+//         default: 0
+//     },
+//     profilePicture: {
+//         type: String,
+//         default: ""
+//     },
+//     articleVisits: {
+//         type: Number,
+//         default: 0
+//     }
+// });
+
+// OAuth Schema
 const UserSchema = mongoose.Schema({
     username: {
-        type: String
-    },
-    password: {
-        type: String
-    },
-    email: {
         type: String
     },
     fantasyForecastPoints: {
@@ -43,9 +84,6 @@ const UserSchema = mongoose.Schema({
     markets: {
         type: Array,
         default: []
-    },
-    name: {
-        type: String
     },
     onboarding: {
         type: OnboardingSchema,

@@ -7,9 +7,101 @@ const cors = require('cors');
 const port = process.env.PORT || 5000;
 const path = require("path");
 
+// OAuth
+const session = require("express-session");
+const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const findOrCreate = require("mongoose-findorcreate");
+
 // Middleware
 app.use(express.json());
 app.use(cors());
+
+// OAuth
+app.use(session({
+    secret: "Our little secret.",
+    resave: false,
+    saveUninitialized: false
+}));
+
+const UserSchema = mongoose.Schema({
+    username: {
+        type: String
+    },
+    fantasyForecastPoints: {
+        type: Number,
+        default: 0
+    },
+    isGroup: {
+        type: Boolean
+    },
+    markets: {
+        type: Array,
+        default: []
+    },
+    onboarding: {
+        type: OnboardingSchema,
+    },
+    brierScores: {
+        type: Array,
+        default: []
+    },
+    numberOfClosedForecasts: {
+        type: Number,
+        default: 0
+    },
+    profilePicture: {
+        type: String,
+        default: ""
+    },
+    articleVisits: {
+        type: Number,
+        default: 0
+    }
+});
+
+UserSchema.plugin(passportLocalMongoose);
+UserSchema.plugin(findOrCreate);
+
+const User = new mongoose.model("User", userSchema);
+
+passport.use(User.createStrategy());
+
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+        done(err, user);
+    });
+});
+
+
+// Access our variables from .env file and create a new user
+passport.use(new GoogleStrategy({
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    callbackURL: "https://fantasy-forecast-politics.herokuapp.com/auth/google/callback",
+    userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ 
+        // when we implement, we want them to input their prolificID first, and save that as state
+        // then we pass it into this mongoose command (findOrCreate), as the success/failure of 
+        // the OAuth login is when the redirect occurs, so the prolificID must be obtained prior
+        // prolificID: prolificIDStateVariable,
+        googleID: profile.id, 
+        username: profile.displayName, 
+        profilePicture: profile.photos[0].value || "",
+        email: profile.emails[0].value || "No email found", 
+        name: `${profile.name.givenName} ${profile.name.familyName}` 
+    }, function (err, user) {
+        return cb(err, user);
+    });
+  }
+));
 
 // Routes
 const homePageNewsFeedRoutes = require('./routes/homePageNewsFeedPosts');
@@ -49,6 +141,24 @@ db.once("open", () => console.log("Successfully connected to the Database"));
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
+
+app.get("/auth/google", passport.authenticate("google", {
+    // scope: ["profile"] 
+    scope: [
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/userinfo.email'
+    ]
+}));
+
+app.get("/auth/google/callback", passport.authenticate("google", { 
+    failureRedirect: "https://fantasy-forecast-politics.herokuapp.com" }), function(req, res) { 
+        res.redirect("https://fantasy-forecast-politics.herokuapp.com")
+    }
+);
+
+app.get("/logout", function(req, res) {
+    res.redirect("https://fantasy-forecast-politics.herokuapp.com/");
 });
 
 // Port listening

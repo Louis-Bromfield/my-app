@@ -7,6 +7,7 @@ const parser = require("../middleware/cloudinary.config");
 const Images = require("../models/Images");
 const HomePageNewsFeedPosts = require('../models/HomePageNewsFeedPosts');
 const Leaderboards = require('../models/Leaderboards');
+const findOrCreate = require("mongoose-findorcreate");
 
 // Get all forecasts that are in the user's markets that the user has NOT yet attempted (for home page C2A)
 router.get("/unattemptedForecasts/:username", async (req, res) => {
