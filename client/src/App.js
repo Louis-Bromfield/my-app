@@ -85,7 +85,7 @@ function App() {
             {/* <Route path='/leaderboard' component={IndividualLeaderboard} /> */}
             {/* <Route path='/learn' component={Learn} /> */}
             {/* <Route path='/my-profile' component={Profile} /> */}
-            <Route exact path='/home' render={(props) => <Home {...props} username={username} name={name} user={userObject} />} />
+            <Route path='/home' render={(props) => <Home {...props} username={username} name={name} user={userObject} />} />
             <Route path="/change-log" render={(props) => <ChangeLog {...props} />} />
             <Route path="/news-post" render={(props) => <IndividualNewsFeedPost {...props} />} />
             <Route path='/forecast' render={(props) => <Forecast {...props} markets={markets} username={username} />} />
@@ -95,7 +95,6 @@ function App() {
             <Route path='/learn' render={(props) => <Learn {...props} username={username} isLoggedIn={isLoggedIn} />} />
             <Route path='/search' render={(props) => <Search {...props} />} />
             <Route path='/help-our-research' render={(props) => <HelpOurResearch {...props} />}/>
-            <Route exact path='/loaderio-3453265497ff3bf6dedab322adc3e24e/' render={(props) => <Home {...props} username={username} name={name} user={userObject} />} />
             <Route path='/my-profile' render={(props) => <Profile {...props} user={userObject} username={username} name={name} updateUsername={updateUsername} profilePicture={profilePicture}/>} />
             <Route path='/report-any-issues' render={(props) => <ReportAnyIssues {...props} />} />
           </Switch>

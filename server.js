@@ -181,6 +181,7 @@ app.get("/auth/google/callback", passport.authenticate("google", {
     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com/sign-in" }), function(req, res) { 
         console.log(req);
         console.log(res);
+        localStorage.setItem("isLoggedIn", false);
         res.redirect("https://fantasy-forecast-politics.herokuapp.com/home")
     }
 );
