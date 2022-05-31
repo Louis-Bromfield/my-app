@@ -104,7 +104,7 @@ function App() {
         <Router>
           <ScrollToTop /> 
           <Switch>
-            <Route exact path='/sign-in' render={(props) => <Login {...props} login={login}/>} />
+            <Route path='/sign-in' render={(props) => <Login {...props} login={login}/>} />
           </Switch>
       </Router>
       }
