@@ -5,7 +5,7 @@ import * as FaIcons from 'react-icons/fa';
 export const NavbarData = [
     {
         title: "Home",
-        path: "/",
+        path: "/home",
         icon: <AiIcons.AiFillHome size={20} />,
         iconSelected: <AiIcons.AiFillHome size={20} color={"#fff"} />
     },
