@@ -182,14 +182,14 @@ app.get("/auth/google/callback", passport.authenticate("google", {
         console.log(req);
         console.log(res);
         // localStorage.setItem("isLoggedIn", true);
-        res.send(true, "You logged in!");
+        res.status(200).send(true, "You logged in!");
         res.redirect("https://fantasy-forecast-politics.herokuapp.com/home")
     }
 );
 
 app.get("/logout", function(req, res) {
     // localStorage.setItem("isLoggedIn", false);
-    res.send(false, "You logged out!");
+    res.status(200).send(false, "You logged out!");
     res.redirect("https://fantasy-forecast-politics.herokuapp.com/sign-in");
 });
 
