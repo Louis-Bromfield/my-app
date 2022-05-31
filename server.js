@@ -20,7 +20,7 @@ app.use(cors());
 
 // OAuth
 app.use(session({
-    secret: "Our little secret.",
+    secret: "Our little secrety.",
     resave: false,
     saveUninitialized: false
 }));
