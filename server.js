@@ -176,8 +176,10 @@ app.get("/auth/google", passport.authenticate("google", {
 
 app.get("/auth/google/callback", passport.authenticate("google", { 
     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com" }), function(req, res) { 
+        console.log(req);
+        console.log(res);
         res.redirect("https://fantasy-forecast-politics.herokuapp.com")
-    }
+    };
 );
 
 app.get("/logout", function(req, res) {
