@@ -130,6 +130,7 @@ function Login(props) {
         }
     }
 
+    // Tried this as alternative to form action, didn't work. Hmmmm.
     const oAuthLogin = async () => {
         try {
             const loginObj = await axios.get("https://fantasy-forecast-politics.herokuapp.com/auth/google");
@@ -178,7 +179,7 @@ function Login(props) {
             </div> */}
             <div className="google-login-container">
             {/* <form action="https://fantasy-forecast-politics.herokuapp.com/auth/google"> */}
-                <button onClick={() => oAuthLogin} className="google-button">
+                <button type="submit" onClick={() => oAuthLogin} className="google-button">
                     <span className="google-button__text">Sign in with Google</span>
                 </button>
             {/* </form> */}
