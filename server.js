@@ -1,3 +1,5 @@
+// REVERT TO ONE UNDO FROM HERE
+
 // Imports
 require('dotenv').config();
 const express = require('express');
@@ -163,9 +165,9 @@ const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Successfully connected to the Database"));
 
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-});
+// app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+// });
 
 app.get("/auth/google", passport.authenticate("google", {
     // scope: ["profile"] 
@@ -185,6 +187,10 @@ app.get("/auth/google/callback", passport.authenticate("google", {
 
 app.get("/logout", function(req, res) {
     res.redirect("https://fantasy-forecast-politics.herokuapp.com/");
+});
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 // Port listening
