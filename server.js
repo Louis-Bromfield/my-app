@@ -122,7 +122,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: `https://fantasy-forecast-politics.herokuapp.com/auth/google/callback/${usernameFromClient}`,
+    callbackURL: "https://fantasy-forecast-politics.herokuapp.com/auth/google/callback",
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -167,6 +167,7 @@ const imageUploadRoutes = require("./routes/uploadImageRoute");
 app.use("/api", imageUploadRoutes);
 
 const submitFeedbackRoutes = require("./routes/helpers");
+const Users = require('./models/Users');
 app.use("/submitFeedback", submitFeedbackRoutes);
 
 app.use(express.static(path.join(__dirname, "client", "build")))
@@ -210,8 +211,17 @@ app.get("/auth/google/not_callback/:username/:prolificID",
     }
 ));
 
+// const updateUserDocToShowSignIn = async (username, next) => {
+//     try {
+//         const userData = await Users.findOneAndUpdate()
+//     } catch (error) {
+//         console.error("Error in updateUserDocToShowSignIn");
+//         console.error(error);
+//     };
+// };
 
-app.get("/auth/google/callback/:username", passport.authenticate("google", { 
+
+app.get("/auth/google/callback/", passport.authenticate("google", { 
     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com" }), function(req, res) { 
         console.log("==============================================");
         console.log("=================REQ=================");
