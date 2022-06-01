@@ -175,16 +175,13 @@ const loggingMiddleWare = (req, res) => {
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 };
 
-app.get("/auth/google", 
-    loggingMiddleWare(req, res),
-    passport.authenticate("google", {
-        // scope: ["profile"] 
-        scope: [
-            'https://www.googleapis.com/auth/userinfo.profile',
-            'https://www.googleapis.com/auth/userinfo.email'
-        ]
-    }
-));
+app.get("/auth/google", (req, res) => loggingMiddleWare(req, res), passport.authenticate("google", {
+    // scope: ["profile"] 
+    scope: [
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/userinfo.email'
+    ]
+}));
 
 app.get("/auth/google/callback", passport.authenticate("google", { 
     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com" }), function(req, res) { 
