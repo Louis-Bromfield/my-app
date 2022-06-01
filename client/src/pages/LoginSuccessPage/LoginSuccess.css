@@ -1,0 +1,118 @@
+.login-main-div {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-top: 10vh;
+    align-items: center;
+    width: 100%;
+    background-color: #404d72;
+}
+
+.login-logo {
+    width: 30%;
+    margin-bottom: 5vh;
+}
+
+.login-signup-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 40% 40%;
+    column-gap: 5%;
+    justify-content: center;
+}
+
+.login-div,
+.signup-div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 1%;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.form-title {
+    color: #fff;
+}
+
+.input-field,
+.input-field-photo {
+    width: 90%;
+    padding: 1%;
+    text-align: center;
+    margin-bottom: 0.5vh;
+    border: 2px solid white;
+    border-radius: 4px;
+}
+
+.input-field-photo {
+    color: #fff;
+}
+
+.login-div > input:hover {
+    border: 2px solid green;
+}
+
+.label-input-container {
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    justify-content: center;
+    vertical-align: middle;
+    border: 0.5px solid white;
+    padding: 1%;
+    margin: 1%;
+    color: #fff;
+}
+
+.login-btn,
+.signup-btn {
+    background-color: rgb(96, 209, 96);
+    border: none;
+    color: #fff;
+    width: 30%;
+    padding: 1%;
+    font-size: 1em;
+    cursor: pointer;
+    margin: 0 auto;
+    margin-bottom: 1vh;
+}
+
+.login-btn:hover,
+.signup-btn:hover {
+    background-color: rgb(104, 189, 104);
+    transition: 0.2s ease;
+}
+
+.error-message {
+    text-align: center;
+    color: red;
+}
+
+.text-message {
+    color: rgb(100, 216, 100);
+}
+
+@media (max-width: 700px) {
+    .login-signup-container {
+        display: flex;
+        flex-direction: column;
+    }
+    .login-logo {
+        width: 60%;
+        margin-bottom: 0;
+    }
+    .form-title {
+        font-size: 1.5em;
+    }
+    .login-div > h3,
+    .signup-div > h3 {
+        font-size: 0.9em;
+    }
+    .extra-text {
+        text-align: center;
+        margin-top: 1vh;
+        margin-bottom: 1vh;
+    }
+}
+

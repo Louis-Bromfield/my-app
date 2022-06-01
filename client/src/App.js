@@ -15,6 +15,7 @@ import Learn from './pages/LearnPage/Learn';
 import Search from './pages/SearchPage/Search';
 import Profile from './pages/ProfilePage/Profile';
 import Login from './pages/LoginPage/Login';
+import LoginSuccess from './pages/LoginSuccessPage/LoginSuccess';
 import HelpOurResearch from './pages/HelpOurResearchPage/HelpOurResearch';
 import ReportAnyIssues from './pages/ReportAnyIssuesPage/ReportAnyIssues';
 
@@ -125,6 +126,7 @@ function App() {
           <ScrollToTop /> 
           <Switch>
             <Route exact path='/' render={(props) => <Login {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
+            <Route path='/loginSuccess/' render={(props) => <LoginSuccess {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
           </Switch>
       </Router>
       }

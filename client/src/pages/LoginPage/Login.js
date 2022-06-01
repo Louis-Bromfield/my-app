@@ -200,7 +200,7 @@ function Login(props) {
                 </form>
             </div>
             {/* Change loggedIn to localstorage variable and check that, it'll persist across page redirects */}
-            {loggedIn === "true" && <Link to="/home" onClick={() => props.login(username)}><button>You've Logged In, Enter Fantasy Forecast Here</button></Link>}
+            {/* {loggedIn === "true" && <Link to="/home" onClick={() => props.login(username)}><button>You've Logged In, Enter Fantasy Forecast Here</button></Link>} */}
         </div>
     )
 }
