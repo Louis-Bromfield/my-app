@@ -4,7 +4,7 @@ import './ReportAnyIssues.css';
 import axios from 'axios';
 
 function ReportAnyIssues() {
-    const history = useNavigate();
+    const navigate = useNavigate();
     const [reportType, setReportType] = useState("General Feedback");
     const [reportComments, setReportComments] = useState("");
     const [reportResponse, setReportResponse] = useState("");

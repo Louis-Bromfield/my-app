@@ -22,7 +22,7 @@ function IndividualNewsFeedPost(props) {
     const [comments, setComments] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
-    const history = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
         doEffect();

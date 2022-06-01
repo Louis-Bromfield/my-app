@@ -7,7 +7,7 @@ import { useNavigate, Link } from 'react-router-dom';
 
 function Login(props) {
     localStorage.setItem("loggedInFromGoogle", true)
-    const history = useNavigate();
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [prolificID, setProlificID] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);

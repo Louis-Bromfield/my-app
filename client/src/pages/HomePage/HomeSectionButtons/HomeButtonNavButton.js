@@ -4,7 +4,7 @@ import './HomeButtonNavButton.css';
 import PropTypes from 'prop-types';
 
 export const HomeButtonNavButton = (props) => {
-    const history = useNavigate();
+    const navigate = useNavigate();
     let buttonDestination;
     let localStoragePageName;
 

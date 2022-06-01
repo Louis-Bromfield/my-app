@@ -13,7 +13,7 @@ function Navbar(props) {
     const [width, setWidth] = useState(window.innerWidth > 1100);
     const [mobileWidth, setMobileWidth] = useState(window.innerWidth > 650);
     const [sidebar, setSidebar] = useState(false);
-    const history = useNavigate();
+    const navigate = useNavigate();
 
     const showSidebar = () => setSidebar(!sidebar);
 
