@@ -169,13 +169,18 @@ db.once("open", () => console.log("Successfully connected to the Database"));
 //     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 // });
 
-app.get("/auth/google", (req, res) => console.log(req), passport.authenticate("google", {
-    // scope: ["profile"] 
-    scope: [
-        'https://www.googleapis.com/auth/userinfo.profile',
-        'https://www.googleapis.com/auth/userinfo.email'
-    ]
-}));
+app.get("/auth/google", 
+    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"), 
+    (req, res) => console.log(req), 
+    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"), 
+    passport.authenticate("google", {
+        // scope: ["profile"] 
+        scope: [
+            'https://www.googleapis.com/auth/userinfo.profile',
+            'https://www.googleapis.com/auth/userinfo.email'
+        ]
+    }
+));
 
 app.get("/auth/google/callback", passport.authenticate("google", { 
     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com" }), function(req, res) { 
