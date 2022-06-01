@@ -1,4 +1,3 @@
-// Imports
 require('dotenv').config();
 const express = require('express');
 const app = express();
@@ -30,29 +29,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-// const OnboardingSchema = mongoose.Schema({
-//     visitProfilePage: {
-//         type: Boolean,
-//         default: false
-//     },
-//     joinAMarket: {
-//         type: Boolean,
-//         default: false
-//     },
-//     submitAPost: {
-//         type: Boolean,
-//         default: false
-//     },
-//     submitAForecast: {
-//         type: Boolean,
-//         default: false
-//     },
-//     completeALearnQuiz: {
-//         type: Boolean,
-//         default: false
-//     },
-// });
 
 const UserSchema = mongoose.Schema({
     username: {
@@ -134,12 +110,8 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     User.findOrCreate({ 
-        // when we implement, we want them to input their prolificID first, and save that as state
-        // then we pass it into this mongoose command (findOrCreate), as the success/failure of 
-        // the OAuth login is when the redirect occurs, so the prolificID must be obtained prior
         prolificID: prolificIDFromClient,
         googleID: profile.id,
-        // We don't want to use their name (displayName) as their username, we want them to create their own username (don't want to store their personal info!) 
         username: usernameFromClient, 
         profilePicture: profile.photos[0].value || ""
     }, function (err, user) {
@@ -199,14 +171,6 @@ const loggingMiddleWare = (username, prolificID, next) => {
     next();
 };
 
-// app.get("/auth/google", (req, res) => loggingMiddleWare(req, res), passport.authenticate("google", {
-//     // scope: ["profile"] 
-//     scope: [
-//         'https://www.googleapis.com/auth/userinfo.profile',
-//         'https://www.googleapis.com/auth/userinfo.email'
-//     ]
-// }));
-
 app.get("/auth/google/not_callback/:username/:prolificID", 
     (req, res, next) => loggingMiddleWare(req.params.username, req.params.prolificID, next), 
     passport.authenticate("google", {
@@ -218,19 +182,10 @@ app.get("/auth/google/not_callback/:username/:prolificID",
     }
 ));
 
-// const updateUserDocToShowSignIn = async (username, next) => {
-//     try {
-//         const userData = await Users.findOneAndUpdate()
-//     } catch (error) {
-//         console.error("Error in updateUserDocToShowSignIn");
-//         console.error(error);
-//     };
-// };
-
-
 app.get("/auth/google/callback/", passport.authenticate("google", { 
+    // Maybe change failureRedirect to a page that just says login failed, and a button to go back to the login page
     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
-    successRedirect: "https://fantasy-forecast-politics.herokuapp.com/home"
+    successRedirect: "https://fantasy-forecast-politics.herokuapp.com"
 // }), function(req, res) { 
 //         console.log("==============================================");
 //         console.log("=================REQ=================");

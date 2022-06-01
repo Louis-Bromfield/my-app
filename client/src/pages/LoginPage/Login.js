@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 // import axios from 'axios';
 import './Login.css';
 import FFLogo from '../../media/sd2.png';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 
 function Login(props) {
     const history = useHistory();
     const [username, setUsername] = useState("");
     const [prolificID, setProlificID] = useState("");
+    const [loggedIn, setLoggedIn] = useState(false);
     // const [password, setPassword] = useState("");
     // const [loginError, setLoginError] = useState("");
 
@@ -188,11 +189,12 @@ function Login(props) {
                 <input type="text" name="prolificID" id="prolificID" onChange={(e) => { console.log(e.target.value); setProlificID(e.target.value)}}/>
                 {/* <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/${username}`} onSubmit={() => { props.login(username); history.push("/home");}}> */}
                 <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/not_callback/${username}/${prolificID}`}>
-                    <button onClick={() => localStorage.setItem("loggedInFromGoogle", true)} type="submit" className="google-button">
+                    <button onClick={() => { localStorage.setItem("loggedInFromGoogle", true); setLoggedIn(true)}} type="submit" className="google-button">
                         <span className="google-button__text">Sign in with Google</span>
                     </button>
                 </form>
             </div>
+            {loggedIn === true && <Link to="/home"><button>You've Logged In, Enter Fantasy Forecast Here</button></Link>}
         </div>
     )
 }
