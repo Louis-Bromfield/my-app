@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import axios from 'axios';
 import Navbar from './components/Navbar/Navbar';
@@ -98,7 +98,7 @@ function App() {
         <Router>
           <ScrollToTop /> 
           <Navbar logOut={logOut} username={username} profilePicture={profilePicture} />
-          <Switch>
+          <Routes>
             {/* <Route exact path='/' component={Home} /> */}
             {/* <Route path='/forecast' component={Forecast} /> */}
             {/* <Route path='/calibration' component={Calibration} /> */}
@@ -118,16 +118,16 @@ function App() {
             <Route path='/help-our-research' render={(props) => <HelpOurResearch {...props} />}/>
             <Route path='/my-profile' render={(props) => <Profile {...props} user={userObject} username={username} name={name} updateUsername={updateUsername} profilePicture={profilePicture}/>} />
             <Route path='/report-any-issues' render={(props) => <ReportAnyIssues {...props} />} />
-          </Switch>
+          </Routes>
         </Router>
       }
       {isLoggedIn === false &&
         <Router>
           <ScrollToTop /> 
-          <Switch>
+          <Routes>
             <Route exact path='/' render={(props) => <Login {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
             <Route path='/loginSuccess/' render={(props) => <LoginSuccess {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
-          </Switch>
+          </Routes>
       </Router>
       }
     </div>
