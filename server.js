@@ -61,6 +61,9 @@ const UserSchema = mongoose.Schema({
     prolificID: {
         type: String
     },
+    googleID: {
+        type: String
+    },
     fantasyForecastPoints: {
         type: Number,
         default: 0
@@ -206,23 +209,22 @@ app.get("/auth/google/not_callback/:username/:prolificID",
 
 app.get("/auth/google/callback", passport.authenticate("google", { 
     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com" }), function(req, res) { 
+        // updateUserDocToShowSignIn()
+        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+        console.log(res.user);
+        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
         console.log("==============================================");
         console.log("=================REQ=================");
         console.log(req);
         console.log("=================RES=================");
         console.log(res);
         console.log("=================END OF RES=================");
-        // localStorage.setItem("isLoggedIn", true);
         res.redirect("https://fantasy-forecast-politics.herokuapp.com/home")
-        // res.send("Success!");
-        // res.status(200).send("You logged in!");
     }
 );
 
 app.get("/logout", function(req, res) {
-    // localStorage.setItem("isLoggedIn", false);
     res.redirect("https://fantasy-forecast-politics.herokuapp.com");
-    // res.status(200).send("You logged out!");
 });
 
 app.get("*", (req, res) => {
