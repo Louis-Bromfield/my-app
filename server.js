@@ -169,10 +169,14 @@ db.once("open", () => console.log("Successfully connected to the Database"));
 //     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 // });
 
+const loggingMiddleWare = (req, res) => {
+    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"), 
+    console.log(req), 
+    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"), 
+};
+
 app.get("/auth/google", 
-    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"), 
-    (req, res) => console.log(req), 
-    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"), 
+    loggingMiddleWare(req, res),
     passport.authenticate("google", {
         // scope: ["profile"] 
         scope: [
