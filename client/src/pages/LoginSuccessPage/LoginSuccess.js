@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 // import axios from 'axios';
 import './LoginSuccess.css';
 import FFLogo from '../../media/sd2.png';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 
 function LoginSuccess(props) {
