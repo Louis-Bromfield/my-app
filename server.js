@@ -169,9 +169,9 @@ db.once("open", () => console.log("Successfully connected to the Database"));
 //     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 // });
 
-const loggingMiddleWare = (req, res) => {
+const loggingMiddleWare = (username) => {
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    console.log(req);
+    console.log(username);
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 };
 
@@ -183,20 +183,13 @@ const loggingMiddleWare = (req, res) => {
 //     ]
 // }));
 
-app.get("/auth/google/:username", (req, res, next) => {
-    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    console.log(req.params.username);
-    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    next()
-}, (req, res, next) => {
-    passport.authenticate("google", {
-        // scope: ["profile"] 
-        scope: [
-            'https://www.googleapis.com/auth/userinfo.profile',
-            'https://www.googleapis.com/auth/userinfo.email'
-        ]
-    })
-});
+app.get("/auth/google/:username", loggingMiddleWare(req.params.username), passport.authenticate("google", {
+    // scope: ["profile"] 
+    scope: [
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/userinfo.email'
+    ]
+}));
 
 
 app.get("/auth/google/callback", passport.authenticate("google", { 
