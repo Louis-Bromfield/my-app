@@ -170,9 +170,9 @@ db.once("open", () => console.log("Successfully connected to the Database"));
 // });
 
 const loggingMiddleWare = (req, res) => {
-    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"), 
-    console.log(req), 
-    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"), 
+    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    console.log(req);
+    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 };
 
 app.get("/auth/google", 
