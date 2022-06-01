@@ -169,7 +169,7 @@ db.once("open", () => console.log("Successfully connected to the Database"));
 //     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 // });
 
-app.get("/auth/google", console.log(req), passport.authenticate("google", {
+app.get("/auth/google", (req, res) => console.log(req), passport.authenticate("google", {
     // scope: ["profile"] 
     scope: [
         'https://www.googleapis.com/auth/userinfo.profile',
