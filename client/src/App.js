@@ -124,7 +124,7 @@ function App() {
         <Router>
           <ScrollToTop /> 
           <Switch>
-            <Route exact path='/' render={(props) => <Login {...props} login={login} setUserForLogin={setUserForLogin} />} />
+            <Route exact path='/' render={(props) => <Login {...props} login={login} setUserForLogin={setUserForLogin}/>} />
           </Switch>
       </Router>
       }
