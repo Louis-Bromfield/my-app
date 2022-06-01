@@ -46,21 +46,36 @@ function App() {
     localStorage.removeItem('profilePicture');
   };
 
-  const login = (usernameFromLogin, nameFromLogin, marketsFromLogin, userObj, profilePicture) => {
-    setUserObject(userObj);
-    setUsername(usernameFromLogin);
-    setName(nameFromLogin);
-    setMarkets(marketsFromLogin);
-    setProfilePicture(profilePicture);
+//   const login = (usernameFromLogin, nameFromLogin, marketsFromLogin, userObj, profilePicture) => {
+  const login = () => {
+    console.log("In login function");
+    setUserObject("[object Object]");
+    setUsername("LouisB");
+    setName("Louis");
+    setMarkets(["Fantasy Forecast All-Time, French Presidential Election 2022"]);
+    setProfilePicture("https://res.cloudinary.com/dnna7u4ew/image/upload/v1647950871/Fantasy%20Forecast%20Profile%20Pictures/LouisB.png");
     setIsLoggedIn(true);
     localStorage.setItem('isLoggedIn', true);
-    localStorage.setItem('username', usernameFromLogin);
-    localStorage.setItem('name', nameFromLogin);
-    localStorage.setItem('markets', marketsFromLogin);
-    localStorage.setItem('userObj', userObj);
-    localStorage.setItem('profilePicture', profilePicture);
+    localStorage.setItem('username', "LouisB");
+    localStorage.setItem('name', "Louis");
+    localStorage.setItem('markets', ["Fantasy Forecast All-Time, French Presidential Election 2022"]);
+    localStorage.setItem('userObj', "[object Object]");
+    localStorage.setItem('profilePicture', "https://res.cloudinary.com/dnna7u4ew/image/upload/v1647950871/Fantasy%20Forecast%20Profile%20Pictures/LouisB.png");
     localStorage.setItem('selectedPage', "Home");
-  };
+    // setUserObject(userObj);
+    // setUsername(usernameFromLogin);
+    // setName(nameFromLogin);
+    // setMarkets(marketsFromLogin);
+    // setProfilePicture(profilePicture);
+    // setIsLoggedIn(true);
+    // localStorage.setItem('isLoggedIn', true);
+    // localStorage.setItem('username', usernameFromLogin);
+    // localStorage.setItem('name', nameFromLogin);
+    // localStorage.setItem('markets', marketsFromLogin);
+    // localStorage.setItem('userObj', userObj);
+    // localStorage.setItem('profilePicture', profilePicture);
+    // localStorage.setItem('selectedPage', "Home");
+};
 
   useEffect(() => {
       setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
@@ -104,7 +119,7 @@ function App() {
         <Router>
           <ScrollToTop /> 
           <Switch>
-            <Route exact path='/' render={(props) => <Login {...props} login={login}/>} />
+            <Route exact path='/' render={(props) => <Login {...props} login={login} />} />
           </Switch>
       </Router>
       }
