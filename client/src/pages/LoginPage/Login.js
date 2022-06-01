@@ -184,7 +184,7 @@ function Login(props) {
                 <label htmlFor="username">Enter Your Username:</label>
                 <input type="text" name="username" id="username" onChange={(e) => { console.log(e.target.value); setUsername(e.target.value)}}/>
                 {/* <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/${username}`} onSubmit={() => { props.login(username); history.push("/home");}}> */}
-                <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/${username}`}>
+                <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/not_callback/${username}`}>
                     <input type="hidden" name="username" value={username} />
                     <button type="submit" className="google-button">
                         <span className="google-button__text">Sign in with Google</span>

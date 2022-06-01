@@ -184,7 +184,7 @@ const loggingMiddleWare = (username, next) => {
 //     ]
 // }));
 
-app.get("/auth/google/:username", (req, res, next) => loggingMiddleWare(req.params.username, next), passport.authenticate("google", {
+app.get("/auth/google/not_callback/:username", (req, res, next) => loggingMiddleWare(req.params.username, next), passport.authenticate("google", {
     // scope: ["profile"] 
     scope: [
         'https://www.googleapis.com/auth/userinfo.profile',
