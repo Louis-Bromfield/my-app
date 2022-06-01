@@ -6,7 +6,7 @@ import { useHistory, Link } from 'react-router-dom';
 
 
 function Login(props) {
-    localStorage.setItem("loggedInFromGoogle", false)
+    localStorage.setItem("loggedInFromGoogle", true)
     const history = useHistory();
     const [username, setUsername] = useState("");
     const [prolificID, setProlificID] = useState("");
@@ -189,18 +189,18 @@ function Login(props) {
             </div> */}
             <div className="google-login-container">
                 <label htmlFor="username">Enter Your Username:</label>
-                <input type="text" name="username" id="username" onChange={(e) => { console.log(e.target.value); setUsername(e.target.value); props.setUserForLogin(e.targetValue)}}/>
+                <input type="text" name="username" id="username" onChange={(e) => { localStorage.setItem("loggedInFromGoogle", false); console.log(e.target.value); setUsername(e.target.value); props.setUserForLogin(e.targetValue)}}/>
                 <label htmlFor="prolificID">Enter Your ProlificID:</label>
-                <input type="text" name="prolificID" id="prolificID" onChange={(e) => { console.log(e.target.value); setProlificID(e.target.value)}}/>
+                <input type="text" name="prolificID" id="prolificID" onChange={(e) => { localStorage.setItem("loggedInFromGoogle", false); console.log(e.target.value); setProlificID(e.target.value)}}/>
                 {/* <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/${username}`} onSubmit={() => { props.login(username); history.push("/home");}}> */}
                 <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/not_callback/${username}/${prolificID}`}>
-                    <button onClick={() => localStorage.setItem("loggedInFromGoogle", true)} className="google-button">
+                    <button type="submit" className="google-button">
                         <span className="google-button__text">Sign in with Google</span>
                     </button>
                 </form>
             </div>
             {/* Change loggedIn to localstorage variable and check that, it'll persist across page redirects */}
-            {loggedIn === "true" && <Link to="/home"><button>You've Logged In, Enter Fantasy Forecast Here</button></Link>}
+            {loggedIn === "true" && <Link to="/home" onClick={() => props.login(username)}><button>You've Logged In, Enter Fantasy Forecast Here</button></Link>}
         </div>
     )
 }
