@@ -183,9 +183,9 @@ const loggingMiddleWare = (req, res) => {
 //     ]
 // }));
 
-app.get("/auth/google", (req, res, next) => {
+app.get("/auth/google/:username", (req, res, next) => {
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    console.log(req);
+    console.log(req.params.username);
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     next()
 }, (req, res, next) => {
