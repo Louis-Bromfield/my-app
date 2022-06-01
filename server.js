@@ -211,7 +211,7 @@ app.get("/auth/google/callback", passport.authenticate("google", {
     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com" }), function(req, res) { 
         // updateUserDocToShowSignIn()
         console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-        console.log(res.user);
+        console.log(res.client.user);
         console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
         console.log("==============================================");
         console.log("=================REQ=================");
