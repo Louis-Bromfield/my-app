@@ -13,6 +13,7 @@ import HomeProfilePreview from './HomeSectionButtons/HomeProfilePreview';
 import { Link } from 'react-router-dom';
 
 function Home(props) {
+    console.log("here in home");
     let width, height;
     width = window.innerWidth;
     height = window.innerHeight;
@@ -35,6 +36,7 @@ function Home(props) {
 
     useEffect(() => {
         if (localStorage.getItem("loggedInFromGoogle") === "true") {
+            console.log("yes is true");
             props.login(props.userForLogin);
         };
         if (localStorage.getItem("firstVisit") === "true") {
