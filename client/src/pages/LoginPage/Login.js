@@ -183,12 +183,12 @@ function Login(props) {
             </div> */}
             <div className="google-login-container">
                 <label htmlFor="username">Enter Your Username:</label>
-                <input type="text" name="username" id="username" onChange={(e) => { console.log(e.target.value); setUsername(e.target.value)}}/>
+                <input type="text" name="username" id="username" onChange={(e) => { console.log(e.target.value); setUsername(e.target.value); props.setUserForLogin(e.targetValue)}}/>
                 <label htmlFor="prolificID">Enter Your ProlificID:</label>
                 <input type="text" name="prolificID" id="prolificID" onChange={(e) => { console.log(e.target.value); setProlificID(e.target.value)}}/>
                 {/* <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/${username}`} onSubmit={() => { props.login(username); history.push("/home");}}> */}
                 <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/not_callback/${username}/${prolificID}`}>
-                    <button type="submit" className="google-button">
+                    <button onClick={() => localStorage.setItem("loggedInFromGoogle", true)}type="submit" className="google-button">
                         <span className="google-button__text">Sign in with Google</span>
                     </button>
                 </form>

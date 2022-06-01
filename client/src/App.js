@@ -21,6 +21,7 @@ import ReportAnyIssues from './pages/ReportAnyIssuesPage/ReportAnyIssues';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
+  const [userForLogin, setUserForLogin] = useState("");
   const [name, setName] = useState("");
   const [markets, setMarkets] = useState([]);
   const [userObject, setUserObject] = useState({});
@@ -102,7 +103,7 @@ function App() {
             {/* <Route path='/leaderboard' component={IndividualLeaderboard} /> */}
             {/* <Route path='/learn' component={Learn} /> */}
             {/* <Route path='/my-profile' component={Profile} /> */}
-            <Route path='/home' render={(props) => <Home {...props} username={username} name={name} user={userObject} />} />
+            <Route path='/home' render={(props) => <Home {...props} username={username} name={name} user={userObject} login={login} userForLogin={userForLogin} />} />
             <Route path="/change-log" render={(props) => <ChangeLog {...props} />} />
             <Route path="/news-post" render={(props) => <IndividualNewsFeedPost {...props} />} />
             <Route path='/forecast' render={(props) => <Forecast {...props} markets={markets} username={username} />} />
@@ -121,7 +122,7 @@ function App() {
         <Router>
           <ScrollToTop /> 
           <Switch>
-            <Route exact path='/' render={(props) => <Login {...props} login={login} />} />
+            <Route exact path='/' render={(props) => <Login {...props} login={login} setUserForLogin={setUserForLogin}/>} />
           </Switch>
       </Router>
       }

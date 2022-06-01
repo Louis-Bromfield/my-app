@@ -93,6 +93,10 @@ const UserSchema = mongoose.Schema({
     articleVisits: {
         type: Number,
         default: 0
+    },
+    justSignedInWithOAuth: {
+        type: Boolean,
+        default: true
     }
 });
 
@@ -118,7 +122,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "https://fantasy-forecast-politics.herokuapp.com/auth/google/callback",
+    callbackURL: `https://fantasy-forecast-politics.herokuapp.com/auth/google/callback/${usernameFromClient}`,
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -207,12 +211,8 @@ app.get("/auth/google/not_callback/:username/:prolificID",
 ));
 
 
-app.get("/auth/google/callback", passport.authenticate("google", { 
+app.get("/auth/google/callback/:username", passport.authenticate("google", { 
     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com" }), function(req, res) { 
-        // updateUserDocToShowSignIn()
-        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-        console.log(res.client.user);
-        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
         console.log("==============================================");
         console.log("=================REQ=================");
         console.log(req);
