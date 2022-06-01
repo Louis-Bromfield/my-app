@@ -49,7 +49,7 @@ function Home(props) {
         if (props.user.numberOfClosedForecasts === undefined) {
             getClosedForecastCount(localStorage.getItem("username") || props.username);
         };
-    }, [props]);
+    }, [props.user.numberOfClosedForecasts, props.username]);
 
     const getClosedForecastCount = async (username) => {
         try {
