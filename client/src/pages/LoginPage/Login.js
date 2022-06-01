@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 // import axios from 'axios';
 import './Login.css';
 import FFLogo from '../../media/sd2.png';
-import { useHistory, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 function Login(props) {
     localStorage.setItem("loggedInFromGoogle", true)
-    const history = useHistory();
+    const history = useNavigate();
     const [username, setUsername] = useState("");
     const [prolificID, setProlificID] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
@@ -192,7 +192,7 @@ function Login(props) {
                 <input type="text" name="username" id="username" onChange={(e) => { localStorage.setItem("loggedInFromGoogle", false); console.log(e.target.value); setUsername(e.target.value); props.setUserForLogin(e.targetValue)}}/>
                 <label htmlFor="prolificID">Enter Your ProlificID:</label>
                 <input type="text" name="prolificID" id="prolificID" onChange={(e) => { localStorage.setItem("loggedInFromGoogle", false); console.log(e.target.value); setProlificID(e.target.value)}}/>
-                {/* <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/${username}`} onSubmit={() => { props.login(username); history.push("/home");}}> */}
+                {/* <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/${username}`} onSubmit={() => { props.login(username); navigate("/home");}}> */}
                 <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/not_callback/${username}/${prolificID}`}>
                     <button type="submit" className="google-button">
                         <span className="google-button__text">Sign in with Google</span>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './IndividualNewsFeedPost.css';
 import * as AiIcons from 'react-icons/ai';
 import ImagePlaceholder from '../../../media/sd.png';
-import { useHistory, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
 function IndividualNewsFeedPost(props) {
@@ -22,7 +22,7 @@ function IndividualNewsFeedPost(props) {
     const [comments, setComments] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
-    const history = useHistory();
+    const history = useNavigate();
 
     useEffect(() => {
         doEffect();
@@ -105,7 +105,7 @@ function IndividualNewsFeedPost(props) {
         <div className="individual-post-container">
             <button 
                 className="post-button"
-                onClick={() => history.push("/home")}>
+                onClick={() => navigate("/home")}>
                     Return to Home
             </button>
             <div className="post-container">

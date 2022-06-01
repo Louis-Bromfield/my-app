@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
 import { NavbarData } from './NavbarData';
@@ -13,7 +13,7 @@ function Navbar(props) {
     const [width, setWidth] = useState(window.innerWidth > 1100);
     const [mobileWidth, setMobileWidth] = useState(window.innerWidth > 650);
     const [sidebar, setSidebar] = useState(false);
-    const history = useHistory();
+    const history = useNavigate();
 
     const showSidebar = () => setSidebar(!sidebar);
 
@@ -81,7 +81,7 @@ function Navbar(props) {
                             className="mobile-nav-logout-btn" 
                             onClick={() => {
                                 signOut(props.logOut); 
-                                history.push("/")
+                                navigate("/")
                             }}>
                                 Log Out
                         </button>
@@ -180,7 +180,7 @@ function Navbar(props) {
                                                 className="nav-logout-btn" 
                                                 onClick={() => {
                                                     signOut(props.logOut); 
-                                                    history.push("/")
+                                                    navigate("/")
                                                 }}>
                                                     Log Out
                                                 </button>
