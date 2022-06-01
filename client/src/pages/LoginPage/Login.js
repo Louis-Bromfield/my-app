@@ -194,7 +194,7 @@ function Login(props) {
                 <input type="text" name="prolificID" id="prolificID" onChange={(e) => { console.log(e.target.value); setProlificID(e.target.value)}}/>
                 {/* <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/${username}`} onSubmit={() => { props.login(username); history.push("/home");}}> */}
                 <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/not_callback/${username}/${prolificID}`}>
-                    <button onClick={() => localStorage.setItem("loggedInFromGoogle", true)} type="submit" className="google-button">
+                    <button onClick={() => localStorage.setItem("loggedInFromGoogle", true)} className="google-button">
                         <span className="google-button__text">Sign in with Google</span>
                     </button>
                 </form>
