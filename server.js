@@ -183,12 +183,10 @@ const loggingMiddleWare = (req, res) => {
 //     ]
 // }));
 
-app.get("/auth/google/:username", (req, res, next) => {
+app.get("/auth/google/:username", (req, res) => {
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     console.log(req.params.username);
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    next()
-}, (req, res, next) => {
     passport.authenticate("google", {
         // scope: ["profile"] 
         scope: [
