@@ -51,6 +51,8 @@ function App() {
   const login = async (username) => {
     console.log("In login function");
     const userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+    // Need to add user to the Fantasy Forecast All-Time leaderboard document
+    // and to create a document for them in the learnQuizzes collection
     console.log(userObj);
     setUserObject(userObj.data[0]);
     setUsername(userObj.data[0].username);

@@ -38,6 +38,7 @@ function Home(props) {
         if (localStorage.getItem("loggedInFromGoogle") === "true") {
             console.log("yes is true");
             props.login(props.userForLogin);
+            localStorage.setItem("loggedInFromGoogle", false);
         };
         if (localStorage.getItem("firstVisit") === "true") {
             setShowModal(true);
@@ -48,7 +49,7 @@ function Home(props) {
         if (props.user.numberOfClosedForecasts === undefined) {
             getClosedForecastCount(localStorage.getItem("username") || props.username);
         };
-    }, [props.user.numberOfClosedForecasts, props.username]);
+    }, [props]);
 
     const getClosedForecastCount = async (username) => {
         try {

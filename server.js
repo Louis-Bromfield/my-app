@@ -31,28 +31,28 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-const OnboardingSchema = mongoose.Schema({
-    visitProfilePage: {
-        type: Boolean,
-        default: false
-    },
-    joinAMarket: {
-        type: Boolean,
-        default: false
-    },
-    submitAPost: {
-        type: Boolean,
-        default: false
-    },
-    submitAForecast: {
-        type: Boolean,
-        default: false
-    },
-    completeALearnQuiz: {
-        type: Boolean,
-        default: false
-    },
-});
+// const OnboardingSchema = mongoose.Schema({
+//     visitProfilePage: {
+//         type: Boolean,
+//         default: false
+//     },
+//     joinAMarket: {
+//         type: Boolean,
+//         default: false
+//     },
+//     submitAPost: {
+//         type: Boolean,
+//         default: false
+//     },
+//     submitAForecast: {
+//         type: Boolean,
+//         default: false
+//     },
+//     completeALearnQuiz: {
+//         type: Boolean,
+//         default: false
+//     },
+// });
 
 const UserSchema = mongoose.Schema({
     username: {
@@ -73,10 +73,17 @@ const UserSchema = mongoose.Schema({
     },
     markets: {
         type: Array,
-        default: []
+        default: ["Fantasy Forecast All-Time"]
     },
     onboarding: {
-        type: OnboardingSchema,
+        type: Object,
+        default: {
+            visitProfilePage: false,
+            joinAMarket: false,
+            submitAPost: false,
+            submitAForecast: false,
+            completeALearnQuiz: false
+        }
     },
     brierScores: {
         type: Array,
