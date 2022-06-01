@@ -178,8 +178,8 @@ function Login(props) {
                 </div> 
             </div> */}
             <div className="google-login-container">
-            <form action="https://fantasy-forecast-politics.herokuapp.com/auth/google" onSubmit={() => props.login}>
-                <button type="submit" onClick={() => oAuthLogin} className="google-button">
+            <form action="https://fantasy-forecast-politics.herokuapp.com/auth/google" onSubmit={() => props.login()}>
+                <button type="submit" className="google-button">
                     <span className="google-button__text">Sign in with Google</span>
                 </button>
             </form>
