@@ -229,16 +229,18 @@ app.get("/auth/google/not_callback/:username/:prolificID",
 
 
 app.get("/auth/google/callback/", passport.authenticate("google", { 
-    failureRedirect: "https://fantasy-forecast-politics.herokuapp.com" }), function(req, res) { 
-        console.log("==============================================");
-        console.log("=================REQ=================");
-        console.log(req);
-        console.log("=================RES=================");
-        console.log(res);
-        console.log("=================END OF RES=================");
-        res.redirect("https://fantasy-forecast-politics.herokuapp.com")
-    }
-);
+    failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
+    successRedirect: "https://fantasy-forecast-politics.herokuapp.com/home"
+// }), function(req, res) { 
+//         console.log("==============================================");
+//         console.log("=================REQ=================");
+//         console.log(req);
+//         console.log("=================RES=================");
+//         console.log(res);
+//         console.log("=================END OF RES=================");
+//         res.redirect("https://fantasy-forecast-politics.herokuapp.com/home")
+//     }
+}));
 
 app.get("/logout", function(req, res) {
     res.redirect("https://fantasy-forecast-politics.herokuapp.com");
