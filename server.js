@@ -1,5 +1,3 @@
-// REVERT TO ONE UNDO FROM HERE
-
 // Imports
 require('dotenv').config();
 const express = require('express');
@@ -15,6 +13,9 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
+
+let usernameFromClient = "_TEMP_USERNAME";
+let prolificIDFromClient = "_TEMP_PROLIFIC_ID_UNIMPORTED";
 
 // Middleware
 app.use(express.json());
@@ -55,6 +56,9 @@ const OnboardingSchema = mongoose.Schema({
 
 const UserSchema = mongoose.Schema({
     username: {
+        type: String
+    },
+    prolificID: {
         type: String
     },
     fantasyForecastPoints: {
@@ -119,9 +123,10 @@ passport.use(new GoogleStrategy({
         // when we implement, we want them to input their prolificID first, and save that as state
         // then we pass it into this mongoose command (findOrCreate), as the success/failure of 
         // the OAuth login is when the redirect occurs, so the prolificID must be obtained prior
-        // prolificID: prolificIDStateVariable,
-        googleID: profile.id, 
-        username: profile.displayName, 
+        prolificID: prolificIDFromClient,
+        googleID: profile.id,
+        // We don't want to use their name (displayName) as their username, we want them to create their own username (don't want to store their personal info!) 
+        username: usernameFromClient, 
         profilePicture: profile.photos[0].value || ""
     }, function (err, user) {
         return cb(err, user);
@@ -169,10 +174,13 @@ db.once("open", () => console.log("Successfully connected to the Database"));
 //     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 // });
 
-const loggingMiddleWare = (username, next) => {
+const loggingMiddleWare = (username, prolificID, next) => {
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     console.log(username);
+    console.log(prolificID);
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    usernameFromClient = username;
+    prolificIDFromClient = prolificID
     next();
 };
 
@@ -184,13 +192,16 @@ const loggingMiddleWare = (username, next) => {
 //     ]
 // }));
 
-app.get("/auth/google/not_callback/:username", (req, res, next) => loggingMiddleWare(req.params.username, next), passport.authenticate("google", {
-    // scope: ["profile"] 
-    scope: [
-        'https://www.googleapis.com/auth/userinfo.profile',
-        'https://www.googleapis.com/auth/userinfo.email'
-    ]
-}));
+app.get("/auth/google/not_callback/:username/:prolificID", 
+    (req, res, next) => loggingMiddleWare(req.params.username, req.params.prolificID, next), 
+    passport.authenticate("google", {
+        // scope: ["profile"] 
+        scope: [
+            'https://www.googleapis.com/auth/userinfo.profile',
+            'https://www.googleapis.com/auth/userinfo.email'
+        ]
+    }
+));
 
 
 app.get("/auth/google/callback", passport.authenticate("google", { 

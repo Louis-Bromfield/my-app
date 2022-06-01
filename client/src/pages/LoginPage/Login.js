@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 function Login(props) {
     const history = useHistory();
     const [username, setUsername] = useState("");
+    const [prolificID, setProlificID] = useState("");
     // const [password, setPassword] = useState("");
     // const [loginError, setLoginError] = useState("");
 
@@ -183,9 +184,10 @@ function Login(props) {
             <div className="google-login-container">
                 <label htmlFor="username">Enter Your Username:</label>
                 <input type="text" name="username" id="username" onChange={(e) => { console.log(e.target.value); setUsername(e.target.value)}}/>
+                <label htmlFor="prolificID">Enter Your ProlificID:</label>
+                <input type="text" name="prolificID" id="prolificID" onChange={(e) => { console.log(e.target.value); setProlificID(e.target.value)}}/>
                 {/* <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/${username}`} onSubmit={() => { props.login(username); history.push("/home");}}> */}
-                <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/not_callback/${username}`}>
-                    <input type="hidden" name="username" value={username} />
+                <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/not_callback/${username}/${prolificID}`}>
                     <button type="submit" className="google-button">
                         <span className="google-button__text">Sign in with Google</span>
                     </button>
