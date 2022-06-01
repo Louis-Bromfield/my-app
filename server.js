@@ -169,7 +169,7 @@ db.once("open", () => console.log("Successfully connected to the Database"));
 //     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 // });
 
-app.get("/auth/google", passport.authenticate("google", {
+app.get("/auth/google", console.log(req), passport.authenticate("google", {
     // scope: ["profile"] 
     scope: [
         'https://www.googleapis.com/auth/userinfo.profile',
@@ -178,7 +178,7 @@ app.get("/auth/google", passport.authenticate("google", {
 }));
 
 app.get("/auth/google/callback", passport.authenticate("google", { 
-    failureRedirect: "https://fantasy-forecast-politics.herokuapp.com/" }), function(req, res) { 
+    failureRedirect: "https://fantasy-forecast-politics.herokuapp.com" }), function(req, res) { 
         console.log("==============================================");
         console.log("=================REQ=================");
         console.log(req);
@@ -194,7 +194,7 @@ app.get("/auth/google/callback", passport.authenticate("google", {
 
 app.get("/logout", function(req, res) {
     // localStorage.setItem("isLoggedIn", false);
-    res.redirect("https://fantasy-forecast-politics.herokuapp.com/sign-in");
+    res.redirect("https://fantasy-forecast-politics.herokuapp.com");
     // res.status(200).send("You logged out!");
 });
 

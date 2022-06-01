@@ -47,20 +47,22 @@ function App() {
   };
 
 //   const login = (usernameFromLogin, nameFromLogin, marketsFromLogin, userObj, profilePicture) => {
-  const login = () => {
+  const login = async (username) => {
     console.log("In login function");
-    setUserObject("[object Object]");
-    setUsername("LouisB");
-    setName("Louis");
-    setMarkets(["Fantasy Forecast All-Time, French Presidential Election 2022"]);
-    setProfilePicture("https://res.cloudinary.com/dnna7u4ew/image/upload/v1647950871/Fantasy%20Forecast%20Profile%20Pictures/LouisB.png");
+    const userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+    console.log(userObj);
+    setUserObject(userObj.data[0]);
+    setUsername(userObj.data[0].username);
+    setName("XXXXXXXXXX");
+    setMarkets(userObj.data[0].markets);
+    setProfilePicture(userObj.data[0].profilePicture);
     setIsLoggedIn(true);
     localStorage.setItem('isLoggedIn', true);
-    localStorage.setItem('username', "LouisB");
-    localStorage.setItem('name', "Louis");
-    localStorage.setItem('markets', ["Fantasy Forecast All-Time, French Presidential Election 2022"]);
-    localStorage.setItem('userObj', "[object Object]");
-    localStorage.setItem('profilePicture', "https://res.cloudinary.com/dnna7u4ew/image/upload/v1647950871/Fantasy%20Forecast%20Profile%20Pictures/LouisB.png");
+    localStorage.setItem('username', userObj.data[0].username);
+    localStorage.setItem('name', "XXXXXXXXXX");
+    localStorage.setItem('markets', userObj.data[0].markets);
+    localStorage.setItem('userObj', userObj);
+    localStorage.setItem('profilePicture', userObj.data[0].profilePicture);
     localStorage.setItem('selectedPage', "Home");
     // setUserObject(userObj);
     // setUsername(usernameFromLogin);
