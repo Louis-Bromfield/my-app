@@ -208,7 +208,7 @@ app.get("/auth/google/not_callback/:username/:prolificID",
 // //     }
 // }));
 
-app.get("/auth/google/callback/:prolificID", passport.authenticate("google", { 
+app.get("/auth/google/callback/:prolificID", (req, res) => passport.authenticate("google", { 
     // Maybe change failureRedirect to a page that just says login failed, and a button to go back to the login page
     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
     // JOB ONE:
