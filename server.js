@@ -203,7 +203,7 @@ const grabGoogleID = (req, res, next) => {
     next();
 };
 
-app.get("/auth/google/callback/", (req, res, next) => grabGoogleID(req, res, next), passport.authenticate("google", { 
+app.get("/auth/google/callback/", (req, res, next) => grabGoogleID(req, res, next), (req, res, next) => passport.authenticate("google", { 
     // Maybe change failureRedirect to a page that just says login failed, and a button to go back to the login page
     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
     // failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
