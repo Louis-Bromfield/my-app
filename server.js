@@ -110,7 +110,7 @@ passport.use(new GoogleStrategy({
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
-    req.sessions.prolificID = prolificIDFromClient;
+    req.session.prolificID = prolificIDFromClient;
     User.findOrCreate({ 
         prolificID: prolificIDFromClient,
         googleID: profile.id,
@@ -213,7 +213,7 @@ app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, ne
     usernameFromClient = req.params.username;
     prolificIDFromClient = req.params.prolificID;
     req.session.prolificID = req.params.prolificID;
-    console.log("req.params.prolficID = " + req.params.prolificID)
+    console.log("req.params.prolificID = " + req.params.prolificID)
     console.log("req.session.prolficID = " + req.session.prolificID)
     next();
 }, passport.authenticate("google", {
