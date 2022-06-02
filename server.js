@@ -210,6 +210,8 @@ const loggingMiddleWare = (username, prolificID, next) => {
 
 // HERE 
 app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, next) {
+    usernameFromClient = req.params.username;
+    prolificIDFromClient = req.params.prolificID;
     req.session.prolificID = req.params.prolificID;
     console.log("req.params.prolficID = " + req.params.prolificID)
     console.log("req.session.prolficID = " + req.session.prolificID)
