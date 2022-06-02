@@ -233,11 +233,14 @@ const loggingMiddleWare = (username, prolificID, next) => {
 // ));
 
 // HERE 
-app.get("/auth/google/not_callback/:username/:prolificID", (req, res, next) => loggingMiddleWare(req.params.username, req.params.prolificID, next), (req, res) => passport.authenticate("google", {
+app.get("/auth/google/not_callback/:username/:prolificID", (req, res, next) => loggingMiddleWare(req.params.username, req.params.prolificID, next), function(error, response, body) {
+    let jsonRes = JSON.parse(body);
+    console.log(jsonRes);
+}, passport.authenticate("google", {
         // THIS vvvvvv WORKS BUT IT RETURNS "_TEMP_PROLIFIC_ID_UNIMPORTED", NOT WHAT LOGGINGMIDDLEWARE UPDATES IT TO
         // state: { prolificID: prolificIDFromClient }
 
-        state: { prolificID: req.params.prolificID }
+        state: { prolificID: jsonRes.prolificID }
     }
 ));
 
