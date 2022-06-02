@@ -11,13 +11,14 @@ function Login(props) {
     const [prolificID, setProlificID] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
     const [problematicInfo, setProblematicInfo] = useState("_");
-    const [credentialsSuccessfullyChecked, setCredentialsSuccessfullyChecked] = useState(false);
+    const [credentialsSuccessfullyChecked, setCredentialsSuccessfullyChecked] = useState();
 
     useEffect(() => {
         setLoggedIn(localStorage.getItem("loggedInFromGoogle"));
     }, []);
 
     const checkCredentials = async (uName, proID) => {
+        console.log("in checkCredentials");
         try {
             const userCheckedByUsername = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${uName}`);
             if (userCheckedByUsername.data.length === 1) {
@@ -52,6 +53,7 @@ function Login(props) {
                     id="username" 
                     onChange={(e) => { 
                         localStorage.setItem("loggedInFromGoogle", false); 
+                        setCredentialsSuccessfullyChecked();
                         setUsername(e.target.value); 
                         props.setUserForLogin(e.targetValue)}}
                 />
@@ -62,6 +64,7 @@ function Login(props) {
                     id="prolificID" 
                     onChange={(e) => { 
                         localStorage.setItem("loggedInFromGoogle", false); 
+                        setCredentialsSuccessfullyChecked();
                         setProlificID(e.target.value)}}
                 />
                 <button onClick={() => checkCredentials(username, prolificID)}>Click Here: Check Your Details</button>
