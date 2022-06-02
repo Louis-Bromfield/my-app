@@ -215,7 +215,7 @@ app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, ne
     prolificIDFromClient = req.params.prolificID;
     req.session.prolificID = req.params.prolificID;
     console.log("req.params.prolificID = " + req.params.prolificID)
-    console.log("req.session.prolficID = " + req.session.prolificID)
+    console.log("req.session.prolificID = " + req.session.prolificID)
     req.prolificID = req.params.prolificID;
     next();
 }, passport.authenticate("google", {
@@ -226,7 +226,8 @@ app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, ne
         ],
         state: req.prolificID
         // state: prolificIDFromClient
-    }
+    },
+    console.log(req)
 ));
 
 app.get("/auth/google/callback", 
