@@ -217,7 +217,7 @@ app.get("/auth/google/callback", (req, res) => passport.authenticate("google", {
     // JOB ONE:
     // look at RES or REQ objects and traverse them to find the user object and it's googleID
     // successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/userGID=108614670038566185853`
-    successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/pAID=${req.params.prolificID}`
+    successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/pAID=OMEGALUL`
 // }), function(req, res) { 
 //         console.log("==============================================");
 //         console.log("=================REQ=================");
