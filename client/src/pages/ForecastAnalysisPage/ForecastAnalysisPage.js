@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './ForecastAnalysisPage.css';
 import ConfidenceFeedback from './ForecastAnalysisPageComponents/ConfidenceFeedback';
 import ReactivenessFeedback from './ForecastAnalysisPageComponents/ReactivenessFeedback';
@@ -9,7 +9,7 @@ import Modal from '../../components/Modal';
 import { FaInfoCircle } from 'react-icons/fa';
 
 function ForecastAnalysisPage(props) {
-    const history = useNavigate();
+    const history = useHistory();
     const [reactivenessScore, setReactivenessScore] = useState(0);
     const [confidenceScore, setConfidenceScore] = useState(0);
     const [timelinessScore, setTimelinessScore] = useState(0);
@@ -158,7 +158,7 @@ function ForecastAnalysisPage(props) {
                 <p>{modalContent}</p>
             </Modal>
             <button 
-                onClick={() => navigate("forecast")} 
+                onClick={() => history.push("forecast")} 
                 className="forecast-analysis-header-link">
                     Back to My Forecasts
             </button>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './IndividualLeaderboard.css';
 import PropTypes from 'prop-types';
 import * as AiIcons from 'react-icons/ai';
@@ -11,7 +11,7 @@ import ConfirmationModal from '../../../components/ConfirmationModal';
 import req from 'express/lib/request';
 
 function IndividualLeaderboard(props) {
-    const history = useNavigate();
+    const history = useHistory();
     const [currentLeaderboardName, setCurrentLeaderboardName] = useState();
     const [filteredRankings, setFilteredRankings] = useState([]);
     const [isFFLeaderboard, setIsFFLeaderboard] = useState();
@@ -132,7 +132,7 @@ function IndividualLeaderboard(props) {
                 };
             };
             localStorage.setItem("markets", newMarkets);
-            navigate("/leaderboard-select");
+            history.push("/leaderboard-select");
             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/removeUser/${leaderboard}/${username}`);
         } catch (error) {
             console.error("Error in IndividualLeaderboard > leaveMarket");
@@ -199,7 +199,7 @@ function IndividualLeaderboard(props) {
             <div className="button-container">
                 <button 
                     className="return-to-leaderboard-menu-btn" 
-                    onClick={() => navigate("leaderboard-select")}>
+                    onClick={() => history.push("leaderboard-select")}>
                         Return to Leaderboard Menu
                 </button>
                 {(currentLeaderboardName !== "Fantasy Forecast All-Time" && props.location.user === true) && 

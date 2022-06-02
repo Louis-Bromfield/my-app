@@ -1,10 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './HomeButtonNavButton.css';
 import PropTypes from 'prop-types';
 
 export const HomeButtonNavButton = (props) => {
-    const history = useNavigate();
+    const history = useHistory();
     let buttonDestination;
     let localStoragePageName;
 
@@ -38,7 +38,7 @@ export const HomeButtonNavButton = (props) => {
         <button 
             className="home-button-nav-button" 
             onClick={() => {
-                navigate(props.path);
+                history.push(props.path);
                 localStorage.setItem("selectedPage", localStoragePageName);
             }}>
                 Go to {buttonDestination}

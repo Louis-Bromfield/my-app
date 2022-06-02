@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './ReportAnyIssues.css';
 import axios from 'axios';
 
 function ReportAnyIssues() {
-    const history = useNavigate();
+    const history = useHistory();
     const [reportType, setReportType] = useState("General Feedback");
     const [reportComments, setReportComments] = useState("");
     const [reportResponse, setReportResponse] = useState("");
@@ -39,7 +39,7 @@ function ReportAnyIssues() {
         <div className="report-any-issues">
             <button 
                 className="return-to-home-btn" 
-                onClick={() => navigate("/home")}>
+                onClick={() => history.push("/home")}>
                     Return to Home
             </button>
             <h1>Fantasy Forecast Feedback Page</h1>
