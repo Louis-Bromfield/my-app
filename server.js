@@ -222,7 +222,8 @@ app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, ne
         scope: [
             'https://www.googleapis.com/auth/userinfo.profile',
             'https://www.googleapis.com/auth/userinfo.email'
-        ]
+        ],
+        state: prolificIDFromClient
     }
 ));
 
@@ -231,6 +232,9 @@ app.get("/auth/google/callback",
         failureRedirect: "https://fantasy-forecast-politics.herokuapp.com"
     }), 
     function(req, res) {
+        console.log("++++++++++++++++++++++++++++");
+        console.log("req.query.state = ");
+        console.log(req.query.state);
         let id = req.session.prolificID;
         console.log("id = " + id);
         if (id) {
