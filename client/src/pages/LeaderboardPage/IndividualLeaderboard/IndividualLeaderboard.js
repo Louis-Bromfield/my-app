@@ -11,7 +11,7 @@ import ConfirmationModal from '../../../components/ConfirmationModal';
 import req from 'express/lib/request';
 
 function IndividualLeaderboard(props) {
-    const navigate = useNavigate();
+    const history = useNavigate();
     const [currentLeaderboardName, setCurrentLeaderboardName] = useState();
     const [filteredRankings, setFilteredRankings] = useState([]);
     const [isFFLeaderboard, setIsFFLeaderboard] = useState();

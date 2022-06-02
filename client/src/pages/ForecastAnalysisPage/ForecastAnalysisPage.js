@@ -9,7 +9,7 @@ import Modal from '../../components/Modal';
 import { FaInfoCircle } from 'react-icons/fa';
 
 function ForecastAnalysisPage(props) {
-    const navigate = useNavigate();
+    const history = useNavigate();
     const [reactivenessScore, setReactivenessScore] = useState(0);
     const [confidenceScore, setConfidenceScore] = useState(0);
     const [timelinessScore, setTimelinessScore] = useState(0);
