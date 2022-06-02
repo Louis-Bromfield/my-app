@@ -218,7 +218,7 @@ app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, ne
     console.log("req.session.prolificID = " + req.session.prolificID)
     req.prolificID = req.params.prolificID;
     next();
-}, (req, res) => passport.authenticate("google", {
+}, passport.authenticate("google", {
         // scope: ["profile"] 
         scope: [
             'https://www.googleapis.com/auth/userinfo.profile',
@@ -228,7 +228,7 @@ app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, ne
         // state: prolificIDFromClient
     },
     console.log("______________________________"),
-    console.log("req.profilicID = " + req.profilicID),
+    console.log("req.prolificID = " + req.prolificID),
     console.log("req.session.prolificID = " + req.session.prolificID)
 ));
 
@@ -237,9 +237,13 @@ app.get("/auth/google/callback",
         failureRedirect: "https://fantasy-forecast-politics.herokuapp.com"
     }), 
     function(req, res) {
-        console.log("++++++++++++++++++++++++++++");
+        console.log("+++++++++++++WE NEED TO GET THEM HERE:+++++++++++++++");
         console.log("req.query.state = ");
         console.log(req.query.state);
+        console.log("req.prolificID = ");
+        console.log(req.prolificID);
+        console.log("req.session.prolificID = ");
+        console.log(req.session.prolificID);
         let id = req.query.state;
         console.log("id = " + id);
         if (id) {
