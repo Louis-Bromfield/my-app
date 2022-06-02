@@ -106,13 +106,16 @@ passport.deserializeUser(function(id, done) {
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: `https://fantasy-forecast-politics.herokuapp.com/auth/google/callback/${prolificIDFromClient}`,
-    userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+    callbackURL: `https://fantasy-forecast-politics.herokuapp.com/auth/google/callback`,
+    userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
+    passReqToCallback: true
   },
-  function(accessToken, refreshToken, profile, cb) {
+  function(req, accessToken, refreshToken, profile, cb) {
       console.log("cb = ");
       console.log(cb);
       console.log(cb.toString());
+      console.log("req = ");
+      console.log(req);
     User.findOrCreate({ 
         prolificID: prolificIDFromClient,
         googleID: profile.id,
@@ -208,7 +211,7 @@ app.get("/auth/google/not_callback/:username/:prolificID",
 // //     }
 // }));
 
-app.get("/auth/google/callback/:prolificID", (req, res) => passport.authenticate("google", { 
+app.get("/auth/google/callback", (req, res) => passport.authenticate("google", { 
     // Maybe change failureRedirect to a page that just says login failed, and a button to go back to the login page
     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
     // JOB ONE:
