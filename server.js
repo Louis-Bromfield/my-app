@@ -108,10 +108,10 @@ passport.use(new GoogleStrategy({
     callbackURL: `https://fantasy-forecast-politics.herokuapp.com/auth/google/callback`,
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
     passReqToCallback: true,
-    scope: [
-        'https://www.googleapis.com/auth/userinfo.profile',
-        'https://www.googleapis.com/auth/userinfo.email'
-    ],
+    // scope: [
+    //     'https://www.googleapis.com/auth/userinfo.profile',
+    //     'https://www.googleapis.com/auth/userinfo.email'
+    // ],
     store: true
   },
   function(req, accessToken, refreshToken, profile, cb) {
@@ -233,28 +233,35 @@ const loggingMiddleWare = (username, prolificID, next) => {
 
 // HERE 
 app.get("/auth/google/not_callback/:username/:prolificID", (req, res, next) => loggingMiddleWare(req.params.username, req.params.prolificID, next), passport.authenticate("google", {
-        // THIS vvvvvv WORKS BUT IT RETURNS "_TEMP_PROLIFIC_ID_UNIMPORTED", NOT WHAT LOGGINGMIDDLEWARE UPDATES IT TO
-        state: { prolificID: prolificIDFromClient }
+    scope: [
+    //  'https://www.googleapis.com/auth/userinfo.profile',
+    //  'https://www.googleapis.com/auth/userinfo.email'
+    ],
+    // THIS vvvvvv WORKS BUT IT RETURNS "_TEMP_PROLIFIC_ID_UNIMPORTED", NOT WHAT LOGGINGMIDDLEWARE UPDATES IT TO
+    // state: { prolificID: prolificIDFromClient }
     }
 ));
 
 app.get("/auth/google/callback", 
     passport.authenticate("google", { 
-        failureRedirect: "https://fantasy-forecast-politics.herokuapp.com"
-    }), 
-    function(req, res) {
-        console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-        console.log("req.authInfo.state = ");
-        console.log(req.authInfo.state);
-        let id = req.authInfo.state.prolificID;
-        console.log("id = " + id);
-        if (id) {
-            res.redirect('https://fantasy-forecast-politics.herokuapp.com/loginSuccess/pAID=' + id)
-        } else {
-            res.redirect('https://fantasy-forecast-politics.herokuapp.com')
-        }
-    }
+        failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
+        successRedirect: "https://fantasy-forecast-politics.herokuapp.com/loginSuccess"
+    })
 );
+//     }), 
+//     function(req, res) {
+//         console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+//         console.log("req.authInfo.state = ");
+//         console.log(req.authInfo.state);
+//         let id = req.authInfo.state.prolificID;
+//         console.log("id = " + id);
+//         if (id) {
+//             res.redirect('https://fantasy-forecast-politics.herokuapp.com/loginSuccess/pAID=' + id)
+//         } else {
+//             res.redirect('https://fantasy-forecast-politics.herokuapp.com')
+//         }
+//     }
+// );
 // TO HERE
 
 // app.get("/auth/google/callback", passport.authenticate("google", { 

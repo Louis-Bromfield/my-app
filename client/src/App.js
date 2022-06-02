@@ -52,13 +52,13 @@ function App() {
   const login = async (prolificID) => {
     console.log("In login function");
     const userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/findByProlificID/${prolificID}`);
+
     console.log(userObj);
     setUserObject(userObj.data[0]);
     setUsername(userObj.data[0].username);
     setName("XXXXXXXXXX");
     setMarkets(userObj.data[0].markets);
     setProfilePicture(userObj.data[0].profilePicture);
-    setIsLoggedIn(true);
     localStorage.setItem('isLoggedIn', true);
     localStorage.setItem('username', userObj.data[0].username);
     localStorage.setItem('name', "XXXXXXXXXX");
@@ -79,6 +79,7 @@ function App() {
     // localStorage.setItem('userObj', userObj);
     // localStorage.setItem('profilePicture', profilePicture);
     // localStorage.setItem('selectedPage', "Home");
+    setIsLoggedIn(true);
 };
 
   useEffect(() => {
@@ -88,7 +89,7 @@ function App() {
       setMarkets(localStorage.getItem('markets'));
       setUserObject(localStorage.getItem('userObj'));
       setProfilePicture(localStorage.getItem('profilePicture'));
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <div className="main-div">
@@ -124,7 +125,7 @@ function App() {
           <ScrollToTop /> 
           <Switch>
             <Route exact path='/' render={(props) => <Login {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
-            <Route path='/loginSuccess/:pAID' render={(props) => <LoginSuccess {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
+            <Route path='/loginSuccess' render={(props) => <LoginSuccess {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
           </Switch>
       </Router>
       }

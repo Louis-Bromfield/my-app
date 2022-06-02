@@ -12,9 +12,9 @@ function LoginSuccess(props) {
     const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
-        const queryParams = new URLSearchParams(window.location.search);
-        setLoggedIn(localStorage.getItem("loggedInFromGoogle"));
-        const userPAID = queryParams.get('pAID');
+        // const queryParams = new URLSearchParams(window.location.search);
+        // setLoggedIn(localStorage.getItem("loggedInFromGoogle"));
+        // const userPAID = queryParams.get('pAID');
         setProlificIDForHomePage(localStorage.getItem("pAID"));
         console.log("LoginSuccess UE");
     }, []);
