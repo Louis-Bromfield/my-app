@@ -218,7 +218,8 @@ app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, ne
     console.log("req.session.prolificID = " + req.session.prolificID)
     req.prolificID = req.params.prolificID;
     next();
-}, (req, res) => passport.authenticate("google", {
+}, function(req, res, next) {
+    passport.authenticate("google", {
         // scope: ["profile"] 
         scope: [
             'https://www.googleapis.com/auth/userinfo.profile',
@@ -226,11 +227,14 @@ app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, ne
         ],
         state: req.prolificID
         // state: prolificIDFromClient
-    },
-    console.log("______________________________"),
-    console.log("req.prolificID = " + req.prolificID),
-    console.log("req.session.prolificID = " + req.session.prolificID)
-));
+    });
+    next();
+    // We know that these variables are accessible here (so they should be in state above as well), commenting them out for now:
+    // },
+    // console.log("______________________________"),
+    // console.log("req.prolificID = " + req.prolificID),
+    // console.log("req.session.prolificID = " + req.session.prolificID)
+});
 
 app.get("/auth/google/callback", 
     passport.authenticate("google", { 
