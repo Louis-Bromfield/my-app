@@ -13,7 +13,7 @@ function LoginSuccess(props) {
 
     useEffect(() => {
         // const queryParams = new URLSearchParams(window.location.search);
-        // setLoggedIn(localStorage.getItem("loggedInFromGoogle"));
+        setLoggedIn(true);
         // const userPAID = queryParams.get('pAID');
         setProlificIDForHomePage(localStorage.getItem("pAID"));
         console.log("LoginSuccess UE");
@@ -22,7 +22,7 @@ function LoginSuccess(props) {
     return (
         <div className="login-main-div">
             <img className="login-logo" src={FFLogo} alt="" />
-            {loggedIn === "true" && <Link to="/home" onClick={() => props.login(prolificIDForHomePage)}><button>You've Logged In, Enter Fantasy Forecast Here</button></Link>}
+            {loggedIn === true && <Link to="/home" onClick={() => props.login(prolificIDForHomePage)}><button>You've Logged In, Enter Fantasy Forecast Here</button></Link>}
         </div>
     )
 }
