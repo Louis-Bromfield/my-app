@@ -113,7 +113,7 @@ router.get("/profileData/:username", async (req, res) => {
 });
 
 // Get one user using their prolificID
-router.get("/findByProlificID/:prolificID", async (req, res) => {
+router.get("/findBy/prolificID/:prolificID", async (req, res) => {
     try {
         const user = await Users.find({ prolificID: req.params.prolificID });
         res.json(user);
