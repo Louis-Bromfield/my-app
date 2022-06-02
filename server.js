@@ -223,7 +223,7 @@ app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, ne
             'https://www.googleapis.com/auth/userinfo.profile',
             'https://www.googleapis.com/auth/userinfo.email'
         ],
-        state: req.params.prolficID
+        state: req.params.prolificID
         // state: prolificIDFromClient
     }
 ));
