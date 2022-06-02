@@ -124,7 +124,8 @@ passport.use(new GoogleStrategy({
         // if this calls the next callback, can we pass in prolificID here?
         console.log("user");
         console.log(user);
-        return cb(err, user, prolificIDFromClient);
+        prolificIDFromClient = user.prolificID;
+        return cb(err, user);
     });
   }
 ));
