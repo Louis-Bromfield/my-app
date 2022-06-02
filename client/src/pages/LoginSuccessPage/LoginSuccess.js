@@ -15,7 +15,7 @@ function LoginSuccess(props) {
         const queryParams = new URLSearchParams(window.location.search);
         setLoggedIn(localStorage.getItem("loggedInFromGoogle"));
         const userPAID = queryParams.get('pAID');
-        setProlificIDForHomePage(userPAID);
+        setProlificIDForHomePage(localStorage.getItem("pAID"));
         console.log("LoginSuccess UE");
     }, []);
  

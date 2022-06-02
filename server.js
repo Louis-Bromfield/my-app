@@ -110,6 +110,9 @@ passport.use(new GoogleStrategy({
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
+      console.log("cb = ");
+      console.log(cb);
+      console.log(cb.toString());
     User.findOrCreate({ 
         prolificID: prolificIDFromClient,
         googleID: profile.id,
@@ -118,7 +121,8 @@ passport.use(new GoogleStrategy({
         // Need to add user to the Fantasy Forecast All-Time leaderboard document
         // and to create a document for them in the learnQuizzes collection
     }, function (err, user) {
-        return cb(err, user);
+        // if this calls the next callback, can we pass in prolificID here?
+        return cb(err, user, prolificIDFromClient);
     });
   }
 ));
@@ -201,10 +205,9 @@ app.get("/auth/google/not_callback/:username/:prolificID",
 // //     }
 // }));
 
-app.get("/auth/google/callback/", (req, res, next) => { console.log("***", req.body, "***", res.body); next(); }, passport.authenticate("google", { 
+app.get("/auth/google/callback/", passport.authenticate("google", { 
     // Maybe change failureRedirect to a page that just says login failed, and a button to go back to the login page
     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
-    // failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
     // JOB ONE:
     // look at RES or REQ objects and traverse them to find the user object and it's googleID
     // successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/userGID=108614670038566185853`

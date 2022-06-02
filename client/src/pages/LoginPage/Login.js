@@ -36,6 +36,7 @@ function Login(props) {
                 } else if (userCheckedByProlificID.data.length === 0) {
                     setProblematicInfo("");
                     setCredentialsSuccessfullyChecked(true);
+                    localStorage.setItem("pAID", proID);
                 };
             };
         } catch (error) {
