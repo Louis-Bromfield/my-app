@@ -110,6 +110,7 @@ passport.use(new GoogleStrategy({
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
+    req.sessions.prolificID = prolificIDFromClient;
     User.findOrCreate({ 
         prolificID: prolificIDFromClient,
         googleID: profile.id,
@@ -154,6 +155,7 @@ app.use("/api", imageUploadRoutes);
 
 const submitFeedbackRoutes = require("./routes/helpers");
 const Users = require('./models/Users');
+const req = require('express/lib/request');
 app.use("/submitFeedback", submitFeedbackRoutes);
 
 app.use(express.static(path.join(__dirname, "client", "build")))
