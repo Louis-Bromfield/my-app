@@ -116,7 +116,6 @@ passport.use(new GoogleStrategy({
     store: true
   },
   function(req, accessToken, refreshToken, profile, cb) {
-    req.session.prolificID = prolificIDFromClient;
     User.findOrCreate({ 
         prolificID: prolificIDFromClient,
         googleID: profile.id,
@@ -181,6 +180,7 @@ const loggingMiddleWare = (username, prolificID, next) => {
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     usernameFromClient = username;
     prolificIDFromClient = prolificID
+    req.piDFC = prolificID;
     next();
 };
 
@@ -233,10 +233,9 @@ const loggingMiddleWare = (username, prolificID, next) => {
 // ));
 
 // HERE 
-app.get("/auth/google/not_callback/:username/:prolificID", (req, res, next) => loggingMiddleWare(req.params.username, req.params.prolificID, next), (req, res) => passport.authenticate("google", {
-        // This does have access to req object, so this state variable IS storing it, it's just a case of how do we get it to the callback below???
-        state: { prolificID: req.params.prolificID }
-        // If this doesn't work, try req.params.prolificID (but might have to add * (req, res, next) => * before passport.authenticate)
+app.get("/auth/google/not_callback/:username/:prolificID", (req, res, next) => loggingMiddleWare(req.params.username, req.params.prolificID, next), passport.authenticate("google", {
+        // THIS vvvvvv WORKS BUT IT RETURNS "_TEMP_PROLIFIC_ID_UNIMPORTED", NOT WHAT LOGGINGMIDDLEWARE UPDATES IT TO
+        state: { prolificID: req.piDFC }
     }
 ));
 
