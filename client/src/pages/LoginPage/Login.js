@@ -21,12 +21,14 @@ function Login(props) {
         console.log("in checkCredentials");
         try {
             const userCheckedByUsername = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${uName}`);
+            console.log(userCheckedByUsername);
             if (userCheckedByUsername.data.length === 1) {
                 setProblematicInfo("username");
                 setCredentialsSuccessfullyChecked(false);
                 return;
             } else {
                 const userCheckedByProlificID = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/findByProlificID/${proID}`);
+                console.log(userCheckedByProlificID);
                 if (userCheckedByProlificID.data.length === 1) {
                     setProblematicInfo("ProlificID");
                     setCredentialsSuccessfullyChecked(false)
