@@ -236,7 +236,8 @@ app.get("/auth/google/not_callback/:username/:prolificID", (req, res, next) => l
             'https://www.googleapis.com/auth/userinfo.email'
         ],
         // This does have access to req object, so this state variable IS storing it, it's just a case of how do we get it to the callback below???
-        state: req.prolificID
+        state: prolificIDFromClient
+        // If this doesn't work, try req.params.prolificID (but might have to add * (req, res, next) => * before passport.authenticate)
     }
 ));
 
