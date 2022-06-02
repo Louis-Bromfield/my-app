@@ -51,8 +51,8 @@ function App() {
 //   const login = (usernameFromLogin, nameFromLogin, marketsFromLogin, userObj, profilePicture) => {
   const login = async (prolificID) => {
     console.log("In login function");
+    console.log("Finding a user with this prolificID: " + prolificID);
     const userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/findByProlificID/${prolificID}`);
-
     console.log(userObj);
     setUserObject(userObj.data[0]);
     setUsername(userObj.data[0].username);
@@ -89,7 +89,7 @@ function App() {
       setMarkets(localStorage.getItem('markets'));
       setUserObject(localStorage.getItem('userObj'));
       setProfilePicture(localStorage.getItem('profilePicture'));
-  }, [isLoggedIn]);
+  }, []);
 
   return (
     <div className="main-div">
