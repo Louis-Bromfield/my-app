@@ -27,7 +27,7 @@ function Login(props) {
                 setCredentialsSuccessfullyChecked(false);
                 return;
             } else {
-                const userCheckedByProlificID = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/findBy/prolificID/${proID}`);
+                const userCheckedByProlificID = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/findByProlificID/${proID}`);
                 console.log(userCheckedByProlificID);
                 if (userCheckedByProlificID.data.length === 1) {
                     setProblematicInfo("ProlificID");
