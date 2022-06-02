@@ -109,6 +109,10 @@ passport.use(new GoogleStrategy({
     callbackURL: `https://fantasy-forecast-politics.herokuapp.com/auth/google/callback`,
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
     passReqToCallback: true,
+    scope: [
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/userinfo.email'
+    ],
     store: true
   },
   function(req, accessToken, refreshToken, profile, cb) {
@@ -230,13 +234,8 @@ const loggingMiddleWare = (username, prolificID, next) => {
 
 // HERE 
 app.get("/auth/google/not_callback/:username/:prolificID", (req, res, next) => loggingMiddleWare(req.params.username, req.params.prolificID, next), passport.authenticate("google", {
-        // scope: ["profile"] 
-        scope: [
-            'https://www.googleapis.com/auth/userinfo.profile',
-            'https://www.googleapis.com/auth/userinfo.email'
-        ],
         // This does have access to req object, so this state variable IS storing it, it's just a case of how do we get it to the callback below???
-        state: prolificIDFromClient
+        state: { prolificID: prolificIDFromClient }
         // If this doesn't work, try req.params.prolificID (but might have to add * (req, res, next) => * before passport.authenticate)
     }
 ));
@@ -246,8 +245,10 @@ app.get("/auth/google/callback",
         failureRedirect: "https://fantasy-forecast-politics.herokuapp.com"
     }), 
     function(req, res) {
-        console.log("++++++++++++++++++++++++++++");
-        let id = req.authInfo.state;
+        console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+        console.log("req.authInfo.state = ");
+        console.log(req.authInfo.state);
+        let id = req.authInfo.state.prolificID;
         console.log("id = " + id);
         if (id) {
             res.redirect('https://fantasy-forecast-politics.herokuapp.com/loginSuccess/pAID=' + id)
