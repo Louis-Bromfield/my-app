@@ -1,27 +1,27 @@
 const mongoose = require('mongoose');
 
-const OnboardingSchema = mongoose.Schema({
-    visitProfilePage: {
-        type: Boolean,
-        default: false
-    },
-    joinAMarket: {
-        type: Boolean,
-        default: false
-    },
-    submitAPost: {
-        type: Boolean,
-        default: false
-    },
-    submitAForecast: {
-        type: Boolean,
-        default: false
-    },
-    completeALearnQuiz: {
-        type: Boolean,
-        default: false
-    },
-});
+// const OnboardingSchema = mongoose.Schema({
+//     visitProfilePage: {
+//         type: Boolean,
+//         default: false
+//     },
+//     joinAMarket: {
+//         type: Boolean,
+//         default: false
+//     },
+//     submitAPost: {
+//         type: Boolean,
+//         default: false
+//     },
+//     submitAForecast: {
+//         type: Boolean,
+//         default: false
+//     },
+//     completeALearnQuiz: {
+//         type: Boolean,
+//         default: false
+//     },
+// });
 
 // Non-OAuth Schema
 // const UserSchema = mongoose.Schema({
@@ -74,6 +74,12 @@ const UserSchema = mongoose.Schema({
     username: {
         type: String
     },
+    prolificID: {
+        type: String
+    },
+    googleID: {
+        type: String
+    },
     fantasyForecastPoints: {
         type: Number,
         default: 0
@@ -83,10 +89,17 @@ const UserSchema = mongoose.Schema({
     },
     markets: {
         type: Array,
-        default: []
+        default: ["Fantasy Forecast All-Time"]
     },
     onboarding: {
-        type: OnboardingSchema,
+        type: Object,
+        default: {
+            visitProfilePage: false,
+            joinAMarket: false,
+            submitAPost: false,
+            submitAForecast: false,
+            completeALearnQuiz: false
+        }
     },
     brierScores: {
         type: Array,
@@ -103,6 +116,10 @@ const UserSchema = mongoose.Schema({
     articleVisits: {
         type: Number,
         default: 0
+    },
+    justSignedInWithOAuth: {
+        type: Boolean,
+        default: true
     }
 });
 
