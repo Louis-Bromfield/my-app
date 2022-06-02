@@ -17,6 +17,12 @@ function LoginSuccess(props) {
         setLoggedIn(localStorage.getItem("loggedInFromGoogle"));
         const userGID = searchParams.get("userGID");
         console.log(userGID);
+
+        // JOB TWO
+        // If we get userGID, do any checks you want
+        // add a button that says "Go To Home Page" and when clicked it will
+        // query users collection using GID to find the user, then pass that object into props.login for localStorage and login
+        // then use props.login 
     }, []);
  
     return (
