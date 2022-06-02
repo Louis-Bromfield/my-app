@@ -126,7 +126,7 @@ function App() {
           <ScrollToTop /> 
           <Routes>
             <Route exact path='/' render={(props) => <Login {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
-            <Route path='/loginSuccess/' render={(props) => <LoginSuccess {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
+            {/* <Route path='/loginSuccess' render={(props) => <LoginSuccess {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} /> */}
           </Routes>
       </Router>
       }
