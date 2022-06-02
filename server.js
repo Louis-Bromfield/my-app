@@ -218,7 +218,7 @@ app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, ne
     console.log("req.session.prolificID = " + req.session.prolificID)
     req.prolificID = req.params.prolificID;
     next();
-}, passport.authenticate("google", {
+}, (req, res) => passport.authenticate("google", {
         // scope: ["profile"] 
         scope: [
             'https://www.googleapis.com/auth/userinfo.profile',
@@ -227,6 +227,7 @@ app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, ne
         state: req.prolificID
         // state: prolificIDFromClient
     },
+    console.log("______________________________"),
     console.log(req)
 ));
 
