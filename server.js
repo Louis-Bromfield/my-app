@@ -233,9 +233,9 @@ const loggingMiddleWare = (username, prolificID, next) => {
 // ));
 
 // HERE 
-app.get("/auth/google/not_callback/:username/:prolificID", (req, res, next) => loggingMiddleWare(req.params.username, req.params.prolificID, next), passport.authenticate("google", {
+app.get("/auth/google/not_callback/:username/:prolificID", (req, res, next) => loggingMiddleWare(req.params.username, req.params.prolificID, next), (req, res) => passport.authenticate("google", {
         // This does have access to req object, so this state variable IS storing it, it's just a case of how do we get it to the callback below???
-        state: { prolificID: prolificIDFromClient }
+        state: { prolificID: req.params.prolificID }
         // If this doesn't work, try req.params.prolificID (but might have to add * (req, res, next) => * before passport.authenticate)
     }
 ));
