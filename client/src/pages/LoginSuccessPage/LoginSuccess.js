@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './LoginSuccess.css';
 import FFLogo from '../../media/sd2.png';
 import { Link } from 'react-router-dom';
-import { useSearchParams } from 'react-router-dom';
+// import { useSearchParams } from 'react-router-dom';
 
 
 function LoginSuccess(props) {
@@ -11,12 +11,12 @@ function LoginSuccess(props) {
     const [username, setUsername] = useState("");
     const [prolificID, setProlificID] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
-    const [searchParams, setSearchParams] = useSearchParams();
+    // const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
         setLoggedIn(localStorage.getItem("loggedInFromGoogle"));
-        const userGID = searchParams.get("userGID");
-        console.log(userGID);
+        // const userGID = searchParams.get("userGID");
+        // console.log(userGID);
     }, []);
  
     return (
