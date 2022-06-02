@@ -216,6 +216,7 @@ app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, ne
     req.session.prolificID = req.params.prolificID;
     console.log("req.params.prolificID = " + req.params.prolificID)
     console.log("req.session.prolficID = " + req.session.prolificID)
+    req.prolificID = req.params.prolificID;
     next();
 }, passport.authenticate("google", {
         // scope: ["profile"] 
@@ -223,7 +224,7 @@ app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, ne
             'https://www.googleapis.com/auth/userinfo.profile',
             'https://www.googleapis.com/auth/userinfo.email'
         ],
-        state: req.params.prolificID
+        state: req.prolificID
         // state: prolificIDFromClient
     }
 ));
