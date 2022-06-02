@@ -112,17 +112,6 @@ router.get("/profileData/:username", async (req, res) => {
     };
 });
 
-// Get one user using their prolificID
-router.get("/findBy/prolificID/:prolificID", async (req, res) => {
-    try {
-        const user = await Users.find({ prolificID: req.params.prolificID });
-        res.json(user);
-    } catch (error) {
-        console.error("Error in router.get/username in users.js");
-        console.error(error);
-    };
-});
-
 // Get all users
 router.get("/", async (req, res) => {
     try {
@@ -138,6 +127,17 @@ router.get("/", async (req, res) => {
 router.get("/:username", async (req, res) => {
     try {
         const user = await Users.find({ username: req.params.username });
+        res.json(user);
+    } catch (error) {
+        console.error("Error in router.get/username in users.js");
+        console.error(error);
+    };
+});
+
+// Get one user using their prolificID
+router.get("/findByProlificID/:prolificID", async (req, res) => {
+    try {
+        const user = await Users.find({ prolificID: req.params.prolificID });
         res.json(user);
     } catch (error) {
         console.error("Error in router.get/username in users.js");
