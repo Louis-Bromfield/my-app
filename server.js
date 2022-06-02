@@ -226,10 +226,10 @@ app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, ne
         ],
         state: req.prolificID
         // state: prolificIDFromClient
-    }
-    // },
-    // console.log("______________________________"),
-    // console.log(req)
+    },
+    console.log("______________________________"),
+    console.log("req.profilicID = " + req.profilicID),
+    console.log("req.session.prolificID = " + req.session.prolificID)
 ));
 
 app.get("/auth/google/callback", 
