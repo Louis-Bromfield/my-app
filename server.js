@@ -107,15 +107,9 @@ passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     callbackURL: `https://fantasy-forecast-politics.herokuapp.com/auth/google/callback`,
-    userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
-    passReqToCallback: true
+    userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
-  function(req, accessToken, refreshToken, profile, cb) {
-      console.log("cb = ");
-      console.log(cb);
-      console.log(cb.toString());
-      console.log("req = ");
-      console.log(req);
+  function(accessToken, refreshToken, profile, cb) {
     User.findOrCreate({ 
         prolificID: prolificIDFromClient,
         googleID: profile.id,
@@ -184,16 +178,16 @@ const loggingMiddleWare = (username, prolificID, next) => {
     next();
 };
 
-app.get("/auth/google/not_callback/:username/:prolificID", 
-    (req, res, next) => loggingMiddleWare(req.params.username, req.params.prolificID, next), 
-    passport.authenticate("google", {
-        // scope: ["profile"] 
-        scope: [
-            'https://www.googleapis.com/auth/userinfo.profile',
-            'https://www.googleapis.com/auth/userinfo.email'
-        ]
-    }
-));
+// app.get("/auth/google/not_callback/:username/:prolificID", 
+//     (req, res, next) => loggingMiddleWare(req.params.username, req.params.prolificID, next), 
+//     passport.authenticate("google", {
+//         // scope: ["profile"] 
+//         scope: [
+//             'https://www.googleapis.com/auth/userinfo.profile',
+//             'https://www.googleapis.com/auth/userinfo.email'
+//         ]
+//     }
+// ));
 
 // app.get("/auth/google/callback/", passport.authenticate("google", { 
 //     // Maybe change failureRedirect to a page that just says login failed, and a button to go back to the login page
@@ -211,23 +205,52 @@ app.get("/auth/google/not_callback/:username/:prolificID",
 // //     }
 // }));
 
-app.get("/auth/google/callback", passport.authenticate("google", { 
-    // Maybe change failureRedirect to a page that just says login failed, and a button to go back to the login page
-    failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
-    // JOB ONE:
-    // look at RES or REQ objects and traverse them to find the user object and it's googleID
-    // successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/userGID=108614670038566185853`
-    successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/pAID=OMEGALUL`
-// }), function(req, res) { 
-//         console.log("==============================================");
-//         console.log("=================REQ=================");
-//         console.log(req);
-//         console.log("=================RES=================");
-//         console.log(res);
-//         console.log("=================END OF RES=================");
-//         res.redirect("https://fantasy-forecast-politics.herokuapp.com/home")
-//     }
-}));
+
+// HERE 
+app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, next) {
+    req.session.prolificID = req.params.prolificID;
+    next();
+}, passport.authenticate("google", {
+        // scope: ["profile"] 
+        scope: [
+            'https://www.googleapis.com/auth/userinfo.profile',
+            'https://www.googleapis.com/auth/userinfo.email'
+        ]
+    }
+));
+
+app.get("/auth/google/callback", 
+    passport.authenticate("google", { 
+        failureRedirect: "https://fantasy-forecast-politics.herokuapp.com"
+    }), 
+    function(req, res) {
+        let id = req.session.prolificID;
+        if (id) {
+            res.redirect('https://fantasy-forecast-politics.herokuapp.com/loginSuccess/pAID=' + id)
+        } else {
+            res.redirect('https://fantasy-forecast-politics.herokuapp.com')
+        }
+    }
+);
+// TO HERE
+
+// app.get("/auth/google/callback", passport.authenticate("google", { 
+//     // Maybe change failureRedirect to a page that just says login failed, and a button to go back to the login page
+//     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
+//     // JOB ONE:
+//     // look at RES or REQ objects and traverse them to find the user object and it's googleID
+//     // successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/userGID=108614670038566185853`
+//     successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/pAID=OMEGALUL`
+// // }), function(req, res) { 
+// //         console.log("==============================================");
+// //         console.log("=================REQ=================");
+// //         console.log(req);
+// //         console.log("=================RES=================");
+// //         console.log(res);
+// //         console.log("=================END OF RES=================");
+// //         res.redirect("https://fantasy-forecast-politics.herokuapp.com/home")
+// //     }
+// }));
 
 // app.get("/auth/google/callback/", passport.authenticate("google", { 
 //     // Maybe change failureRedirect to a page that just says login failed, and a button to go back to the login page
