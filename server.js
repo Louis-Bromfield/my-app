@@ -108,7 +108,8 @@ passport.use(new GoogleStrategy({
     clientSecret: process.env.CLIENT_SECRET,
     callbackURL: `https://fantasy-forecast-politics.herokuapp.com/auth/google/callback`,
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
-    passReqToCallback: true
+    passReqToCallback: true,
+    store: true
   },
   function(req, accessToken, refreshToken, profile, cb) {
     req.session.prolificID = prolificIDFromClient;
@@ -120,10 +121,8 @@ passport.use(new GoogleStrategy({
         // Need to add user to the Fantasy Forecast All-Time leaderboard document
         // and to create a document for them in the learnQuizzes collection
     }, function (err, user) {
-        // if this calls the next callback, can we pass in prolificID here?
         console.log("user");
         console.log(user);
-        prolificIDFromClient = user.prolificID;
         return cb(err, user);
     });
   }
@@ -209,46 +208,45 @@ const loggingMiddleWare = (username, prolificID, next) => {
 // }));
 
 
+// // HERE 
+// app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, next) {
+//     usernameFromClient = req.params.username;
+//     prolificIDFromClient = req.params.prolificID;
+//     req.session.prolificID = req.params.prolificID;
+//     console.log("req.params.prolificID = " + req.params.prolificID)
+//     console.log("req.session.prolificID = " + req.session.prolificID)
+//     req.prolificID = req.params.prolificID;
+//     next();
+// }, (req, res) => passport.authenticate("google", {
+//         // scope: ["profile"] 
+//         scope: [
+//             'https://www.googleapis.com/auth/userinfo.profile',
+//             'https://www.googleapis.com/auth/userinfo.email'
+//         ],
+//         // This does have access to req object, so this state variable IS storing it, it's just a case of how do we get it to the callback below???
+//         state: req.prolificID
+//     }
+// ));
+
 // HERE 
-app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, next) {
-    usernameFromClient = req.params.username;
-    prolificIDFromClient = req.params.prolificID;
-    req.session.prolificID = req.params.prolificID;
-    console.log("req.params.prolificID = " + req.params.prolificID)
-    console.log("req.session.prolificID = " + req.session.prolificID)
-    req.prolificID = req.params.prolificID;
-    next();
-}, function(req, res, next) {
-    passport.authenticate("google", {
+app.get("/auth/google/not_callback/:username/:prolificID", (req, res, next) => loggingMiddleWare(req.params.username, req.params.prolificID, next), passport.authenticate("google", {
         // scope: ["profile"] 
         scope: [
             'https://www.googleapis.com/auth/userinfo.profile',
             'https://www.googleapis.com/auth/userinfo.email'
         ],
+        // This does have access to req object, so this state variable IS storing it, it's just a case of how do we get it to the callback below???
         state: req.prolificID
-        // state: prolificIDFromClient
-    });
-    next();
-    // We know that these variables are accessible here (so they should be in state above as well), commenting them out for now:
-    // },
-    // console.log("______________________________"),
-    // console.log("req.prolificID = " + req.prolificID),
-    // console.log("req.session.prolificID = " + req.session.prolificID)
-});
+    }
+));
 
 app.get("/auth/google/callback", 
     passport.authenticate("google", { 
         failureRedirect: "https://fantasy-forecast-politics.herokuapp.com"
     }), 
     function(req, res) {
-        console.log("+++++++++++++WE NEED TO GET THEM HERE:+++++++++++++++");
-        console.log("req.query.state = ");
-        console.log(req.query.state);
-        console.log("req.prolificID = ");
-        console.log(req.prolificID);
-        console.log("req.session.prolificID = ");
-        console.log(req.session.prolificID);
-        let id = req.query.state;
+        console.log("++++++++++++++++++++++++++++");
+        let id = req.authInfo.state;
         console.log("id = " + id);
         if (id) {
             res.redirect('https://fantasy-forecast-politics.herokuapp.com/loginSuccess/pAID=' + id)
