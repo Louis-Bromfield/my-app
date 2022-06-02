@@ -15,6 +15,7 @@ const findOrCreate = require("mongoose-findorcreate");
 
 let usernameFromClient = "_TEMP_USERNAME";
 let prolificIDFromClient = "_TEMP_PROLIFIC_ID_UNIMPORTED";
+let mDBObjectID = "_TEMP_MDB_ID";
 
 // Middleware
 app.use(express.json());
@@ -114,6 +115,8 @@ passport.use(new GoogleStrategy({
         googleID: profile.id,
         username: usernameFromClient, 
         profilePicture: profile.photos[0].value || ""
+        // Need to add user to the Fantasy Forecast All-Time leaderboard document
+        // and to create a document for them in the learnQuizzes collection
     }, function (err, user) {
         return cb(err, user);
     });
@@ -198,38 +201,14 @@ app.get("/auth/google/not_callback/:username/:prolificID",
 // //     }
 // }));
 
-const grabGoogleID = (req, res, next) => {
-    res.locals.googleID = "12345";
-    next();
-};
-
-// app.get("/auth/google/callback/", (req, res, next) => grabGoogleID(req, res, next), (req, res, next) => passport.authenticate("google", { 
-//     // Maybe change failureRedirect to a page that just says login failed, and a button to go back to the login page
-//     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
-//     // failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
-//     // JOB ONE:
-//     // look at RES or REQ objects and traverse them to find the user object and it's googleID
-//     // successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/userGID=108614670038566185853`
-//     successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/userGID=${res.locals.googleID}`
-// // }), function(req, res) { 
-// //         console.log("==============================================");
-// //         console.log("=================REQ=================");
-// //         console.log(req);
-// //         console.log("=================RES=================");
-// //         console.log(res);
-// //         console.log("=================END OF RES=================");
-// //         res.redirect("https://fantasy-forecast-politics.herokuapp.com/home")
-// //     }
-// }));
-
 app.get("/auth/google/callback/", passport.authenticate("google", { 
     // Maybe change failureRedirect to a page that just says login failed, and a button to go back to the login page
     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
     // failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
     // JOB ONE:
     // look at RES or REQ objects and traverse them to find the user object and it's googleID
-    successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/userGID=108614670038566185853`
-    // successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/userGID=${res.locals.googleID}`
+    // successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/userGID=108614670038566185853`
+    successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/pAID=${prolificIDFromClient}`
 // }), function(req, res) { 
 //         console.log("==============================================");
 //         console.log("=================REQ=================");
@@ -240,6 +219,25 @@ app.get("/auth/google/callback/", passport.authenticate("google", {
 //         res.redirect("https://fantasy-forecast-politics.herokuapp.com/home")
 //     }
 }));
+
+// app.get("/auth/google/callback/", passport.authenticate("google", { 
+//     // Maybe change failureRedirect to a page that just says login failed, and a button to go back to the login page
+//     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
+//     // failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
+//     // JOB ONE:
+//     // look at RES or REQ objects and traverse them to find the user object and it's googleID
+//     successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/userGID=108614670038566185853`
+//     // successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/userGID=${res.locals.googleID}`
+// // }), function(req, res) { 
+// //         console.log("==============================================");
+// //         console.log("=================REQ=================");
+// //         console.log(req);
+// //         console.log("=================RES=================");
+// //         console.log(res);
+// //         console.log("=================END OF RES=================");
+// //         res.redirect("https://fantasy-forecast-politics.herokuapp.com/home")
+// //     }
+// }));
 
 app.get("/logout", function(req, res) {
     res.redirect("https://fantasy-forecast-politics.herokuapp.com");

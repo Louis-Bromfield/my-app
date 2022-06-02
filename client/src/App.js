@@ -49,11 +49,9 @@ function App() {
   };
 
 //   const login = (usernameFromLogin, nameFromLogin, marketsFromLogin, userObj, profilePicture) => {
-  const login = async (username) => {
+  const login = async (prolificID) => {
     console.log("In login function");
-    const userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
-    // Need to add user to the Fantasy Forecast All-Time leaderboard document
-    // and to create a document for them in the learnQuizzes collection
+    const userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/findByProlificID/${prolificID}`);
     console.log(userObj);
     setUserObject(userObj.data[0]);
     setUsername(userObj.data[0].username);
@@ -126,7 +124,7 @@ function App() {
           <ScrollToTop /> 
           <Switch>
             <Route exact path='/' render={(props) => <Login {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
-            <Route path='/loginSuccess/' render={(props) => <LoginSuccess {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
+            <Route path='/loginSuccess/:pAID' render={(props) => <LoginSuccess {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
           </Switch>
       </Router>
       }
