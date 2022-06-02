@@ -107,9 +107,10 @@ passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
     callbackURL: `https://fantasy-forecast-politics.herokuapp.com/auth/google/callback`,
-    userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+    userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
+    passReqToCallback: true
   },
-  function(accessToken, refreshToken, profile, cb) {
+  function(req, accessToken, refreshToken, profile, cb) {
     req.session.prolificID = prolificIDFromClient;
     User.findOrCreate({ 
         prolificID: prolificIDFromClient,
