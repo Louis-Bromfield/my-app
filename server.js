@@ -209,6 +209,8 @@ const loggingMiddleWare = (username, prolificID, next) => {
 // HERE 
 app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, next) {
     req.session.prolificID = req.params.prolificID;
+    console.log("req.params.prolficID = " + req.params.prolificID)
+    console.log("req.session.prolficID = " + req.session.prolificID)
     next();
 }, passport.authenticate("google", {
         // scope: ["profile"] 
@@ -225,6 +227,7 @@ app.get("/auth/google/callback",
     }), 
     function(req, res) {
         let id = req.session.prolificID;
+        console.log("id = " + id);
         if (id) {
             res.redirect('https://fantasy-forecast-politics.herokuapp.com/loginSuccess/pAID=' + id)
         } else {
