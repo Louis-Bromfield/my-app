@@ -105,7 +105,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "https://fantasy-forecast-politics.herokuapp.com/auth/google/callback", username: usernameFromClient,
+    callbackURL: "https://fantasy-forecast-politics.herokuapp.com/auth/google/callback", usernameWO: usernameFromClient,
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -188,7 +188,7 @@ app.get("/auth/google/callback/", (req, res) => passport.authenticate("google", 
     // failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
     // JOB ONE:
     // look at RES or REQ objects and traverse them to find the user object and it's googleID
-    successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/userGID=${req.body.username}`
+    successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/userGID=${req.body.usernameWO}`
 // }), function(req, res) { 
 //         console.log("==============================================");
 //         console.log("=================REQ=================");
