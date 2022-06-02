@@ -122,6 +122,8 @@ passport.use(new GoogleStrategy({
         // and to create a document for them in the learnQuizzes collection
     }, function (err, user) {
         // if this calls the next callback, can we pass in prolificID here?
+        console.log("user");
+        console.log(user);
         return cb(err, user, prolificIDFromClient);
     });
   }
