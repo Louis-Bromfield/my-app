@@ -38,7 +38,7 @@ function Forecast(props) {
                     determined by which markets you have joined. 
                 </p>
             </div>
-            {(props.username === "LouisB" && localStorage.getItem("aPW" === "73485093485734974592398190489025736hbn45")) && <ForecastAdmin />}
+            {(props.username === "LouisB" && localStorage.getItem("aPW") === "73485093485734974592398190489025736hbn45") && <ForecastAdmin />}
             <ForecastSubmission 
                 toggleDiv={setForecastSelected} 
                 setForecastSingleCertainty={setForecastSingleCertainty}
