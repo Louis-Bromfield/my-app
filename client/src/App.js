@@ -57,7 +57,7 @@ function App() {
     };
     // Add user to leaderboard
     const ffAllTime = "Fantasy Forecast All-Time";
-    await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${ffAllTime}`)
+    await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${ffAllTime}`, { username: username, isGroup: false })
 
     // Add user to learnQuizzes
     await axios.post(`https://fantasy-forecast-politics.herokuapp.com/learnQuizzes/`, { username: username });
