@@ -80,10 +80,9 @@ function ForecastAnalysisPage(props) {
         } else if (singleCertaintyBool === false) {
             // has to terminate at length-1 because it involves comparing each forecast to the next one
             for (let i = 0; i < usersForecasts.forecasts.length-1; i++) {
-                // In updated code, it'll be better to have outcomeOne instead of certaintyHigher and so on
-                let differenceOutcomeOne = Math.abs(usersForecasts.forecasts[i].certainties.certaintyHigher*100 - usersForecasts.forecasts[i+1].certainties.certaintyHigher*100);
-                let differenceOutcomeTwo = Math.abs(usersForecasts.forecasts[i].certainties.certaintySame*100 - usersForecasts.forecasts[i+1].certainties.certaintySame*100);
-                let differenceOutcomeThree = Math.abs(usersForecasts.forecasts[i].certainties.certaintyLower*100 - usersForecasts.forecasts[i+1].certainties.certaintyLower*100);
+                let differenceOutcomeOne = Math.abs(usersForecasts.forecasts[i].certainties.certainty1*100 - usersForecasts.forecasts[i+1].certainties.certainty1*100);
+                let differenceOutcomeTwo = Math.abs(usersForecasts.forecasts[i].certainties.certainty2*100 - usersForecasts.forecasts[i+1].certainties.certainty2*100);
+                let differenceOutcomeThree = Math.abs(usersForecasts.forecasts[i].certainties.certainty3*100 - usersForecasts.forecasts[i+1].certainties.certainty3*100);
                 let reactScore = (differenceOutcomeOne + differenceOutcomeTwo + differenceOutcomeThree)/3;
                 reactiveness.push(reactScore);
             };
@@ -102,7 +101,7 @@ function ForecastAnalysisPage(props) {
         let confidenceArray = [];
         if (singleCertaintyBool === false) {
             for (let i = 0; i < usersForecasts.forecasts.length; i++) {
-                let highestCertainty = Math.max(usersForecasts.forecasts[i].certainties.certaintyHigher*100, usersForecasts.forecasts[i].certainties.certaintySame*100, usersForecasts.forecasts[i].certainties.certaintyLower*100);
+                let highestCertainty = Math.max(usersForecasts.forecasts[i].certainties.certainty1*100, usersForecasts.forecasts[i].certainties.certainty2*100, usersForecasts.forecasts[i].certainties.certainty3*100);
                 if (highestCertainty > 50) {
                     confidenceArray.push((100 - highestCertainty));
                 } else {

@@ -128,9 +128,9 @@ function ForecastBreakdown(props) {
     let totalScore = 0;
     let totalIfHappenedNoBoost = 0;
     let totalIfNotHappenedNoBoost = 0;
-    let totalIfIncrease = 0;
-    let totalIfSame = 0;
-    let totalIfDecrease = 0;
+    let totalIfOutcomeOne = 0;
+    let totalIfOutcomeTwo = 0;
+    let totalIfOutcomeThree = 0;
     return (
         <div className="predictions-container">
             {showBreakdown === false && 
@@ -334,9 +334,9 @@ function ForecastBreakdown(props) {
                                                 return (
                                                     <li key={index} className="prediction-li">
                                                         <h3 style={{ color: "#404d72" }}><u>Prediction #{index}</u></h3>
-                                                        <h4>Increase by 2+: {(item.certaintyHigher*100).toFixed(2)}%</h4>
-                                                        <h4>Stay within +/- 2: {(item.certaintySame*100).toFixed(2)}%</h4>
-                                                        <h4>Decrease by 2+: {(item.certaintyLower*100).toFixed(2)}%</h4>
+                                                        <h4>OUTCOME_ONE (FB): {(item.certainty1*100).toFixed(2)}%</h4>
+                                                        <h4>OUTCOME_TWO (FB): {(item.certainty2*100).toFixed(2)}%</h4>
+                                                        <h4>OUTCOME_THREE (FB): {(item.certainty3*100).toFixed(2)}%</h4>
                                                         <br />
                                                         <h4>Brier Score: {item.newBrier.toFixed(0)} / 100</h4>
                                                         <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
@@ -360,9 +360,9 @@ function ForecastBreakdown(props) {
                                                 return (
                                                     <li key={index} className="prediction-li">
                                                         <h3 style={{ color: "#404d72" }}><u>Prediction #{index}</u></h3>
-                                                        <h4>Increase by 2+: {(item.certaintyHigher*100).toFixed(2)}%</h4>
-                                                        <h4>Stay within +/- 2: {(item.certaintySame*100).toFixed(2)}%</h4>
-                                                        <h4>Decrease by 2+: {(item.certaintyLower*100).toFixed(2)}%</h4>
+                                                        <h4>OUTCOME_ONE (FB): {(item.certainty1*100).toFixed(2)}%</h4>
+                                                        <h4>OUTCOME_TWO (FB): {(item.certainty2*100).toFixed(2)}%</h4>
+                                                        <h4>OUTCOME_THREE (FB): {(item.certainty3*100).toFixed(2)}%</h4>
                                                         <h4>Brier Score: {item.newBrier.toFixed(0)} / 100</h4>
                                                         <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
@@ -397,16 +397,16 @@ function ForecastBreakdown(props) {
                                     // Predictions submitted after closing date will still be in DB so must be filtered
                                     if (index !== 0 && new Date(item.date) < new Date(predictionData[0].closeDate)) {
                                         if (index === 1) {
-                                            totalIfIncrease += (item.newHigherBrier * (item.percentageOfTimeAtThisScore/100));
-                                            totalIfSame += (item.newSameBrier * (item.percentageOfTimeAtThisScore/100));
-                                            totalIfDecrease += (item.newLowerBrier * (item.percentageOfTimeAtThisScore/100));
+                                            totalIfOutcomeOne += (item.newFirstBrier * (item.percentageOfTimeAtThisScore/100));
+                                            totalIfOutcomeTwo += (item.newSecondBrier * (item.percentageOfTimeAtThisScore/100));
+                                            totalIfOutcomeThree += (item.newThirdBrier * (item.percentageOfTimeAtThisScore/100));
                                             if (showForecastByForecastBreakdown === true) {
                                                 return (
                                                     <li key={index} className="prediction-li">
                                                         <h3 style={{ color: "#404d72" }}><u>Prediction #{index}</u></h3>
-                                                        <h4>Increase by 2+: {(item.certaintyHigher*100).toFixed(2)}%</h4>
-                                                        <h4>Stay within +/- 2: {(item.certaintySame*100).toFixed(2)}%</h4>
-                                                        <h4>Decrease by 2+: {(item.certaintyLower*100).toFixed(2)}%</h4>
+                                                        <h4>OUTCOME_ONE (FB): {(item.certainty1*100).toFixed(2)}%</h4>
+                                                        <h4>OUTCOME_TWO (FB): {(item.certainty2*100).toFixed(2)}%</h4>
+                                                        <h4>OUTCOME_THREE (FB): {(item.certainty3*100).toFixed(2)}%</h4>
                                                         <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
@@ -414,9 +414,9 @@ function ForecastBreakdown(props) {
                                                         <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>What Will This Forecast Score Me?</h3>
-                                                        <h4>If Increase Happens: {item.newHigherBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newHigherBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
-                                                        <h4>If Stay Within Happens: {item.newSameBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newSameBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
-                                                        <h4>If Decrease Happens: {item.newLowerBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newLowerBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <h4>If OUTCOME ONE Happens: {item.newFirstBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newFirstBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <h4>If OUTCOME TWO Happens: {item.newSecondBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newSecondBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <h4>If OUTCOME THREE Happens: {item.newThirdBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newThirdBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
                                                         <br />
                                                         <h2 style={{ color: "#404d72"}}>Time Score - {tScore.toFixed(2)} / 10</h2>
                                                         <h4>As this was your first prediction, it determines your Time Score (Earlier = Higher Score)</h4>
@@ -426,16 +426,16 @@ function ForecastBreakdown(props) {
                                                 )
                                             } else return null;
                                         } else {
-                                            totalIfIncrease += (item.newHigherBrier * (item.percentageOfTimeAtThisScore/100));
-                                            totalIfSame += (item.newSameBrier * (item.percentageOfTimeAtThisScore/100));
-                                            totalIfDecrease += (item.newLowerBrier * (item.percentageOfTimeAtThisScore/100));
+                                            totalIfOutcomeOne += (item.newFirstBrier * (item.percentageOfTimeAtThisScore/100));
+                                            totalIfOutcomeTwo += (item.newSecondBrier * (item.percentageOfTimeAtThisScore/100));
+                                            totalIfOutcomeThree += (item.newThirdBrier * (item.percentageOfTimeAtThisScore/100));
                                             if (showForecastByForecastBreakdown === true) {
                                                 return (
                                                     <li key={index} className="prediction-li">
                                                         <h3 style={{ color: "#404d72" }}><u>Prediction #{index}</u></h3>
-                                                        <h4>Increase by 2+: {(item.certaintyHigher*100).toFixed(2)}%</h4>
-                                                        <h4>Stay within +/- 2: {(item.certaintySame*100).toFixed(2)}%</h4>
-                                                        <h4>Decrease by 2+: {(item.certaintyLower*100).toFixed(2)}%</h4>
+                                                        <h4>OUTCOME_ONE (FB): {(item.certainty1*100).toFixed(2)}%</h4>
+                                                        <h4>OUTCOME_TWO (FB): {(item.certainty2*100).toFixed(2)}%</h4>
+                                                        <h4>OUTCOME_THREE (FB): {(item.certainty3*100).toFixed(2)}%</h4>
                                                         <h4>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
@@ -443,9 +443,9 @@ function ForecastBreakdown(props) {
                                                         <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>What Will This Forecast Score Me?</h3>
-                                                        <h4>If Increase Happens: {item.newHigherBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newHigherBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
-                                                        <h4>If Stay Within Happens: {item.newSameBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newSameBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
-                                                        <h4>If Decrease Happens: {item.newLowerBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newLowerBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <h4>If OUTCOME ONE Happens: {item.newFirstBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newFirstBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <h4>If OUTCOME TWO Happens: {item.newSecondBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newSecondBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <h4>If OUTCOME THREE Happens: {item.newThirdBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newThirdBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
                                                         <br />
                                                         <hr />
                                                     </li>
@@ -458,9 +458,9 @@ function ForecastBreakdown(props) {
                             <ForecastResultsBreakdown 
                                 forecastClosed={false}
                                 singleCertainty={singleCertainty}
-                                totalIfIncrease={totalIfIncrease}
-                                totalIfSame={totalIfSame}
-                                totalIfDecrease={totalIfDecrease}
+                                totalIfOutcomeOne={totalIfOutcomeOne}
+                                totalIfOutcomeTwo={totalIfOutcomeTwo}
+                                totalIfOutcomeThree={totalIfOutcomeThree}
                                 tScore={tScore}
                             />
                         </div>

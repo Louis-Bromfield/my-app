@@ -17,20 +17,9 @@ const ForecastsSchema = mongoose.Schema({
     submittedForecasts: {
         type: Array,
     },
-    forecasts: [{
-        certainty: {
-            type: Number,
-            required: true
-        },
-        comments: {
-            type: String,
-            required: true
-        },
-        date: {
-            type: String,
-            required: true
-        }
-    }],
+    potentialOutcomes: {
+        type: Array,
+    },
     isClosed: {
         type: Boolean,
     },

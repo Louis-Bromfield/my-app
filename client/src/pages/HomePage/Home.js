@@ -37,7 +37,7 @@ function Home(props) {
     useEffect(() => {
         if (localStorage.getItem("firstVisit") === "true") {
             setShowModal(true);
-            const welcomeString = "Welcome to Fantasy Forecast! Your home page might look a bit empty, so we recommend heading over to the Leaderboards page and joining the markets that look interesting to you! The Onboarding menu on the right will give you ideas as to how to get acquainted with the site - have fun!";
+            const welcomeString = "Welcome to Fantasy Forecast! If this is your first time here, we recommend checking out the Onboarding menu on the right (or down below if you're on mobile) for ideas on how to get started with the site - have fun!";
             setModalContent(welcomeString);
             localStorage.setItem("firstVisit", false);
         };

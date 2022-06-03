@@ -303,81 +303,36 @@ router.patch("/calculateBrier/:happenedStatus/:marketName/:closeEarly", async (r
             await Forecasts.findByIdAndUpdate(forecastObj._id, { isClosed: true, happened: happened });
         };
         const calculatedBriers = calculateBriers(forecastObj, happened, "N/A");
-        // I had written this code, then updated the multiple certainties one to include the new boosting (flat 5% for everyone rather than scaling,)
-        // but forgot to update it for single certainty code - I've kept it here commented out just in case there's an issue
-
-        // let scoresToReturn = [];
-        // let newScorePerformanceBoosted;
-        // for (let i = 0; i < calculatedBriers.length; i++) {
-        //     const user = await Users.findOne({ username: calculatedBriers[i].username });
-        //     // Work out if they should receive a performance bonus for this Brier Score
-        //     let scoreChain = 1;
-        //     let performanceBoostVal = 0;
-        //     if (calculatedBriers[i].finalScore >= 75) {
-        //         for (let i = user.brierScores.length-1; i >= 0; i--) {
-        //             if (user.brierScores[i].marketName === req.params.marketName) {
-        //                 if (user.brierScores[i].brierScore >= 90) {
-        //                     scoreChain++;
-        //                 } else {
-        //                     break;
-        //                 }
-        //             }
-        //         };
-        //         // if scoreChain is 1, then only their current prediction is above 90 or 180, just a 1x streak, bonuses only start at 2x streak
-        //         if (scoreChain === 1) {
-        //             boost = 0;
-        //         // 2x streak = 0.03 + 0.02 = 0.05, 5% boost 
-        //         } else {
-        //             boost = 0.03 + (scoreChain/100);
-        //         }
-        //         console.log(`boost = ${boost}`);
-        //         newScorePerformanceBoosted = calculatedBriers[i].finalScore + (calculatedBriers[i].finalScore * boost);
-        //     } else {
-        //         newScorePerformanceBoosted = calculatedBriers[i].finalScore;
-        //     }
-        //     const toPush = {
-        //         brierScore: newScorePerformanceBoosted,
-        //         problemName: req.body.problemName,
-        //         marketName: req.params.marketName,
-        //         captainedStatus: calculatedBriers[i].captainedStatus,
-        //         performanceBoost: scoreChain
-        //     };
-            
-        //     await Users.findOneAndUpdate({ username: calculatedBriers[i].username }, {
-        //         $push: { brierScores: toPush },
-        //         fantasyForecastPoints: Number(user.fantasyForecastPoints) + toPush.brierScore,
-        //         forecastClosedStatus: true,
-        //         numberOfClosedForecasts: Number(user.numberOfClosedForecasts) + 1
-        //     },
-        //     { new: true }
-        //     );
-        //     toPush.username = calculatedBriers[i].username;
-        //     scoresToReturn.push(toPush);
-        // };
-        // res.json({ scores: scoresToReturn });
+        // Calculate overall average
+        let total = 0;
+        for (let i = 0; i < calculatedBriers.length; i++) {
+            total += calculatedBriers[i].finalScore;
+        };
+        let averageScoreForProblem = total / calculatedBriers.length;
         let scoresToReturn = [];
-        let newScorePerformanceBoosted;
-        let performanceBoostVal = 0;
+        // let newScorePerformanceBoosted;
+        // let performanceBoostVal = 0;
         for (let i = 0; i < calculatedBriers.length; i++) {
             const user = await Users.findOne({ username: calculatedBriers[i].username });
-            // This is the actual code - copied over from the function below (calculateMultipleOutcomes)
+            // Removed 5% boost, fuck it dude
             // Work out if they should receive a performance bonus for this Brier Score
-            if (calculatedBriers[i].finalScore >= 75) {
-                let boost = (calculatedBriers[i].finalScore/100)*5;
-                console.log(`boost = ${boost}`);
-                newScorePerformanceBoosted = (calculatedBriers[i].finalScore + boost);
-                console.log(`so the boosted score is = ${newScorePerformanceBoosted}`);
-                performanceBoostVal = 1;
-            } else {
-                newScorePerformanceBoosted = calculatedBriers[i].finalScore;
-                performanceBoostVal = 0;
-            }
+            // if (calculatedBriers[i].finalScore >= 75) {
+            //     let boost = (calculatedBriers[i].finalScore/100)*5;
+            //     console.log(`boost = ${boost}`);
+            //     newScorePerformanceBoosted = (calculatedBriers[i].finalScore + boost);
+            //     console.log(`so the boosted score is = ${newScorePerformanceBoosted}`);
+            //     performanceBoostVal = 1;
+            // } else {
+            //     newScorePerformanceBoosted = calculatedBriers[i].finalScore;
+            //     performanceBoostVal = 0;
+            // }
             const toPush = {
-                brierScore: newScorePerformanceBoosted,
+                brierScore: calculatedBriers[i].finalScore,
                 problemName: req.body.problemName,
                 marketName: req.params.marketName,
                 captainedStatus: calculatedBriers[i].captainedStatus,
-                performanceBoost: performanceBoostVal
+                // performanceBoost: performanceBoostVal
+                problemAverage: averageScoreForProblem
             };
             await Users.findOneAndUpdate({ username: calculatedBriers[i].username }, {
                 $push: { brierScores: toPush },
@@ -514,19 +469,19 @@ console.log("This forecast counts");
                     };
                 // Multi Cert Problem - using outcome
                 } else if (happened === "N/A") {
-                    let higherBrierIfCorrect = Math.pow(1 - forecastObj.submittedForecasts[i].forecasts[j].certainties.certaintyHigher, 2);
-                    let higherBrierIfIncorrect = Math.pow(0 - forecastObj.submittedForecasts[i].forecasts[j].certainties.certaintyHigher, 2)
-                    let sameBrierIfCorrect = Math.pow(1 - forecastObj.submittedForecasts[i].forecasts[j].certainties.certaintySame, 2);
-                    let sameBrierIfIncorrect = Math.pow(0 - forecastObj.submittedForecasts[i].forecasts[j].certainties.certaintySame, 2)
-                    let lowerBrierIfCorrect = Math.pow(1 - forecastObj.submittedForecasts[i].forecasts[j].certainties.certaintyLower, 2);
-                    let lowerBrierIfIncorrect = Math.pow(0 - forecastObj.submittedForecasts[i].forecasts[j].certainties.certaintyLower, 2)
+                    let firstBrierIfCorrect = Math.pow(1 - forecastObj.submittedForecasts[i].forecasts[j].certainties.certainty1, 2);
+                    let firstBrierIfIncorrect = Math.pow(0 - forecastObj.submittedForecasts[i].forecasts[j].certainties.certainty1, 2)
+                    let secondBrierIfCorrect = Math.pow(1 - forecastObj.submittedForecasts[i].forecasts[j].certainties.certainty2, 2);
+                    let secondBrierIfIncorrect = Math.pow(0 - forecastObj.submittedForecasts[i].forecasts[j].certainties.certainty2, 2)
+                    let thirdBrierIfCorrect = Math.pow(1 - forecastObj.submittedForecasts[i].forecasts[j].certainties.certainty3, 2);
+                    let thirdBrierIfIncorrect = Math.pow(0 - forecastObj.submittedForecasts[i].forecasts[j].certainties.certainty3, 2)
 
-                    if (outcome === "increase") {
-                        originalBrier = higherBrierIfCorrect + sameBrierIfIncorrect + lowerBrierIfIncorrect;
-                    } else if (outcome === "same") {
-                        originalBrier = sameBrierIfCorrect + higherBrierIfIncorrect + lowerBrierIfIncorrect;
-                    } else if (outcome === "decrease") {
-                        originalBrier = lowerBrierIfCorrect + higherBrierIfIncorrect + sameBrierIfIncorrect;
+                    if (outcome === "outcome1") {
+                        originalBrier = firstBrierIfCorrect + secondBrierIfIncorrect + thirdBrierIfIncorrect;
+                    } else if (outcome === "outcome2") {
+                        originalBrier = secondBrierIfCorrect + firstBrierIfIncorrect + thirdBrierIfIncorrect;
+                    } else if (outcome === "outcome3") {
+                        originalBrier = thirdBrierIfCorrect + firstBrierIfIncorrect + secondBrierIfIncorrect;
                     };
                 };
                 let newBrier = (2 - originalBrier) * 50;

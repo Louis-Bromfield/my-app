@@ -156,34 +156,34 @@ router.get("/:problemName/:closedStatus/:username/:singleCertainty", async (req,
                 let fullArrayToReturn = [];
 
                 for (let i = 0; i < userForecastData.forecasts.length; i++) {
-                    fullArrayToReturn[i+1] = {certaintyHigher: "", certaintySame: "", certaintyLower: "", date: "", comments: "", newBrier: 0, duration: "", percentageOfTimeAtThisScore: ""};
+                    fullArrayToReturn[i+1] = {certainty1: "", certainty2: "", certainty3: "", date: "", comments: "", newBrier: 0, duration: "", percentageOfTimeAtThisScore: ""};
 
                     // Forecast WAS made before close date
                     if (new Date(userForecastData.forecasts[i].date) < closeDate) {
                         let originalBrier;
 
-                        let higherBrierIfCorrect = Math.pow(1 - userForecastData.forecasts[i].certainties.certaintyHigher, 2);
-                        let higherBrierIfIncorrect = Math.pow(0 - userForecastData.forecasts[i].certainties.certaintyHigher, 2)
-                        let sameBrierIfCorrect = Math.pow(1 - userForecastData.forecasts[i].certainties.certaintySame, 2);
-                        let sameBrierIfIncorrect = Math.pow(0 - userForecastData.forecasts[i].certainties.certaintySame, 2)
-                        let lowerBrierIfCorrect = Math.pow(1 - userForecastData.forecasts[i].certainties.certaintyLower, 2);
-                        let lowerBrierIfIncorrect = Math.pow(0 - userForecastData.forecasts[i].certainties.certaintyLower, 2)
+                        let firstBrierIfCorrect = Math.pow(1 - userForecastData.forecasts[i].certainties.certainty1, 2);
+                        let firstBrierIfIncorrect = Math.pow(0 - userForecastData.forecasts[i].certainties.certainty1, 2)
+                        let secondBrierIfCorrect = Math.pow(1 - userForecastData.forecasts[i].certainties.certainty2, 2);
+                        let secondBrierIfIncorrect = Math.pow(0 - userForecastData.forecasts[i].certainties.certainty2, 2)
+                        let thirdBrierIfCorrect = Math.pow(1 - userForecastData.forecasts[i].certainties.certainty3, 2);
+                        let thirdBrierIfIncorrect = Math.pow(0 - userForecastData.forecasts[i].certainties.certainty3, 2)
 
                         // Change to working out Brier for if higher is correct, same is correct, or lower is correct
                         // .happened needs to be changed to .outcome === "higher" / .outcome === "same" / .outcome === "lower"
-                        if (forecastObj[0].outcome === "increase") {
-                            originalBrier = higherBrierIfCorrect + sameBrierIfIncorrect + lowerBrierIfIncorrect;
-                        } else if (forecastObj[0].outcome === "same") {
-                            originalBrier = sameBrierIfCorrect + higherBrierIfIncorrect + lowerBrierIfIncorrect;
-                        } else if (forecastObj[0].outcome === "decrease") {
-                            originalBrier = lowerBrierIfCorrect + higherBrierIfIncorrect + sameBrierIfIncorrect;
+                        if (forecastObj[0].outcome === "outcome1") {
+                            originalBrier = firstBrierIfCorrect + secondBrierIfIncorrect + thirdBrierIfIncorrect;
+                        } else if (forecastObj[0].outcome === "outcome2") {
+                            originalBrier = secondBrierIfCorrect + firstBrierIfIncorrect + thirdBrierIfIncorrect;
+                        } else if (forecastObj[0].outcome === "outcome3") {
+                            originalBrier = thirdBrierIfCorrect + firstBrierIfIncorrect + secondBrierIfIncorrect;
                         }
 
                         let newBrier = (2 - originalBrier) * 50;
 
-                        fullArrayToReturn[i+1].certaintyHigher = userForecastData.forecasts[i].certainties.certaintyHigher;
-                        fullArrayToReturn[i+1].certaintySame = userForecastData.forecasts[i].certainties.certaintySame;
-                        fullArrayToReturn[i+1].certaintyLower = userForecastData.forecasts[i].certainties.certaintyLower;
+                        fullArrayToReturn[i+1].certainty1 = userForecastData.forecasts[i].certainties.certainty1;
+                        fullArrayToReturn[i+1].certainty2 = userForecastData.forecasts[i].certainties.certainty2;
+                        fullArrayToReturn[i+1].certainty3 = userForecastData.forecasts[i].certainties.certainty3;
                         fullArrayToReturn[i+1].date = userForecastData.forecasts[i].date;
                         fullArrayToReturn[i+1].comments = userForecastData.forecasts[i].comments;
                         fullArrayToReturn[i+1].newBrier = newBrier;
@@ -350,52 +350,52 @@ router.get("/:problemName/:closedStatus/:username/:singleCertainty", async (req,
                 };
                 formulaComponents[0].tScore = tScore;
 
-                let sumOfNewWeightedHigherBriers = 0;
-                let sumOfNewWeightedSameBriers = 0;
-                let sumOfNewWeightedLowerBriers = 0;
+                let sumOfNewWeightedOutcomeOneBriers = 0;
+                let sumOfNewWeightedOutcomeTwoBriers = 0;
+                let sumOfNewWeightedOutcomeThreeBriers = 0;
                 let fullArrayToReturn = [];
 
                 for (let i = 0; i < userForecastData.forecasts.length; i++) {
                     fullArrayToReturn[i+1] = {
-                        certaintyHigher: "", 
-                        certaintySame: "", 
-                        certaintyLower: "", 
+                        certainty1: "", 
+                        certainty2: "", 
+                        certainty3: "", 
                         date: "", 
                         comments: "",                    
-                        newHigherBrier: 0, 
-                        newSameBrier: 0, 
-                        newLowerBrier: 0, 
+                        newOutcomeOneBrier: 0, 
+                        newOutcomeTwoBrier: 0, 
+                        newOutcomeThreeBrier: 0, 
                         duration: "", 
                         percentageOfTimeAtThisScore: ""
                     };
 
                     // Forecast WAS made before close date
                     if (new Date(userForecastData.forecasts[i].date) < closeDate) {
-                        let higherBrierIfCorrect = Math.pow(1 - userForecastData.forecasts[i].certainties.certaintyHigher, 2);
-                        let higherBrierIfIncorrect = Math.pow(0 - userForecastData.forecasts[i].certainties.certaintyHigher, 2)
-                        let sameBrierIfCorrect = Math.pow(1 - userForecastData.forecasts[i].certainties.certaintySame, 2);
-                        let sameBrierIfIncorrect = Math.pow(0 - userForecastData.forecasts[i].certainties.certaintySame, 2)
-                        let lowerBrierIfCorrect = Math.pow(1 - userForecastData.forecasts[i].certainties.certaintyLower, 2);
-                        let lowerBrierIfIncorrect = Math.pow(0 - userForecastData.forecasts[i].certainties.certaintyLower, 2)
+                        let firstBrierIfCorrect = Math.pow(1 - userForecastData.forecasts[i].certainties.certainty1, 2);
+                        let firstBrierIfIncorrect = Math.pow(0 - userForecastData.forecasts[i].certainties.certainty1, 2)
+                        let secondBrierIfCorrect = Math.pow(1 - userForecastData.forecasts[i].certainties.certainty2, 2);
+                        let secondBrierIfIncorrect = Math.pow(0 - userForecastData.forecasts[i].certainties.certainty2, 2)
+                        let thirdBrierIfCorrect = Math.pow(1 - userForecastData.forecasts[i].certainties.certainty3, 2);
+                        let thirdBrierIfIncorrect = Math.pow(0 - userForecastData.forecasts[i].certainties.certainty3, 2)
 
-                        let higherBrier = higherBrierIfCorrect + sameBrierIfIncorrect + lowerBrierIfIncorrect;
-                        let sameBrier = sameBrierIfCorrect + higherBrierIfIncorrect + lowerBrierIfIncorrect;
-                        let lowerBrier = lowerBrierIfCorrect + higherBrierIfIncorrect + sameBrierIfIncorrect;
+                        let outcomeOneBrier = firstBrierIfCorrect + secondBrierIfIncorrect + thirdBrierIfIncorrect;
+                        let outcomeTwoBrier = secondBrierIfCorrect + firstBrierIfIncorrect + thirdBrierIfIncorrect;
+                        let outcomeThreeBrier = thirdBrierIfCorrect + firstBrierIfIncorrect + secondBrierIfIncorrect;
 
-                        let newHigherBrier = (2 - higherBrier) * 50;
-                        let newSameBrier = (2 - sameBrier) * 50;
-                        let newLowerBrier = (2 - lowerBrier) * 50;
+                        let newOutcomeOneBrier = (2 - outcomeOneBrier) * 50;
+                        let newOutcomeTwoBrier = (2 - outcomeTwoBrier) * 50;
+                        let newOutcomeThreeBrier = (2 - outcomeThreeBrier) * 50;
 
-                        fullArrayToReturn[i+1].certaintyHigher = userForecastData.forecasts[i].certainties.certaintyHigher;
-                        fullArrayToReturn[i+1].certaintySame = userForecastData.forecasts[i].certainties.certaintySame;
-                        fullArrayToReturn[i+1].certaintyLower = userForecastData.forecasts[i].certainties.certaintyLower;
+                        fullArrayToReturn[i+1].certainty1 = userForecastData.forecasts[i].certainties.certainty1;
+                        fullArrayToReturn[i+1].certainty2 = userForecastData.forecasts[i].certainties.certainty2;
+                        fullArrayToReturn[i+1].certainty3 = userForecastData.forecasts[i].certainties.certainty3;
                         fullArrayToReturn[i+1].date = userForecastData.forecasts[i].date;
                         fullArrayToReturn[i+1].comments = userForecastData.forecasts[i].comments;
-                        fullArrayToReturn[i+1].newHigherBrier = newHigherBrier;
-                        fullArrayToReturn[i+1].newSameBrier = newSameBrier;
-                        fullArrayToReturn[i+1].newLowerBrier = newLowerBrier;
+                        fullArrayToReturn[i+1].newOutcomeOneBrier = newOutcomeOneBrier;
+                        fullArrayToReturn[i+1].newOutcomeTwoBrier = newOutcomeTwoBrier;
+                        fullArrayToReturn[i+1].newOutcomeThreeBrier = newOutcomeThreeBrier;
 
-                        let higherBrierWeightedByDuration, sameBrierWeightedByDuration, lowerBrierWeightedByDuration;
+                        let outcomeOneBrierWeightedByDuration, outcomeTwoBrierWeightedByDuration, outcomeThreeBrierWeightedByDuration;
                         let thisForecastTimeDate = new Date(userForecastData.forecasts[i].date);
                         if (i < userForecastData.forecasts.length-1) {
                             let nextForecastTimeDate = new Date(userForecastData.forecasts[i+1].date);
@@ -405,13 +405,13 @@ router.get("/:problemName/:closedStatus/:username/:singleCertainty", async (req,
                             let percentageOfTimeAtThisScore = ((duration/forecastTimeFrame)*100);
                             fullArrayToReturn[i+1].percentageOfTimeAtThisScore = percentageOfTimeAtThisScore;
 
-                            higherBrierWeightedByDuration = (newHigherBrier * (percentageOfTimeAtThisScore/100));
-                            sameBrierWeightedByDuration = (newSameBrier * (percentageOfTimeAtThisScore/100));
-                            lowerBrierWeightedByDuration = (newLowerBrier * (percentageOfTimeAtThisScore/100));
+                            outcomeOneBrierWeightedByDuration = (newOutcomeOneBrier * (percentageOfTimeAtThisScore/100));
+                            outcomeTwoBrierWeightedByDuration = (newOutcomeTwoBrier * (percentageOfTimeAtThisScore/100));
+                            outcomeThreeBrierWeightedByDuration = (newOutcomeThreeBrier * (percentageOfTimeAtThisScore/100));
 
-                            sumOfNewWeightedHigherBriers = sumOfNewWeightedHigherBriers + higherBrierWeightedByDuration;
-                            sumOfNewWeightedSameBriers = sumOfNewWeightedSameBriers + sameBrierWeightedByDuration;
-                            sumOfNewWeightedLowerBriers = sumOfNewWeightedLowerBriers + lowerBrierWeightedByDuration;
+                            sumOfNewWeightedOutcomeOneBriers = sumOfNewWeightedOutcomeOneBriers + outcomeOneBrierWeightedByDuration;
+                            sumOfNewWeightedOutcomeTwoBriers = sumOfNewWeightedOutcomeTwoBriers + outcomeTwoBrierWeightedByDuration;
+                            sumOfNewWeightedOutcomeThreeBriers = sumOfNewWeightedOutcomeThreeBriers + outcomeThreeBrierWeightedByDuration;
                         }
                         else if (i === userForecastData.forecasts.length-1) {
                             let forecastTimeFrame = (closeDate - startDate)/1000;
@@ -420,17 +420,17 @@ router.get("/:problemName/:closedStatus/:username/:singleCertainty", async (req,
                             let percentageOfTimeAtThisScore = ((duration/forecastTimeFrame)*100);
                             fullArrayToReturn[i+1].percentageOfTimeAtThisScore = percentageOfTimeAtThisScore;
                             
-                            higherBrierWeightedByDuration = (newHigherBrier * (percentageOfTimeAtThisScore/100));
-                            sameBrierWeightedByDuration = (newSameBrier * (percentageOfTimeAtThisScore/100));
-                            lowerBrierWeightedByDuration = (newLowerBrier * (percentageOfTimeAtThisScore/100));
+                            outcomeOneBrierWeightedByDuration = (newOutcomeOneBrier * (percentageOfTimeAtThisScore/100));
+                            outcomeTwoBrierWeightedByDuration = (newOutcomeTwoBrier * (percentageOfTimeAtThisScore/100));
+                            outcomeThreeBrierWeightedByDuration = (newOutcomeThreeBrier * (percentageOfTimeAtThisScore/100));
 
-                            sumOfNewWeightedHigherBriers = sumOfNewWeightedHigherBriers + higherBrierWeightedByDuration;
-                            sumOfNewWeightedSameBriers = sumOfNewWeightedSameBriers + sameBrierWeightedByDuration;
-                            sumOfNewWeightedLowerBriers = sumOfNewWeightedLowerBriers + lowerBrierWeightedByDuration;
+                            sumOfNewWeightedOutcomeOneBriers = sumOfNewWeightedOutcomeOneBriers + outcomeOneBrierWeightedByDuration;
+                            sumOfNewWeightedOutcomeTwoBriers = sumOfNewWeightedOutcomeTwoBriers + outcomeTwoBrierWeightedByDuration;
+                            sumOfNewWeightedOutcomeThreeBriers = sumOfNewWeightedOutcomeThreeBriers + outcomeThreeBrierWeightedByDuration;
                             
-                            formulaComponents[0].finalHigherBrierSumUncaptained = sumOfNewWeightedHigherBriers;
-                            formulaComponents[0].finalSameBrierSumUncaptained = sumOfNewWeightedSameBriers;
-                            formulaComponents[0].finalLowerBrierSumUncaptained = sumOfNewWeightedLowerBriers;
+                            formulaComponents[0].finalOutcomeOneBrierSumUncaptained = sumOfNewWeightedOutcomeOneBriers;
+                            formulaComponents[0].finalOutcomeTwoBrierSumUncaptained = sumOfNewWeightedOutcomeTwoBriers;
+                            formulaComponents[0].finalOutcomeThreeBrierSumUncaptained = sumOfNewWeightedOutcomeThreeBriers;
                         };
                     // Forecast was NOT made before close date
                     } else if (new Date(userForecastData.forecasts[i].date) > closeDate) {
@@ -470,6 +470,7 @@ router.post("/newProblem", async (req, res) => {
             market: req.body.market,
             isClosed: false,
             singleCertainty: req.body.singleCertainty === "true" ? true : false,
+            potentialOutcomes: req.body.potentialOutcomes,
             outcome: ""
         });
         const newProblemSavedToDB = await newProblem.save();
@@ -494,8 +495,9 @@ router.patch("/submit", async (req, res) => {
                     comments: req.body.comments, 
                     date: req.body.date
                 }
-            ], 
-            captainedStatus: req.body.captainedStatus
+            ]
+            // ], 
+            // captainedStatus: req.body.captainedStatus
         };
         const newForecastSavedToDB = await Forecasts.findByIdAndUpdate(document._id, 
             { 
@@ -521,15 +523,16 @@ router.patch("/submitMultiple", async (req, res) => {
             forecasts: [
                 {
                     certainties: {
-                        certaintyHigher: req.body.certainty1,
-                        certaintySame: req.body.certainty2,
-                        certaintyLower: req.body.certainty3, 
+                        certainty1: req.body.certainty1,
+                        certainty2: req.body.certainty2,
+                        certainty3: req.body.certainty3, 
                     },
                     comments: req.body.comments, 
                     date: req.body.date
                 }
-            ], 
-            captainedStatus: req.body.captainedStatus
+            ]
+            // ], 
+            // captainedStatus: req.body.captainedStatus
         };
         const newForecastSavedToDB = await Forecasts.findByIdAndUpdate(document._id, 
             { 
@@ -598,9 +601,9 @@ router.patch("/updateMultiple", async (req, res) => {
         //     { 
         //         $push: { [req.body.locationOfForecasts]: {
         //             "certainties": {
-        //                 certaintyHigher: req.body.updatedForecastsForUser.certainty1, 
-        //                 certaintySame: req.body.updatedForecastsForUser.certainty2,
-        //                 certaintyLower: req.body.updatedForecastsForUser.certainty3
+        //                 certainty1: req.body.updatedForecastsForUser.certainty1, 
+        //                 certainty2: req.body.updatedForecastsForUser.certainty2,
+        //                 certainty3: req.body.updatedForecastsForUser.certainty3
         //             },
         //             "comments": req.body.updatedForecastsForUser.comments, 
         //             "date": req.body.updatedForecastsForUser.date 

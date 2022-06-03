@@ -172,9 +172,9 @@ function ForecastSubmission(props) {
                                     };
                                 } else if (forecast.singleCertainty === false) {
                                     console.log(forecast.submittedForecasts[i].forecasts[j])
-                                    totalOutcomeOne += (forecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100);
-                                    totalOutcomeTwo += (forecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100);
-                                    totalOutcomeThree += (forecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100);
+                                    totalOutcomeOne += (forecast.submittedForecasts[i].forecasts[j].certainties.certainty1*100);
+                                    totalOutcomeTwo += (forecast.submittedForecasts[i].forecasts[j].certainties.certainty2*100);
+                                    totalOutcomeThree += (forecast.submittedForecasts[i].forecasts[j].certainties.certainty3*100);
                                 };
                             };
                         };
@@ -260,7 +260,7 @@ function ForecastSubmission(props) {
                             if (forecastProblems[i].singleCertainty === true) {
                                 setUserPreviousAttemptCertainty((forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].certainty*100).toFixed(2));    
                             } else if (forecastProblems[i].singleCertainty === false) {
-                                setUserPreviousAttemptCertainty(`${(forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].certainties.certaintyHigher*100).toFixed(2)}% / ${(forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].certainties.certaintySame*100).toFixed(2)}% / ${(forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].certainties.certaintyLower*100).toFixed(2)}`);
+                                setUserPreviousAttemptCertainty(`${(forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].certainties.certainty1*100).toFixed(2)}% / ${(forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].certainties.certainty2*100).toFixed(2)}% / ${(forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].certainties.certainty3*100).toFixed(2)}`);
                             }
                             setUserPreviousAttemptComments(forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].comments);
                             return;
@@ -456,9 +456,9 @@ function ForecastSubmission(props) {
             };
             documentForecastData[index].forecasts.push({
                 certainties: {
-                    certaintyHigher: newCertainty1, 
-                    certaintySame: newCertainty2, 
-                    certaintyLower: newCertainty3, 
+                    certainty1: newCertainty1, 
+                    certainty2: newCertainty2, 
+                    certainty3: newCertainty3, 
                 },
                 comments: `(${username})~ ${newComments}`, 
                 date: new Date().toString()
@@ -754,7 +754,7 @@ function ForecastSubmission(props) {
                                     </h3>
                                     <div className="multiple-input-fields">
                                         <div className="input-header-container">
-                                            <h3>Increased by ≥2</h3>
+                                            <h3>{selectedForecast.potentialOutcomes[0]}</h3>
                                             <input 
                                                 type="number" 
                                                 className="forecast-certainty-input" 
@@ -766,7 +766,7 @@ function ForecastSubmission(props) {
                                             />
                                         </div>
                                         <div className="input-header-container">
-                                            <h3>Stayed within +/- 2</h3>
+                                            <h3>{selectedForecast.potentialOutcomes[1]}</h3>
                                             <input 
                                                 type="number" 
                                                 className="forecast-certainty-input" 
@@ -778,7 +778,7 @@ function ForecastSubmission(props) {
                                             />
                                         </div>
                                         <div className="input-header-container">
-                                            <h3>Decreased by ≥2</h3>
+                                            <h3>{selectedForecast.potentialOutcomes[2]}</h3>
                                             <input 
                                                 type="number" 
                                                 className="forecast-certainty-input" 
@@ -907,9 +907,9 @@ function ForecastSubmission(props) {
                                 {/* And if false */}
                                 {forecastSingleCertainty === false &&
                                 <div>
-                                    <h3>Average Increased: {outcomeOneCertainty}</h3>
-                                    <h3>Average Same: {outcomeTwoCertainty}</h3>
-                                    <h3>Average Decreased: {outcomeThreeCertainty}</h3>
+                                    <h3>Average {selectedForecast.potentialOutcomes[0]}: {outcomeOneCertainty}</h3>
+                                    <h3>Average {selectedForecast.potentialOutcomes[1]}: {outcomeTwoCertainty}</h3>
+                                    <h3>Average {selectedForecast.potentialOutcomes[2]}: {outcomeThreeCertainty}</h3>
                                 </div>
                                 }
                             </div>

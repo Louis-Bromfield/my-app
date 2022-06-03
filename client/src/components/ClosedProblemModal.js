@@ -44,7 +44,7 @@ const ClosedProblemModal = (props) => {
             <section className="modal-main">
                 <img src={FFLogo} alt="" />
                 <p>We've closed some forecast problems! Go to My Forecasts and select the problem for a breakdown of your performance!</p>
-                <p>You will receive a 5% boost for every problem where you score 75+!</p>
+                {/* <p>You will receive a 5% boost for every problem where you score 75+!</p> */}
                 <a href="https://youtu.be/1fJG4NHDmVY" target="_blank" rel="noreferrer nofollow" style={{ color: "#fff" }}>
                     <p>Want to know more about how your scores are calculated? Click here.</p>
                 </a>
@@ -67,11 +67,11 @@ const ClosedProblemModal = (props) => {
                         <p>You Scored: <u>{currentProblem.brierScore.toFixed(2)} / 110</u></p>
                         <p>You Scored: <u>{currentProblem.brierScore.toFixed(2).slice(0, -3)}</u> Market Points and FFPoints!</p>
                         <br />
-                        {(currentProblem.performanceBoost >= 1 && currentProblem.brierScore >= 75) &&
+                        {/* {(currentProblem.performanceBoost >= 1 && currentProblem.brierScore >= 75) &&
                             <p>
                                 As you scored 75 or above on this problem, you received a Boost of <u>5% ({(currentProblem.brierScore - (currentProblem.brierScore / 105) * 100).toFixed(2)} points)</u> on this prediction.
                             </p>
-                        }
+                        } */}
                     </div>
                 </div>
             </section>

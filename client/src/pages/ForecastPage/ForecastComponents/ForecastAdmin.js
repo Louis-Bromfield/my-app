@@ -5,6 +5,7 @@ import axios from 'axios';
 function ForecastAdmin() {
     const [allForecasts, setAllForecasts] = useState([]);
     const [newProblemName, setNewProblemName] = useState("");
+    const [newProblemPotentialOutcomes, setNewProblemPotentialOutcomes] = useState([]);
     const [allMarkets, setAllMarkets] = useState([]);
     const [openDate, setOpenDate] = useState();
     const [openTime, setOpenTime] = useState();
@@ -33,9 +34,10 @@ function ForecastAdmin() {
     const [newProblemCloseDateTime, setNewProblemCloseDateTime] = useState();
     const [isSingleCertainty, setIsSingleCertainty] = useState("");
     const [adminSingleCertainty, setAdminSingleCertainty] = useState();
-    const [increasedState, setIncreasedState] = useState(false);
-    const [stayedSameState, setStayedSameState] = useState(false);
-    const [decreasedState, setDecreasedState] = useState(false);
+    const [outcome1State, setOutcome1State] = useState(false);
+    const [outcome2State, setOutcome2State] = useState(false);
+    const [outcome3State, setOutcome3State] = useState(false);
+    const [problemPotentialOutcomes, setProblemPotentialOutcomes] = useState([]);
 
     useEffect(() => {
         getAllForecastsFromDB();
@@ -82,7 +84,8 @@ function ForecastAdmin() {
                     startDate: oDateTime,
                     closeDate: cDateTime,
                     market: market,
-                    singleCertainty: singleCertainty
+                    singleCertainty: singleCertainty,
+                    potentialOutcomes: newProblemPotentialOutcomes
                 });
             } catch (error) {
                 console.error("Error in ForecastAdmin > persistNewProblemToDB");
@@ -131,10 +134,10 @@ function ForecastAdmin() {
     };
 
     // Might be worth sorting backend before doing this!
-    const closeAndCalculateBriersMultipleOutcomes = async (problemName, increasedStatus, stayedSameStatus, decreasedStatus, market, closeEarly) => {
+    const closeAndCalculateBriersMultipleOutcomes = async (problemName, outcome1Status, outcome2Status, outcome3Status, market, closeEarly) => {
         try {
             // works
-            let outcome = increasedStatus === true ? "increase" : stayedSameStatus === true ? "same" : "decrease";
+            let outcome = outcome1Status === true ? "outcome1" : outcome2Status === true ? "outcome2" : "outcome3";
             console.log(outcome);
 
             // to find out
@@ -170,6 +173,7 @@ function ForecastAdmin() {
             setProblemSpotlightCloseDate(problem.closeDate);
             setProblemSpotlightMarket(problem.market);
             setProblemSpotlightUniqueForecasterCount(problem.submittedForecasts.length);
+            setProblemPotentialOutcomes(problem.potentialOutcomes);
             setAdminSingleCertainty(problem.singleCertainty);
         };
     };
@@ -251,45 +255,45 @@ function ForecastAdmin() {
                                 type="radio" 
                                 id={1} 
                                 name="Increased" 
-                                value={increasedState} 
-                                checked={increasedState}
+                                value={outcome1State} 
+                                checked={outcome1State}
                                 className="increased-btn"
-                                onClick={() => setIncreasedState(!increasedState)}
+                                onClick={() => setOutcome1State(!outcome1State)}
                             />
                             <label 
                                 htmlFor="Increased" 
-                                onClick={() => setIncreasedState(!increasedState)}>
-                                    Increased
+                                onClick={() => setOutcome1State(!outcome1State)}>
+                                    {problemPotentialOutcomes[0]}
                             </label>
                             <br />
                             <input 
                                 type="radio" 
                                 id={2} 
                                 name="Stayed Same" 
-                                value={stayedSameState}
-                                checked={stayedSameState} 
+                                value={outcome2State}
+                                checked={outcome2State} 
                                 className="stayed-same-btn" 
-                                onClick={() => setStayedSameState(!stayedSameState)} 
+                                onClick={() => setOutcome2State(!outcome2State)} 
                             />
                             <label 
                                 htmlFor="Stayed Same" 
-                                onClick={() => setStayedSameState(!stayedSameState)}>
-                                    Stayed Same
+                                onClick={() => setOutcome2State(!outcome2State)}>
+                                    {problemPotentialOutcomes[1]}
                             </label>
                             <br />
                             <input 
                                 type="radio" 
                                 id={1} 
                                 name="Decreased" 
-                                value={decreasedState} 
-                                checked={decreasedState}
+                                value={outcome3State} 
+                                checked={outcome3State}
                                 className="decreased-btn"
-                                onClick={() => setDecreasedState(!decreasedState)}
+                                onClick={() => setOutcome3State(!outcome3State)}
                             />
                             <label 
                                 htmlFor="Decreased" 
-                                onClick={() => setDecreasedState(!decreasedState)}>
-                                    Increased
+                                onClick={() => setOutcome3State(!outcome3State)}>
+                                    {problemPotentialOutcomes[2]}
                             </label>
                         </div>
                     }
@@ -303,7 +307,7 @@ function ForecastAdmin() {
                     {adminSingleCertainty === false &&
                         <button 
                             className="forecast-admin-btn" 
-                            onClick={() => { closeAndCalculateBriersMultipleOutcomes(selectedProblem, increasedState, stayedSameState, decreasedState, problemSpotlightMarket, false); setAdminText("Problem Closed")}}>
+                            onClick={() => { closeAndCalculateBriersMultipleOutcomes(selectedProblem, outcome1State, outcome2State, outcome3State, problemSpotlightMarket, false); setAdminText("Problem Closed")}}>
                                 Close Forecast & Calculate All Brier Scores
                         </button>
                     }
@@ -398,45 +402,45 @@ function ForecastAdmin() {
                             type="radio" 
                             id={1} 
                             name="Increased" 
-                            value={increasedState} 
-                            checked={increasedState}
+                            value={outcome1State} 
+                            checked={outcome1State}
                             className="increased-btn"
-                            onClick={() => { setIncreasedState(!increasedState); console.log(increasedState)}}
+                            onClick={() => { setOutcome1State(!outcome1State); console.log(outcome1State)}}
                         />
                         <label 
                             htmlFor="Increased" 
-                            onClick={() => setIncreasedState(!increasedState)}>
-                                Increased
+                            onClick={() => setOutcome1State(!outcome1State)}>
+                                {problemPotentialOutcomes[0]}
                         </label>
                         <br />
                         <input 
                             type="radio" 
                             id={2} 
                             name="Stayed Same" 
-                            value={stayedSameState}
-                            checked={stayedSameState} 
+                            value={outcome2State}
+                            checked={outcome2State} 
                             className="stayed-same-btn" 
-                            onClick={() => setStayedSameState(!stayedSameState)} 
+                            onClick={() => setOutcome2State(!outcome2State)} 
                         />
                         <label 
                             htmlFor="Stayed Same" 
-                            onClick={() => setStayedSameState(!stayedSameState)}>
-                                Stayed Same
+                            onClick={() => setOutcome2State(!outcome2State)}>
+                                {problemPotentialOutcomes[1]}
                         </label>
                         <br />
                         <input 
                             type="radio" 
                             id={1} 
                             name="Decreased" 
-                            value={decreasedState} 
-                            checked={decreasedState}
+                            value={outcome3State} 
+                            checked={outcome3State}
                             className="decreased-btn"
-                            onClick={() => setDecreasedState(!decreasedState)}
+                            onClick={() => setOutcome3State(!outcome3State)}
                         />
                         <label 
                             htmlFor="Decreased" 
-                            onClick={() => setDecreasedState(!decreasedState)}>
-                                Decreased
+                            onClick={() => setOutcome3State(!outcome3State)}>
+                                {problemPotentialOutcomes[2]}
                         </label>
                     </div>
                 }
@@ -470,7 +474,7 @@ function ForecastAdmin() {
                 {adminSingleCertainty === false &&
                     <button 
                         className="forecast-admin-btn" 
-                        onClick={() => { closeAndCalculateBriersMultipleOutcomes(selectedProblem, increasedState, stayedSameState, decreasedState, problemSpotlightMarket, true); setAdminText("Problem Closed Early")}}>
+                        onClick={() => { closeAndCalculateBriersMultipleOutcomes(selectedProblem, outcome1State, outcome2State, outcome3State, problemSpotlightMarket, true); setAdminText("Problem Closed Early")}}>
                             Close MultiCert Problem & Calculate All Brier Scores
                     </button>
                 }
@@ -484,6 +488,12 @@ function ForecastAdmin() {
                     type="text" 
                     placeholder="Type new problem here"
                     onChange={(e) => setNewProblemName(e.target.value)}
+                />
+                <h3 className="forecast-admin-header">What are the possible outcomes? | Separate each outcome with a "/" |</h3>
+                <input 
+                    type="text"
+                    placeholder="Insert potential outcomes here"
+                    onChange={(e) => setNewProblemPotentialOutcomes(e.target.value.split("/"))}
                 />
                 <h3 className="forecast-admin-header">Forecast Open Date:</h3>
                 <input 

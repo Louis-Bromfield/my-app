@@ -126,7 +126,7 @@ function Leaderboard(props) {
                         {width && <th className="last-five-briers-column">Last 5 Forecasts (&nbsp;&nbsp;/110&nbsp;&nbsp;)</th>}
                     </tr>
                     {usersData.map((item, index) => {
-                    if (props.leaderboardFilter === "all") {
+                    // if (props.leaderboardFilter === "all") {
                         if (item.username === props.username) {
                             return (
                                 <tr className="leaderboard-row-matching-username" key={index}>
@@ -213,8 +213,10 @@ function Leaderboard(props) {
                             )
                         }
                         else return null;
-                    }        
-                    else if (props.leaderboardFilter === "solo") {
+                    })}
+                    </tbody>
+                    }  
+                     {/* else if (props.leaderboardFilter === "solo") {
                         if (item.username === props.username && item.isGroup === false) {
                             return (
                                 <tr className="leaderboard-row-matching-username" key={index}>
@@ -393,7 +395,7 @@ function Leaderboard(props) {
                     })
                 }
                 </tbody>
-                }
+                } */}
                 {(props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") &&
                 <tbody>
                     <tr className="leaderboard-title-row">
@@ -404,7 +406,7 @@ function Leaderboard(props) {
                         {width && <th className="last-five-briers-column">Last 5 Forecasts (All Markets)</th>}
                     </tr>
                     {usersData.map((item, index) => {
-                        if (props.leaderboardFilter === "all") {
+                        // if (props.leaderboardFilter === "all") {
                             if (item.username === props.username) {
                                 return (
                                     <tr className="leaderboard-row-matching-username" key={index}>
@@ -487,12 +489,14 @@ function Leaderboard(props) {
                                                 })}
                                             </span>
                                         </td>}
-                                    </tr>
-                                )
-                            }
-                            else return null;
+                                        </tr>
+                            )
                         }
-                        else if (props.leaderboardFilter === "solo") {
+                        else return null;
+                    })}
+                </tbody>
+                } 
+                        {/* else if (props.leaderboardFilter === "solo") {
                             if (item.username === props.username && item.isGroup === false) {
                                 return (
                                     <tr className="leaderboard-row-matching-username" key={index}>
@@ -671,7 +675,7 @@ function Leaderboard(props) {
                     })
                     }
                 </tbody>
-                }
+                } */}
             </table>
         </div>
     )

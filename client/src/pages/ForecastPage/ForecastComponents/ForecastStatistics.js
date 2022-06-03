@@ -6,9 +6,9 @@ function ForecastStatistics(props) {
     const [lowestCertainty, setLowestCertainty] = useState(0);
     const [currentAverageCertainty, setCurrentAverageCertainty] = useState(0);
     const [numberOfForecasts, setNumberOfForecasts] = useState(0);
-    const [avgHigher, setAvgHigher] = useState(0);
-    const [avgSame, setAvgSame] = useState(0);
-    const [avgLower, setAvgLower] = useState(0);
+    const [avgOutcomeOne, setAvgOutcomeOne] = useState(0);
+    const [avgOutcomeTwo, setAvgOutcomeTwo] = useState(0);
+    const [avgOutcomeThree, setAvgOutcomeThree] = useState(0);
 
     useEffect(() => {
         getForecastInfo(props.today, props.selectedForecast);
@@ -109,41 +109,41 @@ function ForecastStatistics(props) {
                 setNumberOfForecasts("N/A");
             } else {
                 if (today === true) {
-                    let totalHighest = 0.00;
-                    let totalSame = 0.00;
-                    let totalLowest = 0.00;
+                    let totalOutcomeOne = 0.00;
+                    let totalOutcomeTwo = 0.00;
+                    let totalOutcomeThree = 0.00;
                     let numbOfForecasts = 0;
                         for (let i = 0; i < selectedForecast.submittedForecasts.length; i++) {
                             for (let j = 0; j < selectedForecast.submittedForecasts[i].forecasts.length; j++) {
                                 if (selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) === new Date().toString().slice(0, 15)) {
-                                    totalHighest += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100;
-                                    totalSame += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100;
-                                    totalLowest += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100;
+                                    totalOutcomeOne += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty1*100;
+                                    totalOutcomeTwo += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty2*100;
+                                    totalOutcomeThree += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty3*100;
                                     numbOfForecasts += 1;
                                 };
                             };
                         };
-                        setAvgHigher((totalHighest / numbOfForecasts).toFixed(2));
-                        setAvgSame((totalSame / numbOfForecasts).toFixed(2));
-                        setAvgLower((totalLowest / numbOfForecasts).toFixed(2));
+                        setAvgOutcomeOne((totalOutcomeOne / numbOfForecasts).toFixed(2));
+                        setAvgOutcomeTwo((totalOutcomeTwo / numbOfForecasts).toFixed(2));
+                        setAvgOutcomeThree((totalOutcomeThree / numbOfForecasts).toFixed(2));
                         setNumberOfForecasts(numbOfForecasts);
                 } else if (today === false) {
-                    let totalHighest = 0.00;
-                    let totalSame = 0.00;
-                    let totalLowest = 0.00;
+                    let totalOutcomeOne = 0.00;
+                    let totalOutcomeTwo = 0.00;
+                    let totalOutcomeThree = 0.00;
                     let numbOfForecasts = 0;
 
                     for (let i = 0; i < selectedForecast.submittedForecasts.length; i++) {
                         numbOfForecasts = numbOfForecasts + selectedForecast.submittedForecasts[i].forecasts.length;
                         for (let j = 0; j < selectedForecast.submittedForecasts[i].forecasts.length; j++) {
-                            totalHighest += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyHigher*100;
-                            totalSame += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintySame*100;
-                            totalLowest += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certaintyLower*100;
+                            totalOutcomeOne += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty1*100;
+                            totalOutcomeTwo += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty2*100;
+                            totalOutcomeThree += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty3*100;
                         };
                     };
-                    setAvgHigher((totalHighest / numbOfForecasts).toFixed(2));
-                    setAvgSame((totalSame / numbOfForecasts).toFixed(2));
-                    setAvgLower((totalLowest / numbOfForecasts).toFixed(2));
+                    setAvgOutcomeOne((totalOutcomeOne / numbOfForecasts).toFixed(2));
+                    setAvgOutcomeTwo((totalOutcomeTwo / numbOfForecasts).toFixed(2));
+                    setAvgOutcomeThree((totalOutcomeThree / numbOfForecasts).toFixed(2));
                     setNumberOfForecasts(numbOfForecasts);
                 };
             };
@@ -177,16 +177,16 @@ function ForecastStatistics(props) {
             {props.forecastSingleCertainty === false &&
                 <div className="forecast-statistics-grid">
                     <div className="forecast-statistics-grid-row-odd">
-                        <h3>Average Increase:</h3>
-                        <h3>{isNaN(avgHigher) ? "N/A" : `${avgHigher}%`}</h3>
+                        <h3>Average {props.selectedForecast.potentialOutcomes[0]}:</h3>
+                        <h3>{isNaN(avgOutcomeOne) ? "N/A" : `${avgOutcomeOne}%`}</h3>
                     </div>
                     <div className="forecast-statistics-grid-row-even">
-                        <h3>Average Same</h3>
-                        <h3>{isNaN(avgSame) ? "N/A" : `${avgSame}%`}</h3>
+                        <h3>Average {props.selectedForecast.potentialOutcomes[1]}</h3>
+                        <h3>{isNaN(avgOutcomeTwo) ? "N/A" : `${avgOutcomeTwo}%`}</h3>
                     </div>
                     <div className="forecast-statistics-grid-row-odd">
-                        <h3>Average Lower</h3>
-                        <h3>{isNaN(avgLower) ? "N/A" : `${avgLower}%`}</h3>
+                        <h3>Average {props.selectedForecast.potentialOutcomes[2]}</h3>
+                        <h3>{isNaN(avgOutcomeThree) ? "N/A" : `${avgOutcomeThree}%`}</h3>
                     </div>
                     <div className="forecast-statistics-grid-row-even">
                         <h3>Number of Forecasts:</h3>
