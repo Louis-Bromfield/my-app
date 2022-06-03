@@ -498,6 +498,9 @@ function ForecastSubmission(props) {
         console.log(certainty1);
         console.log(certainty2);
         console.log(certainty3);
+        console.log(comments);
+        console.log(username);
+        console.log(forecast);
         try {
             const submittedForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/submitMultiple`, {
                 problemName: forecast,

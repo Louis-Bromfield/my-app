@@ -397,9 +397,9 @@ function ForecastBreakdown(props) {
                                     // Predictions submitted after closing date will still be in DB so must be filtered
                                     if (index !== 0 && new Date(item.date) < new Date(predictionData[0].closeDate)) {
                                         if (index === 1) {
-                                            totalIfOutcomeOne += (item.newFirstBrier * (item.percentageOfTimeAtThisScore/100));
-                                            totalIfOutcomeTwo += (item.newSecondBrier * (item.percentageOfTimeAtThisScore/100));
-                                            totalIfOutcomeThree += (item.newThirdBrier * (item.percentageOfTimeAtThisScore/100));
+                                            totalIfOutcomeOne += (item.newOutcomeOneBrier * (item.percentageOfTimeAtThisScore/100));
+                                            totalIfOutcomeTwo += (item.newOutcomeTwoBrier * (item.percentageOfTimeAtThisScore/100));
+                                            totalIfOutcomeThree += (item.newOutcomeThreeBrier * (item.percentageOfTimeAtThisScore/100));
                                             if (showForecastByForecastBreakdown === true) {
                                                 return (
                                                     <li key={index} className="prediction-li">
@@ -414,9 +414,9 @@ function ForecastBreakdown(props) {
                                                         <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>What Will This Forecast Score Me?</h3>
-                                                        <h4>If OUTCOME ONE Happens: {item.newFirstBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newFirstBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
-                                                        <h4>If OUTCOME TWO Happens: {item.newSecondBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newSecondBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
-                                                        <h4>If OUTCOME THREE Happens: {item.newThirdBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newThirdBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <h4>If OUTCOME ONE Happens: {item.newOutcomeOneBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newOutcomeOneBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <h4>If OUTCOME TWO Happens: {item.newOutcomeTwoBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newOutcomeTwoBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <h4>If OUTCOME THREE Happens: {item.newOutcomeThreeBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newOutcomeThreeBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
                                                         <br />
                                                         <h2 style={{ color: "#404d72"}}>Time Score - {tScore.toFixed(2)} / 10</h2>
                                                         <h4>As this was your first prediction, it determines your Time Score (Earlier = Higher Score)</h4>
@@ -426,9 +426,9 @@ function ForecastBreakdown(props) {
                                                 )
                                             } else return null;
                                         } else {
-                                            totalIfOutcomeOne += (item.newFirstBrier * (item.percentageOfTimeAtThisScore/100));
-                                            totalIfOutcomeTwo += (item.newSecondBrier * (item.percentageOfTimeAtThisScore/100));
-                                            totalIfOutcomeThree += (item.newThirdBrier * (item.percentageOfTimeAtThisScore/100));
+                                            totalIfOutcomeOne += (item.newOutcomeOneBrier * (item.percentageOfTimeAtThisScore/100));
+                                            totalIfOutcomeTwo += (item.newOutcomeTwoBrier * (item.percentageOfTimeAtThisScore/100));
+                                            totalIfOutcomeThree += (item.newOutcomeThreeBrier * (item.percentageOfTimeAtThisScore/100));
                                             if (showForecastByForecastBreakdown === true) {
                                                 return (
                                                     <li key={index} className="prediction-li">
@@ -443,9 +443,9 @@ function ForecastBreakdown(props) {
                                                         <h4>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</h4>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>What Will This Forecast Score Me?</h3>
-                                                        <h4>If OUTCOME ONE Happens: {item.newFirstBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newFirstBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
-                                                        <h4>If OUTCOME TWO Happens: {item.newSecondBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newSecondBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
-                                                        <h4>If OUTCOME THREE Happens: {item.newThirdBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newThirdBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <h4>If OUTCOME ONE Happens: {item.newOutcomeOneBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newOutcomeOneBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <h4>If OUTCOME TWO Happens: {item.newOutcomeTwoBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newOutcomeTwoBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
+                                                        <h4>If OUTCOME THREE Happens: {item.newOutcomeThreeBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newOutcomeThreeBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</h4>
                                                         <br />
                                                         <hr />
                                                     </li>
