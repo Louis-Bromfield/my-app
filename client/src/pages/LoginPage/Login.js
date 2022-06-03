@@ -59,6 +59,7 @@ function Login(props) {
                     type="text" 
                     name="username" 
                     id="username" 
+                    maxLength={15}
                     onChange={(e) => { 
                         // localStorage.setItem("loggedInFromGoogle", false); 
                         setCredentialsSuccessfullyChecked();
