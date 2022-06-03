@@ -21,6 +21,7 @@ function ForecastProblemLineChart(props) {
   const [userOutcomeThreeChartData, setUserOutcomeThreeChartData] = useState([]);      
   const [allChartData, setAllChartData] = useState([]);
   const [simulatedUserData, setSimulatedUserData] = useState([]);
+  const [sliceIndexState, setSliceIndexState] = useState();
 
   useEffect(() => {
     formatCertainties(props.selectedForecast, props.updateTodayStats, props.username);
@@ -62,9 +63,11 @@ function ForecastProblemLineChart(props) {
         if ((new Date(selectedForecast.closeDate) - new Date(selectedForecast.startDate))/1000 < 604800) {
             console.log("yep slice index = 18");
             sliceIndex = 18;
+            setSliceIndexState(18);
         } else {
             sliceIndex = 15;
             console.log("nope slice index = 15");
+            setSliceIndexState(15);
         }
         if (newCertainties.length > 0 || newCertainties[0] === '') {
             for (let i = 0; i < newCertainties.length; i++) {
@@ -546,13 +549,13 @@ function ForecastProblemLineChart(props) {
     //   setLabelsArray(labelsToReturn);
     };
 
-    const createNewLabelsArray = (start, end, isClosed) => {
+    const createNewLabelsArray = (start, end, isClosed, sliceIndex) => {
         let labelsToReturn = [];
         // I think the reason why the blue line is stopping a day early is because it might be going to the minute 
         // If the start date is 8am and we're at 7.30am, it might not think we are on the same day
         let finalDay = isClosed === true ? end : new Date();
-        for (let d = new Date(start.toString().slice(0, 15)); d <= finalDay; d.setDate(d.getDate() + 1)) {
-            let newDate = new Date(d).toString().slice(0, 15);
+        for (let d = new Date(start.toString().slice(0, sliceIndex)); d <= finalDay; d.setDate(d.getDate() + 1)) {
+            let newDate = new Date(d).toString().slice(0, sliceIndex);
             labelsToReturn.push(newDate);
         };
         return labelsToReturn;
@@ -560,7 +563,7 @@ function ForecastProblemLineChart(props) {
 
     const getNewDailyAverages = (certainties, start, end, isClosed) => {
         // Create labels array
-        let days = createNewLabelsArray(start, end, isClosed);
+        let days = createNewLabelsArray(start, end, isClosed, sliceIndexState);
         // Sort main array by date
         let sortedCertainties = certainties.sort((a, b) => new Date(a.x) - new Date(b.x));
         let averageArr = [];         
