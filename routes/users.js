@@ -364,7 +364,12 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
             await Forecasts.findByIdAndUpdate(forecastObj._id, { isClosed: true, outcome: outcome });
         };
         const calculatedBriers = calculateBriers(forecastObj, "N/A", outcome);
-
+        // Calculate overall average
+        let total = 0;
+        for (let i = 0; i < calculatedBriers.length; i++) {
+            total += calculatedBriers[i].finalScore;
+        };
+        let averageScoreForProblem = total / calculatedBriers.length;
         let scoresToReturn = [];
         let newScorePerformanceBoosted;
         let performanceBoostVal = 0;
@@ -405,7 +410,8 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
                 problemName: req.body.problemName,
                 marketName: req.params.marketName,
                 captainedStatus: calculatedBriers[i].captainedStatus,
-                performanceBoost: performanceBoostVal
+                performanceBoost: performanceBoostVal,
+                averageScore: averageScoreForProblem
             };
             await Users.findOneAndUpdate({ username: calculatedBriers[i].username }, {
                 $push: { brierScores: toPush },
