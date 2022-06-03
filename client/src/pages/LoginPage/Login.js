@@ -22,11 +22,11 @@ function Login(props) {
         try {
             const userCheckedByUsername = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${uName}`);
             console.log(userCheckedByUsername);
-            // if (userCheckedByUsername.data.length === 1) {
-                // setProblematicInfo("username");
-                // setCredentialsSuccessfullyChecked(false);
-                // return;
-            // } else {
+            if (userCheckedByUsername.data.length === 1) {
+                setProblematicInfo("username");
+                setCredentialsSuccessfullyChecked(false);
+                return;
+            } else {
                 // New
                 setProblematicInfo("");
                 setCredentialsSuccessfullyChecked(true);
@@ -43,7 +43,7 @@ function Login(props) {
                 //     setCredentialsSuccessfullyChecked(true);
                 //     localStorage.setItem("pAID", proID);
                 // };
-            // };
+            };
         } catch (error) {
             console.error("Error in Login > checkCredentials");
             console.error(error);
