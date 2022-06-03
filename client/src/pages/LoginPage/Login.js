@@ -17,7 +17,7 @@ function Login(props) {
         setLoggedIn(localStorage.getItem("loggedInFromGoogle"));
     }, []);
 
-    const checkCredentials = async (uName, proID) => {
+    const checkCredentials = async (uName) => {
         console.log("in checkCredentials");
         try {
             const userCheckedByUsername = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${uName}`);
@@ -27,17 +27,22 @@ function Login(props) {
                 setCredentialsSuccessfullyChecked(false);
                 return;
             } else {
-                const userCheckedByProlificID = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/findByProlificID/${proID}`);
-                console.log(userCheckedByProlificID);
-                if (userCheckedByProlificID.data.length === 1) {
-                    setProblematicInfo("ProlificID");
-                    setCredentialsSuccessfullyChecked(false)
-                    return;
-                } else if (userCheckedByProlificID.data.length === 0) {
-                    setProblematicInfo("");
-                    setCredentialsSuccessfullyChecked(true);
-                    localStorage.setItem("pAID", proID);
-                };
+                // New
+                setProblematicInfo("");
+                setCredentialsSuccessfullyChecked(true);
+                localStorage.setItem("username", uName);
+                // Prev
+                // const userCheckedByProlificID = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/findByProlificID/${proID}`);
+                // console.log(userCheckedByProlificID);
+                // if (userCheckedByProlificID.data.length === 1) {
+                //     setProblematicInfo("ProlificID");
+                //     setCredentialsSuccessfullyChecked(false)
+                //     return;
+                // } else if (userCheckedByProlificID.data.length === 0) {
+                //     setProblematicInfo("");
+                //     setCredentialsSuccessfullyChecked(true);
+                //     localStorage.setItem("pAID", proID);
+                // };
             };
         } catch (error) {
             console.error("Error in Login > checkCredentials");
@@ -49,18 +54,19 @@ function Login(props) {
         <div className="login-main-div">
             <img className="login-logo" src={FFLogo} alt="" />
             <div className="google-login-container">
-                <label htmlFor="username">Enter Your Username:</label>
+                <label htmlFor="username">Create Your Username:</label>
                 <input 
                     type="text" 
                     name="username" 
                     id="username" 
                     onChange={(e) => { 
-                        localStorage.setItem("loggedInFromGoogle", false); 
+                        // localStorage.setItem("loggedInFromGoogle", false); 
                         setCredentialsSuccessfullyChecked();
-                        setUsername(e.target.value); 
-                        props.setUserForLogin(e.targetValue)}}
+                        setUsername(e.target.value);
+                    }} 
+                        // props.setUserForLogin(e.targetValue)}}
                 />
-                <label htmlFor="prolificID">Enter Your ProlificID:</label>
+                {/* <label htmlFor="prolificID">Enter Your ProlificID:</label>
                 <input 
                     type="text" 
                     name="prolificID" 
@@ -69,12 +75,12 @@ function Login(props) {
                         localStorage.setItem("loggedInFromGoogle", false); 
                         setCredentialsSuccessfullyChecked();
                         setProlificID(e.target.value)}}
-                />
-                <button onClick={() => checkCredentials(username, prolificID)}>Click Here: Check Your Details</button>
+                /> */}
+                <button onClick={() => checkCredentials(username)}>Click Here: Check Your Details</button>
                 {credentialsSuccessfullyChecked === true && 
                     <div className="credentials-passed-login">
                         <h2>Your details are perfect!</h2>
-                        <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/not_callback/${username}/${prolificID}`}>
+                        <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/not_callback/${username}`}>
                             <button type="submit" className="google-button">
                                 <span className="google-button__text">Sign in with Google</span>
                             </button>

@@ -35,11 +35,6 @@ function Home(props) {
     };
 
     useEffect(() => {
-        // if (localStorage.getItem("loggedInFromGoogle") === "true") {
-        //     console.log("yes is true");
-        //     props.login(props.userForLogin);
-        //     localStorage.setItem("loggedInFromGoogle", false);
-        // };
         if (localStorage.getItem("firstVisit") === "true") {
             setShowModal(true);
             const welcomeString = "Welcome to Fantasy Forecast! Your home page might look a bit empty, so we recommend heading over to the Leaderboards page and joining the markets that look interesting to you! The Onboarding menu on the right will give you ideas as to how to get acquainted with the site - have fun!";

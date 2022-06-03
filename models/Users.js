@@ -74,12 +74,12 @@ const UserSchema = mongoose.Schema({
     username: {
         type: String
     },
-    prolificID: {
-        type: String
-    },
-    googleID: {
-        type: String
-    },
+    // prolificID: {
+    //     type: String
+    // },
+    // googleID: {
+    //     type: String
+    // },
     fantasyForecastPoints: {
         type: Number,
         default: 0
@@ -116,11 +116,12 @@ const UserSchema = mongoose.Schema({
     articleVisits: {
         type: Number,
         default: 0
-    },
-    justSignedInWithOAuth: {
-        type: Boolean,
-        default: true
     }
+    // },
+    // justSignedInWithOAuth: {
+    //     type: Boolean,
+    //     default: true
+    // }
 });
 
 module.exports = mongoose.model("Users", UserSchema);

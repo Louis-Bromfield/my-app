@@ -48,11 +48,20 @@ function App() {
     localStorage.removeItem('profilePicture');
   };
 
-//   const login = (usernameFromLogin, nameFromLogin, marketsFromLogin, userObj, profilePicture) => {
-  const login = async (prolificID) => {
+  const login = async (username) => {
     console.log("In login function");
-    console.log("Finding a user with this prolificID: " + prolificID);
-    const userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/findByProlificID/${prolificID}`);
+    console.log("Finding a user with this username: " + username);
+    const userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+    if (userObj.data.length === 0) {
+        return;
+    };
+    // Add user to leaderboard
+    const ffAllTime = "Fantasy Forecast All-Time";
+    await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${ffAllTime}`)
+
+    // Add user to learnQuizzes
+    await axios.post(`https://fantasy-forecast-politics.herokuapp.com/learnQuizzes/`, { username: username });
+
     console.log(userObj);
     setUserObject(userObj.data[0]);
     setUsername(userObj.data[0].username);
@@ -60,6 +69,7 @@ function App() {
     setMarkets(userObj.data[0].markets);
     setProfilePicture(userObj.data[0].profilePicture);
     localStorage.setItem('isLoggedIn', true);
+    localStorage.setItem("firstVisit", true);
     localStorage.setItem('username', userObj.data[0].username);
     localStorage.setItem('name', "XXXXXXXXXX");
     localStorage.setItem('markets', userObj.data[0].markets);

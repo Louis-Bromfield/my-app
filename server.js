@@ -14,7 +14,7 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
 
 let usernameFromClient = "_TEMP_USERNAME";
-let prolificIDFromClient = "_TEMP_PROLIFIC_ID_UNIMPORTED";
+// let prolificIDFromClient = "_TEMP_PROLIFIC_ID_UNIMPORTED";
 
 // Middleware
 app.use(express.json());
@@ -34,12 +34,12 @@ const UserSchema = mongoose.Schema({
     username: {
         type: String
     },
-    prolificID: {
-        type: String
-    },
-    googleID: {
-        type: String
-    },
+    // prolificID: {
+    //     type: String
+    // },
+    // googleID: {
+    //     type: String
+    // },
     fantasyForecastPoints: {
         type: Number,
         default: 0
@@ -76,11 +76,12 @@ const UserSchema = mongoose.Schema({
     articleVisits: {
         type: Number,
         default: 0
-    },
-    justSignedInWithOAuth: {
-        type: Boolean,
-        default: true
     }
+    // },
+    // justSignedInWithOAuth: {
+    //     type: Boolean,
+    //     default: true
+    // }
 });
 
 UserSchema.plugin(passportLocalMongoose);
@@ -116,8 +117,8 @@ passport.use(new GoogleStrategy({
   },
   function(req, accessToken, refreshToken, profile, cb) {
     User.findOrCreate({ 
-        prolificID: prolificIDFromClient,
-        googleID: profile.id,
+        // prolificID: prolificIDFromClient,
+        // googleID: profile.id,
         username: usernameFromClient, 
         profilePicture: profile.photos[0].value || ""
         // Need to add user to the Fantasy Forecast All-Time leaderboard document
@@ -172,67 +173,29 @@ db.once("open", () => console.log("Successfully connected to the Database"));
 //     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 // });
 
-const loggingMiddleWare = (username, prolificID, next) => {
+// Prev
+// const loggingMiddleWare = (username, prolificID, next) => {
+//     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+//     console.log(username);
+//     console.log(prolificID);
+//     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+//     usernameFromClient = username;
+//     prolificIDFromClient = prolificID
+//     req.piDFC = prolificID;
+//     next();
+// };
+
+// New
+const loggingMiddleWare = (username, next) => {
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     console.log(username);
-    console.log(prolificID);
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     usernameFromClient = username;
-    prolificIDFromClient = prolificID
-    req.piDFC = prolificID;
     next();
 };
 
-// app.get("/auth/google/not_callback/:username/:prolificID", 
-//     (req, res, next) => loggingMiddleWare(req.params.username, req.params.prolificID, next), 
-//     passport.authenticate("google", {
-//         // scope: ["profile"] 
-//         scope: [
-//             'https://www.googleapis.com/auth/userinfo.profile',
-//             'https://www.googleapis.com/auth/userinfo.email'
-//         ]
-//     }
-// ));
 
-// app.get("/auth/google/callback/", passport.authenticate("google", { 
-//     // Maybe change failureRedirect to a page that just says login failed, and a button to go back to the login page
-//     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
-//     successRedirect: "https://fantasy-forecast-politics.herokuapp.com",
-//     // successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/userGID=${res.req.user.googleID}`
-// // }), function(req, res) { 
-// //         console.log("==============================================");
-// //         console.log("=================REQ=================");
-// //         console.log(req);
-// //         console.log("=================RES=================");
-// //         console.log(res);
-// //         console.log("=================END OF RES=================");
-// //         res.redirect("https://fantasy-forecast-politics.herokuapp.com/home")
-// //     }
-// }));
-
-
-// // HERE 
-// app.get("/auth/google/not_callback/:username/:prolificID", function(req, res, next) {
-//     usernameFromClient = req.params.username;
-//     prolificIDFromClient = req.params.prolificID;
-//     req.session.prolificID = req.params.prolificID;
-//     console.log("req.params.prolificID = " + req.params.prolificID)
-//     console.log("req.session.prolificID = " + req.session.prolificID)
-//     req.prolificID = req.params.prolificID;
-//     next();
-// }, (req, res) => passport.authenticate("google", {
-//         // scope: ["profile"] 
-//         scope: [
-//             'https://www.googleapis.com/auth/userinfo.profile',
-//             'https://www.googleapis.com/auth/userinfo.email'
-//         ],
-//         // This does have access to req object, so this state variable IS storing it, it's just a case of how do we get it to the callback below???
-//         state: req.prolificID
-//     }
-// ));
-
-// HERE 
-app.get("/auth/google/not_callback/:username/:prolificID", (req, res, next) => loggingMiddleWare(req.params.username, req.params.prolificID, next), passport.authenticate("google", {
+app.get("/auth/google/not_callback/:username", (req, res, next) => loggingMiddleWare(req.params.username, next), passport.authenticate("google", {
     scope: [
         'https://www.googleapis.com/auth/userinfo.profile',
         'https://www.googleapis.com/auth/userinfo.email'
@@ -248,58 +211,6 @@ app.get("/auth/google/callback",
         successRedirect: "https://fantasy-forecast-politics.herokuapp.com/loginSuccess"
     })
 );
-//     }), 
-//     function(req, res) {
-//         console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-//         console.log("req.authInfo.state = ");
-//         console.log(req.authInfo.state);
-//         let id = req.authInfo.state.prolificID;
-//         console.log("id = " + id);
-//         if (id) {
-//             res.redirect('https://fantasy-forecast-politics.herokuapp.com/loginSuccess/pAID=' + id)
-//         } else {
-//             res.redirect('https://fantasy-forecast-politics.herokuapp.com')
-//         }
-//     }
-// );
-// TO HERE
-
-// app.get("/auth/google/callback", passport.authenticate("google", { 
-//     // Maybe change failureRedirect to a page that just says login failed, and a button to go back to the login page
-//     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
-//     // JOB ONE:
-//     // look at RES or REQ objects and traverse them to find the user object and it's googleID
-//     // successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/userGID=108614670038566185853`
-//     successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/pAID=OMEGALUL`
-// // }), function(req, res) { 
-// //         console.log("==============================================");
-// //         console.log("=================REQ=================");
-// //         console.log(req);
-// //         console.log("=================RES=================");
-// //         console.log(res);
-// //         console.log("=================END OF RES=================");
-// //         res.redirect("https://fantasy-forecast-politics.herokuapp.com/home")
-// //     }
-// }));
-
-// app.get("/auth/google/callback/", passport.authenticate("google", { 
-//     // Maybe change failureRedirect to a page that just says login failed, and a button to go back to the login page
-//     failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
-//     // failureRedirect: "https://fantasy-forecast-politics.herokuapp.com",
-//     // JOB ONE:
-//     // look at RES or REQ objects and traverse them to find the user object and it's googleID
-//     successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/userGID=108614670038566185853`
-//     // successRedirect: `https://fantasy-forecast-politics.herokuapp.com/loginSuccess/userGID=${res.locals.googleID}`
-// // }), function(req, res) { 
-// //         console.log("==============================================");
-// //         console.log("=================REQ=================");
-// //         console.log(req);
-// //         console.log("=================RES=================");
-// //         console.log(res);
-// //         console.log("=================END OF RES=================");
-// //         res.redirect("https://fantasy-forecast-politics.herokuapp.com/home")
-// //     }
-// }));
 
 app.get("/logout", function(req, res) {
     res.redirect("https://fantasy-forecast-politics.herokuapp.com");

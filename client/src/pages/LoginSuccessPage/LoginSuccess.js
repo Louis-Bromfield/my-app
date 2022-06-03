@@ -8,21 +8,21 @@ import { Link } from 'react-router-dom';
 
 function LoginSuccess(props) {
     localStorage.setItem("loggedInFromGoogle", true)
-    const [prolificIDForHomePage, setProlificIDForHomePage] = useState("");
+    const [usernameForHomePage, setUsernameForHomePage] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
         // const queryParams = new URLSearchParams(window.location.search);
         setLoggedIn(true);
         // const userPAID = queryParams.get('pAID');
-        setProlificIDForHomePage(localStorage.getItem("pAID"));
+        setUsernameForHomePage(localStorage.getItem("username"));
         console.log("LoginSuccess UE");
     }, []);
  
     return (
         <div className="login-main-div">
             <img className="login-logo" src={FFLogo} alt="" />
-            {loggedIn === true && <Link to="/home" onClick={() => props.login(prolificIDForHomePage)}><button>You've Logged In, Enter Fantasy Forecast Here</button></Link>}
+            {loggedIn === true && <Link to="/home" onClick={() => props.login(usernameForHomePage)}><button>You've Logged In, Enter Fantasy Forecast Here</button></Link>}
         </div>
     )
 }
