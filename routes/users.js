@@ -332,7 +332,7 @@ router.patch("/calculateBrier/:happenedStatus/:marketName/:closeEarly", async (r
                 marketName: req.params.marketName,
                 captainedStatus: calculatedBriers[i].captainedStatus,
                 // performanceBoost: performanceBoostVal
-                problemAverage: averageScoreForProblem
+                averageScore: averageScoreForProblem
             };
             await Users.findOneAndUpdate({ username: calculatedBriers[i].username }, {
                 $push: { brierScores: toPush },
@@ -410,7 +410,7 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
                 problemName: req.body.problemName,
                 marketName: req.params.marketName,
                 captainedStatus: calculatedBriers[i].captainedStatus,
-                performanceBoost: performanceBoostVal,
+                // performanceBoost: performanceBoostVal,
                 averageScore: averageScoreForProblem
             };
             await Users.findOneAndUpdate({ username: calculatedBriers[i].username }, {
