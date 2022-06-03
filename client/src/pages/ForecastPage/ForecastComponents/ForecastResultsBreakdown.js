@@ -67,7 +67,7 @@ function ForecastResultsBreakdown(props) {
                             <h3>If OUTCOME THREE:</h3>
                             <h4 style={{ color: "#404d72"}}>Aggregate Score: {props.totalIfOutcomeThree.toFixed(2)} / 100</h4>
                             <h4 style={{ color: "#404d72"}}>Time Score: {props.tScore.toFixed(2)} / 10</h4>
-                            <h4 style={{ color: "#404d72"}}>Final Score For This Problem: {(props.totalIfOutcomeTwo + props.tScore).toFixed(2)} / 110</h4>
+                            <h4 style={{ color: "#404d72"}}>Final Score For This Problem: {(props.totalIfOutcomeThree + props.tScore).toFixed(2)} / 110</h4>
                         </div>
                     </div>
                 }
