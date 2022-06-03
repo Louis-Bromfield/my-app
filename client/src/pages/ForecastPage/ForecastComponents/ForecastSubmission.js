@@ -11,6 +11,7 @@ function ForecastSubmission(props) {
     const [forecastProblemsForDropdown, setForecastProblemsForDropdown] = useState([]);
     const [selectedForecast, setSelectedForecast] = useState("No forecast problem selected");
     const [hasAForecastBeenSelected, setHasAForecastBeenSelected] = useState(false);
+    const [forecastPotentialOutcomes, setForecastPotentialOutcomes] = useState([]);
     const [dropdownHighlight, setDropdownHighlight] = useState(false);
     const [isInputDisabled, setIsInputDisabled] = useState(true);
     const [selectedForecastMarket, setSelectedForecastMarket] = useState("N/A");
@@ -244,6 +245,7 @@ function ForecastSubmission(props) {
                 // If only one certainty, this = true. False is multiple certainties are required from user.
                 setForecastSingleCertainty(forecastProblems[i].singleCertainty);
                 props.setForecastSingleCertainty(forecastProblems[i].singleCertainty);
+                setForecastPotentialOutcomes(forecastProblems[i].potentialOutcomes);
                 if (forecastProblems[i].submittedForecasts.length === 0) {
                     setUserHasAttempted(false);
                     setUserPreviousAttemptCertainty("-");
@@ -754,7 +756,7 @@ function ForecastSubmission(props) {
                                     </h3>
                                     <div className="multiple-input-fields">
                                         <div className="input-header-container">
-                                            <h3>{selectedForecast.potentialOutcomes[0]}</h3>
+                                            <h3>{forecastPotentialOutcomes[0]}</h3>
                                             <input 
                                                 type="number" 
                                                 className="forecast-certainty-input" 
@@ -766,7 +768,7 @@ function ForecastSubmission(props) {
                                             />
                                         </div>
                                         <div className="input-header-container">
-                                            <h3>{selectedForecast.potentialOutcomes[1]}</h3>
+                                            <h3>{forecastPotentialOutcomes[1]}</h3>
                                             <input 
                                                 type="number" 
                                                 className="forecast-certainty-input" 
@@ -778,7 +780,7 @@ function ForecastSubmission(props) {
                                             />
                                         </div>
                                         <div className="input-header-container">
-                                            <h3>{selectedForecast.potentialOutcomes[2]}</h3>
+                                            <h3>{forecastPotentialOutcomes[2]}</h3>
                                             <input 
                                                 type="number" 
                                                 className="forecast-certainty-input" 
@@ -907,9 +909,9 @@ function ForecastSubmission(props) {
                                 {/* And if false */}
                                 {forecastSingleCertainty === false &&
                                 <div>
-                                    <h3>Average {selectedForecast.potentialOutcomes[0]}: {outcomeOneCertainty}</h3>
-                                    <h3>Average {selectedForecast.potentialOutcomes[1]}: {outcomeTwoCertainty}</h3>
-                                    <h3>Average {selectedForecast.potentialOutcomes[2]}: {outcomeThreeCertainty}</h3>
+                                    <h3>Average {forecastPotentialOutcomes[0]}: {outcomeOneCertainty}</h3>
+                                    <h3>Average {forecastPotentialOutcomes[1]}: {outcomeTwoCertainty}</h3>
+                                    <h3>Average {forecastPotentialOutcomes[2]}: {outcomeThreeCertainty}</h3>
                                 </div>
                                 }
                             </div>
