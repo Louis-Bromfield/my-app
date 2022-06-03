@@ -34,8 +34,8 @@ export const NavbarData = [
         iconSelected: <AiIcons.AiOutlineSearch size={20} color={"#fff"} />
     },
     {
-        title: "Help Our Research",
-        path: "/help-our-research",
+        title: "Survey",
+        path: "/survey",
         icon: <FaIcons.FaHandsHelping size = {20} />,
         iconSelected: <FaIcons.FaHandsHelping size = {20} color={"#fff"}/>
     },
