@@ -60,9 +60,11 @@ function ForecastProblemLineChart(props) {
         };
         let sliceIndex = 0;
         if ((new Date(selectedForecast.closeDate) - new Date(selectedForecast.startDate))/1000 < 604800) {
+            console.log("yep slice index = 18");
             sliceIndex = 18;
         } else {
             sliceIndex = 15;
+            console.log("nope slice index = 15");
         }
         if (newCertainties.length > 0 || newCertainties[0] === '') {
             for (let i = 0; i < newCertainties.length; i++) {
@@ -181,7 +183,7 @@ function ForecastProblemLineChart(props) {
             //     pointRadius: 0
             // });
         };
-        createLabelsArray(new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
+        createLabelsArray(new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate), sliceIndex);
     } else if (props.forecastSingleCertainty === false) {
         let allData = [];
         let outcomeOneData = [];
@@ -514,10 +516,10 @@ function ForecastProblemLineChart(props) {
     };
 };
 
-  const createLabelsArray = (start, end) => {
+  const createLabelsArray = (start, end, sliceIndex) => {
       let labelsToReturn = [];
       for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
-          let newDate = new Date(d).toString().slice(0, 15);
+          let newDate = new Date(d).toString().slice(0, sliceIndex);
           labelsToReturn.push(newDate);
       };
       setLabelsArray(labelsToReturn);
