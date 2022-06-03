@@ -19,35 +19,36 @@ function Login(props) {
 
     const checkCredentials = async (uName) => {
         console.log("in checkCredentials");
-        try {
-            const userCheckedByUsername = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${uName}`);
-            console.log(userCheckedByUsername);
-            if (userCheckedByUsername.data.length === 1) {
-                setProblematicInfo("username");
-                setCredentialsSuccessfullyChecked(false);
-                return;
-            } else {
-                // New
-                setProblematicInfo("");
-                setCredentialsSuccessfullyChecked(true);
-                localStorage.setItem("username", uName);
-                // Prev
-                // const userCheckedByProlificID = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/findByProlificID/${proID}`);
-                // console.log(userCheckedByProlificID);
-                // if (userCheckedByProlificID.data.length === 1) {
-                //     setProblematicInfo("ProlificID");
-                //     setCredentialsSuccessfullyChecked(false)
-                //     return;
-                // } else if (userCheckedByProlificID.data.length === 0) {
-                //     setProblematicInfo("");
-                //     setCredentialsSuccessfullyChecked(true);
-                //     localStorage.setItem("pAID", proID);
-                // };
-            };
-        } catch (error) {
-            console.error("Error in Login > checkCredentials");
-            console.error(error);
-        };
+        setCredentialsSuccessfullyChecked(true);
+        // try {
+        //     const userCheckedByUsername = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${uName}`);
+        //     console.log(userCheckedByUsername);
+        //     if (userCheckedByUsername.data.length === 1) {
+        //         setProblematicInfo("username");
+        //         setCredentialsSuccessfullyChecked(false);
+        //         return;
+        //     } else {
+        //         // New
+        //         setProblematicInfo("");
+        //         setCredentialsSuccessfullyChecked(true);
+        //         localStorage.setItem("username", uName);
+        //         // Prev
+        //         // const userCheckedByProlificID = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/findByProlificID/${proID}`);
+        //         // console.log(userCheckedByProlificID);
+        //         // if (userCheckedByProlificID.data.length === 1) {
+        //         //     setProblematicInfo("ProlificID");
+        //         //     setCredentialsSuccessfullyChecked(false)
+        //         //     return;
+        //         // } else if (userCheckedByProlificID.data.length === 0) {
+        //         //     setProblematicInfo("");
+        //         //     setCredentialsSuccessfullyChecked(true);
+        //         //     localStorage.setItem("pAID", proID);
+        //         // };
+        //     };
+        // } catch (error) {
+        //     console.error("Error in Login > checkCredentials");
+        //     console.error(error);
+        // };
     };
 
     return (

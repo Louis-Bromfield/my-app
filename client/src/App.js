@@ -57,7 +57,11 @@ function App() {
     };
     // Add user to leaderboard
     const ffAllTime = "Fantasy Forecast All-Time";
-    await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${ffAllTime}`, { username: username, isGroup: false })
+    await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${ffAllTime}`, {
+        username: username,
+        isGroup: false,
+        profilePicture: userObj.data[0].profilePicture
+    });
 
     // Add user to learnQuizzes
     await axios.post(`https://fantasy-forecast-politics.herokuapp.com/learnQuizzes/`, { username: username });
@@ -93,6 +97,7 @@ function App() {
 };
 
   useEffect(() => {
+      localStorage.setItem("signedInWithGoogleAndSignedOutOfFF", false);
       setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
       setUsername(localStorage.getItem('username'));
       setName(localStorage.getItem('name'));
@@ -133,6 +138,30 @@ function App() {
           </Switch>
         </Router>
       }
+
+
+      {/* User is not signed in and needs to create an account */}
+      {/* {(isLoggedIn === false && localStorage.getItem("signedInWithGoogleAndSignedOutOfFF") === "false") &&
+        <Router>
+          <ScrollToTop /> 
+          <Switch>
+            <Route exact path='/' render={(props) => <Login {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
+            <Route path='/loginSuccess' render={(props) => <LoginSuccess {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
+          </Switch>
+      </Router>
+      } */}
+      {/* If a user has created their account, but signed out */}
+      {/* {(isLoggedIn === false && localStorage.getItem("signedInWithGoogleAndSignedOutOfFF") === "true") &&
+        <Router>
+          <ScrollToTop /> 
+          <Switch>
+            <Route path='/logBackIn' render={(props) => <LoginSuccess {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
+          </Switch>
+      </Router>
+      } */}
+
+
+
       {isLoggedIn === false &&
         <Router>
           <ScrollToTop /> 
