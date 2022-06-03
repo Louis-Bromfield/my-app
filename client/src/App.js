@@ -115,7 +115,7 @@ function App() {
             {/* <Route path='/leaderboard' component={IndividualLeaderboard} /> */}
             {/* <Route path='/learn' component={Learn} /> */}
             {/* <Route path='/my-profile' component={Profile} /> */}
-            <Route path="/">
+            <Route exact path="/">
                 <Redirect to="/home"></Redirect>
             </Route>
             <Route path='/home' render={(props) => <Home {...props} username={username} name={name} user={userObject} login={login} userForLogin={userForLogin} />} />
