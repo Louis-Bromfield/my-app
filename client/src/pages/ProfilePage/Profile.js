@@ -181,6 +181,7 @@ console.log("Profile.js UE");
                             brierScores={brierScoresArr} 
                             userObj={userObj} 
                             profileTab={profileTab}
+                            ffPoints={fantasyForecastPoints}
                         />}
                         {profileTab === "my-forecasts" && <ProfileForecasts userObj={userObj}/>}
                         {profileTab === "my-rewards" && <ProfileRewards />}

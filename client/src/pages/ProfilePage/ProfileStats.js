@@ -27,7 +27,7 @@ function ProfileStats(props) {
     const [recentAverageData, setRecentAverageData] = useState([]);
 
     useEffect(() => {
-        if (props.userObj.fantasyForecastPoints < 1000) {
+        if (props.fantasyForecastPoints < 1000) {
             setIsHiddenBehindLevel(true);
             return;
         } else {
