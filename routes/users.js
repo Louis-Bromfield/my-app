@@ -480,7 +480,7 @@ console.log(tScore);
         let sumOfNewWeightedBriers = 0;
         for (let j = 0; j < forecastObj.submittedForecasts[i].forecasts.length; j++) {
             // Forecast WAS made before close date
-            console.log(`${new Date(forecastObj.submittedForecasts[i].forecasts[j].date)} < ${closeDate}`);
+console.log(`${new Date(forecastObj.submittedForecasts[i].forecasts[j].date)} < ${closeDate}`);
             if (new Date(forecastObj.submittedForecasts[i].forecasts[j].date) < closeDate) {
 console.log("This forecast counts");
                 let originalBrier;
