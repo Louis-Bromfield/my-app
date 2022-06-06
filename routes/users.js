@@ -352,6 +352,8 @@ console.log(updatedUser);
             toPush.username = calculatedBriers[i].username;
             scoresToReturn.push(toPush);
         };
+console.log("====++++====");
+console.log(scoresToReturn);
         return scoresToReturn;
     } catch (error) {
         console.error("error in users > patch calculateBriers");
