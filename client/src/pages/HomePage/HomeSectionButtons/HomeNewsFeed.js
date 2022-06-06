@@ -126,13 +126,13 @@ function HomeNewsFeed(props) {
 
     const submitNewsFeedPost = (e) => {
         e.preventDefault();
-        if (newPostURL === "" || newPostURL.length === 0) {
-            setPostMessage("Please enter a valid link.");
-            setTimeout(() => {
-                setPostMessage("");
-            }, 3000);
-            return;
-        };
+        // if (newPostURL === "" || newPostURL.length === 0) {
+        //     setPostMessage("Please enter a valid link.");
+        //     setTimeout(() => {
+        //         setPostMessage("");
+        //     }, 3000);
+        //     return;
+        // };
         if (userMarketsForPost.length === 0) {
             setPostMessage("You must select at least one market.");
             setTimeout(() => {
@@ -329,12 +329,12 @@ function HomeNewsFeed(props) {
                                     className="source-field" 
                                     name="source" 
                                     id="post-1" 
-                                    placeholder="Paste your link here" 
+                                    placeholder="Have an article, video, or blog you'd like to share? Paste your link here!" 
                                     size="100"
                                     value={newPostURL}
                                     onChange={(e) => handlePostURLChange(e, false)}/>
                                 <br/>
-                                <label htmlFor="post-2"><strong>Post Summary:</strong></label>
+                                <label htmlFor="post-2"><strong>Post:</strong></label>
                                 <br/>
                                 <textarea 
                                     className="summary-field" 
@@ -345,8 +345,8 @@ function HomeNewsFeed(props) {
                                     onChange={(e) => handlePostSummaryChange(e, false)}>
                                 </textarea>
                                 <br/>
-                                <h4>Select all markets that your post is relevant to (Only players in the markets you select will be able to see your post):</h4>
-                                <h4>(Select Fantasy Forecast All-Time if you feel this story is relevant to everyone!)</h4>
+                                <h4>Markets:</h4>
+                                <p>Select all markets that your post is relevant to (only forecasters in the markets you select will be able to see your post - Select Fantasy Forecast All-Time if you feel it's relevant to everyone!)</p>
                                 <hr />
                                 {editingPost === false &&
                                     <div className="post-checkboxes">
