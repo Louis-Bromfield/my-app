@@ -369,14 +369,14 @@ console.log(scores);
                             type="radio" 
                             id={1} 
                             name="Happened" 
-                            value={happenedState} 
-                            checked={happenedState}
+                            value={happenedStateEarly} 
+                            checked={happenedStateEarly}
                             className="happened-btn"
-                            onClick={() => { console.log("Before change = " + happenedState); setHappenedState(!happenedState); console.log("After change = " + !happenedState)}}
+                            onClick={() => { console.log("Before change = " + happenedStateEarly); setHappenedStateEarly(!happenedStateEarly); console.log("After change = " + !happenedStateEarly)}}
                         />
                         <label 
                             htmlFor="Happened" 
-                            onClick={() => { console.log("Before change = " + happenedState); setHappenedState(!happenedState); console.log("After change = " + !happenedState)}}>
+                            onClick={() => { console.log("Before change = " + happenedStateEarly); setHappenedStateEarly(!happenedStateEarly); console.log("After change = " + !happenedStateEarly)}}>
                                 Happened
                         </label>
                         <br />
@@ -384,14 +384,14 @@ console.log(scores);
                             type="radio" 
                             id={2} 
                             name="Didn't Happen" 
-                            value={notHappenedState}
-                            checked={notHappenedState} 
+                            value={notHappenedStateEarly}
+                            checked={notHappenedStateEarly} 
                             className="not-happened-btn" 
-                            onClick={() => { console.log("Before change = " + notHappenedState); setHappenedState(!notHappenedState); console.log("After change = " + !notHappenedState)}}
+                            onClick={() => { console.log("Before change = " + notHappenedStateEarly); setHappenedStateEarly(!notHappenedStateEarly); console.log("After change = " + !notHappenedStateEarly)}}
                         />
                         <label 
                             htmlFor="Didn't Happen" 
-                            onClick={() => { console.log("Before change = " + notHappenedState); setHappenedState(!notHappenedState); console.log("After change = " + !notHappenedState)}}>
+                            onClick={() => { console.log("Before change = " + notHappenedStateEarly); setHappenedStateEarly(!notHappenedStateEarly); console.log("After change = " + !notHappenedStateEarly)}}>
                                 Didn't Happen
                         </label>
                         <br />
