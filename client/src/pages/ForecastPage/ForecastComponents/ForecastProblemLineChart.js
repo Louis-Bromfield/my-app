@@ -737,7 +737,8 @@ function ForecastProblemLineChart(props) {
         },
         plugins: {
             legend: {
-                display: true
+                display: true,
+                position: "bottom"
             },
             tooltips: {
                 enabled: false,
@@ -768,7 +769,7 @@ function ForecastProblemLineChart(props) {
                 <p>{modalContent2}</p>
             </Modal>
             <h2>
-                <u>{props.selectedForecast.problemName}</u>
+                {props.selectedForecast.problemName}
                 <FaInfoCircle 
                     color={"orange"} 
                     className="modal-i-btn"

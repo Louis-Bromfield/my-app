@@ -206,29 +206,33 @@ function LeaderboardMenu(props) {
     };
 
     const submitMarketChoices = async (markets, username) => {
-        persistMarketChoicesToDB(markets, username);
-        updateOnboardingAndUserMarkets(markets, username);
-        const marketsForLS = [localStorage.getItem('markets').split(","), ...markets];
-        localStorage.removeItem('markets');
-        localStorage.setItem('markets', marketsForLS);
-        setTimeout(() => {
-            setLoading(false);
-            if (markets.length === 1) {
-                setMarketChoiceSuccessMessage("You have successfully joined this market!");
-            } else if (markets.length > 1) {
-                setMarketChoiceSuccessMessage("You have successfully joined these markets!");
-            }
+        const success = persistMarketChoicesToDB(markets, username);
+        if (success === false) {
+            return;
+        } else {
+            updateOnboardingAndUserMarkets(markets, username);
+            const marketsForLS = [localStorage.getItem('markets').split(","), ...markets];
+            localStorage.removeItem('markets');
+            localStorage.setItem('markets', marketsForLS);
             setTimeout(() => {
-                setMarketChoiceSuccessMessage("");
-                setCauseRefresh(causeRefresh+1);
-            }, 1500);
-        }, 1000);
+                setLoading(false);
+                if (markets.length === 1) {
+                    setMarketChoiceSuccessMessage("You have successfully joined this market!");
+                } else if (markets.length > 1) {
+                    setMarketChoiceSuccessMessage("You have successfully joined these markets!");
+                }
+                setTimeout(() => {
+                    setMarketChoiceSuccessMessage("");
+                    setCauseRefresh(causeRefresh+1);
+                }, 1500);
+            }, 1000);
+        };
     };
 
     const persistMarketChoicesToDB = async (markets, username) => {
         if (markets.length === 0) {
             setMarketChoiceErrorMessage("You must select at least one market to join.");
-            return;
+            return false;
         }
         try {
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
@@ -308,12 +312,12 @@ function LeaderboardMenu(props) {
         };
     };
 
-    const checkLevelThenOpen = (ffPoints, username) => {
-        if (ffPoints < 1500) {
+    const checkLevelThenOpen = (canCreate, username) => {
+        if (canCreate === false) {
             setShowModal(true);
             setModalContent("The ability to create a league is locked until you reach Level 15! Doing things like completing the Onboarding tasks, submitting forecasts, posting to the News Feed will get you there in no time.");
         } else {
-            leagueCreationMenu(true, username)
+            leagueCreationMenu(true, username);
         };
     };
 

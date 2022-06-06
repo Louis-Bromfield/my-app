@@ -195,6 +195,7 @@ function IndividualLeaderboard(props) {
                     setShowConfirmationModal(false)
                 }} 
                 justClose={() => setShowConfirmationModal(false)}
+                children={<h4>If you click "Yes" you will lose all of your market points!</h4>}
             />
             <div className="button-container">
                 <button 

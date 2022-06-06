@@ -341,12 +341,13 @@ function HomeNewsFeed(props) {
                                     name="summary" id="post-2" 
                                     placeholder="What's your post about? What's your opinion?" 
                                     rows="2"
+                                    maxLength={700}
                                     value={newPostDescription}
                                     onChange={(e) => handlePostSummaryChange(e, false)}>
                                 </textarea>
                                 <br/>
                                 <h4>Markets:</h4>
-                                <p>Select all markets that your post is relevant to (only forecasters in the markets you select will be able to see your post - Select Fantasy Forecast All-Time if you feel it's relevant to everyone!)</p>
+                                <p>Select all markets that your post is relevant to (only forecasters in the markets you select will be able to see your post. Select Fantasy Forecast All-Time if you feel it's relevant to everyone!)</p>
                                 <hr />
                                 {editingPost === false &&
                                     <div className="post-checkboxes">
