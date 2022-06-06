@@ -354,7 +354,8 @@ console.log(updatedUser);
         };
 console.log("====++++====");
 console.log(scoresToReturn);
-        return scoresToReturn;
+        // return scoresToReturn;
+        res.json(scoresToReturn);
     } catch (error) {
         console.error("error in users > patch calculateBriers");
         console.error(error);
