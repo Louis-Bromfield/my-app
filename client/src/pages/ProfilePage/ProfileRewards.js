@@ -9,7 +9,7 @@ function ProfileRewards(props) {
         { levelRequired: 15, rewards: ["Rank Title: Seer", "Create your own league"] },
         { levelRequired: 20, rewards: ["Rank Title: Soothsayer"] },
         { levelRequired: 25, rewards: ["Rank Title: Oracle"] },
-        { levelRequired: 30, rewards: ["Rank Title: Prophet", "Push your post to the top of the news feed"] },
+        { levelRequired: 30, rewards: ["Rank Title: Prophet"] },
         { levelRequired: 35, rewards: ["Rank Title: Clairvoyant"] },
         { levelRequired: 40, rewards: ["Rank Title: Augur"] },
         { levelRequired: 45, rewards: ["Rank Title: Omniscient"] },
