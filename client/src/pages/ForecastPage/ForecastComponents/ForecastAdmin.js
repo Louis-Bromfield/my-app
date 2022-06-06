@@ -115,6 +115,8 @@ function ForecastAdmin() {
                     problemName: problemName,
                     newProblemCloseDateTime: newProblemCloseDateTime
                 });
+console.log("14 - SCORES");
+console.log(scores);
             } else if (closeEarly === false) {
                 console.log("Here3");
                 scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
@@ -128,7 +130,7 @@ function ForecastAdmin() {
             });
             console.log(updatedMarket.data);
         } catch (error) {
-            console.error("Error in ForecastAdmin > persistNewProblemToDB");
+            console.error("Error in ForecastAdmin > closeAndCalculateBriers");
             console.error(error);
         };
     };

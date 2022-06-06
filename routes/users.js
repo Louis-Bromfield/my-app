@@ -286,8 +286,14 @@ router.patch("/:username/removeMarket/:marketName", async (req, res) => {
 });
 
 router.patch("/calculateBrier/:happenedStatus/:marketName/:closeEarly", async (req, res) => {
+console.log("1 REQPARAMS");
+console.log(req.params);
+console.log("2 REQBODY");
+console.log(req.body);
     try {
         const forecastObj = await Forecasts.findOne({ problemName: req.body.problemName });
+console.log("3 FORECASTOBJ");
+console.log(forecastObj);
         let happened;
         if (req.params.happenedStatus === "true") {
             happened = true;
@@ -296,10 +302,12 @@ router.patch("/calculateBrier/:happenedStatus/:marketName/:closeEarly", async (r
         };
         // If a problem is being closed early, update the date in the obj and then persist to DB
         if (req.params.closeEarly === "true") {
+console.log("4 SHOULD PRINT AS CLOSEEARLY = TRUE")
             forecastObj.closeDate = req.body.newProblemCloseDateTime;
             await Forecasts.findByIdAndUpdate(forecastObj._id, { closeDate: req.body.newProblemCloseDateTime, happened: happened, isClosed: true});
         } else if (req.params.closeEarly === "false") {
             // Close Forecast
+console.log("SHOULD NOT NOT NOT PRINT AS CLOSEEARLY = TRUE")
             await Forecasts.findByIdAndUpdate(forecastObj._id, { isClosed: true, happened: happened });
         };
         const calculatedBriers = calculateBriers(forecastObj, happened, "N/A");
@@ -309,6 +317,8 @@ router.patch("/calculateBrier/:happenedStatus/:marketName/:closeEarly", async (r
             total += calculatedBriers[i].finalScore;
         };
         let averageScoreForProblem = total / calculatedBriers.length;
+console.log("AVERAGE");
+console.log(averageScoreForProblem);
         let scoresToReturn = [];
         // let newScorePerformanceBoosted;
         // let performanceBoostVal = 0;
@@ -375,6 +385,8 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
         let performanceBoostVal = 0;
         for (let i = 0; i < calculatedBriers.length; i++) {
             const user = await Users.findOne({ username: calculatedBriers[i].username });
+console.log("13 - USERNAME");
+console.log(user);
             // Work out if they should receive a performance bonus for this Brier Score
             // let scoreChain = 1;
             // if (calculatedBriers[i].finalScore >= 75) {
@@ -433,6 +445,14 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
 
 // New version without comments
 const calculateBriers = (forecastObj, happened, outcome) => {
+console.log("5 SHOULD PRINT AS WE ARE IN CALCULATE BRIER FUNCTION");
+console.log("6 ARGUMENTS");
+console.log("7 FORECASTOBJ");
+console.log(forecastObj);
+console.log("8 HAPPENED - SHOULD BE TRUE");
+console.log(happened)
+console.log("9 OUTCOME");
+console.log(outcome);
     const startDate = new Date(forecastObj.startDate);
     const closeDate = new Date(forecastObj.closeDate);
 
@@ -453,6 +473,8 @@ const calculateBriers = (forecastObj, happened, outcome) => {
             let tValue = (closeDate - new Date(forecastObj.submittedForecasts[i].forecasts[0].date))/1000;
             let timeFrame = (closeDate - startDate)/1000;
             tScore = (tValue/timeFrame)*10;
+console.log("10 - tSCORE");
+console.log(tScore);
         } else {
             tScore = 0;
         };
@@ -491,7 +513,8 @@ console.log("This forecast counts");
                     };
                 };
                 let newBrier = (2 - originalBrier) * 50;
-
+console.log("11 NEW BRIER");
+console.log(newBrier);
                 let newBrierWeightedByDuration;
                 let thisForecastTimeDate = new Date(forecastObj.submittedForecasts[i].forecasts[j].date);
                 if (j < forecastObj.submittedForecasts[i].forecasts.length-1) {
@@ -510,6 +533,8 @@ console.log("This forecast counts");
 
                     sumOfNewWeightedBriers = sumOfNewWeightedBriers + newBrierWeightedByDuration;
                     formulaComponents[i].finalBrierSum = sumOfNewWeightedBriers;
+console.log("12 SUMOFNEWWEIGHTEDBRIERS");
+console.log(sumOfNewWeightedBriers);
                 };
             // Forecast was NOT made before close date
             } else if (new Date(forecastObj.submittedForecasts[i].forecasts[j].date) > closeDate) {
@@ -522,11 +547,13 @@ console.log("Forecast submitted after the problem's close date");
         };
         formulaComponents[i].brierSumPlusTScore = formulaComponents[i].finalBrierSum + formulaComponents[i].tScore;
         arrToReturn[i].finalScore = formulaComponents[i].brierSumPlusTScore;
-        console.log(`arrToReturn[i].finalScore = ${arrToReturn[i].finalScore}`)
+console.log(`arrToReturn[i].finalScore = ${arrToReturn[i].finalScore}`)
         arrToReturn[i].captainedStatus = forecastObj.submittedForecasts[i].captainedStatus;
     };
+console.log("================");
     console.log(formulaComponents);
     console.log(arrToReturn);
+console.log("================");
     return arrToReturn;
 };
 
