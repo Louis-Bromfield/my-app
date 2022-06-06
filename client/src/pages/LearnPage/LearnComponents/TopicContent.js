@@ -8,8 +8,8 @@ export const TopicContent = [
     // FF Points
     <div className="topic-text-paragraph">
         <p>Across Fantasy Forecast, you will have numerous opportunities to earn points. On the home page, you'll find the Onboarding menu, which will provide you with a handful of ways to both get started on earning points, as well as giving you some pointers as to what you can do on the site.</p>
-        <p>Points can be accrued by submitting forecasts (and more are awarded based on the accuracy of those forecasts), posting to the news feed, voting on other people's posts, completing the calibration, and much more.</p>
-        <p>Points will then be used to determine your rank in the global leaderboard. To see how you're doing, go to your profile or to the Leaderboards section and select the <strong>Fantasy Forecast All-Time</strong> leaderboard.</p>
+        <p>Points are awarded for submitting forecasts posting to the news feed, voting on other people's posts, completing the quizzes at the end of each section on this Learn page, and much more.</p>
+        <p>Points will then be used to determine your rank in the global leaderboard. To see how you're doing, go to the Leaderboards section and select the <strong>Fantasy Forecast All-Time</strong> leaderboard.</p>
         <p>Progress in all of the other leaderboards will be determined by <strong>Market Points</strong>. These are points that you earn solely from forecasts in that particular market (i.e. a forecast in the US Politics market won't give you any points in the UK Politics leaderboard). However, 1 market point = 1 Fantasy Forecast point, so all the points you earn across every market will count towards your overall Fantasy Forecast point total!</p>
         <p>On this page, you have the opportunity to learn about various aspects of forecasting. From Brier Scores - the metric by which forecast accuracy is assessed - to Superforecasters - the very best forecasters identified across real-world research projects and what makes them so good - there's plenty to take from this section alone.</p>
         <p className="middle-align">Happy Forecasting!</p>

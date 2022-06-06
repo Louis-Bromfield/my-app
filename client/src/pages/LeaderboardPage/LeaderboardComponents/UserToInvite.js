@@ -18,10 +18,11 @@ function UserToInvite(props) {
         >
             {window.innerWidth >= 1000 && 
                 <img 
-                className="invite-user-profile-picture" 
-                src={props.ProfileP} 
-                alt="User profile pic" 
-            />}
+                    className="invite-user-profile-picture" 
+                    src={props.ProfileP} 
+                    alt="User profile pic" 
+                />
+            }
             <h4>{props.username}</h4>
         </div>
         }
@@ -33,10 +34,11 @@ function UserToInvite(props) {
         >
             {window.innerWidth >= 1000 && 
                 <img 
-                className="invite-user-profile-picture" 
-                src={props.ProfileP} 
-                alt="User profile pic" 
-            />}
+                    className="invite-user-profile-picture" 
+                    src={props.ProfileP} 
+                    alt="User profile pic" 
+                />
+            }
             <h4>{props.username}</h4>
         </div>
         }

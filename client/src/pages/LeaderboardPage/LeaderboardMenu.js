@@ -9,6 +9,7 @@ import { FaInfoCircle } from 'react-icons/fa';
 
 
 function LeaderboardMenu(props) {
+    const [canCreateLeagueDueToLevel, setCanCreateLeagueDueToLevel] = useState(false);
     const [createLeague, setCreateLeague] = useState(false);
     const [leagueSetupConfirmation, setLeagueSetupConfirmation] = useState(false);
     const [usersArray, setUsersArray] = useState(["empty array"]);
@@ -35,6 +36,7 @@ function LeaderboardMenu(props) {
     const [modalContent, setModalContent] = useState("");
 
     useEffect(() => {
+        if (props.userFFPoints > 1500) setCanCreateLeagueDueToLevel(true);
         checkIfUserIsInMarkets(props.username);
         pullAllMarketsFromDB(props.username);
         if (userInNoMarkets === true) {
@@ -303,8 +305,17 @@ function LeaderboardMenu(props) {
         } catch (error) {
             console.error("Error in LeaderboardMenu > respondToInvite");
             console.error(error);
-        }
-    }
+        };
+    };
+
+    const checkLevelThenOpen = (ffPoints, username) => {
+        if (ffPoints < 1500) {
+            setShowModal(true);
+            setModalContent("The ability to create a league is locked until you reach Level 15! Doing things like completing the Onboarding tasks, submitting forecasts, posting to the News Feed will get you there in no time.");
+        } else {
+            leagueCreationMenu(true, username)
+        };
+    };
 
     return (
         <div className="leaderboard-menu">
@@ -355,7 +366,7 @@ function LeaderboardMenu(props) {
                 {createLeague === false &&
                     <button 
                         className="create-a-league-btn" 
-                        onClick={() => leagueCreationMenu(true, props.username)}>
+                        onClick={() => checkLevelThenOpen(canCreateLeagueDueToLevel, props.username)}>
                             Create a League
                     </button>
                 }
@@ -450,6 +461,7 @@ function LeaderboardMenu(props) {
                 <div className="create-a-league-div">
                     <h2 className="market-list-title">Create a League</h2>
                     <h4>Create your own league, invite friends, and see who's the best!</h4>
+                    {}
                     <br />
                     <form action="" className="create-a-league-form">
                         <label htmlFor="leagueName">League Name:</label>

@@ -126,13 +126,13 @@ function HomeNewsFeed(props) {
 
     const submitNewsFeedPost = (e) => {
         e.preventDefault();
-        // if (newPostURL === "" || newPostURL.length === 0) {
-        //     setPostMessage("Please enter a valid link.");
-        //     setTimeout(() => {
-        //         setPostMessage("");
-        //     }, 3000);
-        //     return;
-        // };
+        if (newPostURL === "" || newPostURL.length === 0) {
+            setPostMessage("Please enter a valid link.");
+            setTimeout(() => {
+                setPostMessage("");
+            }, 3000);
+            return;
+        };
         if (userMarketsForPost.length === 0) {
             setPostMessage("You must select at least one market.");
             setTimeout(() => {
@@ -533,15 +533,13 @@ function HomeNewsFeed(props) {
                                     </div>
                                     <Link style={{ textDecoration: "none", color: "black" }} to={articleProps} onClick={() => localStorage.setItem("postID", item._id)}>
                                         <p className="post-author-description">{item.postDescription} <i style={{"color":"#404d72"}}><u>See Comments ({item.comments.length})</u></i></p>
-                                        {item.articleURL !== "" &&
-                                            <div className="post-news-preview">
-                                                <a href={item.articleURL} target="_blank" rel="noreferrer nofollow">
-                                                    {item.articleImage !== "" && <img src={item.articleImage} className="post-news-image" alt="News pic"/>}
-                                                    {item.articleImage === "" && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
-                                                </a>
-                                                <a href={item.articleURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{item.articleTitle}</h3></a>
-                                            </div>
-                                        }
+                                        <div className="post-news-preview">
+                                            <a href={item.articleURL} target="_blank" rel="noreferrer nofollow">
+                                                {item.articleImage !== "" && <img src={item.articleImage} className="post-news-image" alt="News pic"/>}
+                                                {item.articleImage === "" && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
+                                            </a>
+                                            <a href={item.articleURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{item.articleTitle}</h3></a>
+                                        </div>
                                         <div className="post-markets">
                                             {item.markets.map((market, index) => {
                                                 if (index < item.markets.length-1) {
@@ -614,15 +612,13 @@ function HomeNewsFeed(props) {
                                         </div>
                                         <Link style={{ textDecoration: "none", color: "black"}} to={articleProps} onClick={() => localStorage.setItem("postID", item._id)}>
                                             <p className="post-author-description">{item.postDescription} <i style={{"color":"#404d72"}}><u>See Comments ({item.comments.length})</u></i></p>
-                                            {item.articleURL !== "" &&
-                                                <div className="post-news-preview">
-                                                    <a href={item.articleURL} target="_blank" rel="noreferrer nofollow">
-                                                        {item.articleImage !== "" && <img src={item.articleImage} className="post-news-image" alt="News pic"/>}
-                                                        {item.articleImage === "" && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
-                                                    </a>
-                                                    <a href={item.articleURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{item.articleTitle}</h3></a>
-                                                </div>
-                                            }
+                                            <div className="post-news-preview">
+                                                <a href={item.articleURL} target="_blank" rel="noreferrer nofollow">
+                                                    {item.articleImage !== "" && <img src={item.articleImage} className="post-news-image" alt="News pic"/>}
+                                                    {item.articleImage === "" && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
+                                                </a>
+                                                <a href={item.articleURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{item.articleTitle}</h3></a>
+                                            </div>
                                             <div className="post-markets">
                                                 {item.markets.map((market, index) => {
                                                     if (index < item.markets.length-1) {

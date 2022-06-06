@@ -16,7 +16,7 @@
 .topic-title {
     text-align: center;
     padding: 1%;
-    text-decoration: underline;
+    color: #404d72;
 }
 
 .topic-youtube-video {
@@ -25,6 +25,7 @@
     width: 100%;
     height: 30vh;
     align-items: center;
+    margin-bottom: 1vh;
 }
 
 .youtube-iframe {

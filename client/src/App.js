@@ -27,6 +27,7 @@ function App() {
   const [markets, setMarkets] = useState([]);
   const [userObject, setUserObject] = useState({});
   const [profilePicture, setProfilePicture] = useState("");
+  const [userFFPoints, setUserFFPoints] = useState();
 
   const updateUsername = async (newUsername) => {
     await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, { username: newUsername });
@@ -69,6 +70,7 @@ function App() {
     console.log(userObj);
     setUserObject(userObj.data[0]);
     setUsername(userObj.data[0].username);
+    setUserFFPoints(userObj.data[0].fantasyForecastPoints);
     setName("XXXXXXXXXX");
     setMarkets(userObj.data[0].markets);
     setProfilePicture(userObj.data[0].profilePicture);
@@ -128,7 +130,7 @@ function App() {
             <Route path="/news-post" render={(props) => <IndividualNewsFeedPost {...props} />} />
             <Route path='/forecast' render={(props) => <Forecast {...props} markets={markets} username={username} />} />
             <Route path='/forecast-analysis' render ={(props) => <ForecastAnalysisPage {...props} username={username} />} />
-            <Route path='/leaderboard-select' render={(props) => <LeaderboardMenu {...props} username={username} />} />
+            <Route path='/leaderboard-select' render={(props) => <LeaderboardMenu {...props} username={username} userFFPoints={userFFPoints} />} />
             <Route path='/leaderboard' render={(props) => <IndividualLeaderboard {...props} username={username} />} />
             <Route path='/learn' render={(props) => <Learn {...props} username={username} isLoggedIn={isLoggedIn} />} />
             <Route path='/search' render={(props) => <Search {...props} />} />
