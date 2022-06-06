@@ -311,6 +311,9 @@ console.log("SHOULD NOT NOT NOT PRINT AS CLOSEEARLY = TRUE")
             await Forecasts.findByIdAndUpdate(forecastObj._id, { isClosed: true, happened: happened });
         };
         const calculatedBriers = calculateBriers(forecastObj, happened, "N/A");
+console.log("13 CALCULATEDBRIERS ARRAY");
+console.log(calculatedBriers);
+console.log("================");
         // Calculate overall average
         let total = 0;
         for (let i = 0; i < calculatedBriers.length; i++) {
@@ -324,27 +327,19 @@ console.log(averageScoreForProblem);
         // let performanceBoostVal = 0;
         for (let i = 0; i < calculatedBriers.length; i++) {
             const user = await Users.findOne({ username: calculatedBriers[i].username });
-            // Removed 5% boost, fuck it dude
-            // Work out if they should receive a performance bonus for this Brier Score
-            // if (calculatedBriers[i].finalScore >= 75) {
-            //     let boost = (calculatedBriers[i].finalScore/100)*5;
-            //     console.log(`boost = ${boost}`);
-            //     newScorePerformanceBoosted = (calculatedBriers[i].finalScore + boost);
-            //     console.log(`so the boosted score is = ${newScorePerformanceBoosted}`);
-            //     performanceBoostVal = 1;
-            // } else {
-            //     newScorePerformanceBoosted = calculatedBriers[i].finalScore;
-            //     performanceBoostVal = 0;
-            // }
+console.log("14 - USERNAME");
+console.log(user);
             const toPush = {
                 brierScore: calculatedBriers[i].finalScore,
                 problemName: req.body.problemName,
                 marketName: req.params.marketName,
-                captainedStatus: calculatedBriers[i].captainedStatus,
+                // captainedStatus: calculatedBriers[i].captainedStatus,
                 // performanceBoost: performanceBoostVal
                 averageScore: averageScoreForProblem
             };
-            await Users.findOneAndUpdate({ username: calculatedBriers[i].username }, {
+console.log("15 TOPUSH");
+console.log(toPush);
+            const updatedUser = await Users.findOneAndUpdate({ username: calculatedBriers[i].username }, {
                 $push: { brierScores: toPush },
                 fantasyForecastPoints: Number(user.fantasyForecastPoints) + toPush.brierScore,
                 forecastClosedStatus: true,
@@ -352,9 +347,12 @@ console.log(averageScoreForProblem);
             },
             { new: true }
             );
+console.log("16 UPDATEDUSER");
+console.log(updatedUser);
             toPush.username = calculatedBriers[i].username;
             scoresToReturn.push(toPush);
         };
+        return scoresToReturn;
     } catch (error) {
         console.error("error in users > patch calculateBriers");
         console.error(error);
@@ -385,8 +383,6 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
         let performanceBoostVal = 0;
         for (let i = 0; i < calculatedBriers.length; i++) {
             const user = await Users.findOne({ username: calculatedBriers[i].username });
-console.log("13 - USERNAME");
-console.log(user);
             // Work out if they should receive a performance bonus for this Brier Score
             // let scoreChain = 1;
             // if (calculatedBriers[i].finalScore >= 75) {

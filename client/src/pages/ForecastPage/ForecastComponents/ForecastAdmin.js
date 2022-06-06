@@ -115,7 +115,7 @@ function ForecastAdmin() {
                     problemName: problemName,
                     newProblemCloseDateTime: newProblemCloseDateTime
                 });
-console.log("14 - SCORES");
+console.log("17 - SCORES");
 console.log(scores);
             } else if (closeEarly === false) {
                 console.log("Here3");
