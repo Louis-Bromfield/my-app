@@ -44,7 +44,7 @@ function ProfileStats(props) {
         };
         setStats(recentForecastData);
         console.log("Profile Stats UE");
-    }, [props.username, props.brierScores, props.profileTab, props.userObj, props.fantasyForecastPoints]);
+    }, [props.username, props.brierScores, props.profileTab, props.userObj]);
 
     const getGlobalData = async () => {
         try {
