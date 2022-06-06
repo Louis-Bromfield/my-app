@@ -20,7 +20,7 @@
     width: 15%;
     height: 35%;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 50%;
 }
 
 .home-profile-preview-level-and-xp {

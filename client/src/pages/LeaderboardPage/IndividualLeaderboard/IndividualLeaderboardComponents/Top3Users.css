@@ -21,12 +21,12 @@
 .rank-one-profile-pic,
 .rank-two-profile-pic,
 .rank-three-profile-pic {
-    width: 80%;
-    min-width: 80%;
-    max-width: 80%;
+    width: 70%;
+    min-width: 70%;
+    max-width: 70%;
     height: 70%;
     max-height: 70%;
-    border-radius: 8px;
+    border-radius: 50%;
 }
 
 .rank-one-profile-pic {
