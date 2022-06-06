@@ -4,6 +4,7 @@ import { Line } from 'react-chartjs-2';
 import axios from 'axios';
 
 function ProfileStats(props) {
+    const [isHiddenBehindLevel, setIsHiddenBehindLevel] = useState();
     const [recentData, setRecentData] = useState([]);
     const [recentLabels, setRecentLabels] = useState([]);
     const [allData, setAllData] = useState([]);
@@ -26,6 +27,10 @@ function ProfileStats(props) {
     const [recentAverageData, setRecentAverageData] = useState([]);
 
     useEffect(() => {
+        if (props.userObj.fantasyForecastPoints < 1000) {
+            setIsHiddenBehindLevel(true);
+            return;
+        };
         if (props.userObj === undefined) {
             formatBrierData(null, props.username);
             findUniquePlayerStats(null, props.username);
@@ -195,53 +200,60 @@ function ProfileStats(props) {
     return (
         <div className="profile-stats">
             <h1 className="profile-header">My Stats</h1>
-            <h3>Check out your Fantasy Forecast stats and how you're stacking up to the rest of the playerbase.</h3>
-            <div className="profile-stats-inner">
-                <div className="profile-stats-recent-forecasts">
-                    <br/>
-                    <ul className="profile-stats-selectors">
-                        <li className={selectedStats} onClick={() => { setStats(recentForecastData); setSelectedStats("selected"); setSelectedStats2("unselected")}}><h3>Recent Forecasts</h3></li>
-                        <h2>|</h2>
-                        <li className={selectedStats2} onClick={() => { setStats(allTimeForecastData); setSelectedStats("unselected"); setSelectedStats2("selected")}}><h3>All Forecasts</h3></li>
-                    </ul>
-                    <Line className="profile-stats-line-chart" data={stats || recentForecastData} options={options} />
-                </div>
-                <div className="profile-stats-grid">
-                    <br/>
-                    <h2>Comparative Stats</h2>
-                    <hr />
-                    <div className="profile-stats-grid-headers">
-                        <h3>Me</h3>
-                        <h3>Global</h3>
-                        <hr />
-                        <hr />
+            {isHiddenBehindLevel === true &&
+            <h3>This section of your profile is locked until you reach Level 10 (1000 Fantasy ForecastPoints). Complete the onboarding tasks on the Home page, submit forecasts, post to the feed and more to earn the points you need!</h3>
+            }
+            {isHiddenBehindLevel === false && 
+                <div className="">
+                <h3>Check out your Fantasy Forecast stats and how you're stacking up to the rest of the playerbase.</h3>
+                <div className="profile-stats-inner">
+                    <div className="profile-stats-recent-forecasts">
+                        <br/>
+                        <ul className="profile-stats-selectors">
+                            <li className={selectedStats} onClick={() => { setStats(recentForecastData); setSelectedStats("selected"); setSelectedStats2("unselected")}}><h3>Recent Forecasts</h3></li>
+                            <h2>|</h2>
+                            <li className={selectedStats2} onClick={() => { setStats(allTimeForecastData); setSelectedStats("unselected"); setSelectedStats2("selected")}}><h3>All Forecasts</h3></li>
+                        </ul>
+                        <Line className="profile-stats-line-chart" data={stats || recentForecastData} options={options} />
                     </div>
-                    <div className="profile-stats-grid-body-three-cols">
-                        <h4 className="oddrow">{bestChanged === true ? playerBestBrier : "N/A"}</h4>
-                        <h4 className="oddrow" style={{backgroundColor: "rgb(250, 250, 250)", color: "#404d72" }}>Best Brier</h4>
-                        <h4 className="oddrow">{bestGlobalBrier}</h4>
-                        <h4>{worstChanged === true ? playerWorstBrier : "N/A"}</h4>
-                        <h4 style={{ color: "#404d72" }}>Worst Brier</h4>
-                        <h4>{worstGlobalBrier}</h4>
-                        <h4 className="oddrow">{isNaN(playerAverageBrier) ? "N/A" : playerAverageBrier}</h4>
-                        <h4 className="oddrow" style={{backgroundColor: "rgb(250, 250, 250)", color: "#404d72" }}>Average Brier</h4>
-                        <h4 className="oddrow">{averageGlobalBrier}</h4>
-                    </div>
-                    <br />
-                    <h2 className="player-stats-title">Unique Player Stats</h2>
-                    <hr className="player-stats-title-hr" />
-                    <div className="profile-stats-grid-body-two-cols">
-                        <h4>Fantasy Forecast Points:</h4>
-                        <h3 style={{ color: "#404d72" }}>{ffPoints}</h3>
-                        <h4>Problems Attempted:</h4>
-                        <h3 style={{ color: "#404d72" }}>{problemsAttempted}</h3>
-                        <h4># of Markets In:</h4>
-                        <h3 style={{ color: "#404d72" }}>{marketsIn}</h3>
-                        <h4>Onboarding Tasks Complete:</h4>
-                        <h3 style={{ color: "#404d72" }}>{onboardingProgress} / 5</h3>
+                    <div className="profile-stats-grid">
+                        <br/>
+                        <h2>Comparative Stats</h2>
+                        <hr />
+                        <div className="profile-stats-grid-headers">
+                            <h3>Me</h3>
+                            <h3>Global</h3>
+                            <hr />
+                            <hr />
+                        </div>
+                        <div className="profile-stats-grid-body-three-cols">
+                            <h4 className="oddrow">{bestChanged === true ? playerBestBrier : "N/A"}</h4>
+                            <h4 className="oddrow" style={{backgroundColor: "rgb(250, 250, 250)", color: "#404d72" }}>Best Brier</h4>
+                            <h4 className="oddrow">{bestGlobalBrier}</h4>
+                            <h4>{worstChanged === true ? playerWorstBrier : "N/A"}</h4>
+                            <h4 style={{ color: "#404d72" }}>Worst Brier</h4>
+                            <h4>{worstGlobalBrier}</h4>
+                            <h4 className="oddrow">{isNaN(playerAverageBrier) ? "N/A" : playerAverageBrier}</h4>
+                            <h4 className="oddrow" style={{backgroundColor: "rgb(250, 250, 250)", color: "#404d72" }}>Average Brier</h4>
+                            <h4 className="oddrow">{averageGlobalBrier}</h4>
+                        </div>
+                        <br />
+                        <h2 className="player-stats-title">Unique Player Stats</h2>
+                        <hr className="player-stats-title-hr" />
+                        <div className="profile-stats-grid-body-two-cols">
+                            <h4>Fantasy Forecast Points:</h4>
+                            <h3 style={{ color: "#404d72" }}>{ffPoints}</h3>
+                            <h4>Problems Attempted:</h4>
+                            <h3 style={{ color: "#404d72" }}>{problemsAttempted}</h3>
+                            <h4># of Markets In:</h4>
+                            <h3 style={{ color: "#404d72" }}>{marketsIn}</h3>
+                            <h4>Onboarding Tasks Complete:</h4>
+                            <h3 style={{ color: "#404d72" }}>{onboardingProgress} / 5</h3>
+                        </div>
                     </div>
                 </div>
             </div>
+            }
         </div>
     )
 }
