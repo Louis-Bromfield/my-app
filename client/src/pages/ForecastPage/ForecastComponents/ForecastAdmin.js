@@ -372,11 +372,11 @@ console.log(scores);
                             value={happenedState} 
                             checked={happenedState}
                             className="happened-btn"
-                            onClick={() => setHappenedState(!happenedState)}
+                            onClick={() => { setHappenedState(!happenedState); console.log(!happenedState)}}
                         />
                         <label 
                             htmlFor="Happened" 
-                            onClick={() => setHappenedState(!happenedState)}>
+                            onClick={() => { setHappenedState(!happenedState); console.log(!happenedState)}}>
                                 Happened
                         </label>
                         <br />
@@ -387,11 +387,11 @@ console.log(scores);
                             value={notHappenedState}
                             checked={notHappenedState} 
                             className="not-happened-btn" 
-                            onClick={() => setNotHappenedState(!notHappenedState)} 
+                            onClick={() => { setNotHappenedState(!notHappenedState); console.log(!notHappenedState)}} 
                         />
                         <label 
                             htmlFor="Didn't Happen" 
-                            onClick={() => setNotHappenedState(!notHappenedState)}>
+                            onClick={() => { setNotHappenedState(!notHappenedState); console.log(!notHappenedState)}}>
                                 Didn't Happen
                         </label>
                         <br />
