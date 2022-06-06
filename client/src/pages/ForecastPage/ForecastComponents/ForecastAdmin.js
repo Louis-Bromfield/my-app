@@ -372,11 +372,11 @@ console.log(scores);
                             value={happenedState} 
                             checked={happenedState}
                             className="happened-btn"
-                            onClick={() => { setHappenedState(!happenedState); console.log(!happenedState)}}
+                            onClick={() => { console.log("Before change = " + happenedState); setHappenedState(!happenedState); console.log("After change = " + !happenedState)}}
                         />
                         <label 
                             htmlFor="Happened" 
-                            onClick={() => { setHappenedState(!happenedState); console.log(!happenedState)}}>
+                            onClick={() => { console.log("Before change = " + happenedState); setHappenedState(!happenedState); console.log("After change = " + !happenedState)}}>
                                 Happened
                         </label>
                         <br />
@@ -387,11 +387,11 @@ console.log(scores);
                             value={notHappenedState}
                             checked={notHappenedState} 
                             className="not-happened-btn" 
-                            onClick={() => { setNotHappenedState(!notHappenedState); console.log(!notHappenedState)}} 
+                            onClick={() => { console.log("Before change = " + notHappenedState); setHappenedState(!notHappenedState); console.log("After change = " + !notHappenedState)}}
                         />
                         <label 
                             htmlFor="Didn't Happen" 
-                            onClick={() => { setNotHappenedState(!notHappenedState); console.log(!notHappenedState)}}>
+                            onClick={() => { console.log("Before change = " + notHappenedState); setHappenedState(!notHappenedState); console.log("After change = " + !notHappenedState)}}>
                                 Didn't Happen
                         </label>
                         <br />
