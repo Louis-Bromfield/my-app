@@ -114,7 +114,7 @@
 .author-profile-pic {
     width: 14%;
     border-radius: 20%;
-    border: 1px solid #404d72;
+    /* border: 1px solid #404d72; */
 }
 
 .post-author-left > h3 {
