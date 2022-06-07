@@ -60,7 +60,7 @@ router.patch("/:id", async (req, res) => {
             {
                 articleURL: req.body.articleURL,
                 postDescription: req.body.postDescription,
-                articleTitle: req.body.articleTitle,
+                articleTitle: req.body.articleTitle === "There was an error. Please check the link you have pasted is correct." ? "" : req.body.articleTitle,
                 author: req.body.author,
                 likes: req.body.likes,
                 dislikes: req.body.dislikes,

@@ -230,7 +230,7 @@ function HomeNewsFeed(props) {
                 postDescription: postDescription,
                 markets: postMarkets,
                 authorProfilePicture: localStorage.getItem("profilePicture"),
-                alternateArticleTitle: altTitle
+                articleTitle: postPreviewTitle === "There was an error. Please check the link you have pasted is correct." ? altTitle : postPreviewTitle
             });
             setCauseFeedNewsFeedRefreshWithoutAnimation(false);
             setCauseFeedNewsFeedRefresh(causeNewsFeedRefresh+1);
