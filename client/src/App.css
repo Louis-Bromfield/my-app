@@ -1,14 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@500&family=Encode+Sans&family=Lato:wght@400&family=Open+Sans:wght@300&family=Titillium+Web&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cabin&display=swap');
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Lato', sans-serif;
-  /* font-family: 'Cabin', sans-serif;  */
+  font-family: 'Assistant', sans-serif;
   -ms-overflow-style: none;
 }
 
