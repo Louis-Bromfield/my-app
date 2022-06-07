@@ -101,7 +101,7 @@ function HomeNewsFeed(props) {
                 setAlternateArticleTitle("There was an error. Please check the link you have pasted is correct.");
                 setPostPreviewImage("");
             } else {
-                setPostPreviewTitle(alternateArticleTitle.length > 0 ? alternateArticleTitle : postPreviewObj.data.articleTitle);
+                setPostPreviewTitle(postPreviewObj.data.articleTitle);
                 setPostPreviewImage(postPreviewObj.data.articleImage);
             };
             setTimeout(() => {
@@ -111,12 +111,12 @@ function HomeNewsFeed(props) {
         };
     };
 
-    const handleAlternatePostTitleChange = (e, prevTitle) => {
-        if (e.target.value.length > 0) {
+    const handleAlternatePostTitleChange = (e) => {
+        if (e.target.value !== "") {
             setAlternateArticleTitle(e.target.value);
         } else {
-            setAlternateArticleTitle(prevTitle)
-        }
+            setAlternateArticleTitle("There was an error. Please check the link you have pasted is correct.")
+        };
     };
 
     const handlePostSummaryChange = (e, changeFromState) => {
@@ -347,18 +347,22 @@ function HomeNewsFeed(props) {
                                     value={newPostURL}
                                     onChange={(e) => handlePostURLChange(e, false)}/>
                                 <br/>
-                                <label htmlFor="post-3"><strong>If the post preview below says there's an error, type in an alternative title for your link here instead:</strong></label>
-                                <br/>
-                                <input 
-                                    type="text" 
-                                    className="source-field" 
-                                    name="source" 
-                                    id="post-3" 
-                                    placeholder="Alternate Title" 
-                                    size="100"
-                                    value={alternateArticleTitle}
-                                    onChange={(e) => handleAlternatePostTitleChange(e, postPreviewTitle)}/>
-                                <br/>
+                                {postPreviewTitle === "There was an error. Please check the link you have pasted is correct." && 
+                                    <div>
+                                        <label htmlFor="post-3"><strong>If the post preview below says there's an error, type in an alternative title for your link here instead:</strong></label>
+                                        <br/>
+                                        <input 
+                                            type="text" 
+                                            className="source-field" 
+                                            name="source" 
+                                            id="post-3" 
+                                            placeholder="Alternate Title" 
+                                            size="100"
+                                            value={alternateArticleTitle}
+                                            onChange={(e) => handleAlternatePostTitleChange(e)}/>
+                                        <br/>
+                                    </div>
+                                }
                                 <label htmlFor="post-2"><strong>Post:</strong></label>
                                 <br/>
                                 <textarea 
