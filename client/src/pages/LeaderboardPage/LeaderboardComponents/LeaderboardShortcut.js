@@ -13,7 +13,7 @@ function LeaderboardShortcut(props) {
         } else if (props.name === "UK Politics") {
             setLeaderboardLogo({UnionJackFlag});
         };
-    });
+    }, [props.name]);
 
     return (
         <div className={props.className}>

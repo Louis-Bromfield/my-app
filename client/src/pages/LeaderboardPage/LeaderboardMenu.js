@@ -465,7 +465,6 @@ function LeaderboardMenu(props) {
                 <div className="create-a-league-div">
                     <h2 className="market-list-title">Create a League</h2>
                     <h4>Create your own league, invite friends, and see who's the best!</h4>
-                    {}
                     <br />
                     <form action="" className="create-a-league-form">
                         <label htmlFor="leagueName">League Name:</label>
