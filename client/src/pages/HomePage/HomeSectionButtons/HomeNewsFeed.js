@@ -100,7 +100,7 @@ function HomeNewsFeed(props) {
                 setPostPreviewTitle("There was an error. Please check the link you have pasted is correct.");
                 setPostPreviewImage("");
             } else {
-                setPostPreviewTitle(postPreviewObj.data.articleTitle);
+                setPostPreviewTitle(alternateArticleTitle.length > 0 ? alternateArticleTitle : postPreviewObj.data.articleTitle);
                 setPostPreviewImage(postPreviewObj.data.articleImage);
             };
             setTimeout(() => {
@@ -110,10 +110,12 @@ function HomeNewsFeed(props) {
         };
     };
 
-    const handleAlternatePostTitleChange = (e) => {
+    const handleAlternatePostTitleChange = (e, prevTitle) => {
         if (e.target.value.length > 0) {
-            setPostPreviewTitle(e.target.value);
-        };
+            setAlternateArticleTitle(e.target.value);
+        } else {
+            setAlternateArticleTitle(prevTitle)
+        }
     };
 
     const handlePostSummaryChange = (e, changeFromState) => {
@@ -354,7 +356,7 @@ function HomeNewsFeed(props) {
                                     placeholder="Alternate Title" 
                                     size="100"
                                     value={alternateArticleTitle}
-                                    onChange={(e) => handleAlternatePostTitleChange(e, false)}/>
+                                    onChange={(e) => handleAlternatePostTitleChange(e, postPreviewTitle)}/>
                                 <br/>
                                 <label htmlFor="post-2"><strong>Post:</strong></label>
                                 <br/>
