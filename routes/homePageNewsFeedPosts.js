@@ -32,17 +32,12 @@ const getArticleHeadline = async (url) => {
 // Create a new post
 router.post("/", async (req, res) => {
     let [ articleTitle, articleImage ] = await getArticleHeadline(req.body.articleURL);
-console.log("====================");
-console.log("articleTitle = ");
-console.log(articleTitle);
-console.log("articleImage = ");
-console.log(articleTitle);
-console.log("====================");
+
     const newHomePageNewsFeedPost = new HomePageNewsFeedPost({
         articleURL: req.body.articleURL,
         postDescription: req.body.postDescription,
-        articleTitle: articleTitle,
-        articleImage: articleImage,
+        articleTitle: articleTitle === null ? req.body.alternateArticleTitle : articleTitle,
+        articleImage: articleImage === null ? req.body.alternateArticleImage : articleImage,
         author: req.body.author,
         likes: req.body.likes,
         dislikes: req.body.dislikes,

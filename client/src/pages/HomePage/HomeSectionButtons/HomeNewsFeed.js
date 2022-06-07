@@ -31,6 +31,7 @@ function HomeNewsFeed(props) {
     const [filteringFeed, setFilteringFeed] = useState(false);
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);
     const [postIDToDelete, setPostIDToDelete] = useState();
+    const [alternateArticleTitle, setAlternateArticleTitle] = useState();
     let userMarketsForPost = [];
     
     useEffect(() => {
@@ -109,6 +110,12 @@ function HomeNewsFeed(props) {
         };
     };
 
+    const handleAlternatePostTitleChange = (e) => {
+        if (e.target.value.length > 0) {
+            setPostPreviewTitle(e.target.value);
+        };
+    };
+
     const handlePostSummaryChange = (e, changeFromState) => {
         if (changeFromState === false) {
             const postSummary = e.target.value;
@@ -158,7 +165,9 @@ function HomeNewsFeed(props) {
                 dislikes: [],
                 postDate: new Date(),
                 markets: userMarketsForPost,
-                authorProfilePicture: localStorage.getItem("profilePicture")
+                authorProfilePicture: localStorage.getItem("profilePicture"),
+                alternateArticleImage: {ImagePlaceholder},
+                alternateArticleTitle: "PLACEHOLDER TITLE"
             });
             setCauseFeedNewsFeedRefreshWithoutAnimation(false);
             setCauseFeedNewsFeedRefresh(causeNewsFeedRefresh+1);
@@ -193,7 +202,7 @@ function HomeNewsFeed(props) {
         };
     };
 
-    const loadEditPost = async (postID, postURL, postDescription, postMarkets) => {
+    const loadEditPost = async (postID, postURL, postDescription, postMarkets, postTitle) => {
         setPost(true);
         setEditingPost(true);
         setEditingPostID(postID);
@@ -201,6 +210,7 @@ function HomeNewsFeed(props) {
         setNewPostDescription(postDescription);
         setNewPostMarkets(postMarkets);
         setPostPreview(true);
+        setAlternateArticleTitle(postTitle);
     };
 
     const persistEditPostToDB = async (e, postID, postURL, postDescription, postMarkets) => {
@@ -334,6 +344,18 @@ function HomeNewsFeed(props) {
                                     value={newPostURL}
                                     onChange={(e) => handlePostURLChange(e, false)}/>
                                 <br/>
+                                <label htmlFor="post-3"><strong>If the post preview below says there's an error, type in an alternative title for your link here instead:</strong></label>
+                                <br/>
+                                <input 
+                                    type="text" 
+                                    className="source-field" 
+                                    name="source" 
+                                    id="post-3" 
+                                    placeholder="Alternate Title" 
+                                    size="100"
+                                    value={alternateArticleTitle}
+                                    onChange={(e) => handleAlternatePostTitleChange(e, false)}/>
+                                <br/>
                                 <label htmlFor="post-2"><strong>Post:</strong></label>
                                 <br/>
                                 <textarea 
@@ -400,7 +422,7 @@ function HomeNewsFeed(props) {
                                             id="post-2" 
                                             className="create-post-submit" 
                                             value="Confirm Edits" 
-                                            onClick={(e) => persistEditPostToDB(e, editingPostID, newPostURL, newPostDescription, userMarketsForPost)}/>
+                                            onClick={(e) => persistEditPostToDB(e, editingPostID, newPostURL, newPostDescription, userMarketsForPost, alternateArticleTitle)}/>
                                     }
                                     <button 
                                     className="create-post-close" 
@@ -468,7 +490,7 @@ function HomeNewsFeed(props) {
                                             {postPreviewImage !== "" && <img src={postPreviewImage} className="post-news-image" alt="News pic"/>}
                                             {postPreviewImage === "" && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
                                     </a>
-                                    <a href={newPostURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{postPreviewTitle}</h3></a>
+                                    <a href={newPostURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{postPreviewTitle === "There was an error. Please check the link you have pasted is correct." ? alternateArticleTitle : postPreviewTitle}</h3></a>
                                 </div>
                                 <div className="post-markets">
                                     {userMarketsForPost.map((market, index) => {
@@ -510,7 +532,7 @@ function HomeNewsFeed(props) {
                                                     <AiIcons.AiFillEdit 
                                                         size={25} 
                                                         className="post-control-btn" 
-                                                        onClick={() => { loadEditPost(item._id, item.articleURL, item.postDescription, item.markets); window.scrollTo(0, 0);}} />
+                                                        onClick={() => { loadEditPost(item._id, item.articleURL, item.postDescription, item.markets, item.articleTitle); window.scrollTo(0, 0);}} />
                                                 }
                                                 {item.author === props.username && 
                                                     <AiIcons.AiFillDelete size={25} 
@@ -589,7 +611,7 @@ function HomeNewsFeed(props) {
                                                         <AiIcons.AiFillEdit 
                                                             size={25} 
                                                             className="post-control-btn" 
-                                                            onClick={() => { loadEditPost(item._id, item.articleURL, item.postDescription, item.markets); window.scrollTo(0, 0);}} />
+                                                            onClick={() => { loadEditPost(item._id, item.articleURL, item.postDescription, item.markets, item.articleTitle); window.scrollTo(0, 0);}} />
                                                     }
                                                     {item.author === props.username && 
                                                         <AiIcons.AiFillDelete size={25} 
