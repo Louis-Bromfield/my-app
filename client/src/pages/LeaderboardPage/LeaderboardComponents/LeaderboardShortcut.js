@@ -9,9 +9,9 @@ function LeaderboardShortcut(props) {
 
     useEffect(() => {
         if (props.name === "Fantasy Forecast All-Time") {
-            setLeaderboardLogo({FFLogo});
+            setLeaderboardLogo(FFLogo);
         } else if (props.name === "UK Politics") {
-            setLeaderboardLogo({UnionJackFlag});
+            setLeaderboardLogo(UnionJackFlag);
         };
         console.log("LS UE");
     }, [props.name]);
