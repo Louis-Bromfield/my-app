@@ -13,6 +13,7 @@ function LeaderboardShortcut(props) {
         } else if (props.name === "UK Politics") {
             setLeaderboardLogo({UnionJackFlag});
         };
+        console.log("LS UE");
     }, [props.name]);
 
     return (
