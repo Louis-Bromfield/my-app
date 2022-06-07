@@ -215,7 +215,7 @@ function HomeNewsFeed(props) {
         setAlternateArticleTitle(postTitle);
     };
 
-    const persistEditPostToDB = async (e, postID, postURL, postDescription, postMarkets) => {
+    const persistEditPostToDB = async (e, postID, postURL, postDescription, postMarkets, altTitle) => {
         e.preventDefault();
         if (userMarketsForPost.length === 0) {
             setPostMessage("You must select at least one market.");
@@ -229,7 +229,8 @@ function HomeNewsFeed(props) {
                 articleURL: postURL,
                 postDescription: postDescription,
                 markets: postMarkets,
-                authorProfilePicture: localStorage.getItem("profilePicture") 
+                authorProfilePicture: localStorage.getItem("profilePicture"),
+                alternateArticleTitle: altTitle
             });
             setCauseFeedNewsFeedRefreshWithoutAnimation(false);
             setCauseFeedNewsFeedRefresh(causeNewsFeedRefresh+1);
