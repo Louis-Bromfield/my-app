@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
         articleURL: req.body.articleURL,
         postDescription: req.body.postDescription,
         articleTitle: articleTitle === null ? req.body.alternateArticleTitle : articleTitle,
-        articleImage: articleImage === null ? req.body.alternateArticleImage : articleImage,
+        articleImage: articleImage === null ? null : articleImage,
         author: req.body.author,
         likes: req.body.likes,
         dislikes: req.body.dislikes,

@@ -98,6 +98,7 @@ function HomeNewsFeed(props) {
             });
             if (postPreviewObj.data.error === "Error") {
                 setPostPreviewTitle("There was an error. Please check the link you have pasted is correct.");
+                setAlternateArticleTitle("There was an error. Please check the link you have pasted is correct.");
                 setPostPreviewImage("");
             } else {
                 setPostPreviewTitle(alternateArticleTitle.length > 0 ? alternateArticleTitle : postPreviewObj.data.articleTitle);
@@ -168,8 +169,7 @@ function HomeNewsFeed(props) {
                 postDate: new Date(),
                 markets: userMarketsForPost,
                 authorProfilePicture: localStorage.getItem("profilePicture"),
-                alternateArticleImage: {ImagePlaceholder},
-                alternateArticleTitle: "PLACEHOLDER TITLE"
+                alternateArticleTitle: alternateArticleTitle
             });
             setCauseFeedNewsFeedRefreshWithoutAnimation(false);
             setCauseFeedNewsFeedRefresh(causeNewsFeedRefresh+1);
@@ -560,8 +560,8 @@ function HomeNewsFeed(props) {
                                         <p className="post-author-description">{item.postDescription} <i style={{"color":"#404d72"}}><u>See Comments ({item.comments.length})</u></i></p>
                                         <div className="post-news-preview">
                                             <a href={item.articleURL} target="_blank" rel="noreferrer nofollow">
-                                                {item.articleImage !== "" && <img src={item.articleImage} className="post-news-image" alt="News pic"/>}
-                                                {item.articleImage === "" && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
+                                                {item.articleImage !== null && <img src={item.articleImage} className="post-news-image" alt="News pic"/>}
+                                                {item.articleImage === null && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
                                             </a>
                                             <a href={item.articleURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{item.articleTitle}</h3></a>
                                         </div>
@@ -639,8 +639,8 @@ function HomeNewsFeed(props) {
                                             <p className="post-author-description">{item.postDescription} <i style={{"color":"#404d72"}}><u>See Comments ({item.comments.length})</u></i></p>
                                             <div className="post-news-preview">
                                                 <a href={item.articleURL} target="_blank" rel="noreferrer nofollow">
-                                                    {item.articleImage !== "" && <img src={item.articleImage} className="post-news-image" alt="News pic"/>}
-                                                    {item.articleImage === "" && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
+                                                    {item.articleImage !== null && <img src={item.articleImage} className="post-news-image" alt="News pic"/>}
+                                                    {item.articleImage === null && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
                                                 </a>
                                                 <a href={item.articleURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{item.articleTitle}</h3></a>
                                             </div>
