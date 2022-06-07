@@ -31,7 +31,7 @@ function HomeNewsFeed(props) {
     const [filteringFeed, setFilteringFeed] = useState(false);
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);
     const [postIDToDelete, setPostIDToDelete] = useState();
-    const [alternateArticleTitle, setAlternateArticleTitle] = useState();
+    const [alternateArticleTitle, setAlternateArticleTitle] = useState("");
     let userMarketsForPost = [];
     
     useEffect(() => {
