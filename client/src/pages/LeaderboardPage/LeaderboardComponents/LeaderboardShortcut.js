@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './LeaderboardShortcut.css';
 import PlaceholderIcon from '../../../media/leaderboard.png';
+import FFLogo from '../../../media/Icon.png';
+import UnionJackFlag from '../../../media/UnionJackFlag.jpg'
 
 function LeaderboardShortcut(props) {
+    const [leaderboardLogo, setLeaderboardLogo] = useState();
+
+    useEffect(() => {
+        if (props.name === "Fantasy Forecast All-Time") {
+            setLeaderboardLogo({FFLogo});
+        } else if (props.name === "UK Politics") {
+            setLeaderboardLogo({UnionJackFlag});
+        };
+    });
+
     return (
         <div className={props.className}>
-            <img src={PlaceholderIcon} alt=""/>
+            <img src={leaderboardLogo} alt="Leaderboard logo" />
             <h3>{props.name}</h3>
         </div>
     )
