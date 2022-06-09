@@ -131,9 +131,9 @@ function Search(props) {
                     setForecasterRank("Diviner");
                 };
             };
-            setTimeout(() => {
+            // setTimeout(() => {
                 setLoading(false);
-            }, 1500);
+            // }, 1500);
         } catch (error) {
             console.error("Error in Search > retrievePlayerInfo");
             console.error(error);

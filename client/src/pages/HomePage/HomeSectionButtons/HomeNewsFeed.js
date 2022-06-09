@@ -40,12 +40,13 @@ function HomeNewsFeed(props) {
             getUserMarketsFromDB(props.username);
         } else if (causeFeedNewsFeedRefreshWithoutAnimation === false) {
             setNewPostLoading(true);
-            setTimeout(() => {
+            // setTimeout(() => {
                 getAllNewsFeedPostsFromDB();
                 getUserMarketsFromDB(props.username);
                 setNewPostLoading(false);
-            }, 1000);
+            // }, 1000);
         };
+        console.log("NewsFeed UE");
     }, [causeNewsFeedRefresh, causeFeedNewsFeedRefreshWithoutAnimation, props.username]);
 
     const getAllNewsFeedPostsFromDB = async () => {

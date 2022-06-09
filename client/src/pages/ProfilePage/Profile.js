@@ -145,7 +145,7 @@ console.log("Profile.js UE");
                             <ul className="profile-summary-list"> 
                                 <li key={0} className="profile-summary-list-item">
                                     <h3>Forecaster Level:</h3>
-                                    <h4>{fantasyForecastPoints === undefined ? (props.user.fantasyForecastPoints/100).toFixed(0): level} - {forecasterRank}</h4>
+                                    <h4>{fantasyForecastPoints === undefined ? (Math.floor(props.user.fantasyForecastPoints/100)).toFixed(0): level} - {forecasterRank}</h4>
                                 </li>
                                 <li key={1} className="profile-summary-list-item">
                                     <h3>Fantasy Forecast Points:</h3>
