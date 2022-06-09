@@ -22,7 +22,7 @@ app.use(cors());
 
 // OAuth
 app.use(session({
-    secret: "Our little secrety.",
+    secret: "fgkebgrbwksjebsk84373rbsbewqeIUIUKEWdkfdhU2383782!shjdfgvh237248582354",
     resave: false,
     saveUninitialized: false
 }));
