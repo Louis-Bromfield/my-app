@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const port = process.env.PORT || 5000;
 const path = require("path");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 // OAuth
 const session = require("express-session");
