@@ -114,6 +114,8 @@ passport.use(new GoogleStrategy({
     store: true
   },
   function(req, accessToken, refreshToken, profile, cb) {
+    console.log(passwordFromClient);
+    console.log(typeof passwordFromClient);
     User.findOrCreate({ 
         username: usernameFromClient, 
         password: passwordFromClient,
@@ -124,7 +126,7 @@ passport.use(new GoogleStrategy({
         console.log(user);
         return cb(err, user);
     });
-  }
+ }
 ));
 
 // Routes
@@ -182,7 +184,7 @@ db.once("open", () => console.log("Successfully connected to the Database"));
 // };
 
 // New
-const loggingMiddleWare = (params, next) => {
+const loggingMiddleWare = async (params, next) => {
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     console.log(params.username);
     console.log(params.password);
@@ -191,13 +193,38 @@ const loggingMiddleWare = (params, next) => {
     // isSignedUpForSurveyFromClient = params.isSignedUpForSurvey;
 
     // Hash password here:
-    const saltRounds = 10;
-    bcrypt.genSalt(saltRounds, (err, salt) => {
-        bcrypt.hash(params.password, salt, (err, hash) => {
-            passwordFromClient = hash;
-        });
-    });
+    await hashPassword(params.password);
+    // const saltRounds = 10;
+    // console.log(params.password);
+    // bcrypt.genSalt(saltRounds, (err, salt) => {
+    //     console.log(params.password);
+    //     bcrypt.hash(params.password, salt, (err, hash) => {
+    //         passwordFromClient = hash;
+    //         console.log(passwordFromClient);
+    //         console.log("hash = " + hash);
+    //     });
+    // });
     next();
+};
+
+const hashPassword = async (pw) => {
+    console.log("******************************");
+    try {
+        const saltRounds = 10;
+        console.log(pw);
+        bcrypt.genSalt(saltRounds, (err, salt) => {
+            console.log(pw);
+            bcrypt.hash(pw, salt, (err, hash) => {
+                passwordFromClient = hash;
+                console.log(passwordFromClient);
+                console.log("hash = " + hash);
+            });
+        });
+    console.log("******************************");
+    } catch (error) {
+        console.error("error in hashPassword");
+        console.error(error);
+    };
 };
 
 
