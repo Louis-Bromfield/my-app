@@ -187,7 +187,7 @@ const loggingMiddleWare = (params, next) => {
     console.log(params.username);
     console.log(params.password);
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    usernameFromClient = username;
+    usernameFromClient = params.username;
     // isSignedUpForSurveyFromClient = params.isSignedUpForSurvey;
 
     // Hash password here:
