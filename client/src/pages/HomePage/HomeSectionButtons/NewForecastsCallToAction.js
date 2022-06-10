@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react'
 import './NewForecastsCallToAction.css';
 import { HomeButtonNavButton } from './HomeButtonNavButton';
 import axios from 'axios';
+import Modal from '../../../components/Modal';
+import { FaInfoCircle } from 'react-icons/fa';
 
 function NewForecastsCallToAction(props) {
     const [isPanelHidden, setIsPanelHidden] = useState(false);
     const [unattemptedForecasts, setUnattemptedForecasts] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState("");
 
     const checkForForecastsUserHasNotAttempted = async (username) => {
         try {
@@ -24,8 +28,20 @@ function NewForecastsCallToAction(props) {
 
     return (
         <div className="new-forecasts-container" style={unattemptedForecasts.join(",").split(",").length-unattemptedForecasts.length >= 1 ? {border: "3px solid orange",} : {border: "none"}}>
+            <Modal show={showModal} handleClose={() => setShowModal(false)}>
+                <p>{modalContent}</p>
+            </Modal>
             <div className="container-header">
-                <h2 className="new-forecasts-title">New Forecasts ({unattemptedForecasts.join(",").split(",").length-unattemptedForecasts.length})</h2>
+                <h2 className="new-forecasts-title">
+                    New Forecasts ({unattemptedForecasts.join(",").split(",").length-unattemptedForecasts.length})
+                    <FaInfoCircle 
+                        onClick={() => {
+                            setShowModal(true);
+                            setModalContent(`Whenever a new problem is released, you'll be notified of it here, so keep an eye out!`)
+                        }}
+                        style={{ "color": "orange", "cursor": "pointer" }}
+                    />
+                </h2>
                 <button 
                     className="show-hide-new-forecasts-c2a"
                     onClick={() => setIsPanelHidden(!isPanelHidden)}>

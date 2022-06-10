@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const port = process.env.PORT || 5000;
 const path = require("path");
+const bcrypt = require("bcrypt");
 
 // OAuth
 const session = require("express-session");
@@ -14,6 +15,8 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
 
 let usernameFromClient = "_TEMP_USERNAME";
+let passwordFromClient = "_TEMP_PASSWORD";
+// let isSignedUpForSurveyFromClient = "SIGNUPFORSURVEY_VALUE_UNCHANGED";
 // let prolificIDFromClient = "_TEMP_PROLIFIC_ID_UNIMPORTED";
 
 // Middleware
@@ -34,16 +37,16 @@ const UserSchema = mongoose.Schema({
     username: {
         type: String
     },
-    // prolificID: {
-    //     type: String
-    // },
-    // googleID: {
-    //     type: String
-    // },
+    password: {
+        type: String
+    },
     fantasyForecastPoints: {
         type: Number,
         default: 0
     },
+    // isSignedUpForSurvey: {
+    //     type: Boolean
+    // },
     isGroup: {
         type: Boolean
     },
@@ -77,11 +80,6 @@ const UserSchema = mongoose.Schema({
         type: Number,
         default: 0
     }
-    // },
-    // justSignedInWithOAuth: {
-    //     type: Boolean,
-    //     default: true
-    // }
 });
 
 UserSchema.plugin(passportLocalMongoose);
@@ -117,12 +115,10 @@ passport.use(new GoogleStrategy({
   },
   function(req, accessToken, refreshToken, profile, cb) {
     User.findOrCreate({ 
-        // prolificID: prolificIDFromClient,
-        // googleID: profile.id,
         username: usernameFromClient, 
+        password: passwordFromClient,
         profilePicture: profile.photos[0].value || ""
-        // Need to add user to the Fantasy Forecast All-Time leaderboard document
-        // and to create a document for them in the learnQuizzes collection
+        // isSignedUpForSurvey: isSignedUpForSurveyFromClient
     }, function (err, user) {
         console.log("user");
         console.log(user);
@@ -186,16 +182,26 @@ db.once("open", () => console.log("Successfully connected to the Database"));
 // };
 
 // New
-const loggingMiddleWare = (username, next) => {
+const loggingMiddleWare = (params, next) => {
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    console.log(username);
+    console.log(params.username);
+    console.log(params.password);
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     usernameFromClient = username;
+    // isSignedUpForSurveyFromClient = params.isSignedUpForSurvey;
+
+    // Hash password here:
+    const saltRounds = 10;
+    bcrypt.genSalt(saltRounds, (err, salt) => {
+        bcrypt.hash(params.password, salt, (err, hash) => {
+            passwordFromClient = hash;
+        });
+    });
     next();
 };
 
 
-app.get("/auth/google/not_callback/:username", (req, res, next) => loggingMiddleWare(req.params.username, next), passport.authenticate("google", {
+app.get("/auth/google/not_callback/:username/:password", (req, res, next) => loggingMiddleWare(req.params, next), passport.authenticate("google", {
     scope: [
         'https://www.googleapis.com/auth/userinfo.profile',
         'https://www.googleapis.com/auth/userinfo.email'

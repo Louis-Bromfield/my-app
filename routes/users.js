@@ -8,6 +8,7 @@ const Images = require("../models/Images");
 const HomePageNewsFeedPosts = require('../models/HomePageNewsFeedPosts');
 const Leaderboards = require('../models/Leaderboards');
 const findOrCreate = require("mongoose-findorcreate");
+const bcrypt = require("bcrypt");
 
 // Get all forecasts that are in the user's markets that the user has NOT yet attempted (for home page C2A)
 router.get("/unattemptedForecasts/:username", async (req, res) => {
@@ -148,8 +149,15 @@ router.get("/findByProlificID/:prolificID", async (req, res) => {
 // Get one user for logging in
 router.get("/:username/:password", async (req, res) => {
     try {
-        const user = await Users.find({ username: req.params.username, password: req.params.password });
-        res.json(user);
+        // hash pw here, then check with line below
+        const user = await Users.find({ username: req.params.username });
+        const match = await bcrypt.compare(req.params.password, user.password);
+        if (match) {
+            res.json(user);
+        } else {
+            res.json({ loginSuccess: false, message: "Password does not match that stored in the database"});
+        };
+        // res.json(user);
     } catch (error) {
         console.error("Error in router.get/username/password in users.js");
         console.error(error);

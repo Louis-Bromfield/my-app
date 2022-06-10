@@ -125,6 +125,9 @@ function App() {
             <Route exact path="/">
                 <Redirect to="/home"></Redirect>
             </Route>
+            <Route exact path="/loginSuccess">
+                <Redirect to="/home"></Redirect>
+            </Route>
             <Route path='/home' render={(props) => <Home {...props} username={username} name={name} user={userObject} login={login} userForLogin={userForLogin} />} />
             <Route path="/change-log" render={(props) => <ChangeLog {...props} />} />
             <Route path="/news-post" render={(props) => <IndividualNewsFeedPost {...props} />} />
@@ -140,35 +143,11 @@ function App() {
           </Switch>
         </Router>
       }
-
-
-      {/* User is not signed in and needs to create an account */}
-      {/* {(isLoggedIn === false && localStorage.getItem("signedInWithGoogleAndSignedOutOfFF") === "false") &&
-        <Router>
-          <ScrollToTop /> 
-          <Switch>
-            <Route exact path='/' render={(props) => <Login {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
-            <Route path='/loginSuccess' render={(props) => <LoginSuccess {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
-          </Switch>
-      </Router>
-      } */}
-      {/* If a user has created their account, but signed out */}
-      {/* {(isLoggedIn === false && localStorage.getItem("signedInWithGoogleAndSignedOutOfFF") === "true") &&
-        <Router>
-          <ScrollToTop /> 
-          <Switch>
-            <Route path='/logBackIn' render={(props) => <LoginSuccess {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
-          </Switch>
-      </Router>
-      } */}
-
-
-
       {isLoggedIn === false &&
         <Router>
           <ScrollToTop /> 
           <Switch>
-            <Route exact path='/' render={(props) => <Login {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
+            <Route exact path='/' render={(props) => <Login {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} setUserObject={setUserObject} setUsername={setUsername} setUserFFPoints={setUserFFPoints} setName={setName} setMarkets={setMarkets} setProfilePicture={setProfilePicture} />} />
             <Route path='/loginSuccess' render={(props) => <LoginSuccess {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
           </Switch>
       </Router>

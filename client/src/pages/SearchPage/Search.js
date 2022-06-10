@@ -132,7 +132,7 @@ function Search(props) {
                 };
             };
             // setTimeout(() => {
-                setLoading(false);
+            setLoading(false);
             // }, 1500);
         } catch (error) {
             console.error("Error in Search > retrievePlayerInfo");

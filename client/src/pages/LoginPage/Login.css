@@ -6,63 +6,51 @@
     align-items: center;
     width: 100%;
     background-color: #404d72;
+    color: #fff;
 }
 
 .login-logo {
     width: 30%;
     margin-bottom: 5vh;
+    margin-top: 1vh;
 }
 
-.login-signup-container {
-    width: 100%;
+.signup-container {
+    width: 80%;
     display: grid;
-    grid-template-columns: 40% 40%;
-    column-gap: 5%;
-    justify-content: center;
+    grid-template-columns: 50% 50%;
+    border: 1px solid #fff;
 }
 
 .login-div,
-.signup-div {
+.signup-div,
+.survey-explanation-div {
     display: flex;
     flex-direction: column;
     width: 100%;
     padding: 1%;
     margin: 0 auto;
     align-items: center;
-}
-
-.form-title {
-    color: #fff;
-}
-
-.input-field,
-.input-field-photo {
-    width: 90%;
-    padding: 1%;
-    text-align: center;
-    margin-bottom: 0.5vh;
-    border: 2px solid white;
-    border-radius: 4px;
-}
-
-.input-field-photo {
-    color: #fff;
-}
-
-.login-div > input:hover {
-    border: 2px solid green;
-}
-
-.label-input-container {
-    display: flex;
-    flex-direction: row;
-    width: 50%;
     justify-content: center;
-    vertical-align: middle;
-    border: 0.5px solid white;
+    text-align: center;
+}
+
+.login-div {
+    border: 1px solid #fff;
+    width: 80%;
+    margin-top: 2vh;
+    margin-bottom: 5vh;
+}
+
+.prize-container {
+    border: 2px solid orange;
     padding: 1%;
-    margin: 1%;
-    color: #fff;
+}
+
+.credentials-passed-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .login-btn,
@@ -70,7 +58,7 @@
     background-color: rgb(96, 209, 96);
     border: none;
     color: #fff;
-    width: 30%;
+    width: 10%;
     padding: 1%;
     font-size: 1em;
     cursor: pointer;
@@ -93,13 +81,20 @@
     color: rgb(100, 216, 100);
 }
 
+@media (max-width: 1000px) {
+    .signup-container {
+        grid-template-columns: 100%;
+        row-gap: 2vh;
+    }
+}
+
 @media (max-width: 700px) {
     .login-signup-container {
         display: flex;
         flex-direction: column;
     }
     .login-logo {
-        width: 60%;
+        /* width: 60%; */
         margin-bottom: 0;
     }
     .form-title {
@@ -115,4 +110,3 @@
         margin-bottom: 1vh;
     }
 }
-

@@ -76,7 +76,7 @@ function Navbar(props) {
                                 );
                             };
                     })}
-                    {/* <li>
+                    <li>
                         <button 
                             className="mobile-nav-logout-btn" 
                             onClick={() => {
@@ -85,7 +85,7 @@ function Navbar(props) {
                             }}>
                                 Log Out
                         </button>
-                    </li> */}
+                    </li>
                     </ul>
                 </nav>
             </IconContext.Provider>   
@@ -176,14 +176,14 @@ function Navbar(props) {
                                                     {props.username}
                                                 </Link>
                                             </p>
-                                            {/* <button 
+                                            <button 
                                                 className="nav-logout-btn" 
                                                 onClick={() => {
                                                     signOut(props.logOut); 
                                                     history.push("/")
                                                 }}>
                                                     Log Out
-                                                </button> */}
+                                                </button>
                                         </div>
                                     </div>
                                 </div>
