@@ -38,7 +38,8 @@ const UserSchema = mongoose.Schema({
         type: String
     },
     password: {
-        type: String
+        type: String,
+        default: "NO_PASSWORD"
     },
     fantasyForecastPoints: {
         type: Number,
@@ -114,8 +115,8 @@ passport.use(new GoogleStrategy({
     store: true
   },
   function(req, accessToken, refreshToken, profile, cb) {
-    console.log(passwordFromClient);
-    console.log(typeof passwordFromClient);
+    console.log("117 " + passwordFromClient);
+    console.log("118 " + typeof passwordFromClient);
     User.findOrCreate({ 
         username: usernameFromClient, 
         password: passwordFromClient,
@@ -208,19 +209,19 @@ const loggingMiddleWare = async (params, next) => {
 };
 
 const hashPassword = async (pw) => {
-    console.log("******************************");
+    console.log("211 ******************************");
     try {
         const saltRounds = 10;
-        console.log(pw);
+        console.log("214 " + pw);
         bcrypt.genSalt(saltRounds, (err, salt) => {
-            console.log(pw);
+            console.log("216 " + pw);
             bcrypt.hash(pw, salt, (err, hash) => {
                 passwordFromClient = hash;
-                console.log(passwordFromClient);
-                console.log("hash = " + hash);
+                console.log("219 " + passwordFromClient);
+                console.log("220 hash = " + hash);
             });
         });
-    console.log("******************************");
+    console.log("223 ******************************");
     } catch (error) {
         console.error("error in hashPassword");
         console.error(error);
