@@ -74,6 +74,9 @@ const UserSchema = mongoose.Schema({
     username: {
         type: String
     },
+    password: {
+        type: String
+    },
     // prolificID: {
     //     type: String
     // },
