@@ -111,10 +111,10 @@ passport.use(new GoogleStrategy({
     store: true
   },
   function(req, accessToken, refreshToken, profile, cb) {
-    console.log("117 " + passwordFromClient);
-    console.log("118 " + typeof passwordFromClient);
+    console.log("114 " + passwordFromClient);
+    console.log("115 " + typeof passwordFromClient);
     profile._json.passwordFromClient = passwordFromClient;
-    console.log("121 = " + profile._json.passwordFromClient);
+    console.log("127 THIS ONEEEEEEEEEEEEEEEEEE = " + profile._json.passwordFromClient);
     console.log(profile);
     // const newUserInfo = {
     //     username: usernameFromClient, 
@@ -125,7 +125,7 @@ passport.use(new GoogleStrategy({
     User.findOrCreate({ 
         username: usernameFromClient, 
         profilePicture: profile.photos[0].value || "",
-        pWD: typeof profile._json.passwordFromClient === String ? profile._json.passwordFromClient : `${typeof profile._json.passwordFromClient} ${profile._json.passwordFromClient}`
+        pWD: profile._json.passwordFromClient
         // isSignedUpForSurvey: isSignedUpForSurveyFromClient
     }, function (err, user) {
         console.log("user");
