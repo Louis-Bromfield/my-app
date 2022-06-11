@@ -54,23 +54,23 @@ function Login(props) {
     const loginFromLogin = async (username, password) => {
         try {
             const userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/${password}`);
-            if (userObj.data.length === 0) {
-                setErrorMessage("These details do not match, please try again.");
+            if (userObj.loginSuccess === false) {
+                setErrorMessage(userObj.message);
                 return;
             } else {
                 console.log(userObj);
-                props.setUserObject(userObj.data[0]);
-                props.setUsername(userObj.data[0].username);
-                props.setUserFFPoints(userObj.data[0].fantasyForecastPoints);
-                props.setName(userObj.data[0].username);
-                props.setMarkets(userObj.data[0].markets);
-                props.setProfilePicture(userObj.data[0].profilePicture);
+                props.setUserObject(userObj.data);
+                props.setUsername(userObj.data.username);
+                props.setUserFFPoints(userObj.data.fantasyForecastPoints);
+                props.setName(userObj.data.username);
+                props.setMarkets(userObj.data.markets);
+                props.setProfilePicture(userObj.data.profilePicture);
                 localStorage.setItem('isLoggedIn', true);
-                localStorage.setItem('username', userObj.data[0].username);
+                localStorage.setItem('username', userObj.data.username);
                 localStorage.setItem('name', "XXXXXXXXXX");
-                localStorage.setItem('markets', userObj.data[0].markets);
+                localStorage.setItem('markets', userObj.data.markets);
                 localStorage.setItem('userObj', userObj);
-                localStorage.setItem('profilePicture', userObj.data[0].profilePicture);
+                localStorage.setItem('profilePicture', userObj.data.profilePicture);
                 localStorage.setItem('selectedPage', "Home");
                 props.setIsLoggedIn(true);
             }
@@ -164,6 +164,7 @@ function Login(props) {
                         }}
                     />
                 <button className="login-button" onClick={() => loginFromLogin(usernameForLogin, passwordForLogin)}>Login to Fantasy Forecast</button>
+                {errorMessage}
             </div>
         </div>
     )
