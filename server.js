@@ -138,7 +138,7 @@ passport.use(new GoogleStrategy({
     User.findOrCreate({ 
         username: usernameFromClient, 
         profilePicture: profile.photos[0].value || "",
-        pWD: await hashPassword(passwordFromClient)
+        pWD: passwordFromClient
         // isSignedUpForSurvey: isSignedUpForSurveyFromClient
     }, function (err, user) {
         console.log("user");
