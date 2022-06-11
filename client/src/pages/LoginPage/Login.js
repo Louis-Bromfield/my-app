@@ -159,6 +159,7 @@ function Login(props) {
                         onChange={(e) => { 
                             setCredentialsSuccessfullyChecked();
                             setErrorMessage("");
+                            console.log(e.target.value);
                             setPasswordForLogin(e.target.value);
                         }}
                     />

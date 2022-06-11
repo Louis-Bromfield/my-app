@@ -150,7 +150,7 @@ router.get("/findByProlificID/:prolificID", async (req, res) => {
 router.get("/:username/:password", async (req, res) => {
     try {
         // hash pw here, then check with line below
-        const user = await Users.find({ username: req.params.username });
+        const user = await Users.findOne({ username: req.params.username });
         const match = await bcrypt.compare(req.params.password, user.password);
         if (match) {
             res.json(user);
