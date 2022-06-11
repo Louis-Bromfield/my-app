@@ -109,11 +109,25 @@ passport.use(new GoogleStrategy({
     // ],
     store: true
   },
-  function(req, accessToken, refreshToken, profile, cb) {
+  async function(req, accessToken, refreshToken, profile, cb) {
     console.log("113 " + passwordFromClient);
     console.log("114 " + typeof passwordFromClient);
     const passwordCheck = passwordFromClient;
     console.log("116 " + passwordCheck);
+    
+    
+    
+    
+    
+    // if not do this:
+    // const newUsername = usernameFromClient;
+    // usernameFromClient = passwordFromClient;
+    // password: usernameFromClient
+
+
+
+
+
     // profile._json.passwordFromClient = passwordFromClient.toString();
     // console.log("127 THIS ONEEEEEEEEEEEEEEEEEE = " + profile._json.passwordFromClient);
     // console.log(profile);
@@ -142,6 +156,10 @@ passport.use(new GoogleStrategy({
         password: passwordCheck
         // isSignedUpForSurvey: isSignedUpForSurveyFromClient
     }, function (err, user) {
+        const userWithPW = await User.findOneAndUpdate({ username: usernameFromClient }, { password: passwordFromClient }, { new: true });
+        console.log("updatedUser");
+        console.log(userWithPW);
+        console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         console.log("user");
         console.log(user);
         return cb(err, user);
