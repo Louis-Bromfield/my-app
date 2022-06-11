@@ -116,6 +116,7 @@ passport.use(new GoogleStrategy({
   function(req, accessToken, refreshToken, profile, cb) {
     console.log("117 " + passwordFromClient);
     console.log("118 " + typeof passwordFromClient);
+    
     // profile._json.passwordFromClient = passwordFromClient.toString();
     // console.log("127 THIS ONEEEEEEEEEEEEEEEEEE = " + profile._json.passwordFromClient);
     // console.log(profile);
@@ -125,10 +126,22 @@ passport.use(new GoogleStrategy({
     //     pWD: profile.passwordFromClient
     // }
     // console.log(newUserInfo);
+
+    let newHash = "newHASH";
+    const saltRounds = 10;
+    console.log("132 " + passwordFromClient);
+    bcrypt.genSalt(saltRounds, (err, salt) => {
+        console.log("134 " + passwordFromClient);
+        bcrypt.hash(passwordFromClient, salt, (err, hash) => {
+            newHash = hash;
+        });
+    });
+    console.log("233 ******************************");
+
     User.findOrCreate({ 
         username: usernameFromClient, 
         profilePicture: profile.photos[0].value || "",
-        pWD: passwordFromClient
+        pWD: newHash
         // isSignedUpForSurvey: isSignedUpForSurveyFromClient
     }, function (err, user) {
         console.log("user");
@@ -203,41 +216,41 @@ const loggingMiddleWare = async (params, next) => {
 
     // Hash password here:
     // passwordFromClient = await hashPassword(params.password);
-    console.log("206 " + passwordFromClient);
-    const saltRounds = 10;
-    console.log("208 " + params.password);
-    bcrypt.genSalt(saltRounds, (err, salt) => {
-        console.log(params.password);
-        bcrypt.hash(params.password, salt, (err, hash) => {
-            passwordFromClient = hash;
-            console.log(passwordFromClient);
-            console.log("hash = " + hash);
-        });
-    });
+    // console.log("206 " + passwordFromClient);
+    // const saltRounds = 10;
+    // console.log("208 " + params.password);
+    // bcrypt.genSalt(saltRounds, (err, salt) => {
+    //     console.log(params.password);
+    //     bcrypt.hash(params.password, salt, (err, hash) => {
+    //         passwordFromClient = hash;
+    //         console.log(passwordFromClient);
+    //         console.log("hash = " + hash);
+    //     });
+    // });
     next();
 };
 
-// const hashPassword = async (pw) => {
-//     console.log("221 ******************************");
-//     try {
-//         let newHash = "";
-//         const saltRounds = 10;
-//         console.log("224 " + pw);
-//         bcrypt.genSalt(saltRounds, (err, salt) => {
-//             console.log("226 " + pw);
-//             bcrypt.hash(pw, salt, (err, hash) => {
-//                 newHash = hash;
-//                 // console.log("219 " + passwordFromClient);
-//                 // console.log("220 hash = " + hash);
-//             });
-//         });
-//         console.log("233 ******************************");
-//         return newHash;
-//     } catch (error) {
-//         console.error("error in hashPassword");
-//         console.error(error);
-//     };
-// };
+const hashPassword = async (pw) => {
+    console.log("221 ******************************");
+    try {
+        let newHash = "";
+        const saltRounds = 10;
+        console.log("224 " + pw);
+        bcrypt.genSalt(saltRounds, (err, salt) => {
+            console.log("226 " + pw);
+            bcrypt.hash(pw, salt, (err, hash) => {
+                newHash = hash;
+                // console.log("219 " + passwordFromClient);
+                // console.log("220 hash = " + hash);
+            });
+        });
+        console.log("233 ******************************");
+        return newHash;
+    } catch (error) {
+        console.error("error in hashPassword");
+        console.error(error);
+    };
+};
 
 
 app.get("/auth/google/not_callback/:username/:password", (req, res, next) => loggingMiddleWare(req.params, next), passport.authenticate("google", {
