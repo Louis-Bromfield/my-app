@@ -37,7 +37,7 @@ const UserSchema = mongoose.Schema({
     username: {
         type: String
     },
-    pWD: {
+    password: {
         type: String
     },
     fantasyForecastPoints: {
@@ -110,9 +110,10 @@ passport.use(new GoogleStrategy({
     store: true
   },
   function(req, accessToken, refreshToken, profile, cb) {
-    console.log("117 " + passwordFromClient);
-    console.log("118 " + typeof passwordFromClient);
-    
+    console.log("113 " + passwordFromClient);
+    console.log("114 " + typeof passwordFromClient);
+    const passwordCheck = passwordFromClient;
+    console.log("116 " + passwordCheck);
     // profile._json.passwordFromClient = passwordFromClient.toString();
     // console.log("127 THIS ONEEEEEEEEEEEEEEEEEE = " + profile._json.passwordFromClient);
     // console.log(profile);
@@ -138,7 +139,7 @@ passport.use(new GoogleStrategy({
     User.findOrCreate({ 
         username: usernameFromClient, 
         profilePicture: profile.photos[0].value || "",
-        pWD: passwordFromClient
+        password: passwordFromClient
         // isSignedUpForSurvey: isSignedUpForSurveyFromClient
     }, function (err, user) {
         console.log("user");

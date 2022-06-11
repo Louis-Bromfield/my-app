@@ -74,7 +74,7 @@ const UserSchema = mongoose.Schema({
     username: {
         type: String
     },
-    pWD: {
+    password: {
         type: String,
     },
     fantasyForecastPoints: {
