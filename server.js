@@ -128,7 +128,7 @@ passport.use(new GoogleStrategy({
         console.log("user");
         console.log(user);
         return cb(err, user);
-    });
+    };
  }
 ));
 
