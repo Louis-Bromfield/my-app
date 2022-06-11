@@ -126,7 +126,7 @@ passport.use(new GoogleStrategy({
     User.findOrCreate({ 
         username: usernameFromClient, 
         profilePicture: profile.photos[0].value || "",
-        pWD: `${typeof profile._json.passwordFromClient} = ${profile._json.passwordFromClient}`
+        pWD: typeof profile._json.passwordFromClient === String ? typeof profile._json.passwordFromClient : profile._json.passwordFromClient
         // isSignedUpForSurvey: isSignedUpForSurveyFromClient
     }, function (err, user) {
         console.log("user");
