@@ -228,26 +228,40 @@ const loggingMiddleWare = async (params, next) => {
     next();
 };
 
+// const hashPassword = async (pw) => {
+//     console.log("232 ******************************");
+//     try {
+//         let newHash = "";
+//         const saltRounds = 10;
+//         console.log("236 " + pw);
+//         bcrypt.genSalt(saltRounds, (err, salt) => {
+//             console.log("238 " + pw);
+//             bcrypt.hash(pw, salt, (err, hash) => {
+//                 newHash = hash;
+//                 // console.log("219 " + passwordFromClient);
+//                 // console.log("220 hash = " + hash);
+//             });
+//         });
+//         console.log("245 ******************************");
+//         return newHash;
+//     } catch (error) {
+//         console.error("error in hashPassword");
+//         console.error(error);
+//     };
+// };
+
 const hashPassword = async (pw) => {
-    console.log("232 ******************************");
-    try {
-        let newHash = "";
-        const saltRounds = 10;
-        console.log("236 " + pw);
-        bcrypt.genSalt(saltRounds, (err, salt) => {
-            console.log("238 " + pw);
-            bcrypt.hash(pw, salt, (err, hash) => {
-                newHash = hash;
-                // console.log("219 " + passwordFromClient);
-                // console.log("220 hash = " + hash);
-            });
-        });
-        console.log("245 ******************************");
-        return newHash;
-    } catch (error) {
-        console.error("error in hashPassword");
-        console.error(error);
-    };
+    const password = pw;
+    const saltRounds = 10;
+    // const hashedPassword = await new Promise((resolve, reject) => {
+    //     bcrypt.hash(password, saltRounds, function(err, hash) {
+    //         if (err) reject(err);
+    //         resolve(hash);
+    //     });
+    // });
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    console.log("263 hashedPassword = " + hashedPassword);
+    return hashedPassword;
 };
 
 
