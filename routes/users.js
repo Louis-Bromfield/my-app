@@ -151,6 +151,9 @@ router.get("/:username/:password", async (req, res) => {
     try {
         // hash pw here, then check with line below
         const user = await Users.findOne({ username: req.params.username });
+        console.log(user);
+        console.log(req.params.password);
+        console.log(user.password);
         const match = await bcrypt.compare(req.params.password, user.password);
         if (match) {
             res.json(user);
