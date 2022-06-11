@@ -76,7 +76,6 @@ const UserSchema = mongoose.Schema({
     },
     pWD: {
         type: String,
-        default: "NO_PASSWORD2"
     },
     fantasyForecastPoints: {
         type: Number,
