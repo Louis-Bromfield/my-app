@@ -133,12 +133,12 @@ passport.use(new GoogleStrategy({
     //     });
     // });
     // console.log("233 ******************************");
-    let newHashedPassword = await hashPassword(passwordFromClient);
+    // let newHashedPassword = await hashPassword(passwordFromClient);
 
     User.findOrCreate({ 
         username: usernameFromClient, 
         profilePicture: profile.photos[0].value || "",
-        pWD: newHashedPassword
+        pWD: await hashPassword(passwordFromClient)
         // isSignedUpForSurvey: isSignedUpForSurveyFromClient
     }, function (err, user) {
         console.log("user");
