@@ -74,7 +74,7 @@ const UserSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    password: {
+    pWD: {
         type: String,
         default: "NO_PASSWORD"
     }
@@ -120,12 +120,12 @@ passport.use(new GoogleStrategy({
     const newUserInfo = {
         username: usernameFromClient, 
         profilePicture: profile.photos[0].value || "",
-        password: profile.passwordFromClient
+        pWD: profile.passwordFromClient
     }
     User.findOrCreate({ 
         username: newUserInfo.username, 
         profilePicture: newUserInfo.profilePicture,
-        password: newUserInfo.password
+        pWD: newUserInfo.pWD
         // isSignedUpForSurvey: isSignedUpForSurveyFromClient
     }, function (err, user) {
         console.log("user");
