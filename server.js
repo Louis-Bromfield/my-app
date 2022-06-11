@@ -117,9 +117,10 @@ passport.use(new GoogleStrategy({
   function(req, accessToken, refreshToken, profile, cb) {
     console.log("117 " + passwordFromClient);
     console.log("118 " + typeof passwordFromClient);
+    profile.passwordFromClient = passwordFromClient;
     User.findOrCreate({ 
         username: usernameFromClient, 
-        password: passwordFromClient,
+        password: profile.passwordFromClient,
         profilePicture: profile.photos[0].value || ""
         // isSignedUpForSurvey: isSignedUpForSurveyFromClient
     }, function (err, user) {
