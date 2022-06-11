@@ -117,12 +117,14 @@ passport.use(new GoogleStrategy({
     profile.passwordFromClient = passwordFromClient;
     console.log("121 = " + profile.passwordFromClient);
     console.log(profile);
-    User.findOrCreate({ 
-        username: usernameFromClient, 
+    const newUserInfo = {
+        username: usernameFromClient,
+        password: profile.passwordFromClient,
         profilePicture: profile.photos[0].value || "",
-        password: profile.passwordFromClient
-        // isSignedUpForSurvey: isSignedUpForSurveyFromClient
-    }, function (err, user) {
+    };
+    console.log("newUserInfo = ");
+    console.log(newUserInfo);
+    User.findOrCreate(newUserInfo), function (err, user) {
         console.log("user");
         console.log(user);
         return cb(err, user);
