@@ -38,6 +38,7 @@ const UserSchema = mongoose.Schema({
         type: String
     },
     pWD: {
+        type: String,
         default: "NO_PASSWORD"
     },
     fantasyForecastPoints: {
@@ -125,7 +126,7 @@ passport.use(new GoogleStrategy({
     User.findOrCreate({ 
         username: usernameFromClient, 
         profilePicture: profile.photos[0].value || "",
-        pWD: profile._json.passwordFromClient
+        pWD: typeof profile._json.passwordFromClient === String ? profile._json.passwordFromClient : typeof profile._json.passwordFromClient
         // isSignedUpForSurvey: isSignedUpForSurveyFromClient
     }, function (err, user) {
         console.log("user");
