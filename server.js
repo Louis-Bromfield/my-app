@@ -118,17 +118,20 @@ passport.use(new GoogleStrategy({
     console.log("121 = " + profile.passwordFromClient);
     console.log(profile);
     const newUserInfo = {
-        username: usernameFromClient,
-        password: profile.passwordFromClient,
+        username: usernameFromClient, 
         profilePicture: profile.photos[0].value || "",
-    };
-    console.log("newUserInfo = ");
-    console.log(newUserInfo);
-    User.findOrCreate(newUserInfo), function (err, user) {
+        password: profile.passwordFromClient
+    }
+    User.findOrCreate({ 
+        username: newUserInfo.username, 
+        profilePicture: newUserInfo.profilePicture,
+        password: newUserInfo.password
+        // isSignedUpForSurvey: isSignedUpForSurveyFromClient
+    }, function (err, user) {
         console.log("user");
         console.log(user);
         return cb(err, user);
-    };
+    });
  }
 ));
 
