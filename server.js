@@ -220,17 +220,19 @@ const loggingMiddleWare = async (params, next) => {
 const hashPassword = async (pw) => {
     console.log("221 ******************************");
     try {
+        let newHash = "";
         const saltRounds = 10;
         console.log("224 " + pw);
         bcrypt.genSalt(saltRounds, (err, salt) => {
             console.log("226 " + pw);
             bcrypt.hash(pw, salt, (err, hash) => {
-                return hash;
+                newHash = hash;
                 // console.log("219 " + passwordFromClient);
                 // console.log("220 hash = " + hash);
             });
         });
-    console.log("233 ******************************");
+        console.log("233 ******************************");
+        return newHash;
     } catch (error) {
         console.error("error in hashPassword");
         console.error(error);
