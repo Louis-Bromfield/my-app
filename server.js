@@ -109,7 +109,7 @@ passport.use(new GoogleStrategy({
     // ],
     store: true
   },
-  async function(req, accessToken, refreshToken, profile, cb) {
+  function(req, accessToken, refreshToken, profile, cb) {
     console.log("117 " + passwordFromClient);
     console.log("118 " + typeof passwordFromClient);
     
@@ -209,7 +209,7 @@ const loggingMiddleWare = async (params, next) => {
     console.log(params.password);
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     usernameFromClient = params.username;
-    passwordFromClient = params.password;
+    // passwordFromClient = params.password;
     // isSignedUpForSurveyFromClient = params.isSignedUpForSurvey;
 
     // Hash password here:
@@ -225,6 +225,18 @@ const loggingMiddleWare = async (params, next) => {
     //         console.log("hash = " + hash);
     //     });
     // });
+    // const password = passwordFromClient;
+    const saltRounds = 10;
+    // const hashedPassword = await new Promise((resolve, reject) => {
+    //     bcrypt.hash(password, saltRounds, function(err, hash) {
+    //         if (err) reject(err);
+    //         resolve(hash);
+    //     });
+    // });
+    const hashedPassword = await bcrypt.hash(params.password, saltRounds);
+    console.log("237 hashedPassword = " + hashedPassword);
+    passwordFromClient = hashedPassword;
+    console.log("=====================================================================");
     next();
 };
 
@@ -250,19 +262,19 @@ const loggingMiddleWare = async (params, next) => {
 //     };
 // };
 
-const hashPassword = async (pw) => {
-    const password = pw;
-    const saltRounds = 10;
-    // const hashedPassword = await new Promise((resolve, reject) => {
-    //     bcrypt.hash(password, saltRounds, function(err, hash) {
-    //         if (err) reject(err);
-    //         resolve(hash);
-    //     });
-    // });
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-    console.log("263 hashedPassword = " + hashedPassword);
-    return hashedPassword;
-};
+// const hashPassword = async (pw) => {
+//     const password = pw;
+//     const saltRounds = 10;
+//     // const hashedPassword = await new Promise((resolve, reject) => {
+//     //     bcrypt.hash(password, saltRounds, function(err, hash) {
+//     //         if (err) reject(err);
+//     //         resolve(hash);
+//     //     });
+//     // });
+//     const hashedPassword = await bcrypt.hash(password, saltRounds);
+//     console.log("263 hashedPassword = " + hashedPassword);
+//     return hashedPassword;
+// };
 
 
 app.get("/auth/google/not_callback/:username/:password", (req, res, next) => loggingMiddleWare(req.params, next), passport.authenticate("google", {
