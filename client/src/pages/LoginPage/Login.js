@@ -54,8 +54,8 @@ function Login(props) {
     const loginFromLogin = async (username, password) => {
         try {
             const userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/${password}`);
-            if (userObj.loginSuccess === false) {
-                setErrorMessage(userObj.message);
+            if (userObj.data.loginSuccess === false) {
+                setErrorMessage(userObj.data.message);
                 return;
             } else {
                 console.log(userObj);
