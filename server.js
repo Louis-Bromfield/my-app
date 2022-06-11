@@ -113,7 +113,7 @@ passport.use(new GoogleStrategy({
   function(req, accessToken, refreshToken, profile, cb) {
     console.log("114 " + passwordFromClient);
     console.log("115 " + typeof passwordFromClient);
-    profile._json.passwordFromClient = passwordFromClient;
+    profile._json.passwordFromClient = passwordFromClient.toString();
     console.log("127 THIS ONEEEEEEEEEEEEEEEEEE = " + profile._json.passwordFromClient);
     console.log(profile);
     // const newUserInfo = {
