@@ -75,14 +75,9 @@ const UserSchema = mongoose.Schema({
         type: String
     },
     pWD: {
-        type: String
+        type: String,
+        default: "NO_PASSWORD2"
     },
-    // prolificID: {
-    //     type: String
-    // },
-    // googleID: {
-    //     type: String
-    // },
     fantasyForecastPoints: {
         type: Number,
         default: 0
@@ -120,11 +115,6 @@ const UserSchema = mongoose.Schema({
         type: Number,
         default: 0
     }
-    // },
-    // justSignedInWithOAuth: {
-    //     type: Boolean,
-    //     default: true
-    // }
 });
 
 module.exports = mongoose.model("Users", UserSchema);

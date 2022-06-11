@@ -37,6 +37,10 @@ const UserSchema = mongoose.Schema({
     username: {
         type: String
     },
+    pWD: {
+        type: String,
+        default: "NO_PASSWORD"
+    },
     fantasyForecastPoints: {
         type: Number,
         default: 0
@@ -73,10 +77,6 @@ const UserSchema = mongoose.Schema({
     articleVisits: {
         type: Number,
         default: 0
-    },
-    pWD: {
-        type: String,
-        default: "NO_PASSWORD"
     }
 });
 
@@ -114,18 +114,19 @@ passport.use(new GoogleStrategy({
   function(req, accessToken, refreshToken, profile, cb) {
     console.log("117 " + passwordFromClient);
     console.log("118 " + typeof passwordFromClient);
-    profile.passwordFromClient = passwordFromClient;
+    profile._json.passwordFromClient = passwordFromClient;
     console.log("121 = " + profile.passwordFromClient);
     console.log(profile);
-    const newUserInfo = {
+    // const newUserInfo = {
+    //     username: usernameFromClient, 
+    //     profilePicture: profile.photos[0].value || "",
+    //     pWD: profile.passwordFromClient
+    // }
+    // console.log(newUserInfo);
+    User.findOrCreate({ 
         username: usernameFromClient, 
         profilePicture: profile.photos[0].value || "",
-        pWD: profile.passwordFromClient
-    }
-    User.findOrCreate({ 
-        username: newUserInfo.username, 
-        profilePicture: newUserInfo.profilePicture,
-        pWD: newUserInfo.pWD
+        pWD: profile._json.passwordFromClient
         // isSignedUpForSurvey: isSignedUpForSurveyFromClient
     }, function (err, user) {
         console.log("user");
