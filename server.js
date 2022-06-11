@@ -96,10 +96,6 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
-const hashMyPassword = () => {
-
-};
-
 // Access our variables from .env file and create a new user
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
@@ -113,7 +109,7 @@ passport.use(new GoogleStrategy({
     // ],
     store: true
   },
-  function(req, accessToken, refreshToken, profile, cb) {
+  async function(req, accessToken, refreshToken, profile, cb) {
     console.log("117 " + passwordFromClient);
     console.log("118 " + typeof passwordFromClient);
     
@@ -127,21 +123,22 @@ passport.use(new GoogleStrategy({
     // }
     // console.log(newUserInfo);
 
-    let newHash = "newHASH";
-    const saltRounds = 10;
-    console.log("132 " + passwordFromClient);
-    bcrypt.genSalt(saltRounds, (err, salt) => {
-        console.log("134 " + passwordFromClient);
-        bcrypt.hash(passwordFromClient, salt, (err, hash) => {
-            newHash = hash;
-        });
-    });
-    console.log("233 ******************************");
+    // let newHash = "newHASH";
+    // const saltRounds = 10;
+    // console.log("132 " + passwordFromClient);
+    // bcrypt.genSalt(saltRounds, (err, salt) => {
+    //     console.log("134 " + passwordFromClient);
+    //     bcrypt.hash(passwordFromClient, salt, (err, hash) => {
+    //         newHash = hash;
+    //     });
+    // });
+    // console.log("233 ******************************");
+    let newHashedPassword = await hashPassword(passwordFromClient);
 
     User.findOrCreate({ 
         username: usernameFromClient, 
         profilePicture: profile.photos[0].value || "",
-        pWD: newHash
+        pWD: newHashedPassword
         // isSignedUpForSurvey: isSignedUpForSurveyFromClient
     }, function (err, user) {
         console.log("user");
@@ -212,6 +209,7 @@ const loggingMiddleWare = async (params, next) => {
     console.log(params.password);
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     usernameFromClient = params.username;
+    passwordFromClient = params.password;
     // isSignedUpForSurveyFromClient = params.isSignedUpForSurvey;
 
     // Hash password here:
@@ -231,20 +229,20 @@ const loggingMiddleWare = async (params, next) => {
 };
 
 const hashPassword = async (pw) => {
-    console.log("221 ******************************");
+    console.log("232 ******************************");
     try {
         let newHash = "";
         const saltRounds = 10;
-        console.log("224 " + pw);
+        console.log("236 " + pw);
         bcrypt.genSalt(saltRounds, (err, salt) => {
-            console.log("226 " + pw);
+            console.log("238 " + pw);
             bcrypt.hash(pw, salt, (err, hash) => {
                 newHash = hash;
                 // console.log("219 " + passwordFromClient);
                 // console.log("220 hash = " + hash);
             });
         });
-        console.log("233 ******************************");
+        console.log("245 ******************************");
         return newHash;
     } catch (error) {
         console.error("error in hashPassword");
