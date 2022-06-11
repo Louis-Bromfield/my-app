@@ -118,6 +118,8 @@ passport.use(new GoogleStrategy({
     console.log("117 " + passwordFromClient);
     console.log("118 " + typeof passwordFromClient);
     profile.passwordFromClient = passwordFromClient;
+    console.log("121 = " + profile.passwordFromClient);
+    console.log(profile);
     User.findOrCreate({ 
         username: usernameFromClient, 
         password: profile.passwordFromClient,
