@@ -202,42 +202,42 @@ const loggingMiddleWare = async (params, next) => {
     // isSignedUpForSurveyFromClient = params.isSignedUpForSurvey;
 
     // Hash password here:
-    passwordFromClient = await hashPassword(params.password);
+    // passwordFromClient = await hashPassword(params.password);
     console.log("206 " + passwordFromClient);
-    // const saltRounds = 10;
-    // console.log(params.password);
-    // bcrypt.genSalt(saltRounds, (err, salt) => {
-    //     console.log(params.password);
-    //     bcrypt.hash(params.password, salt, (err, hash) => {
-    //         passwordFromClient = hash;
-    //         console.log(passwordFromClient);
-    //         console.log("hash = " + hash);
-    //     });
-    // });
+    const saltRounds = 10;
+    console.log("208 " + params.password);
+    bcrypt.genSalt(saltRounds, (err, salt) => {
+        console.log(params.password);
+        bcrypt.hash(params.password, salt, (err, hash) => {
+            passwordFromClient = hash;
+            console.log(passwordFromClient);
+            console.log("hash = " + hash);
+        });
+    });
     next();
 };
 
-const hashPassword = async (pw) => {
-    console.log("221 ******************************");
-    try {
-        let newHash = "";
-        const saltRounds = 10;
-        console.log("224 " + pw);
-        bcrypt.genSalt(saltRounds, (err, salt) => {
-            console.log("226 " + pw);
-            bcrypt.hash(pw, salt, (err, hash) => {
-                newHash = hash;
-                // console.log("219 " + passwordFromClient);
-                // console.log("220 hash = " + hash);
-            });
-        });
-        console.log("233 ******************************");
-        return newHash;
-    } catch (error) {
-        console.error("error in hashPassword");
-        console.error(error);
-    };
-};
+// const hashPassword = async (pw) => {
+//     console.log("221 ******************************");
+//     try {
+//         let newHash = "";
+//         const saltRounds = 10;
+//         console.log("224 " + pw);
+//         bcrypt.genSalt(saltRounds, (err, salt) => {
+//             console.log("226 " + pw);
+//             bcrypt.hash(pw, salt, (err, hash) => {
+//                 newHash = hash;
+//                 // console.log("219 " + passwordFromClient);
+//                 // console.log("220 hash = " + hash);
+//             });
+//         });
+//         console.log("233 ******************************");
+//         return newHash;
+//     } catch (error) {
+//         console.error("error in hashPassword");
+//         console.error(error);
+//     };
+// };
 
 
 app.get("/auth/google/not_callback/:username/:password", (req, res, next) => loggingMiddleWare(req.params, next), passport.authenticate("google", {
