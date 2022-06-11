@@ -38,7 +38,6 @@ const UserSchema = mongoose.Schema({
         type: String
     },
     pWD: {
-        type: String,
         default: "NO_PASSWORD"
     },
     fantasyForecastPoints: {
@@ -115,7 +114,7 @@ passport.use(new GoogleStrategy({
     console.log("117 " + passwordFromClient);
     console.log("118 " + typeof passwordFromClient);
     profile._json.passwordFromClient = passwordFromClient;
-    console.log("121 = " + profile.passwordFromClient);
+    console.log("121 = " + profile._json.passwordFromClient);
     console.log(profile);
     // const newUserInfo = {
     //     username: usernameFromClient, 
