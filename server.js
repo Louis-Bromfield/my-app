@@ -96,6 +96,9 @@ passport.deserializeUser(function(id, done) {
     });
 });
 
+const hashMyPassword = () => {
+
+};
 
 // Access our variables from .env file and create a new user
 passport.use(new GoogleStrategy({
@@ -111,8 +114,8 @@ passport.use(new GoogleStrategy({
     store: true
   },
   function(req, accessToken, refreshToken, profile, cb) {
-    console.log("114 " + passwordFromClient.toString());
-    console.log("115 " + typeof passwordFromClient.toString());
+    console.log("117 " + passwordFromClient);
+    console.log("118 " + typeof passwordFromClient);
     // profile._json.passwordFromClient = passwordFromClient.toString();
     // console.log("127 THIS ONEEEEEEEEEEEEEEEEEE = " + profile._json.passwordFromClient);
     // console.log(profile);
@@ -125,7 +128,7 @@ passport.use(new GoogleStrategy({
     User.findOrCreate({ 
         username: usernameFromClient, 
         profilePicture: profile.photos[0].value || "",
-        pWD: passwordFromClient.toString()
+        pWD: passwordFromClient
         // isSignedUpForSurvey: isSignedUpForSurveyFromClient
     }, function (err, user) {
         console.log("user");
@@ -199,7 +202,8 @@ const loggingMiddleWare = async (params, next) => {
     // isSignedUpForSurveyFromClient = params.isSignedUpForSurvey;
 
     // Hash password here:
-    await hashPassword(params.password);
+    passwordFromClient = await hashPassword(params.password);
+    console.log("206 " + passwordFromClient);
     // const saltRounds = 10;
     // console.log(params.password);
     // bcrypt.genSalt(saltRounds, (err, salt) => {
@@ -214,19 +218,19 @@ const loggingMiddleWare = async (params, next) => {
 };
 
 const hashPassword = async (pw) => {
-    console.log("211 ******************************");
+    console.log("221 ******************************");
     try {
         const saltRounds = 10;
-        console.log("214 " + pw);
+        console.log("224 " + pw);
         bcrypt.genSalt(saltRounds, (err, salt) => {
-            console.log("216 " + pw);
+            console.log("226 " + pw);
             bcrypt.hash(pw, salt, (err, hash) => {
-                passwordFromClient = hash;
-                console.log("219 " + passwordFromClient);
-                console.log("220 hash = " + hash);
+                return hash;
+                // console.log("219 " + passwordFromClient);
+                // console.log("220 hash = " + hash);
             });
         });
-    console.log("223 ******************************");
+    console.log("233 ******************************");
     } catch (error) {
         console.error("error in hashPassword");
         console.error(error);
