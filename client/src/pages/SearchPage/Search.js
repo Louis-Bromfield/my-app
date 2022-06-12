@@ -4,6 +4,8 @@ import './Search.css';
 import FakeProfilePic2 from '../../media/ProfileP.png';
 import { Line } from 'react-chartjs-2';
 import ReactLoading from 'react-loading';
+import ProfileForecasts from '../ProfilePage/ProfileForecasts';
+import ProfileRewards from '../ProfilePage/ProfileRewards';
 
 function Search(props) {
     const [markets, setMarkets] = useState("");
@@ -41,6 +43,8 @@ function Search(props) {
     const [allAverageData, setAllAverageData] = useState([]);
     const [playerLevel, setPlayerLevel] = useState(0);
     const [forecasterRank, setForecasterRank] = useState("");
+    const [searchTab, setSearchTab] = useState("my-stats");
+    const [searchUserObj, setSearchUserObj] = useState({});
 
     useEffect(() => {
         console.log(props);
@@ -70,6 +74,7 @@ function Search(props) {
                 };
             };
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/profileData/${username}`);
+            setSearchUserObj(userDocument.data.userObj);
             formatBrierData(userDocument.data.userObj, playerUsername);
             findUniquePlayerStats(userDocument.data.userObj, playerUsername);
             setBrierAverage(userDocument.data.averageBrier);
@@ -103,7 +108,7 @@ function Search(props) {
                 retrieveUserRankFromDB(username);
                 setPlayerUsername(userDocument.data[0].username);
                 setPlayerName(userDocument.data[0].name);
-                setPlayerLevel((userDocument.data[0].fantasyForecastPoints/100).toFixed(0));
+                setPlayerLevel(Math.floor((userDocument.data[0].fantasyForecastPoints/100).toFixed(0)));
                 setPlayerPoints(userDocument.data[0].fantasyForecastPoints.toFixed(0));
                 formatMarketsString(userDocument.data[0].markets);
                 setPlayerProfilePic(userDocument.data[0].profilePicture);
@@ -351,54 +356,65 @@ function Search(props) {
                         </div>
                         <br/>
                         <hr/>
-                        <div className="profile-stats">
-                            <h1 className="profile-header">{playerUsername !== "" ? `${playerUsername}'s Stats` : "Player Stats"}</h1>
-                            <div className="profile-stats-inner">
-                                <div className="profile-stats-recent-forecasts">
-                                    <br/>
-                                    <ul className="profile-stats-selectors">
-                                    <li className={selectedStats} onClick={() => { setStats(recentForecastData); setSelectedStats("selected"); setSelectedStats2("unselected")}}><h3>Recent Forecasts</h3></li>
-                                        <h2>|</h2>
-                                        <li className={selectedStats2} onClick={() => { setStats(allTimeForecastData); setSelectedStats("unselected"); setSelectedStats2("selected")}}><h3>All Forecasts</h3></li>
-                                    </ul>
-                                    <Line className="profile-stats-line-chart" data={recentForecastData || stats} options={options} />
-                                </div>
-                                <div className="profile-stats-grid">
-                                    <br/>
-                                    <h2>Comparative Stats</h2>
-                                    <hr />
-                                    <div className="profile-stats-grid-headers">
-                                        <h3>{playerUsername === "" ? "User" : playerUsername}</h3>
-                                        <h3>Me</h3>
-                                        <hr />
-                                        <hr />
-                                    </div>
-                                    <div className="profile-stats-grid-body-three-cols">
-                                        <h4 className="oddrow">{bestChanged === true ? playerBestBrier : "N/A"}</h4>
-                                        <h3 className="oddrow" style={{backgroundColor: "rgb(250, 250, 250)", color: "#404d72" }}>Best Brier</h3>
-                                        <h4 className="oddrow">{bestChangedMe === true ? bestBrierMe : "N/A"}</h4>
-                                        <h4>{worstChanged === true ? playerWorstBrier : "N/A"}</h4>
-                                        <h3 style={{ color: "#404d72" }}>Worst Brier</h3>
-                                        <h4>{worstChangedMe === true ? worstBrierMe : "N/A"}</h4>
-                                        <h4 className="oddrow">{isNaN(playerAverageBrier) ? "N/A" : playerAverageBrier}</h4>
-                                        <h3 className="oddrow" style={{backgroundColor: "rgb(250, 250, 250)", color: "#404d72" }}>Average Brier</h3>
-                                        <h4 className="oddrow">{isNaN(averageBrierMe) ? "N/A" : averageBrierMe}</h4>
-                                    </div>
-                                    <br />
-                                    <h2 className="player-stats-title">Unique Player Stats</h2>
-                                    <hr className="player-stats-title-hr" />
-                                    <div className="profile-stats-grid-body-two-cols">
-                                        <h4>Fantasy Forecast Points:</h4>
-                                        <h3 style={{ color: "#404d72" }}>{ffPoints}</h3>
-                                        <h4>Problems Attempted:</h4>
-                                        <h3 style={{ color: "#404d72" }}>{problemsAttempted}</h3>
-                                        <h4># of Markets In:</h4>
-                                        <h3 style={{ color: "#404d72" }}>{marketsIn}</h3>
-                                        <h4>Onboarding Tasks Complete:</h4>
-                                        <h3 style={{ color: "#404d72" }}>{onboardingProgress} / 5</h3>
-                                    </div>
-                                </div>
+                        <div className="profile-stats-rewards-container">
+                            <div className="profile-nav-menu">
+                                <div className="profile-tab" onClick={() => setSearchTab("my-stats")}><h3>My Stats</h3></div>
+                                <div className="profile-tab" onClick={() => setSearchTab("my-forecasts")}><h3>My Forecasts</h3></div>
+                                <div className="profile-tab" onClick={() => setSearchTab("my-rewards")}><h3>My Rewards</h3></div>
                             </div>
+                            {searchTab === "my-stats" && 
+                                <div className="profile-stats">
+                                    <h1 className="profile-header">{playerUsername !== "" ? `${playerUsername}'s Stats` : "Player Stats"}</h1>
+                                    <div className="profile-stats-inner">
+                                        <div className="profile-stats-recent-forecasts">
+                                            <br/>
+                                            <ul className="profile-stats-selectors">
+                                            <li className={selectedStats} onClick={() => { setStats(recentForecastData); setSelectedStats("selected"); setSelectedStats2("unselected")}}><h3>Recent Forecasts</h3></li>
+                                                <h2>|</h2>
+                                                <li className={selectedStats2} onClick={() => { setStats(allTimeForecastData); setSelectedStats("unselected"); setSelectedStats2("selected")}}><h3>All Forecasts</h3></li>
+                                            </ul>
+                                            <Line className="profile-stats-line-chart" data={recentForecastData || stats} options={options} />
+                                        </div>
+                                        <div className="profile-stats-grid">
+                                            <br/>
+                                            <h2>Comparative Stats</h2>
+                                            <hr />
+                                            <div className="profile-stats-grid-headers">
+                                                <h3>{playerUsername === "" ? "User" : playerUsername}</h3>
+                                                <h3>Me</h3>
+                                                <hr />
+                                                <hr />
+                                            </div>
+                                            <div className="profile-stats-grid-body-three-cols">
+                                                <h4 className="oddrow">{bestChanged === true ? playerBestBrier : "N/A"}</h4>
+                                                <h3 className="oddrow" style={{backgroundColor: "rgb(250, 250, 250)", color: "#404d72" }}>Best Brier</h3>
+                                                <h4 className="oddrow">{bestChangedMe === true ? bestBrierMe : "N/A"}</h4>
+                                                <h4>{worstChanged === true ? playerWorstBrier : "N/A"}</h4>
+                                                <h3 style={{ color: "#404d72" }}>Worst Brier</h3>
+                                                <h4>{worstChangedMe === true ? worstBrierMe : "N/A"}</h4>
+                                                <h4 className="oddrow">{isNaN(playerAverageBrier) ? "N/A" : playerAverageBrier}</h4>
+                                                <h3 className="oddrow" style={{backgroundColor: "rgb(250, 250, 250)", color: "#404d72" }}>Average Brier</h3>
+                                                <h4 className="oddrow">{isNaN(averageBrierMe) ? "N/A" : averageBrierMe}</h4>
+                                            </div>
+                                            <br />
+                                            <h2 className="player-stats-title">Unique Player Stats</h2>
+                                            <hr className="player-stats-title-hr" />
+                                            <div className="profile-stats-grid-body-two-cols">
+                                                <h4>Fantasy Forecast Points:</h4>
+                                                <h3 style={{ color: "#404d72" }}>{ffPoints}</h3>
+                                                <h4>Problems Attempted:</h4>
+                                                <h3 style={{ color: "#404d72" }}>{problemsAttempted}</h3>
+                                                <h4># of Markets In:</h4>
+                                                <h3 style={{ color: "#404d72" }}>{marketsIn}</h3>
+                                                <h4>Onboarding Tasks Complete:</h4>
+                                                <h3 style={{ color: "#404d72" }}>{onboardingProgress} / 5</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            {searchTab === "my-forecasts" && <ProfileForecasts userObj={searchUserObj}/>}
+                            {searchTab === "my-rewards" && <ProfileRewards />}
                         </div>
                         <hr />
                     </div>

@@ -3,6 +3,7 @@ import './ChangeLog.css';
 
 function ChangeLog() {
     const changeLogArr = [
+        `12.06.2022 Updated login page, changed profile picture styling, added handling for news feed posts with erroneous links (if this happens, users can now add their own titles to the post instead), general styling and bug-fixing.`,
         `30.05.2022 Added a "Report Any Issues" page which can be accessed below the Change Log on the Home Screen - users can now submit comments anonymously on what they like or dislike, suggest new ideas, and report bugs/errors.`,
         `26.05.2022 Added profile preview to the home page. Added levels and use FFPoints as XP. Added a tab to the Profile Page to showcase all rewards earnt and upcoming (currently under construction). Added Help Our Research tab to the Navbar, page currently under construction.`,
         `17.05.2022 Added average player data to the My Stats charts on Profile pages, Search pages and the Home page preview.`,

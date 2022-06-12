@@ -25,44 +25,47 @@ function ForecastAnalysisPage(props) {
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
 
-    useEffect(async () => {
-        console.log("ForecastAnalysisPage UE");
-        let forecastInfo = {
-            submittedForecasts: ["empty"],
-            singleCertainty: false,
-            startDate: "",
-            closeDate: ""
-        };
-        if (props.location.needLocalStorage !== false || props.location === undefined) {
-            forecastInfo = await retrieveForecastInfo(localStorage.getItem("selectedForecastID"));
-            setForecastObj(forecastInfo);
-        } else {
-            forecastInfo.singleCertainty = props.location.forecastObj.singleCertainty;
-            forecastInfo.startDate = props.location.forecastObj.startDate;
-            forecastInfo.closeDate = props.location.forecastObj.closeDate;
-        }
-        console.log(forecastInfo);
-        const submittedForecasts = props.location.forecastObj === undefined ? forecastInfo.submittedForecasts : props.location.forecastObj.submittedForecasts;
-        const forecastObj = submittedForecasts[submittedForecasts.findIndex(sF => sF.username === props.username)];
-        if (forecastObj.forecasts.length > 0) {
-            setAtLeastOneForecast(true);
-            setNumberOfForecastsSubmitted(forecastObj.forecasts.length);
-            calculateConfidenceScore(forecastObj, props.username, forecastInfo.singleCertainty);
-            calculateTimelinessScore(forecastObj, props.username, forecastInfo.startDate, forecastInfo.closeDate);
-            if (forecastObj.forecasts.length > 1) {
-                calculateReactivenessScore(forecastObj, props.username, forecastInfo.singleCertainty);
+    useEffect(() => {
+        async function doUE() {
+            console.log("ForecastAnalysisPage UE");
+            console.log(props.location.forecastObj);
+            let forecastInfo = {
+                submittedForecasts: ["empty"],
+                singleCertainty: false,
+                startDate: "",
+                closeDate: ""
+            };
+            if (props.location.needLocalStorage !== false || props.location === undefined) {
+                forecastInfo = await retrieveForecastInfo(localStorage.getItem("selectedForecastID"));
+                setForecastObj(forecastInfo);
             } else {
-                setReactivenessScore("N/A");
+                forecastInfo.singleCertainty = props.location.forecastObj.singleCertainty;
+                forecastInfo.startDate = props.location.forecastObj.startDate;
+                forecastInfo.closeDate = props.location.forecastObj.closeDate;
             }
-        } else {
-            setAtLeastOneForecast(false);
+            console.log(forecastInfo);
+            const submittedForecasts = props.location.forecastObj === undefined ? forecastInfo.submittedForecasts : props.location.forecastObj.submittedForecasts;
+            const forecastObj = submittedForecasts[submittedForecasts.findIndex(sF => sF.username === props.username)];
+            if (forecastObj.forecasts.length > 0) {
+                setAtLeastOneForecast(true);
+                setNumberOfForecastsSubmitted(forecastObj.forecasts.length);
+                calculateConfidenceScore(forecastObj, props.username, forecastInfo.singleCertainty);
+                calculateTimelinessScore(forecastObj, props.username, forecastInfo.startDate, forecastInfo.closeDate);
+                if (forecastObj.forecasts.length > 1) {
+                    calculateReactivenessScore(forecastObj, props.username, forecastInfo.singleCertainty);
+                } else {
+                    setReactivenessScore("N/A");
+                }
+            } else {
+                setAtLeastOneForecast(false);
+            };
         };
-    }, []);
+        doUE();
+    }, [props.location, props.username]);
 
     const retrieveForecastInfo = async (forecastID) => {
         try {
             const forecastDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/getByID/${forecastID}`);
-            console.log(forecastDocument);
             return forecastDocument.data[0];
         } catch (error) {
             console.log("Error in retrieveForecastInfo");
@@ -129,21 +132,12 @@ function ForecastAnalysisPage(props) {
     };
 
     const calculateTimelinessScore = (usersForecasts, username, startDate, closeDate) => {
-        console.log(usersForecasts.forecasts[0]);
-        console.log(new Date(usersForecasts.forecasts[0].date));
-        console.log(closeDate);
         let tScore;
-        // Condition to catch if the first prediction a user makes is AFTER I have closed the market
-        // i.e. they submit but I close the problem early, and it closes to a time before they submitted
         if (new Date(usersForecasts.forecasts[0].date) < new Date(closeDate)) {
-            console.log("yes");
             let tValue = (new Date(closeDate) - new Date(usersForecasts.forecasts[0].date))/1000;
-            console.log(tValue);
             let timeFrame = (new Date(closeDate) - new Date(startDate))/1000;
-            console.log(timeFrame);
             tScore = ((tValue/timeFrame)*10).toFixed(2)*10;
         } else {
-            console.log("no");
             tScore = 0;
         };
         setTimelinessScore(tScore);
@@ -210,33 +204,38 @@ function ForecastAnalysisPage(props) {
                 </div>
             </div>
             {/* Explanation of scores */}
-            <div className="full-explanation-of-scores-container">
-                <div className="individual-score-explanation-container">
-                    <h3 className="highlighted-header">Reactiveness: {reactivenessScore} / 100</h3>
-                    <ReactivenessFeedback 
-                        finalScore={Number(localStorage.getItem("closedForecastScore")).toFixed(0)} 
-                        reactivenessScore={reactivenessScore}
-                        numberOfForecastsSubmitted={numberOfForecastsSubmitted}
-                    />
-                    <hr />
+            {atLeastOneForecast === true && 
+                <div className="full-explanation-of-scores-container">
+                    <div className="individual-score-explanation-container">
+                        <h3 className="highlighted-header">Reactiveness: {reactivenessScore} / 100</h3>
+                        <ReactivenessFeedback 
+                            finalScore={Number(localStorage.getItem("closedForecastScore")).toFixed(0)} 
+                            reactivenessScore={reactivenessScore}
+                            numberOfForecastsSubmitted={numberOfForecastsSubmitted}
+                        />
+                        <hr />
+                    </div>
+                    <div className="individual-score-explanation-container">
+                        <h3 className="highlighted-header">Confidence: {confidenceScore} / 100</h3>
+                        <ConfidenceFeedback 
+                            finalScore={Number(localStorage.getItem("closedForecastScore")).toFixed(0)} 
+                            confidenceScore={confidenceScore}
+                        />
+                        <hr />
+                    </div>
+                    <div className="individual-score-explanation-container">
+                        <h3 className="highlighted-header">Timeliness: {timelinessScore/10} / 10</h3>
+                        <TimelinessFeedback 
+                            finalScore={Number(localStorage.getItem("closedForecastScore")).toFixed(0)}
+                            timelinessScore={timelinessScore}
+                        />
+                        <hr />
+                    </div>
                 </div>
-                <div className="individual-score-explanation-container">
-                    <h3 className="highlighted-header">Confidence: {confidenceScore} / 100</h3>
-                    <ConfidenceFeedback 
-                        finalScore={Number(localStorage.getItem("closedForecastScore")).toFixed(0)} 
-                        confidenceScore={confidenceScore}
-                    />
-                    <hr />
-                </div>
-                <div className="individual-score-explanation-container">
-                    <h3 className="highlighted-header">Timeliness: {timelinessScore/10} / 10</h3>
-                    <TimelinessFeedback 
-                        finalScore={Number(localStorage.getItem("closedForecastScore")).toFixed(0)}
-                        timelinessScore={timelinessScore}
-                    />
-                    <hr />
-                </div>
-            </div>
+            }
+            {atLeastOneForecast === false &&
+                <h3>You didn't attempt this problem. When you submit at least one forecast to a problem and it closes, come back here for detailed feedback on how you did!</h3>
+            }
         </div>
     )
 }

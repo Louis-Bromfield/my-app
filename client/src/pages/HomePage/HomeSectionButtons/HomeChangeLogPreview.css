@@ -8,3 +8,10 @@
     column-gap: 9%;
     margin-left: 0;
 }
+
+@media (max-width: 450px) {
+    .list-span {
+        grid-template-columns: 100%;
+        text-align: center;
+    }
+}
