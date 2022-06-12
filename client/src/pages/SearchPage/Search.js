@@ -99,7 +99,12 @@ function Search(props) {
 
     const retrievePlayerInfo = async (username) => {
         setLoading(true);
-        if (username === "" || username.length === 0) return;
+        if (username === "" || username.length === 0) {
+            return;
+        } else if (username === props.username) {
+            setErrorMessage("If you want to see your own profile, click your username in the top-right or select My Profile from the top-left dropdown menu if you're on mobile.")
+            return;
+        };
         try {
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             if (userDocument.data.length === 0) {

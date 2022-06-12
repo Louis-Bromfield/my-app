@@ -292,7 +292,7 @@ function IndividualLeaderboard(props) {
                     leaderboardTitle={currentLeaderboardName}     
                 />
             </div>
-            <div className="leaderboard-filter-select">
+            {/* <div className="leaderboard-filter-select">
                 <select name="leaderboard-filter" id="" onChange={(e) => setLeaderboardFilter(e.target.value)}>
                     <option 
                         value="all">
@@ -307,7 +307,7 @@ function IndividualLeaderboard(props) {
                             Teams
                     </option>
                 </select>
-            </div>
+            </div> */}
             <Leaderboard 
                 leaderboardTitle={currentLeaderboardName} 
                 leaderboardRankings={filteredRankings} 

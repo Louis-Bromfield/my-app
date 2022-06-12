@@ -10,6 +10,9 @@ function ProfileForecasts(props) {
             return;
         } else {
             setBrierReverse(props.userObj.brierScores.reverse());
+            console.log(props);
+            console.log(props.userObj);
+            console.log(props.userObj.brierScores);
         };
     });
   return (

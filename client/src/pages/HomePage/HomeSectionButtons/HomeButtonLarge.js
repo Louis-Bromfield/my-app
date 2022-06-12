@@ -4,14 +4,20 @@ import PropTypes from 'prop-types';
 import './HomeButtonLarge.css';
 import { HomeButtonNavButton } from './HomeButtonNavButton';
 import { Line } from 'react-chartjs-2';
+import Modal from '../../../components/Modal';
+import { FaInfoCircle } from 'react-icons/fa';
 
 function HomeButtonLarge(props) {
     const [data, setData] = useState([]);
     const [labels, setLabels] = useState([]);
     const [averageData, setAverageData] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState("");
 
     useEffect(() => {
-        getBrierDataFromDB(props.user.username === undefined ? localStorage.getItem('username') : props.user.username);
+        if (props.user.fantasyForecastPoints >= 1000) {
+            getBrierDataFromDB(props.user.username === undefined ? localStorage.getItem('username') : props.user.username);
+        };
         console.log("HBL UE");
     }, [props.user.username]);
 
@@ -86,8 +92,24 @@ function HomeButtonLarge(props) {
 
     return (
         <div className="home-button-large">
-            <h2 className="home-button-large-title">{props.title}</h2>
-            <Line data={recentForecastData} options={options}/>
+            <Modal show={showModal} handleClose={() => setShowModal(false)}>
+                <p>{modalContent}</p>
+            </Modal>
+            <h2 className="home-button-large-title">
+                {props.title}
+                {props.user.fantasyForecastPoints < 1000 &&
+                    <FaInfoCircle 
+                        onClick={() => {
+                            setShowModal(true);
+                            setModalContent(`This preview of your forecasting performance will be unlocked when you reach Level 10. This can be easily achieved by completing all Onboarding tasks above! You can submit posts to the feed, submit forecasts, complete learn quizzes, and much more to earn points.`)
+                        }}
+                        style={{ "color": "orange", "cursor": "pointer" }}
+                    />
+                }
+            </h2>
+            {props.user.fantasyForecastPoints >= 1000 && 
+                <Line data={recentForecastData} options={options}/>
+            }
             <HomeButtonNavButton path="my-profile" />
         </div>
     )

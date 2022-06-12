@@ -41,9 +41,9 @@ function HomeNewsFeed(props) {
         } else if (causeFeedNewsFeedRefreshWithoutAnimation === false) {
             setNewPostLoading(true);
             // setTimeout(() => {
-                getAllNewsFeedPostsFromDB();
-                getUserMarketsFromDB(props.username);
-                setNewPostLoading(false);
+            getAllNewsFeedPostsFromDB();
+            getUserMarketsFromDB(props.username);
+            setNewPostLoading(false);
             // }, 1000);
         };
         console.log("NewsFeed UE");
