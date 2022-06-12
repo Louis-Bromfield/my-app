@@ -183,7 +183,7 @@ console.log("Profile.js UE");
                             profileTab={profileTab}
                             ffPoints={fantasyForecastPoints}
                         />}
-                        {profileTab === "my-forecasts" && <ProfileForecasts userObj={userObj}/>}
+                        {profileTab === "my-forecasts" && <ProfileForecasts userObj={userObj} searched={false} />}
                         {profileTab === "my-rewards" && <ProfileRewards />}
                         </div>
                         {/* <ProfileDetails 

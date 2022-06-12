@@ -413,7 +413,7 @@ function Search(props) {
                                     </div>
                                 </div>
                             }
-                            {searchTab === "my-forecasts" && <ProfileForecasts userObj={searchUserObj}/>}
+                            {searchTab === "my-forecasts" && <ProfileForecasts userObj={searchUserObj} searched={true} playerUsername={playerUsername} />}
                             {searchTab === "my-rewards" && <ProfileRewards />}
                         </div>
                         <hr />
