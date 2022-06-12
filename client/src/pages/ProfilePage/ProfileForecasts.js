@@ -7,6 +7,8 @@ function ProfileForecasts(props) {
 
     useEffect(() => {
         console.log("ProfileForecasts UE");
+        console.log(props.userObj);
+        // set if condition here based on above logging
         setBrierReverse(props.userObj.brierScores.reverse());
     });
   return (
