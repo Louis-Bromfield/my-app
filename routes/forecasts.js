@@ -601,11 +601,12 @@ router.patch("/update", async (req, res) => {
                 return;
             };
         };
-        const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.documentID, {
-            // { $push: { [`submittedForecasts[${indexLocation}].forecasts`]: req.body.newForecastObject }
-            // $push: { [`submittedForecasts[${indexLocation}].forecasts`]: {
-            // locationOfForecasts: `submittedForecasts.${index}.forecasts`,
-            $push: { [`submittedForecasts.${indexLocation}.forecasts`]: {
+        // { $push: { [`submittedForecasts[${indexLocation}].forecasts`]: req.body.newForecastObject }
+        // $push: { [`submittedForecasts[${indexLocation}].forecasts`]: {
+        // locationOfForecasts: `submittedForecasts.${index}.forecasts`,
+        const location = `submittedForecasts.${indexLocation}.forecasts`;
+        const updatedForecastDocument = await Forecasts.updateOne(req.body.documentID, {
+            $push: { [location]: {
                 "certainty": req.body.newForecastObject.certainty,
                 "comments": req.body.newForecastObject.comments,
                 "date": req.body.newForecastObject.date
