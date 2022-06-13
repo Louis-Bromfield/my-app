@@ -128,7 +128,7 @@ function App() {
             <Route exact path="/loginSuccess">
                 <Redirect to="/home"></Redirect>
             </Route>
-            <Route path='/home' render={(props) => <Home {...props} username={username} name={name} user={userObject} login={login} userForLogin={userForLogin} />} />
+            <Route path='/home' render={(props) => <Home {...props} username={username} name={name} user={userObject} setUserObject={setUserObject} login={login} userForLogin={userForLogin} />} />
             <Route path="/change-log" render={(props) => <ChangeLog {...props} />} />
             <Route path="/news-post" render={(props) => <IndividualNewsFeedPost {...props} />} />
             <Route path='/forecast' render={(props) => <Forecast {...props} markets={markets} username={username} />} />

@@ -42,39 +42,44 @@ function Home(props) {
             localStorage.setItem("firstVisit", false);
         };
         if (props.user.numberOfClosedForecasts === undefined) {
-            // getClosedForecastCount(localStorage.getItem("username") || props.username);
-            // Version without contacting server (use props instead)
-            getClosedForecastCount(props.user);
+            getClosedForecastCount(localStorage.getItem("username") || props.username);
+            // Version without contacting server (use props instead) - was having issues, defined props.user as [object Object], maybe as it 
+            // was from page load (like refreshing) rather than from login, where App.js sets the value?
+            // So for now, keep previous version but update App.js userObj again to be sure
+            // getClosedForecastCount(props.user);
         };
     }, [props.user.numberOfClosedForecasts, props.username]);
 
-    const getClosedForecastCount = (propsUserObj) => {
-console.log("DEBUGGING");
-console.log(propsUserObj);
+    const getClosedForecastCount = async (username) => {
         try {
-            // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
-            // if (userDocument.data[0].numberOfClosedForecasts > 0) {
-            //     setShowClosedProblemModal(true);
-            // };
-            // let avgBrier = 0;
-            // for (let i = 0; i < userDocument.data[0].brierScores.length; i++) {
-            //     avgBrier += userDocument.data[0].brierScores[i].brierScore;
-            // };
-            // avgBrier = avgBrier / userDocument.data[0].brierScores.length;
-            // setCurrentAvgBrier(isNaN(avgBrier.toFixed(2)) ? 0 : avgBrier.toFixed(2));
-            // setUserObj(userDocument.data[0]);
-            if (propsUserObj.numberOfClosedForecasts > 0) {
+            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            if (userDocument.data[0].numberOfClosedForecasts > 0) {
                 setShowClosedProblemModal(true);
             };
             let avgBrier = 0;
-            for (let i = 0; i < propsUserObj.brierScores.length; i++) {
-                avgBrier += propsUserObj.brierScores[i].brierScore;
+            for (let i = 0; i < userDocument.data[0].brierScores.length; i++) {
+                avgBrier += userDocument.data[0].brierScores[i].brierScore;
             };
-            avgBrier = avgBrier / propsUserObj.brierScores.length;
+            avgBrier = avgBrier / userDocument.data[0].brierScores.length;
             setCurrentAvgBrier(isNaN(avgBrier.toFixed(2)) ? 0 : avgBrier.toFixed(2));
-            setUserObj(propsUserObj);
+            setUserObj(userDocument.data[0]);
+            props.setUserObject(userDocument.data[0]);
+
+            // Serverless version
+            // console.log("DEBUGGING");
+            // console.log(propsUserObj);
+            // if (propsUserObj.numberOfClosedForecasts > 0) {
+            //     setShowClosedProblemModal(true);
+            // };
+            // let avgBrier = 0;
+            // for (let i = 0; i < propsUserObj.brierScores.length; i++) {
+            //     avgBrier += propsUserObj.brierScores[i].brierScore;
+            // };
+            // avgBrier = avgBrier / propsUserObj.brierScores.length;
+            // setCurrentAvgBrier(isNaN(avgBrier.toFixed(2)) ? 0 : avgBrier.toFixed(2));
+            // setUserObj(propsUserObj);
         } catch (error) {
-            console.log("Error in getClosedForecastCount");
+            console.error("Error in getClosedForecastCount");
             console.error(error);
         }
     };
