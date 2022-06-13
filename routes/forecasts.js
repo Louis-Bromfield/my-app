@@ -601,13 +601,17 @@ router.patch("/update", async (req, res) => {
                 return;
             };
         };
-        const updatedForecastDocument = await Forecasts.findByIdAndUpdate(
-            {_id: req.body.documentID },
+        const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.documentID, {
             // { $push: { [`submittedForecasts[${indexLocation}].forecasts`]: req.body.newForecastObj }
-            { $push: { [submittedForecasts[indexLocation].forecasts]: req.body.newForecastObj }
-            }, 
-            { new: true }
-        );
+            $push: { [submittedForecasts[indexLocation].forecasts]: {
+                "certainty": req.body.newForecastObj.certainty,
+                "comments": req.body.newForecastObj.comments,
+                "date": req.body.newForecastObj.date
+            }}
+        }, 
+        { 
+            new: true
+        });
         console.log(updatedForecastDocument);
 
     } catch (error) {
