@@ -415,7 +415,7 @@ function ForecastSubmission(props) {
             const newForecastTwo = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
                 documentID: selectedForecastDocumentID,
                 newForecastObject: newForecastObj,
-                user: username
+                username: username
             });
 
             console.log(newForecastTwo);
@@ -480,7 +480,7 @@ function ForecastSubmission(props) {
             const newForecastTwo = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple`, {
                 documentID: selectedForecastDocumentID,
                 newForecastObject: newForecastObj,
-                user: username
+                username: username
             });
 
            console.log(newForecastTwo);
