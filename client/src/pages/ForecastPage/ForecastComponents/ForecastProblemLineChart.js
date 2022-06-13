@@ -72,6 +72,7 @@ function ForecastProblemLineChart(props) {
                 for (let j = 0; j < newCertainties[i].forecasts.length; j++) {
                     // if it's on a new day to the one before, keep that one and add this one in as a new data point
                     if (newCertainties[i].forecasts[j].date.slice(0, sliceIndex) !== lastForecastDate || lastForecastDate === "") {
+console.log(`1 if (${newCertainties[i].forecasts[j].date.slice(0, sliceIndex)} !== ${lastForecastDate} || ${lastForecastDate} === ""`)
 console.log(`1 the forecast of ${newCertainties[i].forecasts[j].certainty} is here!`);
                         data.data.push({
                             x: new Date(newCertainties[i].forecasts[j].date).toString().slice(0, sliceIndex),
@@ -91,6 +92,7 @@ console.log(`2 the forecast of ${newCertainties[i].forecasts[j].certainty} is he
                         }
                     // else if it is from the same day as the last forecast, replace the last forecast with this newer one
                     } else if (newCertainties[i].forecasts[j].date.slice(0, sliceIndex) === lastForecastDate) {
+console.log(`3 else if (${newCertainties[i].forecasts[j].date.slice(0, sliceIndex)} === ${lastForecastDate}`)
 console.log(`3 the forecast of ${newCertainties[i].forecasts[j].certainty} is here!`);
                         data.data[data.data.length-1] = ({
                             x: new Date(newCertainties[i].forecasts[j].date).toString().slice(0, sliceIndex), 
