@@ -123,6 +123,7 @@ function App() {
   const pullAllInfoFromDBToPassDown = async (username) => {
       try {
         const userPulledFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);  
+        console.log(userPulledFromDB);
         // ----------------
         // Add in JWT verification here? That way if someone changes their username in localstorage, we do a check
         // to see if their JWT matches the one stored in the database and if it fails just return here and don't
