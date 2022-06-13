@@ -591,7 +591,7 @@ router.patch("/update", async (req, res) => {
         console.log("forecastDocument");
         console.log(forecastDocument);
         console.log("username");
-        console.log(username);
+        console.log(req.body.username);
         let indexLocation = 0;
         for (let i = 0; i < forecastDocument.submittedForecasts.length; i++) {
             if (forecastDocument.submittedForecasts[i].username === req.body.username) {
