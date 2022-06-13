@@ -605,7 +605,7 @@ router.patch("/update", async (req, res) => {
             // { $push: { [`submittedForecasts[${indexLocation}].forecasts`]: req.body.newForecastObj }
             // $push: { [`submittedForecasts[${indexLocation}].forecasts`]: {
             // locationOfForecasts: `submittedForecasts.${index}.forecasts`,
-            $push: { [submittedForecasts.indexLocation.forecasts]: {
+            $push: { [`submittedForecasts.${indexLocation}.forecasts`]: {
                 "certainty": req.body.newForecastObj.certainty,
                 "comments": req.body.newForecastObj.comments,
                 "date": req.body.newForecastObj.date
