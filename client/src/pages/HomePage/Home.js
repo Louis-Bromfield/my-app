@@ -48,7 +48,8 @@ function Home(props) {
             // So for now, keep previous version but update App.js userObj again to be sure
             // getClosedForecastCount(props.user);
         };
-    }, [props.user.numberOfClosedForecasts, props.username]);
+    // }, [props.user.numberOfClosedForecasts, props.username]);
+    }, [props.user]);
 
     const getClosedForecastCount = async (username) => {
         try {
@@ -133,7 +134,9 @@ function Home(props) {
                     <div className="home-page-news-feed">
                         <HomeNewsFeed 
                             username={props.username} 
-                            user={props.user}
+                            // user={props.user}
+                            // Trying this one as the getClosed function in UE updates the userObj state variable
+                            userObj={userObj}
                             handleFirstPost={setShowModal} 
                             handleFirstPostModalContent={setModalContent}
                         />
@@ -146,7 +149,8 @@ function Home(props) {
                         <div className={onboardingClassName}>
                             <Onboarding 
                                 username={props.username}
-                                user={props.user}
+                                // user={props.user}
+                                userObj={userObj}
                                 handleClick={() => onboardingButtonClick(showOnboarding, buttonText)} 
                                 buttonText={buttonText} 
                                 isHidden={showOnboarding}
