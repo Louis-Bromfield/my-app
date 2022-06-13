@@ -7,21 +7,21 @@ const ClosedProblemModal = (props) => {
     const showHideClassName = props.show ? "modal display-block" : "modal display-none";
     // const layoutClassName = props.userObj.numberOfClosedForecasts > 1 ? "grid-layout" : "non-grid-layout";
     const [brierArr, setBrierArr] = useState([]);
-    const [currentProblem, setCurrentProblem] = useState(props.userObj.brierScores[props.userObj.brierScores.length-1]);
+    const [currentProblem, setCurrentProblem] = useState(props.userBrierScores[props.userBrierScores.length-1]);
     const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
 
     useEffect(() => {
         const arr = [];
-        let i = props.userObj.brierScores.length-1;
-        while (i >= props.userObj.brierScores.length-(props.userObj.numberOfClosedForecasts)) {
-            arr.push(props.userObj.brierScores[i]);
+        let i = props.userBrierScores.length-1;
+        while (i >= props.userBrierScores.length-(props.userClosedForecastCount)) {
+            arr.push(props.userBrierScores[i]);
             i--;
         };
         setBrierArr(arr);
         setCurrentProblem(arr[0]);
         setCurrentProblemIndex(0);
         console.log("CPM Modal UE");
-    }, [props.userObj.brierScores, props.userObj.numberOfClosedForecasts]);
+    }, [props.userBrierScores, props.userClosedForecastCount]);
 
     const closeModal = async (username) => {
         props.setShowClosedProblemModal(false);
@@ -48,7 +48,7 @@ const ClosedProblemModal = (props) => {
                 <a href="https://youtu.be/1fJG4NHDmVY" target="_blank" rel="noreferrer nofollow" style={{ color: "#fff" }}>
                     <p>Want to know more about how your scores are calculated? Click here.</p>
                 </a>
-                <button onClick={() => closeModal(props.userObj.username)} className="close-modal-btn">
+                <button onClick={() => closeModal(props.username)} className="close-modal-btn">
                     Close
                 </button>
                 {/* Add condition to only render this if there is another problem to show */}

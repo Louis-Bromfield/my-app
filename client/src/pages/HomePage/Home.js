@@ -123,11 +123,14 @@ console.log(userBrierScores);
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>
-            {(props.user.numberOfClosedForecasts > 0 || userObj.numberOfClosedForecasts > 0) &&
+            {props.userClosedForecastCount > 0 &&
                 <ClosedProblemModal 
                     show={showClosedProblemModal}
                     setShowClosedProblemModal={setShowClosedProblemModal}
-                    userObj={userObj === undefined ? props.user : userObj}>
+                    // userObj={userObj === undefined ? props.user : userObj}>
+                    userClosedForecastCount={props.userClosedForecastCount}
+                    username={props.username}
+                    userBrierScores={props.userBrierScores}>
                 </ClosedProblemModal>
             } 
             {/* <button type="button" onClick={() => setShowModal(true)}>
