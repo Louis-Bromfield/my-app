@@ -599,7 +599,7 @@ router.patch("/update", async (req, res) => {
         };
         const updatedForecastDocument = await Forecasts.findByIdAndUpdate(
             {_id: req.body.documentID },
-            { $push: { [submittedForecasts[indexLocation].forecasts]: req.body.newForecastObj }
+            { $push: { ["submittedForecasts[indexLocation].forecasts"]: req.body.newForecastObj }
             }, 
             { new: true }
         );
@@ -624,7 +624,7 @@ router.patch("/updateMultiple", async (req, res) => {
         };
         const updatedForecastDocument = await Forecasts.findByIdAndUpdate(
             {_id: req.body.documentID },
-            { $push: { [submittedForecasts[indexLocation].forecasts]: req.body.newForecastObj }
+            { $push: { ["submittedForecasts[indexLocation].forecasts"]: req.body.newForecastObj }
             }, 
             { new: true }
         );
