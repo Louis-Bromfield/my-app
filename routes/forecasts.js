@@ -585,8 +585,11 @@ router.patch("/update", async (req, res) => {
         // documentID: setSelectedForecastDocumentID,           DOCUMENT ID
         // newForecastObject: newForecastObj,                   FORECASTOBJ CONTAINING CERTAINTY, COMMENTS, DATE
         // user: username                                       USERNAME
-
+        console.log("req.body.documentID");
+        console.log(req.body.documentID);
         const forecastDocument = await Forecasts.findById(req.body.documentID);
+        console.log("forecastDocument");
+        console.log(forecastDocument);
         let indexLocation = 0;
         for (let i = 0; i < forecastDocument.submittedForecasts.length; i++) {
             if (forecastDocument.submittedForecasts[i].username === req.body.username) {
