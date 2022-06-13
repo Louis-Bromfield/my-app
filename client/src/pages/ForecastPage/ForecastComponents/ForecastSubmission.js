@@ -42,6 +42,7 @@ function ForecastSubmission(props) {
     const [outcomeOneCertainty, setOutcomeOneCertainty] = useState("0%");
     const [outcomeTwoCertainty, setOutcomeTwoCertainty] = useState("0%");
     const [outcomeThreeCertainty, setOutcomeThreeCertainty] = useState("0%");
+    const [selectedForecastDocumentID, setSelectedForecastDocumentID] = useState("");
 
     let alertStyle;
     if (dropdownHighlight === true) {
@@ -241,6 +242,7 @@ function ForecastSubmission(props) {
         for (let i = 0; i < forecastProblems.length; i++) {
             if (forecastProblems[i].problemName === forecast) {
                 setSelectedForecastMarket(forecastProblems[i].market);
+                setSelectedForecastDocumentID(forecastProblems[i]._id);
                 props.changeForecast(forecastProblems[i]);
                 // If only one certainty, this = true. False is multiple certainties are required from user.
                 setForecastSingleCertainty(forecastProblems[i].singleCertainty);
@@ -380,32 +382,52 @@ function ForecastSubmission(props) {
             return;
         }
         try {
-            const document = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${forecast}`);
-            const documentForecastData = document.data[0].submittedForecasts;
-            let index = 0;
-            for (let i = 0; i < documentForecastData.length; i++) {
-                if (documentForecastData[i].username === username) {
-                    index = i;
-                };
-            };
-            documentForecastData[index].forecasts.push({
+            // ------------------------------------------------- //
+            // This is brute-force approach of just altering and replacing the entire submitted forecasts array. It works, but I'm 
+            // concerned about race conditions. I'm also questioning why I'm working out indices here on client (on previous approach below), 
+            // when I should just send the forecast object to the backend and do it all there.
+            // const document = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${forecast}`);
+            // const documentForecastData = document.data[0].submittedForecasts;
+            // let index = 0;
+            // for (let i = 0; i < documentForecastData.length; i++) {
+            //     if (documentForecastData[i].username === username) {
+            //         index = i;
+            //     };
+            // };
+            // documentForecastData[index].forecasts.push({
+            //     certainty: newCertainty, 
+            //     comments: `(${username})~ ${newComments}`, 
+            //     date: new Date().toString()
+            // });
+            // const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
+            //     problemID: document.data[0]._id,
+            //     newSubmittedForecasts: documentForecastData
+            // });
+            // console.log(newForecast);
+            // ------------------------------------------------- //
+
+
+            const newForecastObj = {
                 certainty: newCertainty, 
                 comments: `(${username})~ ${newComments}`, 
                 date: new Date().toString()
+            };
+            const newForecastTwo = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
+                documentID: setSelectedForecastDocumentID,
+                newForecastObject: newForecastObj,
+                user: username
             });
-            const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
-                problemID: document.data[0]._id,
-                newSubmittedForecasts: documentForecastData
-            });
-            console.log(newForecast);
+
+            console.log(newForecastTwo);
+            props.changeForecast(newForecastTwo.data);
 
             // const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
             //     problemName: forecast,
             //     updatedForecastsForUser: { certainty: newCertainty, comments: `(${username})~ ${newComments}`, date: new Date().toString() },
             //     locationOfForecasts: `submittedForecasts.${index}.forecasts`,
-            //     locationOfForecastCount: `submittedForecasts.${index}.numberOfForecastsSubmittedByUser`
             // });
-            props.changeForecast(newForecast.data);
+            // props.changeForecast(newForecast.data);
+
         } catch (error) {
             console.error("error in ForecastSubmission.js > handleForecastUpdate");
             console.error(error);
@@ -446,17 +468,7 @@ function ForecastSubmission(props) {
             return;
         }
         try {
-            const document = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${forecast}`);
-            console.log("the document you just got was this one:");
-            console.log(document);
-            const documentForecastData = document.data[0].submittedForecasts;
-            let index = 0;
-            for (let i = 0; i < documentForecastData.length; i++) {
-                if (documentForecastData[i].username === username) {
-                    index = i;
-                };
-            };
-            documentForecastData[index].forecasts.push({
+            const newForecastObj = {
                 certainties: {
                     certainty1: newCertainty1, 
                     certainty2: newCertainty2, 
@@ -464,12 +476,41 @@ function ForecastSubmission(props) {
                 },
                 comments: `(${username})~ ${newComments}`, 
                 date: new Date().toString()
+            };
+            const newForecastTwo = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple`, {
+                documentID: setSelectedForecastDocumentID,
+                newForecastObject: newForecastObj,
+                user: username
             });
-            const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple`, {
-                problemID: document.data[0]._id,
-                newSubmittedForecasts: documentForecastData
-            });
-            console.log(newForecast);
+
+           console.log(newForecastTwo);
+           props.changeForecast(newForecastTwo.data);
+
+            // Brute force method
+            // const document = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${forecast}`);
+            // console.log("the document you just got was this one:");
+            // console.log(document);
+            // const documentForecastData = document.data[0].submittedForecasts;
+            // let index = 0;
+            // for (let i = 0; i < documentForecastData.length; i++) {
+            //     if (documentForecastData[i].username === username) {
+            //         index = i;
+            //     };
+            // };
+            // documentForecastData[index].forecasts.push({
+            //     certainties: {
+            //         certainty1: newCertainty1, 
+            //         certainty2: newCertainty2, 
+            //         certainty3: newCertainty3, 
+            //     },
+            //     comments: `(${username})~ ${newComments}`, 
+            //     date: new Date().toString()
+            // });
+            // const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple`, {
+            //     problemID: document.data[0]._id,
+            //     newSubmittedForecasts: documentForecastData
+            // });
+            // console.log(newForecast);
 
             // const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple`, {
             //     problemName: forecast,
@@ -483,7 +524,7 @@ function ForecastSubmission(props) {
             //     locationOfForecasts: `submittedForecasts.${index}.forecasts`,
             //     locationOfForecastCount: `submittedForecasts.${index}.numberOfForecastsSubmittedByUser`
             // });
-            props.changeForecast(newForecast.data);
+            // props.changeForecast(newForecast.data);
         } catch (error) {
             console.error("error in ForecastSubmission.js > handleForecastUpdate");
             console.error(error);

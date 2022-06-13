@@ -551,19 +551,22 @@ router.patch("/submitMultiple", async (req, res) => {
 // Update a prediction to a single certainty problem
 router.patch("/update", async (req, res) => {
     try {
+        // ---------------------Prev-------------------------
+        // Brute force approach, does work but concerns of race conditions
         // find the Object in submittedForecasts[] where username = username
         // const document = await Forecasts.findOne({ _id: req.body.problemID });
         
-        const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.problemID, 
-            {
-                submittedForecasts: req.body.newSubmittedForecasts,
-            },
-            { new: true }
-        );
-        res.json(updatedForecastDocument);
+        // const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.problemID, 
+        //     {
+        //         submittedForecasts: req.body.newSubmittedForecasts,
+        //     },
+        //     { new: true }
+        // );
+        // res.json(updatedForecastDocument);
+        // --------------------------------------------------
         
+        // ---------------------First approach, but was causing incorrect forecast attribution------------------
         // push the passed in {certainty, comments} object to the end of the submittedForecasts.forecasts array
-        // increase numberOfForecastsSubmittedByUser by 1 - not essential, as we could just take submittedForecasts.forecasts.length
         // const updatedForecastPushedToDB = await Forecasts.findByIdAndUpdate(document._id, 
         //     { 
         //         $push: { [req.body.locationOfForecasts]: {
@@ -575,6 +578,30 @@ router.patch("/update", async (req, res) => {
         //     { new: true }
         // );
         // res.json(updatedForecastPushedToDB);
+        // --------------------------------------------------
+
+        // New idea, do location finding on this end.
+        // Req body = 
+        // documentID: setSelectedForecastDocumentID,           DOCUMENT ID
+        // newForecastObject: newForecastObj,                   FORECASTOBJ CONTAINING CERTAINTY, COMMENTS, DATE
+        // user: username                                       USERNAME
+
+        const forecastDocument = await Forecasts.findById(req.body.documentID);
+        let indexLocation = 0;
+        for (let i = 0; i < forecastDocument.submittedForecasts.length; i++) {
+            if (forecastDocument.submittedForecasts[i].username === req.body.username) {
+                indexLocation = i;
+                return;
+            };
+        };
+        const updatedForecastDocument = await Forecasts.findByIdAndUpdate(
+            {_id: req.body.documentID },
+            { $push: { [submittedForecasts[indexLocation].forecasts]: req.body.newForecastObj }
+            }, 
+            { new: true }
+        );
+        console.log(updatedForecastDocument);
+
     } catch (error) {
         console.error("Error in forecasts.js > update");
         console.error(error);
@@ -584,16 +611,30 @@ router.patch("/update", async (req, res) => {
 // Update a prediction to a multiple certainty problem
 router.patch("/updateMultiple", async (req, res) => {
     try {
-        // find the Object in submittedForecasts[] where username = username
-        // const document = await Forecasts.findOne({ _id: req.body.problemID });
-        
-        const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.problemID, 
-            {
-                submittedForecasts: req.body.newSubmittedForecasts,
-            },
+        const forecastDocument = await Forecasts.findById(req.body.documentID);
+        let indexLocation = 0;
+        for (let i = 0; i < forecastDocument.submittedForecasts.length; i++) {
+            if (forecastDocument.submittedForecasts[i].username === req.body.username) {
+                indexLocation = i;
+                return;
+            };
+        };
+        const updatedForecastDocument = await Forecasts.findByIdAndUpdate(
+            {_id: req.body.documentID },
+            { $push: { [submittedForecasts[indexLocation].forecasts]: req.body.newForecastObj }
+            }, 
             { new: true }
         );
+        console.log(updatedForecastDocument);
         res.json(updatedForecastDocument);
+
+        // const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.problemID, 
+        //     {
+        //         submittedForecasts: req.body.newSubmittedForecasts,
+        //     },
+        //     { new: true }
+        // );
+        // res.json(updatedForecastDocument);
 
         // push the passed in {certainty, comments} object to the end of the submittedForecasts.forecasts array
         // increase numberOfForecastsSubmittedByUser by 1 - not essential, as we could just take submittedForecasts.forecasts.length
@@ -611,7 +652,7 @@ router.patch("/updateMultiple", async (req, res) => {
         //     }, 
         //     { new: true }
         // );
-        res.json(updatedForecastPushedToDB);
+        // res.json(updatedForecastPushedToDB);
     } catch (error) {
         console.error("Error in forecasts.js > update");
         console.error(error);
