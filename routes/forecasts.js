@@ -616,6 +616,7 @@ router.patch("/update", async (req, res) => {
         { new: true }
         );
         console.log(updatedForecastDocument);
+        res.json(updatedForecastDocument);
 
     } catch (error) {
         console.error("Error in forecasts.js > update");
