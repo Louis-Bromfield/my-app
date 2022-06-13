@@ -590,10 +590,14 @@ router.patch("/update", async (req, res) => {
         const forecastDocument = await Forecasts.findById(req.body.documentID);
         console.log("forecastDocument");
         console.log(forecastDocument);
+        console.log("username");
+        console.log(username);
         let indexLocation = 0;
         for (let i = 0; i < forecastDocument.submittedForecasts.length; i++) {
             if (forecastDocument.submittedForecasts[i].username === req.body.username) {
+                console.log(`found user ${forecastDocument.submittedForecasts[i].username} at index ${i}`);
                 indexLocation = i;
+                console.log(`indexLocation = ${indexLocation}`);
                 return;
             };
         };
