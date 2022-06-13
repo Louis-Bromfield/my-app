@@ -598,7 +598,7 @@ router.patch("/update", async (req, res) => {
                 console.log(`found user ${forecastDocument.submittedForecasts[i].username} at index ${i}`);
                 indexLocation = i;
                 console.log(`indexLocation = ${indexLocation}`);
-                return;
+                break;
             };
         };
         // { $push: { [`submittedForecasts[${indexLocation}].forecasts`]: req.body.newForecastObject }
