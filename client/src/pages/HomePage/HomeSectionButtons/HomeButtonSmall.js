@@ -64,6 +64,7 @@ function HomeButtonSmall(props) {
         try {
             const lbName = "Fantasy Forecast All-Time";
             const leaderboard = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${lbName}`);
+console.log(leaderboard);
             // let lbRankings = leaderboard.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
             for (let i = 0; i < leaderboard.data.rankings.length; i++) {
                 if (leaderboard.data.rankings[i].username === username) {
