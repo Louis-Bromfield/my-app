@@ -12,13 +12,13 @@ function Onboarding(props) {
         // Querying server
             // getAllOnboardingBooleans(props.username);
         // Using props
-        getAllOnboardingBooleans(props.userObj);
+        getAllOnboardingBooleans(props.userOnboarding);
     }, [props.userObj]);
 
     // Using props version
-    const getAllOnboardingBooleans = (user) => {
+    const getAllOnboardingBooleans = (userOnboarding) => {
         try {
-            const allOnboardingBooleans = user.onboarding;
+            const allOnboardingBooleans = userOnboarding;
             setOnboardingLoading(true)
             setTimeout(() => {
                 setOnboardingLoading(false);
