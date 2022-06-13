@@ -11,6 +11,8 @@ const ClosedProblemModal = (props) => {
     const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
 
     useEffect(() => {
+console.log(props.userBrierScores);
+console.log(props.userClosedForecastCount);
         const arr = [];
         let i = props.userBrierScores.length-1;
         while (i >= props.userBrierScores.length-(props.userClosedForecastCount)) {
