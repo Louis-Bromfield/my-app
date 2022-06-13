@@ -106,6 +106,12 @@ function App() {
       setMarkets(localStorage.getItem('markets'));
       setUserObject(localStorage.getItem('userObj'));
       setProfilePicture(localStorage.getItem('profilePicture'));
+      if (isLoggedIn === true) {
+        // do all db retrieval here? Or have one retrieval per page's root component
+            // e.g. right now we have Home.js retrieving and passing stuff on, but we 
+            // might be able to put it all inside this conditional and pass down from
+            // here instead?
+      };
   }, []);
 
   return (

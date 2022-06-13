@@ -12,8 +12,10 @@ function Onboarding(props) {
         // Querying server
             // getAllOnboardingBooleans(props.username);
         // Using props
+        console.log("DEBUGGING");
+        console.log(props.userOnboarding)
         getAllOnboardingBooleans(props.userOnboarding);
-    }, [props.userObj]);
+    }, [props.userOnboarding]);
 
     // Using props version
     const getAllOnboardingBooleans = (userOnboarding) => {
