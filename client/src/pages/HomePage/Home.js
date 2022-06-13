@@ -156,7 +156,7 @@ console.log(user);
                                 // username={props.username}
                                 // user={props.user}
                                 // userObj={userObj}
-                                userOnboarding={props.user.onboarding}
+                                userOnboarding={props.userOnboarding}
                                 handleClick={() => onboardingButtonClick(showOnboarding, buttonText)} 
                                 buttonText={buttonText} 
                                 isHidden={showOnboarding}

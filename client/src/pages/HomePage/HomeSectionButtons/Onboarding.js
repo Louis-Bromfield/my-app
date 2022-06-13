@@ -12,9 +12,11 @@ function Onboarding(props) {
         // Querying server
             // getAllOnboardingBooleans(props.username);
         // Using props
+        if (props.userOnboarding !== undefined) {
 console.log("DEBUGGING");
 console.log(props.userOnboarding)
         getAllOnboardingBooleans(props.userOnboarding);
+        };
     }, [props.userOnboarding]);
 
     // Using props version
