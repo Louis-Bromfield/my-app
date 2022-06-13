@@ -672,14 +672,6 @@ function ForecastProblemLineChart(props) {
         labels: labelsArray,
         // datasets: [chartData, averageChartData],
         datasets: [{
-            label: allChartData.label,
-            data: allChartData.data,
-            backgroundColor: allChartData.backgroundColor,
-            borderColor: allChartData.borderColor,
-            borderWidth: allChartData.borderWidth,
-            showLine: allChartData.showLine,
-            pointRadius: allChartData.pointRadius
-        }, {
             label: outcomeOneChartData.label,
             data: outcomeOneChartData.data,
             backgroundColor: outcomeOneChartData.backgroundColor,
@@ -726,6 +718,14 @@ function ForecastProblemLineChart(props) {
             borderWidth: userOutcomeThreeChartData.borderWidth,
             showLine: userOutcomeThreeChartData.showLine,
             pointRadius: userOutcomeThreeChartData.pointRadius  
+        }, {
+            label: allChartData.label,
+            data: allChartData.data,
+            backgroundColor: allChartData.backgroundColor,
+            borderColor: allChartData.borderColor,
+            borderWidth: allChartData.borderWidth,
+            showLine: allChartData.showLine,
+            pointRadius: allChartData.pointRadius
         }],
         spanGaps: false,
         responsive: true,
