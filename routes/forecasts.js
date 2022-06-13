@@ -584,7 +584,7 @@ router.patch("/update", async (req, res) => {
         // Req body = 
         // documentID: setSelectedForecastDocumentID,           DOCUMENT ID
         // newForecastObject: newForecastObj,                   FORECASTOBJ CONTAINING CERTAINTY, COMMENTS, DATE
-        // user: username                                       USERNAME
+        // username: username                                       USERNAME
         console.log("req.body.documentID");
         console.log(req.body.documentID);
         const forecastDocument = await Forecasts.findById(req.body.documentID);
@@ -602,13 +602,13 @@ router.patch("/update", async (req, res) => {
             };
         };
         const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.documentID, {
-            // { $push: { [`submittedForecasts[${indexLocation}].forecasts`]: req.body.newForecastObj }
+            // { $push: { [`submittedForecasts[${indexLocation}].forecasts`]: req.body.newForecastObject }
             // $push: { [`submittedForecasts[${indexLocation}].forecasts`]: {
             // locationOfForecasts: `submittedForecasts.${index}.forecasts`,
             $push: { [`submittedForecasts.${indexLocation}.forecasts`]: {
-                "certainty": req.body.newForecastObj.certainty,
-                "comments": req.body.newForecastObj.comments,
-                "date": req.body.newForecastObj.date
+                "certainty": req.body.newForecastObject.certainty,
+                "comments": req.body.newForecastObject.comments,
+                "date": req.body.newForecastObject.date
             }}
         }, 
         { 
