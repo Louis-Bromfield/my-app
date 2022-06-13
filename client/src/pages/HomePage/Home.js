@@ -43,46 +43,46 @@ function Home(props) {
             setModalContent(welcomeString);
             localStorage.setItem("firstVisit", false);
         };
-        if (props.user.numberOfClosedForecasts === undefined) {
-            getClosedForecastCount(localStorage.getItem("username") || props.username);
+        // if (props.user.numberOfClosedForecasts === undefined) {
+            // getClosedForecastCount(localStorage.getItem("username") || props.username);
             // Version without contacting server (use props instead) - was having issues, defined props.user as [object Object], maybe as it 
             // was from page load (like refreshing) rather than from login, where App.js sets the value?
             // So for now, keep previous version but update App.js userObj again to be sure
-            // getClosedForecastCount(props.user);
-        };
+            getClosedForecastCount(props.user);
+        // };
     // }, [props.user.numberOfClosedForecasts, props.username]);
     }, [props.user]);
 
-    const getClosedForecastCount = async (username) => {
+    const getClosedForecastCount = async (user) => {
         try {
-            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
-            if (userDocument.data[0].numberOfClosedForecasts > 0) {
-                setShowClosedProblemModal(true);
-            };
-            let avgBrier = 0;
-            for (let i = 0; i < userDocument.data[0].brierScores.length; i++) {
-                avgBrier += userDocument.data[0].brierScores[i].brierScore;
-            };
-            avgBrier = avgBrier / userDocument.data[0].brierScores.length;
-            setCurrentAvgBrier(isNaN(avgBrier.toFixed(2)) ? 0 : avgBrier.toFixed(2));
-            setUserObj(userDocument.data[0]);
-            setUserMarkets(userDocument.data[0].markets);
-            setUserOnboarding(userDocument.data[0].onboarding);
-            props.setUserObject(userDocument.data[0]);
-
-            // Serverless version
-            // console.log("DEBUGGING");
-            // console.log(propsUserObj);
-            // if (propsUserObj.numberOfClosedForecasts > 0) {
+            // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            // if (userDocument.data[0].numberOfClosedForecasts > 0) {
             //     setShowClosedProblemModal(true);
             // };
             // let avgBrier = 0;
-            // for (let i = 0; i < propsUserObj.brierScores.length; i++) {
-            //     avgBrier += propsUserObj.brierScores[i].brierScore;
+            // for (let i = 0; i < userDocument.data[0].brierScores.length; i++) {
+            //     avgBrier += userDocument.data[0].brierScores[i].brierScore;
             // };
-            // avgBrier = avgBrier / propsUserObj.brierScores.length;
+            // avgBrier = avgBrier / userDocument.data[0].brierScores.length;
             // setCurrentAvgBrier(isNaN(avgBrier.toFixed(2)) ? 0 : avgBrier.toFixed(2));
-            // setUserObj(propsUserObj);
+            // setUserObj(userDocument.data[0]);
+            // setUserMarkets(userDocument.data[0].markets);
+            // setUserOnboarding(userDocument.data[0].onboarding);
+            // props.setUserObject(userDocument.data[0]);
+
+            // Serverless version
+console.log("DEBUGGING");
+console.log(user);
+            if (user.numberOfClosedForecasts > 0) {
+                setShowClosedProblemModal(true);
+            };
+            let avgBrier = 0;
+            for (let i = 0; i < user.brierScores.length; i++) {
+                avgBrier += user.brierScores[i].brierScore;
+            };
+            avgBrier = avgBrier / user.brierScores.length;
+            setCurrentAvgBrier(isNaN(avgBrier.toFixed(2)) ? 0 : avgBrier.toFixed(2));
+            setUserObj(user);
         } catch (error) {
             console.error("Error in getClosedForecastCount");
             console.error(error);
@@ -140,8 +140,8 @@ function Home(props) {
                             username={props.username} 
                             // user={props.user}
                             // Trying this one as the getClosed function in UE updates the userObj state variable
-                            userObj={userObj}
-                            userMarkets={userMarkets}
+                            userObj={props.userObj}
+                            userMarkets={props.userMarkets}
                             handleFirstPost={setShowModal} 
                             handleFirstPostModalContent={setModalContent}
                         />
@@ -156,7 +156,7 @@ function Home(props) {
                                 // username={props.username}
                                 // user={props.user}
                                 // userObj={userObj}
-                                userOnboarding={userOnboarding}
+                                userOnboarding={props.user.onboarding}
                                 handleClick={() => onboardingButtonClick(showOnboarding, buttonText)} 
                                 buttonText={buttonText} 
                                 isHidden={showOnboarding}
