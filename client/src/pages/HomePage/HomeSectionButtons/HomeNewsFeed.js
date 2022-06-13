@@ -85,6 +85,7 @@ function HomeNewsFeed(props) {
     // Not-querying server
     const getUserMarketsFromDB = (user) => {
         try {
+console.log("DEBUGGING");
 console.log(user);
             const allMarkets = user.markets;
             setUserMarkets(allMarkets);

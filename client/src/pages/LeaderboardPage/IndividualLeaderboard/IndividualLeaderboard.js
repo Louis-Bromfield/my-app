@@ -102,7 +102,7 @@ function IndividualLeaderboard(props) {
     const getLeaderboardData = async (leaderboard) => {
         try {
             const lbData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${leaderboard}`);
-            const lbRankings = lbData.data.rankings;
+            const lbRankings = lbData.data;
             // lbRankings.sort((a, b) => b.marketPoints - a.marketPoints);
             const filtered = filterByInvite(lbRankings);
             let total = 0;

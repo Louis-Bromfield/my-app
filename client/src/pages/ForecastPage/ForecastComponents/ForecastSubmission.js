@@ -102,7 +102,7 @@ function ForecastSubmission(props) {
         if (marketName === undefined) return;
         try {
             const leaderboardResponse = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${marketName}`);
-            let lbRankings = leaderboardResponse.data.rankings;
+            let lbRankings = leaderboardResponse.data;
             // let newRankings = await lbRankings.sort((a, b) => b.marketPoints - a.marketPoints);
             formatUserRank(lbRankings);
             props.handleLeaderboardChange(lbRankings);

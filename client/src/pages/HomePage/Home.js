@@ -49,6 +49,8 @@ function Home(props) {
     }, [props.user.numberOfClosedForecasts, props.username]);
 
     const getClosedForecastCount = (propsUserObj) => {
+console.log("DEBUGGING");
+console.log(propsUserObj);
         try {
             // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             // if (userDocument.data[0].numberOfClosedForecasts > 0) {
