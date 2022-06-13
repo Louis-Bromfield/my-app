@@ -29,6 +29,7 @@ function Home(props) {
     const [onboardingClassName, setOnboardingClassName] = useState("onboarding-div-closed");
     const [currentAvgBrier, setCurrentAvgBrier] = useState(0);
     const [userMarkets, setUserMarkets] = useState([]);
+    const [userOnboarding, setUserOnboarding] = useState({});
 
     const onboardingButtonClick = (showOnboarding, buttonText) => {
         setShowOnboarding(!showOnboarding);
@@ -66,6 +67,7 @@ function Home(props) {
             setCurrentAvgBrier(isNaN(avgBrier.toFixed(2)) ? 0 : avgBrier.toFixed(2));
             setUserObj(userDocument.data[0]);
             setUserMarkets(userDocument.data[0].markets);
+            setUserOnboarding(userDocument.data[0].onboarding);
             props.setUserObject(userDocument.data[0]);
 
             // Serverless version
@@ -151,9 +153,10 @@ function Home(props) {
                         <NewForecastsCallToAction username={props.username} /> 
                         <div className={onboardingClassName}>
                             <Onboarding 
-                                username={props.username}
+                                // username={props.username}
                                 // user={props.user}
-                                userObj={userObj}
+                                // userObj={userObj}
+                                userOnboarding={userOnboarding}
                                 handleClick={() => onboardingButtonClick(showOnboarding, buttonText)} 
                                 buttonText={buttonText} 
                                 isHidden={showOnboarding}
