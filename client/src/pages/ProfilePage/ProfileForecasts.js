@@ -6,7 +6,7 @@ function ProfileForecasts(props) {
 
     useEffect(() => {
         console.log("ProfileForecasts UE");
-        if (props.userObj === {} || props.userObj.brierScores === undefined) {
+        if (props.userObj === {} || props.userObj.brierScores.length === 0 ||props.userObj.brierScores === undefined) {
             return;
         } else {
             setBrierReverse(props.userObj.brierScores.reverse());
@@ -18,8 +18,8 @@ function ProfileForecasts(props) {
   return (
     <div className="profile-forecasts">
         <h1 className="profile-header">{props.searched === true ? `${props.playerUsername}'s Forecasts` : `My Forecasts`}</h1>
-        {brierReverse[0].problemName === null &&
-            <h3>Please enter a username into the field above and press "Search" to see their forecast results.</h3>
+        {(brierReverse[0].problemName === null || props.userObj.brierScores.length === 0) &&
+            <h3>No scores here! {brierReverse[0].problemName === null ? "You might have searched for a user who doesn't exist" : props.userObj.brierScores.length === 0 ? "This forecaster has not yet received a score for any forecasts yet." : ""}</h3>
         }
         {brierReverse[0].problemName !== null &&
             <div>
@@ -38,4 +38,4 @@ function ProfileForecasts(props) {
   )
 }
 
-export default ProfileForecasts
+export default ProfileForecasts;

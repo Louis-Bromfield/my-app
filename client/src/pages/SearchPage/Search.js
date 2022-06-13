@@ -103,6 +103,7 @@ function Search(props) {
             return;
         } else if (username === props.username) {
             setErrorMessage("If you want to see your own profile, click your username in the top-right or select My Profile from the top-left dropdown menu if you're on mobile.")
+            setLoading(false);
             return;
         };
         try {
@@ -317,7 +318,7 @@ function Search(props) {
                 <input className="search-field" type="text" onChange={(e) => { setSearchName(e.target.value); setErrorMessage("")}}/>
                 <button className="search-btn" onClick={() => retrievePlayerInfo(searchName)}>Search</button>
             </div>
-            {errorMessage !== "" && <h3 className="error-message" style={{ color: "red" }}>{errorMessage}</h3>}
+            {errorMessage !== "" && <h3 className="error-message" style={{ color: "red", marginTop: "1vh" }}>{errorMessage}</h3>}
             <div className="main-profile-grid">
                 {loading === true && 
                     <div className="profile-grid">
