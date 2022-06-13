@@ -605,6 +605,7 @@ router.patch("/update", async (req, res) => {
         // $push: { [`submittedForecasts[${indexLocation}].forecasts`]: {
         // locationOfForecasts: `submittedForecasts.${index}.forecasts`,
         const location = `submittedForecasts.${indexLocation}.forecasts`;
+        console.log(`location = ${location}`);
         const updatedForecastDocument = await Forecasts.updateOne(req.body.documentID, {
             $push: { [location]: {
                 "certainty": req.body.newForecastObject.certainty,
@@ -612,9 +613,8 @@ router.patch("/update", async (req, res) => {
                 "date": req.body.newForecastObject.date
             }}
         }, 
-        { 
-            new: true
-        });
+        { new: true }
+        );
         console.log(updatedForecastDocument);
 
     } catch (error) {
