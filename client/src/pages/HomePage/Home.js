@@ -13,7 +13,7 @@ import HomeProfilePreview from './HomeSectionButtons/HomeProfilePreview';
 import { Link } from 'react-router-dom';
 
 function Home(props) {
-    console.log("here in home");
+    // console.log("here in home");
     let width, height;
     width = window.innerWidth;
     height = window.innerHeight;
@@ -28,6 +28,7 @@ function Home(props) {
     const [userObj, setUserObj] = useState(props.user);
     const [onboardingClassName, setOnboardingClassName] = useState("onboarding-div-closed");
     const [currentAvgBrier, setCurrentAvgBrier] = useState(0);
+    const [userMarkets, setUserMarkets] = useState([]);
 
     const onboardingButtonClick = (showOnboarding, buttonText) => {
         setShowOnboarding(!showOnboarding);
@@ -64,6 +65,7 @@ function Home(props) {
             avgBrier = avgBrier / userDocument.data[0].brierScores.length;
             setCurrentAvgBrier(isNaN(avgBrier.toFixed(2)) ? 0 : avgBrier.toFixed(2));
             setUserObj(userDocument.data[0]);
+            setUserMarkets(userDocument.data[0].markets);
             props.setUserObject(userDocument.data[0]);
 
             // Serverless version
@@ -137,6 +139,7 @@ function Home(props) {
                             // user={props.user}
                             // Trying this one as the getClosed function in UE updates the userObj state variable
                             userObj={userObj}
+                            userMarkets={userMarkets}
                             handleFirstPost={setShowModal} 
                             handleFirstPostModalContent={setModalContent}
                         />

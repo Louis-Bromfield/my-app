@@ -53,7 +53,7 @@ function HomeProfilePreview(props) {
     // I'm fine with leaving this one here because it's wrapped in an undefined checker in the useEffect hook
     // so it won't fire everytime, only if we've lost that user prop
     const getUserDetails = async (username) => {
-        console.log("came here!");
+        // console.log("came here!");
         try {
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             setFFPoints(userDocument.data[0].fantasyForecastPoints);
