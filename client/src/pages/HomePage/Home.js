@@ -48,12 +48,12 @@ function Home(props) {
             // Version without contacting server (use props instead) - was having issues, defined props.user as [object Object], maybe as it 
             // was from page load (like refreshing) rather than from login, where App.js sets the value?
             // So for now, keep previous version but update App.js userObj again to be sure
-            getClosedForecastCount(props.user);
+            getClosedForecastCount(props.user, props.userClosedForecastCount);
         // };
     // }, [props.user.numberOfClosedForecasts, props.username]);
-    }, [props.user]);
+    }, [props.user, props.userClosedForecastCount]);
 
-    const getClosedForecastCount = async (user) => {
+    const getClosedForecastCount = async (user, cfc) => {
         try {
             // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             // if (userDocument.data[0].numberOfClosedForecasts > 0) {
@@ -73,7 +73,7 @@ function Home(props) {
             // Serverless version
 console.log("DEBUGGING");
 console.log(user);
-            if (user.numberOfClosedForecasts > 0) {
+            if (cfc > 0) {
                 setShowClosedProblemModal(true);
             };
             let avgBrier = 0;
@@ -82,7 +82,7 @@ console.log(user);
             };
             avgBrier = avgBrier / user.brierScores.length;
             setCurrentAvgBrier(isNaN(avgBrier.toFixed(2)) ? 0 : avgBrier.toFixed(2));
-            setUserObj(user);
+            setUserObj(props.user);
         } catch (error) {
             console.error("Error in getClosedForecastCount");
             console.error(error);
