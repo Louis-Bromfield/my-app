@@ -585,13 +585,13 @@ router.patch("/update", async (req, res) => {
         // documentID: setSelectedForecastDocumentID,           DOCUMENT ID
         // newForecastObject: newForecastObj,                   FORECASTOBJ CONTAINING CERTAINTY, COMMENTS, DATE
         // username: username                                       USERNAME
-        console.log("req.body.documentID");
-        console.log(req.body.documentID);
+        // console.log("req.body.documentID");
+        // console.log(req.body.documentID);
         const forecastDocument = await Forecasts.findById(req.body.documentID);
-        console.log("forecastDocument");
-        console.log(forecastDocument);
-        console.log("username");
-        console.log(req.body.username);
+        // console.log("forecastDocument");
+        // console.log(forecastDocument);
+        // console.log("username");
+        // console.log(req.body.username);
         let indexLocation = 0;
         for (let i = 0; i < forecastDocument.submittedForecasts.length; i++) {
             if (forecastDocument.submittedForecasts[i].username === req.body.username) {
@@ -601,11 +601,8 @@ router.patch("/update", async (req, res) => {
                 break;
             };
         };
-        // { $push: { [`submittedForecasts[${indexLocation}].forecasts`]: req.body.newForecastObject }
-        // $push: { [`submittedForecasts[${indexLocation}].forecasts`]: {
-        // locationOfForecasts: `submittedForecasts.${index}.forecasts`,
         const location = `submittedForecasts.${indexLocation}.forecasts`;
-        console.log(`location = ${location}`);
+        // console.log(`location = ${location}`);
         const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.documentID, {
             $push: { [location]: {
                 "certainty": req.body.newForecastObject.certainty,
@@ -615,7 +612,7 @@ router.patch("/update", async (req, res) => {
         }, 
         { new: true }
         );
-        console.log(updatedForecastDocument);
+        // console.log(updatedForecastDocument);
         res.json(updatedForecastDocument);
 
     } catch (error) {
@@ -632,18 +629,27 @@ router.patch("/updateMultiple", async (req, res) => {
         for (let i = 0; i < forecastDocument.submittedForecasts.length; i++) {
             if (forecastDocument.submittedForecasts[i].username === req.body.username) {
                 indexLocation = i;
-                return;
+                break;
             };
         };
-        const updatedForecastDocument = await Forecasts.findByIdAndUpdate(
-            {_id: req.body.documentID },
-            { $push: { [`submittedForecasts[${indexLocation}].forecasts`]: req.body.newForecastObj }
-            }, 
-            { new: true }
+        const location = `submittedForecasts.${indexLocation}.forecasts`;
+        const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.documentID,{
+            $push: { [location]: {
+                "certainties": {
+                    "certainty1": req.body.newForecastObject.certainties.certainty1,
+                    "certainty2": req.body.newForecastObject.certainties.certainty2,
+                    "certainty3": req.body.newForecastObject.certainties.certainty3,
+                },
+                "comments": req.body.newForecastObject.comments,
+                "date": req.body.newForecastObject.date
+            }},
+        },
+        { new: true }
         );
         console.log(updatedForecastDocument);
         res.json(updatedForecastDocument);
 
+        // Prev approach
         // const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.problemID, 
         //     {
         //         submittedForecasts: req.body.newSubmittedForecasts,
@@ -652,6 +658,7 @@ router.patch("/updateMultiple", async (req, res) => {
         // );
         // res.json(updatedForecastDocument);
 
+        // First approach
         // push the passed in {certainty, comments} object to the end of the submittedForecasts.forecasts array
         // increase numberOfForecastsSubmittedByUser by 1 - not essential, as we could just take submittedForecasts.forecasts.length
         // const updatedForecastPushedToDB = await Forecasts.findByIdAndUpdate(document._id, 
