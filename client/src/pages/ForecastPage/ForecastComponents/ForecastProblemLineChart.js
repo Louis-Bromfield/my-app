@@ -71,9 +71,7 @@ function ForecastProblemLineChart(props) {
             for (let i = 0; i < newCertainties.length; i++) {
                 for (let j = 0; j < newCertainties[i].forecasts.length; j++) {
                     // if it's on a new day to the one before, keep that one and add this one in as a new data point
-                    if (newCertainties[i].forecasts[j].date.slice(0, sliceIndex) !== lastForecastDate || lastForecastDate === "") {
-console.log(`1 if (${newCertainties[i].forecasts[j].date.slice(0, sliceIndex)} !== ${lastForecastDate} || ${lastForecastDate} === ""`)
-console.log(`1 the forecast of ${newCertainties[i].forecasts[j].certainty} is here!`);
+                    if (newCertainties[i].forecasts[j].date.slice(0, sliceIndex) !== lastForecastDate) {
                         data.data.push({
                             x: new Date(newCertainties[i].forecasts[j].date).toString().slice(0, sliceIndex),
                             y: ((newCertainties[i].forecasts[j].certainty)*100),
@@ -83,7 +81,6 @@ console.log(`1 the forecast of ${newCertainties[i].forecasts[j].certainty} is he
                         lastForecastDate = data.data[data.data.length-1].x;
                         // if it's from the logged in user, also add to a separate dataset
                         if (newCertainties[i].username === username) {
-console.log(`2 the forecast of ${newCertainties[i].forecasts[j].certainty} is here!`);
                             userData.data.push({
                                 x: new Date(newCertainties[i].forecasts[j].date).toString().slice(0, sliceIndex), 
                                 y: ((newCertainties[i].forecasts[j].certainty)*100),
@@ -92,8 +89,6 @@ console.log(`2 the forecast of ${newCertainties[i].forecasts[j].certainty} is he
                         }
                     // else if it is from the same day as the last forecast, replace the last forecast with this newer one
                     } else if (newCertainties[i].forecasts[j].date.slice(0, sliceIndex) === lastForecastDate) {
-console.log(`3 else if (${newCertainties[i].forecasts[j].date.slice(0, sliceIndex)} === ${lastForecastDate}`)
-console.log(`3 the forecast of ${newCertainties[i].forecasts[j].certainty} is here!`);
                         data.data[data.data.length-1] = ({
                             x: new Date(newCertainties[i].forecasts[j].date).toString().slice(0, sliceIndex), 
                             y: ((newCertainties[i].forecasts[j].certainty)*100),
@@ -101,14 +96,12 @@ console.log(`3 the forecast of ${newCertainties[i].forecasts[j].certainty} is he
                         });
                         if (newCertainties[i].username === username) {
                             if (userData.data.length === 0) {
-console.log(`4 the forecast of ${newCertainties[i].forecasts[j].certainty} is here!`);
                                 userData.data.push({
                                     x: new Date(newCertainties[i].forecasts[j].date).toString().slice(0, sliceIndex), 
                                     y: ((newCertainties[i].forecasts[j].certainty)*100),
                                     description: newCertainties[i].forecasts[j].comments
                                 });
                             } else if (userData.data.length !== 0) {
-console.log(`5 the forecast of ${newCertainties[i].forecasts[j].certainty} is here!`);
                                 userData.data[userData.data.length-1] = ({
                                     x: new Date(newCertainties[i].forecasts[j].date).toString().slice(0, sliceIndex), 
                                     y: ((newCertainties[i].forecasts[j].certainty)*100),
