@@ -37,12 +37,18 @@ function HomeNewsFeed(props) {
     useEffect(() => {
         if (causeFeedNewsFeedRefreshWithoutAnimation === true) {
             getAllNewsFeedPostsFromDB();
-            getUserMarketsFromDB(props.username);
+            // getUserMarketsFromDB(props.username);
+
+            // Version without querying server:
+            getUserMarketsFromDB(props.user);
         } else if (causeFeedNewsFeedRefreshWithoutAnimation === false) {
             setNewPostLoading(true);
             // setTimeout(() => {
             getAllNewsFeedPostsFromDB();
-            getUserMarketsFromDB(props.username);
+            // getUserMarketsFromDB(props.username);
+            
+            // Version without querying server:
+            getUserMarketsFromDB(props.user);
             setNewPostLoading(false);
             // }, 1000);
         };
@@ -58,18 +64,30 @@ function HomeNewsFeed(props) {
             console.error(error);
         };
     };
+    
+    // Querying Server
+    // const getUserMarketsFromDB = async (username) => {
+    //     try {
+    //         const allMarkets = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${username}`);
+    //         let filtersArr = [];
+    //         let userMarketsArr = [];
+    //         for (let i = 0; i < allMarkets.data.length; i++) {
+    //             filtersArr.push(allMarkets.data[i].leaderboardName);
+    //             userMarketsArr.push(allMarkets.data[i].leaderboardName);
+    //         };
+    //         setUserMarkets(userMarketsArr);
+    //         setFilters(filtersArr);
+    //     } catch (error) {
+    //         console.error(error);
+    //     };
+    // };
 
-    const getUserMarketsFromDB = async (username) => {
+    // Not-querying server
+    const getUserMarketsFromDB = (user) => {
         try {
-            const allMarkets = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${username}`);
-            let filtersArr = [];
-            let userMarketsArr = [];
-            for (let i = 0; i < allMarkets.data.length; i++) {
-                filtersArr.push(allMarkets.data[i].leaderboardName);
-                userMarketsArr.push(allMarkets.data[i].leaderboardName);
-            };
-            setUserMarkets(userMarketsArr);
-            setFilters(filtersArr);
+            const allMarkets = user.markets;
+            setUserMarkets(allMarkets);
+            setFilters(allMarkets);
         } catch (error) {
             console.error(error);
         };

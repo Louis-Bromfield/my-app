@@ -44,7 +44,8 @@ router.get("/:username", async (req, res) => {
 // Get all the info from one leaderboard
 router.get("/leaderboard/:leaderboardName", async (req, res) => {
     const data = await Leaderboards.findOne({ leaderboardName: req.params.leaderboardName });
-    res.json(data);
+    const sortedData = data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
+    res.json(sortedData);
 })
 
 // Create a leaderboard

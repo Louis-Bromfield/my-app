@@ -57,9 +57,9 @@ function Search(props) {
         try {
             const lbName = "Fantasy Forecast All-Time"
             const userData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${lbName}`);
-            const lbRankings = userData.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
-            for (let i = 0; i < lbRankings.length; i++) {
-                if (lbRankings[i].username === username) {
+            // const lbRankings = userData.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
+            for (let i = 0; i < userData.data.rankings.length; i++) {
+                if (userData.data.rankings[i].username === username) {
                     let k = i+1 % 10;
                     let l = i+1 % 100;
                     if (k === 1 && l !== 11) {

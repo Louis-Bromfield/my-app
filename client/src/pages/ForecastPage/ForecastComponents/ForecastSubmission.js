@@ -103,9 +103,9 @@ function ForecastSubmission(props) {
         try {
             const leaderboardResponse = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${marketName}`);
             let lbRankings = leaderboardResponse.data.rankings;
-            let newRankings = await lbRankings.sort((a, b) => b.marketPoints - a.marketPoints);
-            formatUserRank(newRankings);
-            props.handleLeaderboardChange(newRankings);
+            // let newRankings = await lbRankings.sort((a, b) => b.marketPoints - a.marketPoints);
+            formatUserRank(lbRankings);
+            props.handleLeaderboardChange(lbRankings);
         } catch (error) { 
             console.error(error);
         };
@@ -713,13 +713,13 @@ function ForecastSubmission(props) {
                                     <h3>
                                         Forecast Explanation
                                         <FaInfoCircle 
-                                        color={"orange"} 
-                                        className="modal-i-btn"
-                                        onClick={() => { 
-                                            setShowModal(true); 
-                                            setModalContent(`Feel free to note what resources, articles, key events or info helped to inform your prediction. This will be helpful for when you update your predictions (to see how you justified prior forecasts).`)
-                                            setModalContent2("");
-                                            }}
+                                            color={"orange"} 
+                                            className="modal-i-btn"
+                                            onClick={() => { 
+                                                setShowModal(true); 
+                                                setModalContent(`Feel free to note what resources, articles, key events or info helped to inform your prediction. This will be helpful for when you update your predictions (to see how you justified prior forecasts).`)
+                                                setModalContent2("");
+                                                }}
                                         />
                                     </h3>
                                     {userHasAttempted === true &&

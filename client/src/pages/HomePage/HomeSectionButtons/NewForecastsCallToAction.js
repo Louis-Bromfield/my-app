@@ -25,7 +25,6 @@ function NewForecastsCallToAction(props) {
         checkForForecastsUserHasNotAttempted(props.username);
     }, [props.username]);
 
-
     return (
         <div className="new-forecasts-container" style={unattemptedForecasts.join(",").split(",").length-unattemptedForecasts.length >= 1 ? {border: "3px solid orange",} : {border: "none"}}>
             <Modal show={showModal} handleClose={() => setShowModal(false)}>

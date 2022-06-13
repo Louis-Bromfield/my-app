@@ -42,23 +42,35 @@ function Home(props) {
             localStorage.setItem("firstVisit", false);
         };
         if (props.user.numberOfClosedForecasts === undefined) {
-            getClosedForecastCount(localStorage.getItem("username") || props.username);
+            // getClosedForecastCount(localStorage.getItem("username") || props.username);
+            // Version without contacting server (use props instead)
+            getClosedForecastCount(props.user);
         };
     }, [props.user.numberOfClosedForecasts, props.username]);
 
-    const getClosedForecastCount = async (username) => {
+    const getClosedForecastCount = (propsUserObj) => {
         try {
-            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
-            if (userDocument.data[0].numberOfClosedForecasts > 0) {
+            // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            // if (userDocument.data[0].numberOfClosedForecasts > 0) {
+            //     setShowClosedProblemModal(true);
+            // };
+            // let avgBrier = 0;
+            // for (let i = 0; i < userDocument.data[0].brierScores.length; i++) {
+            //     avgBrier += userDocument.data[0].brierScores[i].brierScore;
+            // };
+            // avgBrier = avgBrier / userDocument.data[0].brierScores.length;
+            // setCurrentAvgBrier(isNaN(avgBrier.toFixed(2)) ? 0 : avgBrier.toFixed(2));
+            // setUserObj(userDocument.data[0]);
+            if (propsUserObj.numberOfClosedForecasts > 0) {
                 setShowClosedProblemModal(true);
             };
             let avgBrier = 0;
-            for (let i = 0; i < userDocument.data[0].brierScores.length; i++) {
-                avgBrier += userDocument.data[0].brierScores[i].brierScore;
+            for (let i = 0; i < propsUserObj.brierScores.length; i++) {
+                avgBrier += propsUserObj.brierScores[i].brierScore;
             };
-            avgBrier = avgBrier / userDocument.data[0].brierScores.length;
+            avgBrier = avgBrier / propsUserObj.brierScores.length;
             setCurrentAvgBrier(isNaN(avgBrier.toFixed(2)) ? 0 : avgBrier.toFixed(2));
-            setUserObj(userDocument.data[0]);
+            setUserObj(propsUserObj);
         } catch (error) {
             console.log("Error in getClosedForecastCount");
             console.error(error);
@@ -114,6 +126,7 @@ function Home(props) {
                     <div className="home-page-news-feed">
                         <HomeNewsFeed 
                             username={props.username} 
+                            user={props.user}
                             handleFirstPost={setShowModal} 
                             handleFirstPostModalContent={setModalContent}
                         />
@@ -126,6 +139,7 @@ function Home(props) {
                         <div className={onboardingClassName}>
                             <Onboarding 
                                 username={props.username}
+                                user={props.user}
                                 handleClick={() => onboardingButtonClick(showOnboarding, buttonText)} 
                                 buttonText={buttonText} 
                                 isHidden={showOnboarding}

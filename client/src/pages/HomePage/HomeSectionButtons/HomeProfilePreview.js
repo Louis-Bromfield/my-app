@@ -50,6 +50,8 @@ function HomeProfilePreview(props) {
         };
     }, [props.user.fantasyForecastPoints, ffPoints]);
 
+    // I'm fine with leaving this one here because it's wrapped in an undefined checker in the useEffect hook
+    // so it won't fire everytime, only if we've lost that user prop
     const getUserDetails = async (username) => {
         console.log("came here!");
         try {

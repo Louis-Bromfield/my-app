@@ -33,6 +33,7 @@ function HomeButtonSmall(props) {
         };
     };
 
+    // We could make this serverless if we stored learnQuiz progress inside user documents...
     const getLearnProgress = async (username) => {
         try {
             const userLearn = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/learnQuizzes/${username}`);
@@ -63,9 +64,9 @@ function HomeButtonSmall(props) {
         try {
             const lbName = "Fantasy Forecast All-Time";
             const leaderboard = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${lbName}`);
-            let lbRankings = leaderboard.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
-            for (let i = 0; i < lbRankings.length; i++) {
-                if (lbRankings[i].username === username) {
+            // let lbRankings = leaderboard.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
+            for (let i = 0; i < leaderboard.data.rankings.length; i++) {
+                if (leaderboard.data.rankings[i].username === username) {
                     let j = i + 1;
                     let k = j % 10;
                     let l = j % 100;

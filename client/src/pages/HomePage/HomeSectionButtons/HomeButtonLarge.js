@@ -16,15 +16,18 @@ function HomeButtonLarge(props) {
 
     useEffect(() => {
         if (props.user.fantasyForecastPoints >= 1000) {
-            getBrierDataFromDB(props.user.username === undefined ? localStorage.getItem('username') : props.user.username);
+            // Querying Server 
+                // getBrierDataFromDB(props.user.username === undefined ? localStorage.getItem('username') : props.user.username);
+            // Using props
+            getBrierDataFromDB(props.user);
         };
         console.log("HBL UE");
-    }, [props.user.username]);
+    }, [props.user]);
 
-    const getBrierDataFromDB = async (username) => {
+    // Not querying server, using props
+    const getBrierDataFromDB = (user) => {
         try {
-            const brierDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
-            if (brierDocument.data[0].brierScores.length === 0) {
+            if (user.brierScores.length === 0) {
                 setData([]);
                 setLabels([]);
                 return;
@@ -33,10 +36,10 @@ function HomeButtonLarge(props) {
             let labelsArray = [""];
             let averageArray = [null];
             let counter = 0;
-            for (let i = brierDocument.data[0].brierScores.length-1; counter < 10 && i >= 0; i--) {
-                brierArray.push(brierDocument.data[0].brierScores[i].brierScore);
-                labelsArray.push(brierDocument.data[0].brierScores[i].problemName);
-                averageArray.push(brierDocument.data[0].brierScores[i].averageScore);
+            for (let i = user.brierScores.length-1; counter < 10 && i >= 0; i--) {
+                brierArray.push(user.brierScores[i].brierScore);
+                labelsArray.push(user.brierScores[i].problemName);
+                averageArray.push(user.brierScores[i].averageScore);
                 counter++;
             };
             brierArray.push(null);
@@ -45,12 +48,43 @@ function HomeButtonLarge(props) {
             setData(brierArray.reverse());
             setLabels(labelsArray.reverse());
             setAverageData(averageArray.reverse());
-            // getChartLabels(brierDocument.data[0].brierScores);
         } catch (error) {
             console.error("Error in HomeButtonLarge > getBrierDataFromDB");
             console.error(error);
         };
     };
+
+    // Querying Server - not needed with props
+    // const getBrierDataFromDB = async (username) => {
+    //     try {
+    //         const brierDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+    //         if (brierDocument.data[0].brierScores.length === 0) {
+    //             setData([]);
+    //             setLabels([]);
+    //             return;
+    //         }
+    //         let brierArray = [null];
+    //         let labelsArray = [""];
+    //         let averageArray = [null];
+    //         let counter = 0;
+    //         for (let i = brierDocument.data[0].brierScores.length-1; counter < 10 && i >= 0; i--) {
+    //             brierArray.push(brierDocument.data[0].brierScores[i].brierScore);
+    //             labelsArray.push(brierDocument.data[0].brierScores[i].problemName);
+    //             averageArray.push(brierDocument.data[0].brierScores[i].averageScore);
+    //             counter++;
+    //         };
+    //         brierArray.push(null);
+    //         labelsArray.push("");
+    //         averageArray.push(null);
+    //         setData(brierArray.reverse());
+    //         setLabels(labelsArray.reverse());
+    //         setAverageData(averageArray.reverse());
+    //         // getChartLabels(brierDocument.data[0].brierScores);
+    //     } catch (error) {
+    //         console.error("Error in HomeButtonLarge > getBrierDataFromDB");
+    //         console.error(error);
+    //     };
+    // };
 
     const recentForecastData = {
         labels: labels,

@@ -9,18 +9,22 @@ function Onboarding(props) {
     const [onboardingComplete, setOnboardingComplete] = useState(false);
 
     useEffect(() => {
-        getAllOnboardingBooleans(props.username);
+        // Querying server
+            // getAllOnboardingBooleans(props.username);
+        // Using props
+        getAllOnboardingBooleans(props.user);
     }, [props.username]);
 
-    const getAllOnboardingBooleans = async (username) => {
+    // Using props version
+    const getAllOnboardingBooleans = (user) => {
         try {
-            const allOnboardingBooleans = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            const allOnboardingBooleans = user.onboarding;
             setOnboardingLoading(true)
             setTimeout(() => {
                 setOnboardingLoading(false);
-                setOnboardingBooleans(allOnboardingBooleans.data[0].onboarding);
+                setOnboardingBooleans(allOnboardingBooleans);
                 let complete = true;
-                Object.entries(allOnboardingBooleans.data[0].onboarding).forEach(ele => {
+                Object.entries(allOnboardingBooleans).forEach(ele => {
                     if (typeof ele[1] === "boolean" && ele[1] === false) {
                         complete = false;
                         props.setOnboardingClassName("onboarding-div");
@@ -29,9 +33,32 @@ function Onboarding(props) {
                 setOnboardingComplete(complete);
             }, 1000);
         } catch (error) {
+            console.error("Error in getAllOnboardingBooleans");
             console.error(error);
         }
     };
+
+    // Querying server version
+    // const getAllOnboardingBooleans = async (username) => {
+    //     try {
+    //         const allOnboardingBooleans = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+    //         setOnboardingLoading(true)
+    //         setTimeout(() => {
+    //             setOnboardingLoading(false);
+    //             setOnboardingBooleans(allOnboardingBooleans.data[0].onboarding);
+    //             let complete = true;
+    //             Object.entries(allOnboardingBooleans.data[0].onboarding).forEach(ele => {
+    //                 if (typeof ele[1] === "boolean" && ele[1] === false) {
+    //                     complete = false;
+    //                     props.setOnboardingClassName("onboarding-div");
+    //                 };
+    //             });
+    //             setOnboardingComplete(complete);
+    //         }, 1000);
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // };
 
     return (
         <div className="conditional-div">

@@ -43,9 +43,9 @@ console.log("Profile.js UE");
         try {
             const lbName = "Fantasy Forecast All-Time"
             const userData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${lbName}`);
-            const lbRankings = userData.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
-            for (let i = 0; i < lbRankings.length; i++) {
-                if (lbRankings[i].username === username) {
+            // const lbRankings = userData.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
+            for (let i = 0; i < userData.data.rankings.length; i++) {
+                if (userData.data.rankings[i].username === username) {
                     let k = i+1 % 10;
                     let l = i+1 % 100;
                     if (k === 1 && l !== 11) {
@@ -193,8 +193,8 @@ console.log("Profile.js UE");
                             setModalContent={setModalContent}
                         /> */}
                         {/* Add the ability to download all their data here */}
-                        <h2>Download Your Data</h2>
-                        <h3>This feature is under construction, come back soon!</h3>
+                        {/* <h2>Download Your Data</h2>
+                        <h3>This feature is under construction, come back soon!</h3> */}
                 </div>
             </div>
         </div>
