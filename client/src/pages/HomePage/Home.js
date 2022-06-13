@@ -28,8 +28,8 @@ function Home(props) {
     const [userObj, setUserObj] = useState(props.user);
     const [onboardingClassName, setOnboardingClassName] = useState("onboarding-div-closed");
     const [currentAvgBrier, setCurrentAvgBrier] = useState(0);
-    const [userMarkets, setUserMarkets] = useState([]);
-    const [userOnboarding, setUserOnboarding] = useState({});
+    // const [userMarkets, setUserMarkets] = useState([]);
+    // const [userOnboarding, setUserOnboarding] = useState({});
 
     const onboardingButtonClick = (showOnboarding, buttonText) => {
         setShowOnboarding(!showOnboarding);

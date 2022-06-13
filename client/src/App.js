@@ -28,6 +28,7 @@ function App() {
   const [userObject, setUserObject] = useState({});
   const [profilePicture, setProfilePicture] = useState("");
   const [userFFPoints, setUserFFPoints] = useState();
+  const [userOnboarding, setUserOnboarding] = useState({});
 
   const updateUsername = async (newUsername) => {
     await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, { username: newUsername });
@@ -131,6 +132,7 @@ function App() {
         setUserFFPoints(userPulledFromDB.data[0].fantasyForecastPoints);
         setMarkets(userPulledFromDB.data[0].markets);
         setProfilePicture(userPulledFromDB.data[0].profilePicture);
+        setUserOnboarding(userPulledFromDB.data[0].onboarding);
 
       } catch(error) {
           console.error("Error in pAIFDBTPD");
@@ -158,7 +160,7 @@ function App() {
             <Route exact path="/loginSuccess">
                 <Redirect to="/home"></Redirect>
             </Route>
-            <Route path='/home' render={(props) => <Home {...props} username={username} name={name} user={userObject} setUserObject={setUserObject} userMarkets={markets} userFFPoints={userFFPoints} />} />
+            <Route path='/home' render={(props) => <Home {...props} username={username} name={name} user={userObject} userOnboarding={userOnboarding} setUserObject={setUserObject} userMarkets={markets} userFFPoints={userFFPoints} />} />
             <Route path="/change-log" render={(props) => <ChangeLog {...props} />} />
             <Route path="/news-post" render={(props) => <IndividualNewsFeedPost {...props} />} />
             <Route path='/forecast' render={(props) => <Forecast {...props} markets={markets} username={username} />} />
