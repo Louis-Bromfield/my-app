@@ -48,12 +48,12 @@ function Home(props) {
             // Version without contacting server (use props instead) - was having issues, defined props.user as [object Object], maybe as it 
             // was from page load (like refreshing) rather than from login, where App.js sets the value?
             // So for now, keep previous version but update App.js userObj again to be sure
-            getClosedForecastCount(props.user, props.userClosedForecastCount);
+            getClosedForecastCount(props.userBrierScores, props.userClosedForecastCount);
         // };
     // }, [props.user.numberOfClosedForecasts, props.username]);
     }, [props.user, props.userClosedForecastCount]);
 
-    const getClosedForecastCount = async (user, cfc) => {
+    const getClosedForecastCount = async (userBrierScores, cfc) => {
         try {
             // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             // if (userDocument.data[0].numberOfClosedForecasts > 0) {
@@ -72,15 +72,15 @@ function Home(props) {
 
             // Serverless version
 console.log("DEBUGGING");
-console.log(user);
+console.log(userBrierScores);
             if (cfc > 0) {
                 setShowClosedProblemModal(true);
             };
             let avgBrier = 0;
-            for (let i = 0; i < user.brierScores.length; i++) {
-                avgBrier += user.brierScores[i].brierScore;
+            for (let i = 0; i < userBrierScores.length; i++) {
+                avgBrier += userBrierScores[i].brierScore;
             };
-            avgBrier = avgBrier / user.brierScores.length;
+            avgBrier = avgBrier / userBrierScores.length;
             setCurrentAvgBrier(isNaN(avgBrier.toFixed(2)) ? 0 : avgBrier.toFixed(2));
             setUserObj(props.user);
         } catch (error) {
