@@ -139,6 +139,8 @@ function App() {
         setUserClosedForecastCount(userPulledFromDB.data[0].numberOfClosedForecasts);
         setUserBrierScores(userPulledFromDB.data[0].brierScores);
 
+        console.log(userPulledFromDB.data[0].brierScores);
+
       } catch(error) {
           console.error("Error in pAIFDBTPD");
           console.error(error);
