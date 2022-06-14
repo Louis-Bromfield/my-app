@@ -48,11 +48,11 @@ function Home(props) {
             // Version without contacting server (use props instead) - was having issues, defined props.user as [object Object], maybe as it 
             // was from page load (like refreshing) rather than from login, where App.js sets the value?
             // So for now, keep previous version but update App.js userObj again to be sure
-console.log(props.userBrierScores);
+console.log(props.user);
             getClosedForecastCount();
         // };
     // }, [props.user.numberOfClosedForecasts, props.username]);
-    }, [props.user, props.userBrierScores, props.userClosedForecastCount]);
+    }, [props.user, props.userClosedForecastCount]);
 
     const getClosedForecastCount = async () => {
         try {
@@ -73,15 +73,15 @@ console.log(props.userBrierScores);
 
             // Serverless version
 console.log("DEBUGGING");
-console.log(props.userBrierScores);
+console.log(props.user);
             if (props.userClosedForecastCount > 0) {
                 setShowClosedProblemModal(true);
             };
             let avgBrier = 0;
-            for (let i = 0; i < props.userBrierScores.length; i++) {
-                avgBrier += props.userBrierScores[i].brierScore;
+            for (let i = 0; i < props.user.brierScores.length; i++) {
+                avgBrier += props.props.user.brierScores[i].brierScore;
             };
-            avgBrier = avgBrier / props.userBrierScores.length;
+            avgBrier = avgBrier / props.user.brierScores.length;
             setCurrentAvgBrier(isNaN(avgBrier.toFixed(2)) ? 0 : avgBrier.toFixed(2));
             setUserObj(props.user);
         } catch (error) {
@@ -130,6 +130,7 @@ console.log(props.userBrierScores);
                     setShowClosedProblemModal={setShowClosedProblemModal}
                     // userObj={userObj === undefined ? props.user : userObj}>
                     userClosedForecastCount={props.userClosedForecastCount}
+                    user={props.user}
                     username={props.username}
                     userBrierScores={props.userBrierScores}>
                 </ClosedProblemModal>
