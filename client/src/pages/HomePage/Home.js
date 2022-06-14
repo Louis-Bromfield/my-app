@@ -153,7 +153,7 @@ console.log(props.user);
                     </div>
                     <div className="home-page-stats-div">
                         <HomeProfilePreview 
-                            user={userObj}
+                            user={props.user}
                         />
                         <NewForecastsCallToAction username={props.username} /> 
                         <div className={onboardingClassName}>
