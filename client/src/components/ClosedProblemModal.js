@@ -7,7 +7,7 @@ const ClosedProblemModal = (props) => {
     const showHideClassName = props.show ? "modal display-block" : "modal display-none";
     // const layoutClassName = props.userObj.numberOfClosedForecasts > 1 ? "grid-layout" : "non-grid-layout";
     const [brierArr, setBrierArr] = useState([]);
-    const [currentProblem, setCurrentProblem] = useState(props.userBrierScores[props.userBrierScores.length-1]);
+    const [currentProblem, setCurrentProblem] = useState(props.userBrierScores[props.userBrierScores.length-1] === undefined ? "" : props.userBrierScores[props.userBrierScores.length-1]);
     const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
 
     useEffect(() => {
