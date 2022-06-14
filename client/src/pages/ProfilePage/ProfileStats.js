@@ -34,14 +34,15 @@ function ProfileStats(props) {
             setIsHiddenBehindLevel(false);
         };
         if (props.userObj === undefined) {
+            console.log("userObj is undefined, run it back!");
             formatBrierData(null, props.username);
             findUniquePlayerStats(null, props.username);
-            getGlobalData();
         } else if (props.userObj !== undefined) {
+            console.log("userObj is NOT undefined, no need to run it back!");
             formatBrierData(props.userObj, props.username);
             findUniquePlayerStats(props.userObj, props.username);
-            getGlobalData();
         };
+        getGlobalData();
         setStats(recentForecastData);
         console.log("Profile Stats UE");
     }, [props.username, props.brierScores, props.profileTab, props.userObj]);
@@ -59,6 +60,8 @@ function ProfileStats(props) {
     }
 
     const formatBrierData = async (userObj, username) => {
+        // Only executes a server query if the userObj obtained in Profile.js is undefined, so I think
+        // keep it for insurance purposes as it doesn't fire otherwise
         if (userObj === null) {
             const brierData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             userObj = brierData.data[0];

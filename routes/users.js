@@ -83,6 +83,7 @@ router.get("/globalData", async (req, res) => {
 router.get("/profileData/:username", async (req, res) => {
     try {
         const user = await Users.find({ username: req.params.username });
+        console.log(user);
         // Get Brier Average / Highest Brier / Best Forecast
         let bestBrier = 0;
         let bestForecastProblem = "";

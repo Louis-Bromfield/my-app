@@ -73,12 +73,12 @@ function Search(props) {
                     };
                 };
             };
-            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/profileData/${username}`);
-            setSearchUserObj(userDocument.data.userObj);
-            formatBrierData(userDocument.data.userObj, playerUsername);
-            findUniquePlayerStats(userDocument.data.userObj, playerUsername);
-            setBrierAverage(userDocument.data.averageBrier);
-            setBestForecast(`${(userDocument.data.bestBrier).toFixed(2)} / 110 - ${userDocument.data.bestForecastProblem}`);
+            // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/profileData/${username}`);
+            // setSearchUserObj(userDocument.data.userObj);
+            // formatBrierData(userDocument.data.userObj, playerUsername);
+            // findUniquePlayerStats(userDocument.data.userObj, playerUsername);
+            // setBrierAverage(userDocument.data.averageBrier);
+            // setBestForecast(`${(userDocument.data.bestBrier).toFixed(2)} / 110 - ${userDocument.data.bestForecastProblem}`);
         } catch (error) {
             console.error("Error in Profile.js > retrieveUserInfoFromDB");
             console.error(error);
@@ -107,38 +107,46 @@ function Search(props) {
             return;
         };
         try {
-            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/profileData/${username}`);
+            console.log(userDocument);
+            console.log(userDocument.data)
             if (userDocument.data.length === 0) {
                 setErrorMessage("No profiles were found with this username. Please try again.");
             } else if (userDocument.data.length > 0) {
+                console.log("Came here yoi");
                 retrieveUserRankFromDB(username);
-                setPlayerUsername(userDocument.data[0].username);
-                setPlayerName(userDocument.data[0].name);
-                setPlayerLevel(Math.floor((userDocument.data[0].fantasyForecastPoints/100).toFixed(0)));
-                setPlayerPoints(userDocument.data[0].fantasyForecastPoints.toFixed(0));
-                formatMarketsString(userDocument.data[0].markets);
-                setPlayerProfilePic(userDocument.data[0].profilePicture);
-                if (userDocument.data[0].fantasyForecastPoints < 500) {
+                setPlayerUsername(userDocument.data.userObj.username);
+                // setPlayerName(userDocument.data.userObj.name);
+                setPlayerLevel(Math.floor((userDocument.data.userObj.fantasyForecastPoints/100).toFixed(0)));
+                setPlayerPoints(userDocument.data.userObj.fantasyForecastPoints.toFixed(0));
+                formatMarketsString(userDocument.data.userObj.markets);
+                setPlayerProfilePic(userDocument.data.userObj.profilePicture);
+                setSearchUserObj(userDocument.data.userObj);
+                formatBrierData(userDocument.data.userObj, playerUsername);
+                findUniquePlayerStats(userDocument.data.userObj, playerUsername);
+                setBrierAverage(userDocument.data.averageBrier);
+                setBestForecast(`${(userDocument.data.bestBrier).toFixed(2)} / 110 - ${userDocument.data.bestForecastProblem}`);
+                if (userDocument.data.userObj.fantasyForecastPoints < 500) {
                     setForecasterRank("Guesser");
-                } else if (userDocument.data[0].fantasyForecastPoints >= 500 && userDocument.data[0].fantasyForecastPoints < 1000) {
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 500 && userDocument.data.userObj.fantasyForecastPoints < 1000) {
                     setForecasterRank("Predictor");
-                } else if (userDocument.data[0].fantasyForecastPoints >= 1000 && userDocument.data[0].fantasyForecastPoints < 1500) {
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 1000 && userDocument.data.userObj.fantasyForecastPoints < 1500) {
                     setForecasterRank("Forecaster");
-                } else if (userDocument.data[0].fantasyForecastPoints >= 1500 && userDocument.data[0].fantasyForecastPoints < 2000) {
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 1500 && userDocument.data.userObj.fantasyForecastPoints < 2000) {
                     setForecasterRank("Seer");
-                } else if (userDocument.data[0].fantasyForecastPoints >= 2000 && userDocument.data[0].fantasyForecastPoints < 2500) {
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 2000 && userDocument.data.userObj.fantasyForecastPoints < 2500) {
                     setForecasterRank("Soothsayer");
-                } else if (userDocument.data[0].fantasyForecastPoints >= 2500 && userDocument.data[0].fantasyForecastPoints < 3000) {
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 2500 && userDocument.data.userObj.fantasyForecastPoints < 3000) {
                     setForecasterRank("Oracle");
-                } else if (userDocument.data[0].fantasyForecastPoints >= 3000 && userDocument.data[0].fantasyForecastPoints < 3500) {
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 3000 && userDocument.data.userObj.fantasyForecastPoints < 3500) {
                     setForecasterRank("Prophet");
-                } else if (userDocument.data[0].fantasyForecastPoints >= 3500 && userDocument.data[0].fantasyForecastPoints < 4000) {
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 3500 && userDocument.data.userObj.fantasyForecastPoints < 4000) {
                     setForecasterRank("Clairvoyant");
-                } else if (userDocument.data[0].fantasyForecastPoints >= 4000 && userDocument.data[0].fantasyForecastPoints < 4500) {
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 4000 && userDocument.data.userObj.fantasyForecastPoints < 4500) {
                     setForecasterRank("Augur");
-                } else if (userDocument.data[0].fantasyForecastPoints >= 4500 && userDocument.data[0].fantasyForecastPoints < 5000) {
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 4500 && userDocument.data.userObj.fantasyForecastPoints < 5000) {
                     setForecasterRank("Omniscient");
-                } else if (userDocument.data[0].fantasyForecastPoints >= 5000) {
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 5000) {
                     setForecasterRank("Diviner");
                 };
             };
