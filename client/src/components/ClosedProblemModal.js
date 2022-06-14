@@ -7,7 +7,7 @@ const ClosedProblemModal = (props) => {
     const showHideClassName = props.show ? "modal display-block" : "modal display-none";
     // const layoutClassName = props.userObj.numberOfClosedForecasts > 1 ? "grid-layout" : "non-grid-layout";
     const [brierArr, setBrierArr] = useState([]);
-    const [currentProblem, setCurrentProblem] = useState(props.userBrierScores[props.userBrierScores.length-1] === undefined ? { problemName: "", brierScore: 0} : props.userBrierScores[props.userBrierScores.length-1]);
+    const [currentProblem, setCurrentProblem] = useState(props.userBrierScores[props.userBrierScores.length-1] === undefined ? { problemName: "", brierScore: 0.00 } : props.userBrierScores[props.userBrierScores.length-1]);
     const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
 
     useEffect(() => {
@@ -67,7 +67,7 @@ console.log(props.userClosedForecastCount);
                         <p>{currentProblem.marketName}</p>
                         <br />
                         <p>You Scored: <u>{currentProblem.brierScore.toFixed(2)} / 110</u></p>
-                        <p>You Scored: <u>{currentProblem.brierScore.toFixed(2).slice(0, -3)}</u> Market Points and FFPoints!</p>
+                        <p>You Scored: <u>{currentProblem.brierScore.toFixed(0)}</u> Market Points and FFPoints!</p>
                         <br />
                         {/* {(currentProblem.performanceBoost >= 1 && currentProblem.brierScore >= 75) &&
                             <p>
