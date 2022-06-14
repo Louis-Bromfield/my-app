@@ -149,6 +149,7 @@ console.log(props.user);
                             userMarkets={props.userMarkets}
                             handleFirstPost={setShowModal} 
                             handleFirstPostModalContent={setModalContent}
+                            setUserClosedForecastCount={props.setUserClosedForecastCount}
                         />
                     </div>
                     <div className="home-page-stats-div">
