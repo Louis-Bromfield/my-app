@@ -132,7 +132,8 @@ console.log(props.user);
                     userClosedForecastCount={props.userClosedForecastCount}
                     user={props.user}
                     username={props.username}
-                    userBrierScores={props.userBrierScores}>
+                    userBrierScores={props.userBrierScores}
+                    setUserClosedForecastCount={props.setUserClosedForecastCount}>
                 </ClosedProblemModal>
             } 
             {/* <button type="button" onClick={() => setShowModal(true)}>
@@ -149,7 +150,6 @@ console.log(props.user);
                             userMarkets={props.userMarkets}
                             handleFirstPost={setShowModal} 
                             handleFirstPostModalContent={setModalContent}
-                            setUserClosedForecastCount={props.setUserClosedForecastCount}
                         />
                     </div>
                     <div className="home-page-stats-div">
