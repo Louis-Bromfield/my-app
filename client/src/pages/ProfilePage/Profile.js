@@ -62,7 +62,7 @@ console.log("Profile.js UE");
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/profileData/${username}`);
             setUserObj(userDocument.data.userObj);
             setFantasyForecastPoints(userDocument.data.userObj.fantasyForecastPoints);
-            setLevel((userDocument.data.userObj.fantasyForecastPoints/100).toFixed(0));
+            setLevel(Math.floor((userDocument.data.userObj.fantasyForecastPoints/100)).toFixed(0));
             setBrierAverage(Number(userDocument.data.averageBrier).toFixed(0));
             setBestForecast(`${(userDocument.data.bestBrier).toFixed(2)} / 110 - ${userDocument.data.bestForecastProblem}`);
             setBrierScoresArr(userDocument.data.userObj.brierScoresArr);

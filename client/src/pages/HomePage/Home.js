@@ -23,13 +23,14 @@ function Home(props) {
     const [homeStats, setHomeStats] = useState("Your Average Brier Score");
     const [subtitle, setSubtitle] = useState("0 = Highest, 2 = Lowest");
     const [showModal, setShowModal] = useState(false);
-    const [showClosedProblemModal, setShowClosedProblemModal] = useState(props.user.numberOfClosedForecasts > 0 ? true : false);
+    const [showClosedProblemModal, setShowClosedProblemModal] = useState(props.userClosedForecastCount > 0 ? true : false);
     const [modalContent, setModalContent] = useState("");
     const [userObj, setUserObj] = useState(props.user);
     const [onboardingClassName, setOnboardingClassName] = useState("onboarding-div-closed");
     const [currentAvgBrier, setCurrentAvgBrier] = useState(0);
-    // const [userMarkets, setUserMarkets] = useState([]);
-    // const [userOnboarding, setUserOnboarding] = useState({});
+    const [userMarkets, setUserMarkets] = useState([]);
+    const [userOnboarding, setUserOnboarding] = useState({});
+    const [userClosedForecastCount, setUserClosedForecastCount] = useState(0);
 
     const onboardingButtonClick = (showOnboarding, buttonText) => {
         setShowOnboarding(!showOnboarding);
@@ -48,46 +49,34 @@ function Home(props) {
             // Version without contacting server (use props instead) - was having issues, defined props.user as [object Object], maybe as it 
             // was from page load (like refreshing) rather than from login, where App.js sets the value?
             // So for now, keep previous version but update App.js userObj again to be sure
-console.log(props.user);
-            getClosedForecastCount();
+// console.log(props.user);
+            getUserInfo(props.username);
         // };
     // }, [props.user.numberOfClosedForecasts, props.username]);
-    }, [props.user, props.userClosedForecastCount]);
+    }, [props.username]);
 
-    const getClosedForecastCount = async () => {
+    const getUserInfo = async (username) => {
         try {
-            // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
-            // if (userDocument.data[0].numberOfClosedForecasts > 0) {
-            //     setShowClosedProblemModal(true);
-            // };
-            // let avgBrier = 0;
-            // for (let i = 0; i < userDocument.data[0].brierScores.length; i++) {
-            //     avgBrier += userDocument.data[0].brierScores[i].brierScore;
-            // };
-            // avgBrier = avgBrier / userDocument.data[0].brierScores.length;
-            // setCurrentAvgBrier(isNaN(avgBrier.toFixed(2)) ? 0 : avgBrier.toFixed(2));
-            // setUserObj(userDocument.data[0]);
-            // setUserMarkets(userDocument.data[0].markets);
-            // setUserOnboarding(userDocument.data[0].onboarding);
-            // props.setUserObject(userDocument.data[0]);
-
-            // Serverless version
-console.log("DEBUGGING");
-console.log(props.user);
-            if (props.userClosedForecastCount > 0) {
+            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            if (userDocument.data[0].numberOfClosedForecasts > 0) {
                 setShowClosedProblemModal(true);
+                console.log("true");
             };
             let avgBrier = 0;
-            for (let i = 0; i < props.user.brierScores.length; i++) {
-                avgBrier += props.props.user.brierScores[i].brierScore;
+            for (let i = 0; i < userDocument.data[0].brierScores.length; i++) {
+                avgBrier += userDocument.data[0].brierScores[i].brierScore;
             };
-            avgBrier = avgBrier / props.user.brierScores.length;
+            avgBrier = avgBrier / userDocument.data[0].brierScores.length;
             setCurrentAvgBrier(isNaN(avgBrier.toFixed(2)) ? 0 : avgBrier.toFixed(2));
-            setUserObj(props.user);
+            setUserObj(userDocument.data[0]);
+            setUserMarkets(userDocument.data[0].markets);
+            setUserOnboarding(userDocument.data[0].onboarding);
+            setUserClosedForecastCount(userDocument.data[0].numberOfClosedForecasts);
+            props.setUserObject(userDocument.data[0]);
         } catch (error) {
-            console.error("Error in getClosedForecastCount");
+            console.error("Error in getUserInfo");
             console.error(error);
-        }
+        };
     };
 
     const scrollHomeStats = (currentStatsShowing) => {
@@ -124,45 +113,36 @@ console.log(props.user);
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>
-            {props.userClosedForecastCount > 0 &&
+            {userClosedForecastCount > 0 &&
                 <ClosedProblemModal 
                     show={showClosedProblemModal}
                     setShowClosedProblemModal={setShowClosedProblemModal}
-                    // userObj={userObj === undefined ? props.user : userObj}>
-                    userClosedForecastCount={props.userClosedForecastCount}
+                    userClosedForecastCount={userClosedForecastCount}
                     user={props.user}
                     username={props.username}
                     userBrierScores={props.userBrierScores}
-                    setUserClosedForecastCount={props.setUserClosedForecastCount}>
+                    setUserClosedForecastCount={setUserClosedForecastCount}>
                 </ClosedProblemModal>
             } 
-            {/* <button type="button" onClick={() => setShowModal(true)}>
-                Open
-            </button> */}
             <div className="home-page-div">
                 <div className="home-page-grid">
                     <div className="home-page-news-feed">
                         <HomeNewsFeed 
                             username={props.username} 
-                            // user={props.user}
-                            // Trying this one as the getClosed function in UE updates the userObj state variable
-                            userObj={props.userObj}
-                            userMarkets={props.userMarkets}
+                            userObj={userObj}
+                            userMarkets={userMarkets}
                             handleFirstPost={setShowModal} 
                             handleFirstPostModalContent={setModalContent}
                         />
                     </div>
                     <div className="home-page-stats-div">
                         <HomeProfilePreview 
-                            user={props.user}
+                            user={userObj}
                         />
                         <NewForecastsCallToAction username={props.username} /> 
                         <div className={onboardingClassName}>
                             <Onboarding 
-                                // username={props.username}
-                                // user={props.user}
-                                // userObj={userObj}
-                                userOnboarding={props.userOnboarding}
+                                userOnboarding={userOnboarding}
                                 handleClick={() => onboardingButtonClick(showOnboarding, buttonText)} 
                                 buttonText={buttonText} 
                                 isHidden={showOnboarding}
@@ -176,13 +156,13 @@ console.log(props.user);
                             subtitle={subtitle} 
                             handleClick={scrollHomeStats} 
                             username={props.username} 
-                            user={props.user} 
+                            user={userObj} 
                             forecasts={props.forecasts}
                             currentAvgBrier={currentAvgBrier}
                         />
                         <HomeButtonLarge 
                             title="Your Recent Stats"
-                            user={props.user} 
+                            user={userObj} 
                         /> 
                         <HomeChangeLogPreview />
                         <div className="report-any-issues-container">

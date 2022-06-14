@@ -44,17 +44,17 @@ function HomeNewsFeed(props) {
         } else if (causeFeedNewsFeedRefreshWithoutAnimation === false) {
             setNewPostLoading(true);
             // setTimeout(() => {
-            getAllNewsFeedPostsFromDB();
-            // getUserMarketsFromDB(props.username);
-            
-            // Version without querying server:
-            getUserMarketsFromDB(props.userMarkets);
-            setNewPostLoading(false);
-            // }, 1000);
+                getAllNewsFeedPostsFromDB();
+                // getUserMarketsFromDB(props.username);
+                
+                // Version without querying server:
+                getUserMarketsFromDB(props.userMarkets);
+                setNewPostLoading(false);
+            // }, 500);
         };
         console.log("NewsFeed UE");
-    // }, [causeNewsFeedRefresh, causeFeedNewsFeedRefreshWithoutAnimation, props.username]);
-    }, [props.userObj, props.userMarkets]);
+    }, [causeNewsFeedRefresh, causeFeedNewsFeedRefreshWithoutAnimation, props.username, props.userMarkets, props.userObj]);
+    // }, [props.userObj, props.userMarkets]);
 
     const getAllNewsFeedPostsFromDB = async () => {
         try {
@@ -87,8 +87,8 @@ function HomeNewsFeed(props) {
     // Not-querying server
     const getUserMarketsFromDB = (userMarkets) => {
         try {
-console.log("DEBUGGING");
-console.log(userMarkets);
+            // console.log("DEBUGGING");
+            // console.log(userMarkets);
             const allMarkets = userMarkets;
             setUserMarkets(allMarkets);
             setFilters(allMarkets);
