@@ -7,9 +7,10 @@ function ForecastResults(props) {
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(async () => {
-        console.log("Forecast Results UE");
-        if (props.isClosed === true) {
+    useEffect(() => {
+        console.log("Forecast Results UE2");
+        async function doEffect() {
+            if (props.isClosed === true) {
             setLoading(true);
             // get all users
             const allUsers = await getAllUsers();
@@ -19,7 +20,9 @@ function ForecastResults(props) {
         setTimeout(() => {
             setLoading(false);
         }, 500);
-    }, [props.problemName]);
+        };
+        doEffect();
+    }, [props.problemName, props.isClosed]);
 
     const getAllUsers = async () => {
         try {
@@ -75,7 +78,7 @@ function ForecastResults(props) {
                                             <td><h3>{item.score}</h3></td>
                                     </tr>
                                 )
-                            } else if (index % 2 == 0) {
+                            } else if (index % 2 === 0) {
                                 return (
                                     <tr
                                         key={item.username}

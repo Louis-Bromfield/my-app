@@ -117,9 +117,12 @@ function LeaderboardMenu(props) {
         };
     };
 
+    // ------------------------------------------------------------------------------------
+    // Could this one and pullAllMarketsFromDB be merged into one API request?
     const checkIfUserIsInMarkets = async (username) => {
         try {
             const allUserLeaderboardsFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${username}`);
+            console.log(allUserLeaderboardsFromDB.data);
             if (allUserLeaderboardsFromDB.data[0].length === 0) {
                 setUserInNoMarkets(true)
             } else {
@@ -137,8 +140,10 @@ function LeaderboardMenu(props) {
 
     const pullAllMarketsFromDB = async (username) => {
         const leaderboardDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/justNames/${username}`);
+        console.log(leaderboardDocument.data);
         setAllMarkets(leaderboardDocument.data);
     };
+    // ------------------------------------------------------------------------------------
 
     // Filter out the leaderboards where the user has not responded to an invite
     const filterLeaderboardsByInvite = (markets, username, accepted) => {
@@ -235,6 +240,8 @@ function LeaderboardMenu(props) {
             return false;
         }
         try {
+            // If we already have a get request for this stuff, set it into state and just pull from that state variable rather than do this request again
+            // Answer: we don't
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             setLoading(true);
             for (let i = 0; i < markets.length; i++) {
@@ -253,7 +260,6 @@ function LeaderboardMenu(props) {
 
     const updateOnboardingAndUserMarkets = async (markets, username) => {
         try {
-            // Try to redo this so that we don't need to do the GET first 
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             if (userDocument.data[0].onboarding.joinAMarket === true) {
                 userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 5;

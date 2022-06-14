@@ -11,67 +11,68 @@ function ForecastArticlesDisplay(props) {
         try {
             let term;
             let googleNewsScrapeResult;
-            if (searchTerm.includes("Macron")) {
-                term = "Macron";
-                googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${term}`);
-            } else if (searchTerm.includes("Pécresse") || (searchTerm.includes("Pecresse"))) {
-                term = "Pecresse"
-                googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${term}`);
-            } else if (searchTerm.includes("Zemmour")) {
-                term = "Zemmour"
-                googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${term}`);
-            } else if (searchTerm.includes("Le Pen")) {
-                term = "Le Pen";
-                googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${term}`);
+            if (searchTerm.includes("Wakefield")) {
+                term = "Wakefield by-election";
+            } else if (searchTerm.includes("Tiverton") || searchTerm.includes("Honiton")) {
+                term = "Tiverton and Honiton"
+            } else if (searchTerm.includes("Boris") || searchTerm.includes("Johnson")) {
+                term = "Boris Johnson";
+            } else if (searchTerm.includes("Kier") || searchTerm.includes("Starmer")) {
+                term = "Kier Starmer";
+            } else if (searchTerm.includes("Starmer")) {
+                term = "Starmer";
+            } else if (searchTerm.includes("poll")) {
+                term = "UK poll";
             } else {
-                googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${market}`);
+                term = "UK Politics";
             };
+            googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${term}`);
             setArticles(googleNewsScrapeResult.data);
         } catch (error) {
             console.error(error);
         };
     };
 
-    // useEffect(() => {
-    //     setArticles("loading");
-    //     googleNewsScrape(props.searchTerm, props.market);
-    // }, [props.searchTerm]);
+    useEffect(() => {
+        setArticles("loading");
+        googleNewsScrape(props.searchTerm, props.market);
+    }, [props.searchTerm, props.market]);
 
-    // if (articles === "loading") {
+    if (articles === "loading") {
         return <div className="articles-loading">
-            <h2>This section is under construction!</h2>
-            {/* <h2>Loading potentially useful articles...</h2> */}
-            {/* <ReactLoading type="bars" color="#404d72" height="15%" width="15%" /> */}
+            {/* <h2>This section is under construction!</h2> */}
+            <h2>Loading potentially useful articles...</h2>
+            <ReactLoading type="bars" color="#404d72" height="15%" width="15%" />
         </div>
-    // } else {
-    //     return (
-    //         <div className="articles">
-    //             <h3>The articles shown below are generated from a web scrape of Google News using the problem as written above. This can result in a wide variety in terms of their relevance and usefulness.</h3>
-    //             {articles !== "loading" && <div className="articles-grid">
-    //                 {articles.map((article, index) => {
-    //                     if (article.img === "N/A") {
-    //                         article.img = PlaceholderIcon;
-    //                     }
-    //                     return (
-    //                         <a href={article.link} rel="noreferrer" target="_blank" key={index} style={{ "textDecoration": "none"}}>
-    //                             <div className="article-list-item">
-    //                                 <div className="article-list-item-img-container">
-    //                                     <img className="article-list-item-img" src={article.img} alt="" />
-    //                                 </div>
-    //                                 <div className="article-list-item-text-div">
-    //                                     <h3 className="article-list-item-title">{article.title}</h3>
-    //                                     <p className="article-list-item-description">{article.description}</p>
-    //                                     <hr />
-    //                                     <h5 className="article-list-item-publisher">{article.source}</h5>
-    //                                 </div>
-    //                             </div>
-    //                         </a>
-    //                     )
-    //                 })}
-    //             </div>}
-    //         </div>
-    //     )
-    // }
+    } else {
+        return (
+            <div className="articles">
+                <h3>The articles shown below are generated from a web scrape of Google News using key words in the problem above. This can result in a wide variety in terms of their relevance and usefulness.</h3>
+                {articles !== "loading" && <div className="articles-grid">
+                    {articles.map((article, index) => {
+                        if (article.img === "N/A") {
+                            article.img = PlaceholderIcon;
+                        }
+                        return (
+                            <a href={article.link} rel="noreferrer" target="_blank" key={index} style={{ "textDecoration": "none"}}>
+                                <div className="article-list-item">
+                                    <div className="article-list-item-img-container">
+                                        <img className="article-list-item-img" src={article.img} alt="" />
+                                    </div>
+                                    <div className="article-list-item-text-div">
+                                        <h3 className="article-list-item-title">{article.title}</h3>
+                                        <p className="article-list-item-description">{article.description}</p>
+                                        <hr />
+                                        <h5 className="article-list-item-publisher">{article.source}</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        )
+                    })}
+                </div>}
+            </div>
+        )
+    }
 }
 
 export default ForecastArticlesDisplay;

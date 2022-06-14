@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './IndividualLeaderboard.css';
 import PropTypes from 'prop-types';
-import * as AiIcons from 'react-icons/ai';
+// import * as AiIcons from 'react-icons/ai';
 import Top3Users from './IndividualLeaderboardComponents/Top3Users';
 import LeaderboardSpecificStats from './IndividualLeaderboardComponents/LeaderboardSpecificStats';
 import Leaderboard from './IndividualLeaderboardComponents/Leaderboard';
 import axios from 'axios';
 import ConfirmationModal from '../../../components/ConfirmationModal';
-import req from 'express/lib/request';
+// import req from 'express/lib/request';
 
 function IndividualLeaderboard(props) {
     const history = useHistory();
@@ -28,15 +28,6 @@ function IndividualLeaderboard(props) {
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);
     const [ffData, setFFData] = useState([]);
     const [leaderboardFilter, setLeaderboardFilter] = useState("all");
-    
-    // let index = 0;
-    // for (let i = 0; i < navigationOrder.length; i++) {
-    //     if (props.location.user === true && navigationOrder[i] === currentLeaderboardName) {
-    //         index = i;
-    //     } else if (props.location.user === false && navigationOrder[i][0] === currentLeaderboardName) {
-    //         index = i;
-    //     };
-    // };
 
     useEffect(() => {
         if (props.location.leaderboardName === undefined) {
@@ -47,34 +38,6 @@ function IndividualLeaderboard(props) {
             setCurrentLeaderboardName(localStorage.getItem('currentLeaderboardName'));
             getLeaderboardData(props.location.leaderboardName);
         }
-        // if (props.location.user === false) {
-        //     if (props.location.navigationOrderUnsorted === undefined) {
-        //         const arrFromLS = localStorage.getItem('navigationOrder').split(",");
-        //         let sortedArrFromLS = [];
-        //         for (let i = 0; i < arrFromLS.length; i += 2) {
-        //             sortedArrFromLS.push([arrFromLS[i], Boolean(arrFromLS[i+1])]);
-        //         };
-        //         setNavigationOrder(sortedArrFromLS);
-        //         return;
-        //     } else {
-        //         localStorage.setItem('navigationOrder', props.location.navigationOrderUnsorted);
-        //         setNavigationOrder(props.location.navigationOrderUnsorted);
-        //         return;
-        //     }
-        // } else if (props.location.user === true) {
-        //     if (props.location.navigationOrderUnsorted === undefined) {
-        //         setNavigationOrder(localStorage.getItem('navigationOrder').split(","));
-        //         return;
-        //     } else {
-        //         let navOrder = [];
-        //         for (let i = 0; i < props.location.navigationOrderUnsorted.length; i++) {
-        //             navOrder.push(props.location.navigationOrderUnsorted[i].leaderboardName);
-        //         }
-        //         localStorage.setItem('navigationOrder', navOrder);
-        //         setNavigationOrder(localStorage.getItem('navigationOrder').split(","));
-        //         return;
-        //     };
-        // };
         console.log("Individual Leaderboard UE");
     }, []);
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './ForecastAdmin.css';
 import axios from 'axios';
 
-function ForecastAdmin() {
+function ForecastAdmin(props) {
     const [allForecasts, setAllForecasts] = useState([]);
     const [newProblemName, setNewProblemName] = useState("");
     const [newProblemPotentialOutcomes, setNewProblemPotentialOutcomes] = useState([]);
@@ -58,7 +58,7 @@ function ForecastAdmin() {
 
     const getAllMarketsFromDB = async () => {
         try {
-            const allMarketsDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/justNames/${localStorage.getItem("username")}`);
+            const allMarketsDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/justNames/${props.username}`);
             let filteredbyIsFFOrNot = [];
             for (let i = 0; i < allMarketsDocument.data.length; i++) {
                 if (allMarketsDocument.data[i][2] === true) {

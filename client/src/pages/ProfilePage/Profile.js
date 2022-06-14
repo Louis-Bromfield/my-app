@@ -60,34 +60,38 @@ console.log("Profile.js UE");
                 };
             };
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/profileData/${username}`);
-            setUserObj(userDocument.data.userObj);
-            setFantasyForecastPoints(userDocument.data.userObj.fantasyForecastPoints);
-            setLevel(Math.floor((userDocument.data.userObj.fantasyForecastPoints/100)).toFixed(0));
-            setBrierAverage(Number(userDocument.data.averageBrier).toFixed(0));
-            setBestForecast(`${(userDocument.data.bestBrier).toFixed(2)} / 110 - ${userDocument.data.bestForecastProblem}`);
-            setBrierScoresArr(userDocument.data.userObj.brierScoresArr);
-            if (userDocument.data.userObj.fantasyForecastPoints < 500) {
-                setForecasterRank("Guesser");
-            } else if (userDocument.data.userObj.fantasyForecastPoints >= 500 && userDocument.data.userObj.fantasyForecastPoints < 1000) {
-                setForecasterRank("Predictor");
-            } else if (userDocument.data.userObj.fantasyForecastPoints >= 1000 && userDocument.data.userObj.fantasyForecastPoints < 1500) {
-                setForecasterRank("Forecaster");
-            } else if (userDocument.data.userObj.fantasyForecastPoints >= 1500 && userDocument.data.userObj.fantasyForecastPoints < 2000) {
-                setForecasterRank("Seer");
-            } else if (userDocument.data.userObj.fantasyForecastPoints >= 2000 && userDocument.data.userObj.fantasyForecastPoints < 2500) {
-                setForecasterRank("Soothsayer");
-            } else if (userDocument.data.userObj.fantasyForecastPoints >= 2500 && userDocument.data.userObj.fantasyForecastPoints < 3000) {
-                setForecasterRank("Oracle");
-            } else if (userDocument.data.userObj.fantasyForecastPoints >= 3000 && userDocument.data.userObj.fantasyForecastPoints < 3500) {
-                setForecasterRank("Prophet");
-            } else if (userDocument.data.userObj.fantasyForecastPoints >= 3500 && userDocument.data.userObj.fantasyForecastPoints < 4000) {
-                setForecasterRank("Clairvoyant");
-            } else if (userDocument.data.userObj.fantasyForecastPoints >= 4000 && userDocument.data.userObj.fantasyForecastPoints < 4500) {
-                setForecasterRank("Augur");
-            } else if (userDocument.data.userObj.fantasyForecastPoints >= 4500 && userDocument.data.userObj.fantasyForecastPoints < 5000) {
-                setForecasterRank("Omniscient");
-            } else if (userDocument.data.userObj.fantasyForecastPoints >= 5000) {
-                setForecasterRank("Diviner");
+            if (userDocument.data.userObj === null) {
+                console.log("No profiles were found with this username. Please try again.");
+            } else if (userDocument.data.userObj !== null) {
+                setUserObj(userDocument.data.userObj);
+                setFantasyForecastPoints(userDocument.data.userObj.fantasyForecastPoints);
+                setLevel(Math.floor((userDocument.data.userObj.fantasyForecastPoints/100)).toFixed(0));
+                setBrierAverage(Number(userDocument.data.averageBrier).toFixed(0));
+                setBestForecast(`${(userDocument.data.bestBrier).toFixed(2)} / 110 - ${userDocument.data.bestForecastProblem}`);
+                setBrierScoresArr(userDocument.data.userObj.brierScoresArr);
+                if (userDocument.data.userObj.fantasyForecastPoints < 500) {
+                    setForecasterRank("Guesser");
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 500 && userDocument.data.userObj.fantasyForecastPoints < 1000) {
+                    setForecasterRank("Predictor");
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 1000 && userDocument.data.userObj.fantasyForecastPoints < 1500) {
+                    setForecasterRank("Forecaster");
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 1500 && userDocument.data.userObj.fantasyForecastPoints < 2000) {
+                    setForecasterRank("Seer");
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 2000 && userDocument.data.userObj.fantasyForecastPoints < 2500) {
+                    setForecasterRank("Soothsayer");
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 2500 && userDocument.data.userObj.fantasyForecastPoints < 3000) {
+                    setForecasterRank("Oracle");
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 3000 && userDocument.data.userObj.fantasyForecastPoints < 3500) {
+                    setForecasterRank("Prophet");
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 3500 && userDocument.data.userObj.fantasyForecastPoints < 4000) {
+                    setForecasterRank("Clairvoyant");
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 4000 && userDocument.data.userObj.fantasyForecastPoints < 4500) {
+                    setForecasterRank("Augur");
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 4500 && userDocument.data.userObj.fantasyForecastPoints < 5000) {
+                    setForecasterRank("Omniscient");
+                } else if (userDocument.data.userObj.fantasyForecastPoints >= 5000) {
+                    setForecasterRank("Diviner");
+                };
             };
         } catch (error) {
             console.error("Error in Profile.js > retrieveUserInfoFromDB");
@@ -186,15 +190,6 @@ console.log("Profile.js UE");
                         {profileTab === "my-forecasts" && <ProfileForecasts userObj={userObj} searched={false} />}
                         {profileTab === "my-rewards" && <ProfileRewards />}
                         </div>
-                        {/* <ProfileDetails 
-                            username={props.username} 
-                            updateUsername={props.updateUsername} 
-                            setShowModal={setShowModal}
-                            setModalContent={setModalContent}
-                        /> */}
-                        {/* Add the ability to download all their data here */}
-                        {/* <h2>Download Your Data</h2>
-                        <h3>This feature is under construction, come back soon!</h3> */}
                 </div>
             </div>
         </div>

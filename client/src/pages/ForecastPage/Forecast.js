@@ -38,7 +38,8 @@ function Forecast(props) {
                     determined by which markets you have joined. 
                 </p>
             </div>
-            {(props.username === "LouisB" && localStorage.getItem("aPW") === "73485093485734974592398190489025736hbn45") && <ForecastAdmin />}
+            {/* Replace aPW with JWT verification? */}
+            {(props.username === "LouisB" && localStorage.getItem("aPW") === "73485093485734974592398190489025736hbn45") && <ForecastAdmin username={props.username}/>}
             <ForecastSubmission 
                 toggleDiv={setForecastSelected} 
                 setForecastSingleCertainty={setForecastSingleCertainty}

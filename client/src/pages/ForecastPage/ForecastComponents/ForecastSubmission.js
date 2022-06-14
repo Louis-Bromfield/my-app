@@ -98,6 +98,7 @@ function ForecastSubmission(props) {
         };
     };
 
+    // Market Statistics uses the output of this (see props line at bottom of try block), good!
     const getLeaderboardFromDB = async (marketName) => {
         if (marketName === undefined) return;
         try {
@@ -536,12 +537,6 @@ function ForecastSubmission(props) {
             setForecastResponseMessage("Your certainties do not equal 100.");
             return;
         };
-        console.log(certainty1);
-        console.log(certainty2);
-        console.log(certainty3);
-        console.log(comments);
-        console.log(username);
-        console.log(forecast);
         try {
             const submittedForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/submitMultiple`, {
                 problemName: forecast,
@@ -590,6 +585,7 @@ function ForecastSubmission(props) {
                 setModalContent2("");
             };
         } catch (error) {
+            console.error("Error in updateOnboarding");
             console.error(error);
         };
     };
