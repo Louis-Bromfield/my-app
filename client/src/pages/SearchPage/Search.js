@@ -110,9 +110,9 @@ function Search(props) {
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/profileData/${username}`);
             console.log(userDocument);
             console.log(userDocument.data)
-            if (userDocument.data.length === 0) {
+            if (userDocument.data.userObj === null) {
                 setErrorMessage("No profiles were found with this username. Please try again.");
-            } else if (userDocument.data.length > 0) {
+            } else if (userDocument.data.userObj !== null) {
                 console.log("Came here yoi");
                 retrieveUserRankFromDB(username);
                 setPlayerUsername(userDocument.data.userObj.username);

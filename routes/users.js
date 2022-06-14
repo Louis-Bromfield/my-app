@@ -84,30 +84,38 @@ router.get("/profileData/:username", async (req, res) => {
     try {
         const user = await Users.find({ username: req.params.username });
         console.log(user);
-        // Get Brier Average / Highest Brier / Best Forecast
-        let bestBrier = 0;
-        let bestForecastProblem = "";
-        let totalBrier = 0;
-        let averageBrier = 0;
-        for (let i = 0; i < user[0].brierScores.length; i++) {
-            totalBrier += user[0].brierScores[i].brierScore;
-            // Brier Scores array to consist of { brierScore: X.XX, problemName: "Problem to be forecasted" }
-            if (user[0].brierScores[i].brierScore > bestBrier) {
-                bestBrier = user[0].brierScores[i].brierScore;
-                bestForecastProblem = user[0].brierScores[i].problemName;
+        if (user.length === 0) {
+            res.json({ 
+                userObj: null,
+                bestBrier: null,
+                bestForecastProblem: null,
+                averageBrier: null,})
+        } else {
+            // Get Brier Average / Highest Brier / Best Forecast
+            let bestBrier = 0;
+            let bestForecastProblem = "";
+            let totalBrier = 0;
+            let averageBrier = 0;
+            for (let i = 0; i < user[0].brierScores.length; i++) {
+                totalBrier += user[0].brierScores[i].brierScore;
+                // Brier Scores array to consist of { brierScore: X.XX, problemName: "Problem to be forecasted" }
+                if (user[0].brierScores[i].brierScore > bestBrier) {
+                    bestBrier = user[0].brierScores[i].brierScore;
+                    bestForecastProblem = user[0].brierScores[i].problemName;
+                };
+                
             };
-            
-        };
-        averageBrier = (totalBrier / user[0].brierScores.length).toFixed(2);
+            averageBrier = (totalBrier / user[0].brierScores.length).toFixed(2);
 
-        const toReturn = {
-            userObj: user[0],
-            bestBrier: bestBrier,
-            bestForecastProblem: bestForecastProblem,
-            averageBrier: averageBrier,
-        };
+            const toReturn = {
+                userObj: user[0],
+                bestBrier: bestBrier,
+                bestForecastProblem: bestForecastProblem,
+                averageBrier: averageBrier,
+            };
 
-        res.json(toReturn);
+            res.json(toReturn);
+        };
     } catch (error) {
         console.error("Error in users > profileData/:username");
         console.error(error);
