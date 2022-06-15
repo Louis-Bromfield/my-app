@@ -7,10 +7,11 @@ function TopicQuiz(props) {
     let selectedAnswers = [];
 
     const verifyAndSubmit = async (username) => {
-        persistQuizCompletionToDBAndUpdateOnboarding(username, props.topic);
+        // persistQuizCompletionToDBAndUpdateOnboarding(username, props.topic);
         const correctAnswers = await checkAnswers();
         props.updateQuizResults(correctAnswers);
         if (correctAnswers !== "FAIL") {
+            await persistQuizCompletionToDBAndUpdateOnboarding(username, props.topic);
             props.changeLearnPage("loading", props.topic)
             setTimeout(() => {
                 props.changeLearnPage("results", props.topic);
@@ -44,41 +45,46 @@ function TopicQuiz(props) {
         try {
             // Try to redo this so that we don't need to do the GET first 
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
-            console.log(userDocument);
+console.log(userDocument);
             if (userDocument.data[0].onboarding.completeALearnQuiz === true) {
                 userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 20;
-                if (topic === "Brier Scores" && userDocument.data[0].learnQuizzes.brierComplete === false) {
+                if (topic === "Brier Scores") {
                     userDocument.data[0].learnQuizzes.brierComplete = true;
-                    console.log("here brier");
-                    console.log(userDocument.data[0].learnQuizzes.brierComplete);
-                } else if (topic === "The Good Judgment Project" && userDocument.data[0].learnQuizzes.gjpComplete === false) {
+console.log("here brier");
+console.log(userDocument.data[0].learnQuizzes.brierComplete);
+                } else if (topic === "The Good Judgment Project") {
                     userDocument.data[0].learnQuizzes.gjpComplete = true;
-                    console.log("here gjp");
-                    console.log(userDocument.data[0].learnQuizzes.gjpComplete);
-                } else if (topic === "Superforecasters" && userDocument.data[0].learnQuizzes.superforecastersComplete === false) {
+console.log("here gjp");
+console.log(userDocument.data[0].learnQuizzes.gjpComplete);
+                } else if (topic === "Superforecasters") {
                     userDocument.data[0].learnQuizzes.superforecastersComplete = true;
-                    console.log("here superforecaster");
-                    console.log(userDocument.data[0].learnQuizzes.superforecastersComplete);
+console.log("here superforecaster");
+console.log(userDocument.data[0].learnQuizzes.superforecastersComplete);
                 };
-                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
+console.log(userDocument.data[0].learnQuizzes);
+                const updatedLQS = userDocument.data[0].learnQuizzes;
+console.log(updatedLQS);
+                const updated = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
                     { 
                         onboarding: userDocument.data[0].onboarding,
-                        learnQuizzes: userDocument.data[0].learnQuizzes,
+                        learnQuizzes: updatedLQS,
                         fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 
                     }
                 );
+console.log(updated);
                 props.handleQuizCompletion(true);
                 props.handleQuizCompletionModalContent("You just got 20 points for completing a quiz!");
             } else {
                 userDocument.data[0].onboarding.completeALearnQuiz = true;
                 userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 250;
-                if (topic === "Brier Scores" && userDocument.data[0].learnQuizzes.brierComplete === false) {
+                if (topic === "Brier Scores") {
                     userDocument.data[0].learnQuizzes.brierComplete = true;
-                } else if (topic === "The Good Judgment Project" && userDocument.data[0].learnQuizzes.gjpComplete === false) {
+                } else if (topic === "The Good Judgment Project") {
                     userDocument.data[0].learnQuizzes.gjpComplete = true;
-                } else if (topic === "Superforecasters" && userDocument.data[0].learnQuizzes.superforecastersComplete === false) {
+                } else if (topic === "Superforecasters") {
                     userDocument.data[0].learnQuizzes.superforecastersComplete = true;
                 };
+console.log(userDocument.data[0].learnQuizzes);
                 await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
                     { 
                         onboarding: userDocument.data[0].onboarding,

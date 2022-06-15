@@ -69,7 +69,7 @@ function QuizResults(props) {
                             <br />
                             <h3>You answered: {youSelected}</h3>
                             {youSelected === correctAnswer && <h3 style={{ color: "green" }}>This was correct!</h3>}
-                            {youSelected !== correctAnswer && <h3>This was <span style={{ color: "red" }}>incorrect</span>, the correct answer was: {correctAnswer}</h3>}
+                            {youSelected !== correctAnswer && <h3 style={{ color: "red" }}>This was incorrect, the correct answer was: {correctAnswer}</h3>}
                             <br />
                             <hr />
                             <br />
@@ -87,7 +87,7 @@ function QuizResults(props) {
                         <br />
                         <h3>You answered: {youSelected}</h3>
                         {youSelected === correctAnswer && <h3 style={{ color: "green" }}>This was correct!</h3>}
-                        {youSelected !== correctAnswer && <h3>This was <span style={{ color: "red" }}>incorrect</span>, the correct answer was: {correctAnswer}</h3>}
+                        {youSelected !== correctAnswer && <h3 style={{ color: "red" }}>This was incorrect, the correct answer was: {correctAnswer}</h3>}
                         <br />
                         <hr />
                         <br />

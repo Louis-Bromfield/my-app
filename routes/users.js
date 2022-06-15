@@ -246,6 +246,10 @@ router.patch("/imageAPI/:username", parser.single("image"), async (req, res) => 
 // Update a user
 router.patch("/:username", async (req, res) => {
     try {
+console.log(req.params.username);
+console.log(req.body.onboarding)
+console.log(req.body.learnQuizzes)
+console.log(req.body.fantasyForecastPoints)
         const document = await Users.findOne({ username: req.params.username });
         const updatedUser = await Users.findByIdAndUpdate(document._id, {
             username: req.body.username,

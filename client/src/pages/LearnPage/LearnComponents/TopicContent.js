@@ -53,6 +53,12 @@ export const TopicContent = [
         <p><b>Prediction 2:</b> 60% Certainty = Brier Score of 0.32, inversed to 1.68, * 50 = 84/100. Prediction was up for 3 days, or 30% of the forecast window, so 84 * 0.3 = 25.2.</p>
         <p><b>Prediction 3:</b> 90% Certainty = Brier Score of 0.02, inversed to 1.98, * 50 = 99/100. This was my last prediction, up for the final 2 days, or 20% of the window, so 99 * 0.2 = 19.8.</p>
         <p>My Final Score is then a sum of these results + the time score. So (48 + 25.2 + 19.8) + 9.9 = 102.9/110.</p>
+        <p><b>Why did we make this new version?</b></p>
+        <p>Firstly, the Brier Score formula that returns a score from 0-2, as shown above, makes it quite difficult to sufficiently distinguish between scores. Secondly, we added duration weighting for two main reasons:</p>
+        <p><b>1. It encourages you to forecast sooner</b></p>
+        <p>By weighting forecasts by their duration (from forecast submission to update or from forecast submission to problem deadline), the main way to get any sufficiently high score is to submit as early as possible, a normatively fundamental aspect of good forecasting. Rewarding forecasts <b>solely</b> on accuracy is all well and good, but it means that a forecast submitted right before the deadline would be equally rewarded to the same forecast submitted on day one. Weighting them by duration solves this issue.</p>
+        <p><b>2. It encourages you to update sooner</b></p>
+        <p>This uses the same logic as point 1, but duration weighting means that you have to update your forecast as soon as possible in order to get the biggest weighting possible for that forecast. In the above example, if I didn't submit Prediction 3, my second prediction that was a lower certainty on the right outcome would've been weighted by two more days, scoring me 42 (84/100 * 0.5 (5 days)), instead of the 45 that I got by submitting my third forecast (P2: 84/100 * 03 = 25.2 + P3: 99/100 * 0.2 = 19.8). Similarly, had I submitted Prediction 3 sooner, I would've received a bigger weighting for that 99/100. While these differences might seem negligible, it makes the difference in forecasting tournaments, and those differences become even larger the longer you wait to update.</p>
     </div>,
     // The GJP
     <div className="topic-text-paragraph">
