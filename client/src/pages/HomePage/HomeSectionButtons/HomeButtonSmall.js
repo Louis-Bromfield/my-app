@@ -34,26 +34,27 @@ function HomeButtonSmall(props) {
     };
 
     // We could make this serverless if we stored learnQuiz progress inside user documents...
-    const getLearnProgress = async (username) => {
+    const getLearnProgress = async (userLearn) => {
         try {
-            const userLearn = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/learnQuizzes/${username}`);
-            if (userLearn === null) {
+            // const userLearn = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/learnQuizzes/${username}`);
+            if (userLearn === null || userLearn === undefined) {
                 setLearnProgress(0);
                 setTotalQuizCount(0);
                 return;
-            };
-            let totalQuizzes = 0;
-            let completeQuizzes = 0;
-            for (let i = 0; i < Object.values(userLearn.data).length; i++) {
-                if (Object.values(userLearn.data)[i] === true || Object.values(userLearn.data)[i] === false) {
-                    totalQuizzes++;
-                    if (Object.values(userLearn.data)[i] === true) {
-                        completeQuizzes++;
+            } else {
+                let totalQuizzes = 0;
+                let completeQuizzes = 0;
+                for (let i = 0; i < Object.values(userLearn).length; i++) {
+                    if (Object.values(userLearn)[i] === true || Object.values(userLearn)[i] === false) {
+                        totalQuizzes++;
+                        if (Object.values(userLearn)[i] === true) {
+                            completeQuizzes++;
+                        };
                     };
                 };
-            };
-            setLearnProgress(completeQuizzes);
-            setTotalQuizCount(totalQuizzes);
+                setLearnProgress(completeQuizzes);
+                setTotalQuizCount(totalQuizzes);
+            }
         } catch (error) {
             console.error("Error in getLearnProgress > HomeButtonSmall");
             console.error(error);
@@ -88,10 +89,13 @@ function HomeButtonSmall(props) {
     };
 
     useEffect(() => {
+        if (props.userLearnQuizzes !== undefined && props.userLearnQuizzes !== null) {
+            console.log(props.userLearnQuizzes);
+        };
         getBrierScore(props.user);
-        getLearnProgress(props.username);
+        getLearnProgress(props.userLearnQuizzes);
         getLeaderboardRank(props.username);
-    }, [props.user, props.username, props.currentAvgBrier]);
+    }, [props.userLearnQuizzes, props.username, props.currentAvgBrier]);
 
     switch(props.title) {
         case("Your Average Brier Score"):

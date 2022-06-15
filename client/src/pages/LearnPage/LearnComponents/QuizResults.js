@@ -115,8 +115,8 @@ function QuizResults(props) {
                 }
             })}
             <div className="quiz-results-total">
-                <h1>Total:</h1>
-                <h2>You scored {numberOfCorrectAnswers} / {numberOfQuestions}</h2>
+                <h1>Total: {numberOfCorrectAnswers} / {numberOfQuestions}</h1>
+                {/* <h2>You scored {numberOfCorrectAnswers} / {numberOfQuestions}</h2> */}
                 {numberOfQuestions - numberOfCorrectAnswers === 0 && <h3>Congratulations, you got them all correct!</h3>}
                 {numberOfQuestions - numberOfCorrectAnswers === 1 && <h4>An impressive score, but not quite all correct. Feel free to check out the topic content by either re-selecting it from the left-hand menu or the button below, and you always have unlimited attempts at the quiz to test yourself!</h4>}
                 {numberOfQuestions - numberOfCorrectAnswers > 1 && <h4>Don't worry if you didn't get all the answers, you have unlimited access to and unlimited attempts at this quiz!</h4>}

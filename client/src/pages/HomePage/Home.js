@@ -30,6 +30,7 @@ function Home(props) {
     const [userMarkets, setUserMarkets] = useState([]);
     const [userOnboarding, setUserOnboarding] = useState({});
     const [userClosedForecastCount, setUserClosedForecastCount] = useState(0);
+    const [userLearnQuizzes, setUserLearnQuizzes] = useState({ brierComplete: false, gjpComplete: false, superforecastersComplete: false });
 
     const onboardingButtonClick = (showOnboarding, buttonText) => {
         setShowOnboarding(!showOnboarding);
@@ -69,6 +70,8 @@ function Home(props) {
             setUserMarkets(userDocument.data[0].markets);
             setUserOnboarding(userDocument.data[0].onboarding);
             setUserClosedForecastCount(userDocument.data[0].numberOfClosedForecasts);
+            console.log(userDocument.data[0].learnQuizzes);
+            setUserLearnQuizzes(userDocument.data[0].learnQuizzes);
             props.setUserObject(userDocument.data[0]);
         } catch (error) {
             console.error("Error in getUserInfo");
@@ -154,6 +157,7 @@ function Home(props) {
                             handleClick={scrollHomeStats} 
                             username={props.username} 
                             user={userObj} 
+                            userLearnQuizzes={userLearnQuizzes}
                             forecasts={props.forecasts}
                             currentAvgBrier={currentAvgBrier}
                         />

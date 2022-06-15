@@ -66,8 +66,8 @@ function App() {
         profilePicture: userObj.data[0].profilePicture
     });
 
-    // Add user to learnQuizzes
-    await axios.post(`https://fantasy-forecast-politics.herokuapp.com/learnQuizzes/`, { username: username });
+    // Add user to learnQuizzes - commented out as we move learnQuizzes to user documents
+    // await axios.post(`https://fantasy-forecast-politics.herokuapp.com/learnQuizzes/`, { username: username });
 
     console.log(userObj);
     setUserObject(userObj.data[0]);

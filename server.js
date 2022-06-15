@@ -61,6 +61,14 @@ const UserSchema = mongoose.Schema({
             completeALearnQuiz: false
         }
     },
+    learnQuizzes: {
+        type: Object,
+        default: {
+            brierComplete: false,
+            gjpComplete: false,
+            superforecastersComplete: false
+        }
+    },
     brierScores: {
         type: Array,
         default: []
