@@ -28,7 +28,6 @@ router.get("/:problemName", async (req, res) => {
 
 // Get one forecast using ID
 router.get("/getByID/:problemID", async (req, res) => {
-    console.log("get3");
     try {
         const forecast = await Forecasts.find({ _id: req.params.problemID });
         res.json(forecast);

@@ -40,21 +40,24 @@ function ForecastAdmin(props) {
     const [problemPotentialOutcomes, setProblemPotentialOutcomes] = useState([]);
 
     useEffect(() => {
-        getAllForecastsFromDB();
         getAllMarketsFromDB();
+        setAllForecasts(props.allForecasts);
+        if (props.allForecasts.length > 0) {
+            setSelectedProblem(props.allForecasts[0].problemName);
+        }
         console.log("Forecast Admin UE");
-    }, []);
+    }, [props.allForecasts]);
 
-    const getAllForecastsFromDB = async () => {
-        try {
-            const allForecastsDocument = await axios.get('https://fantasy-forecast-politics.herokuapp.com/forecasts');
-            setAllForecasts(allForecastsDocument.data);
-            setSelectedProblem(allForecastsDocument.data[0].problemName);
-        } catch (error) {
-            console.error("Error in ForecastAdmin > getAllForecastsFromDB");
-            console.error(error);
-        };
-    };
+    // const getAllForecastsFromDB = async () => {
+    //     try {
+    //         const allForecastsDocument = await axios.get('https://fantasy-forecast-politics.herokuapp.com/forecasts');
+    //         setAllForecasts(allForecastsDocument.data);
+    //         setSelectedProblem(allForecastsDocument.data[0].problemName);
+    //     } catch (error) {
+    //         console.error("Error in ForecastAdmin > getAllForecastsFromDB");
+    //         console.error(error);
+    //     };
+    // };
 
     const getAllMarketsFromDB = async () => {
         try {

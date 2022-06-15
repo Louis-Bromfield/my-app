@@ -82,10 +82,7 @@ function IndividualLeaderboard(props) {
 
     const leaveMarket = async (leaderboard, username) => {
         try {
-            console.log("here");
-            console.log(localStorage.getItem("markets"));
             let markets = localStorage.getItem("markets").split(",");
-            console.log(markets);
             let index = markets.findIndex(market => market === leaderboard);
             markets.splice(index, 1);
             let newMarkets = [];
@@ -140,7 +137,6 @@ function IndividualLeaderboard(props) {
                 setSendResponseText(`You have invited ${user.username}.`);
             } else if (inviteOrKick === "kick") {
                 await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/kick/${market}`, { username: user });
-                console.log("user kicked!");
                 setSendResponseText(`You have kicked ${user}.`);
             };
         } catch (error) {

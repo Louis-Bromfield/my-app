@@ -23,7 +23,6 @@ function Login(props) {
     // }, []);
 
     const checkCredentials = async (uName, pWord) => {
-        console.log("in checkCredentials");
         if (uName.length < 4 || pWord.length < 4) {
             setErrorMessageForAccountCreation("Your username and password must be at least 5 characters and contain no spaces.");
             return;
@@ -33,7 +32,6 @@ function Login(props) {
         } else {
             try {
                 const userCheckedByUsername = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${uName}`);
-                console.log(userCheckedByUsername);
                 if (userCheckedByUsername.data.length === 1) {
                     setProblematicInfo("username");
                     setCredentialsSuccessfullyChecked(false);
@@ -58,7 +56,6 @@ function Login(props) {
                 setErrorMessage(userObj.data.message);
                 return;
             } else {
-                console.log(userObj);
                 props.setUserObject(userObj.data);
                 props.setUsername(userObj.data.username);
                 props.setUserFFPoints(userObj.data.fantasyForecastPoints);
@@ -159,7 +156,6 @@ function Login(props) {
                         onChange={(e) => { 
                             setCredentialsSuccessfullyChecked();
                             setErrorMessage("");
-                            console.log(e.target.value);
                             setPasswordForLogin(e.target.value);
                         }}
                     />

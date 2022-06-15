@@ -5,7 +5,7 @@ import Modal from '../../../components/Modal';
 function ForecastResultsBreakdown(props) {
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
-    // console.log(`the forecastClosed prop is currently = ${props.forecastClosed}`);
+    
     return (
         <div>
             <Modal show={showModal} handleClose={() => setShowModal(false)}>

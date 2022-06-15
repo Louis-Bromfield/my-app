@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Profile.css';
 import ProfileStats from './ProfileStats';
-import ProfileDetails from './ProfileDetails';
 import Modal from '../../components/Modal';
 import ProfileRewards from './ProfileRewards';
 import ProfileForecasts from './ProfileForecasts';
@@ -20,6 +19,7 @@ function Profile(props) {
     const [level, setLevel] = useState(0);
     const [profileTab, setProfileTab] = useState("my-stats");
     const [forecasterRank, setForecasterRank] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
         if (props.user.markets === undefined) {
@@ -41,6 +41,7 @@ console.log("Profile.js UE");
 
     const retrieveUserInfoFromDB = async (username) => {
         try {
+            setErrorMessage("");
             const lbName = "Fantasy Forecast All-Time"
             const userData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${lbName}`);
             // const lbRankings = userData.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
@@ -61,7 +62,7 @@ console.log("Profile.js UE");
             };
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/profileData/${username}`);
             if (userDocument.data.userObj === null) {
-                console.log("No profiles were found with this username. Please try again.");
+                setErrorMessage("No profiles were found with this username. Please try again.");
             } else if (userDocument.data.userObj !== null) {
                 setUserObj(userDocument.data.userObj);
                 setFantasyForecastPoints(userDocument.data.userObj.fantasyForecastPoints);
@@ -142,7 +143,7 @@ console.log("Profile.js UE");
             </Modal>
             <div className="main-profile-grid">
                 <div className="profile-grid">
-                    <h1 className="profile-header">{props.username}</h1>
+                    <h1 className="profile-header">{errorMessage === "" ? props.username : errorMessage}</h1>
                     <div className="profile-main-info">
                         <img className="profile-profile-pic" src={props.profilePicture || localStorage.getItem("profilePicture")} alt="Temporary profile pic"/>
                         <div className="profile-summary">

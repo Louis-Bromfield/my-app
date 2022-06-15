@@ -11,8 +11,6 @@ const ClosedProblemModal = (props) => {
     const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
 
     useEffect(() => {
-console.log(props.user);
-console.log(props.userClosedForecastCount);
         const arr = [];
         let i = props.user.brierScores.length-1;
         while (i >= props.user.brierScores.length-(props.userClosedForecastCount)) {
@@ -32,7 +30,6 @@ console.log(props.userClosedForecastCount);
     };
 
     const setNewProblem = () => {
-        console.log("clicked")
         if (currentProblemIndex === brierArr.length-1) {
             setCurrentProblem(brierArr[0]);
             setCurrentProblemIndex(0);

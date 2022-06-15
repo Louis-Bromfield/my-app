@@ -78,7 +78,6 @@ router.patch("/:id", async (req, res) => {
 
 // Update a post
 router.patch("/postComment/:id", async (req, res) => {
-    console.log("here");
     try {
         // New comment, not a reply
         if (req.body.isNewComment === true) {

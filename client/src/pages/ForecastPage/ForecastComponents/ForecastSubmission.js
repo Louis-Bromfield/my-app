@@ -58,17 +58,17 @@ function ForecastSubmission(props) {
     };
 
     useEffect(() => {
+        console.log("ForecastSubmission UE");
         if (props.markets === undefined || typeof props.markets === "string") {
             getAllForecastsFromDB(localStorage.getItem('markets').split(","));    
         } else {
             getAllForecastsFromDB(props.markets);
         }
         getLeaderboardFromDB(props.selectedForecast.market);
-    }, [props.selectedForecast, props.markets]);
+    }, [props.selectedForecast, props.markets, props.allForecasts]);
 
     const getAllForecastsFromDB = async (userMarkets) => {
         try {
-            const allForecastsUnfiltered = await axios.get('https://fantasy-forecast-politics.herokuapp.com/forecasts');
             let filtered = [];
             let filteredAndOrganised = [];
             for (let i = 0; i < userMarkets.length; i++) {
@@ -77,15 +77,14 @@ function ForecastSubmission(props) {
                 };
             };
             let forecastsAreAvailable = false;
-            for (let i = 0; i < allForecastsUnfiltered.data.length; i++) {
-                if (userMarkets.includes(allForecastsUnfiltered.data[i].market) && new Date() > new Date(allForecastsUnfiltered.data[i].startDate)) {
-                    filtered.push(allForecastsUnfiltered.data[i]);
-                    let index = userMarkets.indexOf(allForecastsUnfiltered.data[i].market);
-                    filteredAndOrganised[index].push(allForecastsUnfiltered.data[i]);
+            for (let i = 0; i < props.allForecasts.length; i++) {
+                if (userMarkets.includes(props.allForecasts[i].market) && new Date() > new Date(props.allForecasts[i].startDate)) {
+                    filtered.push(props.allForecasts[i]);
+                    let index = userMarkets.indexOf(props.allForecasts[i].market);
+                    filteredAndOrganised[index].push(props.allForecasts[i]);
                     forecastsAreAvailable = true;
                 };
             };
-            // console.log(`if they have no problems, this should be false ==> ${forecastsAreAvailable}, otherwise true`);
             if (forecastsAreAvailable === false) {
                 setMarketWarning(true)
             } else {
@@ -127,7 +126,6 @@ function ForecastSubmission(props) {
             props.toggleDiv(true);
             setHasAForecastBeenSelected(true);
             setSelectedForecast(e.target.value);
-            // console.log(e.target.value);
             pullForecastDetailsAndCheckIfAlreadyAttempted(e.target.value);
             setIsInputDisabled(false);
             getForecastDetails(e.target.value);
@@ -174,7 +172,6 @@ function ForecastSubmission(props) {
                                         lowestChanged = true;
                                     };
                                 } else if (forecast.singleCertainty === false) {
-                                    console.log(forecast.submittedForecasts[i].forecasts[j])
                                     totalOutcomeOne += (forecast.submittedForecasts[i].forecasts[j].certainties.certainty1*100);
                                     totalOutcomeTwo += (forecast.submittedForecasts[i].forecasts[j].certainties.certainty2*100);
                                     totalOutcomeThree += (forecast.submittedForecasts[i].forecasts[j].certainties.certainty3*100);
@@ -194,7 +191,6 @@ function ForecastSubmission(props) {
                     setLowestCertainty("N/A");
                 }
             } else if (forecast.singleCertainty === false) {
-                console.log(totalOutcomeOne);
                 setOutcomeOneCertainty(`${(totalOutcomeOne / totalNumOfForecasts).toFixed(2)}%`);
                 setOutcomeTwoCertainty(`${(totalOutcomeTwo / totalNumOfForecasts).toFixed(2)}%`);
                 setOutcomeThreeCertainty(`${(totalOutcomeThree / totalNumOfForecasts).toFixed(2)}%`);

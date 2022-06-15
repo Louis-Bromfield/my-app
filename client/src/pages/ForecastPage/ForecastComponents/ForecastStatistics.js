@@ -157,7 +157,7 @@ function ForecastStatistics(props) {
             {props.forecastSingleCertainty === true &&
                 <div className="forecast-statistics-grid">
                     <div className="forecast-statistics-grid-row-odd">
-                        <h3>Average Certainty:</h3>
+                        <h3>Avg Certainty:</h3>
                         <h3>{currentAverageCertainty}</h3>
                     </div>
                     <div className="forecast-statistics-grid-row-even">
@@ -177,15 +177,15 @@ function ForecastStatistics(props) {
             {props.forecastSingleCertainty === false &&
                 <div className="forecast-statistics-grid">
                     <div className="forecast-statistics-grid-row-odd">
-                        <h3>Average {props.selectedForecast.potentialOutcomes[0]}:</h3>
+                        <h3>Avg {props.selectedForecast.potentialOutcomes[0]}:</h3>
                         <h3>{isNaN(avgOutcomeOne) ? "N/A" : `${avgOutcomeOne}%`}</h3>
                     </div>
                     <div className="forecast-statistics-grid-row-even">
-                        <h3>Average {props.selectedForecast.potentialOutcomes[1]}</h3>
+                        <h3>Avg {props.selectedForecast.potentialOutcomes[1]}</h3>
                         <h3>{isNaN(avgOutcomeTwo) ? "N/A" : `${avgOutcomeTwo}%`}</h3>
                     </div>
                     <div className="forecast-statistics-grid-row-odd">
-                        <h3>Average {props.selectedForecast.potentialOutcomes[2]}</h3>
+                        <h3>Avg {props.selectedForecast.potentialOutcomes[2]}</h3>
                         <h3>{isNaN(avgOutcomeThree) ? "N/A" : `${avgOutcomeThree}%`}</h3>
                     </div>
                     <div className="forecast-statistics-grid-row-even">

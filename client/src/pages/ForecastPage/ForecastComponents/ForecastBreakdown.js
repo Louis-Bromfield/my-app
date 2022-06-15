@@ -30,10 +30,14 @@ function ForecastBreakdown(props) {
     }, [props.selectedForecast, props.username, props.userHasAttempted, forecastClosed]);
 
     const getPredictionData = async (selectedForecast, username, forecastClosed) => {
+        console.log(selectedForecast)
+        console.log(username)
+        console.log(forecastClosed)
         try {
             console.log(`forecastClosed === ${forecastClosed}`)
             if (forecastClosed === true) {
                 const userForecastsDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${selectedForecast}/${true}/${username}/${singleCertainty}`);
+                console.log(userForecastsDocument.data)
                 setPredictionData(userForecastsDocument.data);
                 calculateTScore(userForecastsDocument.data);
             } else if (forecastClosed === false) {

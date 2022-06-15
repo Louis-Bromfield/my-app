@@ -24,7 +24,6 @@ function ForecastProblemLineChart(props) {
 
   useEffect(() => {
     formatCertainties(props.selectedForecast, props.updateTodayStats, props.username);
-    // console.log(props.selectedForecast);
     console.log("Line Chart UE");
   }, [props.selectedForecast, props.refresh]);
 
@@ -60,7 +59,6 @@ function ForecastProblemLineChart(props) {
         };
         let sliceIndex = 0;
         if ((new Date(selectedForecast.closeDate) - new Date(selectedForecast.startDate))/1000 < 604800) {
-            // console.log("yep slice index = 18");
             // Until WE CAN GET CONSISTENCY KEEP IT ALL AT 15
             // sliceIndex = 18;
             sliceIndex = 15;
@@ -172,7 +170,6 @@ function ForecastProblemLineChart(props) {
                 borderWidth: 4,
                 pointRadius: 0
             });
-            // console.log(dailyAverages);
             // Create line for days with no prediction (since the last prediction was made)
             // let today = new Date();
             // let averageSinceLatestPrediction = [];
@@ -756,7 +753,6 @@ function ForecastProblemLineChart(props) {
                         }
                         // Need handling for undefined
                         let label = context.dataset.label || '';
-                        // console.log(context);
                         if (label) {
                             label += `: ${context.formattedValue}% -${context.raw.description.includes("~") ? context.raw.description.split("~")[1] : ` ${context.raw.description}`}`;
                         }

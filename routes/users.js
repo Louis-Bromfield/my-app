@@ -83,7 +83,7 @@ router.get("/globalData", async (req, res) => {
 router.get("/profileData/:username", async (req, res) => {
     try {
         const user = await Users.find({ username: req.params.username });
-        console.log(user);
+        // console.log(user);
         if (user.length === 0) {
             res.json({ 
                 userObj: null,
@@ -160,9 +160,9 @@ router.get("/:username/:password", async (req, res) => {
     try {
         // hash pw here, then check with line below
         const user = await Users.findOne({ username: req.params.username });
-        console.log(user);
-        console.log(req.params.password);
-        console.log(user.password);
+        // console.log(user);
+        // console.log(req.params.password);
+        // console.log(user.password);
         const match = await bcrypt.compare(req.params.password, user.password);
         if (match) {
             res.json(user);
@@ -210,9 +210,7 @@ router.patch("/imageAPI/:username", parser.single("image"), async (req, res) => 
             image: req.file.path,
         });
         // Update User Document
-        console.log(req.params.username);
         const userDocument = await Users.findOne({ username: req.params.username });
-        console.log(userDocument);
         const response = await Users.findByIdAndUpdate(userDocument._id, {
             profilePicture: imageUploaded.image
         },

@@ -13,7 +13,6 @@ import HomeProfilePreview from './HomeSectionButtons/HomeProfilePreview';
 import { Link } from 'react-router-dom';
 
 function Home(props) {
-    // console.log("here in home");
     let width, height;
     width = window.innerWidth;
     height = window.innerHeight;
@@ -49,7 +48,6 @@ function Home(props) {
             // Version without contacting server (use props instead) - was having issues, defined props.user as [object Object], maybe as it 
             // was from page load (like refreshing) rather than from login, where App.js sets the value?
             // So for now, keep previous version but update App.js userObj again to be sure
-// console.log(props.user);
             getUserInfo(props.username);
         // };
     // }, [props.user.numberOfClosedForecasts, props.username]);
@@ -60,7 +58,6 @@ function Home(props) {
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             if (userDocument.data[0].numberOfClosedForecasts > 0) {
                 setShowClosedProblemModal(true);
-                console.log("true");
             };
             let avgBrier = 0;
             for (let i = 0; i < userDocument.data[0].brierScores.length; i++) {

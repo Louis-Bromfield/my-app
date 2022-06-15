@@ -54,7 +54,6 @@ function App() {
 
   const login = async (username) => {
     console.log("In login function");
-    console.log("Finding a user with this username: " + username);
     const userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
     if (userObj.data.length === 0) {
         return;

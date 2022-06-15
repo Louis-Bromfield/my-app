@@ -47,7 +47,6 @@ function Search(props) {
     const [searchUserObj, setSearchUserObj] = useState({});
 
     useEffect(() => {
-        console.log(props);
         if (props.location.clickedUsername !== undefined) {
             retrievePlayerInfo(props.location.clickedUsername);
         };
@@ -111,7 +110,6 @@ function Search(props) {
             if (userDocument.data.userObj === null) {
                 setErrorMessage("No profiles were found with this username. Please try again.");
             } else if (userDocument.data.userObj !== null) {
-                console.log("Came here yoi");
                 retrieveUserRankFromDB(username);
                 setPlayerUsername(userDocument.data.userObj.username);
                 // setPlayerName(userDocument.data.userObj.name);

@@ -36,7 +36,6 @@ function ForecastResults(props) {
     };
 
     const findAllScores = (users, problemName) => {
-        console.log(users);
         let problemLeaderboard = [];
 
         for (let i = 0; i < users.length; i++) {
@@ -103,7 +102,7 @@ function ForecastResults(props) {
                     </tbody>
                 </table>
             </div>}
-            {console.log("For additional columns, if you want them, you could pass in selectedProblem as a prop and then get things like # of Forecasts (submittedForecasts[i].forecasts.length or something), Highest Cert, Lowest Cert, Avg Cert Only issue is that this would add up on function cost with more users, but is certainly doable and would provide a lot of info to users.")}
+            {/* {console.log("For additional columns, if you want them, you could pass in selectedProblem as a prop and then get things like # of Forecasts (submittedForecasts[i].forecasts.length or something), Highest Cert, Lowest Cert, Avg Cert Only issue is that this would add up on function cost with more users, but is certainly doable and would provide a lot of info to users.")} */}
         </div>
     )
 }

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 function ConfidenceFeedback(props) {
     const [feedback, setFeedback] = useState("");
-    console.log(props.confidenceScore);
 
     const feedbackArr = [
         // High Accuracy + High Confidence

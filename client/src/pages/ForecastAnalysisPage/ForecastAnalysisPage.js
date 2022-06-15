@@ -28,7 +28,6 @@ function ForecastAnalysisPage(props) {
     useEffect(() => {
         async function doUE() {
             console.log("ForecastAnalysisPage UE");
-            console.log(props.location.forecastObj);
             let forecastInfo = {
                 submittedForecasts: ["empty"],
                 singleCertainty: false,
@@ -43,7 +42,6 @@ function ForecastAnalysisPage(props) {
                 forecastInfo.startDate = props.location.forecastObj.startDate;
                 forecastInfo.closeDate = props.location.forecastObj.closeDate;
             }
-            console.log(forecastInfo);
             const submittedForecasts = props.location.forecastObj === undefined ? forecastInfo.submittedForecasts : props.location.forecastObj.submittedForecasts;
             const forecastObj = submittedForecasts[submittedForecasts.findIndex(sF => sF.username === props.username)];
             if (forecastObj.forecasts.length > 0) {

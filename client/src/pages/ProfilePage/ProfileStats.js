@@ -34,11 +34,9 @@ function ProfileStats(props) {
             setIsHiddenBehindLevel(false);
         };
         if (props.userObj === undefined) {
-            console.log("userObj is undefined, run it back!");
             formatBrierData(null, props.username);
             findUniquePlayerStats(null, props.username);
         } else if (props.userObj !== undefined) {
-            console.log("userObj is NOT undefined, no need to run it back!");
             formatBrierData(props.userObj, props.username);
             findUniquePlayerStats(props.userObj, props.username);
         };
