@@ -11,7 +11,7 @@ function ForecastSubmission(props) {
     const [forecastProblemsForDropdown, setForecastProblemsForDropdown] = useState([]);
     const [selectedForecast, setSelectedForecast] = useState("No forecast problem selected");
     const [hasAForecastBeenSelected, setHasAForecastBeenSelected] = useState(false);
-    const [forecastPotentialOutcomes, setForecastPotentialOutcomes] = useState([]);
+    const [forecastPotentialOutcomes, setForecastPotentialOutcomes] = useState([ "outcome1", "outcome2", "outcome3" ]);
     const [dropdownHighlight, setDropdownHighlight] = useState(false);
     const [isInputDisabled, setIsInputDisabled] = useState(true);
     const [selectedForecastMarket, setSelectedForecastMarket] = useState("N/A");
@@ -241,6 +241,9 @@ function ForecastSubmission(props) {
                 setSelectedForecastMarket(forecastProblems[i].market);
                 setSelectedForecastDocumentID(forecastProblems[i]._id);
                 props.changeForecast(forecastProblems[i]);
+                if (forecastProblems[i].singleCertainty === false) {
+                    setForecastPotentialOutcomes(forecastProblems[i].potentialOutcomes);
+                };
                 // If only one certainty, this = true. False is multiple certainties are required from user.
                 setForecastSingleCertainty(forecastProblems[i].singleCertainty);
                 props.setForecastSingleCertainty(forecastProblems[i].singleCertainty);
@@ -970,6 +973,7 @@ function ForecastSubmission(props) {
                         forecastClosed={true}
                         forecastSingleCertainty={forecastSingleCertainty}
                         forecastObjForAnalysis={forecastObjForAnalysis}
+                        forecastPotentialOutcomes={forecastPotentialOutcomes}
                     />
                 }
                 {(hasAForecastBeenSelected === true && forecastClosed === false) &&
@@ -980,6 +984,7 @@ function ForecastSubmission(props) {
                         forecastClosed={false}
                         forecastSingleCertainty={forecastSingleCertainty}
                         forecastObjForAnalysis={forecastObjForAnalysis}
+                        forecastPotentialOutcomes={forecastPotentialOutcomes}
                     />
                 }
             </div>

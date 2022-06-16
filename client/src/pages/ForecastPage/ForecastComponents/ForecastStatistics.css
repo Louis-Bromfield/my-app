@@ -3,6 +3,10 @@
     flex-direction: column;
 }
 
+.forecast-statistics-grid {
+    font-size: 0.95em;
+}
+
 .forecast-statistics-title {
     color: #404d72;
 }

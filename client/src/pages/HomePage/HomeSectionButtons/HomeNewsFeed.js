@@ -206,7 +206,7 @@ function HomeNewsFeed(props) {
             // Try to redo this so that we don't need to do the GET first 
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             if (userDocument.data[0].onboarding.submitAPost === true) {
-                userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 25
+                userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 15
                 await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, {
                     fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints
                 });
@@ -220,7 +220,7 @@ function HomeNewsFeed(props) {
                     }
                 );
                 props.handleFirstPost(true);
-                props.handleFirstPostModalContent("You just earned 200 Fantasy Forecast Points for your first post! Future posts will earn you 25 per post.")
+                props.handleFirstPostModalContent("You just earned 200 Fantasy Forecast Points for your first post! Future posts will earn you 15 per post.")
             };
         } catch (error) {
             console.error(error);
