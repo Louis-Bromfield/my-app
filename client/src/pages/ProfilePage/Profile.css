@@ -167,7 +167,9 @@
         margin: 0 auto;
         /* max-width: 50%;
         min-width: 50%; */
-        width: 30%;
+        width: 10%;
+        max-width: 10%;
+        min-width: 10%;
         border: 2px solid #404d72;
         margin-top: 2vh;
     }
