@@ -3,6 +3,7 @@
     flex-direction: column;
     margin: 0 auto;
     margin-top: 10vh;
+    padding-bottom: 5vh;
     align-items: center;
     width: 100%;
     background-color: #404d72;
@@ -39,7 +40,7 @@
     border: 1px solid #fff;
     width: 80%;
     margin-top: 2vh;
-    margin-bottom: 5vh;
+    /* margin-bottom: 5vh; */
 }
 
 .prize-container {
@@ -54,22 +55,43 @@
 }
 
 .login-btn,
-.signup-btn {
-    background-color: rgb(96, 209, 96);
+.signup-btn,
+.check-your-details-btn {
+    background-color: rgb(57, 167, 57);
     border: none;
     color: #fff;
-    width: 10%;
+    width: 20%;
     padding: 1%;
     font-size: 1em;
     cursor: pointer;
     margin: 0 auto;
     margin-bottom: 1vh;
+    margin-top: 1vh;
+}
+
+.sign-in-with-google-btn {
+    background-color: rgb(57, 167, 57);
+    border: none;
+    color: #fff;
+    width: 100%;
+    padding: 1%;
+    font-size: 1em;
+    cursor: pointer;
+    margin: 0 auto;
+    margin-bottom: 1vh;
+    margin-top: 1vh;
 }
 
 .login-btn:hover,
-.signup-btn:hover {
+.signup-btn:hover,
+.check-your-details-btn:hover {
     background-color: rgb(104, 189, 104);
     transition: 0.2s ease;
+}
+
+.google-explainer {
+    width: 75%;
+    margin: 0 auto;
 }
 
 .error-message {
@@ -94,8 +116,7 @@
         flex-direction: column;
     }
     .login-logo {
-        /* width: 60%; */
-        margin-bottom: 0;
+        width: 60%;
     }
     .form-title {
         font-size: 1.5em;

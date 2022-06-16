@@ -190,7 +190,10 @@ console.log("Profile.js UE");
                         />}
                         {profileTab === "my-forecasts" && <ProfileForecasts userObj={userObj} searched={false} />}
                         {profileTab === "my-rewards" && <ProfileRewards />}
-                        </div>
+                    </div>
+                    <div className="profile-details-container">
+                        Want to reset your password?
+                    </div>
                 </div>
             </div>
         </div>

@@ -9,14 +9,16 @@ function Login(props) {
     localStorage.setItem("loggedInFromGoogle", true)
     const [usernameForCreate, setUsernameForCreate] = useState("");
     const [passwordForCreate, setPasswordForCreate] = useState("");
+    const [passwordResetCodeForCreate, setPasswordResetCodeForCreate] = useState("");
     const [usernameForLogin, setUsernameForLogin] = useState("");
     const [passwordForLogin, setPasswordForLogin] = useState("");
+    const [passwordResetCodeForLogin, setPasswordResetCodeForLogin] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [errorMessageForAccountCreation, setErrorMessageForAccountCreation] = useState("");
     // const [prolificID, setProlificID] = useState("");
     // const [loggedIn, setLoggedIn] = useState(false);
     const [problematicInfo, setProblematicInfo] = useState("_");
-    const [credentialsSuccessfullyChecked, setCredentialsSuccessfullyChecked] = useState();
+    const [credentialsSuccessfullyChecked, setCredentialsSuccessfullyChecked] = useState(null);
 
     // useEffect(() => {
     //     setLoggedIn(localStorage.getItem("loggedInFromGoogle"));
@@ -34,7 +36,7 @@ function Login(props) {
                 const userCheckedByUsername = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${uName}`);
                 if (userCheckedByUsername.data.length === 1) {
                     setProblematicInfo("username");
-                    setCredentialsSuccessfullyChecked(false);
+                    setCredentialsSuccessfullyChecked(null);
                     return;
                 } else {
                     // New
@@ -49,9 +51,15 @@ function Login(props) {
         };
     };
 
-    const loginFromLogin = async (username, password) => {
+    const loginFromLogin = async (username, passwordOrResetCode, isPassword) => {
         try {
-            const userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/${password}`);
+            let userObj;
+            if (isPassword === true) {
+                userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/${passwordOrResetCode}/${true}`);
+            } else if (isPassword === false) {
+                userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/${passwordOrResetCode}/${false}`);
+            };
+            console.log(userObj);
             if (userObj.data.loginSuccess === false) {
                 setErrorMessage(userObj.data.message);
                 return;
@@ -90,7 +98,7 @@ function Login(props) {
                         id="username" 
                         maxLength={15}
                         onChange={(e) => { 
-                            setCredentialsSuccessfullyChecked();
+                            setCredentialsSuccessfullyChecked(null);
                             setUsernameForCreate(e.target.value);
                         }} 
                     />
@@ -101,16 +109,34 @@ function Login(props) {
                         id="password" 
                         maxLength={15}
                         onChange={(e) => { 
-                            setCredentialsSuccessfullyChecked();
+                            setCredentialsSuccessfullyChecked(null);
                             setPasswordForCreate(e.target.value);
                         }}
                     />
-                    <button onClick={() => checkCredentials(usernameForCreate, passwordForCreate)}>Click Here: Check Your Details</button>
+                    <br />
+                    <label htmlFor="pw-reset-code">Password Reset Code:</label>
+                    <p>Type in a secret code to use if you ever forget your password.</p>
+                    <input 
+                        type="pw-reset-code" 
+                        name="pw-reset-code" 
+                        id="pw-reset-code" 
+                        maxLength={15}
+                        onChange={(e) => { 
+                            setCredentialsSuccessfullyChecked(null);
+                            setPasswordResetCodeForCreate(e.target.value);
+                        }}
+                    />
+                    {credentialsSuccessfullyChecked === null &&
+                        <button className="check-your-details-btn" onClick={() => checkCredentials(usernameForCreate, passwordForCreate)}>Click Here: Check Your Details</button>
+                    }
                     {credentialsSuccessfullyChecked === true && 
                         <div className="credentials-passed-login">
-                            <h2>Your details are perfect!</h2>
-                            <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/not_callback/${usernameForCreate}/${passwordForCreate}`}>
-                                <button type="submit" className="login-button">Sign in with Google</button>
+                            {/* <h2>Your details are perfect!</h2> */}
+                            <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/not_callback/${usernameForCreate}/${passwordForCreate}/${passwordResetCodeForCreate}`}>
+                                <button type="submit" className="sign-in-with-google-btn">Your details are perfect. Now click here to sign in with Google</button>
+                                <div className="google-explainer">
+                                    <p><u>Why do I need to sign in with Google?</u> This is purely so we can use your Google profile picture for your Fantasy Forecast account.</p>
+                                </div>
                             </form>
                         </div>
                     }
@@ -135,14 +161,14 @@ function Login(props) {
             </div>
             <div className="login-div">
                 <h2>Already have an account? Login here:</h2>
-                <label htmlFor="login-username">Username:</label>
+                <label htmlFor="username-login">Username:</label>
                     <input 
                         type="text" 
                         name="login-username" 
                         id="login-username" 
                         maxLength={15}
                         onChange={(e) => { 
-                            setCredentialsSuccessfullyChecked();
+                            setCredentialsSuccessfullyChecked(null);
                             setErrorMessage("");
                             setUsernameForLogin(e.target.value);
                         }}
@@ -154,12 +180,41 @@ function Login(props) {
                         id="login-password" 
                         maxLength={15}
                         onChange={(e) => { 
-                            setCredentialsSuccessfullyChecked();
+                            setCredentialsSuccessfullyChecked(null);
                             setErrorMessage("");
                             setPasswordForLogin(e.target.value);
                         }}
                     />
-                <button className="login-button" onClick={() => loginFromLogin(usernameForLogin, passwordForLogin)}>Login to Fantasy Forecast</button>
+                <button className="login-btn" onClick={() => loginFromLogin(usernameForLogin, passwordForLogin, true)}>Login to Fantasy Forecast</button>
+                {errorMessage}
+            </div>
+            <div className="login-div">
+                <h2>Forgot your password?</h2>
+                <label htmlFor="username-reset-code">Username:</label>
+                    <input 
+                        type="text" 
+                        name="username-reset-code" 
+                        id="username-reset-code" 
+                        maxLength={15}
+                        onChange={(e) => { 
+                            setCredentialsSuccessfullyChecked(null);
+                            setErrorMessage("");
+                            setUsernameForLogin(e.target.value);
+                        }}
+                    />
+                <label htmlFor="password-reset-code">Password Reset Code:</label>
+                    <input 
+                        type="password" 
+                        name="password-reset-code" 
+                        id="password-reset-code" 
+                        maxLength={15}
+                        onChange={(e) => { 
+                            setCredentialsSuccessfullyChecked(null);
+                            setErrorMessage("");
+                            setPasswordResetCodeForLogin(e.target.value);
+                        }}
+                    />
+                <button className="login-btn" onClick={() => loginFromLogin(usernameForLogin, passwordResetCodeForCreate, false)}>Login to Fantasy Forecast</button>
                 {errorMessage}
             </div>
         </div>

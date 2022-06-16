@@ -17,7 +17,8 @@ const findOrCreate = require("mongoose-findorcreate");
 
 let usernameFromClient = "_TEMP_USERNAME";
 let passwordFromClient = "_TEMP_PASSWORD";
-let accessTokenToReturnToClient = "_TEMP_TOKEN";
+let passwordResetCodeFromClient = "_TEMP_PASSWORD_RESET_CODE";
+// let accessTokenToReturnToClient = "_TEMP_TOKEN";
 // let isSignedUpForSurveyFromClient = "SIGNUPFORSURVEY_VALUE_UNCHANGED";
 // let prolificIDFromClient = "_TEMP_PROLIFIC_ID_UNIMPORTED";
 
@@ -89,6 +90,9 @@ const UserSchema = mongoose.Schema({
     },
     authRT: {
         type: String
+    },
+    pwdResetCode: {
+        type: String
     }
 });
 
@@ -123,10 +127,10 @@ passport.use(new GoogleStrategy({
     store: true
   },
   function(req, accessToken, refreshToken, profile, cb) {
-    console.log("113 " + passwordFromClient);
-    console.log("114 " + typeof passwordFromClient);
+    // console.log("113 " + passwordFromClient);
+    // console.log("114 " + typeof passwordFromClient);
     const passwordCheck = passwordFromClient;
-    console.log("116 " + passwordCheck);
+    // console.log("116 " + passwordCheck);
     
     // if not do this:
     // const newUsername = usernameFromClient;
@@ -157,11 +161,15 @@ passport.use(new GoogleStrategy({
 
     User.findOrCreate({ 
         username: usernameFromClient, 
+        pwdResetCode: passwordResetCodeFromClient,
         profilePicture: profile.photos[0].value || "",
         password: passwordCheck
         // isSignedUpForSurvey: isSignedUpForSurveyFromClient
     }, async function (err, user) {
-        const userWithPW = await Users.findOneAndUpdate({ username: usernameFromClient }, { password: passwordFromClient }, { new: true });
+        const userWithPW = await Users.findOneAndUpdate({ username: usernameFromClient }, {
+            password: passwordFromClient,
+            pwdResetCode: passwordResetCodeFromClient,
+        }, { new: true });
         console.log("updatedUser");
         console.log(userWithPW);
         console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
@@ -233,6 +241,7 @@ const loggingMiddleWare = async (params, next) => {
     console.log(params.password);
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     usernameFromClient = params.username;
+    passwordResetCodeFromClient = params.resetCode;
     // passwordFromClient = params.password;
     // isSignedUpForSurveyFromClient = params.isSignedUpForSurvey;
 
@@ -258,8 +267,10 @@ const loggingMiddleWare = async (params, next) => {
     //     });
     // });
     const hashedPassword = await bcrypt.hash(params.password, saltRounds);
-    console.log("237 hashedPassword = " + hashedPassword);
+    const hashedResetCode = await bcrypt.hash(params.resetCode, saltRounds);
+    // console.log("237 hashedPassword = " + hashedPassword);
     passwordFromClient = hashedPassword;
+    passwordResetCodeFromClient = hashedResetCode;
     console.log("=====================================================================");
     
     next();
@@ -302,7 +313,7 @@ const loggingMiddleWare = async (params, next) => {
 // };
 
 
-app.get("/auth/google/not_callback/:username/:password", (req, res, next) => loggingMiddleWare(req.params, next), passport.authenticate("google", {
+app.get("/auth/google/not_callback/:username/:password/:resetCode", (req, res, next) => loggingMiddleWare(req.params, next), passport.authenticate("google", {
     scope: [
         'https://www.googleapis.com/auth/userinfo.profile',
         'https://www.googleapis.com/auth/userinfo.email'
