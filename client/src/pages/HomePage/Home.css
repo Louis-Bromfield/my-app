@@ -7,7 +7,7 @@
 .home-page-stats-div {
     display: flex;
     flex-direction: column;
-    row-gap: 2vh;
+    row-gap: 1%;
 }
 
 .onboarding-div-closed {
@@ -93,22 +93,6 @@
     }
     .home-page-stats-div {
         row-gap: 1vh;
-    }
-}
-
-/* @media (max-width: 425px) {
-    .home-page-news-feed {
-        width: 105%;
-    }
-} */
-
-@media (max-width: 425px) {
-    .home {
-        width: 90%;
-        font-size: 0.95em;
-    }
-    h2 {
-        font-size: 1.2em;
     }
 }
 

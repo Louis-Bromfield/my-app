@@ -15,7 +15,7 @@ function Forecast(props) {
 
     const handleForecastChange = (newForecast) => {
         setForecast(newForecast);
-    };
+    }
 
     const handleLeaderboardChange = (newLeaderboard) => {
         setLeaderboardData(newLeaderboard);

@@ -6,7 +6,6 @@ const cors = require('cors');
 const port = process.env.PORT || 5000;
 const path = require("path");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 // OAuth
 const session = require("express-session");
@@ -17,7 +16,6 @@ const findOrCreate = require("mongoose-findorcreate");
 
 let usernameFromClient = "_TEMP_USERNAME";
 let passwordFromClient = "_TEMP_PASSWORD";
-let accessTokenToReturnToClient = "_TEMP_TOKEN";
 // let isSignedUpForSurveyFromClient = "SIGNUPFORSURVEY_VALUE_UNCHANGED";
 // let prolificIDFromClient = "_TEMP_PROLIFIC_ID_UNIMPORTED";
 
@@ -86,9 +84,6 @@ const UserSchema = mongoose.Schema({
     articleVisits: {
         type: Number,
         default: 0
-    },
-    authRT: {
-        type: String
     }
 });
 
@@ -128,11 +123,19 @@ passport.use(new GoogleStrategy({
     const passwordCheck = passwordFromClient;
     console.log("116 " + passwordCheck);
     
+    
+    
+    
+    
     // if not do this:
     // const newUsername = usernameFromClient;
     // usernameFromClient = passwordFromClient;
     // password: usernameFromClient
-    // ---------------------------------------------------------------------------------------
+
+
+
+
+
     // profile._json.passwordFromClient = passwordFromClient.toString();
     // console.log("127 THIS ONEEEEEEEEEEEEEEEEEE = " + profile._json.passwordFromClient);
     // console.log(profile);
@@ -261,7 +264,6 @@ const loggingMiddleWare = async (params, next) => {
     console.log("237 hashedPassword = " + hashedPassword);
     passwordFromClient = hashedPassword;
     console.log("=====================================================================");
-    
     next();
 };
 

@@ -21,7 +21,7 @@ function MarketStatistics(props) {
         <div className="market-statistics">
             <h2 className="market-statistics-title">Market Statistics</h2>
             <div className="market-statistics-grid">
-                <div className="market-statistics-grid-row-odd">
+            <div className="market-statistics-grid-row-odd">
                     <h3>Market:</h3>
                     <h3>{props.market}</h3>
                 </div>

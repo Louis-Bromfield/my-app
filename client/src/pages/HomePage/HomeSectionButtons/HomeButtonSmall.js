@@ -89,9 +89,9 @@ function HomeButtonSmall(props) {
     };
 
     useEffect(() => {
-        // if (props.userLearnQuizzes !== undefined && props.userLearnQuizzes !== null) {
-        //     console.log(props.userLearnQuizzes);
-        // };
+        if (props.userLearnQuizzes !== undefined && props.userLearnQuizzes !== null) {
+            console.log(props.userLearnQuizzes);
+        };
         getBrierScore(props.user);
         getLearnProgress(props.userLearnQuizzes);
         getLeaderboardRank(props.username);
@@ -135,7 +135,7 @@ function HomeButtonSmall(props) {
                     />
                 </h2>
                 :
-                <h2 className="home-button-small-title">{props.title}</h2>
+                <h2>{props.title}</h2>
                 }
                 <div className="home-button-scroll">
                     <AiIcons.AiOutlineCaretRight 

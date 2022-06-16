@@ -11,7 +11,6 @@
     "axios": "^0.21.4",
     "chart.js": "^3.6.0",
     "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.5.1",
     "react-chartjs-2": "^3.0.3",

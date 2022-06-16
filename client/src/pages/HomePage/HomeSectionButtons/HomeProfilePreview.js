@@ -69,22 +69,18 @@ function HomeProfilePreview(props) {
             </Modal>
             <h2 className="home-button-large-title">My Profile Preview</h2>
             <div className="home-profile-preview-container">
-                <div className="home-profile-preview-container-top-grid">
-                    <div className="profile-top-info-container">
-                        <h2>{props.user.username}</h2>
-                        <h3>Level {Math.floor((ffPoints/100)).toFixed(0)} {forecasterRank}</h3>
-                        <h3>
-                            {ffPoints.toFixed(0)} Fantasy Forecast Points
-                            <FaInfoCircle 
-                                color={"orange"} 
-                                className="modal-i-btn"
-                                onClick={() => { setShowModal(true); setModalContent(`Fantasy Forecast Points are earned through the majority of your interactions with the site. Submitting a forecast (you'll also get points when a problem closes and you receive a score based on how accurate you were), posting to the news feed, completing the Onboarding tasks, attempting the quizzes found on the Learn page and more! Head to the Learn page and select the "Fantasy Forecast Points" topic for more info!`)}}
-                            />
-                            </h3>
-                        <br />
-                    </div>
-                    <img className="home-profile-preview-img" src={props.user.profilePicture} alt="" />
-                </div>
+                <img className="home-profile-preview-img" src={props.user.profilePicture} alt="" />
+                <h2>{props.user.username}</h2>
+                <h3>Level {Math.floor((ffPoints/100)).toFixed(0)} {forecasterRank}</h3>
+                <h3>
+                    {ffPoints.toFixed(0)} Fantasy Forecast Points
+                    <FaInfoCircle 
+                        color={"orange"} 
+                        className="modal-i-btn"
+                        onClick={() => { setShowModal(true); setModalContent(`Fantasy Forecast Points are earned through the majority of your interactions with the site. Submitting a forecast (you'll also get points when a problem closes and you receive a score based on how accurate you were), posting to the news feed, completing the Onboarding tasks, attempting the quizzes found on the Learn page and more! Head to the Learn page and select the "Fantasy Forecast Points" topic for more info!`)}}
+                    />
+                    </h3>
+                <br />
                 <h3>Progress To Next Level:</h3>
                 <div className="home-profile-preview-level-and-xp">
                     <div className="home-profile-preview-level">
