@@ -447,20 +447,20 @@ function ForecastProblemLineChart(props) {
         let allChData = {
             label: "All Data",
             data: allData,
-            backgroundColor: "darkgray",
-            borderColor: "darkgray",
+            backgroundColor: "lightgray",
+            borderColor: "lightgray",
             showLine: true,
             borderWidth: 0,
             pointRadius: 3
         }
         let outcomeOneChData = {
-            label: `${props.selectedForecast.potentialOutcomes[0]} (Avg)`,
+            label: `${props.selectedForecast.potentialOutcomes[0]} (Avg)`, //JOB AFTER DINNER: RENAME THESE LABELS
             data: avgOutcomeOneArr,
             backgroundColor: "darkblue",
             borderColor: "darkblue",
             showLine: true,
             borderWidth: 4,
-            pointRadius: 0
+            pointRadius: 3
         };
         let outcomeTwoChData = {
             label: `${props.selectedForecast.potentialOutcomes[1]} (Avg)`,
@@ -469,7 +469,7 @@ function ForecastProblemLineChart(props) {
             borderColor: "red",
             showLine: true,
             borderWidth: 4,
-            pointRadius: 0
+            pointRadius: 3
         };
         let outcomeThreeChData = {
             label: `${props.selectedForecast.potentialOutcomes[2]} (Avg)`,
@@ -478,7 +478,7 @@ function ForecastProblemLineChart(props) {
             borderColor: "green",
             showLine: true,
             borderWidth: 4,
-            pointRadius: 0
+            pointRadius: 3
         };
         let userOutcomeOneChData = {
             label: `${props.selectedForecast.potentialOutcomes[0]} (Me)`,
@@ -492,8 +492,8 @@ function ForecastProblemLineChart(props) {
         let userOutcomeTwoChData = {
             label: `${props.selectedForecast.potentialOutcomes[1]} (Me)`,
             data: userOutcomeTwoData,
-            backgroundColor: "crimson",
-            borderColor: "crimson",
+            backgroundColor: "pink",
+            borderColor: "pink",
             showLine: true,
             borderWidth: 3,
             pointRadius: 2
@@ -677,28 +677,12 @@ function ForecastProblemLineChart(props) {
             showLine: outcomeOneChartData.showLine,
             pointRadius: outcomeOneChartData.pointRadius
         }, {
-            label: userOutcomeOneChartData.label,
-            data: userOutcomeOneChartData.data,
-            backgroundColor: userOutcomeOneChartData.backgroundColor,
-            borderColor: userOutcomeOneChartData.borderColor,
-            borderWidth: userOutcomeOneChartData.borderWidth,
-            showLine: userOutcomeOneChartData.showLine,
-            pointRadius: userOutcomeOneChartData.pointRadius 
-        }, {
             label: outcomeTwoChartData.label,
             data: outcomeTwoChartData.data,
             backgroundColor: outcomeTwoChartData.backgroundColor,
             borderColor: outcomeTwoChartData.borderColor,
             borderWidth: outcomeTwoChartData.borderWidth,
             pointRadius: outcomeTwoChartData.pointRadius
-        }, {
-            label: userOutcomeTwoChartData.label,
-            data: userOutcomeTwoChartData.data,
-            backgroundColor: userOutcomeTwoChartData.backgroundColor,
-            borderColor: userOutcomeTwoChartData.borderColor,
-            borderWidth: userOutcomeTwoChartData.borderWidth,
-            showLine: userOutcomeTwoChartData.showLine,
-            pointRadius: userOutcomeTwoChartData.pointRadius  
         }, {
             label: outcomeThreeChartData.label,
             data: outcomeThreeChartData.data,
@@ -707,6 +691,22 @@ function ForecastProblemLineChart(props) {
             borderWidth: outcomeThreeChartData.borderWidth,
             showLine: outcomeThreeChartData.showLine,
             pointRadius: outcomeThreeChartData.pointRadius
+        }, {
+            label: userOutcomeOneChartData.label,
+            data: userOutcomeOneChartData.data,
+            backgroundColor: userOutcomeOneChartData.backgroundColor,
+            borderColor: userOutcomeOneChartData.borderColor,
+            borderWidth: userOutcomeOneChartData.borderWidth,
+            showLine: userOutcomeOneChartData.showLine,
+            pointRadius: userOutcomeOneChartData.pointRadius  
+        }, {
+            label: userOutcomeTwoChartData.label,
+            data: userOutcomeTwoChartData.data,
+            backgroundColor: userOutcomeTwoChartData.backgroundColor,
+            borderColor: userOutcomeTwoChartData.borderColor,
+            borderWidth: userOutcomeTwoChartData.borderWidth,
+            showLine: userOutcomeTwoChartData.showLine,
+            pointRadius: userOutcomeTwoChartData.pointRadius  
         }, {
             label: userOutcomeThreeChartData.label,
             data: userOutcomeThreeChartData.data,
@@ -725,11 +725,13 @@ function ForecastProblemLineChart(props) {
             pointRadius: allChartData.pointRadius
         }],
         spanGaps: false,
-        responsive: true,
-        maintainAspectRatio: true
+        // responsive: true,
+        // maintainAspectRatio: true
     };
 
     const options = {
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
             y: {
                 beginAtZero: true,
@@ -780,7 +782,7 @@ function ForecastProblemLineChart(props) {
                     }}
                 />
             </h2>
-            <div className="chart-container" style={{ position: "relative", margin: "auto", width: "100%" }}>
+            <div className="chart-container" style={{ position: "relative", margin: "auto", width: "100%", height: "100%" }}>
                 <Line data={props.forecastSingleCertainty === true ? data : multiOutcomeData} options={options} height={"100%"}/>
             </div>
         </div>

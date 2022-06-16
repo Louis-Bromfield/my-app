@@ -1,9 +1,11 @@
 .forecast-problem-line-chart {
     width: 85%;
+    height: 100%;
     margin: 0 auto;
     text-align: center;
     color: #404d72;
 }
+
 
 @media (max-width: 1100px) {
     .forecast-problem-line-chart {
