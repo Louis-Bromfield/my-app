@@ -162,13 +162,13 @@ function IndividualLeaderboard(props) {
                     onClick={() => history.push("leaderboard-select")}>
                         Return to Leaderboard Menu
                 </button>
-                {(currentLeaderboardName !== "Fantasy Forecast All-Time" && props.location.user === true) && 
+                {/* {(currentLeaderboardName !== "Fantasy Forecast All-Time" && props.location.user === true) && 
                     <button 
                         className="leave-leaderboard-btn"
                         onClick={() => setShowConfirmationModal(true)}>
                             Leave Market
                     </button>
-                }
+                } */}
                 {(userInMarket === true && props.location.user === true && isFFLeaderboard === false) &&
                     <button
                         className="members-btn"

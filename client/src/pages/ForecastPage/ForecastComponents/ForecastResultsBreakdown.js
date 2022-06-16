@@ -52,19 +52,19 @@ function ForecastResultsBreakdown(props) {
                 {props.singleCertainty === false &&
                     <div className="hypothetical-results-container">
                         <div className="hypothetical-results-subcontainer">
-                            <h3>If OUTCOME ONE:</h3>
+                            <h3>If {props.forecastPotentialOutcomes[0]}:</h3>
                             <h4 style={{ color: "#404d72"}}>Aggregate Score: {props.totalIfOutcomeOne.toFixed(2)} / 100</h4>
                             <h4 style={{ color: "#404d72"}}>Time Score: {props.tScore.toFixed(2)} / 10</h4>
                             <h4 style={{ color: "#404d72"}}>Final Score For This Problem: {(props.totalIfOutcomeOne + props.tScore).toFixed(2)} / 110</h4>
                         </div>
                         <div className="hypothetical-results-subcontainer">
-                            <h3>If OUTCOME TWO:</h3>
+                            <h3>If {props.forecastPotentialOutcomes[1]}:</h3>
                             <h4 style={{ color: "#404d72"}}>Aggregate Score: {props.totalIfOutcomeTwo.toFixed(2)} / 100</h4>
                             <h4 style={{ color: "#404d72"}}>Time Score: {props.tScore.toFixed(2)} / 10</h4>
                             <h4 style={{ color: "#404d72"}}>Final Score For This Problem: {(props.totalIfOutcomeTwo + props.tScore).toFixed(2)} / 110</h4>
                         </div>
                         <div className="hypothetical-results-subcontainer">
-                            <h3>If OUTCOME THREE:</h3>
+                            <h3>If {props.forecastPotentialOutcomes[2]}:</h3>
                             <h4 style={{ color: "#404d72"}}>Aggregate Score: {props.totalIfOutcomeThree.toFixed(2)} / 100</h4>
                             <h4 style={{ color: "#404d72"}}>Time Score: {props.tScore.toFixed(2)} / 10</h4>
                             <h4 style={{ color: "#404d72"}}>Final Score For This Problem: {(props.totalIfOutcomeThree + props.tScore).toFixed(2)} / 110</h4>

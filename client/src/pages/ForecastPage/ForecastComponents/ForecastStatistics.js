@@ -181,11 +181,11 @@ function ForecastStatistics(props) {
                         <h3>{isNaN(avgOutcomeOne) ? "N/A" : `${avgOutcomeOne}%`}</h3>
                     </div>
                     <div className="forecast-statistics-grid-row-even">
-                        <h3>Avg {props.selectedForecast.potentialOutcomes[1]}</h3>
+                        <h3>Avg {props.selectedForecast.potentialOutcomes[1]}:</h3>
                         <h3>{isNaN(avgOutcomeTwo) ? "N/A" : `${avgOutcomeTwo}%`}</h3>
                     </div>
                     <div className="forecast-statistics-grid-row-odd">
-                        <h3>Avg {props.selectedForecast.potentialOutcomes[2]}</h3>
+                        <h3>Avg {props.selectedForecast.potentialOutcomes[2]}:</h3>
                         <h3>{isNaN(avgOutcomeThree) ? "N/A" : `${avgOutcomeThree}%`}</h3>
                     </div>
                     <div className="forecast-statistics-grid-row-even">

@@ -121,6 +121,9 @@ const UserSchema = mongoose.Schema({
     articleVisits: {
         type: Number,
         default: 0
+    },
+    authRT: {
+        type: String
     }
 });
 
