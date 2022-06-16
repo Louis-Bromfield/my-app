@@ -782,7 +782,8 @@ function ForecastProblemLineChart(props) {
                     }}
                 />
             </h2>
-            <div className="chart-container" style={{ position: "relative", margin: "auto", width: "100%", height: "100%" }}>
+            {/* Copy this and make one just for mobile (like if width) */}
+            <div className="chart-container" style={{ position: "relative", margin: "auto", width: "100%", height: "60vh" }}>
                 <Line data={props.forecastSingleCertainty === true ? data : multiOutcomeData} options={options} height={"100%"}/>
             </div>
         </div>
