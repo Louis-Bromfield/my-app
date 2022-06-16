@@ -285,7 +285,7 @@ function LeaderboardMenu(props) {
                     }
                 );
                 setShowModal(true);
-                setModalContent("You just got 150 Fantasy Forecast Points for joining your first market! Every time you join a market you'll earn 5 points.");
+                setModalContent("You just got 150 Fantasy Forecast Points for joining your first market! From now on, every time you join a market you'll earn 5 points.");
             }
         } catch (error) {
             console.error("Error in LeaderboardMenu > updateOnboarding")
