@@ -237,7 +237,7 @@
 .mobile-nav-menu {
     background-color: #404d72;
     width: 80%;
-    height: 65vh;
+    height: 75%;
     display: flex;
     justify-content: center;
     position: fixed;
