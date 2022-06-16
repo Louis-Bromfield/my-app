@@ -160,9 +160,10 @@ router.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
     try {
         const user = await Users.findOne({ username: req.params.username });
         let match;
-        if (req.params.isPassword == true) {
+        console.log(req.params);
+        if (req.params.isPassword === true) {
             match = await bcrypt.compare(req.params.passwordOrResetCode, user.password);
-        } else if (req.params.isPassword == false) {
+        } else if (req.params.isPassword === false) {
             match = await bcrypt.compare(req.params.passwordOrResetCode, user.pwResetCode);
         }
         if (match) {

@@ -54,6 +54,10 @@ function Login(props) {
     const loginFromLogin = async (username, passwordOrResetCode, isPassword) => {
         try {
             let userObj;
+            console.log(username);
+            console.log(passwordOrResetCode);
+            console.log(isPassword);
+
             if (isPassword === true) {
                 userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/${passwordOrResetCode}/${true}`);
             } else if (isPassword === false) {
@@ -100,6 +104,7 @@ function Login(props) {
                         onChange={(e) => { 
                             setCredentialsSuccessfullyChecked(null);
                             setUsernameForCreate(e.target.value);
+                            setErrorMessageForAccountCreation("");
                         }} 
                     />
                     <label htmlFor="password">Password:</label>
@@ -111,6 +116,7 @@ function Login(props) {
                         onChange={(e) => { 
                             setCredentialsSuccessfullyChecked(null);
                             setPasswordForCreate(e.target.value);
+                            setErrorMessageForAccountCreation("");
                         }}
                     />
                     <br />
@@ -124,6 +130,7 @@ function Login(props) {
                         onChange={(e) => { 
                             setCredentialsSuccessfullyChecked(null);
                             setPasswordResetCodeForCreate(e.target.value);
+                            setErrorMessageForAccountCreation("");
                         }}
                     />
                     {credentialsSuccessfullyChecked === null &&
@@ -143,6 +150,7 @@ function Login(props) {
                     {credentialsSuccessfullyChecked === false &&
                         <h2>An account with this {problematicInfo} already exists. Please try again.</h2>
                     }
+                    {errorMessageForAccountCreation}
                 </div>
                 <div className="survey-explanation-div">
                     <h2><u>Want to play for $$$?</u></h2>
