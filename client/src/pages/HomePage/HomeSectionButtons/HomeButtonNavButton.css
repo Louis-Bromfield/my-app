@@ -18,7 +18,7 @@
     transition: 0.2s ease;
 }
 
-@media (max-width: 425px) {
+@media (max-width: 450px) {
     .home-button-nav-button {
         font-size: 1em;
     }

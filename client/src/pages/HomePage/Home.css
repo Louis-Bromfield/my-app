@@ -102,10 +102,11 @@
     }
 } */
 
-@media (max-width: 425px) {
+@media (max-width: 450px) {
     .home {
         width: 90%;
         font-size: 0.95em;
+        margin-left: 5%;
     }
     h2 {
         font-size: 1.2em;
