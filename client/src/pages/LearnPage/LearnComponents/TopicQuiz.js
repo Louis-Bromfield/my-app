@@ -45,25 +45,35 @@ function TopicQuiz(props) {
         try {
             // Try to redo this so that we don't need to do the GET first 
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+console.log(userDocument);
             if (userDocument.data[0].onboarding.completeALearnQuiz === true) {
-                userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 5;
+                userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 20;
                 if (topic === "Brier Scores") {
                     userDocument.data[0].learnQuizzes.brierComplete = true;
+console.log("here brier");
+console.log(userDocument.data[0].learnQuizzes.brierComplete);
                 } else if (topic === "The Good Judgment Project") {
                     userDocument.data[0].learnQuizzes.gjpComplete = true;
+console.log("here gjp");
+console.log(userDocument.data[0].learnQuizzes.gjpComplete);
                 } else if (topic === "Superforecasters") {
                     userDocument.data[0].learnQuizzes.superforecastersComplete = true;
+console.log("here superforecaster");
+console.log(userDocument.data[0].learnQuizzes.superforecastersComplete);
                 };
+console.log(userDocument.data[0].learnQuizzes);
                 const updatedLQS = userDocument.data[0].learnQuizzes;
-                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
+console.log(updatedLQS);
+                const updated = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
                     { 
                         onboarding: userDocument.data[0].onboarding,
                         learnQuizzes: updatedLQS,
                         fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 
                     }
                 );
+console.log(updated);
                 props.handleQuizCompletion(true);
-                props.handleQuizCompletionModalContent("You just got 5 points for completing a quiz!");
+                props.handleQuizCompletionModalContent("You just got 20 points for completing a quiz!");
             } else {
                 userDocument.data[0].onboarding.completeALearnQuiz = true;
                 userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 250;
@@ -74,6 +84,7 @@ function TopicQuiz(props) {
                 } else if (topic === "Superforecasters") {
                     userDocument.data[0].learnQuizzes.superforecastersComplete = true;
                 };
+console.log(userDocument.data[0].learnQuizzes);
                 await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
                     { 
                         onboarding: userDocument.data[0].onboarding,
@@ -82,7 +93,7 @@ function TopicQuiz(props) {
                     }
                 );
                 props.handleQuizCompletion(true);
-                props.handleQuizCompletionModalContent("You just got 250 Fantasy Forecast Points for completing your first quiz! Completing quizzes will now return 5 points per quiz.");
+                props.handleQuizCompletionModalContent("You just got 250 Fantasy Forecast Points for completing your first quiz! Completing quizzes will now return 20 points per quiz.");
             };
         } catch (error) {
             console.error(error);

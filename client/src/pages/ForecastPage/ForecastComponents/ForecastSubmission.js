@@ -561,14 +561,14 @@ function ForecastSubmission(props) {
             // Try to redo this so that we don't need to do the GET first 
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             if (userDocument.data[0].onboarding.submitAForecast === true) {
-                userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 15;
+                userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 25;
                 await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
                     { 
                         fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 
                     }
                 );
                 setShowModal(true);
-                setModalContent("You just got 15 points for submitting a forecast!");
+                setModalContent("You just got 75 points for submitting a forecast!");
                 setModalContent2("");
             } else {
                 userDocument.data[0].onboarding.submitAForecast = true;
@@ -580,7 +580,7 @@ function ForecastSubmission(props) {
                     }
                 );
                 setShowModal(true);
-                setModalContent("You just got 300 Fantasy Forecast Points for submitting your first forecast! Any forecasts submitted from now on will yield 15 points. You can see your predictions from each day in the 'Forecast Stats' tab below.");
+                setModalContent("You just got 300 Fantasy Forecast Points for submitting your first forecast! Any forecasts submitted from now on will yield 25 points. You can see your predictions from each day in the 'Forecast Stats' tab below.");
                 setModalContent2("");
             };
         } catch (error) {
