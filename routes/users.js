@@ -160,9 +160,9 @@ router.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
     try {
         const user = await Users.findOne({ username: req.params.username });
         let match;
-        if (req.params.isPassword === true) {
+        if (req.params.isPassword == true) {
             match = await bcrypt.compare(req.params.passwordOrResetCode, user.password);
-        } else if (req.params.isPassword === false) {
+        } else if (req.params.isPassword == false) {
             match = await bcrypt.compare(req.params.passwordOrResetCode, user.pwResetCode);
         }
         if (match) {
@@ -242,6 +242,19 @@ router.patch("/imageAPI/:username", parser.single("image"), async (req, res) => 
         console.error(error);
         res.json({errorMsg: "An error happened!", errorFull: error});
     };
+});
+
+router.patch("/newPW/:username", async (req, res) => {
+    try {
+        const document = await Users.findOne({ username: req.params.username });
+        const newHashedPW = await bcrypt.hash(params.password, 10);
+        const updatedUser = await Users.findByIdAndUpdate(document._id, { password: newHashedPW },
+        { new: true }
+    );
+    res.json(updatedUser);
+    } catch (error) {
+        res.json({ error: error.message })
+    }
 });
 
 // Update a user

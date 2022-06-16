@@ -20,6 +20,8 @@ function Profile(props) {
     const [profileTab, setProfileTab] = useState("my-stats");
     const [forecasterRank, setForecasterRank] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const [passwordChangeMsg, setPasswordChangeMsg] = useState("");
 
     useEffect(() => {
         if (props.user.markets === undefined) {
@@ -134,6 +136,20 @@ console.log("Profile.js UE");
             console.error(error);
         };
     };
+
+    const changePassword = async (newPW) => {
+        try {
+            const newDoc = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newPW/${props.username}`, { password: newPW });
+            if (newDoc) {
+                setPasswordChangeMsg("Password succesfully changed.");
+            } else {
+                setPasswordChangeMsg("There was an error, please try again later.");
+            };
+        } catch (error) {
+            console.error(error);
+            console.error("Error in change PW");
+        };
+    };
     
     return (
         <div className="profile">
@@ -193,6 +209,19 @@ console.log("Profile.js UE");
                     </div>
                     <div className="profile-details-container">
                         Want to reset your password?
+                        <label htmlFor="password">Password:</label>
+                        <input 
+                            type="password" 
+                            name="password" 
+                            id="password" 
+                            maxLength={15}
+                            onChange={(e) => { 
+                                setNewPassword(e.target.value);
+                                setPasswordChangeMsg("");
+                            }}
+                        />
+                        <button onClick={() => changePassword(newPassword)}>Change Password</button>
+                        {passwordChangeMsg !== "" && passwordChangeMsg}
                     </div>
                 </div>
             </div>
