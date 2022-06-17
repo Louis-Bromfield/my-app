@@ -161,9 +161,9 @@ router.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
         const user = await Users.findOne({ username: req.params.username });
         let match;
         console.log(req.params);
-        if (req.params.isPassword === true) {
+        if (req.params.isPassword === "true") {
             match = await bcrypt.compare(req.params.passwordOrResetCode, user.password);
-        } else if (req.params.isPassword === false) {
+        } else if (req.params.isPassword === "false") {
             match = await bcrypt.compare(req.params.passwordOrResetCode, user.pwResetCode);
         }
         if (match) {
@@ -171,7 +171,7 @@ router.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
         } else {
             res.json({ loginSuccess: false, message: "Password/reset code does not match that stored in the database"});
         };
-        res.json({ loginSuccess: false, message: "An error occurred"});
+        // res.json({ loginSuccess: false, message: "An error occurred"});
     } catch (error) {
         console.error("Error in router.get/username/password in users.js");
         console.error(error);

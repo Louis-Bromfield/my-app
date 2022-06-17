@@ -16,7 +16,6 @@ function LoginSuccess(props) {
         setLoggedIn(true);
         // const userPAID = queryParams.get('pAID');
         setUsernameForHomePage(localStorage.getItem("username"));
-        props.login(usernameForHomePage)
         console.log("LoginSuccess UE");
     }, []);
  
