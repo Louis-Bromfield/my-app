@@ -11,6 +11,7 @@ import ClosedProblemModal from '../../components/ClosedProblemModal';
 import HomeChangeLogPreview from './HomeSectionButtons/HomeChangeLogPreview';
 import HomeProfilePreview from './HomeSectionButtons/HomeProfilePreview';
 import { Link } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 function Home(props) {
     let width, height;
@@ -31,6 +32,7 @@ function Home(props) {
     const [userOnboarding, setUserOnboarding] = useState({});
     const [userClosedForecastCount, setUserClosedForecastCount] = useState(0);
     const [userLearnQuizzes, setUserLearnQuizzes] = useState({ brierComplete: false, gjpComplete: false, superforecastersComplete: false });
+    const [cookie, setCookie] = useCookies(['username']);
 
     const onboardingButtonClick = (showOnboarding, buttonText) => {
         setShowOnboarding(!showOnboarding);
@@ -44,6 +46,7 @@ function Home(props) {
             setModalContent(welcomeString);
             localStorage.setItem("firstVisit", false);
         };
+        console.log(`username cookie = ${cookie.username}`);
         // if (props.user.numberOfClosedForecasts === undefined) {
             // getClosedForecastCount(localStorage.getItem("username") || props.username);
             // Version without contacting server (use props instead) - was having issues, defined props.user as [object Object], maybe as it 
@@ -73,6 +76,7 @@ function Home(props) {
             console.log(userDocument.data[0].learnQuizzes);
             setUserLearnQuizzes(userDocument.data[0].learnQuizzes);
             props.setUserObject(userDocument.data[0]);
+            props.setProfilePicture(userDocument.data[0].profilePicture);
         } catch (error) {
             console.error("Error in getUserInfo");
             console.error(error);
@@ -129,6 +133,7 @@ function Home(props) {
                     <div className="home-page-news-feed">
                         <HomeNewsFeed 
                             username={props.username} 
+                            userProfilePicture={props.profilePicture}
                             userObj={userObj}
                             userMarkets={userMarkets}
                             handleFirstPost={setShowModal} 
@@ -138,6 +143,7 @@ function Home(props) {
                     <div className="home-page-stats-div">
                         <HomeProfilePreview 
                             user={userObj}
+                            username={props.username}
                         />
                         <NewForecastsCallToAction username={props.username} /> 
                         <div className={onboardingClassName}>

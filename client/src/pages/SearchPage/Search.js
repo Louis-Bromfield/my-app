@@ -6,6 +6,7 @@ import { Line } from 'react-chartjs-2';
 import ReactLoading from 'react-loading';
 import ProfileForecasts from '../ProfilePage/ProfileForecasts';
 import ProfileRewards from '../ProfilePage/ProfileRewards';
+import { useCookies } from 'react-cookie';
 
 function Search(props) {
     const [markets, setMarkets] = useState("");
@@ -45,6 +46,7 @@ function Search(props) {
     const [forecasterRank, setForecasterRank] = useState("");
     const [searchTab, setSearchTab] = useState("my-stats");
     const [searchUserObj, setSearchUserObj] = useState({});
+    const [cookie, setCookie] = useCookies(['uName']);
 
     useEffect(() => {
         if (props.location.clickedUsername !== undefined) {
@@ -208,7 +210,8 @@ function Search(props) {
         let bestBrierMe = 0;
         let worstBrierMe = 110;
         let averageBrierMe = 0;
-        const myStats = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${localStorage.getItem("username")}`);
+        // CHARMANDER - cookie for username
+        const myStats = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${cookie.username}`);
         for (let i = 0; i < myStats.data[0].brierScores.length; i++) {
             if (myStats.data[0].brierScores[i].brierScore > bestBrierMe) {
                 setBestChangedMe(true);

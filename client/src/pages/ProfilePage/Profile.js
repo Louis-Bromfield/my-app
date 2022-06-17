@@ -25,12 +25,15 @@ function Profile(props) {
 
     useEffect(() => {
         if (props.user.markets === undefined) {
+            // CHARMANDER
             const markets = localStorage.getItem('markets').split(",");
             formatMarketsString(markets);
         } else {
             formatMarketsString(props.user.markets);
         }
         if (props.username === undefined) {
+            // this should change tbh as it would mean anyone could get anyone's user info
+            // CHARMANDER
             const username = localStorage.getItem('username');
             retrieveUserInfoFromDB(username);
             updateOnboarding(username);
@@ -171,7 +174,9 @@ console.log("Profile.js UE");
                 <div className="profile-grid">
                     <h1 className="profile-header">{errorMessage === "" ? props.username : errorMessage}</h1>
                     <div className="profile-main-info">
-                        <img className="profile-profile-pic" src={props.profilePicture || localStorage.getItem("profilePicture")} alt="Temporary profile pic"/>
+                        {/* CHARMANDER */}
+                        {/* <img className="profile-profile-pic" src={props.profilePicture || localStorage.getItem("profilePicture")} alt="Temporary profile pic"/> */}
+                        <img className="profile-profile-pic" src={props.profilePicture} alt="Temporary profile pic"/>
                         <div className="profile-summary">
                             <ul className="profile-summary-list"> 
                                 <li key={0} className="profile-summary-list-item">

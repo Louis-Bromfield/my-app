@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Login.css';
 import FFLogo from '../../media/sd2.png';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 
 function Login(props) {
-    localStorage.setItem("loggedInFromGoogle", true)
+    // localStorage.setItem("loggedInFromGoogle", true)
     const [usernameForCreate, setUsernameForCreate] = useState("");
     const [passwordForCreate, setPasswordForCreate] = useState("");
     const [passwordResetCodeForCreate, setPasswordResetCodeForCreate] = useState("");
@@ -19,6 +20,8 @@ function Login(props) {
     // const [loggedIn, setLoggedIn] = useState(false);
     const [problematicInfo, setProblematicInfo] = useState("_");
     const [credentialsSuccessfullyChecked, setCredentialsSuccessfullyChecked] = useState(null);
+
+    const [cookie, setCookie] = useCookies(['username']);
 
     // useEffect(() => {
     //     setLoggedIn(localStorage.getItem("loggedInFromGoogle"));
@@ -36,13 +39,15 @@ function Login(props) {
                 const userCheckedByUsername = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${uName}`);
                 if (userCheckedByUsername.data.length === 1) {
                     setProblematicInfo("username");
-                    setCredentialsSuccessfullyChecked(null);
+                    setCredentialsSuccessfullyChecked(false);
                     return;
                 } else {
                     // New
                     setProblematicInfo("");
                     setCredentialsSuccessfullyChecked(true);
+                    // CHARMANDER - possibly allow this but delete it from localstorage when you get to home
                     localStorage.setItem("username", uName);
+                    setCookie('username', uName, { path: "/", secure: true });
                 };
             } catch (error) {
                 console.error("Error in Login > checkCredentials");
@@ -70,20 +75,22 @@ function Login(props) {
             } else {
                 props.setUserObject(userObj.data);
                 props.setUsername(userObj.data.username);
+                setCookie('username', userObj.data.username, { path: "/", secure: true });
+                // document.cookie = `usernameD=${userObj.data.username};path=/;secure:true`;
                 props.setUserFFPoints(userObj.data.fantasyForecastPoints);
                 props.setName(userObj.data.username);
                 props.setMarkets(userObj.data.markets);
                 props.setProfilePicture(userObj.data.profilePicture);
                 localStorage.setItem('isLoggedIn', true);
                 localStorage.setItem('username', userObj.data.username);
-                localStorage.setItem('name', "XXXXXXXXXX");
-                localStorage.setItem('markets', userObj.data.markets);
-                localStorage.setItem('userObj', userObj);
-                localStorage.setItem('profilePicture', userObj.data.profilePicture);
+                // localStorage.setItem('name', "XXXXXXXXXX");
+                // localStorage.setItem('markets', userObj.data.markets);
+                // localStorage.setItem('userObj', userObj);
+                // localStorage.setItem('profilePicture', userObj.data.profilePicture);
                 localStorage.setItem('selectedPage', "Home");
-                if (isPassword === false) {
-                    localStorage.setItem("loggedInWithResetCode", true);
-                };
+                // if (isPassword === false) {
+                //     localStorage.setItem("loggedInWithResetCode", true);
+                // };
                 props.setIsLoggedIn(true);
             }
         } catch(error) {

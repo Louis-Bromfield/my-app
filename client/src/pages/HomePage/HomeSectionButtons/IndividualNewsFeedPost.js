@@ -4,6 +4,7 @@ import * as AiIcons from 'react-icons/ai';
 import ImagePlaceholder from '../../../media/sd.png';
 import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
 
 function IndividualNewsFeedPost(props) {
     const [comment, setComment] = useState("");
@@ -23,6 +24,7 @@ function IndividualNewsFeedPost(props) {
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
     const history = useHistory();
+    const [cookie, setCookie] = useCookies(['username']);
 
     useEffect(() => {
         doEffect();
@@ -30,8 +32,15 @@ function IndividualNewsFeedPost(props) {
     }, [props.location.postObject]);
 
     const doEffect = async () => {
+        // if page is refreshed
         if (props.location.postObject === undefined) {
             const res = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/${localStorage.getItem("postID")}`);
+            console.log(res.message);
+            // if the postID in LS has been tampered with, just return to home
+            if (res.data.message !== undefined) {
+                history.push("/home");
+                return;
+            };
             setAuthor(res.data.author);
             setAuthorProfilePicture(res.data.authorProfilePicture);
             setPostDescription(res.data.postDescription);
@@ -71,12 +80,17 @@ function IndividualNewsFeedPost(props) {
                 postID: ID,
                 isNewComment: true,
                 newComment: comment,
-                author: localStorage.getItem("username")
+                // CHARMANDER Would like to change this as otherwise you could make posts in someone else's name
+                // author: localStorage.getItem("username")
+                author: cookie.username
             });
             setNewCommentStatus(true);
             setNewCommentToRender(comment)
             setComment("");
-            giveUserPoints(localStorage.getItem("username"));
+            // CHARMANDER
+            // giveUserPoints(localStorage.getItem("username"));
+            giveUserPoints(cookie.username);
+            
         } catch (error) {
             console.error("Error in IndividualNewsFeedPost > submitComment");
             console.error(error);
@@ -112,7 +126,9 @@ function IndividualNewsFeedPost(props) {
                 <div key={1} className="individual-news-feed-post">
                     <div className="post-author">
                         <div className="post-author-left">
-                            <img className="author-profile-pic" src={author === localStorage.getItem("username") ? localStorage.getItem("profilePicture") : authorProfilePicture} alt=""/>
+                            {/* CHARMANDER */}
+                            {/* <img className="author-profile-pic" src={author === localStorage.getItem("username") ? localStorage.getItem("profilePicture") : authorProfilePicture} alt=""/> */}
+                            <img className="author-profile-pic" src={author === cookie.username ? localStorage.getItem("profilePicture") : authorProfilePicture} alt=""/>
                             <div className="post-author-details">
                                 <Link 
                                     to={{pathname: "/search", clickedUsername: author}}
@@ -187,7 +203,9 @@ function IndividualNewsFeedPost(props) {
                                 to={{pathname: "/search", clickedUsername: author}}
                                 onClick={() => localStorage.setItem("selectedPage", "Search")}
                                 style={{ textDecoration: "none", color: "#404d72"}}>
-                                    <h4 className="comment-author">{localStorage.getItem("username")}</h4>
+                                    {/* CHARMANDER */}
+                                    {/* <h4 className="comment-author">{localStorage.getItem("username")}</h4> */}
+                                    <h4 className="comment-author">{cookie.username}</h4>
                             </Link>
                             <h4>{newCommentToRender}</h4>
                         </div>

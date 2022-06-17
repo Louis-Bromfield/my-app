@@ -82,6 +82,7 @@ function IndividualLeaderboard(props) {
 
     const leaveMarket = async (leaderboard, username) => {
         try {
+            // CHARMANDER
             let markets = localStorage.getItem("markets").split(",");
             let index = markets.findIndex(market => market === leaderboard);
             markets.splice(index, 1);

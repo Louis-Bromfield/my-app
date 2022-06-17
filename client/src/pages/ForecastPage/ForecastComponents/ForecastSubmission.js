@@ -59,7 +59,8 @@ function ForecastSubmission(props) {
 
     useEffect(() => {
         console.log("ForecastSubmission UE");
-        if (props.markets === undefined || typeof props.markets === "string") {
+        console.log(props.markets);
+        if (props.markets === undefined || typeof props.markets === "string" || props.markets.length === 0) {
             getAllForecastsFromDB(localStorage.getItem('markets').split(","));    
         } else {
             getAllForecastsFromDB(props.markets);

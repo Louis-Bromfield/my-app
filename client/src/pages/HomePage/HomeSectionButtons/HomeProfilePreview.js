@@ -15,10 +15,10 @@ function HomeProfilePreview(props) {
 
     useEffect(() => {
         console.log("HomeProfilePreviewUE");
-        if (props.user.fantasyForecastPoints === undefined) {
-            getUserDetails(localStorage.getItem("username"));
+        if (props.userFFPoints === undefined) {
+            getUserDetails(props.username);
         } else {
-            setFFPoints(props.user.fantasyForecastPoints);
+            setFFPoints(props.userFFPoints);
         };
         // Need to add checks for if the user has below 100 points (100 would be level 1 (fine), but 60 points would be level 0.6 (not fine))
         const targetRounded = Math.ceil(ffPoints/100) * 100;
@@ -69,8 +69,9 @@ function HomeProfilePreview(props) {
             </Modal>
             <h2 className="home-button-large-title">My Profile Preview</h2>
             <div className="home-profile-preview-container">
-                <div className="home-profile-preview-container-top-grid">
-                    <div className="profile-top-info-container">
+            <img className="home-profile-preview-img" src={props.user.profilePicture} alt="" />
+                {/* <div className="home-profile-preview-container-top-grid"> */}
+                    {/* <div className="profile-top-info-container"> */}
                         <h2>{props.user.username}</h2>
                         <h3>Level {Math.floor((ffPoints/100)).toFixed(0)} {forecasterRank}</h3>
                         <h3>
@@ -82,9 +83,9 @@ function HomeProfilePreview(props) {
                             />
                             </h3>
                         <br />
-                    </div>
-                    <img className="home-profile-preview-img" src={props.user.profilePicture} alt="" />
-                </div>
+                    {/* </div> */}
+                    {/* <img className="home-profile-preview-img" src={props.user.profilePicture} alt="" /> */}
+                {/* </div> */}
                 <h3>Progress To Next Level:</h3>
                 <div className="home-profile-preview-level-and-xp">
                     <div className="home-profile-preview-level">

@@ -18,9 +18,10 @@ function HomeButtonSmall(props) {
     let mainData, subtitle, path;
     
     const getBrierScore = (userObj) => {
-        if (userObj.length === 15) {
+        console.log(userObj);
+        if (userObj.length === 15 || userObj === {} || userObj.brierScores === undefined) {
             setBrierScore(props.currentAvgBrier);
-            localStorage.setItem("brierScore", props.currentAvgBrier);
+            // localStorage.setItem("brierScore", props.currentAvgBrier);
             return;
         } else {
             let brierTotal = 0;
@@ -29,7 +30,7 @@ function HomeButtonSmall(props) {
             };
             const brierForState = (brierTotal / userObj.brierScores.length).toFixed(0);
             setBrierScore(isNaN(brierForState) ? "N/A" : brierForState);
-            localStorage.setItem("brierScore", isNaN(brierForState) ? "N/A" : brierForState);
+            // localStorage.setItem("brierScore", isNaN(brierForState) ? "N/A" : brierForState);
         };
     };
 
@@ -92,10 +93,12 @@ function HomeButtonSmall(props) {
         // if (props.userLearnQuizzes !== undefined && props.userLearnQuizzes !== null) {
         //     console.log(props.userLearnQuizzes);
         // };
-        getBrierScore(props.user);
+        if (props.user !== {} || props.user === {} || props.user.brierScores === undefined) {
+            getBrierScore(props.user);
+        };
         getLearnProgress(props.userLearnQuizzes);
         getLeaderboardRank(props.username);
-    }, [props.userLearnQuizzes, props.username, props.currentAvgBrier]);
+    }, [props.userLearnQuizzes, props.username, props.user]);
 
     switch(props.title) {
         case("Your Average Brier Score"):

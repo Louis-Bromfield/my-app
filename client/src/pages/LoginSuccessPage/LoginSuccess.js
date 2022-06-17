@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 
 function LoginSuccess(props) {
-    localStorage.setItem("loggedInFromGoogle", true)
+    // localStorage.setItem("loggedInFromGoogle", true)
     const [usernameForHomePage, setUsernameForHomePage] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
 
@@ -15,6 +15,7 @@ function LoginSuccess(props) {
         // const queryParams = new URLSearchParams(window.location.search);
         setLoggedIn(true);
         // const userPAID = queryParams.get('pAID');
+        // CHARMANDER change this to retrieve username from cookie
         setUsernameForHomePage(localStorage.getItem("username"));
         console.log("LoginSuccess UE");
     }, []);

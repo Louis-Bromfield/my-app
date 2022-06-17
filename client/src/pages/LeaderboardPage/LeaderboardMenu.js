@@ -102,6 +102,7 @@ function LeaderboardMenu(props) {
                 });
 
                 updateOnboardingAndUserMarkets([league], username);
+                // CHARMANDER
                 localStorage.setItem("markets", localStorage.getItem("markets") + `, ${league}`);
                 setLeagueName("");
                 setCreateLeague(false);
@@ -216,6 +217,7 @@ function LeaderboardMenu(props) {
             return;
         } else {
             updateOnboardingAndUserMarkets(markets, username);
+            // CHARMANDER
             const marketsForLS = [localStorage.getItem('markets').split(","), ...markets];
             localStorage.removeItem('markets');
             localStorage.setItem('markets', marketsForLS);

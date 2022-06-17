@@ -191,7 +191,8 @@ function HomeNewsFeed(props) {
                 dislikes: [],
                 postDate: new Date(),
                 markets: userMarketsForPost,
-                authorProfilePicture: localStorage.getItem("profilePicture"),
+                authorProfilePicture: props.profilePicture || props.userObj.profilePicture,
+                // authorProfilePicture: localStorage.getItem("profilePicture"),
                 alternateArticleTitle: alternateArticleTitle
             });
             setCauseFeedNewsFeedRefreshWithoutAnimation(false);
@@ -252,7 +253,8 @@ function HomeNewsFeed(props) {
                 articleURL: postURL,
                 postDescription: postDescription,
                 markets: postMarkets,
-                authorProfilePicture: localStorage.getItem("profilePicture"),
+                authorProfilePicture: props.profilePicture || props.userObj.profilePicture,
+                // authorProfilePicture: localStorage.getItem("profilePicture"),
                 articleTitle: postPreviewTitle === "There was an error. Please check the link you have pasted is correct." ? altTitle : postPreviewTitle
             });
             setCauseFeedNewsFeedRefreshWithoutAnimation(false);
@@ -507,7 +509,8 @@ function HomeNewsFeed(props) {
                             <div className="news-feed-post">
                                 <div className="post-author">
                                     <div className="post-author-left">
-                                        <img className="author-profile-pic" src={localStorage.getItem("profilePicture") || ProfilePic} alt=""/>
+                                        {/* <img className="author-profile-pic" src={localStorage.getItem("profilePicture") || ProfilePic} alt=""/> */}
+                                        <img className="author-profile-pic" src={props.profilePicture || props.userObj.profilePicture} alt=""/>
                                         <div className="post-author-details">
                                             <h3>{props.username}</h3>
                                             <h5>{new Date().toString().slice(0, 15)}</h5>
@@ -545,7 +548,8 @@ function HomeNewsFeed(props) {
                                 <li key={index} className="news-feed-post">
                                     <div className="post-author">
                                         <div className="post-author-left">
-                                            <img className="author-profile-pic" src={item.author === props.username ? localStorage.getItem("profilePicture") : item.authorProfilePicture} alt=""/>
+                                            {/* <img className="author-profile-pic" src={item.author === props.username ? localStorage.getItem("profilePicture") : item.authorProfilePicture} alt=""/> */}
+                                            <img className="author-profile-pic" src={item.authorProfilePicture} alt=""/>
                                             <div className="post-author-details">
                                                 <Link 
                                                     to={{pathname: "/search", clickedUsername: item.author}}
@@ -624,7 +628,8 @@ function HomeNewsFeed(props) {
                                     <li key={index} className="news-feed-post">
                                         <div className="post-author">
                                             <div className="post-author-left">
-                                                <img className="author-profile-pic" src={item.author === props.username ? localStorage.getItem("profilePicture") : item.authorProfilePicture} alt=""/>
+                                                {/* <img className="author-profile-pic" src={item.author === props.username ? localStorage.getItem("profilePicture") : item.authorProfilePicture} alt=""/> */}
+                                                <img className="author-profile-pic" src={item.authorProfilePicture} alt=""/>
                                                 <div className="post-author-details">
                                                     <Link 
                                                         to={{pathname: "/search", clickedUsername: item.author}}

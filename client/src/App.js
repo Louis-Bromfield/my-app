@@ -32,24 +32,24 @@ function App() {
   const [userClosedForecastCount, setUserClosedForecastCount] = useState(0);
   const [userBrierScores, setUserBrierScores] = useState([]);
 
-  const updateUsername = async (newUsername) => {
-    await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, { username: newUsername });
-    setUsername(newUsername);
-    localStorage.setItem("username", newUsername);
-  };
+//   const updateUsername = async (newUsername) => {
+//     await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, { username: newUsername });
+//     setUsername(newUsername);
+//     localStorage.setItem("username", newUsername);
+//   };
 
   const logOut = () => {
     setIsLoggedIn(false);
     localStorage.setItem('isLoggedIn', false);
     localStorage.removeItem('username');
-    localStorage.removeItem('name');
-    localStorage.removeItem('markets');
-    localStorage.removeItem('navigationOrder');
-    localStorage.removeItem('currentLeaderboardName');
-    localStorage.removeItem('userObj');
-    localStorage.removeItem('brierScore');
-    localStorage.removeItem('selectedPage');
-    localStorage.removeItem('profilePicture');
+    // localStorage.removeItem('name');
+    // localStorage.removeItem('markets');
+    // localStorage.removeItem('navigationOrder');
+    // localStorage.removeItem('currentLeaderboardName');
+    // localStorage.removeItem('userObj');
+    // localStorage.removeItem('brierScore');
+    // localStorage.removeItem('selectedPage');
+    // localStorage.removeItem('profilePicture');
   };
 
   const login = async (username) => {
@@ -79,10 +79,10 @@ function App() {
     localStorage.setItem('isLoggedIn', true);
     localStorage.setItem("firstVisit", true);
     localStorage.setItem('username', userObj.data[0].username);
-    localStorage.setItem('name', "XXXXXXXXXX");
-    localStorage.setItem('markets', userObj.data[0].markets);
-    localStorage.setItem('userObj', userObj);
-    localStorage.setItem('profilePicture', userObj.data[0].profilePicture);
+    // localStorage.setItem('name', "XXXXXXXXXX");
+    // localStorage.setItem('markets', userObj.data[0].markets);
+    // localStorage.setItem('userObj', userObj);
+    // localStorage.setItem('profilePicture', userObj.data[0].profilePicture);
     localStorage.setItem('selectedPage', "Home");
     // setUserObject(userObj);
     // setUsername(usernameFromLogin);
@@ -104,10 +104,10 @@ function App() {
       console.log("A UE");
       setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
       setUsername(localStorage.getItem('username'));
-      setName(localStorage.getItem('name'));
-      setMarkets(localStorage.getItem('markets'));
-      setUserObject(localStorage.getItem('userObj'));
-      setProfilePicture(localStorage.getItem('profilePicture'));
+    //   setName(localStorage.getItem('name'));
+    //   setMarkets(localStorage.getItem('markets'));
+    //   setUserObject(localStorage.getItem('userObj'));
+    //   setProfilePicture(localStorage.getItem('profilePicture'));
     //   if (isLoggedIn === true) {
         // do all db retrieval here? Or have one retrieval per page's root component
             // e.g. right now we have Home.js retrieving and passing stuff on, but we 
@@ -167,7 +167,7 @@ function App() {
                 <Redirect to="/home"></Redirect>
             </Route>
             {/* <Route path='/home' render={(props) => <Home {...props} username={username} name={name} user={userObject} userBrierScores={userBrierScores} userClosedForecastCount={userClosedForecastCount} userOnboarding={userOnboarding} setUserObject={setUserObject} userMarkets={markets} userFFPoints={userFFPoints} setUserClosedForecastCount={setUserClosedForecastCount} />} /> */}
-            <Route path='/home' render={(props) => <Home {...props} username={username} name={name} user={userObject} setUserObject={setUserObject} />} />
+            <Route path='/home' render={(props) => <Home {...props} username={username} name={name} user={userObject} setUserObject={setUserObject} userFFPoints={userFFPoints} setProfilePicture={setProfilePicture} profilePicture={profilePicture} />} />
             <Route path="/change-log" render={(props) => <ChangeLog {...props} />} />
             <Route path="/news-post" render={(props) => <IndividualNewsFeedPost {...props} />} />
             <Route path='/forecast' render={(props) => <Forecast {...props} markets={markets} username={username} />} />
@@ -177,7 +177,8 @@ function App() {
             <Route path='/learn' render={(props) => <Learn {...props} username={username} isLoggedIn={isLoggedIn} />} />
             <Route path='/search' render={(props) => <Search {...props} username={username} />} />
             <Route path='/survey' render={(props) => <HelpOurResearch {...props} />}/>
-            <Route path='/my-profile' render={(props) => <Profile {...props} user={userObject} username={username} name={name} updateUsername={updateUsername} profilePicture={profilePicture}/>} />
+            {/* <Route path='/my-profile' render={(props) => <Profile {...props} user={userObject} username={username} name={name} updateUsername={updateUsername} profilePicture={profilePicture}/>} /> */}
+            <Route path='/my-profile' render={(props) => <Profile {...props} user={userObject} username={username} name={name} profilePicture={profilePicture}/>} />
             <Route path='/report-any-issues' render={(props) => <ReportAnyIssues {...props} />} />
           </Switch>
         </Router>

@@ -164,7 +164,8 @@ function Navbar(props) {
                                             }
                                     </div>
                                     <div className="user-logout-container">
-                                        <img src={props.profilePicture || localStorage.getItem("profilePicture")} className="navbar-profile-pic" alt="User's profile pic" />
+                                        {/* <img src={props.profilePicture || localStorage.getItem("profilePicture")} className="navbar-profile-pic" alt="User's profile pic" /> */}
+                                        <img src={props.profilePicture} className="navbar-profile-pic" alt="User's profile pic" />
                                         <div className="user-logout-column-container">
                                             <p>
                                                 <Link 
