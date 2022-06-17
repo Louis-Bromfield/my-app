@@ -40,7 +40,7 @@ function HomeNewsFeed(props) {
             // getUserMarketsFromDB(props.username);
 
             // Version without querying server:
-            getUserMarketsFromDB(props.userObj);
+            getUserMarketsFromDB(props.userMarkets);
         } else if (causeFeedNewsFeedRefreshWithoutAnimation === false) {
             setNewPostLoading(true);
             // setTimeout(() => {
@@ -48,6 +48,9 @@ function HomeNewsFeed(props) {
                 // getUserMarketsFromDB(props.username);
                 
                 // Version without querying server:
+                console.log("1");
+                console.log(props.userMarkets);
+                console.log("==========");
                 getUserMarketsFromDB(props.userMarkets);
                 setNewPostLoading(false);
             // }, 500);
@@ -90,8 +93,8 @@ function HomeNewsFeed(props) {
             // console.log("DEBUGGING");
             // console.log(userMarkets);
             const allMarkets = userMarkets;
-            setUserMarkets(allMarkets);
-            setFilters(allMarkets);
+            setUserMarkets(userMarkets);
+            setFilters(userMarkets);
         } catch (error) {
             console.error(error);
         };
@@ -293,6 +296,12 @@ function HomeNewsFeed(props) {
     }
 
     const filterNewsFeed = (leaderboardName, feed, filters) => {
+        let userMarketsBackup = [];
+        // Have to make this backup array manually as for some reason on line 312 it also splices userMarkets
+        // meaning the filter checkboxes on the News Feed just disappear :/ this loop solution does work though
+        for (let i = 0; i < userMarkets.length; i++) {
+            userMarketsBackup.push(userMarkets[i]);
+        };
         if (filters !== feed) {
             setFiltersApplied(true);
         } else {
@@ -300,7 +309,9 @@ function HomeNewsFeed(props) {
         };
         let filterArray = filters;
         if (filterArray.includes(leaderboardName)) {
+// console.log(userMarkets);
             filterArray.splice(filterArray.indexOf(leaderboardName), 1);
+// console.log(userMarkets);
         } else if (!filterArray.includes(leaderboardName)) {
             filterArray.push(leaderboardName);
         };
@@ -311,6 +322,7 @@ function HomeNewsFeed(props) {
             };
         };
         setFilteredFeed(filteredFeedArr);
+        setUserMarkets(userMarketsBackup);
     };
 
     const checkCheckBoxes = (market, markets) => {
@@ -471,6 +483,8 @@ function HomeNewsFeed(props) {
                         <div className="news-feed-filter-div">
                             <div className="checkbox-div">
                                 {userMarkets.map((item, index) => {
+                                    console.log(item);
+                                    console.log(filters.includes(item));
                                     if (filters.includes(item)) {
                                         return (
                                             <div className="filter-market-checkbox" key={index} >
@@ -552,7 +566,7 @@ function HomeNewsFeed(props) {
                                             <img className="author-profile-pic" src={item.authorProfilePicture} alt=""/>
                                             <div className="post-author-details">
                                                 <Link 
-                                                    to={{pathname: "/search", clickedUsername: item.author}}
+                                                    to={item.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: item.author}}
                                                     onClick={() => localStorage.setItem("selectedPage", "Search")}
                                                     style={{ textDecoration: "none", color: "#404d72"}}>
                                                         <h3>{item.author}</h3>
@@ -632,7 +646,7 @@ function HomeNewsFeed(props) {
                                                 <img className="author-profile-pic" src={item.authorProfilePicture} alt=""/>
                                                 <div className="post-author-details">
                                                     <Link 
-                                                        to={{pathname: "/search", clickedUsername: item.author}}
+                                                        to={item.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: item.author}}
                                                         onClick={() => localStorage.setItem("selectedPage", "Search")}
                                                         style={{ textDecoration: "none", color: "#404d72"}}>
                                                             <h3>{item.author}</h3>

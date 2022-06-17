@@ -131,7 +131,7 @@ function IndividualNewsFeedPost(props) {
                             <img className="author-profile-pic" src={author === cookie.username ? localStorage.getItem("profilePicture") : authorProfilePicture} alt=""/>
                             <div className="post-author-details">
                                 <Link 
-                                    to={{pathname: "/search", clickedUsername: author}}
+                                    to={author === cookie.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: author}}
                                     onClick={() => localStorage.setItem("selectedPage", "Search")}
                                     style={{ textDecoration: "none", color: "#404d72"}}>
                                         <h3>{author}</h3>
@@ -200,7 +200,7 @@ function IndividualNewsFeedPost(props) {
                     {newCommentStatus === true && 
                         <div className="comment-in-chain">
                             <Link 
-                                to={{pathname: "/search", clickedUsername: author}}
+                                to={{pathname: "/my-profile"}}
                                 onClick={() => localStorage.setItem("selectedPage", "Search")}
                                 style={{ textDecoration: "none", color: "#404d72"}}>
                                     {/* CHARMANDER */}
@@ -224,8 +224,9 @@ function IndividualNewsFeedPost(props) {
                                             className="comment-in-chain">
                                                 <Link 
                                                     to={usernameProps}
-                                                    onClick={() => localStorage.setItem("selectedPage", "Search")}>
-                                                    <h4 className="comment-author">{subComment.author}</h4>
+                                                    onClick={() => localStorage.setItem("selectedPage", item.author === cookie.username ? "My Profile" : "Search")}>
+                                                    <h4 className="comment-author"
+                                                    style={{ textDecoration: "none" }}>{subComment.author}</h4>
                                                 </Link>
                                                 <h4>{subComment.comment}</h4>
                                         </div>
@@ -234,7 +235,7 @@ function IndividualNewsFeedPost(props) {
                             ) 
                         } else if (typeof item === "object") {
                             const usernameProps = {
-                                pathname: "/search",
+                                pathname: item.author === cookie.username ? "/my-profile" : "/search",
                                 clickedUsername: item.author
                             }
                             return (
@@ -244,7 +245,8 @@ function IndividualNewsFeedPost(props) {
                                         <div className="author-details">
                                             <Link 
                                                 to={usernameProps}
-                                                onClick={() => localStorage.setItem("selectedPage", "Search")}>
+                                                onClick={() => localStorage.setItem("selectedPage", item.author === cookie.username ? "My Profile" : "Search")}
+                                                style={{ textDecoration: "none" }}>
                                                 <h4 className="comment-author">{item.author}</h4>
                                             </Link>
                                         </div>

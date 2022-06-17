@@ -1,10 +1,15 @@
 .top-three-users-highlight {
-    width: 65%;
-    max-width: 65%;
+    width: 50%;
+    max-width: 50%;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
     column-gap: 5%;
     font-size: 0.8em;
+    /* background-color: rgb(238, 237, 237); */
+    box-shadow: 0.5px 1px 5px 0.5px #888888;
+    padding-top: 1vh;
 }
 
 .top-three-individual-user {

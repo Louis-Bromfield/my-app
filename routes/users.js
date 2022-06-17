@@ -508,6 +508,7 @@ console.log(outcome);
         // Condition to catch if the first prediction a user makes is AFTER I have closed the market
         // i.e. they submit but I close the problem early, and it closes to a time before they submitted
         if (new Date(forecastObj.submittedForecasts[i].forecasts[0].date) < closeDate) {
+            // Add in a check that says if first forecast submitted is ON THE SAME DAY as startDate, give them 10/10
             let tValue = (closeDate - new Date(forecastObj.submittedForecasts[i].forecasts[0].date))/1000;
             let timeFrame = (closeDate - startDate)/1000;
             tScore = (tValue/timeFrame)*10;

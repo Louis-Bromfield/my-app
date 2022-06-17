@@ -245,12 +245,12 @@ function IndividualLeaderboard(props) {
                     rankings={filteredRankings}
                     ffData={ffData}
                 />
-                <LeaderboardSpecificStats 
+                {/* <LeaderboardSpecificStats 
                     numberOfForecasters={filteredRankings.length} 
                     averageBrier={averageBrier}
                     isFFLeaderboard={isFFLeaderboard}
                     leaderboardTitle={currentLeaderboardName}     
-                />
+                /> */}
             </div>
             {/* <div className="leaderboard-filter-select">
                 <select name="leaderboard-filter" id="" onChange={(e) => setLeaderboardFilter(e.target.value)}>

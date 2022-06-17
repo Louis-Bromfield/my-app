@@ -24,6 +24,7 @@ function Leaderboard(props) {
         return () => window.addEventListener("resize", updateWidth);
     }, [props.leaderboardRankings, props.isFFLeaderboard, props.leaderboardTitle]);
 
+    // Make this function cheaper, with about 140 people it took a few seconds, maybe add a loading animation while it gets all users?
     const getAllUserFFPoints = async (rankings) => {
         try {
             if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
