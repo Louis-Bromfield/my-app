@@ -7,14 +7,15 @@ const ClosedProblemModal = (props) => {
     const showHideClassName = props.show ? "modal display-block" : "modal display-none";
     // const layoutClassName = props.userObj.numberOfClosedForecasts > 1 ? "grid-layout" : "non-grid-layout";
     const [brierArr, setBrierArr] = useState([]);
-    const [currentProblem, setCurrentProblem] = useState(props.user.brierScores[props.user.brierScores.length-1] === undefined ? { problemName: "", brierScore: 0.00 } : props.user.brierScores[props.user.brierScores.length-1]);
+    const [currentProblem, setCurrentProblem] = useState(props.userBrierScores === undefined ? { problemName: "", brierScore: 0.00 } : props.userBrierScores[props.userBrierScores.length-1]);
     const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
 
     useEffect(() => {
+        console.log(props);
         const arr = [];
-        let i = props.user.brierScores.length-1;
-        while (i >= props.user.brierScores.length-(props.userClosedForecastCount)) {
-            arr.push(props.user.brierScores[i]);
+        let i = props.userBrierScores.length-1;
+        while (i >= props.userBrierScores.length-(props.userClosedForecastCount)) {
+            arr.push(props.userBrierScores[i]);
             i--;
         };
         setBrierArr(arr);
@@ -45,7 +46,7 @@ const ClosedProblemModal = (props) => {
                 <img src={FFLogo} alt="" />
                 <p>We've closed some forecast problems! Go to My Forecasts and select the problem for a breakdown of your performance!</p>
                 {/* <p>You will receive a 5% boost for every problem where you score 75+!</p> */}
-                <a href="https://youtu.be/1fJG4NHDmVY" target="_blank" rel="noreferrer nofollow" style={{ color: "#fff" }}>
+                <a href="https://youtu.be/OkLP72O3hmo" target="_blank" rel="noreferrer nofollow" style={{ color: "#fff" }}>
                     <p>Want to know more about how your scores are calculated? Click here.</p>
                 </a>
                 <button onClick={() => closeModal(props.username)} className="close-modal-btn">

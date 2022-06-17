@@ -21,11 +21,11 @@ function Topic(props) {
         case("Brier Scores"):
             youtubeLink = <iframe 
                 className="youtube-iframe" 
-                src="https://www.youtube.com/embed/q5hI_1Rgl3Q" 
+                src="https://www.youtube.com/embed/9W7rnmEWVmQ" 
                 title="YouTube video player" 
-                frameBorder="0" 
+                frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen>
+                allowfullscreen>
             </iframe>
             text = TopicContent[1];
             break;

@@ -122,9 +122,9 @@ function Home(props) {
                     show={showClosedProblemModal}
                     setShowClosedProblemModal={setShowClosedProblemModal}
                     userClosedForecastCount={userClosedForecastCount}
-                    user={props.user}
+                    user={props.user === undefined ? userObj : props.user}
                     username={props.username}
-                    userBrierScores={props.userBrierScores}
+                    userBrierScores={props.userBrierScores === undefined ? userObj.brierScores : props.userBrierScores}
                     setUserClosedForecastCount={setUserClosedForecastCount}>
                 </ClosedProblemModal>
             } 

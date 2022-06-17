@@ -29,7 +29,7 @@ function ForecastResultsBreakdown(props) {
                         className="modal-i-btn"
                         onClick={() => {
                             setShowModal(true);
-                            setModalContent(<a href="https://youtu.be/0TtfLVADR-I" target="_blank" rel="noreferrer nofollow" style={{ color: "#fff" }}><h4>Want to know more about how your scores are calculated? Click here, or visit the Learn page and select the Brier Scores tab.</h4></a>)
+                            setModalContent(<a href="https://youtu.be/OkLP72O3hmo" target="_blank" rel="noreferrer nofollow" style={{ color: "#fff" }}><h4>Want to know more about how your scores are calculated? Click here, or visit the Learn page and select the Brier Scores tab.</h4></a>)
                         }}
                     />
                 </h2>
