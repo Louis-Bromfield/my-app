@@ -248,7 +248,7 @@ router.patch("/imageAPI/:username", parser.single("image"), async (req, res) => 
 router.patch("/newPW/:username", async (req, res) => {
     try {
         const document = await Users.findOne({ username: req.params.username });
-        const newHashedPW = await bcrypt.hash(params.password, 10);
+        const newHashedPW = await bcrypt.hash(req.body.password, 10);
         const updatedUser = await Users.findByIdAndUpdate(document._id, { password: newHashedPW },
         { new: true }
     );

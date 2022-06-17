@@ -102,6 +102,24 @@
     text-decoration-color: #fff;
 }
 
+.profile-details-container { 
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+}
+
+.change-pw-btn {
+    background-color: rgb(57, 167, 57);
+    color: #fff;
+    border: none;
+    padding: 0.5%;
+}
+
+.change-pw-btn:hover {
+    background-color: rgb(40, 179, 40);
+    cursor: pointer;
+}
+
 @media (max-width: 1500px) {
     .profile-header {
         font-size: 1.8em;
@@ -117,6 +135,9 @@
         grid-template-columns: 40% 60%;
         height: 30vh;
         margin-bottom: 3vh;
+    }
+    .profile-details-container {
+        width: 50%;
     }
 }
 

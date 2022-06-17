@@ -130,7 +130,7 @@ console.log("Profile.js UE");
                     }
                 );
                 setShowModal(true);
-                setModalContent("You just got 100 Fantasy Forecast Points for visiting your profile for the first time!");
+                setModalContent("You just got 100 Fantasy Forecast Points for visiting your profile for the first time! If you forget your password, log back in using your Reset Code and then set your new password at the bottom of this page.");
             };
         } catch (error) {
             console.error(error);
@@ -139,12 +139,22 @@ console.log("Profile.js UE");
 
     const changePassword = async (newPW) => {
         try {
-            const newDoc = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newPW/${props.username}`, { password: newPW });
-            if (newDoc) {
-                setPasswordChangeMsg("Password succesfully changed.");
+            if (newPW.length < 4) {
+                setPasswordChangeMsg("Your username and password must be at least 5 characters and contain no spaces.");
+                return;
+            } else if (/\s/.test(newPW)) {
+                setPasswordChangeMsg("Your username and password must be at least 5 characters and contain no spaces.");
+                return;
             } else {
-                setPasswordChangeMsg("There was an error, please try again later.");
-            };
+                console.log(newPW);
+                const newDoc = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newPW/${props.username}`, { password: newPW });
+                console.log(newDoc);
+                if (newDoc) {
+                    setPasswordChangeMsg("Password succesfully changed.");
+                } else {
+                    setPasswordChangeMsg("There was an error, please try again later.");
+                };
+            }
         } catch (error) {
             console.error(error);
             console.error("Error in change PW");
@@ -207,10 +217,12 @@ console.log("Profile.js UE");
                         {profileTab === "my-forecasts" && <ProfileForecasts userObj={userObj} searched={false} />}
                         {profileTab === "my-rewards" && <ProfileRewards />}
                     </div>
+                    <br />
                     <div className="profile-details-container">
-                        Want to reset your password?
-                        <label htmlFor="password">Password:</label>
+                        <h3 classname="profile-details-header">Want to change your password?</h3>
+                        <label htmlFor="password" classname="profile-details-label">Password:</label>
                         <input 
+                            classname="profile-details-input"
                             type="password" 
                             name="password" 
                             id="password" 
@@ -220,8 +232,8 @@ console.log("Profile.js UE");
                                 setPasswordChangeMsg("");
                             }}
                         />
-                        <button onClick={() => changePassword(newPassword)}>Change Password</button>
-                        {passwordChangeMsg !== "" && passwordChangeMsg}
+                        <button onClick={() => changePassword(newPassword)} className="change-pw-btn">Change Password</button>
+                        {passwordChangeMsg}
                     </div>
                 </div>
             </div>

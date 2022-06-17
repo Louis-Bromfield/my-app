@@ -81,6 +81,9 @@ function Login(props) {
                 localStorage.setItem('userObj', userObj);
                 localStorage.setItem('profilePicture', userObj.data.profilePicture);
                 localStorage.setItem('selectedPage', "Home");
+                if (isPassword === false) {
+                    localStorage.setItem("loggedInWithResetCode", true);
+                };
                 props.setIsLoggedIn(true);
             }
         } catch(error) {
