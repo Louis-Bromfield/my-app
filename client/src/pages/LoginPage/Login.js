@@ -222,7 +222,7 @@ function Login(props) {
                             setPasswordResetCodeForLogin(e.target.value);
                         }}
                     />
-                <button className="login-btn" onClick={() => loginFromLogin(usernameForLogin, passwordResetCodeForCreate, false)}>Login to Fantasy Forecast</button>
+                <button className="login-btn" onClick={() => loginFromLogin(usernameForLogin, passwordResetCodeForLogin, false)}>Login to Fantasy Forecast</button>
                 {errorMessage}
             </div>
         </div>

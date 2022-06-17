@@ -84,7 +84,8 @@
 
 .login-btn:hover,
 .signup-btn:hover,
-.check-your-details-btn:hover {
+.check-your-details-btn:hover,
+.sign-in-with-google-btn:hover {
     background-color: rgb(104, 189, 104);
     transition: 0.2s ease;
 }
