@@ -17,7 +17,7 @@
 }
 
 .signup-container {
-    width: 80%;
+    width: 90%;
     display: grid;
     grid-template-columns: 50% 50%;
     border: 1px solid #fff;
@@ -38,7 +38,7 @@
 
 .login-div {
     border: 1px solid #fff;
-    width: 80%;
+    width: 90%;
     margin-top: 2vh;
     /* margin-bottom: 5vh; */
 }
@@ -73,7 +73,7 @@
     background-color: rgb(57, 167, 57);
     border: none;
     color: #fff;
-    width: 100%;
+    width: 90%;
     padding: 1%;
     font-size: 1em;
     cursor: pointer;

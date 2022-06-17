@@ -287,7 +287,7 @@ function LeaderboardMenu(props) {
                     }
                 );
                 setShowModal(true);
-                setModalContent("You just got 150 Fantasy Forecast Points for joining your first market! From now on, every time you join a market you'll earn 5 points.");
+                setModalContent("You just got 150 Fantasy Forecast Points for joining your first market! Before you start forecasting, remember that if you want to be eligible for the tournament prizes (including £250 for 1st Place!), you MUST complete our survey before 11:59pm (BST) on Sunday 26th June. Failing to do so will render you ineligible for the prizes. The survey can be found by selecting the Survey tab at the top of the screen or the top-left dropdown menu if you're on mobile.");
             }
         } catch (error) {
             console.error("Error in LeaderboardMenu > updateOnboarding")
