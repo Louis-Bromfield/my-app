@@ -13,6 +13,17 @@ function ForecastResultsBreakdown(props) {
             </Modal>
             {props.forecastClosed === true &&
                 <div>
+                    <h2 style={{ color: "#404d72", marginTop: "1vh" }}>
+                    <u>What did I score?</u>
+                    <FaInfoCircle 
+                        color={"orange"} 
+                        className="modal-i-btn"
+                        onClick={() => {
+                            setShowModal(true);
+                            setModalContent(<a href="https://youtu.be/OkLP72O3hmo" target="_blank" rel="noreferrer nofollow" style={{ color: "#fff" }}><h4>Want to know more about how your scores are calculated? Click here, or visit the Learn page and select the Brier Scores tab.</h4></a>)
+                        }}
+                    />
+                </h2>
                     <h2 style={{ color: "#404d72"}}>Combined Brier Score: <u>{props.totalScore.toFixed(2)} / 100</u></h2>
                     <h2 style={{ color: "#404d72"}}>Time Score: <u>{props.tScore.toFixed(2)} / 10</u></h2>
                     <h2 style={{ color: "#404d72"}}>Total: <u>{(props.totalScore + props.tScore).toFixed(2)} / 110</u></h2>
