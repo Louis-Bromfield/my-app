@@ -207,25 +207,34 @@ function HomeNewsFeed(props) {
 
     const updateOnboarding = async (username) => {
         try {
-            // Try to redo this so that we don't need to do the GET first 
-            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
-            if (userDocument.data[0].onboarding.submitAPost === true) {
-                userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 15
-                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, {
-                    fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints
-                });
-            } else {
-                userDocument.data[0].onboarding.submitAPost = true;
-                userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 200
-                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
-                    { 
-                        onboarding: userDocument.data[0].onboarding,
-                        fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 
-                    }
-                );
+            const updatedUserDocument = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/onboardingTask/${username}`, {
+                onboardingTask: "submitAPost",
+                ffPointsIfFalse: 200,
+                ffPointsIfTrue: 15
+            });
+            if (updatedUserDocument.firstTime === true) {
                 props.handleFirstPost(true);
-                props.handleFirstPostModalContent("You just earned 200 Fantasy Forecast Points for your first post! Future posts will earn you 15 per post.")
+                props.handleFirstPostModalContent("You just earned 200 Fantasy Forecast Points for your first post! Future posts will earn you 15 per post.")    
             };
+            // Try to redo this so that we don't need to do the GET first 
+            // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            // if (userDocument.data[0].onboarding.submitAPost === true) {
+            //     userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 15
+            //     await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, {
+            //         fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints
+            //     });
+            // } else {
+            //     userDocument.data[0].onboarding.submitAPost = true;
+            //     userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 200
+            //     await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
+            //         { 
+            //             onboarding: userDocument.data[0].onboarding,
+            //             fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 
+            //         }
+            //     );
+            //     props.handleFirstPost(true);
+            //     props.handleFirstPostModalContent("You just earned 200 Fantasy Forecast Points for your first post! Future posts will earn you 15 per post.")
+            // };
         } catch (error) {
             console.error(error);
         };
