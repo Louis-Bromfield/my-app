@@ -141,7 +141,7 @@ function Leaderboard(props) {
     const getAllUserFFPoints = async (rankings) => {
         try {
             const leaderboardName = props.leaderboardTitle === undefined ? localStorage.getItem("currentLeaderboardName") : props.leaderboardTitle;
-            const leaderboardData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/getAllInfoToRender/${leaderboardName}`, {
+            const leaderboardData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/getAllInfoToRender`, {
                 rankings: rankings,
                 username: props.username,
                 isFFLeaderboard: props.isFFLeaderboard,
