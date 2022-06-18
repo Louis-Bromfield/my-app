@@ -48,6 +48,104 @@ router.get("/leaderboard/:leaderboardName", async (req, res) => {
     res.json(sortedData);
 })
 
+// Get all leaderboard info to render
+router.get("/leaderboard/getAllInfoToRender/:leaderboardName", async (req, res) => {
+    try {
+        // req.body contains 
+        // rankings leaderboard (array)
+        // username of logged in user (string)
+        // isFFLeaderboard boolean
+        // leaderboardTitle string
+
+        // must return
+        // value for setUserInMarket 
+        // new rankings array containing all info
+
+        let rankingsFromBody = req.body.rankings;
+        let userInMarket = false;
+        let usersData = [];
+        let ffData = [];
+        let ffRankings = [];
+          for (let i = 0; i < rankingsFromBody.length; i++) {
+            console.log(rankingsFromBody[i]);
+            const userDocumentFF = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${rankings[i].username}`);
+            // Check if logged in user is in market, true will allow them to invite etc
+            if (userDocumentFF.data[0].username === props.username) {
+                userInMarket = true;
+            };
+            if (req.body.isFFLeaderboard === false || req.body.leaderboardTitle === "Fantasy Forecast All-Time") {
+              ffRankings[i] = {
+                profilePicture: rankingsFromBody[i].profilePicture,
+                username: rankingsFromBody[i].username,
+                marketPoints: 0.0,
+                brierScores: [],
+                avgAllTimeBrier: 0.0
+              };
+              ffRankings[i].profilePicture = rankingsFromBody[i].profilePicture;
+              ffRankings[i].username = rankingsFromBody[i].username;
+              ffRankings[i].marketPoints = userDocumentFF.data[0].fantasyForecastPoints;
+              ffRankings[i].brierScores = userDocumentFF.data[0].brierScores;
+      
+              let totalBrierForUser = 0;
+              for (let j = 0; j < userDocumentFF.data[0].brierScores.length; j++) {
+                totalBrierForUser += userDocumentFF.data[0].brierScores[j].brierScore;
+              }
+              let avgAllTimeBrier = (totalBrierForUser / userDocumentFF.data[0].brierScores.length);
+              ffRankings[i].avgAllTimeBrier = isNaN(avgAllTimeBrier) ? 0.0 : avgAllTimeBrier;
+            } else {
+              rankingsFromBody[i].brierScores = [];
+              let totalBrier = 0;
+              let numberOfBriersInThisMarket = 0;
+              if (userDocumentFF.data[0].brierScores.length > 0) {
+                // Loop through the user's briers, adding to the user's average calculation while pushing simultaneously
+                  for (let j = 0; j < userDocumentFF.data[0].brierScores.length; j++) {
+                      if (userDocumentFF.data[0].brierScores[j].marketName === req.body.leaderboardTitle) {
+                          numberOfBriersInThisMarket++;
+                          rankingsFromBody[i].brierScores.push({
+                              problemName: userDocumentFF.data[0].brierScores[j].problemName,
+                              brierScore: userDocumentFF.data[0].brierScores[j].brierScore
+                          });
+                          totalBrier += userDocumentFF.data[0].brierScores[j].brierScore;
+                      };
+                  };
+              };
+              if (userDocumentFF.data[0].brierScores.length === 0) {
+                    rankingsFromBody[i].avgBrierScore = 0;
+              } else {
+                  let avgBrierScore = totalBrier / numberOfBriersInThisMarket;
+                  rankingsFromBody[i].avgBrierScore = isNaN(avgBrierScore) ? 0.0 : totalBrier/numberOfBriersInThisMarket;
+              };
+            };
+          };
+          // Outside of main loop:
+          if (req.body.isFFLeaderboard === false || req.body.leaderboardTitle === "Fantasy Forecast All-Time") {
+            ffRankings = ffRankings.sort((a, b) => b.marketPoints - a.marketPoints);
+            // usersData = ffRankings;
+            // ffData = ffRankings;
+            res.json({
+                rankings: rankingsFromBody,
+                userInMarket: userInMarket,
+                usersData: ffRankings,
+                ffData: ffRankings
+            });
+          } else {
+            // setUsersData(rankingsFromBody);
+            if (rankingsFromBody.find(el => el.username === props.username) !== undefined) {
+                userInMarket = true;
+            };
+            res.json({
+                rankings: rankingsFromBody,
+                userInMarket: userInMarket,
+                usersData: ffRankings,
+            });
+          };
+    } catch (err) {
+        console.error("Error in getAllInfoToRender");
+        console.error(err);
+        res.json({ Error: "Error, failed to return leaderboard data"});
+    };
+});
+
 // Create a leaderboard
 router.post("/", async (req, res) => {
     const newLeaderboard = new Leaderboards({

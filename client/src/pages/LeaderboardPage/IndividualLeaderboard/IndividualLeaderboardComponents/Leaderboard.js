@@ -144,6 +144,7 @@ function Leaderboard(props) {
                 isFFLeaderboard: props.isFFLeaderboard,
                 leaderboardTitle: props.leaderboardTitle === undefined ? localStorage.getItem("currentLeaderboardName") : props.leaderboardTitle
             });
+            console.log(leaderboardData);
             if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
                 setUsersData(leaderboardData.data.usersData);
                 props.setFFData(leaderboardData.data.ffData);
