@@ -49,7 +49,7 @@ router.get("/leaderboard/:leaderboardName", async (req, res) => {
 })
 
 // Get all leaderboard info to render
-router.get("/leaderboard/getAllInfoToRender", async (req, res) => {
+router.get("/getAllInfoToRender", async (req, res) => {
     try {
         console.log(req.body);
         // req.body contains 
