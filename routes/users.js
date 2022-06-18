@@ -266,12 +266,12 @@ router.patch("/onboardingTask/:username", async (req, res) => {
         let userOnboarding = user.onboarding;
         let userFFPoints = user.fantasyForecastPoints;
         let firstTime;
-        console.log(user);
+        // console.log(user);
         const onboardingTaskToUpdate = req.body.onboardingTask;
         console.log(onboardingTaskToUpdate);
         for (let i = 0; i < Object.keys(userOnboarding).length; i++) {
             console.log(Object.keys(userOnboarding)[i]);
-            if (Object.keys(userOnboarding[i] === onboardingTaskToUpdate)) {
+            if (Object.keys(userOnboarding)[i] === onboardingTaskToUpdate) {
                 if (Object.keys(userOnboarding)[i] === false) {
                     userOnboarding = true;
                     userFFPoints += Number(req.body.ffPointsIfFalse);
