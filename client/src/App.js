@@ -184,7 +184,7 @@ function App() {
             <Route path="/news-post" render={(props) => <IndividualNewsFeedPost {...props} />} />
             <Route path='/forecast' render={(props) => <Forecast {...props} markets={markets} username={username} />} />
             <Route path='/forecast-analysis' render ={(props) => <ForecastAnalysisPage {...props} username={username} />} />
-            <Route path='/leaderboard-select' render={(props) => <LeaderboardMenu {...props} username={username} userFFPoints={userFFPoints} userObject={userObject} />} />
+            <Route path='/leaderboard-select' render={(props) => <LeaderboardMenu {...props} username={username} userFFPoints={userFFPoints} userObject={userObject} profilePicture={profilePicture} />} />
             <Route path='/leaderboard' render={(props) => <IndividualLeaderboard {...props} username={username} />} />
             <Route path='/learn' render={(props) => <Learn {...props} username={username} isLoggedIn={isLoggedIn} />} />
             <Route path='/search' render={(props) => <Search {...props} username={username} />} />

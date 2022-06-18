@@ -9,8 +9,8 @@ import { FaInfoCircle } from 'react-icons/fa';
 
 
 function LeaderboardMenu(props) {
-    const [canCreateLeagueDueToLevel, setCanCreateLeagueDueToLevel] = useState(false);
-    const [createLeague, setCreateLeague] = useState(false);
+    // const [canCreateLeagueDueToLevel, setCanCreateLeagueDueToLevel] = useState(false);
+    // const [createLeague, setCreateLeague] = useState(false);
     const [leagueSetupConfirmation, setLeagueSetupConfirmation] = useState(false);
     const [usersArray, setUsersArray] = useState(["empty array"]);
     const [leagueName, setLeagueName] = useState("");
@@ -29,7 +29,7 @@ function LeaderboardMenu(props) {
     const [isPublic, setIsPublic] = useState();
     const [isPublicChecked, setIsPublicChecked] = useState(false);
     const [isPrivateChecked, setIsPrivateChecked] = useState(false);
-    const [usersToInviteToNewLeague, setUsersToInviteToNewLeague] = useState([{username: props.username, marketPoints: 0, isGroup: false, acceptedInvite: true}]);
+    const [usersToInviteToNewLeague, setUsersToInviteToNewLeague] = useState([{username: props.username, marketPoints: 0, isGroup: false, acceptedInvite: true, profilePicture: props.profilePicture || ""}]);
     const [leagueCreationError, setLeagueCreationError] = useState("");
     const [inviteAlert, setInviteAlert] = useState("No message");
     const [showModal, setShowModal] = useState(false);
@@ -38,7 +38,7 @@ function LeaderboardMenu(props) {
     useEffect(() => {
         console.log(props);
         
-        if (props.userFFPoints > 1500) setCanCreateLeagueDueToLevel(true);
+        // if (props.userFFPoints > 1500) setCanCreateLeagueDueToLevel(true);
         checkIfUserIsInMarkets(props.username);
         pullAllMarketsFromDB(props.username);
         if (userInNoMarkets === true) {
@@ -63,7 +63,7 @@ function LeaderboardMenu(props) {
             setUsersToInviteToNewLeague(updatedArray);
         } else if (found === false) {
             let updatedArray = usersToInviteToNewLeague;
-            updatedArray.push({ username: username, marketPoints: 0, isGroup: isGroup, acceptedInvite: false});
+            updatedArray.push({ username: username, marketPoints: 0, isGroup: isGroup, acceptedInvite: false, profilePicture: ""});
             setUsersToInviteToNewLeague(updatedArray);
         };
     };
@@ -73,52 +73,62 @@ function LeaderboardMenu(props) {
         setLeagueName(e.target.value);
     };
 
-    const persistLeagueToDB = async (league, usersToInvite, publicStatus, username) => {
-        if (isPublicChecked === false && isPrivateChecked === false) {
-            setLeagueCreationError("Please indicate if your league is public or private.");
-            return;
-        };
-        if (/^\s*$/.test(league)) {
-            setLeagueCreationError("Your league name is only spaces. Please use letters and numbers.");
-            return;
-        };
-        let found = false;
-        for (let i = 0; i < allMarkets.length; i++) {
-            if (allMarkets[i][0] === league) {
-                setLeagueCreationError("This league name has already been taken. Please choose another one.");
-                found = true;
-                return;
-            };
-        };
-        if (found === true) {
-            return;
-        } else {
-            setLeagueCreationError("");
-            try {
-                await axios.post('https://fantasy-forecast-politics.herokuapp.com/leaderboards', {
-                    leaderboardName: league,
-                    rankings: usersToInvite,
-                    isPublic: publicStatus,
-                    isFFLeaderboard: false,
-                    leagueCreator: username
-                });
+    // const persistLeagueToDB = async (league, usersToInvite, publicStatus, username) => {
+    //     if (isPublicChecked === false && isPrivateChecked === false) {
+    //         setLeagueCreationError("Please indicate if your league is public or private.");
+    //         return;
+    //     };
+    //     if (/^\s*$/.test(league)) {
+    //         setLeagueCreationError("Your league name is only spaces. Please use letters and numbers.");
+    //         return;
+    //     };
+    //     let found = false;
+    //     for (let i = 0; i < allMarkets.length; i++) {
+    //         if (allMarkets[i][0] === league) {
+    //             setLeagueCreationError("This league name has already been taken. Please choose another one.");
+    //             found = true;
+    //             return;
+    //         };
+    //     };
+    //     if (found === true) {
+    //         return;
+    //     } else {
+    //         console.log(usersToInvite);
+    //         console.log(usersArray);
+    //         for (let i = 0; i < usersToInvite.length; i++) {
+    //             for (let j = 0; j < usersArray.length; j++) {
+    //                 if (usersToInvite[i].username === usersArray[j].username) {
+    //                     usersToInvite[i].profilePicture = usersArray[j].profilePicture;
+    //                     continue;
+    //                 };
+    //             };
+    //         };
+    //         setLeagueCreationError("");
+    //         try {
+    //             await axios.post('https://fantasy-forecast-politics.herokuapp.com/leaderboards', {
+    //                 leaderboardName: league,
+    //                 rankings: usersToInvite,
+    //                 isPublic: publicStatus,
+    //                 isFFLeaderboard: false,
+    //                 leagueCreator: username
+    //             });
 
-                updateOnboardingAndUserMarkets([league], username);
-                // CHARMANDER
-                localStorage.setItem("markets", localStorage.getItem("markets") + `, ${league}`);
-                setLeagueName("");
-                setCreateLeague(false);
-                setLeagueSetupConfirmation(true);
-                setTimeout(() => {
-                    setLeagueSetupConfirmation(false);
-                }, 1500);
-                setCauseRefresh(causeRefresh+1);
-            } catch (error) {
-                console.error("Error occured in LeaderboardMenu.js > persistLeagueToDB");
-                console.error(error);
-            };
-        };
-    };
+    //             updateOnboardingAndUserMarkets([league], username);
+    //             // CHARMANDER
+    //             localStorage.setItem("markets", localStorage.getItem("markets") + `, ${league}`);
+    //             setLeagueName("");
+    //             setCreateLeague(false);
+    //             setLeagueSetupConfirmation(true);
+    //             setTimeout(() => {
+    //                 setLeagueSetupConfirmation(false);
+    //             }, 1500);
+    //             setCauseRefresh(causeRefresh+1);
+    //         } catch (error) {
+    //             console.error("Error occured in LeaderboardMenu.js > persistLeagueToDB");
+    //             console.error(error);
+    //         };
+    //     };
+    // };
 
     // ------------------------------------------------------------------------------------
     // Could this one and pullAllMarketsFromDB be merged into one API request?
@@ -180,27 +190,27 @@ function LeaderboardMenu(props) {
         };
     };
 
-    const leagueCreationMenu = async (openStatus, username) => {
-        try {
-            if (usersArray !== ["empty array"]) {
-                let allUsers = await axios.get('https://fantasy-forecast-politics.herokuapp.com/users');
-                let filteredUsers = [];
-                for (let i = 0; i < allUsers.data.length; i++) {
-                    if (allUsers.data[i].username === username) {
-                        setUsersToInviteToNewLeague([{username: username, marketPoints: 0, isGroup: allUsers.data[i].isGroup, acceptedInvite: true}]);
-                    }
-                    if (allUsers.data[i].username !== username) {
-                        filteredUsers.push(allUsers.data[i]);
-                    };
-                };
-                setUsersArray(filteredUsers);   
-            };
-            setCreateLeague(openStatus);
-        } catch (error) {
-            console.error("Error in LeaderboardMenu.js > leagueCreationMenu");
-            console.error(error);
-        }
-    };
+    // const leagueCreationMenu = async (openStatus, username) => {
+    //     try {
+    //         if (usersArray !== ["empty array"]) {
+    //             let allUsers = await axios.get('https://fantasy-forecast-politics.herokuapp.com/users');
+    //             let filteredUsers = [];
+    //             for (let i = 0; i < allUsers.data.length; i++) {
+    //                 if (allUsers.data[i].username === username) {
+    //                     setUsersToInviteToNewLeague([{username: username, marketPoints: 0, isGroup: allUsers.data[i].isGroup, acceptedInvite: true, profilePicture: props.profilePicture || ""}]);
+    //                 }
+    //                 if (allUsers.data[i].username !== username) {
+    //                     filteredUsers.push(allUsers.data[i]);
+    //                 };
+    //             };
+    //             setUsersArray(filteredUsers);   
+    //         };
+    //         setCreateLeague(openStatus);
+    //     } catch (error) {
+    //         console.error("Error in LeaderboardMenu.js > leagueCreationMenu");
+    //         console.error(error);
+    //     }
+    // };
 
     const editMarketChoices = (item, marketsForSignUp) => {
         setMarketChoiceErrorMessage("");
@@ -322,14 +332,14 @@ function LeaderboardMenu(props) {
         };
     };
 
-    const checkLevelThenOpen = (canCreate, username) => {
-        if (canCreate === false) {
-            setShowModal(true);
-            setModalContent("The ability to create a league is locked until you reach Level 15! Doing things like completing the Onboarding tasks, submitting forecasts, posting to the News Feed will get you there in no time.");
-        } else {
-            leagueCreationMenu(true, username);
-        };
-    };
+    // const checkLevelThenOpen = (canCreate, username) => {
+    //     if (canCreate === false) {
+    //         setShowModal(true);
+    //         setModalContent("The ability to create a league is locked until you reach Level 15! Doing things like completing the Onboarding tasks, submitting forecasts, posting to the News Feed will get you there in no time.");
+    //     } else {
+    //         leagueCreationMenu(true, username);
+    //     };
+    // };
 
     return (
         <div className="leaderboard-menu">
@@ -340,7 +350,7 @@ function LeaderboardMenu(props) {
                     className="modal-i-btn"
                     onClick={() => { 
                         setShowModal(true); 
-                        setModalContent(`If you're here for the first time, it's likely that you aren't signed up to any markets aside from "Fantasy Forecast All-Time". To get forecasting, you need to join a market, which you can do by pressing the "Join A Market" button. Your invites to markets are managed by clicking on the "Your Invites" button, and you can create your own league using the, you guessed it, "Create a League" button. Leagues made by users and the Fantasy Forecast All-Time league will not have forecasts, instead using Fantasy Forecast Points to determine rankings. All the other markets will have forecasts generated by us that will return Market Points to determine your rankings.`)
+                        setModalContent(`To get forecasting, you need to join a market, which you can do by pressing the "Join A Market" button.`)
                     }}
                 />
             </h1>
@@ -348,7 +358,7 @@ function LeaderboardMenu(props) {
                 <p>{modalContent}</p>
             </Modal>
             <div className="your-markets-button-div">
-                <div></div>
+                {/* <div></div> */}
                 {joinAMarketMenu === false &&
                     <button 
                         className="join-a-market-btn" 
@@ -363,7 +373,7 @@ function LeaderboardMenu(props) {
                             Close Market Sign Up
                     </button>
                 }
-                {manageYourInvitesMenu === false &&
+                {/* {manageYourInvitesMenu === false &&
                     <button 
                         className="manage-your-invites-btn" 
                         onClick={() => setManageYourInvitesMenu(true)}>
@@ -376,8 +386,8 @@ function LeaderboardMenu(props) {
                         onClick={() => setManageYourInvitesMenu(false)}>
                             Close Your Invites
                     </button>
-                }
-                {createLeague === false &&
+                } */}
+                {/* {createLeague === false &&
                     <button 
                         className="create-a-league-btn" 
                         onClick={() => checkLevelThenOpen(canCreateLeagueDueToLevel, props.username)}>
@@ -390,7 +400,7 @@ function LeaderboardMenu(props) {
                         onClick={() => leagueCreationMenu(false, props.username)}>
                             Close League Creation
                     </button>
-                }
+                } */}
             </div>
             {(userInNoMarkets === true || joinAMarketMenu === true) &&
                 <div className="market-sign-up-div">
@@ -471,7 +481,7 @@ function LeaderboardMenu(props) {
                     {inviteAlert !== "No message" && <h3 style={{ color: "green" }}>{inviteAlert}</h3>}
                 </div>
             }
-            {createLeague === true &&
+            {/* {createLeague === true &&
                 <div className="create-a-league-div">
                     <h2 className="market-list-title">Create a League</h2>
                     <h4>Create your own league, invite friends, and see who's the best!</h4>
@@ -539,7 +549,7 @@ function LeaderboardMenu(props) {
                         </button>
                     </div>
                 </div>
-            }
+            } */}
             {leagueSetupConfirmation === true && <h2 style={{ "color": "green" }}>League Successfully Created</h2>}
             <h3>Your Markets:</h3>
             <LeaderboardGrid 
