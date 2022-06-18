@@ -140,89 +140,89 @@ function Leaderboard(props) {
     // Refactored version, approx 20 lines less code, takes about 4.5 seconds (down from 5.5)
     const getAllUserFFPoints = async (rankings) => {
         try {
-            const leaderboardName = props.leaderboardTitle === undefined ? localStorage.getItem("currentLeaderboardName") : props.leaderboardTitle;
-            const leaderboardData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/getAllInfoToRender`, {
-                rankings: rankings,
-                username: props.username,
-                isFFLeaderboard: props.isFFLeaderboard,
-                leaderboardTitle: props.leaderboardTitle === undefined ? localStorage.getItem("currentLeaderboardName") : props.leaderboardTitle
-            });
-            console.log(leaderboardData);
+            // const leaderboardName = props.leaderboardTitle === undefined ? localStorage.getItem("currentLeaderboardName") : props.leaderboardTitle;
+            // const leaderboardData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/getAllInfoToRender`, {
+            //     rankings: rankings,
+            //     username: props.username,
+            //     isFFLeaderboard: props.isFFLeaderboard,
+            //     leaderboardTitle: props.leaderboardTitle === undefined ? localStorage.getItem("currentLeaderboardName") : props.leaderboardTitle
+            // });
+            // console.log(leaderboardData);
+            // if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
+            //     setUsersData(leaderboardData.data.usersData);
+            //     props.setFFData(leaderboardData.data.ffData);
+            // } else {
+            //     setUsersData(leaderboardData.data.rankings);
+            // }
+            // props.setUserInMarket(leaderboardData.data.userInMarket);
+            // setLoading(false);
+          let ffRankings = [];
+          for (let i = 0; i < rankings.length; i++) {
+            console.log(rankings[i]);
+            const userDocumentFF = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${rankings[i].username}`);
+            // Check if logged in user is in market, true will allow them to invite etc
+            if (userDocumentFF.data[0].username === props.username) {
+              props.setUserInMarket(true);
+            };
             if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
-                setUsersData(leaderboardData.data.usersData);
-                props.setFFData(leaderboardData.data.ffData);
-            } else {
-                setUsersData(leaderboardData.data.rankings);
-            }
-            props.setUserInMarket(leaderboardData.data.userInMarket);
-            setLoading(false);
-        //   let ffRankings = [];
-        //   for (let i = 0; i < rankings.length; i++) {
-        //     console.log(rankings[i]);
-        //     const userDocumentFF = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${rankings[i].username}`);
-        //     // Check if logged in user is in market, true will allow them to invite etc
-        //     if (userDocumentFF.data[0].username === props.username) {
-        //       props.setUserInMarket(true);
-        //     };
-        //     if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
-        //       ffRankings[i] = {
-        //         profilePicture: rankings[i].profilePicture,
-        //         username: rankings[i].username,
-        //         marketPoints: 0.0,
-        //         brierScores: [],
-        //         avgAllTimeBrier: 0.0
-        //       };
-        //       ffRankings[i].profilePicture = rankings[i].profilePicture;
-        //       ffRankings[i].username = rankings[i].username;
-        //       ffRankings[i].marketPoints = userDocumentFF.data[0].fantasyForecastPoints;
-        //       ffRankings[i].brierScores = userDocumentFF.data[0].brierScores;
+              ffRankings[i] = {
+                profilePicture: rankings[i].profilePicture,
+                username: rankings[i].username,
+                marketPoints: 0.0,
+                brierScores: [],
+                avgAllTimeBrier: 0.0
+              };
+              ffRankings[i].profilePicture = rankings[i].profilePicture;
+              ffRankings[i].username = rankings[i].username;
+              ffRankings[i].marketPoints = userDocumentFF.data[0].fantasyForecastPoints;
+              ffRankings[i].brierScores = userDocumentFF.data[0].brierScores;
       
-        //       let totalBrierForUser = 0;
-        //       for (let j = 0; j < userDocumentFF.data[0].brierScores.length; j++) {
-        //         totalBrierForUser += userDocumentFF.data[0].brierScores[j].brierScore;
-        //       }
-        //       let avgAllTimeBrier = (totalBrierForUser / userDocumentFF.data[0].brierScores.length);
-        //       ffRankings[i].avgAllTimeBrier = isNaN(avgAllTimeBrier) ? 0.0 : avgAllTimeBrier;
-        //     } else {
-        //       rankings[i].brierScores = [];
-        //       let totalBrier = 0;
-        //       let numberOfBriersInThisMarket = 0;
-        //       if (userDocumentFF.data[0].brierScores.length > 0) {
-        //         // Loop through the user's briers, adding to the user's average calculation while pushing simultaneously
-        //           for (let j = 0; j < userDocumentFF.data[0].brierScores.length; j++) {
-        //               if (userDocumentFF.data[0].brierScores[j].marketName === props.leaderboardTitle || userDocumentFF.data[0].brierScores[j].marketName === localStorage.getItem('currentLeaderboardName')) {
-        //                   numberOfBriersInThisMarket++;
-        //                   rankings[i].brierScores.push({
-        //                       problemName: userDocumentFF.data[0].brierScores[j].problemName,
-        //                       brierScore: userDocumentFF.data[0].brierScores[j].brierScore
-        //                   });
-        //                   totalBrier += userDocumentFF.data[0].brierScores[j].brierScore;
-        //               };
-        //           };
-        //       };
-        //       if (userDocumentFF.data[0].brierScores.length === 0) {
-        //           rankings[i].avgBrierScore = 0;
-        //       } else {
-        //           let avgBrierScore = totalBrier / numberOfBriersInThisMarket;
-        //           rankings[i].avgBrierScore = isNaN(avgBrierScore) ? 0.0 : totalBrier/numberOfBriersInThisMarket;
-        //       };
-        //     };
-        //   };
-        //   // Outside of main loop:
-        //   if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
-        //     ffRankings = ffRankings.sort((a, b) => b.marketPoints - a.marketPoints);
-        //     setUsersData(ffRankings);
-        //     props.setFFData(ffRankings);
-        //     setLoading(false);
-        //     return;
-        //   } else {
-        //     // props.setAverageBrier(totalAverageBrier / rankings.length);
-        //     setUsersData(rankings);
-        //     if (rankings.find(el => el.username === props.username) !== undefined) {
-        //         props.setUserInMarket(true);
-        //     };
-        //     setLoading(false);
-        //   };
+              let totalBrierForUser = 0;
+              for (let j = 0; j < userDocumentFF.data[0].brierScores.length; j++) {
+                totalBrierForUser += userDocumentFF.data[0].brierScores[j].brierScore;
+              }
+              let avgAllTimeBrier = (totalBrierForUser / userDocumentFF.data[0].brierScores.length);
+              ffRankings[i].avgAllTimeBrier = isNaN(avgAllTimeBrier) ? 0.0 : avgAllTimeBrier;
+            } else {
+              rankings[i].brierScores = [];
+              let totalBrier = 0;
+              let numberOfBriersInThisMarket = 0;
+              if (userDocumentFF.data[0].brierScores.length > 0) {
+                // Loop through the user's briers, adding to the user's average calculation while pushing simultaneously
+                  for (let j = 0; j < userDocumentFF.data[0].brierScores.length; j++) {
+                      if (userDocumentFF.data[0].brierScores[j].marketName === props.leaderboardTitle || userDocumentFF.data[0].brierScores[j].marketName === localStorage.getItem('currentLeaderboardName')) {
+                          numberOfBriersInThisMarket++;
+                          rankings[i].brierScores.push({
+                              problemName: userDocumentFF.data[0].brierScores[j].problemName,
+                              brierScore: userDocumentFF.data[0].brierScores[j].brierScore
+                          });
+                          totalBrier += userDocumentFF.data[0].brierScores[j].brierScore;
+                      };
+                  };
+              };
+              if (userDocumentFF.data[0].brierScores.length === 0) {
+                  rankings[i].avgBrierScore = 0;
+              } else {
+                  let avgBrierScore = totalBrier / numberOfBriersInThisMarket;
+                  rankings[i].avgBrierScore = isNaN(avgBrierScore) ? 0.0 : totalBrier/numberOfBriersInThisMarket;
+              };
+            };
+          };
+          // Outside of main loop:
+          if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
+            ffRankings = ffRankings.sort((a, b) => b.marketPoints - a.marketPoints);
+            setUsersData(ffRankings);
+            props.setFFData(ffRankings);
+            setLoading(false);
+            return;
+          } else {
+            // props.setAverageBrier(totalAverageBrier / rankings.length);
+            setUsersData(rankings);
+            if (rankings.find(el => el.username === props.username) !== undefined) {
+                props.setUserInMarket(true);
+            };
+            setLoading(false);
+          };
         } catch (error) {
           console.error("Error in Leaderboard > getAllUserFFPoints");
           console.error(error);

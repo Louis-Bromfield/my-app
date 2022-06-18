@@ -93,6 +93,10 @@ const UserSchema = mongoose.Schema({
     },
     pwdResetCode: {
         type: String
+    },
+    email: {
+        type: String,
+        default: "NO EMAIL ADDRESS"
     }
 });
 
@@ -127,6 +131,7 @@ passport.use(new GoogleStrategy({
     store: true
   },
   function(req, accessToken, refreshToken, profile, cb) {
+    console.log(profile);
     // console.log("113 " + passwordFromClient);
     // console.log("114 " + typeof passwordFromClient);
     const passwordCheck = passwordFromClient;
