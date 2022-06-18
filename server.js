@@ -168,7 +168,7 @@ passport.use(new GoogleStrategy({
         username: usernameFromClient, 
         pwdResetCode: passwordResetCodeFromClient,
         profilePicture: profile.photos[0].value || "",
-        email: profile.emails.value || "No email address",
+        email: profile.emails[0].value || "No email address",
         password: passwordCheck
         // isSignedUpForSurvey: isSignedUpForSurveyFromClient
     }, async function (err, user) {
