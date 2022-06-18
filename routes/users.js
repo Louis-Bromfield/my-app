@@ -265,6 +265,7 @@ router.patch("/onboardingTask/:username", async (req, res) => {
         const user = await Users.findOne({ username: req.params.username });
         let userOnboarding = user.onboarding;
         let userFFPoints = user.fantasyForecastPoints;
+        let firstTime;
         console.log(user);
         const onboardingTaskToUpdate = req.body.onboardingTask;
         console.log(onboardingTaskToUpdate);
@@ -274,8 +275,10 @@ router.patch("/onboardingTask/:username", async (req, res) => {
                 if (Object.keys(userOnboarding)[i] === false) {
                     userOnboarding = true;
                     userFFPoints += Number(req.body.ffPoints);
+                    firstTime = true;
                 } else {
                     userFFPoints += Number(req.body.ffPoints);
+                    firstTime = false;
                 };
                 break;
             };
@@ -284,11 +287,11 @@ router.patch("/onboardingTask/:username", async (req, res) => {
             onboarding: userOnboarding,
             fantasyForecastPoints: userFFPoints
         });
-        res.json(updatedUser);
+        res.json({ user: updatedUser, firstTime: firstTime });
     } catch (error) {
         console.error("Error in onboardingTask");
         console.error(error);
-        res.json({ error: "error" })
+        res.json({ error: "error", errorMessage: error })
     };
 });
 
