@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './HomeProfilePreview.css';
 import axios from 'axios';
 import { HomeButtonNavButton } from './HomeButtonNavButton';
@@ -72,7 +73,7 @@ function HomeProfilePreview(props) {
             <img className="home-profile-preview-img" src={props.user.profilePicture} alt="" />
                 {/* <div className="home-profile-preview-container-top-grid"> */}
                     {/* <div className="profile-top-info-container"> */}
-                        <h2>{props.user.username}</h2>
+                        <Link to="/my-profile" style={{ textDecoration: "none", color: "#404d72" }}><h2>{props.user.username}</h2></Link>
                         <h3>Level {Math.floor((ffPoints/100)).toFixed(0)} {forecasterRank}</h3>
                         <h3>
                             {ffPoints.toFixed(0)} Fantasy Forecast Points
