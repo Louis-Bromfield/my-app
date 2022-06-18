@@ -261,6 +261,7 @@ router.patch("/newPW/:username", async (req, res) => {
 // Update onboarding
 router.patch("/onboardingTask/:username", async (req, res) => {
     try {
+        console.log(req.body);
         const user = await Users.findOne({ username: req.params.username });
         let userOnboarding = user.onboarding;
         let userFFPoints = user.fantasyForecastPoints;
@@ -272,9 +273,9 @@ router.patch("/onboardingTask/:username", async (req, res) => {
             if (Object.keys(userOnboarding[i] === onboardingTaskToUpdate)) {
                 if (Object.keys(userOnboarding)[i] === false) {
                     userOnboarding = true;
-                    userFFPoints = userFFPoints + req.body.ffPoints;
+                    userFFPoints += Number(req.body.ffPoints);
                 } else {
-                    userFFPoints = userFFPoints + req.body.ffPoints;
+                    userFFPoints += Number(req.body.ffPoints);
                 };
                 break;
             };
