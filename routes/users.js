@@ -271,9 +271,10 @@ router.patch("/onboardingTask/:username", async (req, res) => {
         console.log(onboardingTaskToUpdate);
         for (let i = 0; i < Object.keys(userOnboarding).length; i++) {
             console.log(Object.keys(userOnboarding)[i]);
-            if (Object.keys(userOnboarding)[i] == onboardingTaskToUpdate) {
+            if (Object.keys(userOnboarding)[i] === onboardingTaskToUpdate) {
+                console.log("yes!");
                 if ((userOnboarding)[i] === false) {
-                    userOnboarding = true;
+                    userOnboarding[i] = true;
                     userFFPoints += req.body.ffPointsIfFalse;
                     firstTime = true;
                 } else {
