@@ -1,8 +1,0 @@
-.calibration-panel {
-    background-color: rgba(173, 216, 230, 0.274);
-    margin-top: 2vh;
-    margin-bottom: 2vh;
-    box-shadow: 0.5px 1px 2.5px 0.5px #888888;
-    display: flex;
-    flex-direction: column;
-}

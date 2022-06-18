@@ -224,7 +224,8 @@ function LeaderboardMenu(props) {
     };
 
     const submitMarketChoices = async (markets, username) => {
-        const success = persistMarketChoicesToDB(markets, username);
+        const success = await persistMarketChoicesToDB(markets, username);
+        console.log(success);
         if (success === false) {
             return;
         } else {

@@ -258,6 +258,20 @@ router.patch("/newPW/:username", async (req, res) => {
     }
 });
 
+// Update onboarding
+router.patch("/onboardingTask/:username", async (req, res) => {
+    try {
+        const user = Users.findOne({ username: req.params.username });
+        const onboardingTaskToUpdate = req.body.onboardingTask;
+        for (let i = 0; i < Object.keys(user.onboarding).length; i++) {
+            console.log(Object.keys(user.onboarding)[i]);
+        };
+    } catch (error) {
+        console.error("Error in onboardingTask");
+        console.error(error);
+    }
+})
+
 // Update a user
 router.patch("/:username", async (req, res) => {
     try {
