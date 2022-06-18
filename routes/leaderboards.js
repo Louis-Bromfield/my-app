@@ -73,7 +73,7 @@ router.get("/getAllInfoToRender", async (req, res) => {
             // const userDocumentFF = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${rankings[i].username}`);
             const userDocumentFF = await Users.findOne(rankingsFromBody[i].username);
             // Check if logged in user is in market, true will allow them to invite etc
-            if (userDocumentFF.data[0].username === props.username) {
+            if (userDocumentFF.username === req.body.username) {
                 userInMarket = true;
             };
             if (req.body.isFFLeaderboard === false || req.body.leaderboardTitle === "Fantasy Forecast All-Time") {
@@ -86,33 +86,33 @@ router.get("/getAllInfoToRender", async (req, res) => {
             };
             ffRankings[i].profilePicture = rankingsFromBody[i].profilePicture;
             ffRankings[i].username = rankingsFromBody[i].username;
-            ffRankings[i].marketPoints = userDocumentFF.data[0].fantasyForecastPoints;
-            ffRankings[i].brierScores = userDocumentFF.data[0].brierScores;
+            ffRankings[i].marketPoints = userDocumentFF.fantasyForecastPoints;
+            ffRankings[i].brierScores = userDocumentFF.brierScores;
     
             let totalBrierForUser = 0;
-            for (let j = 0; j < userDocumentFF.data[0].brierScores.length; j++) {
-                totalBrierForUser += userDocumentFF.data[0].brierScores[j].brierScore;
+            for (let j = 0; j < userDocumentFF.brierScores.length; j++) {
+                totalBrierForUser += userDocumentFF.brierScores[j].brierScore;
             }
-            let avgAllTimeBrier = (totalBrierForUser / userDocumentFF.data[0].brierScores.length);
+            let avgAllTimeBrier = (totalBrierForUser / userDocumentFF.brierScores.length);
             ffRankings[i].avgAllTimeBrier = isNaN(avgAllTimeBrier) ? 0.0 : avgAllTimeBrier;
             } else {
                 rankingsFromBody[i].brierScores = [];
                 let totalBrier = 0;
                 let numberOfBriersInThisMarket = 0;
-                if (userDocumentFF.data[0].brierScores.length > 0) {
+                if (userDocumentFF.brierScores.length > 0) {
                     // Loop through the user's briers, adding to the user's average calculation while pushing simultaneously
-                    for (let j = 0; j < userDocumentFF.data[0].brierScores.length; j++) {
-                        if (userDocumentFF.data[0].brierScores[j].marketName === req.body.leaderboardTitle) {
+                    for (let j = 0; j < userDocumentFF.brierScores.length; j++) {
+                        if (userDocumentFF.brierScores[j].marketName === req.body.leaderboardTitle) {
                             numberOfBriersInThisMarket++;
                             rankingsFromBody[i].brierScores.push({
-                                problemName: userDocumentFF.data[0].brierScores[j].problemName,
-                                brierScore: userDocumentFF.data[0].brierScores[j].brierScore
+                                problemName: userDocumentFF.brierScores[j].problemName,
+                                brierScore: userDocumentFF.brierScores[j].brierScore
                             });
-                            totalBrier += userDocumentFF.data[0].brierScores[j].brierScore;
+                            totalBrier += userDocumentFF.brierScores[j].brierScore;
                         };
                     };
                 };
-                if (userDocumentFF.data[0].brierScores.length === 0) {
+                if (userDocumentFF.brierScores.length === 0) {
                         rankingsFromBody[i].avgBrierScore = 0;
                 } else {
                     let avgBrierScore = totalBrier / numberOfBriersInThisMarket;
@@ -133,7 +133,7 @@ router.get("/getAllInfoToRender", async (req, res) => {
             });
         } else {
             // setUsersData(rankingsFromBody);
-            if (rankingsFromBody.find(el => el.username === props.username) !== undefined) {
+            if (rankingsFromBody.find(el => el.username === req.body.username) !== undefined) {
                 userInMarket = true;
             };
             res.json({
