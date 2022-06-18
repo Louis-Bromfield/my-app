@@ -21,7 +21,9 @@ function Leaderboard(props) {
 
     useEffect(() => {
         setLoading(true);
-        getAllUserFFPoints(props.leaderboardRankings);
+        if (props.leaderboardRankings.length > 0) {
+            getAllUserFFPoints(props.leaderboardRankings);
+        };
         console.log("Leaderboard UE");
         console.log(props);
         if (props.isFFLeaderboard === undefined) {
@@ -138,7 +140,8 @@ function Leaderboard(props) {
     // Refactored version, approx 20 lines less code, takes about 4.5 seconds (down from 5.5)
     const getAllUserFFPoints = async (rankings) => {
         try {
-            const leaderboardData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/getAllInfoToRender/${props.leaderboardTitle === undefined ? localStorage.getItem("currentLeaderboardName") : props.leaderboardTitle}`, {
+            const leaderboardName = props.leaderboardTitle === undefined ? localStorage.getItem("currentLeaderboardName") : props.leaderboardTitle;
+            const leaderboardData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/getAllInfoToRender/${leaderboardName}`, {
                 rankings: rankings,
                 username: props.username,
                 isFFLeaderboard: props.isFFLeaderboard,

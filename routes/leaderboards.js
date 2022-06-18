@@ -51,6 +51,7 @@ router.get("/leaderboard/:leaderboardName", async (req, res) => {
 // Get all leaderboard info to render
 router.get("/leaderboard/getAllInfoToRender/:leaderboardName", async (req, res) => {
     try {
+        console.log(req.body);
         // req.body contains 
         // rankings leaderboard (array)
         // username of logged in user (string)
