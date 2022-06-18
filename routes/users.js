@@ -269,19 +269,50 @@ router.patch("/onboardingTask/:username", async (req, res) => {
         // console.log(user);
         const onboardingTaskToUpdate = req.body.onboardingTask;
         console.log(onboardingTaskToUpdate);
-        for (let i = 0; i < Object.keys(userOnboarding).length; i++) {
-            console.log(Object.keys(userOnboarding)[i]);
-            if (Object.keys(userOnboarding)[i] === onboardingTaskToUpdate) {
-                console.log("yes!");
-                if (Object.values(userOnboarding)[i] === false) {
-                    Object.values(userOnboarding)[i] = true;
-                    userFFPoints += req.body.ffPointsIfFalse;
-                    firstTime = true;
-                } else {
-                    userFFPoints += req.body.ffPointsIfTrue;
-                    firstTime = false;
-                };
-                break;
+        if (onboardingTaskToUpdate === "visitProfilePage") {
+            if (userOnboarding.visitProfilePage === false) {
+                userOnboarding.visitProfilePage = true;
+                userFFPoints += req.body.ffPointsIfFalse;
+                firstTime = true;
+            } else {
+                userFFPoints += req.body.ffPointsIfTrue;
+                firstTime = false;
+            };
+        } else if (onboardingTaskToUpdate === "joinAMarket") {
+            if (userOnboarding.joinAMarket === false) {
+                userOnboarding.joinAMarket = true;
+                userFFPoints += req.body.ffPointsIfFalse;
+                firstTime = true;
+            } else {
+                userFFPoints += req.body.ffPointsIfTrue;
+                firstTime = false;
+            };
+        } else if (onboardingTaskToUpdate === "submitAPost") {
+            if (userOnboarding.submitAPost === false) {
+                userOnboarding.submitAPost = true;
+                userFFPoints += req.body.ffPointsIfFalse;
+                firstTime = true;
+            } else {
+                userFFPoints += req.body.ffPointsIfTrue;
+                firstTime = false;
+            };
+        } else if (onboardingTaskToUpdate === "submitAForecast") {
+            if (userOnboarding.submitAForecast === false) {
+                userOnboarding.submitAForecast = true;
+                userFFPoints += req.body.ffPointsIfFalse;
+                firstTime = true;
+            } else {
+                userFFPoints += req.body.ffPointsIfTrue;
+                firstTime = false;
+            };
+        } else if (onboardingTaskToUpdate === "completeALearnQuiz") {
+            if (userOnboarding.completeALearnQuiz === false) {
+                userOnboarding.completeALearnQuiz = true;
+                userFFPoints += req.body.ffPointsIfFalse;
+                firstTime = true;
+            } else {
+                userFFPoints += req.body.ffPointsIfTrue;
+                firstTime = false;
             };
         };
         console.log("======================");
