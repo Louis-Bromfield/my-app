@@ -120,7 +120,7 @@ console.log("Profile.js UE");
     const updateOnboarding = async (username) => {
         try {
             const updatedUserDocument = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/onboardingTask/${username}`, {
-                onboardingTask: "joinAMarket",
+                onboardingTask: "visitProfilePage",
                 ffPointsIfFalse: 100,
                 ffPointsIfTrue: 0
             });
