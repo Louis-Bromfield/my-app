@@ -46,7 +46,7 @@ function Search(props) {
     const [forecasterRank, setForecasterRank] = useState("");
     const [searchTab, setSearchTab] = useState("my-stats");
     const [searchUserObj, setSearchUserObj] = useState({});
-    const [cookie, setCookie] = useCookies(['uName']);
+    const [cookie, setCookie] = useCookies(['username']);
 
     useEffect(() => {
         if (props.location.clickedUsername !== undefined) {

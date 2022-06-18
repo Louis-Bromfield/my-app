@@ -36,6 +36,8 @@ function LeaderboardMenu(props) {
     const [modalContent, setModalContent] = useState("");
 
     useEffect(() => {
+        console.log(props);
+        
         if (props.userFFPoints > 1500) setCanCreateLeagueDueToLevel(true);
         checkIfUserIsInMarkets(props.username);
         pullAllMarketsFromDB(props.username);

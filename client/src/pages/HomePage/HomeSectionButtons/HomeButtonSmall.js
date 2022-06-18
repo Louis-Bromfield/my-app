@@ -62,32 +62,32 @@ function HomeButtonSmall(props) {
         };
     };
 
-    const getLeaderboardRank = async (username) => {
-        try {
-            const lbName = "Fantasy Forecast All-Time";
-            const leaderboard = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${lbName}`);
-            // let lbRankings = leaderboard.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
-            for (let i = 0; i < leaderboard.data.length; i++) {
-                if (leaderboard.data[i].username === username) {
-                    let j = i + 1;
-                    let k = j % 10;
-                    let l = j % 100;
-                    if (k === 1 && l !== 11) {
-                        setLeaderboardRank(j+"st");
-                    } else if (k === 2 && l !== 12) {
-                        setLeaderboardRank(j+"nd");
-                    } else if (k === 3 && l !== 13) {
-                        setLeaderboardRank(j+"rd");
-                    } else {
-                        setLeaderboardRank(j+"th");
-                    };                 
-                };
-            };
-        } catch (error) {
-            console.error("Error in getLeaderboardRank > HomeButtonSmall");
-            console.error(error);
-        };
-    };
+    // const getLeaderboardRank = async (username) => {
+    //     try {
+    //         const lbName = "Fantasy Forecast All-Time";
+    //         const leaderboard = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${lbName}`);
+    //         // let lbRankings = leaderboard.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
+    //         for (let i = 0; i < leaderboard.data.length; i++) {
+    //             if (leaderboard.data[i].username === username) {
+    //                 let j = i + 1;
+    //                 let k = j % 10;
+    //                 let l = j % 100;
+    //                 if (k === 1 && l !== 11) {
+    //                     setLeaderboardRank(j+"st");
+    //                 } else if (k === 2 && l !== 12) {
+    //                     setLeaderboardRank(j+"nd");
+    //                 } else if (k === 3 && l !== 13) {
+    //                     setLeaderboardRank(j+"rd");
+    //                 } else {
+    //                     setLeaderboardRank(j+"th");
+    //                 };                 
+    //             };
+    //         };
+    //     } catch (error) {
+    //         console.error("Error in getLeaderboardRank > HomeButtonSmall");
+    //         console.error(error);
+    //     };
+    // };
 
     useEffect(() => {
         // if (props.userLearnQuizzes !== undefined && props.userLearnQuizzes !== null) {
@@ -97,8 +97,11 @@ function HomeButtonSmall(props) {
             getBrierScore(props.user);
         };
         getLearnProgress(props.userLearnQuizzes);
-        getLeaderboardRank(props.username);
-    }, [props.userLearnQuizzes, props.username, props.user]);
+        if (props.user.fantasyForecastPoints !== undefined) {
+            setLeaderboardRank(props.user.fantasyForecastPoints.toFixed(0));
+        };
+        // getLeaderboardRank(props.username);
+    }, [props.userLearnQuizzes, props.user]);
 
     switch(props.title) {
         case("Your Average Brier Score"):
@@ -113,7 +116,7 @@ function HomeButtonSmall(props) {
             break;
         case("Leaderboards"):
             mainData = leaderboardRank;
-            subtitle = "Fantasy Forecast All-Time Rank"
+            subtitle = "Fantasy Forecast Points"
             path ="leaderboard-select"
             break;
         default:

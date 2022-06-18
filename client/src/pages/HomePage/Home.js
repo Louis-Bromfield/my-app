@@ -76,6 +76,7 @@ function Home(props) {
             console.log(userDocument.data[0].learnQuizzes);
             setUserLearnQuizzes(userDocument.data[0].learnQuizzes);
             props.setUserObject(userDocument.data[0]);
+            props.setUserFFPoints(userDocument.data[0].fantasyForecastPoints);
             props.setProfilePicture(userDocument.data[0].profilePicture);
         } catch (error) {
             console.error("Error in getUserInfo");

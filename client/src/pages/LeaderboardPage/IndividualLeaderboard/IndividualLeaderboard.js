@@ -274,7 +274,7 @@ function IndividualLeaderboard(props) {
                 username={props.username}
                 isFFLeaderboard={isFFLeaderboard}
                 setUserInMarket={setUserInMarket}
-                setAverageBrier={setAverageBrier}
+                // setAverageBrier={setAverageBrier}
                 setFFData={setFFData}
                 leaderboardFilter={leaderboardFilter}
             />

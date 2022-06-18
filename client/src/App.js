@@ -18,6 +18,7 @@ import Login from './pages/LoginPage/Login';
 import LoginSuccess from './pages/LoginSuccessPage/LoginSuccess';
 import HelpOurResearch from './pages/HelpOurResearchPage/HelpOurResearch';
 import ReportAnyIssues from './pages/ReportAnyIssuesPage/ReportAnyIssues';
+import { useCookies } from 'react-cookie';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -31,6 +32,7 @@ function App() {
   const [userOnboarding, setUserOnboarding] = useState({});
   const [userClosedForecastCount, setUserClosedForecastCount] = useState(0);
   const [userBrierScores, setUserBrierScores] = useState([]);
+  const [cookie, setCookies] = useCookies(["username"]);
 
 //   const updateUsername = async (newUsername) => {
 //     await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, { username: newUsername });
@@ -104,6 +106,7 @@ function App() {
       console.log("A UE");
       setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
       setUsername(localStorage.getItem('username'));
+      setUsername(cookie.username);
     //   setName(localStorage.getItem('name'));
     //   setMarkets(localStorage.getItem('markets'));
     //   setUserObject(localStorage.getItem('userObj'));
@@ -117,7 +120,7 @@ function App() {
             // Might be able to avoid using localStorage then right? It's possible.
             // pullAllInfoFromDBToPassDown(username)
     //   };
-  }, [isLoggedIn, username]);
+  }, [isLoggedIn, cookie.username]);
 
 //   const pullAllInfoFromDBToPassDown = async (username) => {
 //       try {
@@ -167,12 +170,21 @@ function App() {
                 <Redirect to="/home"></Redirect>
             </Route>
             {/* <Route path='/home' render={(props) => <Home {...props} username={username} name={name} user={userObject} userBrierScores={userBrierScores} userClosedForecastCount={userClosedForecastCount} userOnboarding={userOnboarding} setUserObject={setUserObject} userMarkets={markets} userFFPoints={userFFPoints} setUserClosedForecastCount={setUserClosedForecastCount} />} /> */}
-            <Route path='/home' render={(props) => <Home {...props} username={username} name={name} user={userObject} setUserObject={setUserObject} userFFPoints={userFFPoints} setProfilePicture={setProfilePicture} profilePicture={profilePicture} />} />
+            <Route path='/home' render={(props) => <Home {...props} 
+                username={username} 
+                name={name} 
+                user={userObject} 
+                setUserObject={setUserObject} 
+                userFFPoints={userFFPoints} 
+                setProfilePicture={setProfilePicture} 
+                profilePicture={profilePicture} 
+                setUserFFPoints={setUserFFPoints}
+            />} />
             <Route path="/change-log" render={(props) => <ChangeLog {...props} />} />
             <Route path="/news-post" render={(props) => <IndividualNewsFeedPost {...props} />} />
             <Route path='/forecast' render={(props) => <Forecast {...props} markets={markets} username={username} />} />
             <Route path='/forecast-analysis' render ={(props) => <ForecastAnalysisPage {...props} username={username} />} />
-            <Route path='/leaderboard-select' render={(props) => <LeaderboardMenu {...props} username={username} userFFPoints={userFFPoints} />} />
+            <Route path='/leaderboard-select' render={(props) => <LeaderboardMenu {...props} username={username} userFFPoints={userFFPoints} userObject={userObject} />} />
             <Route path='/leaderboard' render={(props) => <IndividualLeaderboard {...props} username={username} />} />
             <Route path='/learn' render={(props) => <Learn {...props} username={username} isLoggedIn={isLoggedIn} />} />
             <Route path='/search' render={(props) => <Search {...props} username={username} />} />
