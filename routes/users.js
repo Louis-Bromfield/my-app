@@ -284,6 +284,10 @@ router.patch("/onboardingTask/:username", async (req, res) => {
                 break;
             };
         };
+        console.log("======================");
+        console.log(userOnboarding);
+        console.log(userFFPoints);
+        console.log("======================");
         const updatedUser = await Users.findByIdAndUpdate(user._id, {
             onboarding: userOnboarding,
             fantasyForecastPoints: userFFPoints
