@@ -82,7 +82,7 @@ function App() {
     localStorage.setItem("firstVisit", true);
     localStorage.setItem('username', userObj.data[0].username);
     // localStorage.setItem('name', "XXXXXXXXXX");
-    // localStorage.setItem('markets', userObj.data[0].markets);
+    localStorage.setItem('markets', userObj.data[0].markets);
     // localStorage.setItem('userObj', userObj);
     // localStorage.setItem('profilePicture', userObj.data[0].profilePicture);
     localStorage.setItem('selectedPage', "Home");
@@ -184,8 +184,8 @@ function App() {
             <Route path="/news-post" render={(props) => <IndividualNewsFeedPost {...props} />} />
             <Route path='/forecast' render={(props) => <Forecast {...props} markets={markets} username={username} />} />
             <Route path='/forecast-analysis' render ={(props) => <ForecastAnalysisPage {...props} username={username} />} />
-            <Route path='/leaderboard-select' render={(props) => <LeaderboardMenu {...props} username={username} userFFPoints={userFFPoints} userObject={userObject} profilePicture={profilePicture} />} />
-            <Route path='/leaderboard' render={(props) => <IndividualLeaderboard {...props} username={username} />} />
+            <Route path='/leaderboard-select' render={(props) => <LeaderboardMenu {...props} username={username} markets={markets} userFFPoints={userFFPoints} userObject={userObject} profilePicture={profilePicture} />} />
+            <Route path='/leaderboard' render={(props) => <IndividualLeaderboard {...props} username={username} markets={markets} />} />
             <Route path='/learn' render={(props) => <Learn {...props} username={username} isLoggedIn={isLoggedIn} />} />
             <Route path='/search' render={(props) => <Search {...props} username={username} />} />
             <Route path='/survey' render={(props) => <HelpOurResearch {...props} />}/>

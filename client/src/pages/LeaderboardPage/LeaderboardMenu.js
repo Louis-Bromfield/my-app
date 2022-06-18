@@ -224,6 +224,7 @@ function LeaderboardMenu(props) {
     };
 
     const submitMarketChoices = async (markets, username) => {
+        console.log(markets);
         const success = await persistMarketChoicesToDB(markets, username);
         console.log(success);
         if (success === false) {
@@ -231,9 +232,10 @@ function LeaderboardMenu(props) {
         } else {
             updateOnboardingAndUserMarkets(markets, username);
             // CHARMANDER
-            const marketsForLS = [localStorage.getItem('markets').split(","), ...markets];
-            localStorage.removeItem('markets');
-            localStorage.setItem('markets', marketsForLS);
+            // const marketsForLS = [localStorage.getItem('markets').split(","), ...markets];
+            // const marketsForLS = [localStorage.getItem('markets').split(","), ...markets];
+            // localStorage.removeItem('markets');
+            // localStorage.setItem('markets', marketsForLS);
             setTimeout(() => {
                 setLoading(false);
                 if (markets.length === 1) {
