@@ -159,6 +159,9 @@ router.get("/findByProlificID/:prolificID", async (req, res) => {
 router.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
     try {
         const user = await Users.findOne({ username: req.params.username });
+        if (!user) {
+            res.json({ loginSuccess: false, message: "This user does not exist in the database"});
+        };
         let match;
         console.log(req.params);
         if (req.params.isPassword === "true") {

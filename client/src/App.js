@@ -201,6 +201,40 @@ function App() {
           <Switch>
             <Route exact path='/' render={(props) => <Login {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} setUserObject={setUserObject} setUsername={setUsername} setUserFFPoints={setUserFFPoints} setName={setName} setMarkets={setMarkets} setProfilePicture={setProfilePicture} />} />
             <Route path='/loginSuccess' render={(props) => <LoginSuccess {...props} login={login} setUserForLogin={setUserForLogin} setIsLoggedIn={setIsLoggedIn} />} />
+            {/* if someone tries to access part of the site without being logged in: */}
+            <Route exact path="/home">
+                <Redirect to="/"></Redirect>
+            </Route>
+            <Route exact path="/news-post">
+                <Redirect to="/"></Redirect>
+            </Route>
+            <Route exact path="/forecast">
+                <Redirect to="/"></Redirect>
+            </Route>
+            <Route exact path="/forecast-analysis">
+                <Redirect to="/"></Redirect>
+            </Route>
+            <Route exact path="/leaderboard-select">
+                <Redirect to="/"></Redirect>
+            </Route>
+            <Route exact path="/leaderboard">
+                <Redirect to="/"></Redirect>
+            </Route>
+            <Route exact path="/learn">
+                <Redirect to="/"></Redirect>
+            </Route>
+            <Route exact path="/search">
+                <Redirect to="/"></Redirect>
+            </Route>
+            <Route exact path="/survey">
+                <Redirect to="/"></Redirect>
+            </Route>
+            <Route exact path="/my-profile">
+                <Redirect to="/"></Redirect>
+            </Route>
+            <Route exact path="/report-any-issues">
+                <Redirect to="/"></Redirect>
+            </Route>
           </Switch>
       </Router>
       }
