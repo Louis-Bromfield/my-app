@@ -262,13 +262,28 @@ router.patch("/newPW/:username", async (req, res) => {
 router.patch("/onboardingTask/:username", async (req, res) => {
     try {
         const user = await Users.findOne({ username: req.params.username });
+        let userOnboarding = user.onboarding;
+        let userFFPoints = user.fantasyForecastPoints;
         console.log(user);
         const onboardingTaskToUpdate = req.body.onboardingTask;
         console.log(onboardingTaskToUpdate);
-        for (let i = 0; i < Object.keys(user.onboarding).length; i++) {
-            console.log(Object.keys(user.onboarding)[i]);
+        for (let i = 0; i < Object.keys(userOnboarding).length; i++) {
+            console.log(Object.keys(userOnboarding)[i]);
+            if (Object.keys(userOnboarding[i] === onboardingTaskToUpdate)) {
+                if (Object.keys(userOnboarding)[i] === false) {
+                    userOnboarding = true;
+                    userFFPoints = userFFPoints + req.body.ffPoints;
+                } else {
+                    userFFPoints = userFFPoints + req.body.ffPoints;
+                };
+                break;
+            };
         };
-        res.json(user);
+        const updatedUser = await Users.findByIdAndUpdate(user._id, {
+            onboarding: userOnboarding,
+            fantasyForecastPoints: userFFPoints
+        });
+        res.json(updatedUser);
     } catch (error) {
         console.error("Error in onboardingTask");
         console.error(error);
