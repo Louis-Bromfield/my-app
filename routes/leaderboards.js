@@ -246,7 +246,7 @@ router.patch("/marketSignUp/:leaderboardName", async (req, res) => {
                 { new: true }
             );
             // Update user document
-            const user = Users.findOne({ username: req.body.username });
+            const user = await Users.findOne({ username: req.body.username });
             const newMarkets = [user.markets, ...req.params.leaderboardName];
             await Users.findOneAndUpdate(user.username, { markets: newMarkets });
             res.json(newLeaderboardDataPushedToDB);
