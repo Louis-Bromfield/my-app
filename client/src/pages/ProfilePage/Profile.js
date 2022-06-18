@@ -119,22 +119,32 @@ console.log("Profile.js UE");
 
     const updateOnboarding = async (username) => {
         try {
-            // Try to redo this so that we don't need to do the GET first 
-            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
-            if (userDocument.data[0].onboarding.visitProfilePage === true) {
-                return;
-            } else {
-                userDocument.data[0].onboarding.visitProfilePage = true;
-                userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 100
-                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
-                    { 
-                        onboarding: userDocument.data[0].onboarding,
-                        fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 
-                    }
-                );
+            const updatedUserDocument = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/onboardingTask/${username}`, {
+                onboardingTask: "joinAMarket",
+                ffPointsIfFalse: 100,
+                ffPointsIfTrue: 0
+            });
+            console.log(updatedUserDocument);
+            if (updatedUserDocument.data.firstTime === true) {
                 setShowModal(true);
                 setModalContent("You just got 100 Fantasy Forecast Points for visiting your profile for the first time! If you forget your password, log back in using your Reset Code and then set your new password at the bottom of this page.");
             };
+            // Try to redo this so that we don't need to do the GET first 
+            // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            // if (userDocument.data[0].onboarding.visitProfilePage === true) {
+            //     return;
+            // } else {
+            //     userDocument.data[0].onboarding.visitProfilePage = true;
+            //     userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 100
+            //     await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
+            //         { 
+            //             onboarding: userDocument.data[0].onboarding,
+            //             fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 
+            //         }
+            //     );
+            //     setShowModal(true);
+            //     setModalContent("You just got 100 Fantasy Forecast Points for visiting your profile for the first time! If you forget your password, log back in using your Reset Code and then set your new password at the bottom of this page.");
+            // };
         } catch (error) {
             console.error(error);
         };

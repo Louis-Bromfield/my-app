@@ -212,9 +212,10 @@ function HomeNewsFeed(props) {
                 ffPointsIfFalse: 200,
                 ffPointsIfTrue: 15
             });
-            if (updatedUserDocument.firstTime === true) {
+            console.log(updatedUserDocument);
+            if (updatedUserDocument.data.firstTime === true) {
                 props.handleFirstPost(true);
-                props.handleFirstPostModalContent("You just earned 200 Fantasy Forecast Points for your first post! Future posts will earn you 15 per post.")    
+                props.handleFirstPostModalContent("You just earned 200 Fantasy Forecast Points for your first post! Future posts will earn you 15 points per post.")    
             };
             // Try to redo this so that we don't need to do the GET first 
             // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
