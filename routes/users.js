@@ -268,11 +268,13 @@ router.patch("/onboardingTask/:username", async (req, res) => {
         for (let i = 0; i < Object.keys(user.onboarding).length; i++) {
             console.log(Object.keys(user.onboarding)[i]);
         };
+        res.json(user);
     } catch (error) {
         console.error("Error in onboardingTask");
         console.error(error);
-    }
-})
+        res.json({ error: "error" })
+    };
+});
 
 // Update a user
 router.patch("/:username", async (req, res) => {
