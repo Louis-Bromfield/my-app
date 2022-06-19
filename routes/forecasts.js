@@ -92,6 +92,7 @@ router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
                     for (let i = 0; i < selectedProblem.submittedForecasts.length; i++) {
                         for (let j = 0; j < selectedProblem.submittedForecasts[i].forecasts.length; j++) {
                             if (selectedProblem.submittedForecasts[i].forecasts[j].date.slice(0, 15) === new Date().toString().slice(0, 15)) {
+                                console.log("yes this forecast was made today!");
                                 totalOutcomeOne += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty1*100;
                                 totalOutcomeTwo += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty2*100;
                                 totalOutcomeThree += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty3*100;
@@ -99,6 +100,11 @@ router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
                             };
                         };
                     };
+                    console.log("+++++++++++++++++++++++")
+                    console.log((totalOutcomeOne / numbOfForecasts).toFixed(2))
+                    console.log((totalOutcomeTwo / numbOfForecasts).toFixed(2))
+                    console.log((totalOutcomeThree / numbOfForecasts).toFixed(2))
+                    console.log("+++++++++++++++++++++++")
                     responseObj.avgOutcomeOne = (totalOutcomeOne / numbOfForecasts).toFixed(2);
                     responseObj.avgOutcomeTwo = (totalOutcomeTwo / numbOfForecasts).toFixed(2);
                     responseObj.avgOutcomeThree = (totalOutcomeThree / numbOfForecasts).toFixed(2);
@@ -155,20 +161,12 @@ router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
 
                 for (let i = 0; i < selectedProblem.submittedForecasts.length; i++) {
                     numbOfForecasts = numbOfForecasts + selectedProblem.submittedForecasts[i].forecasts.length;
-                    console.log(numbOfForecasts);
                     for (let j = 0; j < selectedProblem.submittedForecasts[i].forecasts.length; j++) {
                         totalOutcomeOne += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty1*100;
                         totalOutcomeTwo += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty2*100;
                         totalOutcomeThree += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty3*100;
-                        console.log(totalOutcomeOne);
-                        console.log(totalOutcomeTwo);
-                        console.log(totalOutcomeThree);
                     };
                 };
-                console.log((totalOutcomeOne / numbOfForecasts).toFixed(2));
-                console.log((totalOutcomeTwo / numbOfForecasts).toFixed(2));
-                console.log((totalOutcomeThree / numbOfForecasts).toFixed(2));
-                console.log(numbOfForecasts);
                 responseObj.avgOutcomeOne = (totalOutcomeOne / numbOfForecasts).toFixed(2);
                 responseObj.avgOutcomeTwo = (totalOutcomeTwo / numbOfForecasts).toFixed(2);
                 responseObj.avgOutcomeThree = (totalOutcomeThree / numbOfForecasts).toFixed(2);
