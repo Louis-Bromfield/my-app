@@ -59,17 +59,14 @@ function ForecastSubmission(props) {
 
     useEffect(() => {
         console.log("ForecastSubmission UE");
-        console.log(props.markets);
-        if (props.markets === undefined || typeof props.markets === "string" || props.markets.length === 0) {
-            getAllForecastsFromDB(localStorage.getItem('markets').split(","));    
-        } else {
-            getAllForecastsFromDB(props.markets);
-        }
+        console.log(props);
+        getAllForecastsFromDB(props.userObjectMarkets);
         getLeaderboardFromDB(props.selectedForecast.market);
-    }, [props.selectedForecast, props.markets, props.allForecasts]);
+    }, [props.selectedForecast, props.markets, props.allForecasts, props.userObject]);
 
     const getAllForecastsFromDB = async (userMarkets) => {
         try {
+            console.log(userMarkets);
             let filtered = [];
             let filteredAndOrganised = [];
             for (let i = 0; i < userMarkets.length; i++) {

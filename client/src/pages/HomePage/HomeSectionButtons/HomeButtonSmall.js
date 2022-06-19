@@ -18,7 +18,7 @@ function HomeButtonSmall(props) {
     let mainData, subtitle, path;
     
     const getBrierScore = (userObj) => {
-        console.log(userObj);
+        // console.log(userObj);
         if (userObj.length === 15 || userObj === {} || userObj.brierScores === undefined) {
             setBrierScore(props.currentAvgBrier);
             // localStorage.setItem("brierScore", props.currentAvgBrier);

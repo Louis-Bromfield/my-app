@@ -124,7 +124,7 @@ console.log("Profile.js UE");
                 ffPointsIfFalse: 100,
                 ffPointsIfTrue: 0
             });
-            console.log(updatedUserDocument);
+            // console.log(updatedUserDocument);
             if (updatedUserDocument.data.firstTime === true) {
                 setShowModal(true);
                 setModalContent("You just got 100 Fantasy Forecast Points for visiting your profile for the first time! If you forget your password, log back in using your Reset Code and then set your new password at the bottom of this page.");
@@ -234,10 +234,10 @@ console.log("Profile.js UE");
                     </div>
                     <br />
                     <div className="profile-details-container">
-                        <h3 classname="profile-details-header">Want to change your password?</h3>
-                        <label htmlFor="password" classname="profile-details-label">Password:</label>
+                        <h3 className="profile-details-header">Want to change your password?</h3>
+                        <label htmlFor="password" className="profile-details-label">Password:</label>
                         <input 
-                            classname="profile-details-input"
+                            className="profile-details-input"
                             type="password" 
                             name="password" 
                             id="password" 

@@ -13,6 +13,7 @@ function Navbar(props) {
     const [width, setWidth] = useState(window.innerWidth > 1100);
     const [mobileWidth, setMobileWidth] = useState(window.innerWidth > 650);
     const [sidebar, setSidebar] = useState(false);
+    const [profilePicture, setProfilePicture] = useState(props.profilePicture);
     const history = useHistory();
 
     const showSidebar = () => setSidebar(!sidebar);
@@ -23,11 +24,12 @@ function Navbar(props) {
     };
 
     useEffect(() => {
+        setProfilePicture(props.profilePicture);
         setWidth(window.innerWidth > 1350);
         setMobileWidth(window.innerWidth <= 650);
         window.addEventListener("resize", updateWidth);
         return () => window.addEventListener("resize", updateWidth);
-    });
+    }, [props.profilePicture]);
 
     const signOut = (logout) => {
         logout();
@@ -165,7 +167,7 @@ function Navbar(props) {
                                     </div>
                                     <div className="user-logout-container">
                                         {/* <img src={props.profilePicture || localStorage.getItem("profilePicture")} className="navbar-profile-pic" alt="User's profile pic" /> */}
-                                        <img src={props.profilePicture} className="navbar-profile-pic" alt="User's profile pic" />
+                                        <img src={profilePicture} className="navbar-profile-pic" alt="User's profile pic" />
                                         <div className="user-logout-column-container">
                                             <p>
                                                 <Link 

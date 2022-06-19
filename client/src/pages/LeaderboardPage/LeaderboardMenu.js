@@ -36,8 +36,7 @@ function LeaderboardMenu(props) {
     const [modalContent, setModalContent] = useState("");
 
     useEffect(() => {
-        console.log(props);
-        
+        // console.log(props);        
         // if (props.userFFPoints > 1500) setCanCreateLeagueDueToLevel(true);
         checkIfUserIsInMarkets(props.username);
         pullAllMarketsFromDB(props.username);
@@ -135,7 +134,7 @@ function LeaderboardMenu(props) {
     const checkIfUserIsInMarkets = async (username) => {
         try {
             const allUserLeaderboardsFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${username}`);
-            console.log(allUserLeaderboardsFromDB.data);
+            // console.log(allUserLeaderboardsFromDB.data);
             if (allUserLeaderboardsFromDB.data[0].length === 0) {
                 setUserInNoMarkets(true)
             } else {
@@ -153,7 +152,7 @@ function LeaderboardMenu(props) {
 
     const pullAllMarketsFromDB = async (username) => {
         const leaderboardDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/justNames/${username}`);
-        console.log(leaderboardDocument.data);
+        // console.log(leaderboardDocument.data);
         setAllMarkets(leaderboardDocument.data);
     };
     // ------------------------------------------------------------------------------------

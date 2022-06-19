@@ -46,7 +46,7 @@ function Home(props) {
             setModalContent(welcomeString);
             localStorage.setItem("firstVisit", false);
         };
-        console.log(`username cookie = ${cookie.username}`);
+        // console.log(`username cookie = ${cookie.username}`);
         // if (props.user.numberOfClosedForecasts === undefined) {
             // getClosedForecastCount(localStorage.getItem("username") || props.username);
             // Version without contacting server (use props instead) - was having issues, defined props.user as [object Object], maybe as it 
@@ -55,6 +55,7 @@ function Home(props) {
             getUserInfo(props.username);
         // };
     // }, [props.user.numberOfClosedForecasts, props.username]);
+    console.log("HOME UE");
     }, [props.username]);
 
     const getUserInfo = async (username) => {
@@ -73,7 +74,7 @@ function Home(props) {
             setUserMarkets(userDocument.data[0].markets);
             setUserOnboarding(userDocument.data[0].onboarding);
             setUserClosedForecastCount(userDocument.data[0].numberOfClosedForecasts);
-            console.log(userDocument.data[0].learnQuizzes);
+            // console.log(userDocument.data[0].learnQuizzes);
             setUserLearnQuizzes(userDocument.data[0].learnQuizzes);
             props.setUserObject(userDocument.data[0]);
             props.setUserFFPoints(userDocument.data[0].fantasyForecastPoints);

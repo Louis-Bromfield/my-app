@@ -48,9 +48,9 @@ function HomeNewsFeed(props) {
                 // getUserMarketsFromDB(props.username);
                 
                 // Version without querying server:
-                console.log("1");
-                console.log(props.userMarkets);
-                console.log("==========");
+                // console.log("1");
+                // console.log(props.userMarkets);
+                // console.log("==========");
                 getUserMarketsFromDB(props.userMarkets);
                 setNewPostLoading(false);
             // }, 500);
@@ -92,7 +92,7 @@ function HomeNewsFeed(props) {
         try {
             // console.log("DEBUGGING");
             // console.log(userMarkets);
-            const allMarkets = userMarkets;
+            // const allMarkets = userMarkets;
             setUserMarkets(userMarkets);
             setFilters(userMarkets);
         } catch (error) {

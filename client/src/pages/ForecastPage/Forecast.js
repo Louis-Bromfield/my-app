@@ -28,7 +28,7 @@ function Forecast(props) {
     const getAllForecastsFromDB = async () => {
         try {
             const allForecastsUnfiltered = await axios.get('https://fantasy-forecast-politics.herokuapp.com/forecasts');
-            console.log(allForecastsUnfiltered);
+            // console.log(allForecastsUnfiltered);
             setAllForecasts(allForecastsUnfiltered.data);
         } catch (error) {
             console.error(error);
@@ -67,6 +67,7 @@ function Forecast(props) {
                 selectedForecast={forecast} 
                 username={props.username}
                 causeRefresh={causeRefresh}
+                userObjectMarkets={props.userObjectMarkets}
             />
             {forecastSelected &&
                 <ForecastTabPane 

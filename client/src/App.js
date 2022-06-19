@@ -182,7 +182,7 @@ function App() {
             />} />
             <Route path="/change-log" render={(props) => <ChangeLog {...props} />} />
             <Route path="/news-post" render={(props) => <IndividualNewsFeedPost {...props} />} />
-            <Route path='/forecast' render={(props) => <Forecast {...props} markets={markets} username={username} />} />
+            <Route path='/forecast' render={(props) => <Forecast {...props} markets={markets} username={username} userObjectMarkets={userObject.markets} />} />
             <Route path='/forecast-analysis' render ={(props) => <ForecastAnalysisPage {...props} username={username} />} />
             <Route path='/leaderboard-select' render={(props) => <LeaderboardMenu {...props} username={username} markets={markets} userFFPoints={userFFPoints} userObject={userObject} profilePicture={profilePicture} />} />
             <Route path='/leaderboard' render={(props) => <IndividualLeaderboard {...props} username={username} markets={markets} />} />
