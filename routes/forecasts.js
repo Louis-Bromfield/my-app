@@ -26,6 +26,151 @@ router.get("/:problemName", async (req, res) => {
     };
 });
 
+// Get detailed forecast info
+router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
+    try {
+        const selectedProblem = await Forecasts.findOne({ problemName: req.params.problemName });
+        let responseObj = {};
+        if (selectedProblem.submittedForecasts.length === 0) {
+            responseObj.highestCertainty = "N/A";
+            responseObj.lowestCertainty = "N/A";
+            responseObj.currentAverageCertainty = "N/A";
+            responseObj.numberOfForecasts = "0";
+        };
+        if (req.params.today === true) {
+            if (selectedProblem.singleCertainty === true) {
+                let highestCertaintySoFar = 0.00;
+                let highestChanged = false;
+                let lowestCertaintySoFar = 1.00;
+                let lowestChanged = false;
+                let totalCertainty = 0.00;
+                let numbOfForecasts = 0;
+                for (let i = 0; i < selectedProblem.submittedForecasts.length; i++) {
+                    let index = selectedProblem.submittedForecasts[i].forecasts.length-1;
+                    if (selectedProblem.submittedForecasts[i].forecasts[index].date.slice(0, 15) === new Date().toString().slice(0, 15)) {
+                        if (selectedProblem.submittedForecasts[i].forecasts[index].certainty >= highestCertaintySoFar) {
+                            highestCertaintySoFar = selectedProblem.submittedForecasts[i].forecasts[index].certainty;
+                            highestChanged = true;
+                        };
+                        if (selectedProblem.submittedForecasts[i].forecasts[index].certainty <= lowestCertaintySoFar) {
+                            lowestCertaintySoFar = selectedProblem.submittedForecasts[i].forecasts[index].certainty;
+                            lowestChanged = true;
+                        };
+                        totalCertainty += selectedProblem.submittedForecasts[i].forecasts[index].certainty;
+                        numbOfForecasts += 1;
+                    };
+                }
+                if (highestChanged === true) {
+                    responseObj.highestCertainty = `${(highestCertaintySoFar*100).toFixed(2)}%`;
+                } else {
+                    responseObj.highestCertainty = "N/A";
+                }
+                if (lowestChanged === true) {
+                    responseObj.lowestCertainty = `${(lowestCertaintySoFar*100).toFixed(2)}%`;
+                } else {
+                    responseObj.lowestCertainty = "N/A";
+                };
+                if (highestChanged === true && lowestChanged === true) {
+                    responseObj.currentAverageCertainty = `${((totalCertainty / numbOfForecasts)*100).toFixed(2)}%`;   
+                } else {
+                    responseObj.currentAverageCertainty = "N/A";
+                };
+                responseObj.numberOfForecasts = numbOfForecasts;
+            } else if (selectedProblem.singleCertainty === false) {
+                if (selectedProblem.submittedForecasts.length === 0) {
+                    responseObj.highestCertainty = "N/A";
+                    responseObj.lowestCertainty = "N/A";
+                    responseObj.currentAverageCertainty = "N/A";
+                    responseObj.numberOfForecasts = "N/A";
+                } else {
+                    if (today === true) {
+                        let totalOutcomeOne = 0.00;
+                        let totalOutcomeTwo = 0.00;
+                        let totalOutcomeThree = 0.00;
+                        let numbOfForecasts = 0;
+                            for (let i = 0; i < selectedProblem.submittedForecasts.length; i++) {
+                                for (let j = 0; j < selectedProblem.submittedForecasts[i].forecasts.length; j++) {
+                                    if (selectedProblem.submittedForecasts[i].forecasts[j].date.slice(0, 15) === new Date().toString().slice(0, 15)) {
+                                        totalOutcomeOne += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty1*100;
+                                        totalOutcomeTwo += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty2*100;
+                                        totalOutcomeThree += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty3*100;
+                                        numbOfForecasts += 1;
+                                    };
+                                };
+                            };
+                            responseObj.avgOutcomeOne = (totalOutcomeOne / numbOfForecasts).toFixed(2);
+                            responseObj.avgOutcomeTwo = (totalOutcomeTwo / numbOfForecasts).toFixed(2);
+                            responseObj.avgOutcomeThree = (totalOutcomeThree / numbOfForecasts).toFixed(2);
+                            responseObj.numberOfForecasts = numbOfForecasts;
+                    };
+                };
+            };
+        } else if (req.params.today === false) {
+            if (selectedProblem.singleCertainty === true) {
+                let highestCertaintySoFar = 0.00;
+                let highestChanged = false;
+                let lowestCertaintySoFar = 1.00;
+                let lowestChanged = false;
+                let totalCertainty = 0.00;
+                let numbOfForecasts = 0;
+
+                for (let i = 0; i < selectedProblem.submittedForecasts.length; i++) {
+                    numbOfForecasts = numbOfForecasts + selectedProblem.submittedForecasts[i].forecasts.length;
+                    for (let j = 0; j < selectedProblem.submittedForecasts[i].forecasts.length; j++) {
+                        if (selectedProblem.submittedForecasts[i].forecasts[j].certainty > highestCertaintySoFar) {
+                            highestCertaintySoFar = selectedProblem.submittedForecasts[i].forecasts[j].certainty;
+                            highestChanged = true;
+                        };
+                        if (selectedProblem.submittedForecasts[i].forecasts[j].certainty < lowestCertaintySoFar) {
+                            lowestCertaintySoFar = selectedProblem.submittedForecasts[i].forecasts[j].certainty;
+                            lowestChanged = true;
+                        };
+                        totalCertainty += selectedProblem.submittedForecasts[i].forecasts[j].certainty;
+                    };
+                };
+                if (highestChanged === true) {
+                    responseObj.setHighestCertainty = `${(highestCertaintySoFar*100).toFixed(2)}%`;
+                } else {
+                    responseObj.setHighestCertainty = "N/A";
+                };
+                if (lowestChanged === true) {
+                    responseObj.setLowestCertainty = `${(lowestCertaintySoFar*100).toFixed(2)}%`;
+                } else {
+                    responseObj.setLowestCertainty = "N/A";
+                };
+                if (highestChanged === true && lowestChanged === true) {
+                    responseObj.setCurrentAverageCertainty = `${((totalCertainty / numbOfForecasts)*100).toFixed(2)}%`; 
+                } else {
+                    responseObj.setCurrentAverageCertainty = "N/A";
+                };
+                responseObj.setNumberOfForecasts(numbOfForecasts);
+            };
+        } else if (selectedProblem.singleCertainty === false) {
+            let totalOutcomeOne = 0.00;
+            let totalOutcomeTwo = 0.00;
+            let totalOutcomeThree = 0.00;
+            let numbOfForecasts = 0;
+
+            for (let i = 0; i < selectedProblem.submittedForecasts.length; i++) {
+                numbOfForecasts = numbOfForecasts + selectedProblem.submittedForecasts[i].forecasts.length;
+                for (let j = 0; j < selectedProblem.submittedForecasts[i].forecasts.length; j++) {
+                    totalOutcomeOne += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty1*100;
+                    totalOutcomeTwo += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty2*100;
+                    totalOutcomeThree += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty3*100;
+                };
+            };
+            responseObj.setAvgOutcomeOne = (totalOutcomeOne / numbOfForecasts).toFixed(2);
+            responseObj.setAvgOutcomeTwo = (totalOutcomeTwo / numbOfForecasts).toFixed(2);
+            responseObj.setAvgOutcomeThree = (totalOutcomeThree / numbOfForecasts).toFixed(2);
+            responseObj.setNumberOfForecasts = numbOfForecasts;
+        };
+        res.json(responseObj);
+    } catch (error) {
+        console.error("error in forecasts.js > get /:getDetailedForecastInfo");
+        console.error(error);
+    };
+})
+
 // Get one forecast using ID
 router.get("/getByID/:problemID", async (req, res) => {
     try {

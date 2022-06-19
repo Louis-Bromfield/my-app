@@ -35,37 +35,37 @@ function ForecastResults(props) {
         };
     };
 
-    const getAllUsers = async () => {
-        try {
-            const userDocument = await axios.get("https://fantasy-forecast-politics.herokuapp.com/users");
-            return userDocument.data;
-        } catch (err) {
-            console.error("Error in ForecastResults > getAllUsers");
-            console.error(err);
-            return {};
-        };
-    };
+    // const getAllUsers = async () => {
+    //     try {
+    //         const userDocument = await axios.get("https://fantasy-forecast-politics.herokuapp.com/users");
+    //         return userDocument.data;
+    //     } catch (err) {
+    //         console.error("Error in ForecastResults > getAllUsers");
+    //         console.error(err);
+    //         return {};
+    //     };
+    // };
 
-    const findAllScores = (users, problemName) => {
-        let problemLeaderboard = [];
-        if (users === {}) {
-            setResults([]);
-            return;
-        };
+    // const findAllScores = (users, problemName) => {
+    //     let problemLeaderboard = [];
+    //     if (users === {}) {
+    //         setResults([]);
+    //         return;
+    //     };
 
-        for (let i = 0; i < users.length; i++) {
-            for (let j = 0; j < users[i].brierScores.length; j++) {
-                if (users[i].brierScores[j].problemName === problemName) {
-                    problemLeaderboard.push({
-                        username: users[i].username,
-                        score: Number(users[i].brierScores[j].brierScore.toFixed(2))
-                    });
-                };
-            };
-        };
-        const sortedLeaderboard = problemLeaderboard.sort((a, b) => b.score - a.score);
-        setResults(sortedLeaderboard);
-    };
+    //     for (let i = 0; i < users.length; i++) {
+    //         for (let j = 0; j < users[i].brierScores.length; j++) {
+    //             if (users[i].brierScores[j].problemName === problemName) {
+    //                 problemLeaderboard.push({
+    //                     username: users[i].username,
+    //                     score: Number(users[i].brierScores[j].brierScore.toFixed(2))
+    //                 });
+    //             };
+    //         };
+    //     };
+    //     const sortedLeaderboard = problemLeaderboard.sort((a, b) => b.score - a.score);
+    //     setResults(sortedLeaderboard);
+    // };
 
     return (
         <div className="forecast-results">
