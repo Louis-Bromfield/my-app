@@ -181,6 +181,35 @@ router.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
     };
 });
 
+// Get all scores for an individual forecast problem
+router.get("/getIndividualProblemResults/:problemName", async (req, res) => {
+    try {
+        // get all users
+        const allUsers = Users.find();
+        // make an array of all who have
+        let problemRankings = [];
+        // loop through all, see if they have a brier for this problem
+        for (let i = 0; i < allUsers.length; i++) {
+            for (let j = 0; j < allUsers.brierScores.length; j++) {
+                if (allUsers[i].brierScores[j].problemName === req.params.problemName) {
+                    problemRankings.push({
+                        username: allUsers[i].username,
+                        score: allUsers[i].brierScores[j].brierScore.toFixed(2)
+                    });
+                };
+            };
+        };
+        // sort by score
+        const sortedProblemRankings = problemRankings.sort((a, b) => b.score - a.score);
+        // return array
+        res.json(sortedProblemRankings);
+    } catch (error) {
+        console.error("Error in getIndividualProblemResults");
+        console.error(error);
+        return [];  
+    };
+});
+
 // Create a new user
 router.post("/", async (req, res) => {
     const newUser = new Users({
