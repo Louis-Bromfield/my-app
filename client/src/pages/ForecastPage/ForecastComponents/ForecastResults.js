@@ -9,20 +9,31 @@ function ForecastResults(props) {
 
     useEffect(() => {
         console.log("Forecast Results UE2");
-        async function doEffect() {
+        // async function doEffect() {
             if (props.isClosed === true) {
             setLoading(true);
             // get all users
-            const allUsers = await getAllUsers();
+            // const allUsers = await getAllUsers();
             // scrape all users for those names that appear in the leaderboard
-            findAllScores(allUsers, props.problemName);
-        };
+            // findAllScores(allUsers, props.problemName);
+            pullAllScores(props.problemName);
+        // };
         setTimeout(() => {
             setLoading(false);
         }, 500);
         };
-        doEffect();
+        // doEffect();
     }, [props.problemName, props.isClosed]);
+
+    const pullAllScores = async (problemName) => {
+        try {
+            const results = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/getIndividualProblemResults/${problemName}`);
+            console.log(results);            
+        } catch (err) {
+            console.error("Error in ForecastResults > pullAllScores");
+            console.error(err);
+        };
+    };
 
     const getAllUsers = async () => {
         try {

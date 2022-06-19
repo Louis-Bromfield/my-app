@@ -190,7 +190,7 @@ router.get("/getIndividualProblemResults/:problemName", async (req, res) => {
         let problemRankings = [];
         // loop through all, see if they have a brier for this problem
         for (let i = 0; i < allUsers.length; i++) {
-            for (let j = 0; j < allUsers.brierScores.length; j++) {
+            for (let j = 0; j < allUsers[i].brierScores.length; j++) {
                 if (allUsers[i].brierScores[j].problemName === req.params.problemName) {
                     problemRankings.push({
                         username: allUsers[i].username,
