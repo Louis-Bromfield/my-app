@@ -90,7 +90,7 @@ router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
                     responseObj.currentAverageCertainty = "N/A";
                     responseObj.numberOfForecasts = "N/A";
                 } else {
-                    if (today === true) {
+                    if (req.params.today === true) {
                         let totalOutcomeOne = 0.00;
                         let totalOutcomeTwo = 0.00;
                         let totalOutcomeThree = 0.00;
