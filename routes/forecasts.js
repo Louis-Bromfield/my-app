@@ -176,6 +176,7 @@ router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
                 responseObj.numberOfForecasts = numbOfForecasts;
             };
         };
+        responseObj.singleCertainty = selectedProblem.singleCertainty;
         res.json(responseObj);
     } catch (error) {
         console.error("error in forecasts.js > get /:getDetailedForecastInfo");

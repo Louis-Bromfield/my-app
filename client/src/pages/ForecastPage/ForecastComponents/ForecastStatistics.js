@@ -20,6 +20,17 @@ function ForecastStatistics(props) {
     const getForecastInfo = async (today, selectedForecast) => {
         const response = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/getDetailedForecastInfo/${selectedForecast.problemName}/${today}`)
         console.log(response);
+        // if (props.today === true) {
+        //     setAvgOutcomeOne(response.data.avgOutcomeOne);
+        //     setAvgOutcomeTwo(response.data.avgOutcomeTwo);
+        //     setAvgOutcomeThree(response.data.avgOutcomeThree);
+        //     setNumberOfForecasts(response.data.numberOfForecasts);
+        // } else if (props.today === false) {
+        //     setAvgOutcomeOne(response.data.avgOutcomeOne);
+        //     setAvgOutcomeTwo(response.data.avgOutcomeTwo);
+        //     setAvgOutcomeThree(response.data.avgOutcomeThree);
+        //     setNumberOfForecasts(response.data.numberOfForecasts);
+        // };
         // if (props.forecastSingleCertainty === true) {
         //     if (selectedForecast.submittedForecasts.length === 0) {
         //         setHighestCertainty("N/A");
