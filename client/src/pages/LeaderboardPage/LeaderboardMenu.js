@@ -39,7 +39,7 @@ function LeaderboardMenu(props) {
         // console.log(props);        
         // if (props.userFFPoints > 1500) setCanCreateLeagueDueToLevel(true);
         checkIfUserIsInMarkets(props.username);
-        pullAllMarketsFromDB(props.username);
+        // pullAllMarketsFromDB(props.username);
         // if (userInNoMarkets === true) {
         //     setJoinAMarketMenu(true);
         // };
@@ -154,11 +154,11 @@ function LeaderboardMenu(props) {
         };
     };
 
-    const pullAllMarketsFromDB = async (username) => {
-        const leaderboardDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/justNames/${username}`);
-        // console.log(leaderboardDocument.data);
-        setAllMarkets(leaderboardDocument.data);
-    };
+    // const pullAllMarketsFromDB = async (username) => {
+    //     const leaderboardDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/justNames/${username}`);
+    //     // console.log(leaderboardDocument.data);
+    //     setAllMarkets(leaderboardDocument.data);
+    // };
     // ------------------------------------------------------------------------------------
 
     // Filter out the leaderboards where the user has not responded to an invite

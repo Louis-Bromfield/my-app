@@ -49,8 +49,8 @@ function IndividualLeaderboard(props) {
             const leaderboardObj = props.location.navigationOrderUnsorted.find(el => el.leaderboardName === localStorage.getItem('currentLeaderboardName'));
             setIsFFLeaderboard(leaderboardObj.isFFLeaderboard);
         } else if (props.location.user === false) {
-            const leaderboardObj = props.location.navigationOrderUnsorted.find(el => el[0] === localStorage.getItem('currentLeaderboardName'));
-            setIsFFLeaderboard(leaderboardObj[2]);
+            const leaderboardObj = props.location.navigationOrderUnsorted.find(el => el.leaderboardName === localStorage.getItem('currentLeaderboardName'));
+            setIsFFLeaderboard(leaderboardObj.isFFLeaderboard);
         }
         console.log("2nd Individual Leaderboard UE");
     }, [currentLeaderboardName, props.location.navigationOrderUnsorted, props.location.user]);
