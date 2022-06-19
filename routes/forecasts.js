@@ -108,9 +108,9 @@ router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
                     console.log(`(${totalOutcomeThree} / ${numbOfForecasts}).toFixed(2)`)
                     console.log((totalOutcomeThree / numbOfForecasts).toFixed(2))
                     console.log("+++++++++++++++++++++++")
-                    responseObj.avgOutcomeOne = (totalOutcomeOne / numbOfForecasts).toFixed(2);
-                    responseObj.avgOutcomeTwo = (totalOutcomeTwo / numbOfForecasts).toFixed(2);
-                    responseObj.avgOutcomeThree = (totalOutcomeThree / numbOfForecasts).toFixed(2);
+                    responseObj.avgOutcomeOne = isNaN((totalOutcomeOne / numbOfForecasts).toFixed(2)) ? "N/A" : (totalOutcomeOne / numbOfForecasts).toFixed(2);
+                    responseObj.avgOutcomeTwo = isNaN((totalOutcomeTwo / numbOfForecasts).toFixed(2)) ? "N/A" : (totalOutcomeTwo / numbOfForecasts).toFixed(2);
+                    responseObj.avgOutcomeThree = isNaN((totalOutcomeThree / numbOfForecasts).toFixed(2)) ? "N/A" : (totalOutcomeThree / numbOfForecasts).toFixed(2);
                     responseObj.numberOfForecasts = numbOfForecasts;
                 // };
             };
