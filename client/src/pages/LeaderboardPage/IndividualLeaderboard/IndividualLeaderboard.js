@@ -69,7 +69,8 @@ function IndividualLeaderboard(props) {
         try {
             const lbData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${leaderboard}`);
             const lbRankings = lbData.data;
-            // lbRankings.sort((a, b) => b.marketPoints - a.marketPoints);
+            console.log(lbRankings);
+            // lbRankings.sort((a, b) => b.marketPoints - a.marketPoints);indexOf
             // Removed line below as we have removed creating leagues for now, so no invites needed as all are default true for FFLeaderboards
             // const filtered = filterByInvite(lbRankings);
             // let total = 0;
@@ -248,7 +249,7 @@ function IndividualLeaderboard(props) {
             <div className="leaderboard-spotlight-row">
                 <Top3Users 
                     rankings={filteredRankings}
-                    ffData={ffData}
+                    // ffData={ffData}
                 />
                 {/* <LeaderboardSpecificStats 
                     numberOfForecasters={filteredRankings.length} 
@@ -280,7 +281,7 @@ function IndividualLeaderboard(props) {
                 isFFLeaderboard={isFFLeaderboard}
                 setUserInMarket={setUserInMarket}
                 // setAverageBrier={setAverageBrier}
-                setFFData={setFFData}
+                // setFFData={setFFData}
                 // leaderboardFilter={leaderboardFilter}
             />
         </div>

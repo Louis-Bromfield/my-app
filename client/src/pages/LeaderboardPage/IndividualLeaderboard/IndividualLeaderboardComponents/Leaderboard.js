@@ -157,7 +157,7 @@ function Leaderboard(props) {
             // setLoading(false);
           let ffRankings = [];
           for (let i = 0; i < rankings.length; i++) {
-            console.log(rankings[i]);
+            // console.log(rankings[i]);
             const userDocumentFF = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${rankings[i].username}`);
             // Check if logged in user is in market, true will allow them to invite etc
             if (userDocumentFF.data[0].username === props.username) {
@@ -211,7 +211,7 @@ function Leaderboard(props) {
           if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
             ffRankings = ffRankings.sort((a, b) => b.marketPoints - a.marketPoints);
             setUsersData(ffRankings);
-            props.setFFData(ffRankings);
+            // props.setFFData(ffRankings);
             setLoading(false);
             return;
           } else {
@@ -530,6 +530,7 @@ function Leaderboard(props) {
                         {width && <th className="last-five-briers-column">Last 5 Forecasts (All Markets)</th>}
                     </tr>
                     {usersData.map((item, index) => {
+                        if (item.username === "admin") return null;
                         // if (props.leaderboardFilter === "all") {
                             if (item.username === props.username) {
                                 return (

@@ -11,17 +11,17 @@ import { FaInfoCircle } from 'react-icons/fa';
 function LeaderboardMenu(props) {
     // const [canCreateLeagueDueToLevel, setCanCreateLeagueDueToLevel] = useState(false);
     // const [createLeague, setCreateLeague] = useState(false);
-    const [leagueSetupConfirmation, setLeagueSetupConfirmation] = useState(false);
+    // const [leagueSetupConfirmation, setLeagueSetupConfirmation] = useState(false);
     // const [usersArray, setUsersArray] = useState(["empty array"]);
     // const [leagueName, setLeagueName] = useState("");
     const [shouldRefresh, setShouldRefresh] = useState(0);
-    const [userInNoMarkets, setUserInNoMarkets] = useState(false);
+    // const [userInNoMarkets, setUserInNoMarkets] = useState(false);
     const [joinAMarketMenu, setJoinAMarketMenu] = useState(false);
-    const [manageYourInvitesMenu, setManageYourInvitesMenu] = useState(false);
+    // const [manageYourInvitesMenu, setManageYourInvitesMenu] = useState(false);
     const [allMarkets, setAllMarkets] = useState([]);
     const [marketsForSignUp, setMarketsForSignUp] = useState([]);
     const [allUserLeaderboardsWithInviteAccepted, setAllUserLeaderboardsWithInviteAccepted] = useState([]);
-    const [allUserLeaderboardsWithInviteNotYetAccepted, setAllUserLeaderboardsWithInviteNotYetAccepted] = useState([]);
+    // const [allUserLeaderboardsWithInviteNotYetAccepted, setAllUserLeaderboardsWithInviteNotYetAccepted] = useState([]);
     const [marketChoiceErrorMessage, setMarketChoiceErrorMessage] = useState("");
     const [marketChoiceSuccessMessage, setMarketChoiceSuccessMessage] = useState("");
     const [loading, setLoading] = useState(false);
@@ -29,9 +29,9 @@ function LeaderboardMenu(props) {
     // const [isPublic, setIsPublic] = useState();
     // const [isPublicChecked, setIsPublicChecked] = useState(false);
     // const [isPrivateChecked, setIsPrivateChecked] = useState(false);
-    const [usersToInviteToNewLeague, setUsersToInviteToNewLeague] = useState([{username: props.username, marketPoints: 0, isGroup: false, acceptedInvite: true, profilePicture: props.profilePicture || ""}]);
+    // const [usersToInviteToNewLeague, setUsersToInviteToNewLeague] = useState([{username: props.username, marketPoints: 0, isGroup: false, acceptedInvite: true, profilePicture: props.profilePicture || ""}]);
     // const [leagueCreationError, setLeagueCreationError] = useState("");
-    const [inviteAlert, setInviteAlert] = useState("No message");
+    // const [inviteAlert, setInviteAlert] = useState("No message");
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
 
@@ -40,10 +40,10 @@ function LeaderboardMenu(props) {
         // if (props.userFFPoints > 1500) setCanCreateLeagueDueToLevel(true);
         checkIfUserIsInMarkets(props.username);
         pullAllMarketsFromDB(props.username);
-        if (userInNoMarkets === true) {
-            setJoinAMarketMenu(true);
-        };
-    }, [causeRefresh, joinAMarketMenu, props.username, userInNoMarkets]);
+        // if (userInNoMarkets === true) {
+        //     setJoinAMarketMenu(true);
+        // };
+    }, [causeRefresh, joinAMarketMenu, props.username]);
 
     // For private leaderboards, their ranking is determined by FantasyForecast Points, or no?
     // const toggleInviteUserToLeague = (username, isGroup) => {
@@ -137,14 +137,17 @@ function LeaderboardMenu(props) {
             const allUserLeaderboardsFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${username}`);
             // console.log(allUserLeaderboardsFromDB.data);
             if (allUserLeaderboardsFromDB.data[0].length === 0) {
-                setUserInNoMarkets(true)
+                setAllUserLeaderboardsWithInviteAccepted([]);
+                // setUserInNoMarkets(true)
             } else {
-                setUserInNoMarkets(false);
-                let marketsFilteredByInviteAccepted = filterLeaderboardsByInvite(allUserLeaderboardsFromDB.data, username, true);
-                let marketsFilteredByInviteNotYetAccepted = filterLeaderboardsByInvite(allUserLeaderboardsFromDB.data, username, false);
-                setAllUserLeaderboardsWithInviteAccepted(marketsFilteredByInviteAccepted);
-                setAllUserLeaderboardsWithInviteNotYetAccepted(marketsFilteredByInviteNotYetAccepted);
-            }
+                // setUserInNoMarkets(false);
+                // let marketsFilteredByInviteAccepted = filterLeaderboardsByInvite(allUserLeaderboardsFromDB.data, username, true);
+                // let marketsFilteredByInviteNotYetAccepted = filterLeaderboardsByInvite(allUserLeaderboardsFromDB.data, username, false);
+                // setAllUserLeaderboardsWithInviteAccepted(marketsFilteredByInviteAccepted);
+                // setAllUserLeaderboardsWithInviteNotYetAccepted(marketsFilteredByInviteNotYetAccepted);
+                setAllUserLeaderboardsWithInviteAccepted(allUserLeaderboardsFromDB.data);
+                console.log(allUserLeaderboardsFromDB.data);
+            };
         } catch (error) {
             console.error("Error occured in LeaderboardMenu.js > checkIfUserIsInMarkets");
             console.error(error);
@@ -160,36 +163,38 @@ function LeaderboardMenu(props) {
 
     // Filter out the leaderboards where the user has not responded to an invite
     // and by extension remove this one too?
-    const filterLeaderboardsByInvite = (markets, username, accepted) => {
-        if (accepted === true) {
-            let filteredMarkets = [];
-            for (let i = 0; i < markets.length; i++) {
-                if (markets[i].isFFLeaderboard === true) {
-                    filteredMarkets.push(markets[i]);
-                    continue;
-                }
-                for (let j = 0; j < markets[i].rankings.length; j++) {
-                    if (markets[i].rankings[j].username === username && markets[i].rankings[j].acceptedInvite === true) {
-                        filteredMarkets.push(markets[i]);
-                    };
-                };
-            };
-            return filteredMarkets;
-        } else if (accepted === false) {
-            let filteredMarkets = [];
-            for (let i = 0; i < markets.length; i++) {
-                if (markets[i].isFFLeaderboard === true) {
-                    continue;
-                }
-                for (let j = 0; j < markets[i].rankings.length; j++) {
-                    if (markets[i].rankings[j].username === username && markets[i].rankings[j].acceptedInvite === false) {
-                        filteredMarkets.push(markets[i]);
-                    };
-                };
-            };
-            return filteredMarkets;
-        };
-    };
+    // const filterLeaderboardsByInvite = (markets, username, accepted) => {
+    //     if (accepted === true) {
+    //         let filteredMarkets = [];
+    //         for (let i = 0; i < markets.length; i++) {
+    //             if (markets[i].isFFLeaderboard === true) {
+    //                 console.log("True1");
+    //                 filteredMarkets.push(markets[i]);
+    //                 continue;
+    //             }
+    //             for (let j = 0; j < markets[i].rankings.length; j++) {
+    //                 if (markets[i].rankings[j].username === username && markets[i].rankings[j].acceptedInvite === true) {
+    //                     console.log("True");
+    //                     filteredMarkets.push(markets[i]);
+    //                 };
+    //             };
+    //         };
+    //         return filteredMarkets;
+    //     } else if (accepted === false) {
+    //         let filteredMarkets = [];
+    //         for (let i = 0; i < markets.length; i++) {
+    //             if (markets[i].isFFLeaderboard === true) {
+    //                 continue;
+    //             }
+    //             for (let j = 0; j < markets[i].rankings.length; j++) {
+    //                 if (markets[i].rankings[j].username === username && markets[i].rankings[j].acceptedInvite === false) {
+    //                     filteredMarkets.push(markets[i]);
+    //                 };
+    //             };
+    //         };
+    //         return filteredMarkets;
+    //     };
+    // };
 
     // const leagueCreationMenu = async (openStatus, username) => {
     //     try {
@@ -416,18 +421,18 @@ function LeaderboardMenu(props) {
                     </button>
                 } */}
             </div>
-            {(userInNoMarkets === true || joinAMarketMenu === true) &&
+            {joinAMarketMenu === true &&
                 <div className="market-sign-up-div">
                     <h2 className="market-list-title">Welcome to the Market Sign Up!</h2>
-                    {userInNoMarkets === true && 
+                    {/* {userInNoMarkets === true && 
                         <h4>You're not currently in any markets (apart from our Fantasy Forecast All-Time leaderboard). Below is a 
                         list of all the public markets available for you to join. You can join simply by checking the box and 
                         pressing "Confirm Market Choices".</h4>
-                    }
-                    {userInNoMarkets === false && 
+                    } */}
+                    {/* {userInNoMarkets === false &&  */}
                         <h4>Below is a list of all the public markets available for you to join. You can join simply by 
                         checking the box and pressing "Confirm Market Choices".</h4>
-                    }
+                    {/* } */}
                     <div className="markets-list">
                         <h2 className="market-list-title">Markets</h2>
                         <ul className="markets-list-ul">
@@ -563,7 +568,7 @@ function LeaderboardMenu(props) {
                     </div>
                 </div>
             } */}
-            {leagueSetupConfirmation === true && <h2 style={{ "color": "green" }}>League Successfully Created</h2>}
+            {/* {leagueSetupConfirmation === true && <h2 style={{ "color": "green" }}>League Successfully Created</h2>} */}
             <h3>Your Markets:</h3>
             <LeaderboardGrid 
                 user={true} 
