@@ -5,16 +5,18 @@ import './ForecastTabPaneMenu.css';
 function ForecastTabPaneMenu(props) {
 
     const updateArticleTabVisits = async (username) => {
+        console.log(props);
         try {
-            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
-            let increasedVisits = userDocument.data[0].articleVisits + 1;
+            // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            // let increasedVisits = userDocument.data[0].articleVisits + 1;
+            let increasedVisits = props.userObject.articleVisits + 1;
             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, { 
                 articleVisits: increasedVisits
             });
         } catch (error) {
             console.log("Error in ForecastTabPaneMenu > updateArticleTabVisits");
             console.log(error);
-        }
+        };
     };
 
     return (

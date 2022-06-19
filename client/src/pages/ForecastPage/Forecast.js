@@ -74,6 +74,7 @@ function Forecast(props) {
                 <ForecastTabPane 
                     selectedForecast={forecast} 
                     username={props.username} 
+                    userObject={props.userObject}
                     leaderboard={leaderboardData}
                     refresh={refresh} 
                     forecastSingleCertainty={forecastSingleCertainty}

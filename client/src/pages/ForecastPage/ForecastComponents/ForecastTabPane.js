@@ -16,6 +16,7 @@ function ForecastTabPane(props) {
                 setTab={changeTab} 
                 chosenTab={selectedTab}
                 username={props.username}
+                userObject={props.userObject}
             />
             <ForecastTabPaneDisplay 
                 chosenTab={selectedTab} 

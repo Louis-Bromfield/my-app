@@ -187,6 +187,7 @@ function App() {
             <Route path='/forecast' render={(props) => <Forecast {...props} 
                 markets={markets} 
                 username={username} 
+                userObject={userObject}
                 userObjectMarkets={userObject.markets} 
                 userBriers={userObject.brierScores}
             />} />

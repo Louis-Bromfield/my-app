@@ -578,7 +578,8 @@ function LeaderboardMenu(props) {
             />
             <hr/>
             <h3>All markets offered by Fantasy Forecast:</h3>
-            <span 
+            <p>Any new markets will appear here, and you can join them by using the "Join A Market" button at the top of the page.</p>
+            {/* <span 
                 className="markets-legend">
                 <h4 style={{color: "#404d72"}}> Blue</h4>
                 <h4> = Fantasy Forecast Leaderboard, no invite needed to join (Use the Join a Market button at the top of the page).</h4>
@@ -586,7 +587,7 @@ function LeaderboardMenu(props) {
             <span className="markets-legend">
                 <h4 style={{color: "#993131"}}>Red</h4>
                 <h4> = User-created Leaderboard, requires an invite to join.</h4>
-            </span>
+            </span> */}
             <LeaderboardGrid 
                 user={false} 
                 username={props.username} 
