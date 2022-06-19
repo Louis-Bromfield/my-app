@@ -101,8 +101,11 @@ router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
                         };
                     };
                     console.log("+++++++++++++++++++++++")
+                    console.log(`(${totalOutcomeOne} / ${numbOfForecasts}).toFixed(2)`)
                     console.log((totalOutcomeOne / numbOfForecasts).toFixed(2))
+                    console.log(`(${totalOutcomeTwo} / ${numbOfForecasts}).toFixed(2)`)
                     console.log((totalOutcomeTwo / numbOfForecasts).toFixed(2))
+                    console.log(`(${totalOutcomeThree} / ${numbOfForecasts}).toFixed(2)`)
                     console.log((totalOutcomeThree / numbOfForecasts).toFixed(2))
                     console.log("+++++++++++++++++++++++")
                     responseObj.avgOutcomeOne = (totalOutcomeOne / numbOfForecasts).toFixed(2);
