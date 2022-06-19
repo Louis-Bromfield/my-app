@@ -185,7 +185,7 @@ router.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
 router.get("/getIndividualProblemResults/:problemName", async (req, res) => {
     try {
         // get all users
-        const allUsers = Users.find();
+        const allUsers = await Users.find();
         // make an array of all who have
         let problemRankings = [];
         // loop through all, see if they have a brier for this problem
