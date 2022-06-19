@@ -165,9 +165,11 @@ function App() {
             {/* <Route path='/my-profile' component={Profile} /> */}
             <Route exact path="/">
                 <Redirect to="/home"></Redirect>
+                {localStorage.setItem("selectedPage", "Home")}
             </Route>
             <Route exact path="/loginSuccess">
                 <Redirect to="/home"></Redirect>
+                {localStorage.setItem("selectedPage", "Home")}
             </Route>
             {/* <Route path='/home' render={(props) => <Home {...props} username={username} name={name} user={userObject} userBrierScores={userBrierScores} userClosedForecastCount={userClosedForecastCount} userOnboarding={userOnboarding} setUserObject={setUserObject} userMarkets={markets} userFFPoints={userFFPoints} setUserClosedForecastCount={setUserClosedForecastCount} />} /> */}
             <Route path='/home' render={(props) => <Home {...props} 
@@ -204,36 +206,47 @@ function App() {
             {/* if someone tries to access part of the site without being logged in: */}
             <Route exact path="/home">
                 <Redirect to="/"></Redirect>
+                {localStorage.setItem("selectedPage", "Home")}
             </Route>
             <Route exact path="/news-post">
                 <Redirect to="/"></Redirect>
+                {localStorage.setItem("selectedPage", "Home")}
             </Route>
             <Route exact path="/forecast">
                 <Redirect to="/"></Redirect>
+                {localStorage.setItem("selectedPage", "Home")}
             </Route>
             <Route exact path="/forecast-analysis">
                 <Redirect to="/"></Redirect>
+                {localStorage.setItem("selectedPage", "Home")}
             </Route>
             <Route exact path="/leaderboard-select">
                 <Redirect to="/"></Redirect>
+                {localStorage.setItem("selectedPage", "Home")}
             </Route>
             <Route exact path="/leaderboard">
                 <Redirect to="/"></Redirect>
+                {localStorage.setItem("selectedPage", "Home")}
             </Route>
             <Route exact path="/learn">
                 <Redirect to="/"></Redirect>
+                {localStorage.setItem("selectedPage", "Home")}
             </Route>
             <Route exact path="/search">
                 <Redirect to="/"></Redirect>
+                {localStorage.setItem("selectedPage", "Home")}
             </Route>
             <Route exact path="/survey">
                 <Redirect to="/"></Redirect>
+                {localStorage.setItem("selectedPage", "Home")}
             </Route>
             <Route exact path="/my-profile">
                 <Redirect to="/"></Redirect>
+                {localStorage.setItem("selectedPage", "Home")}
             </Route>
             <Route exact path="/report-any-issues">
                 <Redirect to="/"></Redirect>
+                {localStorage.setItem("selectedPage", "Home")}
             </Route>
           </Switch>
       </Router>
