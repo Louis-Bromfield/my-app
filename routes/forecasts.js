@@ -41,7 +41,7 @@ router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
             responseObj.currentAverageCertainty = "N/A";
             responseObj.numberOfForecasts = "0";
         };
-        if (req.params.today === true) {
+        if (req.params.today === "true") {
             console.log("1 YES TODAY IS TRUE");
             if (selectedProblem.singleCertainty === true) {
                 console.log("1a YES PROBLEM IS SINGLE CERT");
@@ -112,7 +112,7 @@ router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
                     };
                 };
             };
-        } else if (req.params.today === false) {
+        } else if (req.params.today === "false") {
             console.log("2 NO TODAY IS FALSE");
             if (selectedProblem.singleCertainty === true) {
                 console.log("2a YES FORECAST IS SINGLE CERT");
