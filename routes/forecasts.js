@@ -42,9 +42,9 @@ router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
             responseObj.numberOfForecasts = "0";
         };
         if (req.params.today === "true") {
-            console.log("1 YES TODAY IS TRUE");
+            console.log("1 TODAY IS TRUE");
             if (selectedProblem.singleCertainty === true) {
-                console.log("1a YES PROBLEM IS SINGLE CERT");
+                console.log("1a TODAY IS TRUE AND PROBLEM IS SINGLE CERT");
                 let highestCertaintySoFar = 0.00;
                 let highestChanged = false;
                 let lowestCertaintySoFar = 1.00;
@@ -83,39 +83,32 @@ router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
                 };
                 responseObj.numberOfForecasts = numbOfForecasts;
             } else if (selectedProblem.singleCertainty === false) {
-                console.log("1b YES PROBLEM IS MULTIPLE CERT");
-                if (selectedProblem.submittedForecasts.length === 0) {
-                    responseObj.highestCertainty = "N/A";
-                    responseObj.lowestCertainty = "N/A";
-                    responseObj.currentAverageCertainty = "N/A";
-                    responseObj.numberOfForecasts = "N/A";
-                } else {
-                    // if (req.params.today === true) {
-                        let totalOutcomeOne = 0.00;
-                        let totalOutcomeTwo = 0.00;
-                        let totalOutcomeThree = 0.00;
-                        let numbOfForecasts = 0;
-                            for (let i = 0; i < selectedProblem.submittedForecasts.length; i++) {
-                                for (let j = 0; j < selectedProblem.submittedForecasts[i].forecasts.length; j++) {
-                                    if (selectedProblem.submittedForecasts[i].forecasts[j].date.slice(0, 15) === new Date().toString().slice(0, 15)) {
-                                        totalOutcomeOne += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty1*100;
-                                        totalOutcomeTwo += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty2*100;
-                                        totalOutcomeThree += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty3*100;
-                                        numbOfForecasts += 1;
-                                    };
-                                };
+                console.log("1b TODAY IS TRUE AND PROBLEM IS MULTIPLE CERT");
+                // if (req.params.today === true) {
+                let totalOutcomeOne = 0.00;
+                let totalOutcomeTwo = 0.00;
+                let totalOutcomeThree = 0.00;
+                let numbOfForecasts = 0;
+                    for (let i = 0; i < selectedProblem.submittedForecasts.length; i++) {
+                        for (let j = 0; j < selectedProblem.submittedForecasts[i].forecasts.length; j++) {
+                            if (selectedProblem.submittedForecasts[i].forecasts[j].date.slice(0, 15) === new Date().toString().slice(0, 15)) {
+                                totalOutcomeOne += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty1*100;
+                                totalOutcomeTwo += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty2*100;
+                                totalOutcomeThree += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty3*100;
+                                numbOfForecasts += 1;
                             };
-                        responseObj.avgOutcomeOne = (totalOutcomeOne / numbOfForecasts).toFixed(2);
-                        responseObj.avgOutcomeTwo = (totalOutcomeTwo / numbOfForecasts).toFixed(2);
-                        responseObj.avgOutcomeThree = (totalOutcomeThree / numbOfForecasts).toFixed(2);
-                        responseObj.numberOfForecasts = numbOfForecasts;
-                    // };
-                };
+                        };
+                    };
+                    responseObj.avgOutcomeOne = (totalOutcomeOne / numbOfForecasts).toFixed(2);
+                    responseObj.avgOutcomeTwo = (totalOutcomeTwo / numbOfForecasts).toFixed(2);
+                    responseObj.avgOutcomeThree = (totalOutcomeThree / numbOfForecasts).toFixed(2);
+                    responseObj.numberOfForecasts = numbOfForecasts;
+                // };
             };
         } else if (req.params.today === "false") {
-            console.log("2 NO TODAY IS FALSE");
+            console.log("2 TODAY IS FALSE");
             if (selectedProblem.singleCertainty === true) {
-                console.log("2a YES FORECAST IS SINGLE CERT");
+                console.log("2a TODAY IS FALSE AND FORECAST IS SINGLE CERT");
                 let highestCertaintySoFar = 0.00;
                 let highestChanged = false;
                 let lowestCertaintySoFar = 1.00;
@@ -138,23 +131,23 @@ router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
                     };
                 };
                 if (highestChanged === true) {
-                    responseObj.setHighestCertainty = `${(highestCertaintySoFar*100).toFixed(2)}%`;
+                    responseObj.highestCertainty = `${(highestCertaintySoFar*100).toFixed(2)}%`;
                 } else {
-                    responseObj.setHighestCertainty = "N/A";
+                    responseObj.highestCertainty = "N/A";
                 };
                 if (lowestChanged === true) {
-                    responseObj.setLowestCertainty = `${(lowestCertaintySoFar*100).toFixed(2)}%`;
+                    responseObj.lowestCertainty = `${(lowestCertaintySoFar*100).toFixed(2)}%`;
                 } else {
-                    responseObj.setLowestCertainty = "N/A";
+                    responseObj.lowestCertainty = "N/A";
                 };
                 if (highestChanged === true && lowestChanged === true) {
-                    responseObj.setCurrentAverageCertainty = `${((totalCertainty / numbOfForecasts)*100).toFixed(2)}%`; 
+                    responseObj.currentAverageCertainty = `${((totalCertainty / numbOfForecasts)*100).toFixed(2)}%`; 
                 } else {
-                    responseObj.setCurrentAverageCertainty = "N/A";
+                    responseObj.currentAverageCertainty = "N/A";
                 };
                 responseObj.numberOfForecasts = numbOfForecasts;
             } else if (selectedProblem.singleCertainty === false) {
-                console.log("2b YES FORECAST IS MULTIPLE CERT");
+                console.log("2b TODAY IS FALSE AND FORECAST IS MULTIPLE CERT");
                 let totalOutcomeOne = 0.00;
                 let totalOutcomeTwo = 0.00;
                 let totalOutcomeThree = 0.00;
@@ -168,10 +161,10 @@ router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
                         totalOutcomeThree += selectedProblem.submittedForecasts[i].forecasts[j].certainties.certainty3*100;
                     };
                 };
-                responseObj.setAvgOutcomeOne = (totalOutcomeOne / numbOfForecasts).toFixed(2);
-                responseObj.setAvgOutcomeTwo = (totalOutcomeTwo / numbOfForecasts).toFixed(2);
-                responseObj.setAvgOutcomeThree = (totalOutcomeThree / numbOfForecasts).toFixed(2);
-                responseObj.setNumberOfForecasts = numbOfForecasts;
+                responseObj.avgOutcomeOne = (totalOutcomeOne / numbOfForecasts).toFixed(2);
+                responseObj.avgOutcomeTwo = (totalOutcomeTwo / numbOfForecasts).toFixed(2);
+                responseObj.avgOutcomeThree = (totalOutcomeThree / numbOfForecasts).toFixed(2);
+                responseObj.numberOfForecasts = numbOfForecasts;
             };
         };
         res.json(responseObj);
