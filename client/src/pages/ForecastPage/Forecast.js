@@ -68,6 +68,7 @@ function Forecast(props) {
                 username={props.username}
                 causeRefresh={causeRefresh}
                 userObjectMarkets={props.userObjectMarkets}
+                userBriers={props.userBriers}
             />
             {forecastSelected &&
                 <ForecastTabPane 

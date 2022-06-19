@@ -3,7 +3,7 @@ import axios from 'axios';
 import './LeaderboardMenu.css';
 import LeaderboardGrid from './LeaderboardComponents/LeaderboardGrid';
 import ReactLoading from 'react-loading';
-import UserToInvite from './LeaderboardComponents/UserToInvite';
+// import UserToInvite from './LeaderboardComponents/UserToInvite';
 import Modal from '../../components/Modal';
 import { FaInfoCircle } from 'react-icons/fa';
 
@@ -12,8 +12,8 @@ function LeaderboardMenu(props) {
     // const [canCreateLeagueDueToLevel, setCanCreateLeagueDueToLevel] = useState(false);
     // const [createLeague, setCreateLeague] = useState(false);
     const [leagueSetupConfirmation, setLeagueSetupConfirmation] = useState(false);
-    const [usersArray, setUsersArray] = useState(["empty array"]);
-    const [leagueName, setLeagueName] = useState("");
+    // const [usersArray, setUsersArray] = useState(["empty array"]);
+    // const [leagueName, setLeagueName] = useState("");
     const [shouldRefresh, setShouldRefresh] = useState(0);
     const [userInNoMarkets, setUserInNoMarkets] = useState(false);
     const [joinAMarketMenu, setJoinAMarketMenu] = useState(false);
@@ -26,11 +26,11 @@ function LeaderboardMenu(props) {
     const [marketChoiceSuccessMessage, setMarketChoiceSuccessMessage] = useState("");
     const [loading, setLoading] = useState(false);
     const [causeRefresh, setCauseRefresh] = useState(0);
-    const [isPublic, setIsPublic] = useState();
-    const [isPublicChecked, setIsPublicChecked] = useState(false);
-    const [isPrivateChecked, setIsPrivateChecked] = useState(false);
+    // const [isPublic, setIsPublic] = useState();
+    // const [isPublicChecked, setIsPublicChecked] = useState(false);
+    // const [isPrivateChecked, setIsPrivateChecked] = useState(false);
     const [usersToInviteToNewLeague, setUsersToInviteToNewLeague] = useState([{username: props.username, marketPoints: 0, isGroup: false, acceptedInvite: true, profilePicture: props.profilePicture || ""}]);
-    const [leagueCreationError, setLeagueCreationError] = useState("");
+    // const [leagueCreationError, setLeagueCreationError] = useState("");
     const [inviteAlert, setInviteAlert] = useState("No message");
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
@@ -46,31 +46,31 @@ function LeaderboardMenu(props) {
     }, [causeRefresh, joinAMarketMenu, props.username, userInNoMarkets]);
 
     // For private leaderboards, their ranking is determined by FantasyForecast Points, or no?
-    const toggleInviteUserToLeague = (username, isGroup) => {
-        let found = false;
-        let index = 0;
-        for (let i = 0; i < usersToInviteToNewLeague.length; i++) {
-            if (usersToInviteToNewLeague[i].username === username) {
-                found = true;
-                index = i;
-                return;
-            };
-        };
-        if (found === true) {
-            usersToInviteToNewLeague.splice(index, 1);
-            let updatedArray = usersToInviteToNewLeague;
-            setUsersToInviteToNewLeague(updatedArray);
-        } else if (found === false) {
-            let updatedArray = usersToInviteToNewLeague;
-            updatedArray.push({ username: username, marketPoints: 0, isGroup: isGroup, acceptedInvite: false, profilePicture: ""});
-            setUsersToInviteToNewLeague(updatedArray);
-        };
-    };
+    // const toggleInviteUserToLeague = (username, isGroup) => {
+    //     let found = false;
+    //     let index = 0;
+    //     for (let i = 0; i < usersToInviteToNewLeague.length; i++) {
+    //         if (usersToInviteToNewLeague[i].username === username) {
+    //             found = true;
+    //             index = i;
+    //             return;
+    //         };
+    //     };
+    //     if (found === true) {
+    //         usersToInviteToNewLeague.splice(index, 1);
+    //         let updatedArray = usersToInviteToNewLeague;
+    //         setUsersToInviteToNewLeague(updatedArray);
+    //     } else if (found === false) {
+    //         let updatedArray = usersToInviteToNewLeague;
+    //         updatedArray.push({ username: username, marketPoints: 0, isGroup: isGroup, acceptedInvite: false, profilePicture: ""});
+    //         setUsersToInviteToNewLeague(updatedArray);
+    //     };
+    // };
 
-    const handleLeagueNameChange = (e) => {
-        setLeagueCreationError("");
-        setLeagueName(e.target.value);
-    };
+    // const handleLeagueNameChange = (e) => {
+    //     setLeagueCreationError("");
+    //     setLeagueName(e.target.value);
+    // };
 
     // const persistLeagueToDB = async (league, usersToInvite, publicStatus, username) => {
     //     if (isPublicChecked === false && isPrivateChecked === false) {
@@ -131,6 +131,7 @@ function LeaderboardMenu(props) {
 
     // ------------------------------------------------------------------------------------
     // Could this one and pullAllMarketsFromDB be merged into one API request?
+    // Could this function be removed entirely?
     const checkIfUserIsInMarkets = async (username) => {
         try {
             const allUserLeaderboardsFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${username}`);
@@ -158,6 +159,7 @@ function LeaderboardMenu(props) {
     // ------------------------------------------------------------------------------------
 
     // Filter out the leaderboards where the user has not responded to an invite
+    // and by extension remove this one too?
     const filterLeaderboardsByInvite = (markets, username, accepted) => {
         if (accepted === true) {
             let filteredMarkets = [];
@@ -223,9 +225,9 @@ function LeaderboardMenu(props) {
     };
 
     const submitMarketChoices = async (markets, username) => {
-        console.log(markets);
+        // console.log(markets);
         const success = await persistMarketChoicesToDB(markets, username);
-        console.log(success);
+        // console.log(success);
         if (success === false) {
             return;
         } else {
@@ -258,13 +260,13 @@ function LeaderboardMenu(props) {
         try {
             // If we already have a get request for this stuff, set it into state and just pull from that state variable rather than do this request again
             // Answer: we don't
-            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             setLoading(true);
             for (let i = 0; i < markets.length; i++) {
-                const leaderboardUpdate = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/marketSignUp/${markets[i]}`, {
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/marketSignUp/${markets[i]}`, {
                     username: username,
-                    profilePicture: userDocument.data[0].profilePicture,
-                    isGroup: userDocument.data[0].isGroup
+                    profilePicture: props.userObject.profilePicture,
+                    isGroup: props.userObject.isGroup
                 });
             };
         } catch (error) {
@@ -320,29 +322,29 @@ function LeaderboardMenu(props) {
         };
     };
 
-    const respondToInvite = async (market, response, username) => {
-        try {
-            if (response === "accept") {
-                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${market}/acceptInvite/${username}`);
-                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/addMarket/${market}`);
-                setInviteAlert(`Congratulations, you have now joined the ${market} market!`);
-                setTimeout(() => {
-                    setInviteAlert("No message");
-                }, 1500);
-            } else if (response === "reject") {
-                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${market}/removeUser/${username}`)
-                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/removeMarket/${market}`);
-                setInviteAlert(`You have rejected this invitation to join ${market}.`);
-                setTimeout(() => {
-                    setInviteAlert("No message");
-                }, 1500);
-            };
-            setCauseRefresh(causeRefresh+1);
-        } catch (error) {
-            console.error("Error in LeaderboardMenu > respondToInvite");
-            console.error(error);
-        };
-    };
+    // const respondToInvite = async (market, response, username) => {
+    //     try {
+    //         if (response === "accept") {
+    //             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${market}/acceptInvite/${username}`);
+    //             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/addMarket/${market}`);
+    //             setInviteAlert(`Congratulations, you have now joined the ${market} market!`);
+    //             setTimeout(() => {
+    //                 setInviteAlert("No message");
+    //             }, 1500);
+    //         } else if (response === "reject") {
+    //             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${market}/removeUser/${username}`)
+    //             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/removeMarket/${market}`);
+    //             setInviteAlert(`You have rejected this invitation to join ${market}.`);
+    //             setTimeout(() => {
+    //                 setInviteAlert("No message");
+    //             }, 1500);
+    //         };
+    //         setCauseRefresh(causeRefresh+1);
+    //     } catch (error) {
+    //         console.error("Error in LeaderboardMenu > respondToInvite");
+    //         console.error(error);
+    //     };
+    // };
 
     // const checkLevelThenOpen = (canCreate, username) => {
     //     if (canCreate === false) {
@@ -457,7 +459,7 @@ function LeaderboardMenu(props) {
                     </div>
                 </div>
             }
-            {manageYourInvitesMenu === true &&
+            {/* {manageYourInvitesMenu === true &&
                 <div className="manage-your-invites-div">
                     <h2 className="market-list-title">Your Invites</h2>
                     <h4>Here you can see all of the leagues you have been invited to!</h4>
@@ -465,7 +467,6 @@ function LeaderboardMenu(props) {
                         return (
                             <div key={index} className="market-div">
                                 <h2 style={{ color: "#404d72" }}>{item.leaderboardName}</h2>
-                                {/* -1 to account for the current invitee */}
                                 <ul><h3>Number of Players/Invitees: {item.rankings.length-1}</h3>
                                 {item.rankings.map((item, index) => {
                                     if (item.acceptedInvite === true) {
@@ -492,7 +493,7 @@ function LeaderboardMenu(props) {
                     })}
                     {inviteAlert !== "No message" && <h3 style={{ color: "green" }}>{inviteAlert}</h3>}
                 </div>
-            }
+            } */}
             {/* {createLeague === true &&
                 <div className="create-a-league-div">
                     <h2 className="market-list-title">Create a League</h2>

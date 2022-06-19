@@ -32,6 +32,8 @@ function ForecastStatistics(props) {
                     let numbOfForecasts = 0;
                         for (let i = 0; i < selectedForecast.submittedForecasts.length; i++) {
                             let index = selectedForecast.submittedForecasts[i].forecasts.length-1;
+                            // SHould this first date be wrapped in a new Date()? As if it's from a different time zone
+                            // slicing off the timezone stuff might put include it / exclude it when it shouldn't be
                             if (selectedForecast.submittedForecasts[i].forecasts[index].date.slice(0, 15) === new Date().toString().slice(0, 15)) {
                                 if (selectedForecast.submittedForecasts[i].forecasts[index].certainty >= highestCertaintySoFar) {
                                     highestCertaintySoFar = selectedForecast.submittedForecasts[i].forecasts[index].certainty;

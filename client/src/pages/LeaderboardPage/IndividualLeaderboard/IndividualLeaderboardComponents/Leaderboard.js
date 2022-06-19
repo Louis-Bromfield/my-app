@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import './Leaderboard.css';
 import PropTypes from 'prop-types';
@@ -12,7 +12,7 @@ function Leaderboard(props) {
     const [width, setWidth] = useState(window.innerWidth >= 600);
     const [biggerWidth, setBiggerWidth] = useState(window.innerWidth >= 1030);
     const [loading, setLoading] = useState(true);
-    const history = useHistory();
+    // const history = useHistory();
 
     const updateWidth = () => {
         setWidth(window.innerWidth >= 600);
@@ -25,18 +25,17 @@ function Leaderboard(props) {
             getAllUserFFPoints(props.leaderboardRankings);
         };
         console.log("Leaderboard UE");
-        console.log(props);
-        if (props.isFFLeaderboard === undefined) {
-            // history.push("/leaderboard-select");
-            console.log("undefined");
-        }
+        // console.log(props);
+        // if (props.isFFLeaderboard === undefined) {
+        //     history.push("/leaderboard-select");
+        //     console.log("undefined");
+        // }
         setWidth(window.innerWidth > 600);
         setBiggerWidth(window.innerWidth > 1030);
         window.addEventListener("resize", updateWidth);
         return () => window.addEventListener("resize", updateWidth);
     }, [props.leaderboardRankings]);
 
-    // Make this function cheaper, with about 140 people it took a few seconds, maybe add a loading animation while it gets all users?
     // const getAllUserFFPoints = async (rankings) => {
     //     try {
     //         // Either user-created or is the All-Time leaderboard
@@ -341,7 +340,7 @@ function Leaderboard(props) {
                     })}
                     </tbody>
                     }  
-                     {/* else if (props.leaderboardFilter === "solo") {
+                    {/* else if (props.leaderboardFilter === "solo") {
                         if (item.username === props.username && item.isGroup === false) {
                             return (
                                 <tr className="leaderboard-row-matching-username" key={index}>

@@ -128,7 +128,6 @@ function ForecastSubmission(props) {
             setIsInputDisabled(false);
             getForecastDetails(e.target.value);
         };
-
     };
 
     const getForecastDetails = (etv) => {
@@ -203,8 +202,9 @@ function ForecastSubmission(props) {
 
     const getBrierForClosedForecast = async (username, problemName) => {
         try {
-            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
-            const forecastDetails = userDocument.data[0].brierScores.find(el => el.problemName === problemName);
+            // console.log(props.userBriers);
+            // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            const forecastDetails = props.userBriers.find(el => el.problemName === problemName);
             setClosedForecastScore(forecastDetails === undefined ? "No Forecast Submitted" : forecastDetails.brierScore.toFixed(0));
             localStorage.setItem("closedForecastScore", forecastDetails.brierScore);
         } catch (error) {
@@ -232,7 +232,7 @@ function ForecastSubmission(props) {
         };
     };
 
-    // Nested loop - clean this up if you can
+    // Nested loop - clean this up if you can. Over half the lines are state setting but could be moved to backend?
     const pullForecastDetailsAndCheckIfAlreadyAttempted = (forecast) => {
         for (let i = 0; i < forecastProblems.length; i++) {
             if (forecastProblems[i].problemName === forecast) {

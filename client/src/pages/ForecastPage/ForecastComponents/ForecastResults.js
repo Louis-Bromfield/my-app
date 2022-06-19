@@ -37,6 +37,10 @@ function ForecastResults(props) {
 
     const findAllScores = (users, problemName) => {
         let problemLeaderboard = [];
+        if (users === {}) {
+            setResults([]);
+            return;
+        };
 
         for (let i = 0; i < users.length; i++) {
             for (let j = 0; j < users[i].brierScores.length; j++) {
