@@ -27,8 +27,8 @@ function ForecastResults(props) {
 
     const pullAllScores = async (problemName) => {
         try {
-            const results = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/getIndividualProblemResults/${problemName}`);
-            console.log(results);            
+            const resultsFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/getIndividualProblemResults/${problemName}`);
+            setResults(resultsFromDB.data);      
         } catch (err) {
             console.error("Error in ForecastResults > pullAllScores");
             console.error(err);
