@@ -20,17 +20,31 @@ function ForecastStatistics(props) {
     const getForecastInfo = async (today, selectedForecast) => {
         const response = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/getDetailedForecastInfo/${selectedForecast.problemName}/${today}`)
         console.log(response);
-        // if (props.today === true) {
-        //     setAvgOutcomeOne(response.data.avgOutcomeOne);
-        //     setAvgOutcomeTwo(response.data.avgOutcomeTwo);
-        //     setAvgOutcomeThree(response.data.avgOutcomeThree);
-        //     setNumberOfForecasts(response.data.numberOfForecasts);
-        // } else if (props.today === false) {
-        //     setAvgOutcomeOne(response.data.avgOutcomeOne);
-        //     setAvgOutcomeTwo(response.data.avgOutcomeTwo);
-        //     setAvgOutcomeThree(response.data.avgOutcomeThree);
-        //     setNumberOfForecasts(response.data.numberOfForecasts);
-        // };
+        if (today === true) {
+            if (response.data.singleCertainty === true) {
+                setHighestCertainty(response.data.highestCertainty);
+                setLowestCertainty(response.data.lowestCertainty);
+                setCurrentAverageCertainty(response.data.currentAverageCertainty);
+                setNumberOfForecasts(response.data.numberOfForecasts);
+            } else if (response.data.singleCertainty === false) {
+                setAvgOutcomeOne(response.data.avgOutcomeOne);
+                setAvgOutcomeTwo(response.data.avgOutcomeTwo);
+                setAvgOutcomeThree(response.data.avgOutcomeThree);
+                setNumberOfForecasts(response.data.numberOfForecasts);
+            };
+        } else if (today === false) {
+            if (response.data.singleCertainty === true) {
+                setHighestCertainty(response.data.highestCertainty);
+                setLowestCertainty(response.data.lowestCertainty);
+                setCurrentAverageCertainty(response.data.currentAverageCertainty);
+                setNumberOfForecasts(response.data.numberOfForecasts);
+            } else if (response.data.singleCertainty === false) {
+                setAvgOutcomeOne(response.data.avgOutcomeOne);
+                setAvgOutcomeTwo(response.data.avgOutcomeTwo);
+                setAvgOutcomeThree(response.data.avgOutcomeThree);
+                setNumberOfForecasts(response.data.numberOfForecasts);
+            };
+        };
         // if (props.forecastSingleCertainty === true) {
         //     if (selectedForecast.submittedForecasts.length === 0) {
         //         setHighestCertainty("N/A");
