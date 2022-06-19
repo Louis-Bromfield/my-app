@@ -131,7 +131,6 @@ function LeaderboardMenu(props) {
 
     // ------------------------------------------------------------------------------------
     // Could this one and pullAllMarketsFromDB be merged into one API request?
-    // Could this function be removed entirely?
     const checkIfUserIsInMarkets = async (username) => {
         try {
             const allUserLeaderboardsFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${username}`);
@@ -146,6 +145,7 @@ function LeaderboardMenu(props) {
                 // setAllUserLeaderboardsWithInviteAccepted(marketsFilteredByInviteAccepted);
                 // setAllUserLeaderboardsWithInviteNotYetAccepted(marketsFilteredByInviteNotYetAccepted);
                 setAllUserLeaderboardsWithInviteAccepted(allUserLeaderboardsFromDB.data);
+                setAllMarkets(allUserLeaderboardsFromDB.data);
                 console.log(allUserLeaderboardsFromDB.data);
             };
         } catch (error) {

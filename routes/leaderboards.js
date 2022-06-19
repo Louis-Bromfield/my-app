@@ -20,10 +20,10 @@ router.get("/justNames/:username", async (req, res) => {
     Object.values(leaderboards).forEach(leaderboard => {
         if (leaderboard.rankings.find(el => el.username === req.params.username) === undefined || req.params.username === "admin") {
             // User is NOT in this market
-            leaderboardNames.push([leaderboard.leaderboardName, leaderboard.isPublic, leaderboard.isFFLeaderboard, false]);
+            leaderboardNames.push([leaderboard.leaderboardName, leaderboard.isPublic, leaderboard.isFFLeaderboard, false, leaderboard.rankings]);
         } else if (leaderboard.rankings.find(el => el.username === req.params.username) !== undefined || req.params.username === "admin") {
             // User IS in this market
-            leaderboardNames.push([leaderboard.leaderboardName, leaderboard.isPublic, leaderboard.isFFLeaderboard, true]);
+            leaderboardNames.push([leaderboard.leaderboardName, leaderboard.isPublic, leaderboard.isFFLeaderboard, true, leaderboard.rankings]);
         }
     });
     res.json(leaderboardNames);
