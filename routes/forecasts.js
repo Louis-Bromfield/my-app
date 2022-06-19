@@ -90,7 +90,7 @@ router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
                     responseObj.currentAverageCertainty = "N/A";
                     responseObj.numberOfForecasts = "N/A";
                 } else {
-                    if (req.params.today === true) {
+                    // if (req.params.today === true) {
                         let totalOutcomeOne = 0.00;
                         let totalOutcomeTwo = 0.00;
                         let totalOutcomeThree = 0.00;
@@ -105,11 +105,11 @@ router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
                                     };
                                 };
                             };
-                            responseObj.avgOutcomeOne = (totalOutcomeOne / numbOfForecasts).toFixed(2);
-                            responseObj.avgOutcomeTwo = (totalOutcomeTwo / numbOfForecasts).toFixed(2);
-                            responseObj.avgOutcomeThree = (totalOutcomeThree / numbOfForecasts).toFixed(2);
-                            responseObj.numberOfForecasts = numbOfForecasts;
-                    };
+                        responseObj.avgOutcomeOne = (totalOutcomeOne / numbOfForecasts).toFixed(2);
+                        responseObj.avgOutcomeTwo = (totalOutcomeTwo / numbOfForecasts).toFixed(2);
+                        responseObj.avgOutcomeThree = (totalOutcomeThree / numbOfForecasts).toFixed(2);
+                        responseObj.numberOfForecasts = numbOfForecasts;
+                    // };
                 };
             };
         } else if (req.params.today === "false") {
@@ -152,7 +152,7 @@ router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
                 } else {
                     responseObj.setCurrentAverageCertainty = "N/A";
                 };
-                responseObj.setNumberOfForecasts(numbOfForecasts);
+                responseObj.numberOfForecasts = numbOfForecasts;
             } else if (selectedProblem.singleCertainty === false) {
                 console.log("2b YES FORECAST IS MULTIPLE CERT");
                 let totalOutcomeOne = 0.00;
