@@ -130,6 +130,10 @@ const UserSchema = mongoose.Schema({
     },
     email: {
         type: String
+    },
+    completedSurvey: {
+        type: Boolean,
+        default: false
     }
 });
 

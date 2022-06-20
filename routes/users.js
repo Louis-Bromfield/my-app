@@ -9,6 +9,7 @@ const HomePageNewsFeedPosts = require('../models/HomePageNewsFeedPosts');
 const Leaderboards = require('../models/Leaderboards');
 const findOrCreate = require("mongoose-findorcreate");
 const bcrypt = require("bcryptjs");
+const isAuth = require('../helpers/isAuth');
 
 // Get all forecasts that are in the user's markets that the user has NOT yet attempted (for home page C2A)
 router.get("/unattemptedForecasts/:username", async (req, res) => {
@@ -134,7 +135,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get one user
-router.get("/:username", async (req, res) => {
+router.get("/:username", isAuth, async (req, res) => {
     try {
         const user = await Users.find({ username: req.params.username });
         res.json(user);

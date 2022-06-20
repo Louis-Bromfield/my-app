@@ -17,6 +17,10 @@
     background-color: #6e83bd;
 }
 
+.report-form {
+    margin-top: 1vh;
+}
+
 .report-fieldset {
     display: flex;
     flex-direction: column;

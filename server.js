@@ -14,6 +14,7 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
+const MongoStore = require("connect-mongo");
 
 let usernameFromClient = "_TEMP_USERNAME";
 let passwordFromClient = "_TEMP_PASSWORD";
@@ -30,7 +31,11 @@ app.use(cors());
 app.use(session({
     secret: "fgkebgrbwksjebsk84373rbsbewqeIUIUKEWdkfdhU2383782!shjdfgvh237248582354",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: MongoStore.create({
+        mongoUrl: process.env.DATABASE_URL,
+        collectionName: "sessions"
+    })
 }));
 
 app.use(passport.initialize());
@@ -97,6 +102,10 @@ const UserSchema = mongoose.Schema({
     email: {
         type: String,
         default: "NO EMAIL ADDRESS"
+    },
+    completedSurvey: {
+        type: Boolean,
+        default: false
     }
 });
 
@@ -336,7 +345,35 @@ app.get("/auth/google/callback",
     })
 );
 
+// Get one user for logging in
+router.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
+    try {
+        const user = await User.findOne({ username: req.params.username });
+        if (!user) {
+            res.json({ loginSuccess: false, message: "This user does not exist in the database"});
+        };
+        let match;
+        console.log(req.params);
+        if (req.params.isPassword === "true") {
+            match = await bcrypt.compare(req.params.passwordOrResetCode, user.password);
+        } else if (req.params.isPassword === "false") {
+            match = await bcrypt.compare(req.params.passwordOrResetCode, user.pwdResetCode);
+        }
+        if (match) {
+            req.session.isAuth = true;
+            res.json(user);
+        } else {
+            res.json({ loginSuccess: false, message: "Password/reset code does not match that stored in the database"});
+        };
+        // res.json({ loginSuccess: false, message: "An error occurred"});
+    } catch (error) {
+        console.error("Error in router.get/username/password in server.js");
+        console.error(error);
+    };
+});
+
 app.get("/logout", function(req, res) {
+    // Add session destroy here?
     res.redirect("https://fantasy-forecast-politics.herokuapp.com");
 });
 

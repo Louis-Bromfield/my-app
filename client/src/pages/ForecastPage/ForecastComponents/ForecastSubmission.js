@@ -681,8 +681,11 @@ function ForecastSubmission(props) {
                                 setModalContent2(`The Articles tab below returns articles based on a web scrape of the problem, so they may vary in terms of usefulness. The Forecast Stats tab will show you what other forecasters are saying for this problem.`)
                             }}
                         />
+                        {selectedForecast.includes("Politico's") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://www.politico.eu/europe-poll-of-polls/united-kingdom/" target="_blank"><h4>(<u>Link: Politico</u>)</h4></a>}
                     </h2>
-                    <h4 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 38)}</h4>
+                    <h3 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 38)}</h3>
+                    {/* {selectedForecast.includes("Politico's") && <h2><a href="https://www.politico.eu/europe-poll-of-polls/united-kingdom/" target="_blank">Click Here For Politico's Poll of Polls</a></h2>} */}
+                    {/* <br /> */}
                     <div className="forecast-submission-and-error-container">
                         {forecastSingleCertainty === true &&
                             <div className="forecast-submission-input">
@@ -735,7 +738,7 @@ function ForecastSubmission(props) {
                                     }
                                     {userHasAttempted === false &&
                                         <textarea 
-                                            placeholder="Explain why you gave the above certainty"
+                                            placeholder="Explain why you gave the above certainty/certainties"
                                             className="forecast-submission-explanation-input"
                                             name="forecast-explanation"
                                             disabled={isInputDisabled}
@@ -863,7 +866,7 @@ function ForecastSubmission(props) {
                                         }
                                         {userHasAttempted === false &&
                                             <textarea 
-                                                placeholder="Explain why you gave the above certainty"
+                                                placeholder="Explain why you gave the above certainty/certainties"
                                                 className="forecast-submission-explanation-input"
                                                 name="forecast-explanation"
                                                 disabled={isInputDisabled}

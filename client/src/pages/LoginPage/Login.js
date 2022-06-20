@@ -64,9 +64,11 @@ function Login(props) {
             console.log(isPassword);
 
             if (isPassword === true) {
-                userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/${passwordOrResetCode}/${true}`);
+                // userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/${passwordOrResetCode}/${true}`);
+                userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/${username}/${passwordOrResetCode}/${true}`);
             } else if (isPassword === false) {
-                userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/${passwordOrResetCode}/${false}`);
+                // userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/${passwordOrResetCode}/${false}`);
+                userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/${username}/${passwordOrResetCode}/${false}`);
             };
             console.log(userObj);
             if (userObj.data.loginSuccess === false) {

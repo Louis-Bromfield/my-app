@@ -205,7 +205,7 @@ function App() {
             />} />
             <Route path='/learn' render={(props) => <Learn {...props} username={username} isLoggedIn={isLoggedIn} />} />
             <Route path='/search' render={(props) => <Search {...props} username={username} />} />
-            <Route path='/survey' render={(props) => <HelpOurResearch {...props} />}/>
+            <Route path='/survey' render={(props) => <HelpOurResearch {...props} username={username} userObject={userObject} />}/>
             {/* <Route path='/my-profile' render={(props) => <Profile {...props} user={userObject} username={username} name={name} updateUsername={updateUsername} profilePicture={profilePicture}/>} /> */}
             <Route path='/my-profile' render={(props) => <Profile {...props} user={userObject} username={username} name={name} profilePicture={profilePicture}/>} />
             <Route path='/report-any-issues' render={(props) => <ReportAnyIssues {...props} />} />
