@@ -20,12 +20,12 @@ const checkCookie = async (req, res, next) => {
         // console.log(req.cookies);
         console.log(req.cookies.secureCookie);
         console.log("=========2======");
-        console.log(req.cookies.secureCookie.sessionID);
+        console.log(req.cookies.secureCookie["sessionID"]);
         console.log("=========3======");
-        console.log(JSON.parse(req.cookies.secureCookie.sessionID));
-        console.log("=========4======");
-        console.log(JSON.stringify(req.cookies.secureCookie.sessionID));
-        console.log("=========5======");
+        // console.log(JSON.parse(req.cookies.secureCookie.sessionID));
+        // console.log("=========4======");
+        // console.log(JSON.stringify(req.cookies.secureCookie.sessionID));
+        // console.log("=========5======");
 
         // if no doc with sessionID exists, return err
         const sessionInDB = await Sessions.findOne({ sessionID: req.cookies.secureCookie.sessionID});
