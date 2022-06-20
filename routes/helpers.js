@@ -45,16 +45,4 @@ router.post("/submitFeedback", async (req, res) => {
     };
 });
 
-// Session auth middleware
-const isAuth = (req, res, next) => {
-    if (req.session.isAuth) {
-        next();
-    } else {
-        console.log("no");
-        console.log(req.session);
-        console.log(req.session.isAuth);
-        res.redirect("/login");
-    }
-};
-
 module.exports = router;

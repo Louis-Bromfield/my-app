@@ -9,19 +9,6 @@ const HomePageNewsFeedPosts = require('../models/HomePageNewsFeedPosts');
 const Leaderboards = require('../models/Leaderboards');
 const findOrCreate = require("mongoose-findorcreate");
 const bcrypt = require("bcryptjs");
-// const isAuth = require('../helpers/isAuth');
-
-// Session auth middleware
-const isAuth = (req, res, next) => {
-    if (req.session.isAuth) {
-        next();
-    } else {
-        console.log("no");
-        console.log(req.session);
-        console.log(req.session.isAuth);
-        res.redirect("/login");
-    }
-};
 
 // Get all forecasts that are in the user's markets that the user has NOT yet attempted (for home page C2A)
 router.get("/unattemptedForecasts/:username", async (req, res) => {

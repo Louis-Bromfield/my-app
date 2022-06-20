@@ -7,6 +7,7 @@ const port = process.env.PORT || 5000;
 const path = require("path");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const Sessions = require('./models/Sessions');
 
 // OAuth
 const session = require("express-session");
@@ -14,8 +15,6 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
-// const MongoStore = require("connect-mongo");
-const MongoDBSession = require("connect-mongodb-session")(session);
 
 let usernameFromClient = "_TEMP_USERNAME";
 let passwordFromClient = "_TEMP_PASSWORD";
@@ -28,17 +27,11 @@ let passwordResetCodeFromClient = "_TEMP_PASSWORD_RESET_CODE";
 app.use(express.json());
 app.use(cors());
 
-const store = new MongoDBSession({
-    uri: process.env.DATABASE_URL,
-    collection: "sessions"
-})
-
 // OAuth
 app.use(session({
     secret: "fgkebgrbwksjebsk84373rbsbewqeIUIUKEWdkfdhU2383782!shjdfgvh237248582354",
     resave: false,
-    saveUninitialized: false,
-    store: store
+    saveUninitialized: false
 }));
 
 app.use(passport.initialize());
@@ -363,7 +356,17 @@ app.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
             match = await bcrypt.compare(req.params.passwordOrResetCode, user.pwdResetCode);
         }
         if (match) {
-            req.session.isAuth = true;
+            // let string = user.id+sdfufysdf87gdfgdbwjhbjh4b3jh6b543kj6b45h;
+            const newHash = await bcrypt.hash(user._id, 10); 
+            const newSession = {
+                sessionID: newHash,
+                expiration: new Date("August 01, 2022 11:00:00").toString()
+            };
+            res.cookie("secureCookie", JSON.stringify(newSession), {
+                secure: true,
+                httpOnly: true,
+                expires: new Date("August 01, 2022 11:00:00").toString()
+            });
             res.json(user);
         } else {
             res.json({ loginSuccess: false, message: "Password/reset code does not match that stored in the database"});
@@ -376,7 +379,6 @@ app.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
 });
 
 app.get("/logout", function(req, res) {
-    // Add session destroy here?
     res.redirect("https://fantasy-forecast-politics.herokuapp.com");
 });
 
