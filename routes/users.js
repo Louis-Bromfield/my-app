@@ -31,7 +31,8 @@ const checkCookie = async (req, res, next) => {
         // console.log("=========5======");
 
         // if no doc with sessionID exists, return err
-        const sessionInDB = await Sessions.findOne({ sessionID: req.cookies.secureCookie.sessionID});
+        const sessionIDFromCookie = req.cookies.secureCookie.slice(req.cookies.secureCookie.indexOf("sessionID")+12, 107);
+        const sessionInDB = await Sessions.findOne({ sessionID: sessionIDFromCookie});
         console.log(sessionInDB);
         console.log("=========6======");
         if (!sessionInDB) {
