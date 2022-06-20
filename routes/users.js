@@ -20,13 +20,44 @@ const checkCookie = (req, res, next) => {
         console.log(req.cookies);
         console.log(req.cookies.secureCookie);
         console.log("=========2======");
-        next();
+
+        // if no doc with sessionID exists, return err
+        const sessionInDB = await Sessions.findOne({ sessionID: req.cookies.secureCookie.sessionID});
+        if (!sessionInDB) {
+            console.log("No session in DB!");
+            //  send error that will trigger user logout in frontend
+            const err = new Error(`No session exists.`);
+            err.status=404;
+            err.statusCode=404;
+            next(err);
+        // or if doc with sessionID exists, but it is expired, delete session object 
+        // (so that logging back in creates a new one) and return err
+        } else if (sessionInDB && (new Date().toString > sessionInDB.expiration)) {
+            console.log("Session is in DB but expired!!");
+            const err = new Error(`Session is expired.`);
+            err.status=401;
+            err.statusCode=401;
+            next(err);
+        } else {
+            // else if both tests pass, go next()
+            next();
+        };
     } catch (error) {
         console.error("error in users > checkCookie");
         console.error(error);
         // return back to log user out?
-    }
-}
+    };
+};
+
+// Error handling 
+router.use((err, req, res, next) => {
+    err.statusCode= err.statusCode || 500
+     err.status= err.status || 'error'
+     res.status(err.statusCode).json({
+          status:err.status,
+          message:err.message
+     });
+});
 
 // Get all forecasts that are in the user's markets that the user has NOT yet attempted (for home page C2A)
 router.get("/unattemptedForecasts/:username", async (req, res) => {
