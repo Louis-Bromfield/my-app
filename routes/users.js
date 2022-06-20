@@ -10,6 +10,19 @@ const Leaderboards = require('../models/Leaderboards');
 const findOrCreate = require("mongoose-findorcreate");
 const bcrypt = require("bcryptjs");
 
+const checkCookie = (req, res, next) => {
+    try {
+        console.log("================");
+        console.log(req.body);
+        console.log("================");
+        next();
+    } catch (error) {
+        console.error("error in users > checkCookie");
+        console.error(error);
+        // return back to log user out?
+    }
+}
+
 // Get all forecasts that are in the user's markets that the user has NOT yet attempted (for home page C2A)
 router.get("/unattemptedForecasts/:username", async (req, res) => {
     try {
@@ -156,7 +169,7 @@ router.get("/findByProlificID/:prolificID", async (req, res) => {
 });
 
 // Get one user for logging in
-router.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
+router.get("/:username/:passwordOrResetCode/:isPassword", checkCookie, async (req, res) => {
     try {
         const user = await Users.findOne({ username: req.params.username });
         if (!user) {
