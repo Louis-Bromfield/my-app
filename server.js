@@ -359,10 +359,12 @@ app.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
         if (match) {
             // let string = user.id+sdfufysdf87gdfgdbwjhbjh4b3jh6b543kj6b45h;
             const newHash = await bcrypt.hash(user._id.toString(), 10); 
-            const newSession = {
+            const newSession = new Sessions({
                 sessionID: newHash,
                 expiration: new Date("August 01, 2022 11:00:00").toString()
-            };
+            });
+            // const newSessionSaved = newSession.save();
+            newSession.save();
             res.cookie("secureCookie", JSON.stringify(newSession), {
                 secure: true,
                 httpOnly: true,
