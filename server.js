@@ -366,7 +366,7 @@ app.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
             res.cookie("secureCookie", JSON.stringify(newSession), {
                 secure: true,
                 httpOnly: true,
-                expires: new Date("August 01, 2022 11:00:00").toString()
+                expires: new Date("August 01, 2022 11:00:00")
             });
             res.json(user);
         } else {
