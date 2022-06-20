@@ -17,8 +17,10 @@ function HomeProfilePreview(props) {
     useEffect(() => {
         console.log("HomeProfilePreviewUE");
         if (props.userFFPoints === undefined) {
+            console.log("here1");
             getUserDetails(props.username);
         } else {
+            console.log("here2");
             setFFPoints(props.userFFPoints);
         };
         // Need to add checks for if the user has below 100 points (100 would be level 1 (fine), but 60 points would be level 0.6 (not fine))

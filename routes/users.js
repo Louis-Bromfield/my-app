@@ -16,25 +16,20 @@ router.use(cookieParser());
 
 const checkCookie = async (req, res, next) => {
     try {
-        console.log("=========1======");
-        // console.log(req.cookies);
-        console.log(req.cookies.secureCookie);
-        console.log("=========2======");
-        console.log(typeof req.cookies.secureCookie);
-        console.log(req.cookies.secureCookie.sessionID);
-        console.log(req.cookies.secureCookie.indexOf("sessionID"));
-        console.log(req.cookies.secureCookie.slice(req.cookies.secureCookie.indexOf("sessionID")+12, 107));
-        console.log("=========3======");
-        // console.log(JSON.parse(req.cookies.secureCookie.sessionID));
-        // console.log("=========4======");
-        // console.log(JSON.stringify(req.cookies.secureCookie.sessionID));
-        // console.log("=========5======");
+        // console.log("=========1======");
+        // // console.log(req.cookies);
+        // console.log(req.cookies.secureCookie);
+        // console.log("=========2======");
+        // console.log(typeof req.cookies.secureCookie);
+        // console.log(req.cookies.secureCookie.sessionID);
+        // console.log(req.cookies.secureCookie.indexOf("sessionID"));
+        // console.log(req.cookies.secureCookie.slice(req.cookies.secureCookie.indexOf("sessionID")+12, 107));
 
         // if no doc with sessionID exists, return err
         const sessionIDFromCookie = req.cookies.secureCookie.slice(req.cookies.secureCookie.indexOf("sessionID")+12, 107);
         const sessionInDB = await Sessions.findOne({ sessionID: sessionIDFromCookie});
-        console.log(sessionInDB);
-        console.log("=========6======");
+        // console.log(sessionInDB);
+        // console.log("=========6======");
         if (!sessionInDB) {
             console.log("No session in DB!");
             //  send error that will trigger user logout in frontend
@@ -63,12 +58,14 @@ const checkCookie = async (req, res, next) => {
 
 // Error handling 
 router.use((err, req, res, next) => {
-    err.statusCode= err.statusCode || 500
-     err.status= err.status || 'error'
-     res.status(err.statusCode).json({
-          status:err.status,
-          message:err.message
-     });
+    // err.statusCode= err.statusCode || 500
+    // err.status= err.status || 'error'
+    // res.status(err.statusCode).json({
+    //     status:err.status,
+    //     message:err.message,
+    //     signUserOut: true
+    // });
+    res.redirect("/");
 });
 
 // Get all forecasts that are in the user's markets that the user has NOT yet attempted (for home page C2A)
@@ -195,7 +192,8 @@ router.get("/", async (req, res) => {
 });
 
 // Get one user
-router.get("/:username", checkCookie, async (req, res) => {
+// router.get("/:username", checkCookie, async (req, res) => {
+router.get("/:username", async (req, res) => {
     try {
         const user = await Users.find({ username: req.params.username });
         res.json(user);
