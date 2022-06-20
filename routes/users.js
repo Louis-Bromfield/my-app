@@ -14,8 +14,8 @@ const checkCookie = (req, res, next) => {
     try {
         console.log("================");
         // console.log(req);
-        console.log(req.headers);
-        console.log(req.cookies);
+        console.log(req.headers.cookie);
+        // console.log(req.cookies);
         console.log("================");
         next();
     } catch (error) {
