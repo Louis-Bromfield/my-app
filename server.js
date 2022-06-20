@@ -345,6 +345,7 @@ app.get("/auth/google/callback",
 app.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
     try {
         const user = await User.findOne({ username: req.params.username });
+        console.log(user);
         if (!user) {
             res.json({ loginSuccess: false, message: "This user does not exist in the database"});
         };
@@ -357,7 +358,7 @@ app.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
         }
         if (match) {
             // let string = user.id+sdfufysdf87gdfgdbwjhbjh4b3jh6b543kj6b45h;
-            const newHash = await bcrypt.hash(user._id, 10); 
+            const newHash = await bcrypt.hash(user._id.toString(), 10); 
             const newSession = {
                 sessionID: newHash,
                 expiration: new Date("August 01, 2022 11:00:00").toString()
