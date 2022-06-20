@@ -12,12 +12,15 @@ const bcrypt = require("bcryptjs");
 
 const checkCookie = (req, res, next) => {
     try {
-        console.log("================");
+        console.log("=========1======");
         // console.log(req);
         console.log(req.headers.cookie);
+        console.log("=========2======");
         console.log(req.headers.cookie.secureCookie);
+        console.log("=========3======");
+        console.log(req.cookies);
         // console.log(req.cookies);
-        console.log("================");
+        console.log("=========4======");
         next();
     } catch (error) {
         console.error("error in users > checkCookie");
