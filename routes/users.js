@@ -15,6 +15,7 @@ const checkCookie = (req, res, next) => {
         console.log("================");
         // console.log(req);
         console.log(req.headers.cookie);
+        console.log(req.headers.cookie.secureCookie);
         // console.log(req.cookies);
         console.log("================");
         next();
