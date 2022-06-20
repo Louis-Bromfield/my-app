@@ -14,7 +14,7 @@ const Sessions = require('../models/Sessions');
 
 router.use(cookieParser());
 
-const checkCookie = (req, res, next) => {
+const checkCookie = async (req, res, next) => {
     try {
         console.log("=========1======");
         console.log(req.cookies);
