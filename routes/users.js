@@ -9,6 +9,7 @@ const HomePageNewsFeedPosts = require('../models/HomePageNewsFeedPosts');
 const Leaderboards = require('../models/Leaderboards');
 const findOrCreate = require("mongoose-findorcreate");
 const bcrypt = require("bcryptjs");
+const cookieParser = require("cookie-parser");
 
 const checkCookie = (req, res, next) => {
     try {
@@ -19,8 +20,10 @@ const checkCookie = (req, res, next) => {
         console.log(req.headers.cookie.secureCookie);
         console.log("=========3======");
         console.log(req.cookies);
-        // console.log(req.cookies);
         console.log("=========4======");
+        console.log(cookieParser.JSONCookie(req.headers.cookie));
+        // console.log(req.cookies);
+        console.log("=========5======");
         next();
     } catch (error) {
         console.error("error in users > checkCookie");
