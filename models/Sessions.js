@@ -7,6 +7,9 @@ const SessionSchema = mongoose.Schema({
     },
     expiration: {
         type: String
+    },
+    username: {
+        type: String
     }
 });
 
