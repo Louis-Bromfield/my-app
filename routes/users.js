@@ -18,12 +18,16 @@ const checkCookie = (req, res, next) => {
         console.log(req.headers.cookie);
         console.log("=========2======");
         console.log(req.headers.cookie.secureCookie);
+        const cookies = req.headers.cookie.split("; ");
+        for (let i = 0; i < cookies.length; i++) {
+            console.log(cookies[i]);
+        }
         console.log("=========3======");
-        console.log(req.cookies);
-        console.log("=========4======");
-        console.log(cookieParser.JSONCookie(req.headers.cookie));
         // console.log(req.cookies);
-        console.log("=========5======");
+        // console.log("=========4======");
+        // console.log(cookieParser.JSONCookie(req.headers.cookie));
+        // // console.log(req.cookies);
+        // console.log("=========5======");
         next();
     } catch (error) {
         console.error("error in users > checkCookie");
