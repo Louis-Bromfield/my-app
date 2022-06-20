@@ -20,7 +20,7 @@ const checkCookie = async (req, res, next) => {
         // console.log(req.cookies);
         console.log(req.cookies.secureCookie);
         console.log("=========2======");
-        console.log(req.cookies.secureCookie["sessionID"]);
+        console.log(req.cookies["secureCookie"]["sessionID"]);
         console.log("=========3======");
         // console.log(JSON.parse(req.cookies.secureCookie.sessionID));
         // console.log("=========4======");
