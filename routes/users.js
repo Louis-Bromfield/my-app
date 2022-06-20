@@ -134,7 +134,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get one user
-router.get("/:username", isAuth, async (req, res) => {
+router.get("/:username", async (req, res) => {
     try {
         const user = await Users.find({ username: req.params.username });
         res.json(user);
