@@ -147,7 +147,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get one user
-router.get("/:username", async (req, res) => {
+router.get("/:username", checkCookie, async (req, res) => {
     try {
         const user = await Users.find({ username: req.params.username });
         res.json(user);
@@ -169,7 +169,7 @@ router.get("/findByProlificID/:prolificID", async (req, res) => {
 });
 
 // Get one user for logging in
-router.get("/:username/:passwordOrResetCode/:isPassword", checkCookie, async (req, res) => {
+router.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
     try {
         const user = await Users.findOne({ username: req.params.username });
         if (!user) {
