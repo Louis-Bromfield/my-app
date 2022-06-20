@@ -17,12 +17,15 @@ router.use(cookieParser());
 const checkCookie = async (req, res, next) => {
     try {
         console.log("=========1======");
-        console.log(req.cookies);
+        // console.log(req.cookies);
         console.log(req.cookies.secureCookie);
+        console.log(req.cookies.secureCookie.sessionID);
         console.log("=========2======");
 
         // if no doc with sessionID exists, return err
         const sessionInDB = await Sessions.findOne({ sessionID: req.cookies.secureCookie.sessionID});
+        console.log(sessionInDB);
+        console.log("=========3======");
         if (!sessionInDB) {
             console.log("No session in DB!");
             //  send error that will trigger user logout in frontend
@@ -32,7 +35,7 @@ const checkCookie = async (req, res, next) => {
             next(err);
         // or if doc with sessionID exists, but it is expired, delete session object 
         // (so that logging back in creates a new one) and return err
-        } else if (sessionInDB && (new Date().toString > sessionInDB.expiration)) {
+        } else if (sessionInDB && (new Date() > new Date(sessionInDB.expiration))) {
             console.log("Session is in DB but expired!!");
             const err = new Error(`Session is expired.`);
             err.status=401;
