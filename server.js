@@ -8,6 +8,7 @@ const path = require("path");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Sessions = require('./models/Sessions');
+const cookieParser = require("cookie-parser");
 
 // OAuth
 const session = require("express-session");
@@ -22,6 +23,8 @@ let passwordResetCodeFromClient = "_TEMP_PASSWORD_RESET_CODE";
 // let accessTokenToReturnToClient = "_TEMP_TOKEN";
 // let isSignedUpForSurveyFromClient = "SIGNUPFORSURVEY_VALUE_UNCHANGED";
 // let prolificIDFromClient = "_TEMP_PROLIFIC_ID_UNIMPORTED";
+
+app.use(cookieParser());
 
 // Middleware
 app.use(express.json());
@@ -357,19 +360,29 @@ app.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
             match = await bcrypt.compare(req.params.passwordOrResetCode, user.pwdResetCode);
         }
         if (match) {
-            // let string = user.id+sdfufysdf87gdfgdbwjhbjh4b3jh6b543kj6b45h;
-            const newHash = await bcrypt.hash(user._id.toString(), 10); 
-            const newSession = new Sessions({
-                sessionID: newHash,
-                expiration: new Date("August 01, 2022 11:00:00").toString()
-            });
-            // const newSessionSaved = newSession.save();
-            newSession.save();
-            res.cookie("secureCookie", JSON.stringify(newSession), {
-                secure: true,
-                httpOnly: true,
-                expires: new Date("August 01, 2022 11:00:00")
-            });
+            const userSession = await Sessions.findOne({ username: req.params.username });
+            if (userSession) {
+                res.cookie("secureCookie", JSON.stringify(userSession), {
+                    secure: true,
+                    httpOnly: true,
+                    expires: new Date("August 01, 2022 11:00:00")
+                });
+            } else {
+                // let string = user.id+sdfufysdf87gdfgdbwjhbjh4b3jh6b543kj6b45h;
+                const newHash = await bcrypt.hash(user._id.toString(), 10); 
+                const newSession = new Sessions({
+                    sessionID: newHash,
+                    expiration: new Date("August 01, 2022 11:00:00").toString(),
+                    username: req.params.username
+                });
+                // const newSessionSaved = newSession.save();
+                newSession.save();
+                res.cookie("secureCookie", JSON.stringify(newSession), {
+                    secure: true,
+                    httpOnly: true,
+                    expires: new Date("August 01, 2022 11:00:00")
+                });
+            };
             res.json(user);
         } else {
             res.json({ loginSuccess: false, message: "Password/reset code does not match that stored in the database"});
