@@ -14,7 +14,8 @@ const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const findOrCreate = require("mongoose-findorcreate");
-const MongoStore = require("connect-mongo");
+// const MongoStore = require("connect-mongo");
+const MongoDBSession = require("connect-mongodb-session")(session);
 
 let usernameFromClient = "_TEMP_USERNAME";
 let passwordFromClient = "_TEMP_PASSWORD";
@@ -27,15 +28,17 @@ let passwordResetCodeFromClient = "_TEMP_PASSWORD_RESET_CODE";
 app.use(express.json());
 app.use(cors());
 
+const store = new MongoDBSession({
+    uri: process.env.DATABASE_URL,
+    collection: "sessions"
+})
+
 // OAuth
 app.use(session({
     secret: "fgkebgrbwksjebsk84373rbsbewqeIUIUKEWdkfdhU2383782!shjdfgvh237248582354",
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({
-        mongoUrl: process.env.DATABASE_URL,
-        collectionName: "sessions"
-    })
+    store: store
 }));
 
 app.use(passport.initialize());
