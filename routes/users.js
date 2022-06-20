@@ -13,7 +13,7 @@ const bcrypt = require("bcryptjs");
 const checkCookie = (req, res, next) => {
     try {
         console.log("================");
-        console.log(req.body);
+        console.log(req);
         console.log("================");
         next();
     } catch (error) {
