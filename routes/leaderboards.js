@@ -96,16 +96,16 @@ router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle/:localStorage
         };
         // Outside of main loop:
         if (req.params.isFFLeaderboard === false || req.params.leaderboardTitle === "Fantasy Forecast All-Time" || req.params.localStorageLBName === "Fantasy Forecast All-Time") {
-            ffRankings = ffRankings.sort((a, b) => b.marketPoints - a.marketPoints);
+            const ffRankingsSorted = ffRankings.sort((a, b) => b.marketPoints - a.marketPoints);
             // setUsersData(ffRankings);
             // props.setFFData(ffRankings);
             // props.setRankingsForTop3([ffRankings[0], ffRankings[1], ffRankings[2]]);
             // setLoading(false);
             console.log("ffRankings")
-            res.json(ffRankings);
+            res.json(ffRankingsSorted);
         } else {
             // props.setAverageBrier(totalAverageBrier / rankings.length);
-            allUsers = allUsers.sort((a, b) => b.totalBrier - a.totalBrier);
+            const allUsersSorted = allUsers.sort((a, b) => b.totalBrier - a.totalBrier);
             // console.log("++++++++++++++++++++++");
             // console.log(rankings);
             // console.log("++++++++++++++++++++++");
