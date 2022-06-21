@@ -101,7 +101,7 @@ router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle/:localStorage
             // props.setFFData(ffRankings);
             // props.setRankingsForTop3([ffRankings[0], ffRankings[1], ffRankings[2]]);
             // setLoading(false);
-            console.log("ffRankings")
+            console.log("ffRankingsSorted")
             res.json(ffRankingsSorted);
         } else {
             // props.setAverageBrier(totalAverageBrier / rankings.length);
@@ -115,8 +115,8 @@ router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle/:localStorage
             // };
             // props.setRankingsForTop3([rankings[0], rankings[1], rankings[2]]);
             // setLoading(false);
-            console.log("allUsers");
-            res.json(allUsers);
+            console.log("allUsersSorted");
+            res.json(allUsersSorted);
         };
     } catch (err) {
         console.error("Error in getAllInfoToRender");
