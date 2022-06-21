@@ -100,7 +100,8 @@ function ForecastSubmission(props) {
         if (marketName === undefined) return;
         try {
             // const leaderboardResponse = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${marketName}`);
-            const leaderboardResponse = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/newGetleaderboardRoute/${marketName}`);
+            const leaderboardResponse = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/newGetLeaderboardRoute/${marketName}`);
+            console.log(leaderboardResponse);
             let lbRankings = leaderboardResponse.data;
             // console.log("7777777777777777777777777777777777777777777777");
             // console.log(lbRankings);
