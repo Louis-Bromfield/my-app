@@ -58,8 +58,8 @@ router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle", async (req,
             if (allUsers[i].markets.includes(req.params.leaderboardTitle)) {
                 if (req.params.isFFLeaderboard === "false" || req.params.leaderboardTitle === "Fantasy Forecast All-Time") {
                     ffRankings[i] = {
-                        profilePicture: rankings[i].profilePicture,
-                        username: rankings[i].username,
+                        profilePicture: allUsers[i].profilePicture,
+                        username: allUsers[i].username,
                         marketPoints: 0.0,
                         brierScores: [],
                         avgAllTimeBrier: 0.0
