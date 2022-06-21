@@ -118,7 +118,7 @@ function ForecastAdmin(props) {
                     problemName: problemName,
                     newProblemCloseDateTime: newProblemCloseDateTime
                 });
-console.log("17 - SCORES");
+console.log("17A - SCORES");
 console.log(scores);
             } else if (closeEarly === false) {
                 console.log("Here3");
@@ -126,7 +126,8 @@ console.log(scores);
                     problemName: problemName
                 });
             };
-
+console.log("17B - SCORES");
+console.log(scores);
             // Market Points
             const updatedMarket = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/closedProblem/${market}`, {
                 scores: scores.data

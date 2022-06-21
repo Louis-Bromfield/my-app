@@ -40,10 +40,11 @@ function App() {
 //     localStorage.setItem("username", newUsername);
 //   };
 
-  const logOut = () => {
+  const logOut = async () => {
     setIsLoggedIn(false);
     localStorage.setItem('isLoggedIn', false);
     localStorage.removeItem('username');
+    await axios.delete(`https://fantasy-forecast-politics.herokuapp.com/deleteSession`);
     // localStorage.removeItem('name');
     // localStorage.removeItem('markets');
     // localStorage.removeItem('navigationOrder');

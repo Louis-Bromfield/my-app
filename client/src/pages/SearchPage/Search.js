@@ -109,6 +109,7 @@ function Search(props) {
         };
         try {
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/profileData/${username}`);
+            console.log(userDocument);
             if (userDocument.data.userObj === null) {
                 setErrorMessage("No profiles were found with this username. Please try again.");
             } else if (userDocument.data.userObj !== null) {
@@ -368,12 +369,12 @@ function Search(props) {
                             </div>
                         </div>
                         <br/>
-                        <hr/>
+                        {/* <hr/> */}
                         <div className="profile-stats-rewards-container">
                             <div className="profile-nav-menu">
-                                <div className="profile-tab" onClick={() => setSearchTab("my-stats")}><h3>My Stats</h3></div>
-                                <div className="profile-tab" onClick={() => setSearchTab("my-forecasts")}><h3>My Forecasts</h3></div>
-                                <div className="profile-tab" onClick={() => setSearchTab("my-rewards")}><h3>My Rewards</h3></div>
+                                <div className="profile-tab" onClick={() => setSearchTab("my-stats")}><h3>{playerUsername !== "" ? `${playerUsername}'s Stats` : "Player Stats"}</h3></div>
+                                <div className="profile-tab" onClick={() => setSearchTab("my-forecasts")}><h3>{playerUsername !== "" ? `${playerUsername}'s Forecasts` : "Player Forecasts"}</h3></div>
+                                <div className="profile-tab" onClick={() => setSearchTab("my-rewards")}><h3>{playerUsername !== "" ? `${playerUsername}'s Rewards` : "Player Rewards"}</h3></div>
                             </div>
                             {searchTab === "my-stats" && 
                                 <div className="profile-stats">

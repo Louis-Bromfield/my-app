@@ -41,7 +41,7 @@ const checkCookie = async (req, res, next) => {
         // (so that logging back in creates a new one) and return err
         } else if (sessionInDB && (new Date() > new Date(sessionInDB.expiration))) {
             console.log("Session is in DB but expired!!");
-            const err = new Error(`Session is expired.`);
+            const err = new Error(`Session is in DB but expired!!`);
             err.status=401;
             err.statusCode=401;
             next(err);

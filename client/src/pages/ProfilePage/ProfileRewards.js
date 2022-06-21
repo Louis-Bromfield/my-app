@@ -17,7 +17,10 @@ function ProfileRewards(props) {
     ]);
     return (
         <div className="profile-rewards">
-            <h1 className="profile-header">This section is currently under construction, come back soon!</h1>
+            <h2 className="profile-header">This section is currently under construction, come back soon!</h2>
+            <p>At the moment, rewards are limited to forecaster "titles" (Guesser, Predictor, Forecaster, Seer etc up to Level 50), and the unlocking of the "My Stats" section on your profile and
+                on the home page. More rewards and incentives will be added in due course.
+            </p>
         </div>
     )
 }

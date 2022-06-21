@@ -60,7 +60,8 @@ function ProfileStats(props) {
     const formatBrierData = async (userObj, username) => {
         // Only executes a server query if the userObj obtained in Profile.js is undefined, so I think
         // keep it for insurance purposes as it doesn't fire otherwise
-        if (userObj === null) {
+        if (userObj === null || userObj === undefined) {
+            // Happy to keep as it's only if there's an issue with userObj
             const brierData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             userObj = brierData.data[0];
         };

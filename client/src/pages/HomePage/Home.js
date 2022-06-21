@@ -145,7 +145,7 @@ function Home(props) {
                     </div>
                     <div className="home-page-stats-div">
                         <HomeProfilePreview 
-                            user={userObj}
+                            userObj={userObj}
                             username={props.username}
                         />
                         <NewForecastsCallToAction username={props.username} /> 

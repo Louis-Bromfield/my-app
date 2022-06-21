@@ -394,6 +394,16 @@ app.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
     };
 });
 
+app.delete("/deleteSession", async (req, res) => {
+    try {
+        const sessionIDFromCookie = req.cookies.secureCookie.slice(req.cookies.secureCookie.indexOf("sessionID")+12, 107);
+        await Sessions.findOneAndDelete({ sessionID: sessionIDFromCookie });
+    } catch (err) {
+        console.error("Error in deleteSession");
+        console.error(error);
+    };
+});
+
 app.get("/logout", function(req, res) {
     res.redirect("https://fantasy-forecast-politics.herokuapp.com");
 });
