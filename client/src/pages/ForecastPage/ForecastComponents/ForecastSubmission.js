@@ -99,11 +99,12 @@ function ForecastSubmission(props) {
     const getLeaderboardFromDB = async (marketName) => {
         if (marketName === undefined) return;
         try {
-            const leaderboardResponse = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${marketName}`);
+            // const leaderboardResponse = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${marketName}`);
+            const leaderboardResponse = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/newGetleaderboardRoute/${marketName}`);
             let lbRankings = leaderboardResponse.data;
-            console.log("7777777777777777777777777777777777777777777777");
-            console.log(lbRankings);
-            console.log("7777777777777777777777777777777777777777777777");
+            // console.log("7777777777777777777777777777777777777777777777");
+            // console.log(lbRankings);
+            // console.log("7777777777777777777777777777777777777777777777");
             // let newRankings = await lbRankings.sort((a, b) => b.marketPoints - a.marketPoints);
             formatUserRank(lbRankings);
             props.handleLeaderboardChange(lbRankings);
@@ -614,7 +615,7 @@ function ForecastSubmission(props) {
             <div className="forecast-top-bar">
                 {marketWarning === true &&
                     <div className="forecast-selection-div">
-                        <h3>You are not currently in any markets, so no forecasts are available. To join a market, go to the Leaderboards page and press the Join A Market button.</h3>
+                        <h4>You are not currently in any markets, so no forecasts are available. To join a market, go to the Leaderboards page and press the Join A Market button. If you've joined a market and are still seeing this message, refresh the page and the dropdown should appear here.</h4>
                     </div>
                 }
                 {marketWarning === false && 

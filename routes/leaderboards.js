@@ -49,6 +49,30 @@ router.get("/leaderboard/:leaderboardName/", async (req, res) => {
     res.json(sortedData);
 })
 
+// New version of service above this, as we aren't really using the leaderboard collection anymore
+router.get("/newGetLeaderboardRoute/:leaderboardName", async (req, res) => {
+    try {
+        const allUsers = Users.find();
+        let usersForMarket = [];
+        for (let i = 0; i < allUsers.length; i++) {
+            if (allUsers[i].markets.includes(req.params.leaderboardName)) {
+                allUsers[i].totalForMarket = 0;
+                for (let j = 0; j < allUsers[i].brierScores.length; i++) {
+                    if (allUsers[i].brierScores[j].marketName === req.params.leaderboardName) {
+                        allUsers[i].totalForMarket += allUsers[i].brierScores[j].brierScore;
+                    };
+                };
+                usersForMarket.push(allUsers[i]);
+            };
+        };
+        usersForMarket = usersForMarket.sort((a, b) => b.totalScoreForMarket - a.totalScoreForMarket);
+        res.json(usersForMarket);
+    } catch (err) {
+        console.error("Error in leaderboards > newGetLeaderboardRoute");
+        console.error(err);
+    };
+});
+
 // Get all leaderboard info to render
 // Issue at the moment is that none of the additons to the allUsers[i] objects is persisting
 // e.g. line 74: .brierScoresForMarket is non-existent in returned allUsers array of objects

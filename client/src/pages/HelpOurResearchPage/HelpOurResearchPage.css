@@ -7,3 +7,21 @@
 .help-our-research-explainer {
     margin-bottom: 2vh;
 }
+
+.survey-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.submit-survey-btn {
+    background-color: rgb(67, 181, 67);
+    color: #fff;
+    border: none;
+    padding: 1%;
+    width: 30%;
+}
+
+.submit-survey-btn:hover {
+    background-color: rgb(89, 216, 89);
+    cursor: pointer;
+}

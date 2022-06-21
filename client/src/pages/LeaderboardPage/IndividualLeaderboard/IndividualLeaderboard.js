@@ -48,10 +48,12 @@ function IndividualLeaderboard(props) {
         // console.log("==================");
         if (props.location.user === true) {
             const leaderboardObj = props.location.navigationOrderUnsorted.find(el => el.leaderboardName === localStorage.getItem('currentLeaderboardName'));
-            setIsFFLeaderboard(leaderboardObj.isFFLeaderboard);
+            // setIsFFLeaderboard(leaderboardObj.isFFLeaderboard);
+            setIsFFLeaderboard(true);
         } else if (props.location.user === false) {
             const leaderboardObj = props.location.navigationOrderUnsorted.find(el => el.leaderboardName === localStorage.getItem('currentLeaderboardName'));
-            setIsFFLeaderboard(leaderboardObj.isFFLeaderboard);
+            // setIsFFLeaderboard(leaderboardObj.isFFLeaderboard);
+            setIsFFLeaderboard(true);
         }
         console.log("2nd Individual Leaderboard UE");
     }, [currentLeaderboardName, props.location.navigationOrderUnsorted, props.location.user]);

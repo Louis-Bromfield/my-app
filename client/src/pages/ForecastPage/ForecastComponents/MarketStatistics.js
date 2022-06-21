@@ -7,6 +7,7 @@ function MarketStatistics(props) {
     const [userRank, setUserRank] = useState(0);
 
     useEffect(() => {
+        console.log(props);
         setForecasterCount(props.leaderboard.length);
         setMarketLeader(props.leaderboard[0].username.length > 9 ? `${props.leaderboard[0].username.slice(0, 9)}...` : props.leaderboard[0].username);
         for (let i = 0; i < props.leaderboard.length; i++) {

@@ -347,8 +347,8 @@ function Leaderboard(props) {
                                         {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
                                         {item.username}
                                     </td>
-                                    <td className="leaderboard-ffPoints-data">{Number(item.totalBrier).toFixed(0)}</td>
-                                    <td className="leaderboard-avgBrierScore-data">{Number(item.avgBrierScore).toFixed(1)}</td>
+                                    <td className="leaderboard-ffPoints-data">{isNaN(Number(item.totalBrier).toFixed(0)) ? 0.0 : Number(item.totalBrier).toFixed(0)}</td>
+                                    <td className="leaderboard-avgBrierScore-data">{isNaN(Number(item.avgBrierScore).toFixed(1)) ? 0.0 : Number(item.avgBrierScore).toFixed(1)}</td>
                                     {width && <td className="leaderboard-last5Forecasts-data">
                                         <span className="last-five-data-span">
                                             {item.brierScoresForMarket.map((item2, index) => {
@@ -393,8 +393,8 @@ function Leaderboard(props) {
                                         {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
                                         {item.username}
                                     </td>
-                                    <td className="leaderboard-ffPoints-data">{Number(item.totalBrier).toFixed(0)}</td>
-                                    <td className="leaderboard-avgBrierScore-data">{Number(item.avgBrierScore).toFixed(1)}</td>
+                                    <td className="leaderboard-ffPoints-data">{isNaN(Number(item.totalBrier).toFixed(0)) ? 0.0 : Number(item.totalBrier).toFixed(0)}</td>
+                                    <td className="leaderboard-avgBrierScore-data">{isNaN(Number(item.avgBrierScore).toFixed(1)) ? 0.0 : Number(item.avgBrierScore).toFixed(1)}</td>
                                     {width && <td className="leaderboard-last5Forecasts-data">
                                         <span className="last-five-data-span">
                                             {item.brierScoresForMarket.map((item2, index) => {
@@ -632,8 +632,8 @@ function Leaderboard(props) {
                                             {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
                                             {item.username}
                                         </td>
-                                        <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
-                                        <td className="leaderboard-avgBrierScore-data">{Number(item.avgAllTimeBrier).toFixed(1)}</td>
+                                        <td className="leaderboard-ffPoints-data">{isNaN(Number(item.marketPoints).toFixed(0)) ? 0.0 : Number(item.marketPoints).toFixed(0)}</td>
+                                        <td className="leaderboard-avgBrierScore-data">{isNaN(Number(item.avgAllTimeBrier).toFixed(1)) ? 0.0 : Number(item.avgAllTimeBrier).toFixed(1)}</td>
                                         {width && <td className="leaderboard-last5Forecasts-data">
                                             <span className="last-five-data-span">
                                                 {item.brierScores.map((item2, index) => {
@@ -674,8 +674,8 @@ function Leaderboard(props) {
                                             {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
                                             {item.username}
                                         </td>
-                                        <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
-                                        <td className="leaderboard-avgBrierScore-data">{Number(item.avgAllTimeBrier).toFixed(1)}</td>
+                                        <td className="leaderboard-ffPoints-data">{isNaN(Number(item.marketPoints).toFixed(0)) ? 0.0 : Number(item.marketPoints).toFixed(0)}</td>
+                                        <td className="leaderboard-avgBrierScore-data">{isNaN(Number(item.avgAllTimeBrier).toFixed(1)) ? 0.0 : Number(item.avgAllTimeBrier).toFixed(1)}</td>
                                         {width && <td className="leaderboard-last5Forecasts-data">
                                             <span className="last-five-data-span">
                                                 {item.brierScores.map((item2, index) => {

@@ -156,7 +156,7 @@ function Login(props) {
                                 <div className="google-explainer">
                                     <p><u>Why do I need to sign in with Google?</u> 1) So your Fantasy Forecast account has a profile picture, and 2) so we can email the winners of the tournament!</p>
                                     <br />
-                                    <p>Email addresses obtained from those who do not complete the survey and become eligible for the tournament will be deleted on Monday 27th June, and all others will be deleted as soon as the tournament ends.</p>
+                                    <p>Email addresses obtained from those who do not complete the survey and become eligible for the tournament will be deleted on Monday 4th July, and all others will be deleted as soon as the tournament ends.</p>
                                 </div>
                             </form>
                         </div>
@@ -168,7 +168,7 @@ function Login(props) {
                 </div>
                 <div className="survey-explanation-div">
                     <h2><u>Want to play for $$$?</u></h2>
-                    <p>Over the next 6 weeks, Fantasy Forecast is running its inaugural forecasting tournament on UK Politics. The top three forecasters will win:</p>
+                    <p>Starting on Monday 27th June for the next 6 weeks, Fantasy Forecast is running its inaugural forecasting tournament on UK Politics. The top three forecasters will win:</p>
                     <br />
                     <div className="prize-container">
                         <p>1st: £250 Amazon Gift Certificate</p>
@@ -176,7 +176,7 @@ function Login(props) {
                         <p>3rd: £100 Amazon Gift Certificate</p>
                     </div>
                     <br />
-                    <p>Anyone can enter, however to be eligible for the prizes you <strong><u style={{ color: "orange" }}>must</u></strong> complete a survey before <u style={{ color: "orange" }}>11:59pm (BST) on Sunday 26th June</u>. This survey will be available after you login from the "Survey" tab at the top of the screen (or the dropdown menu if you're on a mobile device).</p>
+                    <p>Anyone can enter, however to be eligible for the prizes you <strong><u style={{ color: "orange" }}>must</u></strong> complete a survey before <u style={{ color: "orange" }}>11:59pm (BST) on Tuesday 28th June</u>. This survey will be available after you login from the "Survey" tab at the top of the screen (or the dropdown menu if you're on a mobile device).</p>
                     <br />
                     <p>You can still fully participate in the tournament without completing the survey, <u style={{ color: "orange" }}>but only those who complete the survey will be eligible for prizes</u> (so if someone who hasn't completed the survey finishes 1st, the prizes will be allocated to 2nd, 3rd, and 4th, etc.)</p>
                 </div>

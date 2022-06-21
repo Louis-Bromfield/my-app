@@ -16,7 +16,7 @@ function LeaderboardGrid(props) {
                 {props.user === true && props.markets.map((item, index) => {  
                     const leaderboardProps = {
                         pathname: "/leaderboard",
-                        leaderboardName: item.leaderboardName,
+                        leaderboardName: item,
                         navigationOrderUnsorted: props.markets,
                         username: props.username,
                         user: true
@@ -26,7 +26,7 @@ function LeaderboardGrid(props) {
                             key={index} 
                             to={leaderboardProps} 
                             className="your-markets-leaderboards">
-                                <LeaderboardShortcut name={item.leaderboardName} className="leaderboard-shortcut"/>
+                                <LeaderboardShortcut name={item} className="leaderboard-shortcut"/>
                         </Link>
                     )
                 })}
@@ -35,7 +35,7 @@ function LeaderboardGrid(props) {
                         // console.log("yes is true")
                         const leaderboardProps = {
                             pathname: "/leaderboard",
-                            leaderboardName: item.leaderboardName,
+                            leaderboardName: item,
                             navigationOrderUnsorted: props.markets,
                             username: props.username,
                             user: false
@@ -46,7 +46,7 @@ function LeaderboardGrid(props) {
                                     key={index} 
                                     to={leaderboardProps}
                                     className="all-markets-leaderboards">
-                                        <LeaderboardShortcut name={item.leaderboardName} className="leaderboard-shortcut-blue"/>
+                                        <LeaderboardShortcut name={item} className="leaderboard-shortcut-blue"/>
                                 </Link>
                             )
                         // } else if (item[2] === false) {
