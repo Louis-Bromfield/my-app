@@ -502,7 +502,7 @@ router.patch("/:username", async (req, res) => {
             numberOfClosedForecasts: req.body.numberOfClosedForecasts,
             profilePicture: req.body.profilePicture,
             articleVisits: req.body.articleVisits,
-            completeSurvey: req.body.completeSurvey
+            completedSurvey: req.body.completedSurvey
         },
         { new: true }
     );

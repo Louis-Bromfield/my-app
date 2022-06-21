@@ -144,9 +144,13 @@ function HelpOurResearch(props) {
             if (res.data.surveySuccess === true) {
                 setSubmitMsg("Your survey has been sent. Thank you for participating, and best of luck in the tournament!");
                 const username = props.username === undefined ? props.userObject.username === undefined : props.username;
+                console.log(username);
                 const userRes = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, {
                     completedSurvey: true
                 });
+                // if (userRes) {
+                    console.log(userRes);
+                // }
             };
         } catch (err) {
             console.error("Error in Survey > handleSubmit");
