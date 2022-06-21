@@ -345,7 +345,7 @@ app.get("/auth/google/callback",
 );
 
 // Get one user for logging in
-app.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
+app.get("login/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
     try {
         const user = await User.findOne({ username: req.params.username });
         console.log(user);

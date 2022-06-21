@@ -31,19 +31,19 @@ function ProfileStats(props) {
             setIsHiddenBehindLevel(true);
             return;
         } else {
-            setIsHiddenBehindLevel(false);
+                setIsHiddenBehindLevel(false);
+            if (props.userObj === undefined) {
+                formatBrierData(null, props.username);
+                findUniquePlayerStats(null, props.username);
+            } else if (props.userObj !== undefined) {
+                formatBrierData(props.userObj, props.username);
+                findUniquePlayerStats(props.userObj, props.username);
+            };
+            getGlobalData();
+            setStats(recentForecastData);
         };
-        if (props.userObj === undefined) {
-            formatBrierData(null, props.username);
-            findUniquePlayerStats(null, props.username);
-        } else if (props.userObj !== undefined) {
-            formatBrierData(props.userObj, props.username);
-            findUniquePlayerStats(props.userObj, props.username);
-        };
-        getGlobalData();
-        setStats(recentForecastData);
         console.log("Profile Stats UE");
-    }, [props.username, props.brierScores, props.profileTab, props.userObj]);
+    }, [props.username, props.brierScores, props.profileTab, props.userObj, props.ffPoints]);
 
     const getGlobalData = async () => {
         try {

@@ -171,11 +171,11 @@ function Search(props) {
         let counter = 0;
         for (let i = userObj.brierScores.length-1; i >= 0; i--) {
             allLabelsArray.push(`${userObj.brierScores[i].problemName}`);
-            if (userObj.brierScores[i].brierScore > bestBrierPlayer) {
+            if (userObj.brierScores[i].brierScore >= bestBrierPlayer) {
                 setBestChanged(true);
                 bestBrierPlayer = userObj.brierScores[i].brierScore;
             };
-            if (userObj.brierScores[i].brierScore < worstBrierPlayer) {
+            if (userObj.brierScores[i].brierScore <= worstBrierPlayer) {
                 setWorstChanged(true);
                 worstBrierPlayer = userObj.brierScores[i].brierScore;
             };

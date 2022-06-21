@@ -101,6 +101,9 @@ function ForecastSubmission(props) {
         try {
             const leaderboardResponse = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${marketName}`);
             let lbRankings = leaderboardResponse.data;
+            console.log("7777777777777777777777777777777777777777777777");
+            console.log(lbRankings);
+            console.log("7777777777777777777777777777777777777777777777");
             // let newRankings = await lbRankings.sort((a, b) => b.marketPoints - a.marketPoints);
             formatUserRank(lbRankings);
             props.handleLeaderboardChange(lbRankings);
@@ -246,6 +249,7 @@ function ForecastSubmission(props) {
                 setForecastSingleCertainty(forecastProblems[i].singleCertainty);
                 props.setForecastSingleCertainty(forecastProblems[i].singleCertainty);
                 setForecastPotentialOutcomes(forecastProblems[i].potentialOutcomes);
+                // If no forecasts have been submitted by anyone at all
                 if (forecastProblems[i].submittedForecasts.length === 0) {
                     setUserHasAttempted(false);
                     setUserPreviousAttemptCertainty("-");
@@ -256,8 +260,10 @@ function ForecastSubmission(props) {
                     setFinalCertainty("N/A")
                     return;
                 } else {
+                    // If at least one forecast has been submitted by anyone
                     for (let j = 0; j < forecastProblems[i].submittedForecasts.length; j++) {
                         if (forecastProblems[i].submittedForecasts[j].username === props.username) {
+                            // You have submitted at least one forecast for this problem
                             setUserHasAttempted(true);
                             if (forecastProblems[i].singleCertainty === true) {
                                 setUserPreviousAttemptCertainty((forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].certainty*100).toFixed(2));    
@@ -267,6 +273,7 @@ function ForecastSubmission(props) {
                             setUserPreviousAttemptComments(forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].comments);
                             return;
                         } else {
+                            // You have not attempted this problem yet
                             setUserHasAttempted(false);
                             setUserPreviousAttemptCertainty("-");
                             setUserPreviousAttemptComments("No Forecast Submitted");
