@@ -59,7 +59,7 @@ router.get("/newGetLeaderboardRoute/:leaderboardName", async (req, res) => {
             if (allUsers[i].markets.includes(req.params.leaderboardName)) {
                 console.log("yes it does include this market");
                 allUsers[i].totalForMarket = 0;
-                for (let j = 0; j < allUsers[i].brierScores.length; i++) {
+                for (let j = 0; j < allUsers[i].brierScores.length; j++) {
                     if (allUsers[i].brierScores[j].marketName === req.params.leaderboardName) {
                         allUsers[i].totalForMarket += allUsers[i].brierScores[j].brierScore;
                     };
