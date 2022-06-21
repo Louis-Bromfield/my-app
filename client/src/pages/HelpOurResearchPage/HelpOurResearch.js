@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './HelpOurResearchPage.css';
+import axios from 'axios';
 
 function HelpOurResearch(props) {
     const [submitMsg, setSubmitMsg] = useState("");
@@ -70,6 +71,7 @@ function HelpOurResearch(props) {
             console.log(currentShadowSOST);
             console.log(currentSpeaker);
             console.log(pollStationCloseTime);
+            console.log(typeof pollStationCloseTime);
             console.log(dayOfPMQs);
             console.log(constituencyCount);
             console.log(depositPay);
@@ -89,14 +91,63 @@ function HelpOurResearch(props) {
             console.log(foxHedgehogRating);
             console.log(politicalInterest);
             console.log(politicalSpectrumPosition);
+            console.log(typeof politicalSpectrumPosition);
             console.log(ukPartySupporter);
             console.log(currentAge);
+            console.log(typeof currentAge);
             console.log(identification);
             console.log(highestQual);
             console.log(householdIncome);
             console.log(ukBased);
 
-
+            const res = await axios.post(`https://fantasy-forecast-politics.herokuapp.com/users/surveyResponse`, {
+                username: props.userObject.username,
+                submitMsg: submitMsg,
+                selfAssessedPolKnowledge: selfAssessedPolKnowledge,
+                currentHomeSecretary: currentHomeSecretary,
+                currentDeputyPM: currentDeputyPM,
+                currentSOSHSC: currentSOSHSC,
+                currentSOSLUHC: currentSOSLUHC,
+                currentSOSScotland: currentSOSScotland,
+                currentLibDemLeader: currentLibDemLeader,
+                currentSNPHOCLeader: currentSNPHOCLeader,
+                currentShadowChanc: currentShadowChanc,
+                currentShadowSOST: currentShadowSOST,
+                currentSpeaker: currentSpeaker,
+                pollStationCloseTime: pollStationCloseTime,
+                dayOfPMQs: dayOfPMQs,
+                constituencyCount: constituencyCount,
+                depositPay: depositPay,
+                electoralSystemName: electoralSystemName,
+                ethicsAdvisorNames: ethicsAdvisorNames,
+                inflationPercentage: inflationPercentage,
+                unemploymentPercentage: unemploymentPercentage,
+                noConfidenceVoteCount: noConfidenceVoteCount,
+                publicBillsName: publicBillsName,
+                opposingArgumentConvince: opposingArgumentConvince,
+                evidenceAgainstBeliefs: evidenceAgainstBeliefs,
+                reviseBeliefs: reviseBeliefs,
+                changingYourMind: changingYourMind,
+                intuitionIsBest: intuitionIsBest,
+                perservereBeliefs: perservereBeliefs,
+                disregardEvidence: disregardEvidence,
+                foxHedgehogRating: foxHedgehogRating,
+                politicalInterest: politicalInterest,
+                politicalSpectrumPosition: politicalSpectrumPosition,
+                ukPartySupporter: ukPartySupporter,
+                currentAge: currentAge,
+                identification: identification,
+                highestQual: highestQual,
+                householdIncome: householdIncome,
+                ukBased: ukBased,
+            });
+            if (res.data.surveySuccess === true) {
+                setSubmitMsg("Your survey has been sent. Thank you for participating, and best of luck in the tournament!");
+                const username = props.username === undefined ? props.userObject.username === undefined : props.username;
+                const userRes = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, {
+                    completedSurvey: true
+                });
+            };
         } catch (err) {
             console.error("Error in Survey > handleSubmit");
             console.error(err);
@@ -120,7 +171,9 @@ function HelpOurResearch(props) {
                 the tournament has ended.
                 </p>
             </div>
-            <h3 style={{ "color": "#404d72" }}>Survey:</h3>
+            <h3 style={{ "color": "#404d72" }}>If you don't know the answer/what to write, please type "N/A".</h3>
+            {/* <p>If you do not know the answer to any questions that require you to type out a response, please type "N/A".</p> */}
+            <br />
             {(props.userObject !== undefined && props.userObject.completedSurvey === false) && 
                 <form className="survey-form">
                     <label htmlFor="question1-self-described-knowledge"><b>1. Which of the following do you feel best describes how knowledgeable you are about UK Politics?</b></label>
@@ -248,10 +301,10 @@ function HelpOurResearch(props) {
                     <br />
                     <label 
                         htmlFor="">
-                            <b>12. At what time do Polling stations in the UK normally close on election day? (24 Hour Clock)</b>
+                            <b>12. At what time (e.g. 11:00am, 3:45pm) do Polling stations in the UK normally close on election day?</b>
                     </label>
                     <input 
-                        type="time" 
+                        type="text" 
                         placeholder='Enter your response here'
                         name="question12-polling-stations-close-time"
                             style={{ "padding": "0.5%" }}

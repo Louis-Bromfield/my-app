@@ -55,6 +55,7 @@ function IndividualNewsFeedPost(props) {
         } else {
             setAuthor(props.location.postObject.author);
             setAuthorProfilePicture(props.location.postObject.authorProfilePicture);
+            console.log(props.location.postObject.authorProfilePicture);
             setPostDescription(props.location.postObject.postDescription);
             setPostDate(props.location.postObject.postDate);
             setLikes(props.location.postObject.likes);
@@ -128,7 +129,7 @@ function IndividualNewsFeedPost(props) {
                         <div className="post-author-left">
                             {/* CHARMANDER */}
                             {/* <img className="author-profile-pic" src={author === localStorage.getItem("username") ? localStorage.getItem("profilePicture") : authorProfilePicture} alt=""/> */}
-                            <img className="author-profile-pic" src={author === cookie.username ? localStorage.getItem("profilePicture") : authorProfilePicture} alt=""/>
+                            <img className="author-profile-pic" src={authorProfilePicture === undefined ? "" : authorProfilePicture} alt=""/>
                             <div className="post-author-details">
                                 <Link 
                                     to={author === cookie.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: author}}

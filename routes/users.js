@@ -11,6 +11,7 @@ const findOrCreate = require("mongoose-findorcreate");
 const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser");
 const Sessions = require('../models/Sessions');
+const Surveys = require('../models/Surveys');
 
 router.use(cookieParser());
 
@@ -306,6 +307,59 @@ router.post("/", async (req, res) => {
     };
 });
 
+// Persist a survey response
+router.post("/surveyResponse", async (req, res) => {
+    try {
+        const newSurveyResponse = new Surveys({
+            username: req.body.username,
+            submitMsg: req.body.submitMsg,
+            selfAssessedPolKnowledge: req.body.selfAssessedPolKnowledge,
+            currentHomeSecretary: req.body.currentHomeSecretary,
+            currentDeputyPM: req.body.currentDeputyPM,
+            currentSOSHSC: req.body.currentSOSHSC,
+            currentSOSLUHC: req.body.currentSOSLUHC,
+            currentSOSScotland: req.body.currentSOSScotland,
+            currentLibDemLeader: req.body.currentLibDemLeader,
+            currentSNPHOCLeader: req.body.currentSNPHOCLeader,
+            currentShadowChanc: req.body.currentShadowChanc,
+            currentShadowSOST: req.body.currentShadowSOST,
+            currentSpeaker: req.body.currentSpeaker,
+            pollStationCloseTime: req.body.pollStationCloseTime,
+            dayOfPMQs: req.body.dayOfPMQs,
+            constituencyCount: req.body.constituencyCount,
+            depositPay: req.body.depositPay,
+            electoralSystemName: req.body.electoralSystemName,
+            ethicsAdvisorNames: req.body.ethicsAdvisorNames,
+            inflationPercentage: req.body.inflationPercentage,
+            unemploymentPercentage: req.body.unemploymentPercentage,
+            noConfidenceVoteCount: req.body.noConfidenceVoteCount,
+            publicBillsName: req.body.publicBillsName,
+            opposingArgumentConvince: req.body.opposingArgumentConvince,
+            evidenceAgainstBeliefs: req.body.evidenceAgainstBeliefs,
+            reviseBeliefs: req.body.reviseBeliefs,
+            changingYourMind: req.body.changingYourMind,
+            intuitionIsBest: req.body.intuitionIsBest,
+            perservereBeliefs: req.body.perservereBeliefs,
+            disregardEvidence: req.body.disregardEvidence,
+            foxHedgehogRating: req.body.foxHedgehogRating,
+            politicalInterest: req.body.politicalInterest,
+            politicalSpectrumPosition: req.body.politicalSpectrumPosition,
+            ukPartySupporter: req.body.ukPartySupporter,
+            currentAge: req.body.currentAge,
+            identification: req.body.identification,
+            highestQual: req.body.highestQual,
+            householdIncome: req.body.householdIncome,
+            ukBased: req.body.ukBased,
+        });
+        await newSurveyResponse.save();
+        res.json({ surveySuccess: true });
+    } catch (err) {
+        console.err("Error in users > surveyResponse");
+        console.err(err);
+        res.json({ surveySuccess: false });
+    };
+})
+
 // Picture upload
 router.patch("/imageAPI/:username", parser.single("image"), async (req, res) => {
     try {
@@ -447,7 +501,8 @@ router.patch("/:username", async (req, res) => {
             markets: req.body.markets,
             numberOfClosedForecasts: req.body.numberOfClosedForecasts,
             profilePicture: req.body.profilePicture,
-            articleVisits: req.body.articleVisits
+            articleVisits: req.body.articleVisits,
+            completeSurvey: req.body.completeSurvey
         },
         { new: true }
     );
