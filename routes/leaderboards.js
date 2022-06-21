@@ -115,7 +115,7 @@ router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle/:localStorage
             // };
             // props.setRankingsForTop3([rankings[0], rankings[1], rankings[2]]);
             // setLoading(false);
-            res.json("allUsers");
+            console.log("allUsers");
             res.json(allUsers);
         };
     } catch (err) {
