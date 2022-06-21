@@ -27,6 +27,7 @@ function IndividualLeaderboard(props) {
     // const [averageBrier, setAverageBrier] = useState(0);
     // const [showConfirmationModal, setShowConfirmationModal] = useState(false);
     const [ffData, setFFData] = useState([]);
+    const [rankingsForTop3, setRankingsForTop3] = useState([]);
     // const [leaderboardFilter, setLeaderboardFilter] = useState("all");
 
     useEffect(() => {
@@ -67,9 +68,17 @@ function IndividualLeaderboard(props) {
     
     const getLeaderboardData = async (leaderboard) => {
         try {
-            const lbData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${leaderboard}`);
-            const lbRankings = lbData.data;
-            console.log(lbRankings);
+            // const lbData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${leaderboard}`);
+            // const lbRankings = lbData.data;
+            // console.log(lbRankings);
+            const lbData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/`);
+            console.log(lbData);
+            // let lbRankings = [];
+            // for (let i = 0; i < lbData.data.length; i++) {
+            //     if (lbData.data[i].markets.includes(leaderboard)) {
+            //         lbRankings.push(lbData.data[i]);
+            //     };
+            // };
             // lbRankings.sort((a, b) => b.marketPoints - a.marketPoints);indexOf
             // Removed line below as we have removed creating leagues for now, so no invites needed as all are default true for FFLeaderboards
             // const filtered = filterByInvite(lbRankings);
@@ -79,7 +88,8 @@ function IndividualLeaderboard(props) {
             //     total += lbRankings[i].marketPoints;
             // };
             // setAveragePoints(total / lbRankings.length);
-            setFilteredRankings(lbRankings);
+            // setFilteredRankings(lbRankings);
+            setFilteredRankings(lbData.data);
         } catch (error) {
             console.error("Error occured in getLeaderboardData func in IndividualLeaderboard");
             console.error(error);
@@ -248,7 +258,8 @@ function IndividualLeaderboard(props) {
             </div>
             <div className="leaderboard-spotlight-row">
                 <Top3Users 
-                    rankings={filteredRankings}
+                    // rankings={filteredRankings}
+                    rankingsForTop3={rankingsForTop3}
                     // ffData={ffData}
                 />
                 {/* <LeaderboardSpecificStats 
@@ -280,6 +291,7 @@ function IndividualLeaderboard(props) {
                 username={props.username}
                 isFFLeaderboard={isFFLeaderboard}
                 setUserInMarket={setUserInMarket}
+                setRankingsForTop3={setRankingsForTop3}
                 // setAverageBrier={setAverageBrier}
                 // setFFData={setFFData}
                 // leaderboardFilter={leaderboardFilter}

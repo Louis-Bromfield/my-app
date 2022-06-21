@@ -119,7 +119,7 @@ function ForecastAdmin(props) {
                     newProblemCloseDateTime: newProblemCloseDateTime
                 });
 console.log("17A - SCORES");
-console.log(scores);
+// console.log(scores);
             } else if (closeEarly === false) {
                 console.log("Here3");
                 scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
@@ -127,12 +127,12 @@ console.log(scores);
                 });
             };
 console.log("17B - SCORES");
-console.log(scores);
+// console.log(scores);
             // Market Points
-            const updatedMarket = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/closedProblem/${market}`, {
-                scores: scores.data
-            });
-            console.log(updatedMarket.data);
+            // const updatedMarket = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/closedProblem/${market}`, {
+            //     scores: scores.data
+            // });
+            // console.log(updatedMarket.data);
         } catch (error) {
             console.error("Error in ForecastAdmin > closeAndCalculateBriers");
             console.error(error);

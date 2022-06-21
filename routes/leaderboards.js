@@ -172,7 +172,7 @@ router.patch("/closedProblem/:market", async (req, res) => {
         for (let i = 0; i < req.body.scores.scores.length; i++) {
             const index = marketDocument.rankings.indexOf(marketDocument.rankings.find(el => el.username === req.body.scores.scores[i].username));
             marketDocument.rankings[index].marketPoints += req.body.scores.scores[i].brierScore;
-console.log(`${i} done`);
+// console.log(`${i} done`);
         };
         const updatedMarket = await Leaderboards.findByIdAndUpdate(marketDocument._id, { rankings: marketDocument.rankings }, { new: true });
         res.json(updatedMarket);

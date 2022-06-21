@@ -9,22 +9,25 @@ function Top3Users(props) {
 
     useEffect(() => {
         console.log(props);
-        if (props.rankings.length === 0) {
+        if (props.rankingsForTop3.length === 0) {
             setTopThreeUsers([
                 {
-                    profilePicture: TopUser1
+                    profilePicture: TopUser1,
+                    username: "Top3User1"
                 },
                 {
-                    profilePicture: TopUser2
+                    profilePicture: TopUser2,
+                    username: "Top3User2"
                 },
                 {
-                    profilePicture: TopUser3
+                    profilePicture: TopUser3,
+                    username: "Top3User3"
                 },
-            ])
+            ]);
         } else {
-            setTopThreeUsers(props.rankings);
+            setTopThreeUsers(props.rankingsForTop3);
         };
-    }, [props.rankings]);
+    }, [props.rankingsForTop3]);
 
     return (
         <div className="top-three-users-highlight">
