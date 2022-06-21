@@ -52,7 +52,7 @@ router.get("/leaderboard/:leaderboardName/", async (req, res) => {
 // New version of service above this, as we aren't really using the leaderboard collection anymore
 router.get("/newGetLeaderboardRoute/:leaderboardName", async (req, res) => {
     try {
-        const allUsers = Users.find();
+        const allUsers = await Users.find();
         console.log(allUsers);
         let usersForMarket = [];
         for (let i = 0; i < allUsers.length; i++) {
