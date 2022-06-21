@@ -101,12 +101,17 @@ function ForecastSubmission(props) {
         try {
             // const leaderboardResponse = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${marketName}`);
             const leaderboardResponse = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/newGetLeaderboardRoute/${marketName}`);
-            console.log(leaderboardResponse);
-            let lbRankings = leaderboardResponse.data;
-            // console.log("7777777777777777777777777777777777777777777777");
+            // console.log(leaderboardResponse);
+            for (let i = 0; i < leaderboardResponse.data.length; i++) {
+                leaderboardResponse.data[i].marketPoints = 0;
+                for (let j = 0; j < leaderboardResponse.data[i].brierScores.length; j++) {
+                    if (leaderboardResponse.data[i].brierScores[j].marketName === marketName) {
+                        leaderboardResponse.data[i].marketPoints += leaderboardResponse.data[i].brierScores[j].brierScore;
+                    };
+                };
+            };
+            let lbRankings = leaderboardResponse.data.sort((a, b) => b.marketPoints - a.marketPoints);
             // console.log(lbRankings);
-            // console.log("7777777777777777777777777777777777777777777777");
-            // let newRankings = await lbRankings.sort((a, b) => b.marketPoints - a.marketPoints);
             formatUserRank(lbRankings);
             props.handleLeaderboardChange(lbRankings);
         } catch (error) { 

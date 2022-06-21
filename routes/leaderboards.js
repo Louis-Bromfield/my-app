@@ -57,18 +57,18 @@ router.get("/newGetLeaderboardRoute/:leaderboardName", async (req, res) => {
         let usersForMarket = [];
         for (let i = 0; i < allUsers.length; i++) {
             if (allUsers[i].markets.includes(req.params.leaderboardName)) {
-                console.log("yes it does include this market");
-                allUsers[i].totalForMarket = 0;
-                for (let j = 0; j < allUsers[i].brierScores.length; j++) {
-                    if (allUsers[i].brierScores[j].marketName === req.params.leaderboardName) {
-                        allUsers[i].totalForMarket += allUsers[i].brierScores[j].brierScore;
-                    };
-                };
+                // console.log("yes it does include this market");
+                // allUsers[i].totalForMarket = 0;
+                // for (let j = 0; j < allUsers[i].brierScores.length; j++) {
+                //     if (allUsers[i].brierScores[j].marketName === req.params.leaderboardName) {
+                //         allUsers[i].totalForMarket += allUsers[i].brierScores[j].brierScore;
+                //     };
+                // };
                 usersForMarket.push(allUsers[i]);
-                console.log("new user pushed!");
+                // console.log("new user pushed!");
             };
         };
-        usersForMarket = usersForMarket.sort((a, b) => b.totalScoreForMarket - a.totalScoreForMarket);
+        // usersForMarket = usersForMarket.sort((a, b) => b.totalScoreForMarket - a.totalScoreForMarket);
         console.log(usersForMarket);
         res.json(usersForMarket);
     } catch (err) {
