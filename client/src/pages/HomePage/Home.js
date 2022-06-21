@@ -61,7 +61,7 @@ function Home(props) {
     const getUserInfo = async (username) => {
         try {
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
-            console.log(userDocument);
+            // console.log(userDocument);
             if (userDocument.data[0].numberOfClosedForecasts > 0) {
                 setShowClosedProblemModal(true);
             };

@@ -157,10 +157,6 @@ function Leaderboard(props) {
             // setLoading(false);
             let ffRankings = [];
             for (let i = 0; i < rankings.length; i++) {
-                // if (rankings[i].username === "admin") {
-                //     rankings.splice(rankings[i], 1);
-                //     continue;
-                // };
                 // console.log(rankings[i]);
                 if (rankings[i].markets.includes(props.leaderboardTitle)) {
                     if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {

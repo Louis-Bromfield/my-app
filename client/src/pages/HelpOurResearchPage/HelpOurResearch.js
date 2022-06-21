@@ -6,7 +6,7 @@ function HelpOurResearch(props) {
 
     useEffect(() => {
         // Query database or check user object and check if user has already completed the survey
-        console.log(props);
+        // console.log(props);
         // if (props.userObject !== undefined) {
         //     if (props.userObject.completedSurvey === true) {}
         // }

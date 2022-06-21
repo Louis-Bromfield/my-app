@@ -16,7 +16,7 @@ function HomeProfilePreview(props) {
 
     useEffect(() => {
         console.log("HomeProfilePreviewUE");
-        console.log(props);
+        // console.log(props);
         // if (props.userFFPoints === undefined) {
         //     console.log("here1");
         //     getUserDetails(props.username);
@@ -25,10 +25,10 @@ function HomeProfilePreview(props) {
         //     setFFPoints(props.userFFPoints);
         // };
         if (props.userObj === undefined || props.userObj === {}) {
-            console.log("here1");
+            // console.log("here1");
             getUserDetails(props.username);
         } else {
-            console.log("here2");
+            // console.log("here2");
             setFFPoints(props.userObj.fantasyForecastPoints);
         };
         

@@ -7,7 +7,7 @@ import LeaderboardShortcut from './LeaderboardShortcut';
 function LeaderboardGrid(props) {
     
     useEffect(() => {
-        console.log(props);
+        // console.log(props);
     }, [props])
 
     return (
@@ -32,7 +32,7 @@ function LeaderboardGrid(props) {
                 })}
                 {props.user === false && props.markets.map((item, index) => {
                     // if (item[1] === true) {
-                        console.log("yes is true")
+                        // console.log("yes is true")
                         const leaderboardProps = {
                             pathname: "/leaderboard",
                             leaderboardName: item.leaderboardName,

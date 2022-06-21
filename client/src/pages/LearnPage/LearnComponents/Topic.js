@@ -23,9 +23,9 @@ function Topic(props) {
                 className="youtube-iframe" 
                 src="https://www.youtube.com/embed/9W7rnmEWVmQ" 
                 title="YouTube video player" 
-                frameborder="0" 
+                frameBorder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
+                allowFullScreen>
             </iframe>
             text = TopicContent[1];
             break;

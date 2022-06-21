@@ -23,7 +23,7 @@ function ProfileForecasts(props) {
                     <h3># of Problems Attempted: {brierReverse.length}</h3>
                     {brierReverse.map((item, index) => {
                         return (
-                            <div index={item.problemName} className="profile-forecasts-individual-result">
+                            <div key={item.problemName+index} index={item.problemName} className="profile-forecasts-individual-result">
                                 <div className="problem-header"><h4 style={{ color: "#404d72"}}>Problem:&nbsp;</h4> <h4>{item.problemName}</h4></div>
                                 <div className="score-header"><h4 style={{ color: "#404d72"}}>Score:&nbsp;</h4> <h4>{item.brierScore.toFixed(2)}</h4></div>
                             </div>

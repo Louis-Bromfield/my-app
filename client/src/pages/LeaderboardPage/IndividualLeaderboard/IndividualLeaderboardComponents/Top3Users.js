@@ -8,7 +8,7 @@ function Top3Users(props) {
     const [topThreeUsers, setTopThreeUsers] = useState([]);
 
     useEffect(() => {
-        console.log(props);
+        // console.log(props);
         if (props.rankingsForTop3.length === 0) {
             setTopThreeUsers([
                 {

@@ -59,14 +59,14 @@ function ForecastSubmission(props) {
 
     useEffect(() => {
         console.log("ForecastSubmission UE");
-        console.log(props);
+        // console.log(props);
         getAllForecastsFromDB(props.userObjectMarkets);
         getLeaderboardFromDB(props.selectedForecast.market);
     }, [props.selectedForecast, props.markets, props.allForecasts, props.userObject]);
 
     const getAllForecastsFromDB = async (userMarkets) => {
         try {
-            console.log(userMarkets);
+            // console.log(userMarkets);
             let filtered = [];
             let filteredAndOrganised = [];
             for (let i = 0; i < userMarkets.length; i++) {

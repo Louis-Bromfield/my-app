@@ -146,7 +146,7 @@ function LeaderboardMenu(props) {
                 // setAllUserLeaderboardsWithInviteNotYetAccepted(marketsFilteredByInviteNotYetAccepted);
                 setAllUserLeaderboardsWithInviteAccepted(allUserLeaderboardsFromDB.data);
                 setAllMarkets(allUserLeaderboardsFromDB.data);
-                console.log(allUserLeaderboardsFromDB.data);
+                // console.log(allUserLeaderboardsFromDB.data);
             };
         } catch (error) {
             console.error("Error occured in LeaderboardMenu.js > checkIfUserIsInMarkets");
