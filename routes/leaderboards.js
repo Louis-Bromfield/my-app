@@ -50,6 +50,8 @@ router.get("/leaderboard/:leaderboardName/:localStorageLBName", async (req, res)
 })
 
 // Get all leaderboard info to render
+// Issue at the moment is that none of the additons to the allUsers[i] objects is persisting
+// e.g. line 74: .brierScoresForMarket is non-existent in returned allUsers array of objects
 router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle/:localStorageLBName", async (req, res) => {
     try {
         const allUsers = await Users.find();
@@ -96,41 +98,19 @@ router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle/:localStorage
         };
         // Outside of main loop:
         if (req.params.isFFLeaderboard === false || req.params.leaderboardTitle === "Fantasy Forecast All-Time" || req.params.localStorageLBName === "Fantasy Forecast All-Time") {
-            // const ffRankingsSorted = ffRankings.sort((a, b) => b.marketPoints - a.marketPoints);
-            // setUsersData(ffRankings);
-            // props.setFFData(ffRankings);
-            // props.setRankingsForTop3([ffRankings[0], ffRankings[1], ffRankings[2]]);
-            // setLoading(false);
+            const ffRankingsSorted = ffRankings.sort((a, b) => b.marketPoints - a.marketPoints);
             console.log("ffRankings")
-            // res.json({
-            //     rankings: ffRankingsSorted,
-            //     topThree: [ffRankingsSorted[0], ffRankingsSorted[1], ffRankingsSorted[2]]
-            // });
             res.json({
-                rankings: ffRankings,
-                topThree: [ffRankings[0], ffRankings[1], ffRankings[2]]
+                rankings: ffRankingsSorted,
+                topThree: [ffRankingsSorted[0], ffRankingsSorted[1], ffRankingsSorted[2]]
             });
         } else {
             console.log(allUsers);
-            // props.setAverageBrier(totalAverageBrier / rankings.length);
-            // const allUsersSorted = allUsers.sort((a, b) => b.totalBrier - a.totalBrier);
-            // console.log("++++++++++++++++++++++");
-            // console.log(rankings);
-            // console.log("++++++++++++++++++++++");
-            // setUsersData(rankings);
-            // if (rankings.find(el => el.username === props.username) !== undefined) {
-            //     props.setUserInMarket(true);
-            // };
-            // props.setRankingsForTop3([rankings[0], rankings[1], rankings[2]]);
-            // setLoading(false);
+            const allUsersSorted = allUsers.sort((a, b) => b.totalBrier - a.totalBrier);
             console.log("allUsersSorted");
-            // res.json({
-            //     rankings: allUsersSorted,
-            //     topThree: [allUsersSorted[0], allUsersSorted[1], allUsersSorted[2]]
-            // });
             res.json({
-                rankings: allUsers,
-                topThree: [allUsers[0], allUsers[1], allUsers[2]]
+                rankings: allUsersSorted,
+                topThree: [allUsersSorted[0], allUsersSorted[1], allUsersSorted[2]]
             });
         };
     } catch (err) {
