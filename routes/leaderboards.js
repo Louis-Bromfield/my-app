@@ -50,7 +50,7 @@ router.get("/leaderboard/:leaderboardName/:localStorageLBName", async (req, res)
 })
 
 // Get all leaderboard info to render
-router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle", async (req, res) => {
+router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle/:localStorageLBName", async (req, res) => {
     try {
         const allUsers = await Users.find();
         let ffRankings = [];
@@ -95,12 +95,13 @@ router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle", async (req,
             }
         };
         // Outside of main loop:
-        if (req.params.isFFLeaderboard === false || req.params.leaderboardTitle === "Fantasy Forecast All-Time") {
+        if (req.params.isFFLeaderboard === false || req.params.leaderboardTitle === "Fantasy Forecast All-Time" || req.params.localStorageLBName === "Fantasy Forecast All-Time") {
             ffRankings = ffRankings.sort((a, b) => b.marketPoints - a.marketPoints);
             // setUsersData(ffRankings);
             // props.setFFData(ffRankings);
             // props.setRankingsForTop3([ffRankings[0], ffRankings[1], ffRankings[2]]);
             // setLoading(false);
+            console.log("ffRankings")
             res.json(ffRankings);
         } else {
             // props.setAverageBrier(totalAverageBrier / rankings.length);
@@ -114,6 +115,7 @@ router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle", async (req,
             // };
             // props.setRankingsForTop3([rankings[0], rankings[1], rankings[2]]);
             // setLoading(false);
+            res.json("allUsers");
             res.json(allUsers);
         };
     } catch (err) {
