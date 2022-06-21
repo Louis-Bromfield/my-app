@@ -297,6 +297,12 @@ function ForecastSubmission(props) {
 
     const handleCertaintyChange = (e) => {
         const certainty = e.target.value;
+        console.log(e.target.value);
+        // if (certainty.contains("e") || certainty.contains("--")) {
+        //     setButtonDisabled(true);
+        //     setForecastResponseMessage("Certainty contains letters or symbols it shouldn't. Only numbers are allowed.");
+        //     return;
+        // };
         if (certainty > 100) {
             setButtonDisabled(true);
             setForecastResponseMessage("Please enter a certainty BELOW or equal to 100");
@@ -319,6 +325,12 @@ function ForecastSubmission(props) {
 
     const handleMultipleCertaintyChange = (certaintyVal, e) => {
         const certainty = e.target.value;
+        console.log(e.target.value);
+        // if (certainty.contains("e") || certainty.contains("--")) {
+        //     setButtonDisabled(true);
+        //     setForecastResponseMessage("Certainty contains letters or symbols it shouldn't. Only numbers are allowed.");
+        //     return;
+        // };
         if (certainty > 100) {
             setButtonDisabled(true);
             setForecastResponseMessage("Please enter a certainty BELOW or equal to 100");
@@ -495,8 +507,9 @@ function ForecastSubmission(props) {
                 username: username
             });
 
-           console.log(newForecastTwo);
-           props.changeForecast(newForecastTwo.data);
+            updateOnboarding(username);
+            console.log(newForecastTwo);
+            props.changeForecast(newForecastTwo.data);
 
             // Brute force method
             // const document = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${forecast}`);
