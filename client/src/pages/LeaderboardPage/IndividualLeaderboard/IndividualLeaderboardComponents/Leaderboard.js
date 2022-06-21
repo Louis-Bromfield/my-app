@@ -143,6 +143,7 @@ function Leaderboard(props) {
             const lbFromLS = localStorage.getItem("currentLeaderboardName");
             const leaderboardData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/getAllInfoToRender/${props.isFFLeaderboard}/${props.leaderboardTitle}/${lbFromLS}`);
             console.log(leaderboardData);
+            console.log(leaderboardData.data.rankings);
             // Outside of main loop:
             if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
                 setUsersData(leaderboardData.data.rankings);
