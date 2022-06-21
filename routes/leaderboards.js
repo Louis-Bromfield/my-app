@@ -52,7 +52,7 @@ router.get("/leaderboard/:leaderboardName", async (req, res) => {
 // Get all leaderboard info to render
 router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle", async (req, res) => {
     try {
-        const allUsers = Users.find();
+        const allUsers = await Users.find();
         let ffRankings = [];
         for (let i = 0; i < allUsers.length; i++) {
             if (allUsers[i].markets.includes(req.params.leaderboardTitle)) {
