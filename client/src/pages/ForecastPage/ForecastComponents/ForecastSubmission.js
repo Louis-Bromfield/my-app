@@ -84,7 +84,7 @@ function ForecastSubmission(props) {
                 };
             };
             if (forecastsAreAvailable === false) {
-                setMarketWarning(true)
+                setMarketWarning(true);
             } else {
                 setMarketWarning(false);
             };

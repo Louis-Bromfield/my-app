@@ -86,7 +86,7 @@ const UserSchema = mongoose.Schema({
     },
     markets: {
         type: Array,
-        default: ["Fantasy Forecast All-Time", "UK Politics Practice Tournament"]
+        default: ["Fantasy Forecast All-Time", "UK Politics Practice Tournament", "UK Politics Forecasting Tournament"]
     },
     onboarding: {
         type: Object,

@@ -104,6 +104,18 @@
     color: rgb(100, 216, 100);
 }
 
+.login-success-btn {
+    color: #fff;
+    background-color: #359735;
+    border: none;
+    padding: 1%;
+    cursor: pointer;
+}
+
+.login-success-btn {
+    background-color: #3ab73a;
+}
+
 @media (max-width: 1000px) {
     .signup-container {
         grid-template-columns: 100%;

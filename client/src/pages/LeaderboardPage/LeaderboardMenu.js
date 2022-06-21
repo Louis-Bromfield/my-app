@@ -16,15 +16,15 @@ function LeaderboardMenu(props) {
     // const [leagueName, setLeagueName] = useState("");
     const [shouldRefresh, setShouldRefresh] = useState(0);
     // const [userInNoMarkets, setUserInNoMarkets] = useState(false);
-    const [joinAMarketMenu, setJoinAMarketMenu] = useState(false);
+    // const [joinAMarketMenu, setJoinAMarketMenu] = useState(false);
     // const [manageYourInvitesMenu, setManageYourInvitesMenu] = useState(false);
     const [allMarkets, setAllMarkets] = useState([]);
-    const [marketsForSignUp, setMarketsForSignUp] = useState([]);
+    // const [marketsForSignUp, setMarketsForSignUp] = useState([]);
     const [allUserLeaderboardsWithInviteAccepted, setAllUserLeaderboardsWithInviteAccepted] = useState([]);
     // const [allUserLeaderboardsWithInviteNotYetAccepted, setAllUserLeaderboardsWithInviteNotYetAccepted] = useState([]);
-    const [marketChoiceErrorMessage, setMarketChoiceErrorMessage] = useState("");
-    const [marketChoiceSuccessMessage, setMarketChoiceSuccessMessage] = useState("");
-    const [loading, setLoading] = useState(false);
+    // const [marketChoiceErrorMessage, setMarketChoiceErrorMessage] = useState("");
+    // const [marketChoiceSuccessMessage, setMarketChoiceSuccessMessage] = useState("");
+    // const [loading, setLoading] = useState(false);
     const [causeRefresh, setCauseRefresh] = useState(0);
     // const [isPublic, setIsPublic] = useState();
     // const [isPublicChecked, setIsPublicChecked] = useState(false);
@@ -45,7 +45,7 @@ function LeaderboardMenu(props) {
         // if (userInNoMarkets === true) {
         //     setJoinAMarketMenu(true);
         // };
-    }, [causeRefresh, joinAMarketMenu, props.username]);
+    }, [causeRefresh, props.username]);
 
     // For private leaderboards, their ranking is determined by FantasyForecast Points, or no?
     // const toggleInviteUserToLeague = (username, isGroup) => {
@@ -220,114 +220,115 @@ function LeaderboardMenu(props) {
     //     }
     // };
 
-    const editMarketChoices = (item, marketsForSignUp) => {
-        setMarketChoiceErrorMessage("");
-        let markets = marketsForSignUp;
-        if (marketsForSignUp.includes(item)) {
-            marketsForSignUp.splice(marketsForSignUp.indexOf(item), 1);
-        } else if (!marketsForSignUp.includes(item)) {
-            marketsForSignUp.push(item);
-        };
-        setMarketsForSignUp(markets);
-    };
+    // const editMarketChoices = (item, marketsForSignUp) => {
+    //     setMarketChoiceErrorMessage("");
+    //     let markets = marketsForSignUp;
+    //     if (marketsForSignUp.includes(item)) {
+    //         marketsForSignUp.splice(marketsForSignUp.indexOf(item), 1);
+    //     } else if (!marketsForSignUp.includes(item)) {
+    //         marketsForSignUp.push(item);
+    //     };
+    //     console.log(marketsForSignUp);
+    //     setMarketsForSignUp(markets);
+    // };
 
-    const submitMarketChoices = async (markets, username) => {
-        // console.log(markets);
-        const success = await persistMarketChoicesToDB(markets, username);
-        // console.log(success);
-        if (success === false) {
-            return;
-        } else {
-            updateOnboardingAndUserMarkets(markets, username);
-            // CHARMANDER
-            // const marketsForLS = [localStorage.getItem('markets').split(","), ...markets];
-            // const marketsForLS = [localStorage.getItem('markets').split(","), ...markets];
-            // localStorage.removeItem('markets');
-            // localStorage.setItem('markets', marketsForLS);
-            setTimeout(() => {
-                setLoading(false);
-                if (markets.length === 1) {
-                    setMarketChoiceSuccessMessage("You have successfully joined this market!");
-                } else if (markets.length > 1) {
-                    setMarketChoiceSuccessMessage("You have successfully joined these markets!");
-                }
-                setTimeout(() => {
-                    setMarketChoiceSuccessMessage("");
-                    setCauseRefresh(causeRefresh+1);
-                }, 1500);
-            }, 1000);
-        };
-    };
+    // const submitMarketChoices = async (markets, username) => {
+    //     // console.log(markets);
+    //     const success = await persistMarketChoicesToDB(markets, username);
+    //     // console.log(success);
+    //     if (success === false) {
+    //         return;
+    //     } else {
+    //         updateOnboardingAndUserMarkets(markets, username);
+    //         // CHARMANDER
+    //         // const marketsForLS = [localStorage.getItem('markets').split(","), ...markets];
+    //         // const marketsForLS = [localStorage.getItem('markets').split(","), ...markets];
+    //         // localStorage.removeItem('markets');
+    //         // localStorage.setItem('markets', marketsForLS);
+    //         setTimeout(() => {
+    //             setLoading(false);
+    //             if (markets.length === 1) {
+    //                 setMarketChoiceSuccessMessage("You have successfully joined this market!");
+    //             } else if (markets.length > 1) {
+    //                 setMarketChoiceSuccessMessage("You have successfully joined these markets!");
+    //             }
+    //             setTimeout(() => {
+    //                 setMarketChoiceSuccessMessage("");
+    //                 setCauseRefresh(causeRefresh+1);
+    //             }, 1500);
+    //         }, 1000);
+    //     };
+    // };
 
-    const persistMarketChoicesToDB = async (markets, username) => {
-        if (markets.length === 0) {
-            setMarketChoiceErrorMessage("You must select at least one market to join.");
-            return false;
-        }
-        try {
-            // If we already have a get request for this stuff, set it into state and just pull from that state variable rather than do this request again
-            // Answer: we don't
-            // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
-            setLoading(true);
-            for (let i = 0; i < markets.length; i++) {
-                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/marketSignUp/${markets[i]}`, {
-                    username: username,
-                    profilePicture: props.userObject.profilePicture,
-                    isGroup: props.userObject.isGroup
-                });
-            };
-        } catch (error) {
-            console.error("Error in LeaderboardMenu.js > submitMarketChoices")
-            console.error(error);
-            setMarketChoiceErrorMessage("Something went wrong. Please try again later.");
-        }
-    };
+    // const persistMarketChoicesToDB = async (markets, username) => {
+    //     if (markets.length === 0) {
+    //         setMarketChoiceErrorMessage("You must select at least one market to join.");
+    //         return false;
+    //     }
+    //     try {
+    //         // If we already have a get request for this stuff, set it into state and just pull from that state variable rather than do this request again
+    //         // Answer: we don't
+    //         // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+    //         setLoading(true);
+    //         for (let i = 0; i < markets.length; i++) {
+    //             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/marketSignUp/${markets[i]}`, {
+    //                 username: username,
+    //                 profilePicture: props.userObject.profilePicture,
+    //                 isGroup: props.userObject.isGroup
+    //             });
+    //         };
+    //     } catch (error) {
+    //         console.error("Error in LeaderboardMenu.js > submitMarketChoices")
+    //         console.error(error);
+    //         setMarketChoiceErrorMessage("Something went wrong. Please try again later.");
+    //     }
+    // };
 
-    const updateOnboardingAndUserMarkets = async (markets, username) => {
-        try {
-            const updatedUserDocument = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/onboardingTask/${username}`, {
-                onboardingTask: "joinAMarket",
-                ffPointsIfFalse: 150,
-                ffPointsIfTrue: 5
-            });
-            console.log(updatedUserDocument);
-            if (updatedUserDocument.data.firstTime === true) {
-                setShowModal(true);
-                setModalContent("You just got 150 Fantasy Forecast Points for joining your first market! Before you start forecasting, remember that if you want to be eligible for the tournament prizes (including £250 for 1st Place!), you MUST complete our survey before 11:59pm (BST) on Tuesday 28th June. Failing to do so will render you ineligible for the prizes. The survey can be found by selecting the Survey tab at the top of the screen or the top-left dropdown menu if you're on mobile.");
-            };
-            // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
-            // if (userDocument.data[0].onboarding.joinAMarket === true) {
-            //     userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 5;
-            //     userDocument.data[0].markets = [...userDocument.data[0].markets, ...markets];
-            //     await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
-            //         { 
-            //             onboarding: userDocument.data[0].onboarding,
-            //             fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints,
-            //             markets: userDocument.data[0].markets
-            //         }
-            //     );
-            //     setShowModal(true);
-            //     setModalContent("You just got 5 points for joining a market!");
-            // } else {
-            //     userDocument.data[0].onboarding.joinAMarket = true;
-            //     userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 150;
-            //     userDocument.data[0].markets = [...userDocument.data[0].markets, ...markets];
-            //     await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
-            //         { 
-            //             onboarding: userDocument.data[0].onboarding,
-            //             fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints,
-            //             markets: userDocument.data[0].markets
-            //         }
-            //     );
-            //     setShowModal(true);
-            //     setModalContent("You just got 150 Fantasy Forecast Points for joining your first market! Before you start forecasting, remember that if you want to be eligible for the tournament prizes (including £250 for 1st Place!), you MUST complete our survey before 11:59pm (BST) on Sunday 26th June. Failing to do so will render you ineligible for the prizes. The survey can be found by selecting the Survey tab at the top of the screen or the top-left dropdown menu if you're on mobile.");
-            // }
-        } catch (error) {
-            console.error("Error in LeaderboardMenu > updateOnboarding")
-            console.error(error);
-            setMarketChoiceErrorMessage("Something went wrong. Please try again later.");
-        };
-    };
+    // const updateOnboardingAndUserMarkets = async (markets, username) => {
+    //     try {
+    //         const updatedUserDocument = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/onboardingTask/${username}`, {
+    //             onboardingTask: "joinAMarket",
+    //             ffPointsIfFalse: 150,
+    //             ffPointsIfTrue: 5
+    //         });
+    //         console.log(updatedUserDocument);
+    //         if (updatedUserDocument.data.firstTime === true) {
+    //             setShowModal(true);
+    //             setModalContent("You just got 150 Fantasy Forecast Points for joining your first market! Before you start forecasting, remember that if you want to be eligible for the tournament prizes (including £250 for 1st Place!), you MUST complete our survey before 11:59pm (BST) on Tuesday 28th June. Failing to do so will render you ineligible for the prizes. The survey can be found by selecting the Survey tab at the top of the screen or the top-left dropdown menu if you're on mobile.");
+    //         };
+    //         // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+    //         // if (userDocument.data[0].onboarding.joinAMarket === true) {
+    //         //     userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 5;
+    //         //     userDocument.data[0].markets = [...userDocument.data[0].markets, ...markets];
+    //         //     await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
+    //         //         { 
+    //         //             onboarding: userDocument.data[0].onboarding,
+    //         //             fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints,
+    //         //             markets: userDocument.data[0].markets
+    //         //         }
+    //         //     );
+    //         //     setShowModal(true);
+    //         //     setModalContent("You just got 5 points for joining a market!");
+    //         // } else {
+    //         //     userDocument.data[0].onboarding.joinAMarket = true;
+    //         //     userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 150;
+    //         //     userDocument.data[0].markets = [...userDocument.data[0].markets, ...markets];
+    //         //     await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
+    //         //         { 
+    //         //             onboarding: userDocument.data[0].onboarding,
+    //         //             fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints,
+    //         //             markets: userDocument.data[0].markets
+    //         //         }
+    //         //     );
+    //         //     setShowModal(true);
+    //         //     setModalContent("You just got 150 Fantasy Forecast Points for joining your first market! Before you start forecasting, remember that if you want to be eligible for the tournament prizes (including £250 for 1st Place!), you MUST complete our survey before 11:59pm (BST) on Sunday 26th June. Failing to do so will render you ineligible for the prizes. The survey can be found by selecting the Survey tab at the top of the screen or the top-left dropdown menu if you're on mobile.");
+    //         // }
+    //     } catch (error) {
+    //         console.error("Error in LeaderboardMenu > updateOnboarding")
+    //         console.error(error);
+    //         setMarketChoiceErrorMessage("Something went wrong. Please try again later.");
+    //     };
+    // };
 
     // const respondToInvite = async (market, response, username) => {
     //     try {
@@ -378,8 +379,7 @@ function LeaderboardMenu(props) {
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>
-            <div className="your-markets-button-div">
-                {/* <div></div> */}
+            {/* <div className="your-markets-button-div">
                 {joinAMarketMenu === false &&
                     <button 
                         className="join-a-market-btn" 
@@ -393,7 +393,7 @@ function LeaderboardMenu(props) {
                         onClick={() => {setJoinAMarketMenu(false); setMarketsForSignUp([])}}>
                             Close Market Sign Up
                     </button>
-                }
+                } */}
                 {/* {manageYourInvitesMenu === false &&
                     <button 
                         className="manage-your-invites-btn" 
@@ -422,50 +422,52 @@ function LeaderboardMenu(props) {
                             Close League Creation
                     </button>
                 } */}
-            </div>
-            {joinAMarketMenu === true &&
+            {/* </div> */}
+            {/* {joinAMarketMenu === true &&
                 <div className="market-sign-up-div">
-                    <h2 className="market-list-title">Welcome to the Market Sign Up!</h2>
+                    <h2 className="market-list-title">Welcome to the Market Sign Up!</h2> */}
                     {/* {userInNoMarkets === true && 
                         <h4>You're not currently in any markets (apart from our Fantasy Forecast All-Time leaderboard). Below is a 
                         list of all the public markets available for you to join. You can join simply by checking the box and 
                         pressing "Confirm Market Choices".</h4>
                     } */}
                     {/* {userInNoMarkets === false &&  */}
-                        <h4>Below is a list of all the public markets available for you to join. You can join simply by 
-                        checking the box and pressing "Confirm Market Choices".</h4>
+                        {/* <h4>Below is a list of all the public markets available for you to join. You can join simply by 
+                        checking the box and pressing "Confirm Market Choices".</h4> */}
                     {/* } */}
-                    <div className="markets-list">
+                    {/* <div className="markets-list">
                         <h2 className="market-list-title">Markets</h2>
-                        <ul className="markets-list-ul">
-                            {allMarkets.map((item, index) => {
+                        <ul className="markets-list-ul"> */}
+                            {/* {allMarkets.map((item, index) => {
                                 if (item[0] === "Fantasy Forecast All-Time") {
                                     return null;
-                                } 
-                                else if (item[2] === true && item[3] === false) return (
-                                    <li className="market-selector" key={index}>
-                                        <input type="checkbox" className="market-selector-checkbox" onClick={() => editMarketChoices(item[0], marketsForSignUp)} />
-                                        <h3>{item}</h3>
+                                }  */}
+                                {/* else if (item[2] === true && item[3] === false) return ( */}
+                                {/* {!props.userObject.markets.includes("UK Politics Forecasting Tournament") &&
+                                    <li className="market-selector">
+                                        <input type="checkbox" className="market-selector-checkbox" onClick={() => editMarketChoices("UK Politics Forecasting Tournament", marketsForSignUp)} />
+                                        <h3>UK Politics Forecasting Tournament</h3>
                                     </li>
-                                )
+                                } */}
+                                {/* )
                                 else return null;
-                            })}
-                        </ul>
-                        {marketChoiceErrorMessage !== "" && <h3 style={{ color: "red" }}>{marketChoiceErrorMessage}</h3>}
-                        {marketChoiceSuccessMessage !== "" && <h3 style={{ color: "green" }}>{marketChoiceSuccessMessage}</h3>}
-                        <button 
-                            className="submit-markets-btn" 
-                            onClick={() => submitMarketChoices(marketsForSignUp, props.username)}>
-                                Confirm Market Choices
-                        </button>
-                        {loading === true && 
-                            <div className="loading-div">
-                                <ReactLoading type="bubbles" color="#404d72" height="30%" width="30%"/>
-                            </div>
-                        }
-                    </div>
-                </div>
-            }
+                            })} */}
+                        {/* </ul> */}
+                        {/* {marketChoiceErrorMessage !== "" && <h3 style={{ color: "red" }}>{marketChoiceErrorMessage}</h3>} */}
+                        {/* {marketChoiceSuccessMessage !== "" && <h3 style={{ color: "green" }}>{marketChoiceSuccessMessage}</h3>} */}
+                        {/* <button  */}
+                            {/* className="submit-markets-btn"  */}
+                            {/* onClick={() => submitMarketChoices(marketsForSignUp, props.username)}> */}
+                                {/* Confirm Market Choices */}
+                        {/* </button> */}
+                        {/* {loading === true &&  */}
+                            {/* <div className="loading-div"> */}
+                                {/* <ReactLoading type="bubbles" color="#404d72" height="30%" width="30%"/> */}
+                            {/* </div> */}
+                        {/* } */}
+                    {/* </div> */}
+                {/* </div> */}
+            {/* } */}
             {/* {manageYourInvitesMenu === true &&
                 <div className="manage-your-invites-div">
                     <h2 className="market-list-title">Your Invites</h2>
