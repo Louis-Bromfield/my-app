@@ -43,7 +43,7 @@ router.get("/:username", async (req, res) => {
 });
 
 // Get all the info from one leaderboard
-router.get("/leaderboard/:leaderboardName", async (req, res) => {
+router.get("/leaderboard/:leaderboardName/:localStorageLBName", async (req, res) => {
     const data = await Leaderboards.findOne({ leaderboardName: req.params.leaderboardName });
     const sortedData = data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
     res.json(sortedData);
@@ -74,7 +74,7 @@ router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle", async (req,
                     let numberOfBriersInThisMarket = 0;
                     if (allUsers[i].brierScores.length > 0) {
                         for (let j = 0; j < allUsers[i].brierScores.length; j++) {
-                            if (allUsers[i].brierScores[j].marketName === props.leaderboardTitle || allUsers[i].brierScores[j].marketName === localStorage.getItem('currentLeaderboardName')) {
+                            if (allUsers[i].brierScores[j].marketName === req.params.leaderboardTitle || allUsers[i].brierScores[j].marketName === req.params.localStorageLBName) {
                                 numberOfBriersInThisMarket++;
                                 allUsers[i].brierScoresForMarket.push({
                                     problemName: allUsers[i].brierScores[j].problemName,

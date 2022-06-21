@@ -140,7 +140,7 @@ function Leaderboard(props) {
     const getAllUserFFPoints = async (rankings) => {
         try {
             // const leaderboardName = props.leaderboardTitle === undefined ? localStorage.getItem("currentLeaderboardName") : props.leaderboardTitle;
-            const leaderboardData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/getAllInfoToRender/${props.isFFLeaderboard}/${props.leaderboardTitle}`);
+            const leaderboardData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/getAllInfoToRender/${props.isFFLeaderboard}/${props.leaderboardTitle}/${localStorage.getItem('currentLeaderboardName')}`);
             console.log(leaderboardData);
             // if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
             //     setUsersData(leaderboardData.data.usersData);
