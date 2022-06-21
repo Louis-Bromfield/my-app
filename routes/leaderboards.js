@@ -107,6 +107,7 @@ router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle/:localStorage
                 topThree: [ffRankingsSorted[0], ffRankingsSorted[1], ffRankingsSorted[2]]
             });
         } else {
+            console.log(allUsers);
             // props.setAverageBrier(totalAverageBrier / rankings.length);
             const allUsersSorted = allUsers.sort((a, b) => b.totalBrier - a.totalBrier);
             // console.log("++++++++++++++++++++++");

@@ -143,6 +143,20 @@ function Leaderboard(props) {
             const lbFromLS = localStorage.getItem("currentLeaderboardName");
             const leaderboardData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/getAllInfoToRender/${props.isFFLeaderboard}/${props.leaderboardTitle}/${lbFromLS}`);
             console.log(leaderboardData);
+            // Outside of main loop:
+            if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
+                setUsersData(leaderboardData.data.rankings);
+                props.setRankingsForTop3(leaderboardData.data.topThree);
+                setLoading(false);
+                return;
+            } else {
+                setUsersData(leaderboardData.data.rankings);
+                if (leaderboardData.data.rankings.find(el => el.username === props.username) !== undefined) {
+                    props.setUserInMarket(true);
+                };
+                props.setRankingsForTop3(leaderboardData.data.topThree);
+                setLoading(false);
+            };
             // if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
             //     setUsersData(leaderboardData.data.usersData);
             //     props.setFFData(leaderboardData.data.ffData);
@@ -151,72 +165,72 @@ function Leaderboard(props) {
             // }
             // props.setUserInMarket(leaderboardData.data.userInMarket);
             // setLoading(false);
-            let ffRankings = [];
-            for (let i = 0; i < rankings.length; i++) {
-                // console.log(rankings[i]);
-                if (rankings[i].markets.includes(props.leaderboardTitle)) {
-                    if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
-                        ffRankings[i] = {
-                            profilePicture: rankings[i].profilePicture,
-                            username: rankings[i].username,
-                            marketPoints: 0.0,
-                            brierScores: [],
-                            avgAllTimeBrier: 0.0
-                          };
-                          ffRankings[i].profilePicture = rankings[i].profilePicture;
-                          ffRankings[i].username = rankings[i].username;
-                          ffRankings[i].marketPoints = rankings[i].fantasyForecastPoints;
-                          ffRankings[i].brierScores = rankings[i].brierScores;
-                    } else {
-                        // console.log("here in else!");
-                        rankings[i].brierScoresForMarket = [];
-                        let totalBrier = 0;
-                        let numberOfBriersInThisMarket = 0;
-                        if (rankings[i].brierScores.length > 0) {
-                            // console.log("yeah more than 1 score");
-                            for (let j = 0; j < rankings[i].brierScores.length; j++) {
-                                if (rankings[i].brierScores[j].marketName === props.leaderboardTitle || rankings[i].brierScores[j].marketName === localStorage.getItem('currentLeaderboardName')) {
-                                    // console.log("yeah there's a score from this market here");
-                                    numberOfBriersInThisMarket++;
-                                    rankings[i].brierScoresForMarket.push({
-                                        problemName: rankings[i].brierScores[j].problemName,
-                                        brierScore: rankings[i].brierScores[j].brierScore
-                                    });
-                                    totalBrier += rankings[i].brierScores[j].brierScore;
-                                };
-                            };
-                        };
-                        if (rankings[i].brierScores.length === 0) {
-                            rankings[i].avgBrierScore = 0;
-                        } else {
-                            let avgBrierScore = totalBrier / numberOfBriersInThisMarket;
-                            rankings[i].avgBrierScore = isNaN(avgBrierScore) ? 0.0 : totalBrier/numberOfBriersInThisMarket;
-                            rankings[i].totalBrier = totalBrier;
-                        };
-                    };
-                };
-            };
-            // Outside of main loop:
-            if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
-                ffRankings = ffRankings.sort((a, b) => b.marketPoints - a.marketPoints);
-                setUsersData(ffRankings);
-                // props.setFFData(ffRankings);
-                props.setRankingsForTop3([ffRankings[0], ffRankings[1], ffRankings[2]]);
-                setLoading(false);
-                return;
-            } else {
-                // props.setAverageBrier(totalAverageBrier / rankings.length);
-                rankings = rankings.sort((a, b) => b.totalBrier - a.totalBrier);
-                // console.log("++++++++++++++++++++++");
-                // console.log(rankings);
-                // console.log("++++++++++++++++++++++");
-                setUsersData(rankings);
-                if (rankings.find(el => el.username === props.username) !== undefined) {
-                    props.setUserInMarket(true);
-                };
-                props.setRankingsForTop3([rankings[0], rankings[1], rankings[2]]);
-                setLoading(false);
-            };
+            // let ffRankings = [];
+            // for (let i = 0; i < rankings.length; i++) {
+            //     // console.log(rankings[i]);
+            //     if (rankings[i].markets.includes(props.leaderboardTitle)) {
+            //         if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
+            //             ffRankings[i] = {
+            //                 profilePicture: rankings[i].profilePicture,
+            //                 username: rankings[i].username,
+            //                 marketPoints: 0.0,
+            //                 brierScores: [],
+            //                 avgAllTimeBrier: 0.0
+            //               };
+            //               ffRankings[i].profilePicture = rankings[i].profilePicture;
+            //               ffRankings[i].username = rankings[i].username;
+            //               ffRankings[i].marketPoints = rankings[i].fantasyForecastPoints;
+            //               ffRankings[i].brierScores = rankings[i].brierScores;
+            //         } else {
+            //             // console.log("here in else!");
+            //             rankings[i].brierScoresForMarket = [];
+            //             let totalBrier = 0;
+            //             let numberOfBriersInThisMarket = 0;
+            //             if (rankings[i].brierScores.length > 0) {
+            //                 // console.log("yeah more than 1 score");
+            //                 for (let j = 0; j < rankings[i].brierScores.length; j++) {
+            //                     if (rankings[i].brierScores[j].marketName === props.leaderboardTitle || rankings[i].brierScores[j].marketName === localStorage.getItem('currentLeaderboardName')) {
+            //                         // console.log("yeah there's a score from this market here");
+            //                         numberOfBriersInThisMarket++;
+            //                         rankings[i].brierScoresForMarket.push({
+            //                             problemName: rankings[i].brierScores[j].problemName,
+            //                             brierScore: rankings[i].brierScores[j].brierScore
+            //                         });
+            //                         totalBrier += rankings[i].brierScores[j].brierScore;
+            //                     };
+            //                 };
+            //             };
+            //             if (rankings[i].brierScores.length === 0) {
+            //                 rankings[i].avgBrierScore = 0;
+            //             } else {
+            //                 let avgBrierScore = totalBrier / numberOfBriersInThisMarket;
+            //                 rankings[i].avgBrierScore = isNaN(avgBrierScore) ? 0.0 : totalBrier/numberOfBriersInThisMarket;
+            //                 rankings[i].totalBrier = totalBrier;
+            //             };
+            //         };
+            //     };
+            // };
+            // // Outside of main loop:
+            // if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
+            //     ffRankings = ffRankings.sort((a, b) => b.marketPoints - a.marketPoints);
+            //     setUsersData(ffRankings);
+            //     // props.setFFData(ffRankings);
+            //     props.setRankingsForTop3([ffRankings[0], ffRankings[1], ffRankings[2]]);
+            //     setLoading(false);
+            //     return;
+            // } else {
+            //     // props.setAverageBrier(totalAverageBrier / rankings.length);
+            //     rankings = rankings.sort((a, b) => b.totalBrier - a.totalBrier);
+            //     // console.log("++++++++++++++++++++++");
+            //     // console.log(rankings);
+            //     // console.log("++++++++++++++++++++++");
+            //     setUsersData(rankings);
+            //     if (rankings.find(el => el.username === props.username) !== undefined) {
+            //         props.setUserInMarket(true);
+            //     };
+            //     props.setRankingsForTop3([rankings[0], rankings[1], rankings[2]]);
+            //     setLoading(false);
+            // };
         //   let ffRankings = [];
         //   for (let i = 0; i < rankings.length; i++) {
         //     // console.log(rankings[i]);
