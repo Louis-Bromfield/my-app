@@ -102,7 +102,10 @@ router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle/:localStorage
             // props.setRankingsForTop3([ffRankings[0], ffRankings[1], ffRankings[2]]);
             // setLoading(false);
             console.log("ffRankingsSorted")
-            res.json(ffRankingsSorted);
+            res.json({
+                rankings: ffRankingsSorted,
+                topThree: [ffRankingsSorted[0], ffRankingsSorted[1], ffRankingsSorted[2]]
+            });
         } else {
             // props.setAverageBrier(totalAverageBrier / rankings.length);
             const allUsersSorted = allUsers.sort((a, b) => b.totalBrier - a.totalBrier);
@@ -116,7 +119,10 @@ router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle/:localStorage
             // props.setRankingsForTop3([rankings[0], rankings[1], rankings[2]]);
             // setLoading(false);
             console.log("allUsersSorted");
-            res.json(allUsersSorted);
+            res.json({
+                rankings: allUsersSorted,
+                topThree: [allUsersSorted[0], allUsersSorted[1], allUsersSorted[2]]
+            });
         };
     } catch (err) {
         console.error("Error in getAllInfoToRender");
