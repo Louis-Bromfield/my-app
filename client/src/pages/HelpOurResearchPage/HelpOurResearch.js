@@ -167,6 +167,10 @@ function HelpOurResearch(props) {
                     you will not be eligible for the prizes.</b> 
                 </p>
                 <br />
+                <p>Our focus in this work will be to look at the relationship between political knowledge and forecasting accuracy and, importantly, your answers to these questions don't bear on the tournament - so please answer honestly and don't worry if you don't know the answers to some of the questions (i.e., don't just look them up online!).</p>
+                <br />
+                <p>Please note that these data will be used for research purposes only and user anonymity will be maintained in any research publications.</p>
+                <br />
                 <h3 style={{ "color": "#404d72" }}>Withdrawal</h3>
                 <p>If you fill out the survey but change your mind as to being included in the study, please email <b>fantasyforecastcontact@gmail.com</b> and let us know. You will still be able to participate
                 in the tournament as normal, but please be aware, however, that withdrawing from the survey will make you ineligible for the prizes. You are also able to withdraw your data from our paper after
