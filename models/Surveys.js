@@ -5,9 +5,6 @@ const SurveysSchema = mongoose.Schema({
     username: {
         type: String,
     },
-    submitMsg: {
-        type: String
-    },
     selfAssessedPolKnowledge: {
         type: String
     },
