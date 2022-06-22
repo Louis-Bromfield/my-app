@@ -118,20 +118,24 @@ router.get("/globalData", async (req, res) => {
         let averageBrier = 0;
         let totalBrier = 0;
         let brierCount = 0;
+        let bestChanged = false;
+        let worstChanged = false;
         for (let i = 0; i < allUsers.length; i++) {
             for (let j = 0; j < allUsers[i].brierScores.length; j++) {
                 if (allUsers[i].brierScores[j].brierScore >= bestBrier) {
                     bestBrier = allUsers[i].brierScores[j].brierScore;
+                    bestChanged = true;
                 };
                 if (allUsers[i].brierScores[j].brierScore <= worstBrier) {
                     worstBrier = allUsers[i].brierScores[j].brierScore;
+                    worstChanged = true;
                 };
                 brierCount++;
                 totalBrier += allUsers[i].brierScores[j].brierScore;
             };
         };
         averageBrier = totalBrier / brierCount;
-        res.json({ bestBrier: bestBrier, worstBrier: worstBrier, averageBrier: averageBrier });
+        res.json({ bestBrier: bestChanged === true ? bestBrier : -1, worstBrier: worstChanged === true ? worstBrier : -1, averageBrier: averageBrier });
     } catch (error) {
         console.error("Error in router.get/globalData in users.js");
         console.error(error);

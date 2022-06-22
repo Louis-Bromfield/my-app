@@ -48,9 +48,9 @@ function ProfileStats(props) {
     const getGlobalData = async () => {
         try {
             const res = await axios.get('https://fantasy-forecast-politics.herokuapp.com/users/globalData');
-            setGlobalBestBrier(res.data.bestBrier.toFixed(0));
-            setGlobalWorstBrier(res.data.worstBrier.toFixed(0));
-            setGlobalAverageBrier(res.data.averageBrier.toFixed(0));
+            setGlobalBestBrier((res.data.bestBrier === null || res.data.bestBrier === -1)  ? "N/A" : res.data.bestBrier.toFixed(0));
+            setGlobalWorstBrier((res.data.worstBrier === null || res.data.worstBrier === -1) ? "N/A" : res.data.worstBrier.toFixed(0));
+            setGlobalAverageBrier(res.data.averageBrier === null ? "N/A" : res.data.averageBrier.toFixed(0));
         } catch (error) {
             console.error("Error in ProfileStats > getGlobalData");
             console.error(error);
