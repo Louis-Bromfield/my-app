@@ -62,6 +62,14 @@ function ForecastSubmission(props) {
         // console.log(props);
         getAllForecastsFromDB(props.userObjectMarkets);
         getLeaderboardFromDB(props.selectedForecast.market);
+        // console.log("+++++++++++++++++++++++");
+        // console.log(props.selectedForecast);
+        // console.log(typeof props.selectedForecast);
+        // // if props.selectedForecast !== somehting then fire the pullForecastDetails function?
+        // if (props.selectedForecast !== "") {
+        //     pullForecastDetailsAndCheckIfAlreadyAttempted(props.selectedForecast);
+        // }
+        // console.log("+++++++++++++++++++++++");
     }, [props.selectedForecast, props.markets, props.allForecasts, props.userObject]);
 
     const getAllForecastsFromDB = async (userMarkets) => {
@@ -137,6 +145,7 @@ function ForecastSubmission(props) {
             pullForecastDetailsAndCheckIfAlreadyAttempted(e.target.value);
             setIsInputDisabled(false);
             getForecastDetails(e.target.value);
+            setForecastResponseMessage("");
         };
     };
 
@@ -525,7 +534,6 @@ function ForecastSubmission(props) {
                 newForecastObject: newForecastObj,
                 username: username
             });
-
             updateOnboarding(username);
             console.log(newForecastTwo);
             props.changeForecast(newForecastTwo.data);
@@ -738,7 +746,7 @@ function ForecastSubmission(props) {
                     {/* {selectedForecast.includes("Politico's") && <h2><a href="https://www.politico.eu/europe-poll-of-polls/united-kingdom/" target="_blank">Click Here For Politico's Poll of Polls</a></h2>} */}
                     {/* <br /> */}
                     <div className="forecast-submission-and-error-container">
-                        {forecastSingleCertainty === true &&
+                        {(forecastSingleCertainty === true && (forecastResponseMessage !== "Forecast successfully updated!" && forecastResponseMessage !== "Forecast successfully submitted!")) &&
                             <div className="forecast-submission-input">
                                 <div className="forecast-submission-input-certainty-section">
                                     <h3>Your Certainty (0.00 - 100.00%)</h3>
@@ -841,7 +849,7 @@ function ForecastSubmission(props) {
                                 }
                             </div>
                         }
-                        {forecastSingleCertainty === false && 
+                        {(forecastSingleCertainty === false && (forecastResponseMessage !== "Forecast successfully updated!" && forecastResponseMessage !== "Forecast successfully submitted!")) &&
                             <div className="multiple-forecast-submission-input">
                                 <div className="forecast-submission-input-certainty-section">
                                     <h3>
@@ -980,11 +988,31 @@ function ForecastSubmission(props) {
                     <div className="forecast-submission-potential-scores">
                         <div className="placeholder-container-no-error">
                             <div className="last-certainty-div">
-                                <h2 className="previous-attempt-titles">Your Last Forecast:</h2>
+                                <h2 className="previous-attempt-titles">
+                                    Your Last Forecast:
+                                    <FaInfoCircle 
+                                        color={"orange"} 
+                                        className="modal-i-btn"
+                                        onClick={() => { 
+                                            setShowModal(true); 
+                                            setModalContent(`If you submit a forecast, click on a different problem from the dropdown menu, and then click back onto this one, the "Your Last Forecast" and "Your Last Comments" field may not have updated and still be showing an older forecast or none at all if you had only submitted one forecast for this problem. Don't worry, it's there, you just need to refresh the page :) I'm working on some code to avoid having to refresh to double-check your forecast is there, but for now please don't worry! - Louis`); 
+                                        }}
+                                    />
+                                </h2>
                                 <h3>{userPreviousAttemptCertainty}%</h3>
                             </div>
                             <div className="last-comments-div">
-                                <h2 className="previous-attempt-titles">Your Last Comments:</h2>
+                                <h2 className="previous-attempt-titles">
+                                    Your Last Comments:
+                                    <FaInfoCircle 
+                                        color={"orange"} 
+                                        className="modal-i-btn"
+                                        onClick={() => { 
+                                            setShowModal(true); 
+                                            setModalContent(`If you submit a forecast, click on a different problem from the dropdown menu, and then click back onto this one, the "Your Last Forecast" and "Your Last Comments" field may not have updated and still be showing an older forecast or none at all if you had only submitted one forecast for this problem. Don't worry, it's there, you just need to refresh the page :) I'm working on some code to avoid having to refresh to double-check your forecast is there, but for now please don't worry! - Louis`); 
+                                        }}
+                                    />
+                                </h2>
                                 <h4>{userPreviousAttemptComments.includes("~") ? userPreviousAttemptComments.split("~")[1] : userPreviousAttemptComments}</h4>
                             </div>
                         </div>

@@ -14,6 +14,7 @@ function Forecast(props) {
     const [allForecasts, setAllForecasts] = useState([]);
 
     const handleForecastChange = (newForecast) => {
+        console.log("yes there's been a change");
         setForecast(newForecast);
     };
 
