@@ -181,7 +181,7 @@ function HelpOurResearch(props) {
             {/* <p>If you do not know the answer to any questions that require you to type out a response, please type "N/A".</p> */}
             {(props.userObject !== undefined && props.userObject.completedSurvey === false) && 
                 <div className="form-container">
-                    <h3 style={{ "color": "#404d72" }}>If you don't know the answer/what to write, please type "N/A".</h3>
+                    <h3 style={{ "color": "#404d72" }}>If you don't know the answer/what to write, please type "D/K".</h3>
                     <br />
                     <form className="survey-form">
                         <label htmlFor="question1-self-described-knowledge"><b>1. Which of the following do you feel best describes how knowledgeable you are about UK Politics?</b></label>
