@@ -119,36 +119,34 @@ function App() {
             // here instead?
 
             // Might be able to avoid using localStorage then right? It's possible.
-            // pullAllInfoFromDBToPassDown(username)
+            console.log(localStorage.getItem("username"));
+            console.log(cookie.username);
+            pullAllInfoFromDBToPassDown(localStorage.getItem("username") === undefined ? cookie.username : localStorage.getItem("username"))
     //   };
   }, [isLoggedIn, cookie.username]);
 
-//   const pullAllInfoFromDBToPassDown = async (username) => {
-//       try {
-//         const userPulledFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);  
-//         console.log(userPulledFromDB);
-//         // ----------------
-//         // Add in JWT verification here? That way if someone changes their username in localstorage, we do a check
-//         // to see if their JWT matches the one stored in the database and if it fails just return here and don't
-//         // grab any more, that would leave it as ok for their username to be in LS and this function to work, I think
+  const pullAllInfoFromDBToPassDown = async (username) => {
+      try {
+          console.log("fired");
+        const userPulledFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);  
+        console.log(userPulledFromDB);
 
-//         // ----------------
-//         setUserObject(userPulledFromDB.data[0]);
-//         setUsername(userPulledFromDB.data[0].username);
-//         setUserFFPoints(userPulledFromDB.data[0].fantasyForecastPoints);
-//         setMarkets(userPulledFromDB.data[0].markets);
-//         setProfilePicture(userPulledFromDB.data[0].profilePicture);
-//         setUserOnboarding(userPulledFromDB.data[0].onboarding);
-//         setUserClosedForecastCount(userPulledFromDB.data[0].numberOfClosedForecasts);
-//         setUserBrierScores(userPulledFromDB.data[0].brierScores);
+        setUserObject(userPulledFromDB.data[0]);
+        setUsername(userPulledFromDB.data[0].username);
+        setUserFFPoints(userPulledFromDB.data[0].fantasyForecastPoints);
+        setMarkets(userPulledFromDB.data[0].markets);
+        setProfilePicture(userPulledFromDB.data[0].profilePicture);
+        setUserOnboarding(userPulledFromDB.data[0].onboarding);
+        setUserClosedForecastCount(userPulledFromDB.data[0].numberOfClosedForecasts);
+        setUserBrierScores(userPulledFromDB.data[0].brierScores);
 
-//         console.log(userPulledFromDB.data[0].brierScores);
+        console.log(userPulledFromDB.data[0].brierScores);
 
-//       } catch(error) {
-//           console.error("Error in pAIFDBTPD");
-//           console.error(error);
-//       };
-//   };
+      } catch(error) {
+          console.error("Error in pAIFDBTPD");
+          console.error(error);
+      };
+  };
 
   return (
     <div className="main-div">
