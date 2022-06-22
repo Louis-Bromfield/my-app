@@ -119,8 +119,8 @@ function App() {
             // here instead?
 
             // Might be able to avoid using localStorage then right? It's possible.
-            console.log(localStorage.getItem("username"));
-            console.log(cookie.username);
+            // console.log(localStorage.getItem("username"));
+            // console.log(cookie.username);
             pullAllInfoFromDBToPassDown(localStorage.getItem("username") === undefined ? cookie.username : localStorage.getItem("username"))
     //   };
   }, [isLoggedIn, cookie.username]);
@@ -129,7 +129,7 @@ function App() {
       try {
           console.log("fired");
         const userPulledFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);  
-        console.log(userPulledFromDB);
+        // console.log(userPulledFromDB);
 
         setUserObject(userPulledFromDB.data[0]);
         setUsername(userPulledFromDB.data[0].username);
@@ -140,7 +140,7 @@ function App() {
         setUserClosedForecastCount(userPulledFromDB.data[0].numberOfClosedForecasts);
         setUserBrierScores(userPulledFromDB.data[0].brierScores);
 
-        console.log(userPulledFromDB.data[0].brierScores);
+        // console.log(userPulledFromDB.data[0].brierScores);
 
       } catch(error) {
           console.error("Error in pAIFDBTPD");

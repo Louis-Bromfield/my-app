@@ -437,12 +437,13 @@ function ForecastSubmission(props) {
 
             let date = new Date().toString();
             let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
-            let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20));
+            let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20)).toString();
+            let nDateBSTSuffix = nDate.slice(0, 25) + "GMT+0100 (British Summer Time)";
             const newForecastObj = {
                 certainty: newCertainty, 
                 comments: `(${username})~ ${newComments}`, 
                 // date: new Date().toString()
-                date: nDate.toString()
+                date: nDateBSTSuffix
             };
             const newForecastTwo = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
                 documentID: selectedForecastDocumentID,
@@ -470,14 +471,15 @@ function ForecastSubmission(props) {
         try {
             let date = new Date().toString();
             let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
-            let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20));
+            let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20)).toString();
+            let nDateBSTSuffix = nDate.slice(0, 25) + "GMT+0100 (British Summer Time)";
             const submittedForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/submit`, {
                 problemName: forecast,
                 username: username,
                 certainty: certainty,
                 comments: `(${username})~ ${comments}`,
                 // date: new Date().toString()
-                date: nDate.toString()
+                date: nDateBSTSuffix
             });
             setForecastResponseMessage("Forecast successfully submitted!")
             updateOnboarding(username);
@@ -506,7 +508,8 @@ function ForecastSubmission(props) {
         try {
             let date = new Date().toString();
             let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
-            let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20));
+            let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20)).toString();
+            let nDateBSTSuffix = nDate.slice(0, 25) + "GMT+0100 (British Summer Time)";
             const newForecastObj = {
                 certainties: {
                     certainty1: newCertainty1, 
@@ -515,7 +518,7 @@ function ForecastSubmission(props) {
                 },
                 comments: `(${username})~ ${newComments}`, 
                 // date: new Date().toString()
-                date: nDate.toString()
+                date: nDateBSTSuffix
             };
             const newForecastTwo = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple`, {
                 documentID: selectedForecastDocumentID,
@@ -580,7 +583,8 @@ function ForecastSubmission(props) {
         try {
             let date = new Date().toString();
             let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
-            let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20));
+            let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20)).toString();
+            let nDateBSTSuffix = nDate.slice(0, 25) + "GMT+0100 (British Summer Time)";
             const submittedForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/submitMultiple`, {
                 problemName: forecast,
                 username: username,
@@ -589,7 +593,7 @@ function ForecastSubmission(props) {
                 certainty3: certainty3,
                 comments: `(${username})~ ${comments}`,
                 // date: new Date().toString()
-                date: nDate.toString()
+                date: nDateBSTSuffix
             });
             setForecastResponseMessage("Forecast successfully submitted!")
             updateOnboarding(username);
