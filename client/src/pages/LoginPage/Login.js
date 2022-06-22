@@ -47,7 +47,7 @@ function Login(props) {
                     setCredentialsSuccessfullyChecked(true);
                     // CHARMANDER - possibly allow this but delete it from localstorage when you get to home
                     localStorage.setItem("username", uName);
-                    setCookie('username', uName, { path: "/"});
+                    setCookie('username', uName, { path: "/", sameSite: "lax" });
                 };
             } catch (error) {
                 console.error("Error in Login > checkCredentials");
@@ -77,7 +77,7 @@ function Login(props) {
             } else {
                 props.setUserObject(userObj.data);
                 props.setUsername(userObj.data.username);
-                setCookie('username', userObj.data.username, { path: "/" });
+                setCookie('username', userObj.data.username, { path: "/", sameSite: "lax" });
                 // document.cookie = `usernameD=${userObj.data.username};path=/;secure:true`;
                 props.setUserFFPoints(userObj.data.fantasyForecastPoints);
                 props.setName(userObj.data.username);
