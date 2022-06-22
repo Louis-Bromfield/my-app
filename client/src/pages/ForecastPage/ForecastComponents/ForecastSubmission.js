@@ -384,11 +384,15 @@ function ForecastSubmission(props) {
     };
 
     const handleCommentsChange = (e) => {
+        setButtonDisabled(false);
         setForecastResponseMessage("");
         setForecastComments(e.target.value);
         if (e.target.value.length === 0) {
             setButtonDisabled(true);
             setForecastResponseMessage("Please enter a comment.");
+        } else if (e.target.value.includes("~")) {
+            setButtonDisabled(true);
+            setForecastResponseMessage("~ symbol is not allowed.");
         };
     };
 
