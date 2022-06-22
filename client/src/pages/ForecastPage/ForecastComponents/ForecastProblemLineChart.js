@@ -24,6 +24,9 @@ function ForecastProblemLineChart(props) {
 
   useEffect(() => {
     formatCertainties(props.selectedForecast, props.updateTodayStats, props.username);
+    console.log("==================");
+    console.log(props.selectedForecast);
+    console.log("==================");
     console.log("Line Chart UE");
   }, [props.selectedForecast, props.refresh]);
 
@@ -40,6 +43,7 @@ function ForecastProblemLineChart(props) {
         // Forecasts Submitted
         let lastForecastDate = "";
         let newCertainties = selectedForecast.submittedForecasts;
+        console.log(newCertainties);
         let userData = {
             label: "Your Forecasts",
             data: [],
@@ -68,18 +72,23 @@ function ForecastProblemLineChart(props) {
         if (newCertainties.length > 0 || newCertainties[0] === '') {
             for (let i = 0; i < newCertainties.length; i++) {
                 for (let j = 0; j < newCertainties[i].forecasts.length; j++) {
+                    console.log(newCertainties[i].forecasts[j]);
                     // if it's on a new day to the one before, keep that one and add this one in as a new data point
                     if (newCertainties[i].forecasts[j].date.slice(0, sliceIndex) !== lastForecastDate) {
+                        console.log(`no ${newCertainties[i].forecasts[j].date.slice(0, sliceIndex)} !== ${lastForecastDate}`);
                         data.data.push({
+                            username: newCertainties[i].username,
                             x: new Date(newCertainties[i].forecasts[j].date).toString().slice(0, sliceIndex),
                             y: ((newCertainties[i].forecasts[j].certainty)*100),
                             description: newCertainties[i].forecasts[j].comments
                         });
                         // set the lastForecastDate for comparing the next forecast
                         lastForecastDate = data.data[data.data.length-1].x;
+                        console.log("lastForecastDate updated to " + lastForecastDate);
                         // if it's from the logged in user, also add to a separate dataset
                         if (newCertainties[i].username === username) {
                             userData.data.push({
+                                username: newCertainties[i].username,
                                 x: new Date(newCertainties[i].forecasts[j].date).toString().slice(0, sliceIndex), 
                                 y: ((newCertainties[i].forecasts[j].certainty)*100),
                                 description: newCertainties[i].forecasts[j].comments
@@ -87,20 +96,43 @@ function ForecastProblemLineChart(props) {
                         }
                     // else if it is from the same day as the last forecast, replace the last forecast with this newer one
                     } else if (newCertainties[i].forecasts[j].date.slice(0, sliceIndex) === lastForecastDate) {
-                        data.data[data.data.length-1] = ({
-                            x: new Date(newCertainties[i].forecasts[j].date).toString().slice(0, sliceIndex), 
-                            y: ((newCertainties[i].forecasts[j].certainty)*100),
-                            description: newCertainties[i].forecasts[j].comments
-                        });
+                        console.log(`yes ${newCertainties[i].forecasts[j].date.slice(0, sliceIndex)} === ${lastForecastDate}`);
+                        // this should ONLY be doing data.data[data.data.length-1] = ({ if the previous forecast located at data.data[data.data.length-1] was from
+                        // the same user as the one you're working with right now (that's how the multi outcome chart works) - what this code is doing is 
+                        // overriding the last forecast in the chart's data if they're from the same date, so it's always overriding them and whoever was last that
+                        // day is the only one being shown
+
+                        // fix to above is added below, previously it was just doing the data.data[data.data.length-1] = {( )} EVERY TIME
+                        // now there's checking and this seems to work
+
+                        // if current forecast object username === last forecast stored in chart data, replace
+                        if (newCertainties[i].username === data.data[data.data.length-1].username) {
+                            data.data[data.data.length-1] = ({
+                                username: newCertainties[i].username,
+                                x: new Date(newCertainties[i].forecasts[j].date).toString().slice(0, sliceIndex), 
+                                y: ((newCertainties[i].forecasts[j].certainty)*100),
+                                description: newCertainties[i].forecasts[j].comments
+                            });
+                        } else {
+                        // else, just push it as it's a different user
+                            data.data.push({
+                                username: newCertainties[i].username,
+                                x: new Date(newCertainties[i].forecasts[j].date).toString().slice(0, sliceIndex), 
+                                y: ((newCertainties[i].forecasts[j].certainty)*100),
+                                description: newCertainties[i].forecasts[j].comments
+                            });
+                        };
                         if (newCertainties[i].username === username) {
                             if (userData.data.length === 0) {
                                 userData.data.push({
+                                    username: newCertainties[i].username,
                                     x: new Date(newCertainties[i].forecasts[j].date).toString().slice(0, sliceIndex), 
                                     y: ((newCertainties[i].forecasts[j].certainty)*100),
                                     description: newCertainties[i].forecasts[j].comments
                                 });
                             } else if (userData.data.length !== 0) {
                                 userData.data[userData.data.length-1] = ({
+                                    username: newCertainties[i].username,
                                     x: new Date(newCertainties[i].forecasts[j].date).toString().slice(0, sliceIndex), 
                                     y: ((newCertainties[i].forecasts[j].certainty)*100),
                                     description: newCertainties[i].forecasts[j].comments
@@ -118,6 +150,7 @@ function ForecastProblemLineChart(props) {
                     todayForecasts.push(data.data[i].x);
                 };
             };
+            console.log(data.data);
             const dailyAverages = getNewDailyAverages(data.data, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate), selectedForecast.isClosed);
             updateTodayStats(`${dailyAverages[dailyAverages.length-1].y.toFixed(2)}%`, todayForecasts.length);
             // Simulate data for days with no predictions
