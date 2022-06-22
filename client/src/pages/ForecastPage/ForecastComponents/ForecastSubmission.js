@@ -244,6 +244,7 @@ function ForecastSubmission(props) {
 
     // Nested loop - clean this up if you can. Over half the lines are state setting but could be moved to backend?
     const pullForecastDetailsAndCheckIfAlreadyAttempted = (forecast) => {
+        console.log(forecast);
         for (let i = 0; i < forecastProblems.length; i++) {
             if (forecastProblems[i].problemName === forecast) {
                 setSelectedForecastMarket(forecastProblems[i].market);

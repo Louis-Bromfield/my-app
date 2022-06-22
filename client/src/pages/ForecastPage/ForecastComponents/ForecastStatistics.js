@@ -18,167 +18,167 @@ function ForecastStatistics(props) {
     }, [props.selectedForecast]);
 
     const getForecastInfo = async (today, selectedForecast) => {
-        const response = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/getDetailedForecastInfo/${selectedForecast.problemName}/${today}`)
-        console.log(response);
-        if (today === true) {
-            if (response.data.singleCertainty === true) {
-                setHighestCertainty(response.data.highestCertainty);
-                setLowestCertainty(response.data.lowestCertainty);
-                setCurrentAverageCertainty(response.data.currentAverageCertainty);
-                setNumberOfForecasts(response.data.numberOfForecasts);
-            } else if (response.data.singleCertainty === false) {
-                setAvgOutcomeOne(response.data.avgOutcomeOne);
-                setAvgOutcomeTwo(response.data.avgOutcomeTwo);
-                setAvgOutcomeThree(response.data.avgOutcomeThree);
-                setNumberOfForecasts(response.data.numberOfForecasts);
-            };
-        } else if (today === false) {
-            if (response.data.singleCertainty === true) {
-                setHighestCertainty(response.data.highestCertainty);
-                setLowestCertainty(response.data.lowestCertainty);
-                setCurrentAverageCertainty(response.data.currentAverageCertainty);
-                setNumberOfForecasts(response.data.numberOfForecasts);
-            } else if (response.data.singleCertainty === false) {
-                setAvgOutcomeOne(response.data.avgOutcomeOne);
-                setAvgOutcomeTwo(response.data.avgOutcomeTwo);
-                setAvgOutcomeThree(response.data.avgOutcomeThree);
-                setNumberOfForecasts(response.data.numberOfForecasts);
-            };
-        };
-        // if (props.forecastSingleCertainty === true) {
-        //     if (selectedForecast.submittedForecasts.length === 0) {
-        //         setHighestCertainty("N/A");
-        //         setLowestCertainty("N/A");
-        //         setCurrentAverageCertainty("N/A");
-        //         setNumberOfForecasts("N/A");
-        //     } else {
-        //         if (today === true) {
-        //             let highestCertaintySoFar = 0.00;
-        //             let highestChanged = false;
-        //             let lowestCertaintySoFar = 1.00;
-        //             let lowestChanged = false;
-        //             let totalCertainty = 0.00;
-        //             let numbOfForecasts = 0;
-        //                 for (let i = 0; i < selectedForecast.submittedForecasts.length; i++) {
-        //                     let index = selectedForecast.submittedForecasts[i].forecasts.length-1;
-        //                     // SHould this first date be wrapped in a new Date()? As if it's from a different time zone
-        //                     // slicing off the timezone stuff might put include it / exclude it when it shouldn't be
-        //                     if (selectedForecast.submittedForecasts[i].forecasts[index].date.slice(0, 15) === new Date().toString().slice(0, 15)) {
-        //                         if (selectedForecast.submittedForecasts[i].forecasts[index].certainty >= highestCertaintySoFar) {
-        //                             highestCertaintySoFar = selectedForecast.submittedForecasts[i].forecasts[index].certainty;
-        //                             highestChanged = true;
-        //                         };
-        //                         if (selectedForecast.submittedForecasts[i].forecasts[index].certainty <= lowestCertaintySoFar) {
-        //                             lowestCertaintySoFar = selectedForecast.submittedForecasts[i].forecasts[index].certainty;
-        //                             lowestChanged = true;
-        //                         };
-        //                         totalCertainty += selectedForecast.submittedForecasts[i].forecasts[index].certainty;
-        //                         numbOfForecasts += 1;
-        //                     };
-        //                 };
-        //                 if (highestChanged === true) {
-        //                     setHighestCertainty(`${(highestCertaintySoFar*100).toFixed(2)}%`);
-        //                 } else {
-        //                     setHighestCertainty("N/A");
-        //                 };
-        //                 if (lowestChanged === true) {
-        //                     setLowestCertainty(`${(lowestCertaintySoFar*100).toFixed(2)}%`);
-        //                 } else {
-        //                     setLowestCertainty("N/A");
-        //                 };
-        //                 if (highestChanged === true && lowestChanged === true) {
-        //                     setCurrentAverageCertainty(`${((totalCertainty / numbOfForecasts)*100).toFixed(2)}%`)   
-        //                 } else {
-        //                     setCurrentAverageCertainty("N/A");
-        //                 };
-        //                 setNumberOfForecasts(numbOfForecasts);
-        //         } else if (today === false) {
-        //             let highestCertaintySoFar = 0.00;
-        //             let highestChanged = false;
-        //             let lowestCertaintySoFar = 1.00;
-        //             let lowestChanged = false;
-        //             let totalCertainty = 0.00;
-        //             let numbOfForecasts = 0;
-
-        //             for (let i = 0; i < selectedForecast.submittedForecasts.length; i++) {
-        //                 numbOfForecasts = numbOfForecasts + selectedForecast.submittedForecasts[i].forecasts.length;
-        //                 for (let j = 0; j < selectedForecast.submittedForecasts[i].forecasts.length; j++) {
-        //                     if (selectedForecast.submittedForecasts[i].forecasts[j].certainty > highestCertaintySoFar) {
-        //                         highestCertaintySoFar = selectedForecast.submittedForecasts[i].forecasts[j].certainty;
-        //                         highestChanged = true;
-        //                     };
-        //                     if (selectedForecast.submittedForecasts[i].forecasts[j].certainty < lowestCertaintySoFar) {
-        //                         lowestCertaintySoFar = selectedForecast.submittedForecasts[i].forecasts[j].certainty;
-        //                         lowestChanged = true;
-        //                     };
-        //                     totalCertainty += selectedForecast.submittedForecasts[i].forecasts[j].certainty;
-        //                 };
-        //             };
-        //             if (highestChanged === true) {
-        //                 setHighestCertainty(`${(highestCertaintySoFar*100).toFixed(2)}%`);
-        //             } else {
-        //                 setHighestCertainty("N/A");
-        //             };
-        //             if (lowestChanged === true) {
-        //                 setLowestCertainty(`${(lowestCertaintySoFar*100).toFixed(2)}%`);
-        //             } else {
-        //                 setLowestCertainty("N/A");
-        //             };
-        //             if (highestChanged === true && lowestChanged === true) {
-        //                 setCurrentAverageCertainty(`${((totalCertainty / numbOfForecasts)*100).toFixed(2)}%`);  
-        //             } else {
-        //                 setCurrentAverageCertainty("N/A");
-        //             };
-        //             setNumberOfForecasts(numbOfForecasts);
-        //         };
+        // const response = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/getDetailedForecastInfo/${selectedForecast.problemName}/${today}`)
+        // console.log(response);
+        // if (today === true) {
+        //     if (response.data.singleCertainty === true) {
+        //         setHighestCertainty(response.data.highestCertainty);
+        //         setLowestCertainty(response.data.lowestCertainty);
+        //         setCurrentAverageCertainty(response.data.currentAverageCertainty);
+        //         setNumberOfForecasts(response.data.numberOfForecasts);
+        //     } else if (response.data.singleCertainty === false) {
+        //         setAvgOutcomeOne(response.data.avgOutcomeOne);
+        //         setAvgOutcomeTwo(response.data.avgOutcomeTwo);
+        //         setAvgOutcomeThree(response.data.avgOutcomeThree);
+        //         setNumberOfForecasts(response.data.numberOfForecasts);
         //     };
-        // } else if (props.forecastSingleCertainty === false) {
-        //     if (selectedForecast.submittedForecasts.length === 0) {
-        //         setHighestCertainty("N/A");
-        //         setLowestCertainty("N/A");
-        //         setCurrentAverageCertainty("N/A");
-        //         setNumberOfForecasts("N/A");
-        //     } else {
-        //         if (today === true) {
-        //             let totalOutcomeOne = 0.00;
-        //             let totalOutcomeTwo = 0.00;
-        //             let totalOutcomeThree = 0.00;
-        //             let numbOfForecasts = 0;
-        //                 for (let i = 0; i < selectedForecast.submittedForecasts.length; i++) {
-        //                     for (let j = 0; j < selectedForecast.submittedForecasts[i].forecasts.length; j++) {
-        //                         if (selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) === new Date().toString().slice(0, 15)) {
-        //                             totalOutcomeOne += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty1*100;
-        //                             totalOutcomeTwo += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty2*100;
-        //                             totalOutcomeThree += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty3*100;
-        //                             numbOfForecasts += 1;
-        //                         };
-        //                     };
-        //                 };
-        //                 setAvgOutcomeOne((totalOutcomeOne / numbOfForecasts).toFixed(2));
-        //                 setAvgOutcomeTwo((totalOutcomeTwo / numbOfForecasts).toFixed(2));
-        //                 setAvgOutcomeThree((totalOutcomeThree / numbOfForecasts).toFixed(2));
-        //                 setNumberOfForecasts(numbOfForecasts);
-        //         } else if (today === false) {
-        //             let totalOutcomeOne = 0.00;
-        //             let totalOutcomeTwo = 0.00;
-        //             let totalOutcomeThree = 0.00;
-        //             let numbOfForecasts = 0;
-
-        //             for (let i = 0; i < selectedForecast.submittedForecasts.length; i++) {
-        //                 numbOfForecasts = numbOfForecasts + selectedForecast.submittedForecasts[i].forecasts.length;
-        //                 for (let j = 0; j < selectedForecast.submittedForecasts[i].forecasts.length; j++) {
-        //                     totalOutcomeOne += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty1*100;
-        //                     totalOutcomeTwo += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty2*100;
-        //                     totalOutcomeThree += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty3*100;
-        //                 };
-        //             };
-        //             setAvgOutcomeOne((totalOutcomeOne / numbOfForecasts).toFixed(2));
-        //             setAvgOutcomeTwo((totalOutcomeTwo / numbOfForecasts).toFixed(2));
-        //             setAvgOutcomeThree((totalOutcomeThree / numbOfForecasts).toFixed(2));
-        //             setNumberOfForecasts(numbOfForecasts);
-        //         };
+        // } else if (today === false) {
+        //     if (response.data.singleCertainty === true) {
+        //         setHighestCertainty(response.data.highestCertainty);
+        //         setLowestCertainty(response.data.lowestCertainty);
+        //         setCurrentAverageCertainty(response.data.currentAverageCertainty);
+        //         setNumberOfForecasts(response.data.numberOfForecasts);
+        //     } else if (response.data.singleCertainty === false) {
+        //         setAvgOutcomeOne(response.data.avgOutcomeOne);
+        //         setAvgOutcomeTwo(response.data.avgOutcomeTwo);
+        //         setAvgOutcomeThree(response.data.avgOutcomeThree);
+        //         setNumberOfForecasts(response.data.numberOfForecasts);
         //     };
         // };
+        if (props.forecastSingleCertainty === true) {
+            if (selectedForecast.submittedForecasts.length === 0) {
+                setHighestCertainty("N/A");
+                setLowestCertainty("N/A");
+                setCurrentAverageCertainty("N/A");
+                setNumberOfForecasts("N/A");
+            } else {
+                if (today === true) {
+                    let highestCertaintySoFar = 0.00;
+                    let highestChanged = false;
+                    let lowestCertaintySoFar = 1.00;
+                    let lowestChanged = false;
+                    let totalCertainty = 0.00;
+                    let numbOfForecasts = 0;
+                        for (let i = 0; i < selectedForecast.submittedForecasts.length; i++) {
+                            let index = selectedForecast.submittedForecasts[i].forecasts.length-1;
+                            // SHould this first date be wrapped in a new Date()? As if it's from a different time zone
+                            // slicing off the timezone stuff might put include it / exclude it when it shouldn't be
+                            if (selectedForecast.submittedForecasts[i].forecasts[index].date.slice(0, 15) === new Date().toString().slice(0, 15)) {
+                                if (selectedForecast.submittedForecasts[i].forecasts[index].certainty >= highestCertaintySoFar) {
+                                    highestCertaintySoFar = selectedForecast.submittedForecasts[i].forecasts[index].certainty;
+                                    highestChanged = true;
+                                };
+                                if (selectedForecast.submittedForecasts[i].forecasts[index].certainty <= lowestCertaintySoFar) {
+                                    lowestCertaintySoFar = selectedForecast.submittedForecasts[i].forecasts[index].certainty;
+                                    lowestChanged = true;
+                                };
+                                totalCertainty += selectedForecast.submittedForecasts[i].forecasts[index].certainty;
+                                numbOfForecasts += 1;
+                            };
+                        };
+                        if (highestChanged === true) {
+                            setHighestCertainty(`${(highestCertaintySoFar*100).toFixed(2)}%`);
+                        } else {
+                            setHighestCertainty("N/A");
+                        };
+                        if (lowestChanged === true) {
+                            setLowestCertainty(`${(lowestCertaintySoFar*100).toFixed(2)}%`);
+                        } else {
+                            setLowestCertainty("N/A");
+                        };
+                        if (highestChanged === true && lowestChanged === true) {
+                            setCurrentAverageCertainty(`${((totalCertainty / numbOfForecasts)*100).toFixed(2)}%`)   
+                        } else {
+                            setCurrentAverageCertainty("N/A");
+                        };
+                        setNumberOfForecasts(numbOfForecasts);
+                } else if (today === false) {
+                    let highestCertaintySoFar = 0.00;
+                    let highestChanged = false;
+                    let lowestCertaintySoFar = 1.00;
+                    let lowestChanged = false;
+                    let totalCertainty = 0.00;
+                    let numbOfForecasts = 0;
+
+                    for (let i = 0; i < selectedForecast.submittedForecasts.length; i++) {
+                        numbOfForecasts = numbOfForecasts + selectedForecast.submittedForecasts[i].forecasts.length;
+                        for (let j = 0; j < selectedForecast.submittedForecasts[i].forecasts.length; j++) {
+                            if (selectedForecast.submittedForecasts[i].forecasts[j].certainty > highestCertaintySoFar) {
+                                highestCertaintySoFar = selectedForecast.submittedForecasts[i].forecasts[j].certainty;
+                                highestChanged = true;
+                            };
+                            if (selectedForecast.submittedForecasts[i].forecasts[j].certainty < lowestCertaintySoFar) {
+                                lowestCertaintySoFar = selectedForecast.submittedForecasts[i].forecasts[j].certainty;
+                                lowestChanged = true;
+                            };
+                            totalCertainty += selectedForecast.submittedForecasts[i].forecasts[j].certainty;
+                        };
+                    };
+                    if (highestChanged === true) {
+                        setHighestCertainty(`${(highestCertaintySoFar*100).toFixed(2)}%`);
+                    } else {
+                        setHighestCertainty("N/A");
+                    };
+                    if (lowestChanged === true) {
+                        setLowestCertainty(`${(lowestCertaintySoFar*100).toFixed(2)}%`);
+                    } else {
+                        setLowestCertainty("N/A");
+                    };
+                    if (highestChanged === true && lowestChanged === true) {
+                        setCurrentAverageCertainty(`${((totalCertainty / numbOfForecasts)*100).toFixed(2)}%`);  
+                    } else {
+                        setCurrentAverageCertainty("N/A");
+                    };
+                    setNumberOfForecasts(numbOfForecasts);
+                };
+            };
+        } else if (props.forecastSingleCertainty === false) {
+            if (selectedForecast.submittedForecasts.length === 0) {
+                setHighestCertainty("N/A");
+                setLowestCertainty("N/A");
+                setCurrentAverageCertainty("N/A");
+                setNumberOfForecasts("N/A");
+            } else {
+                if (today === true) {
+                    let totalOutcomeOne = 0.00;
+                    let totalOutcomeTwo = 0.00;
+                    let totalOutcomeThree = 0.00;
+                    let numbOfForecasts = 0;
+                        for (let i = 0; i < selectedForecast.submittedForecasts.length; i++) {
+                            for (let j = 0; j < selectedForecast.submittedForecasts[i].forecasts.length; j++) {
+                                if (selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) === new Date().toString().slice(0, 15)) {
+                                    totalOutcomeOne += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty1*100;
+                                    totalOutcomeTwo += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty2*100;
+                                    totalOutcomeThree += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty3*100;
+                                    numbOfForecasts += 1;
+                                };
+                            };
+                        };
+                        setAvgOutcomeOne((totalOutcomeOne / numbOfForecasts).toFixed(2));
+                        setAvgOutcomeTwo((totalOutcomeTwo / numbOfForecasts).toFixed(2));
+                        setAvgOutcomeThree((totalOutcomeThree / numbOfForecasts).toFixed(2));
+                        setNumberOfForecasts(numbOfForecasts);
+                } else if (today === false) {
+                    let totalOutcomeOne = 0.00;
+                    let totalOutcomeTwo = 0.00;
+                    let totalOutcomeThree = 0.00;
+                    let numbOfForecasts = 0;
+
+                    for (let i = 0; i < selectedForecast.submittedForecasts.length; i++) {
+                        numbOfForecasts = numbOfForecasts + selectedForecast.submittedForecasts[i].forecasts.length;
+                        for (let j = 0; j < selectedForecast.submittedForecasts[i].forecasts.length; j++) {
+                            totalOutcomeOne += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty1*100;
+                            totalOutcomeTwo += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty2*100;
+                            totalOutcomeThree += selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty3*100;
+                        };
+                    };
+                    setAvgOutcomeOne((totalOutcomeOne / numbOfForecasts).toFixed(2));
+                    setAvgOutcomeTwo((totalOutcomeTwo / numbOfForecasts).toFixed(2));
+                    setAvgOutcomeThree((totalOutcomeThree / numbOfForecasts).toFixed(2));
+                    setNumberOfForecasts(numbOfForecasts);
+                };
+            };
+        };
     };
 
     return (
