@@ -159,10 +159,10 @@ console.log("17B - SCORES");
                 });
             };
             // Market Points
-            const updatedMarket = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/closedProblem/${market}`, {
-                scores: scores.data
-            });
-            console.log(updatedMarket.data);
+            // const updatedMarket = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/closedProblem/${market}`, {
+            //     scores: scores.data
+            // });
+            // console.log(updatedMarket.data);
         } catch (error) {
             console.error("Error in closeAndCalculateBriersMultipleOutcomes");
             console.error(error);

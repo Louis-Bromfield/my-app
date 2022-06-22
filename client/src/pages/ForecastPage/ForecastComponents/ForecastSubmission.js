@@ -430,11 +430,14 @@ function ForecastSubmission(props) {
             // console.log(newForecast);
             // ------------------------------------------------- //
 
-
+            let date = new Date().toString();
+            let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
+            let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20));
             const newForecastObj = {
                 certainty: newCertainty, 
                 comments: `(${username})~ ${newComments}`, 
-                date: new Date().toString()
+                // date: new Date().toString()
+                date: nDate.toString()
             };
             const newForecastTwo = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
                 documentID: selectedForecastDocumentID,
@@ -460,12 +463,16 @@ function ForecastSubmission(props) {
 
     const handleForecastSubmit = async (forecast, certainty, comments, username) => {
         try {
+            let date = new Date().toString();
+            let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
+            let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20));
             const submittedForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/submit`, {
                 problemName: forecast,
                 username: username,
                 certainty: certainty,
                 comments: `(${username})~ ${comments}`,
-                date: new Date().toString()
+                // date: new Date().toString()
+                date: nDate.toString()
             });
             setForecastResponseMessage("Forecast successfully submitted!")
             updateOnboarding(username);
@@ -492,6 +499,9 @@ function ForecastSubmission(props) {
             return;
         }
         try {
+            let date = new Date().toString();
+            let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
+            let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20));
             const newForecastObj = {
                 certainties: {
                     certainty1: newCertainty1, 
@@ -499,7 +509,8 @@ function ForecastSubmission(props) {
                     certainty3: newCertainty3, 
                 },
                 comments: `(${username})~ ${newComments}`, 
-                date: new Date().toString()
+                // date: new Date().toString()
+                date: nDate.toString()
             };
             const newForecastTwo = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple`, {
                 documentID: selectedForecastDocumentID,
@@ -562,6 +573,9 @@ function ForecastSubmission(props) {
             return;
         };
         try {
+            let date = new Date().toString();
+            let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
+            let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20));
             const submittedForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/submitMultiple`, {
                 problemName: forecast,
                 username: username,
@@ -569,7 +583,8 @@ function ForecastSubmission(props) {
                 certainty2: certainty2,
                 certainty3: certainty3,
                 comments: `(${username})~ ${comments}`,
-                date: new Date().toString()
+                // date: new Date().toString()
+                date: nDate.toString()
             });
             setForecastResponseMessage("Forecast successfully submitted!")
             updateOnboarding(username);
