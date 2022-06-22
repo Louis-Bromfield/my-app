@@ -44,7 +44,7 @@ function App() {
     setIsLoggedIn(false);
     localStorage.setItem('isLoggedIn', false);
     localStorage.removeItem('username');
-    await axios.delete(`https://fantasy-forecast-politics.herokuapp.com/deleteSession`);
+    // await axios.delete(`https://fantasy-forecast-politics.herokuapp.com/deleteSession`);
     // localStorage.removeItem('name');
     // localStorage.removeItem('markets');
     // localStorage.removeItem('navigationOrder');
