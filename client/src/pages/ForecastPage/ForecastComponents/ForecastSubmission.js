@@ -229,7 +229,9 @@ function ForecastSubmission(props) {
             // console.log(props.userBriers);
             // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             const forecastDetails = props.userBriers.find(el => el.problemName === problemName);
-            setClosedForecastScore(forecastDetails === undefined ? "No Forecast Submitted" : forecastDetails.brierScore.toFixed(0));
+            // setClosedForecastScore(forecastDetails === undefined ? "No Forecast Submitted" : forecastDetails.brierScore.toFixed(0));
+            // Don't think it should say "no forecast submitted" as they may just be waiting for a forecast to be closed
+            setClosedForecastScore(forecastDetails === undefined ? "No Forecast Score (Yet)" : forecastDetails.brierScore.toFixed(0));
             localStorage.setItem("closedForecastScore", forecastDetails.brierScore);
         } catch (error) {
             console.error("Error in ForecastSubmission > getBrierForClosedForecast");
