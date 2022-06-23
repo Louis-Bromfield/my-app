@@ -9,6 +9,8 @@ const HomePageNewsFeedPosts = require('../models/HomePageNewsFeedPosts');
 const Leaderboards = require('../models/Leaderboards');
 const findOrCreate = require("mongoose-findorcreate");
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 const cookieParser = require("cookie-parser");
 const Sessions = require('../models/Sessions');
 const Surveys = require('../models/Surveys');
@@ -823,5 +825,56 @@ console.log("================");
 console.log("================");
     return arrToReturn;
 };
+
+// Reset user's password
+router.patch("/reset", async (req, res) => {
+    try {
+        const user = Users.findOne({ username: req.body.username, email: req.body.email });
+        if (user) {
+            let newPW = crypto.randomBytes(20).toString("hex");
+            let transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 587,
+                secure: false, // true for 465, false for other ports
+                auth: {
+                    user: "fantasyforecastcontact@gmail.com", // generated ethereal user
+                    pass: "mhpfaejoxvlkftdw", // generated ethereal password
+                },
+                    tls: {
+                        rejectUnauthorized: false
+                }
+            });
+            const hashedNewPW = await bcrypt.hash(newPW, 10);
+
+            const updatedUser = await Users.findByIdAndUpdate(user.document_id, { password: hashedNewPW });
+            if (updatedUser) {
+                // send mail with defined transport object
+                let info = await transporter.sendMail({
+                    from: 'fantasyforecastcontact@gmail.com', // sender address
+                    to: "louisbromwork@gmail.com", // list of receivers
+                    subject: "Fantasy Forecast Password Reset5", // Subject line
+                    text: "Your new password is blargblargblarg. If this wasn't you, we recommend you log on to your account, head to your profile page, and change your password at the bottom of the profile page. If you did make this reset request, we still recommend you change your password yourself through your profile page just to be safe. Many thanks, Louis - Fantasy Forecast", // plain text body
+                    html:
+                    `Your new password is ${newPW}. If this wasn't you, we recommend you log on to your account, head to your profile page, and change your password at the bottom of the profile page.</p><br /><p>If you did make this reset request, we still recommend you change your password yourself through your profile page just to be safe.</p><p>Many thanks,</p><p>Louis - Fantasy Forecast</p>`, // html body
+                });
+                console.log("Message sent: %s", info.messageId);
+                res.json({ resetSuccess: true, errorMessage: "User updated" });
+            } else {
+                res.json({ resetSuccess: false, errorMessage: "Unable to update user info" });
+            }
+            // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+            // Preview only available when sending through an Ethereal account
+            // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+            // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+        } else if (!user) {
+            res.json({ resetSuccess: false, errorMessage: "No user exists with those credentials" });
+        }
+    } catch (err) {
+        console.error("Error in users > reset");
+        console.error(err);
+        res.json({ resetSuccess: false, errorMessage: err });
+    };
+});
 
 module.exports = router;
