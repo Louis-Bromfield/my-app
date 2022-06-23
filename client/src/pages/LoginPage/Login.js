@@ -104,14 +104,17 @@ function Login(props) {
         };
     };
 
-    // const requestPasswordResetThroughEmail = async (usernameForPasswordReset, emailForPasswordReset) => {
+    // const requestPasswordResetThroughEmail = async (username, email) => {
     //     try {
+    //         console.log(username);
+    //         console.log(email);
     //         const resetUser = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/reset`, {
-    //             username: usernameForPasswordReset,
-    //             email: emailForPasswordReset
+    //             username: username,
+    //             email: email
     //         });
+    //         console.log(resetUser);
     //         if (resetUser.data.resetSuccess === true) {
-    //             setResetMessage("Your password has been reset. Check your email address for ")
+    //             setResetMessage("Your password has been reset. Check your email address.")
     //         } else {
     //             setResetMessage("There is no user with this username and email. Please try again.");
     //         };
@@ -283,7 +286,7 @@ function Login(props) {
                             setEmailForPasswordReset(e.target.value);
                         }}
                     />
-                <button className="login-btn" onClick={() => requestPasswordResetThroughEmail(usernameForLogin, passwordResetCodeForLogin, false)}>Request Password Reset</button>
+                <button className="login-btn" onClick={() => requestPasswordResetThroughEmail(usernameForPasswordReset, emailForPasswordReset)}>Request Password Reset</button>
                 {resetMessage !== "" && resetMessage}
                 {errorMessage}
             </div> */}

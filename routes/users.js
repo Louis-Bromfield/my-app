@@ -846,7 +846,7 @@ router.patch("/reset", async (req, res) => {
             });
             const hashedNewPW = await bcrypt.hash(newPW, 10);
 
-            const updatedUser = await Users.findByIdAndUpdate(user.document_id, { password: hashedNewPW });
+            const updatedUser = await Users.findByIdAndUpdate(user._id, { password: hashedNewPW });
             if (updatedUser) {
                 // send mail with defined transport object
                 let info = await transporter.sendMail({
