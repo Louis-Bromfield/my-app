@@ -192,7 +192,11 @@ function ProfileStats(props) {
             setFFPoints(userObj.fantasyForecastPoints.toFixed(0) || "X");
             let onboardingCount = 0;
             Object.entries(userObj.onboarding).forEach(
-                ([key, value]) => value === true ? onboardingCount++ : onboardingCount += 0
+                ([key, value]) => {
+                    if (key !== "joinAMarket") {
+                        value === true ? onboardingCount++ : onboardingCount += 0
+                    }
+                }
             );
             setOnboardingProgress(onboardingCount);
         } catch (error) {
@@ -252,7 +256,7 @@ function ProfileStats(props) {
                                 <h4># of Markets In:</h4>
                                 <h3 style={{ color: "#404d72" }}>{marketsIn}</h3>
                                 <h4>Onboarding Tasks Complete:</h4>
-                                <h3 style={{ color: "#404d72" }}>{onboardingProgress} / 5</h3>
+                                <h3 style={{ color: "#404d72" }}>{onboardingProgress} / 4</h3>
                             </div>
                         </div>
                     </div>
