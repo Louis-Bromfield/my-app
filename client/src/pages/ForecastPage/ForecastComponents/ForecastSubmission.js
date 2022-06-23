@@ -146,6 +146,11 @@ function ForecastSubmission(props) {
             setIsInputDisabled(false);
             getForecastDetails(e.target.value);
             setForecastResponseMessage("");
+            setCertainty(0);
+            setCertaintyOne(0);
+            setCertaintyTwo(0);
+            setCertaintyThree(0);
+            setForecastComments("");
         };
     };
 
@@ -462,6 +467,15 @@ function ForecastSubmission(props) {
 
             console.log(newForecastTwo);
             props.changeForecast(newForecastTwo.data);
+            setForecastResponseMessage("Forecast successfully updated!");
+            document.getElementsByClassName("forecast-certainty-input").value = 0;
+            setCertainty(0);
+            setCertaintyOne(0);
+            setCertaintyTwo(0);
+            setCertaintyThree(0);
+            setForecastComments("");
+            setUserPreviousAttemptCertainty(certainty*100);
+            setUserPreviousAttemptComments(forecastComments);
 
             // const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
             //     problemName: forecast,
@@ -494,6 +508,14 @@ function ForecastSubmission(props) {
             updateOnboarding(username);
             props.changeForecast(submittedForecast.data);
             setUserHasAttempted(true);
+            document.getElementsByClassName("forecast-certainty-input").value = 0;
+            setCertainty(0);
+            setCertaintyOne(0);
+            setCertaintyTwo(0);
+            setCertaintyThree(0);
+            setForecastComments("");
+            setUserPreviousAttemptCertainty(certainty*100);
+            setUserPreviousAttemptComments(forecastComments);
         } catch (error) {
             console.error("error in ForecastSubmission.js > handleForecastSubmit")
             console.error(error);
@@ -510,6 +532,10 @@ function ForecastSubmission(props) {
             setForecastResponseMessage("One or more certainties is not between 0 and 100.");
             return;
         };
+        if (newCertainty1 + newCertainty2 + newCertainty3 !== 1) {
+            setForecastResponseMessage("The three certainties must equal 100");
+            return;
+        }
         if (newComments === "") {
             setForecastResponseMessage("Please enter a comment");
             return;
@@ -536,7 +562,16 @@ function ForecastSubmission(props) {
             });
             updateOnboarding(username);
             console.log(newForecastTwo);
+            setForecastResponseMessage("Forecast successfully updated!");
             props.changeForecast(newForecastTwo.data);
+            document.getElementsByClassName("forecast-certainty-input").value = 0;
+            setCertainty(0);
+            setCertaintyOne(0);
+            setCertaintyTwo(0);
+            setCertaintyThree(0);
+            setForecastComments("");
+            setUserPreviousAttemptCertainty(`${newCertainty1*100} / ${newCertainty2*100} / ${newCertainty3*100}`);
+            setUserPreviousAttemptComments(newComments);
 
             // Brute force method
             // const document = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${forecast}`);
@@ -607,6 +642,14 @@ function ForecastSubmission(props) {
             updateOnboarding(username);
             props.changeForecast(submittedForecast.data);
             setUserHasAttempted(true);
+            document.getElementsByClassName("forecast-certainty-input").value = 0;
+            setCertainty(0);
+            setCertaintyOne(0);
+            setCertaintyTwo(0);
+            setCertaintyThree(0);
+            setForecastComments("");
+            setUserPreviousAttemptCertainty(`${certainty1*100} / ${certainty2*100} / ${certainty3*100}`);
+            setUserPreviousAttemptComments(comments);
         } catch (error) {
             console.error("error in ForecastSubmission.js > handleForecastSubmit")
             console.error(error);
@@ -754,6 +797,7 @@ function ForecastSubmission(props) {
                                         <input 
                                             type="number" 
                                             placeholder="Enter Your Prediction" 
+                                            defaultValue={0}
                                             className="forecast-certainty-input" 
                                             onChange={handleCertaintyChange}
                                             min="0"
@@ -766,6 +810,7 @@ function ForecastSubmission(props) {
                                         <input 
                                             type="number" 
                                             className="forecast-certainty-input" 
+                                            defaultValue={0}
                                             onChange={handleCertaintyChange}
                                             min="0"
                                             max="100"
@@ -818,9 +863,9 @@ function ForecastSubmission(props) {
                                         disabled={buttonDisabled}
                                         onClick={() => {
                                             handleForecastUpdate(selectedForecast, certainty, forecastComments, props.username); 
-                                            setForecastResponseMessage("Forecast successfully updated!");
-                                            setUserPreviousAttemptCertainty(certainty*100);
-                                            setUserPreviousAttemptComments(forecastComments);
+                                            // setForecastResponseMessage("Forecast successfully updated!");
+                                            // setUserPreviousAttemptCertainty(certainty*100);
+                                            // setUserPreviousAttemptComments(forecastComments);
                                             props.causeRefresh();
                                         }}>
                                             Update Forecast
@@ -839,9 +884,9 @@ function ForecastSubmission(props) {
                                         disabled={buttonDisabled}
                                         onClick={() => {
                                             handleForecastSubmit(selectedForecast, certainty, forecastComments, props.username); 
-                                            setForecastResponseMessage("Forecast successfully submitted!");
-                                            setUserPreviousAttemptCertainty(certainty*100);
-                                            setUserPreviousAttemptComments(forecastComments);
+                                            // setForecastResponseMessage("Forecast successfully submitted!");
+                                            // setUserPreviousAttemptCertainty(certainty*100);
+                                            // setUserPreviousAttemptComments(forecastComments);
                                             props.causeRefresh();
                                         }}>
                                             Submit Forecast
@@ -946,7 +991,7 @@ function ForecastSubmission(props) {
                                             disabled={buttonDisabled}
                                             onClick={() => {
                                                 handleMultipleForecastUpdate(selectedForecast, certaintyOne, certaintyTwo, certaintyThree, forecastComments, props.username); 
-                                                setForecastResponseMessage("Forecast successfully updated!");
+                                                // setForecastResponseMessage("Forecast successfully updated!");
                                                 setUserPreviousAttemptCertainty(`${certaintyOne*100} / ${certaintyTwo*100} / ${certaintyThree*100}`);
                                                 setUserPreviousAttemptComments(forecastComments);
                                                 props.causeRefresh();
@@ -967,7 +1012,7 @@ function ForecastSubmission(props) {
                                             disabled={buttonDisabled}
                                             onClick={() => {
                                                 handleMultipleForecastSubmit(selectedForecast, certaintyOne, certaintyTwo, certaintyThree, forecastComments, props.username); 
-                                                setForecastResponseMessage("Forecast successfully submitted!");
+                                                // setForecastResponseMessage("Forecast successfully submitted!");
                                                 setUserPreviousAttemptCertainty(`${certaintyOne*100} / ${certaintyTwo*100} / ${certaintyThree*100}`);
                                                 setUserPreviousAttemptComments(forecastComments);
                                                 props.causeRefresh();
