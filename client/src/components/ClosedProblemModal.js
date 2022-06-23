@@ -12,15 +12,24 @@ const ClosedProblemModal = (props) => {
 
     useEffect(() => {
         console.log(props);
-        const arr = [];
-        let i = props.userBrierScores.length-1;
-        while (i >= props.userBrierScores.length-(props.userClosedForecastCount)) {
-            arr.push(props.userBrierScores[i]);
-            i--;
+        if (props.userBrierScores.length === 0 || props.userClosedForecastCount === null || props.userClosedForecastCount === undefined) {
+            return;
+        } else {
+            let userClosedForecastCount = props.userClosedForecastCount;
+            if (props.userClosedForecastCount > props.userBrierScores.length) {
+                userClosedForecastCount = props.userBrierScores.length;
+            };
+            const arr = [];
+            let i = props.userBrierScores.length-1;
+            // while (i >= props.userBrierScores.length-(props.userClosedForecastCount)) {
+            while (i >= props.userBrierScores.length-(userClosedForecastCount)) {
+                arr.push(props.userBrierScores[i]);
+                i--;
+            };
+            setBrierArr(arr);
+            setCurrentProblem(arr[0]);
+            setCurrentProblemIndex(0);
         };
-        setBrierArr(arr);
-        setCurrentProblem(arr[0]);
-        setCurrentProblemIndex(0);
         console.log("CPM Modal UE");
     }, [props.userBrierScores, props.userClosedForecastCount]);
 

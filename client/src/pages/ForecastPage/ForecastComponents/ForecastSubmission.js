@@ -464,7 +464,6 @@ function ForecastSubmission(props) {
                 newForecastObject: newForecastObj,
                 username: username
             });
-
             console.log(newForecastTwo);
             props.changeForecast(newForecastTwo.data);
             setForecastResponseMessage("Forecast successfully updated!");
@@ -476,6 +475,7 @@ function ForecastSubmission(props) {
             setForecastComments("");
             setUserPreviousAttemptCertainty(certainty*100);
             setUserPreviousAttemptComments(forecastComments);
+            updateOnboarding(username);
 
             // const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
             //     problemName: forecast,
@@ -517,7 +517,6 @@ function ForecastSubmission(props) {
                 date: nDateBSTSuffix
             });
             setForecastResponseMessage("Forecast successfully submitted!")
-            updateOnboarding(username);
             props.changeForecast(submittedForecast.data);
             setUserHasAttempted(true);
             document.getElementsByClassName("forecast-certainty-input").value = 0;
@@ -528,6 +527,7 @@ function ForecastSubmission(props) {
             setForecastComments("");
             setUserPreviousAttemptCertainty(certainty*100);
             setUserPreviousAttemptComments(forecastComments);
+            updateOnboarding(username);
         } catch (error) {
             console.error("error in ForecastSubmission.js > handleForecastSubmit")
             console.error(error);
@@ -572,7 +572,6 @@ function ForecastSubmission(props) {
                 newForecastObject: newForecastObj,
                 username: username
             });
-            updateOnboarding(username);
             console.log(newForecastTwo);
             setForecastResponseMessage("Forecast successfully updated!");
             props.changeForecast(newForecastTwo.data);
@@ -584,6 +583,7 @@ function ForecastSubmission(props) {
             setForecastComments("");
             setUserPreviousAttemptCertainty(`${newCertainty1*100} / ${newCertainty2*100} / ${newCertainty3*100}`);
             setUserPreviousAttemptComments(newComments);
+            updateOnboarding(username);
 
             // Brute force method
             // const document = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${forecast}`);
@@ -663,7 +663,6 @@ function ForecastSubmission(props) {
                 date: nDateBSTSuffix
             });
             setForecastResponseMessage("Forecast successfully submitted!")
-            updateOnboarding(username);
             props.changeForecast(submittedForecast.data);
             setUserHasAttempted(true);
             document.getElementsByClassName("forecast-certainty-input").value = 0;
@@ -674,6 +673,7 @@ function ForecastSubmission(props) {
             setForecastComments("");
             setUserPreviousAttemptCertainty(`${certainty1*100} / ${certainty2*100} / ${certainty3*100}`);
             setUserPreviousAttemptComments(comments);
+            updateOnboarding(username);
         } catch (error) {
             console.error("error in ForecastSubmission.js > handleForecastSubmit")
             console.error(error);
