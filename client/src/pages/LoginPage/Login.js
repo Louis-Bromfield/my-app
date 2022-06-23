@@ -22,6 +22,7 @@ function Login(props) {
     const [credentialsSuccessfullyChecked, setCredentialsSuccessfullyChecked] = useState(null);
     const [emailForPasswordReset, setEmailForPasswordReset] = useState("");
     const [usernameForPasswordReset, setUsernameForPasswordReset] = useState("");
+    const [resetMessage, setResetMessage] = useState("");
 
     const [cookie, setCookie] = useCookies(['username']);
 
@@ -102,6 +103,24 @@ function Login(props) {
             console.error(error);
         };
     };
+
+    // const requestPasswordResetThroughEmail = async (usernameForPasswordReset, emailForPasswordReset) => {
+    //     try {
+    //         const resetUser = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/reset`, {
+    //             username: usernameForPasswordReset,
+    //             email: emailForPasswordReset
+    //         });
+    //         if (resetUser.data.resetSuccess === true) {
+    //             setResetMessage("Your password has been reset. Check your email address for ")
+    //         } else {
+    //             setResetMessage("There is no user with this username and email. Please try again.");
+    //         };
+    //     } catch (err) {
+    //         console.error("Error in requestPasswordResetThroughEmail");
+    //         console.error(err);
+    //         setResetMessage("There was an error. Please try again later.");
+    //     };
+    // };
 
     return (
         <div className="login-main-div">
@@ -250,6 +269,7 @@ function Login(props) {
                         id="username-reset-code" 
                         maxLength={15}
                         onChange={(e) => { 
+                            setResetMessage("");
                             setUsernameForPasswordReset(e.target.value);
                         }}
                     />
@@ -259,10 +279,12 @@ function Login(props) {
                         name="email-reset-request" 
                         id="email-reset-request"
                         onChange={(e) => {
+                            setResetMessage("");
                             setEmailForPasswordReset(e.target.value);
                         }}
                     />
                 <button className="login-btn" onClick={() => requestPasswordResetThroughEmail(usernameForLogin, passwordResetCodeForLogin, false)}>Request Password Reset</button>
+                {resetMessage !== "" && resetMessage}
                 {errorMessage}
             </div> */}
         </div>

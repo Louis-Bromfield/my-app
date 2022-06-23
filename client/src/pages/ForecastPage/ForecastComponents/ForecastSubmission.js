@@ -1131,7 +1131,7 @@ function ForecastSubmission(props) {
                         username={props.username} 
                         selectedForecast={selectedForecast}
                         userHasAttempted={userHasAttempted}
-                        forecastClosed={true}
+                        forecastClosed={forecastObjForAnalysis.isClosed}
                         forecastSingleCertainty={forecastSingleCertainty}
                         forecastObjForAnalysis={forecastObjForAnalysis}
                         forecastPotentialOutcomes={forecastPotentialOutcomes}
@@ -1142,7 +1142,7 @@ function ForecastSubmission(props) {
                         username={props.username} 
                         selectedForecast={selectedForecast}
                         userHasAttempted={userHasAttempted}
-                        forecastClosed={false}
+                        forecastClosed={forecastObjForAnalysis.isClosed}
                         forecastSingleCertainty={forecastSingleCertainty}
                         forecastObjForAnalysis={forecastObjForAnalysis}
                         forecastPotentialOutcomes={forecastPotentialOutcomes}
