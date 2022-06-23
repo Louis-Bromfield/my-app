@@ -108,6 +108,7 @@ function App() {
       setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
       setUsername(localStorage.getItem('username'));
       setUsername(cookie.username);
+      setUsername((localStorage.getItem("username") === undefined || localStorage.getItem("username") === null) ? cookie.username : localStorage.getItem("username"));
     //   setName(localStorage.getItem('name'));
     //   setMarkets(localStorage.getItem('markets'));
     //   setUserObject(localStorage.getItem('userObj'));
@@ -121,13 +122,16 @@ function App() {
             // Might be able to avoid using localStorage then right? It's possible.
             // console.log(localStorage.getItem("username"));
             // console.log(cookie.username);
-            pullAllInfoFromDBToPassDown(localStorage.getItem("username") === undefined ? cookie.username : localStorage.getItem("username"))
+            // console.log(localStorage.getItem("username"));
+            // console.log(cookie.username);
+            pullAllInfoFromDBToPassDown(localStorage.getItem("username") === undefined || localStorage.getItem("username") === null ? cookie.username : localStorage.getItem("username"))
     //   };
   }, [isLoggedIn, cookie.username]);
 
   const pullAllInfoFromDBToPassDown = async (username) => {
       try {
-          console.log("fired");
+        //   console.log(username);
+          console.log("paIFDBTPDB");
         const userPulledFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);  
         // console.log(userPulledFromDB);
 
