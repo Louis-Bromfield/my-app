@@ -416,7 +416,7 @@ function ForecastSubmission(props) {
             setForecastResponseMessage("Please enter a certainty between 0.00-100.00");
             return;
         };
-        if (newCertainty > 100 || newCertainty < 0) {
+        if ((newCertainty*100) > 100 || (newCertainty*100) < 0) {
             setForecastResponseMessage("Please enter a certainty within 0.00-100.00");
             return;
         };
@@ -495,7 +495,7 @@ function ForecastSubmission(props) {
             setForecastResponseMessage("Please enter a certainty between 0.00-100.00");
             return;
         };
-        if (certainty > 1 || certainty < 0) {
+        if ((certainty*100) > 100 || (certainty*100) < 0) {
             setForecastResponseMessage("Please enter a certainty within 0.00-100.00");
             return;
         };
@@ -544,7 +544,7 @@ function ForecastSubmission(props) {
             setForecastResponseMessage("One or more certainties is not between 0 and 100.");
             return;
         };
-        if (newCertainty1 + newCertainty2 + newCertainty3 !== 1) {
+        if ((newCertainty1*100) + (newCertainty2*100) + (newCertainty3*100) !== 100) {
             setForecastResponseMessage("The three certainties must equal 100");
             return;
         }
@@ -631,7 +631,7 @@ function ForecastSubmission(props) {
     };
 
     const handleMultipleForecastSubmit = async (forecast, certainty1, certainty2, certainty3, comments, username) => {
-        if (certainty1 + certainty2 + certainty3 !== 1) {
+        if ((certainty1*100) + (certainty2*100) + (certainty3*100) !== 100) {
             setForecastResponseMessage("Your certainties do not equal 100.");
             return;
         };
