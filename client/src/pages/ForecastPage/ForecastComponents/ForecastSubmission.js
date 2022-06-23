@@ -416,7 +416,7 @@ function ForecastSubmission(props) {
             setForecastResponseMessage("Please enter a certainty between 0.00-100.00");
             return;
         };
-        if ((newCertainty*100) > 100 || (newCertainty*100) < 0) {
+        if (newCertainty > 100 || newCertainty < 0) {
             setForecastResponseMessage("Please enter a certainty within 0.00-100.00");
             return;
         };
@@ -491,6 +491,18 @@ function ForecastSubmission(props) {
     };
 
     const handleForecastSubmit = async (forecast, certainty, comments, username) => {
+        if (certainty === undefined) {
+            setForecastResponseMessage("Please enter a certainty between 0.00-100.00");
+            return;
+        };
+        if (certainty > 1 || certainty < 0) {
+            setForecastResponseMessage("Please enter a certainty within 0.00-100.00");
+            return;
+        };
+        if (certainty === "") {
+            setForecastResponseMessage("Please enter a comment");
+            return;
+        }
         try {
             let date = new Date().toString();
             let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
@@ -619,10 +631,22 @@ function ForecastSubmission(props) {
     };
 
     const handleMultipleForecastSubmit = async (forecast, certainty1, certainty2, certainty3, comments, username) => {
-        if ((certainty1*100) + (certainty2*100) + (certainty3*100) !== 100) {
+        if (certainty1 + certainty2 + certainty3 !== 1) {
             setForecastResponseMessage("Your certainties do not equal 100.");
             return;
         };
+        if (certainty1 === undefined || certainty2 === undefined || certainty3 === undefined) {
+            setForecastResponseMessage("One or more certainties is missing.");
+            return;
+        };
+        if (((certainty1*100) > 100 || (certainty1*100) < 0) || ((certainty2*100) > 100 || (certainty2*100) < 0) || ((certainty3*100) > 100 || (certainty3*100) < 0)) {
+            setForecastResponseMessage("One or more certainties is not between 0 and 100.");
+            return;
+        };
+        if (comments === "") {
+            setForecastResponseMessage("Please enter a comment");
+            return;
+        }
         try {
             let date = new Date().toString();
             let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
