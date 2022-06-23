@@ -104,26 +104,26 @@ function Login(props) {
         };
     };
 
-    const requestPasswordResetThroughEmail = async (username, email) => {
-        try {
-            console.log(username);
-            console.log(email);
-            const resetUser = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/reset`, {
-                username: username,
-                email: email
-            });
-            console.log(resetUser);
-            if (resetUser.data.resetSuccess === true) {
-                setResetMessage("Your password has been reset. Check your email address.")
-            } else {
-                setResetMessage("There is no user with this username and email. Please try again.");
-            };
-        } catch (err) {
-            console.error("Error in requestPasswordResetThroughEmail");
-            console.error(err);
-            setResetMessage("There was an error. Please try again later.");
-        };
-    };
+    // const requestPasswordResetThroughEmail = async (username, email) => {
+    //     try {
+    //         console.log(username);
+    //         console.log(email);
+    //         const resetUser = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/reset`, {
+    //             username: username,
+    //             email: email
+    //         });
+    //         console.log(resetUser);
+    //         if (resetUser.data.resetSuccess === true) {
+    //             setResetMessage("Your password has been reset. Check your email address.")
+    //         } else {
+    //             setResetMessage("There is no user with this username and email. Please try again.");
+    //         };
+    //     } catch (err) {
+    //         console.error("Error in requestPasswordResetThroughEmail");
+    //         console.error(err);
+    //         setResetMessage("There was an error. Please try again later.");
+    //     };
+    // };
 
     return (
         <div className="login-main-div">
@@ -263,7 +263,7 @@ function Login(props) {
                 <button className="login-btn" onClick={() => loginFromLogin(usernameForLogin, passwordResetCodeForLogin, false)}>Login to Fantasy Forecast</button>
                 {errorMessage}
             </div>
-            <div className="login-div">
+            {/* <div className="login-div">
                 <h2>Forgot everything?</h2>
                 <label htmlFor="username-reset-code">Username:</label>
                     <input 
@@ -289,7 +289,7 @@ function Login(props) {
                 <button className="login-btn" onClick={() => requestPasswordResetThroughEmail(usernameForPasswordReset, emailForPasswordReset)}>Request Password Reset</button>
                 {resetMessage !== "" && resetMessage}
                 {errorMessage}
-            </div>
+            </div> */}
         </div>
     )
 }
