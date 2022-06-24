@@ -137,7 +137,9 @@ function App() {
           console.log("paIFDBTPDB");
         const userPulledFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);  
         console.log(userPulledFromDB);
-
+        if (userPulledFromDB.data === []) {
+            return;
+        };
         setUserObject(userPulledFromDB.data[0]);
         setUsername(userPulledFromDB.data[0].username);
         setUserFFPoints(userPulledFromDB.data[0].fantasyForecastPoints);
