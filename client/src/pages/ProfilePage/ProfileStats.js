@@ -27,7 +27,7 @@ function ProfileStats(props) {
     const [recentAverageData, setRecentAverageData] = useState([]);
 
     useEffect(() => {
-        if (props.ffPoints < 1000) {
+        if (props.ffPoints < 600) {
             setIsHiddenBehindLevel(true);
             return;
         } else {
@@ -209,7 +209,7 @@ function ProfileStats(props) {
         <div className="profile-stats">
             <h1 className="profile-header">My Stats</h1>
             {isHiddenBehindLevel === true &&
-            <h3>This section of your profile is locked until you reach Level 10 (1000 Fantasy ForecastPoints). Complete the onboarding tasks on the Home page, submit forecasts, post to the feed and more to earn the points you need!</h3>
+            <h3>This section of your profile is locked until you reach Level 6 (600 Fantasy ForecastPoints). Complete the onboarding tasks on the Home page, submit forecasts, post to the feed and more to earn the points you need!</h3>
             }
             {isHiddenBehindLevel === false && 
                 <div className="">

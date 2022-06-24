@@ -15,7 +15,7 @@ function HomeButtonLarge(props) {
     const [modalContent, setModalContent] = useState("");
 
     useEffect(() => {
-        if (props.user.fantasyForecastPoints >= 1000) {
+        if (props.user.fantasyForecastPoints >= 600) {
             // Querying Server 
                 // getBrierDataFromDB(props.user.username === undefined ? localStorage.getItem('username') : props.user.username);
             // Using props
@@ -131,11 +131,11 @@ function HomeButtonLarge(props) {
             </Modal>
             <h2 className="home-button-large-title">
                 {props.title}
-                {props.user.fantasyForecastPoints < 1000 &&
+                {props.user.fantasyForecastPoints < 600 &&
                     <FaInfoCircle 
                         onClick={() => {
                             setShowModal(true);
-                            setModalContent(`This preview of your forecasting performance will be unlocked when you reach Level 10. This can be easily achieved by completing all Onboarding tasks above! You can submit posts to the feed, submit forecasts, complete learn quizzes, and much more to earn points.`)
+                            setModalContent(`This preview of your forecasting performance will be unlocked when you reach Level 6. This can be easily achieved by completing all Onboarding tasks above! You can submit posts to the feed, submit forecasts, complete learn quizzes, and much more to earn points.`)
                         }}
                         style={{ "color": "orange", "cursor": "pointer" }}
                     />
