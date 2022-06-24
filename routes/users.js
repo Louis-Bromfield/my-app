@@ -829,8 +829,12 @@ console.log("================");
 // Reset user's password
 router.patch("/reset", async (req, res) => {
     try {
+        console.log("In reset");
         const user = await Users.findOne({ username: req.body.username, email: req.body.email });
-        // console.log(user);
+        const fakeUser = await Users.findOne({ username: "78w5786y3487ty65348e75", email: "88w7e8r678sdfsdhjfbsdjh" });
+        console.log(user);
+        console.log("this is response when user isn't found vvvvv");
+        console.log(fakeUser);
         if (user) {
             let newPW = crypto.randomBytes(20).toString("hex");
             let transporter = nodemailer.createTransport({
