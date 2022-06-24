@@ -1114,6 +1114,10 @@ function ForecastSubmission(props) {
                                     <h3>Average {forecastPotentialOutcomes[2]}: {outcomeThreeCertainty}</h3>
                                 </div>
                                 }
+                                <br />
+                                {forecastObjForAnalysis.singleCertainty === false &&
+                                    <h2 style={{ color: "#404d72", border: "1px solid black" }}>Actual Outcome: {forecastObjForAnalysis.isClosed === false ? "TBD" : forecastObjForAnalysis.outcome === "outcome1" ? forecastPotentialOutcomes[0] : forecastObjForAnalysis.outcome === "outcome2" ? forecastPotentialOutcomes[1] : forecastPotentialOutcomes[2]}</h2>
+                                }
                             </div>
                             <div className="forecast-review-div-right">
                                 <h1>{closedForecastScore}</h1>
