@@ -191,7 +191,12 @@ function Login(props) {
                     {errorMessageForAccountCreation}
                 </div>
                 <div className="survey-explanation-div">
-                    <h2><u>Want to play for $$$?</u></h2>
+                    <h2 style={{ color: "orange" }}><u>What's involved?</u></h2>
+                    <p>Fantasy Forecast is a website dedicated to crowdsourcing political forecasts. Over the next 6 weeks, we will provide you with a variety of things to forecast under the umbrella of UK Politics. This includes things like predicting whether Boris Johnson will resign, to forecasting how polls will change over a week, to whether or not a general election will be called before the end of July. When a forecast reaches its deadline, you will recieve a score based on how accurate you were and how early you were, which will determine your place on the leaderboards.</p>
+                    <br />
+                    <p>There's nothing financial to this, we aren't taking any payment info, it's all free-to-play to whoever signs up, no restrictions. If you sign up and change your mind, email us at <b style={{ color: "orange" }}>fantasyforecastcontact@gmail.com</b> and we will delete your account, no questions asked.</p>
+                    <br />
+                    <h2 style={{ color: "orange" }}><u>Want to play for $$$?</u></h2>
                     <p>Starting on Monday 27th June for the next 6 weeks, Fantasy Forecast is running its inaugural forecasting tournament on UK Politics. The top three forecasters will win:</p>
                     <br />
                     <div className="prize-container">
