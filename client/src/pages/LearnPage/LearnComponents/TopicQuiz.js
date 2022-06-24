@@ -5,7 +5,8 @@ import './TopicQuiz.css';
 function TopicQuiz(props) {
     const [quizMessage, setQuizMessage] = useState("");
     // const [selectedAnswers, setSelectedAnswers] = useState([]);
-    // const [showSubmit, setShowSubmit] = useState(false);
+    const [showSubmit, setShowSubmit] = useState(false);
+    const [selectedAnswersForMarking, setSelectedAnswersForMarking] = useState([]);
     let selectedAnswers = [];
 
     const verifyAndSubmit = async (username) => {
@@ -93,31 +94,35 @@ function TopicQuiz(props) {
 
     const checkAnswers = () => {
         // Calculate how many they got right and check they have selected enough answers
+        console.log("////////////////");
+        console.log(selectedAnswers);
+        console.log("////////////////");
+        console.log(selectedAnswersForMarking);
         let correctAnswers = [];
         let answers = [];
         let numberOfAnswers = 0;
         let numberOfExpectedAnswers = 0;
-        for (let i = 0; i < selectedAnswers.length; i++) {
-            for (let j = 0; j < selectedAnswers[i].length; j++) {
-                answers.push(selectedAnswers[i][j][0]);
-                if (selectedAnswers[i][j][0][2] === true) {
-                    numberOfAnswers++;
-                };
+        for (let i = 0; i < selectedAnswersForMarking.length; i++) {
+            for (let j = 0; j < selectedAnswersForMarking[i].length; j++) {
+                answers.push(selectedAnswersForMarking[i][j][0]);
+                // if (selectedAnswers[i][j][0][2] === true) {
+                //     numberOfAnswers++;
+                // };
             };
         };
-        for (let i = 0; i < props.quizAnswers.length; i++) {
-            if (props.quizAnswers[i] === true) {
-                numberOfExpectedAnswers++;
-            }
-        }
-        // Check if the user has submitted enough answers
-        if (numberOfAnswers < numberOfExpectedAnswers) {
-            setQuizMessage("You have not selected enough answers.");
-            setTimeout(() => {
-                setQuizMessage("");
-            }, 3000);
-            return "FAIL";
-        };
+        // for (let i = 0; i < props.quizAnswers.length; i++) {
+        //     if (props.quizAnswers[i] === true) {
+        //         numberOfExpectedAnswers++;
+        //     }
+        // }
+        // // Check if the user has submitted enough answers
+        // if (numberOfAnswers < numberOfExpectedAnswers) {
+        //     setQuizMessage("You have not selected enough answers.");
+        //     setTimeout(() => {
+        //         setQuizMessage("");
+        //     }, 3000);
+        //     return "FAIL";
+        // };
         // Check if their answers are correct
         for (let i = 0; i < answers.length; i++) {
             if (answers[i][2] === true && props.quizAnswers[i] === true) {
@@ -152,22 +157,24 @@ function TopicQuiz(props) {
 
         // Switch boolean to true:
         selectedAnswers[index][indexOfAnswer][0][2] = true;
-
-        // console.log(selectedAnswers);
+        // setSelectedAnswersForMarking(selectedAnswers);
+        console.log(selectedAnswers);
         
         // if (showSubmit === false) {
-        //     let numOfAnswers = 0;
-        //     for (let i = 0; i < selectedAnswers.length; i++) {
-        //         for (let j = 0; j < selectedAnswers[i].length; j++) {
-        //             if (selectedAnswers[i][j][0][2] === true) {
-        //                 numOfAnswers++;
-        //             };
-        //         };
-        //     };
-        //     console.log(numOfAnswers);
-        //     if (numOfAnswers === props.quizQuestions.length) {
-        //         setShowSubmit(true);
-        //     };
+            let numOfAnswers = 0;
+            for (let i = 0; i < selectedAnswers.length; i++) {
+                for (let j = 0; j < selectedAnswers[i].length; j++) {
+                    if (selectedAnswers[i][j][0][2] === true) {
+                        numOfAnswers++;
+                    };
+                };
+            };
+            console.log(numOfAnswers);
+            // setSelectedAnswersForMarking(selectedAnswers);
+            if (numOfAnswers === props.quizQuestions.length) {
+                setShowSubmit(true);
+                setSelectedAnswersForMarking(selectedAnswers);
+            };
         // };
     };
 
@@ -208,8 +215,7 @@ function TopicQuiz(props) {
                 )
             })}
             {quizMessage !== "" && <h3 style={{ color: "red" }}>{quizMessage}</h3>}
-            {/* {showSubmit === true && <button className="submit-answers-btn" onClick={() => verifyAndSubmit(props.username)}>Submit Answers</button>} */}
-            <button className="submit-answers-btn" onClick={() => verifyAndSubmit(props.username)}>Submit Answers</button>
+            {showSubmit === true && <button className="submit-answers-btn" onClick={() => verifyAndSubmit(props.username)}>Submit Answers</button>}
         </div>
     )
 }

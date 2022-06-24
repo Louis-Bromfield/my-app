@@ -42,7 +42,7 @@ function Learn(props) {
                 Brier Scores will tell you about how we assess forecast accuracy; The Good Judgment Project is a 
                 pioneering research endeavour that provides a profound understanding of forecasting in action, as 
                 well as tips on how to improve, and Superforecasters imparts lessons on the very best in the business. 
-                Each topic also has a quiz, which you can attempt an unlimited number of times.
+                Each topic also has a quiz, which you can attempt <b>an unlimited number of times.</b>
             </p>
             <div className="learn-grid">
                 <div className="topic-list">
