@@ -4,13 +4,16 @@ import './TopicQuiz.css';
 
 function TopicQuiz(props) {
     const [quizMessage, setQuizMessage] = useState("");
+    // const [myAnswers, setMyAnswers] = useState([]);
+    const [showSubmit, setShowSubmit] = useState(false);
     let selectedAnswers = [];
 
     const verifyAndSubmit = async (username) => {
         // persistQuizCompletionToDBAndUpdateOnboarding(username, props.topic);
-        const correctAnswers = await checkAnswers();
-        props.updateQuizResults(correctAnswers);
+        const correctAnswers = checkAnswers();
+        
         if (correctAnswers !== "FAIL") {
+            props.updateQuizResults(correctAnswers);
             await persistQuizCompletionToDBAndUpdateOnboarding(username, props.topic);
             props.changeLearnPage("loading", props.topic)
             setTimeout(() => {
@@ -89,49 +92,51 @@ function TopicQuiz(props) {
         };
     };
 
-    const checkAnswers = async () => {
+    const checkAnswers = () => {
         // Calculate how many they got right and check they have selected enough answers
         let correctAnswers = [];
         let answers = [];
-        let numberOfAnswers = 0;
-        let numberOfExpectedAnswers = 0;
+        // let numberOfAnswers = 0;
+        // let numberOfExpectedAnswers = 0;
         for (let i = 0; i < selectedAnswers.length; i++) {
             for (let j = 0; j < selectedAnswers[i].length; j++) {
                 answers.push(selectedAnswers[i][j][0]);
-                if (selectedAnswers[i][j][0][2] === true) {
-                    numberOfAnswers++;
+                // if (selectedAnswers[i][j][0][2] === true) {
+                //     numberOfAnswers++;
+                // };
+            };
+        };
+        // for (let i = 0; i < props.quizAnswers.length; i++) {
+        //     if (props.quizAnswers[i] === true) {
+        //         numberOfExpectedAnswers++;
+        //     }
+        // }
+        // // Check if the user has submitted enough answers
+        // console.log(`if ${numberOfAnswers} < ${numberOfExpectedAnswers}`);
+        // if (numberOfAnswers < numberOfExpectedAnswers) {
+        //     setQuizMessage("You have not selected enough answers.");
+        //     setTimeout(() => {
+        //         setQuizMessage("");
+        //     }, 1500);
+        //     return "FAIL";
+        // } else {
+            // Check if their answers are correct
+            for (let i = 0; i < answers.length; i++) {
+                if (answers[i][2] === true && props.quizAnswers[i] === true) {
+                    correctAnswers.push([answers[i], "correctly-selected"]);
+                }
+                else if (answers[i][2] === false && props.quizAnswers[i] === false) {
+                    correctAnswers.push([answers[i], "correctly-not-selected"]);
+                } 
+                else if (answers[i][2] === true && props.quizAnswers[i] === false){
+                    correctAnswers.push([answers[i], "incorrectly-selected"]);
+                }
+                else if (answers[i][2] === false && props.quizAnswers[i] === true){
+                    correctAnswers.push([answers[i], "incorrectly-not-selected"]);
                 };
             };
-        };
-        for (let i = 0; i < props.quizAnswers.length; i++) {
-            if (props.quizAnswers[i] === true) {
-                numberOfExpectedAnswers++;
-            }
-        }
-        // Check if the user has submitted enough answers
-        if (numberOfAnswers < numberOfExpectedAnswers) {
-            setQuizMessage("You have not selected enough answers.");
-            setTimeout(() => {
-                setQuizMessage("");
-            }, 3000);
-            return "FAIL";
-        };
-        // Check if their answers are correct
-        for (let i = 0; i < answers.length; i++) {
-            if (answers[i][2] === true && props.quizAnswers[i] === true) {
-                correctAnswers.push([answers[i], "correctly-selected"]);
-            }
-            else if (answers[i][2] === false && props.quizAnswers[i] === false) {
-                correctAnswers.push([answers[i], "correctly-not-selected"]);
-            } 
-            else if (answers[i][2] === true && props.quizAnswers[i] === false){
-                correctAnswers.push([answers[i], "incorrectly-selected"]);
-            }
-            else if (answers[i][2] === false && props.quizAnswers[i] === true){
-                correctAnswers.push([answers[i], "incorrectly-not-selected"]);
-            };
-        };
-        return correctAnswers;
+            return correctAnswers;
+        // };
     };
 
     // There's surely a cleaner way of doing all this XD
@@ -150,6 +155,22 @@ function TopicQuiz(props) {
 
         // Switch boolean to true:
         selectedAnswers[index][indexOfAnswer][0][2] = true;
+        console.log(selectedAnswers);
+        
+        if (showSubmit === false) {
+            let numOfAnswers = 0;
+            for (let i = 0; i < selectedAnswers.length; i++) {
+                for (let j = 0; j < selectedAnswers[i].length; j++) {
+                    if (selectedAnswers[i][j][0][2] === true) {
+                        numOfAnswers++;
+                    };
+                };
+            };
+            console.log(numOfAnswers);
+            if (numOfAnswers === props.quizQuestions.length) {
+                setShowSubmit(true);
+            };
+        };
     };
 
     return (
@@ -189,7 +210,7 @@ function TopicQuiz(props) {
                 )
             })}
             {quizMessage !== "" && <h3 style={{ color: "red" }}>{quizMessage}</h3>}
-            <button className="submit-answers-btn" onClick={() => verifyAndSubmit(props.username)}>Submit Answers</button>
+            {showSubmit === true && <button className="submit-answers-btn" onClick={() => verifyAndSubmit(props.username)}>Submit Answers</button>}
         </div>
     )
 }

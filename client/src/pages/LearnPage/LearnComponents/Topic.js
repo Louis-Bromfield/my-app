@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Topic.css';
 import ReactLoading from 'react-loading';
 import PropTypes from 'prop-types';
@@ -10,84 +10,91 @@ import QuizResults from './QuizResults';
 
 function Topic(props) {
     const [quizResults, setQuizResults] = useState();
-    let youtubeLink;
-    let text;
+    const [youtubeLink, setYoutubeLink] = useState("");
+    const [text, setText] = useState("");
+    const [quizQuestions, setQuizQuestions] = useState([]);
+    const [quizAnswers, setQuizAnswers] = useState([]);
+    // let youtubeLink;
+    // let text;
 
-    switch(props.title) {
-        case("Fantasy Forecast Points"):
-            //youtubeLink = 
-            text = TopicContent[0];
-            break;
-        case("Brier Scores"):
-            youtubeLink = <iframe 
-                className="youtube-iframe" 
-                src="https://www.youtube.com/embed/9W7rnmEWVmQ" 
-                title="YouTube video player" 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen>
-            </iframe>
-            text = TopicContent[1];
-            break;
-        case("The Good Judgment Project"):
-            youtubeLink = <iframe 
-                className="youtube-iframe" 
-                src="https://www.youtube.com/embed/uJb63rMNrbE" 
-                title="YouTube video player" 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen>
-            </iframe>
-            text = TopicContent[2];
-            break;
-        case("Superforecasters"):
-            youtubeLink = <iframe 
-                className="youtube-iframe" 
-                src="https://www.youtube.com/embed/wgybyx5cxEc" 
-                title="YouTube video player" 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen>
-            </iframe>
-            text = TopicContent[3];
-            break;
-        default:
-            youtubeLink = <iframe 
-                className="youtube-iframe" 
-                src="https://www.youtube.com/embed/0XaBygN-FZ8" 
-                title="YouTube video player" 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen>
-            </iframe>
-            text = [];
-            break;
-    };
+    useEffect(() => {
+        console.log("Topic UE");
+        switch(props.title) {
+            case("Fantasy Forecast Points"):
+                //setYoutubeLink(
+                setText(TopicContent[0]);
+                break;
+            case("Brier Scores"):
+                setYoutubeLink(<iframe 
+                    className="youtube-iframe" 
+                    src="https://www.youtube.com/embed/9W7rnmEWVmQ" 
+                    title="YouTube video player" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowFullScreen>
+                </iframe>);
+                setText(TopicContent[1]);
+                break;
+            case("The Good Judgment Project"):
+                setYoutubeLink(<iframe 
+                    className="youtube-iframe" 
+                    src="https://www.youtube.com/embed/uJb63rMNrbE" 
+                    title="YouTube video player" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowFullScreen>
+                </iframe>);
+                setText(TopicContent[2]);
+                break;
+            case("Superforecasters"):
+                setYoutubeLink(<iframe 
+                    className="youtube-iframe" 
+                    src="https://www.youtube.com/embed/wgybyx5cxEc" 
+                    title="YouTube video player" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowFullScreen>
+                </iframe>);
+                setText(TopicContent[3]);
+                break;
+            default:
+                setYoutubeLink(<iframe 
+                    className="youtube-iframe" 
+                    src="https://www.youtube.com/embed/0XaBygN-FZ8" 
+                    title="YouTube video player" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowFullScreen>
+                </iframe>);
+                setText([]);
+                break;
+        };
 
-    let quizQuestions;
-    let quizAnswers;
+        // let quizQuestions;
+        // let quizAnswers;
 
-    switch(props.title) {
-        case("Fantasy Forecast Points"):
-            quizQuestions = QuizQuestions[0];
-            quizAnswers = QuizAnswers[0].correctAnswers;
-        break;
-        case("Brier Scores"):
-            quizQuestions = QuizQuestions[1];
-            quizAnswers = QuizAnswers[1].correctAnswers;
-        break;
-        case("The Good Judgment Project"):
-            quizQuestions = QuizQuestions[2];
-            quizAnswers = QuizAnswers[2].correctAnswers;
-        break;
-        case("Superforecasters"):
-            quizQuestions = QuizQuestions[3];
-            quizAnswers = QuizAnswers[3].correctAnswers;
-        break;
-        default:
-            quizQuestions = QuizQuestions[0];
-            quizAnswers = QuizAnswers[0].correctAnswers;
-    };
+        switch(props.title) {
+            case("Fantasy Forecast Points"):
+                setQuizQuestions(QuizQuestions[0]);
+                setQuizAnswers(QuizAnswers[0].correctAnswers);
+            break;
+            case("Brier Scores"):
+                setQuizQuestions(QuizQuestions[1]);
+                setQuizAnswers(QuizAnswers[1].correctAnswers);
+            break;
+            case("The Good Judgment Project"):
+                setQuizQuestions(QuizQuestions[2]);
+                setQuizAnswers(QuizAnswers[2].correctAnswers);
+            break;
+            case("Superforecasters"):
+                setQuizQuestions(QuizQuestions[3]);
+                setQuizAnswers(QuizAnswers[3].correctAnswers);
+            break;
+            default:
+                setQuizQuestions(QuizQuestions[0]);
+                setQuizAnswers(QuizAnswers[0].correctAnswers);
+        };
+    }, [props.title]);
 
     const updateQuizResults = (newResults) => {
         setQuizResults(newResults);
@@ -114,6 +121,7 @@ function Topic(props) {
                     topic={props.title} 
                     quizQuestions={quizQuestions} 
                     quizAnswers={quizAnswers} 
+                    setQuizAnswers={setQuizAnswers}
                     changeLearnPage={props.changeLearnPage} 
                     updateQuizResults={updateQuizResults} 
                     username={props.username}
