@@ -137,18 +137,21 @@ function App() {
           console.log("paIFDBTPDB");
         const userPulledFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);  
         console.log(userPulledFromDB);
-        if (userPulledFromDB.data === []) {
+        console.log(userPulledFromDB.data);
+        if (userPulledFromDB.data === [] || userPulledFromDB.data[0] === undefined) {
+            console.log("here1");
             return;
-        };
-        setUserObject(userPulledFromDB.data[0]);
-        setUsername(userPulledFromDB.data[0].username);
-        setUserFFPoints(userPulledFromDB.data[0].fantasyForecastPoints);
-        setMarkets(userPulledFromDB.data[0].markets);
-        setProfilePicture(userPulledFromDB.data[0].profilePicture);
-        setUserOnboarding(userPulledFromDB.data[0].onboarding);
-        setUserClosedForecastCount(userPulledFromDB.data[0].numberOfClosedForecasts);
-        setUserBrierScores(userPulledFromDB.data[0].brierScores);
-
+        } else {
+            console.log("here2");
+            setUserObject(userPulledFromDB.data[0]);
+            setUsername(userPulledFromDB.data[0].username);
+            setUserFFPoints(userPulledFromDB.data[0].fantasyForecastPoints);
+            setMarkets(userPulledFromDB.data[0].markets);
+            setProfilePicture(userPulledFromDB.data[0].profilePicture);
+            setUserOnboarding(userPulledFromDB.data[0].onboarding);
+            setUserClosedForecastCount(userPulledFromDB.data[0].numberOfClosedForecasts);
+            setUserBrierScores(userPulledFromDB.data[0].brierScores);
+        }
         // console.log(userPulledFromDB.data[0].brierScores);
 
       } catch(error) {
