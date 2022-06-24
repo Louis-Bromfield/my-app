@@ -124,13 +124,16 @@ function App() {
             // console.log(cookie.username);
             console.log(localStorage.getItem("username"));
             console.log(cookie.username);
-            pullAllInfoFromDBToPassDown(localStorage.getItem("username") === undefined || localStorage.getItem("username") === null ? cookie.username : localStorage.getItem("username"))
+            if (localStorage.getItem("isLoggedIn") === "true") {
+                pullAllInfoFromDBToPassDown(localStorage.getItem("username") === undefined || localStorage.getItem("username") === null ? cookie.username : localStorage.getItem("username"))
+            };
     //   };
   }, [isLoggedIn, cookie.username]);
 
   const pullAllInfoFromDBToPassDown = async (username) => {
       try {
-          if (username === undefined) {
+          console.log("FIRED");
+          if (username === undefined || username !== null || typeof username !== "string") {
               return;
           };
           console.log(username);
@@ -138,7 +141,7 @@ function App() {
         const userPulledFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);  
         console.log(userPulledFromDB);
         console.log(userPulledFromDB.data);
-        if (userPulledFromDB.data === [] || userPulledFromDB.data[0] === undefined) {
+        if (userPulledFromDB.data === [] || userPulledFromDB.data[0].username === undefined) {
             console.log("here1");
             return;
         } else {
@@ -153,7 +156,6 @@ function App() {
             setUserBrierScores(userPulledFromDB.data[0].brierScores);
         }
         // console.log(userPulledFromDB.data[0].brierScores);
-
       } catch(error) {
           console.error("Error in pAIFDBTPD");
           console.error(error);
