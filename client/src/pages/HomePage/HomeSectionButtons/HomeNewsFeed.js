@@ -108,6 +108,7 @@ function HomeNewsFeed(props) {
     }
 
     const handlePostURLChange = async (e, changeFromState) => {
+        console.log(e.target.value);
         if (e.target.value.length === 0 || e.target.value === "") {
             setPostPreview(false);
             setNewPostURL("");
@@ -122,7 +123,8 @@ function HomeNewsFeed(props) {
                     URL: postURL
                 }
             });
-            if (postPreviewObj.data.error === "Error") {
+            console.log(postPreviewObj.data.articleTitle);
+            if (postPreviewObj.data.error === "Error" || postPreviewObj.data.articleTitle === "") {
                 setPostPreviewTitle("There was an error. Please check the link you have pasted is correct.");
                 setAlternateArticleTitle("There was an error. Please check the link you have pasted is correct.");
                 setPostPreviewImage("");
