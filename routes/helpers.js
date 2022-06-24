@@ -28,6 +28,17 @@ router.get("/getPostInfo", async (req, res) => {
     };
 });
 
+router.get("/getAllFeedback/responses", async (req, res) => {
+    try {
+        const allPosts = Feedback.find();
+        res.json({ retreiveSuccess: true, allPosts: allPosts });
+    } catch (err) {
+        console.error("Error in helpers > getAllFeedback");
+        console.error(err);
+        res.json({ retreiveSuccess: false, feedbackSubmissions: [] });
+    };
+});
+
 // Submit feedback
 router.post("/submitFeedback", async (req, res) => {
     try {
