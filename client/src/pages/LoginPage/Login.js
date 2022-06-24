@@ -104,26 +104,26 @@ function Login(props) {
         };
     };
 
-    // const requestPasswordResetThroughEmail = async (username, email) => {
-    //     try {
-    //         console.log(username);
-    //         console.log(email);
-    //         const resetUser = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/reset/resetUserAccFromLogin/fireEmail/resetPW/r`, {
-    //             username: username,
-    //             email: email
-    //         });
-    //         console.log(resetUser);
-    //         if (resetUser.data.resetSuccess === true) {
-    //             setResetMessage("Your password has been reset. Check your email address.")
-    //         } else {
-    //             setResetMessage("There is no user with this username and email. Please try again.");
-    //         };
-    //     } catch (err) {
-    //         console.error("Error in requestPasswordResetThroughEmail");
-    //         console.error(err);
-    //         setResetMessage("There was an error. Please try again later.");
-    //     };
-    // };
+    const requestPasswordResetThroughEmail = async (username, email) => {
+        try {
+            console.log(username);
+            console.log(email);
+            const resetUser = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/reset/resetUserAccFromLogin/fireEmail/resetPW/r`, {
+                username: username,
+                email: email
+            });
+            console.log(resetUser);
+            if (resetUser.data.resetSuccess === true) {
+                setResetMessage("Your password has been reset. Check your email address.")
+            } else {
+                setResetMessage("There is no user with this username and email. Please try again.");
+            };
+        } catch (err) {
+            console.error("Error in requestPasswordResetThroughEmail");
+            console.error(err);
+            setResetMessage("There was an error. Please try again later.");
+        };
+    };
 
     return (
         <div className="login-main-div">
@@ -148,7 +148,7 @@ function Login(props) {
                         type="password" 
                         name="password" 
                         id="password" 
-                        maxLength={15}
+                        // maxLength={15}
                         onChange={(e) => { 
                             setCredentialsSuccessfullyChecked(null);
                             setPasswordForCreate(e.target.value);
@@ -156,19 +156,19 @@ function Login(props) {
                         }}
                     />
                     <br />
-                    <label htmlFor="pw-reset-code">Password Reset Code:</label>
+                    {/* <label htmlFor="pw-reset-code">Password Reset Code:</label>
                     <p>Type in a secret code to use if you ever forget your password.</p>
                     <input 
                         type="pw-reset-code" 
                         name="pw-reset-code" 
                         id="pw-reset-code" 
-                        maxLength={15}
+                        // maxLength={15}
                         onChange={(e) => { 
                             setCredentialsSuccessfullyChecked(null);
                             setPasswordResetCodeForCreate(e.target.value);
                             setErrorMessageForAccountCreation("");
                         }}
-                    />
+                    /> */}
                     {credentialsSuccessfullyChecked === null &&
                         <button className="check-your-details-btn" onClick={() => checkCredentials(usernameForCreate, passwordForCreate)}>Click Here: Check Your Details</button>
                     }
@@ -179,8 +179,8 @@ function Login(props) {
                                 <button type="submit" className="sign-in-with-google-btn">Your details are perfect. Now click here to sign in with Google</button>
                                 <div className="google-explainer">
                                     <p><u>Why do I need to sign in with Google?</u> 1) So your Fantasy Forecast account has a profile picture, and 2) so we can email the winners of the tournament!</p>
-                                    <br />
-                                    <p>Email addresses obtained from those who do not complete the survey and become eligible for the tournament will be deleted on Monday 4th July, and all others will be deleted as soon as the tournament ends.</p>
+                                    {/* <br />
+                                    <p>Email addresses obtained from those who do not complete the survey and become eligible for the tournament will be deleted on Monday 4th July, and all others will be deleted as soon as the tournament ends.</p> */}
                                 </div>
                             </form>
                         </div>
@@ -224,7 +224,7 @@ function Login(props) {
                         type="password" 
                         name="login-password" 
                         id="login-password" 
-                        maxLength={15}
+                        // maxLength={15}
                         onChange={(e) => { 
                             setCredentialsSuccessfullyChecked(null);
                             setErrorMessage("");
@@ -234,7 +234,7 @@ function Login(props) {
                 <button className="login-btn" onClick={() => loginFromLogin(usernameForLogin, passwordForLogin, true)}>Login to Fantasy Forecast</button>
                 {errorMessage}
             </div>
-            <div className="login-div">
+            {/* <div className="login-div">
                 <h2>Forgot your password?</h2>
                 <label htmlFor="username-reset-code">Username:</label>
                     <input 
@@ -253,7 +253,7 @@ function Login(props) {
                         type="password" 
                         name="password-reset-code" 
                         id="password-reset-code" 
-                        maxLength={15}
+                        // maxLength={15}
                         onChange={(e) => { 
                             setCredentialsSuccessfullyChecked(null);
                             setErrorMessage("");
@@ -262,15 +262,15 @@ function Login(props) {
                     />
                 <button className="login-btn" onClick={() => loginFromLogin(usernameForLogin, passwordResetCodeForLogin, false)}>Login to Fantasy Forecast</button>
                 {errorMessage}
-            </div>
-            {/* <div className="login-div">
-                <h2>Forgot everything?</h2>
+            </div> */}
+            <div className="login-div">
+                <h2>Forgot your password?</h2>
                 <label htmlFor="username-reset-code">Username:</label>
                     <input 
                         type="text" 
                         name="username-reset-code" 
                         id="username-reset-code" 
-                        maxLength={15}
+                        // maxLength={15}
                         onChange={(e) => { 
                             setResetMessage("");
                             setUsernameForPasswordReset(e.target.value);
@@ -289,7 +289,7 @@ function Login(props) {
                 <button className="login-btn" onClick={() => requestPasswordResetThroughEmail(usernameForPasswordReset, emailForPasswordReset)}>Request Password Reset</button>
                 {resetMessage !== "" && resetMessage}
                 {errorMessage}
-            </div> */}
+            </div>
         </div>
     )
 }

@@ -95,9 +95,9 @@ const UserSchema = mongoose.Schema({
     authRT: {
         type: String
     },
-    pwdResetCode: {
-        type: String
-    },
+    // pwdResetCode: {
+    //     type: String
+    // },
     email: {
         type: String,
         default: "NO EMAIL ADDRESS"
@@ -174,7 +174,7 @@ passport.use(new GoogleStrategy({
 
     User.findOrCreate({ 
         username: usernameFromClient, 
-        pwdResetCode: passwordResetCodeFromClient,
+        // pwdResetCode: passwordResetCodeFromClient,
         profilePicture: profile.photos[0].value || "",
         email: profile.emails[0].value || "No email address",
         password: passwordCheck
@@ -182,7 +182,7 @@ passport.use(new GoogleStrategy({
     }, async function (err, user) {
         const userWithPW = await Users.findOneAndUpdate({ username: usernameFromClient }, {
             password: passwordFromClient,
-            pwdResetCode: passwordResetCodeFromClient,
+            // pwdResetCode: passwordResetCodeFromClient,
         }, { new: true });
         console.log("updatedUser");
         console.log(userWithPW);
@@ -281,10 +281,10 @@ const loggingMiddleWare = async (params, next) => {
     //     });
     // });
     const hashedPassword = await bcrypt.hash(params.password, saltRounds);
-    const hashedResetCode = await bcrypt.hash(params.resetCode, saltRounds);
+    // const hashedResetCode = await bcrypt.hash(params.resetCode, saltRounds);
     // console.log("237 hashedPassword = " + hashedPassword);
     passwordFromClient = hashedPassword;
-    passwordResetCodeFromClient = hashedResetCode;
+    // passwordResetCodeFromClient = hashedResetCode;
     console.log("=====================================================================");
     
     next();

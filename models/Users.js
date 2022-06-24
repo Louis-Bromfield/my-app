@@ -125,9 +125,9 @@ const UserSchema = mongoose.Schema({
     authRT: {
         type: String
     },
-    pwdResetCode: {
-        type: String
-    },
+    // pwdResetCode: {
+    //     type: String
+    // },
     email: {
         type: String
     },
