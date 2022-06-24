@@ -827,7 +827,7 @@ console.log("================");
 };
 
 // Reset user's password
-router.patch("/reset", async (req, res) => {
+router.patch("/reset/resetUserAccFromLogin/fireEmail/resetPW/r", async (req, res) => {
     try {
         console.log("In reset");
         const user = await Users.findOne({ username: req.body.username, email: req.body.email });

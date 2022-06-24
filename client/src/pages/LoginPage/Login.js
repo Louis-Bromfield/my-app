@@ -108,7 +108,7 @@ function Login(props) {
     //     try {
     //         console.log(username);
     //         console.log(email);
-    //         const resetUser = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/reset`, {
+    //         const resetUser = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/reset/resetUserAccFromLogin/fireEmail/resetPW/r`, {
     //             username: username,
     //             email: email
     //         });
