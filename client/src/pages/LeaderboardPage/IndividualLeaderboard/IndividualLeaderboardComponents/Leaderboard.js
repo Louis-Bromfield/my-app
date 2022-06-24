@@ -177,7 +177,8 @@ function Leaderboard(props) {
                     } else {
                         // console.log("here in else!");
                         rankings[i].brierScoresForMarket = [];
-                        let totalBrier = 0;
+                        rankings[i].totalBrier = 0;
+                        // let totalBrier = 0;
                         let numberOfBriersInThisMarket = 0;
                         if (rankings[i].brierScores.length > 0) {
                             // console.log("yeah more than 1 score");
@@ -189,16 +190,16 @@ function Leaderboard(props) {
                                         problemName: rankings[i].brierScores[j].problemName,
                                         brierScore: rankings[i].brierScores[j].brierScore
                                     });
-                                    totalBrier += rankings[i].brierScores[j].brierScore;
+                                    rankings[i].totalBrier += rankings[i].brierScores[j].brierScore;
                                 };
                             };
                         };
                         if (rankings[i].brierScores.length === 0) {
                             rankings[i].avgBrierScore = 0;
                         } else {
-                            let avgBrierScore = totalBrier / numberOfBriersInThisMarket;
-                            rankings[i].avgBrierScore = isNaN(avgBrierScore) ? 0.0 : totalBrier/numberOfBriersInThisMarket;
-                            rankings[i].totalBrier = totalBrier;
+                            let avgBrierScore = rankings[i].totalBrier / numberOfBriersInThisMarket;
+                            rankings[i].avgBrierScore = isNaN(avgBrierScore) ? 0.0 : rankings[i].totalBrier/numberOfBriersInThisMarket;
+                            // rankings[i].totalBrier = totalBrier;
                         };
                     };
                 };
@@ -206,17 +207,24 @@ function Leaderboard(props) {
             // Outside of main loop:
             if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
                 ffRankings = ffRankings.sort((a, b) => b.marketPoints - a.marketPoints);
+                // console.log(ffRankings);
                 setUsersData(ffRankings);
                 // props.setFFData(ffRankings);
                 props.setRankingsForTop3([ffRankings[0], ffRankings[1], ffRankings[2]]);
                 setLoading(false);
                 return;
             } else {
+                // console.log("in rankings else");
                 // props.setAverageBrier(totalAverageBrier / rankings.length);
+                // console.log("rankings pre");
+                // console.log(rankings);
                 rankings = rankings.sort((a, b) => b.totalBrier - a.totalBrier);
+                // console.log("rankings post");
+                // console.log(rankings);
                 // console.log("++++++++++++++++++++++");
                 // console.log(rankings);
                 // console.log("++++++++++++++++++++++");
+                // console.log(rankings);
                 setUsersData(rankings);
                 if (rankings.find(el => el.username === props.username) !== undefined) {
                     props.setUserInMarket(true);
