@@ -175,7 +175,7 @@ function Login(props) {
                     {credentialsSuccessfullyChecked === true && 
                         <div className="credentials-passed-login">
                             {/* <h2>Your details are perfect!</h2> */}
-                            <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/not_callback/${usernameForCreate}/${passwordForCreate}/${passwordResetCodeForCreate}`}>
+                            <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/not_callback/${usernameForCreate}/${passwordForCreate}`}>
                                 <button type="submit" className="sign-in-with-google-btn">Your details are perfect. Now click here to sign in with Google</button>
                                 <div className="google-explainer">
                                     <p><u>Why do I need to sign in with Google?</u> 1) So your Fantasy Forecast account has a profile picture, and 2) so we can email the winners of the tournament!</p>

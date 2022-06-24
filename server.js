@@ -327,7 +327,7 @@ const loggingMiddleWare = async (params, next) => {
 // };
 
 
-app.get("/auth/google/not_callback/:username/:password/:resetCode", (req, res, next) => loggingMiddleWare(req.params, next), passport.authenticate("google", {
+app.get("/auth/google/not_callback/:username/:password", (req, res, next) => loggingMiddleWare(req.params, next), passport.authenticate("google", {
     scope: [
         'https://www.googleapis.com/auth/userinfo.profile',
         'https://www.googleapis.com/auth/userinfo.email'
