@@ -30,7 +30,7 @@ router.get("/getPostInfo", async (req, res) => {
 
 router.get("/getAllFeedback/responses", async (req, res) => {
     try {
-        const allPosts = Feedback.find();
+        const allPosts = await Feedback.find();
         res.json({ retreiveSuccess: true, allPosts: allPosts });
     } catch (err) {
         console.error("Error in helpers > getAllFeedback");

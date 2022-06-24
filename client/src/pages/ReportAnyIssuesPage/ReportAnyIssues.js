@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './ReportAnyIssues.css';
 import axios from 'axios';
@@ -9,6 +9,7 @@ function ReportAnyIssues() {
     const [reportComments, setReportComments] = useState("");
     const [reportResponse, setReportResponse] = useState("");
     const [reportResponseColour, setReportResponseColour] = useState("");
+    const [feedbackArr, setFeedbackArr] = useState([]);
 
     const submitComments = async (type, comments) => {
         if (reportComments === "" || /^\s*$/.test(reportComments)) {
@@ -33,7 +34,22 @@ function ReportAnyIssues() {
             console.error("Error in ReportAnyIssues > submitComments");
             console.error(error);
         };
-    }
+    };
+
+    // const getAllFeedback = async () => {
+    //     try {
+    //         const allFeedback = await axios.get('https://fantasy-forecast-politics.herokuapp.com/helpers/getAllFeedback/responses');
+    //         console.log(allFeedback);
+    //     } catch (err) {
+    //         console.error("Error in getting all Feedback");
+    //         setFeedbackArr(["The feedback submissions are not available at the moment. Please try again later."]);
+    //     };
+    // };
+
+    // useEffect(() => {
+    //     getAllFeedback();
+    //     console.log("ReportAnyIssues UE");
+    // }, []);
 
     return (
         <div className="report-any-issues">
