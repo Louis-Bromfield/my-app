@@ -174,17 +174,29 @@ function Leaderboard(props) {
                           ffRankings[i].username = rankings[i].username;
                           ffRankings[i].marketPoints = rankings[i].fantasyForecastPoints;
                           ffRankings[i].brierScores = rankings[i].brierScores;
+                          ffRankings[i].brierScoresForMarket = [];
+                          ffRankings[i].totalBrier = 0;
+                          let numberOfBriers = 0;
+                          if (rankings[i].brierScores.length > 0) {
+                            for (let j = 0; j < rankings[i].brierScores.length; j++) {
+                                numberOfBriers++;
+                                ffRankings[i].totalBrier += rankings[i].brierScores[j].brierScore;
+                            };
+                        };
+                        if (rankings[i].brierScores.length === 0) {
+                            ffRankings[i].avgAllTimeBrier = 0;
+                        } else {
+                            let avgBrierScore = ffRankings[i].totalBrier / numberOfBriers;
+                            console.log(avgBrierScore);
+                            ffRankings[i].avgAllTimeBrier = isNaN(avgBrierScore) ? 0.0 : ffRankings[i].totalBrier/numberOfBriers;
+                        };
                     } else {
-                        // console.log("here in else!");
                         rankings[i].brierScoresForMarket = [];
                         rankings[i].totalBrier = 0;
-                        // let totalBrier = 0;
                         let numberOfBriersInThisMarket = 0;
                         if (rankings[i].brierScores.length > 0) {
-                            // console.log("yeah more than 1 score");
                             for (let j = 0; j < rankings[i].brierScores.length; j++) {
                                 if (rankings[i].brierScores[j].marketName === props.leaderboardTitle || rankings[i].brierScores[j].marketName === localStorage.getItem('currentLeaderboardName')) {
-                                    // console.log("yeah there's a score from this market here");
                                     numberOfBriersInThisMarket++;
                                     rankings[i].brierScoresForMarket.push({
                                         problemName: rankings[i].brierScores[j].problemName,
@@ -199,7 +211,6 @@ function Leaderboard(props) {
                         } else {
                             let avgBrierScore = rankings[i].totalBrier / numberOfBriersInThisMarket;
                             rankings[i].avgBrierScore = isNaN(avgBrierScore) ? 0.0 : rankings[i].totalBrier/numberOfBriersInThisMarket;
-                            // rankings[i].totalBrier = totalBrier;
                         };
                     };
                 };
@@ -207,24 +218,12 @@ function Leaderboard(props) {
             // Outside of main loop:
             if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
                 ffRankings = ffRankings.sort((a, b) => b.marketPoints - a.marketPoints);
-                // console.log(ffRankings);
                 setUsersData(ffRankings);
-                // props.setFFData(ffRankings);
                 props.setRankingsForTop3([ffRankings[0], ffRankings[1], ffRankings[2]]);
                 setLoading(false);
                 return;
             } else {
-                // console.log("in rankings else");
-                // props.setAverageBrier(totalAverageBrier / rankings.length);
-                // console.log("rankings pre");
-                // console.log(rankings);
                 rankings = rankings.sort((a, b) => b.totalBrier - a.totalBrier);
-                // console.log("rankings post");
-                // console.log(rankings);
-                // console.log("++++++++++++++++++++++");
-                // console.log(rankings);
-                // console.log("++++++++++++++++++++++");
-                // console.log(rankings);
                 setUsersData(rankings);
                 if (rankings.find(el => el.username === props.username) !== undefined) {
                     props.setUserInMarket(true);
