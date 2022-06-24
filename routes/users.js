@@ -856,9 +856,9 @@ router.patch("/reset", async (req, res) => {
                 // send mail with defined transport object
                 let info = await transporter.sendMail({
                     from: 'fantasyforecastcontact@gmail.com', // sender address
-                    to: "louisbromwork@gmail.com", // list of receivers
-                    subject: "Fantasy Forecast Password Reset5", // Subject line
-                    text: "Your new password is blargblargblarg. If this wasn't you, we recommend you log on to your account, head to your profile page, and change your password at the bottom of the profile page. If you did make this reset request, we still recommend you change your password yourself through your profile page just to be safe. Many thanks, Louis - Fantasy Forecast", // plain text body
+                    to: user.email, // list of receivers
+                    subject: "Fantasy Forecast Password Reset", // Subject line
+                    text: `Your new password is ${newPW}. If this wasn't you, we recommend you log on to your account, head to your profile page, and change your password at the bottom of the profile page. If you did make this reset request, we still recommend you change your password yourself through your profile page just to be safe. Many thanks, Louis - Fantasy Forecast`, // plain text body
                     html:
                     `Your new password is ${newPW}. If this wasn't you, we recommend you log on to your account, head to your profile page, and change your password at the bottom of the profile page.</p><br /><p>If you did make this reset request, we still recommend you change your password yourself through your profile page just to be safe.</p><p>Many thanks,</p><p>Louis - Fantasy Forecast</p>`, // html body
                 });
