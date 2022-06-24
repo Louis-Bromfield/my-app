@@ -64,10 +64,10 @@ function QuizResults(props) {
                             break;
                     }
                     return (
-                        <div key={item} className="">
+                        <div className="">
                             <h4 className="answer" style={{ color: color }}>- {item[0]}</h4>
                             <br />
-                            <h3 key={item}>You answered: {youSelected}</h3>
+                            <h3>You answered: {youSelected}</h3>
                             {youSelected === correctAnswer && <h3 style={{ color: "green" }}>This was correct!</h3>}
                             {youSelected !== correctAnswer && <h3 style={{ color: "red" }}>This was incorrect, the correct answer was: {correctAnswer}</h3>}
                             <br />
@@ -82,36 +82,36 @@ function QuizResults(props) {
                         numberOfCorrectAnswers++;
                     };
                     return (
-                        <div key={item} className="">
-                            <h4 className="answer">- {item[0]}</h4>
-                            <br />
-                            <h3>You answered: {youSelected}</h3>
-                            {youSelected === correctAnswer && <h3 style={{ color: "green" }}>This was correct!</h3>}
-                            {youSelected !== correctAnswer && <h3 style={{ color: "red" }}>This was incorrect, the correct answer was: {correctAnswer}</h3>}
-                            <br />
-                            <hr />
-                            <br />
+                        <div className="">
+                        <h4 className="answer">- {item[0]}</h4>
+                        <br />
+                        <h3>You answered: {youSelected}</h3>
+                        {youSelected === correctAnswer && <h3 style={{ color: "green" }}>This was correct!</h3>}
+                        {youSelected !== correctAnswer && <h3 style={{ color: "red" }}>This was incorrect, the correct answer was: {correctAnswer}</h3>}
+                        <br />
+                        <hr />
+                        <br />
                         </div>
                     )
                 }
                 else if (!Array.isArray(item)) {
                     return (
-                        <h3 key={item}>{item}</h3>
+                        <h3>{item}</h3>
                     )
                 } else if (Array.isArray(item) && (item[1] === "correctly-selected" || item[1] === "incorrectly-not-selected")) {
                     return (
-                        <h4 key={item} className="answer" style={{ color: "green" }}>- {item[0]}</h4>
+                        <h4 className="answer" style={{ color: "green" }}>- {item[0]}</h4>
                     )
                 } else if (Array.isArray(item) && item[1] === "incorrectly-selected") {
                     return (
-                        <h4 key={item} className="answer" style={{ color: "red" }}>-- {item[0]}</h4>
+                        <h4 className="answer" style={{ color: "red" }}>-- {item[0]}</h4>
                     )
                 } else if (Array.isArray(item) && item[1] === "correctly-not-selected") {
                     return (
-                        <h4 key={item} className="answer">- {item[0]}</h4>
+                        <h4 className="answer">- {item[0]}</h4>
                     )
                 } else {
-                    return <div key={item}></div>
+                    return <div></div>
                 }
             })}
             <div className="quiz-results-total">
