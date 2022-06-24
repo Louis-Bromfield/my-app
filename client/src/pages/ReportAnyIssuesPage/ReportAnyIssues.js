@@ -10,6 +10,8 @@ function ReportAnyIssues() {
     const [reportResponse, setReportResponse] = useState("");
     const [reportResponseColour, setReportResponseColour] = useState("");
     const [feedbackArr, setFeedbackArr] = useState([]);
+    const [feedbackMessage, setFeedbackMessage] = useState("");
+    const [newFeedback, setNewFeedback] = useState({ reportType: "", reportDate: "", reportComments: "", reportResponse: ""});
 
     const submitComments = async (type, comments) => {
         if (reportComments === "" || /^\s*$/.test(reportComments)) {
@@ -21,11 +23,18 @@ function ReportAnyIssues() {
             setReportResponse("");
             const res = await axios.post('https://fantasy-forecast-politics.herokuapp.com/helpers/submitFeedback', {
                 reportType: type,
-                reportComments: comments
+                reportComments: comments,
+                reportReponse: ""
             });
             if (res.status === 200) {
                 setReportResponseColour("green");
                 setReportResponse("Your feedback has been submitted! Thank you for your input :)")
+                setNewFeedback({
+                    reportType: type,
+                    reportDate: new Date().toString(),
+                    reportComments: comments,
+                    reportResponse: ""
+                });
             } else {
                 setReportResponseColour("red");
                 setReportResponse("There was an error (not your fault!). Please try again later");
@@ -36,20 +45,28 @@ function ReportAnyIssues() {
         };
     };
 
-    // const getAllFeedback = async () => {
-    //     try {
-    //         const allFeedback = await axios.get('https://fantasy-forecast-politics.herokuapp.com/helpers/getAllFeedback/responses');
-    //         console.log(allFeedback);
-    //     } catch (err) {
-    //         console.error("Error in getting all Feedback");
-    //         setFeedbackArr(["The feedback submissions are not available at the moment. Please try again later."]);
-    //     };
-    // };
+    const getAllFeedback = async () => {
+        try {
+            const allFeedback = await axios.get('https://fantasy-forecast-politics.herokuapp.com/helpers/getAllFeedback/responses');
+            console.log(allFeedback);
+            if (allFeedback.data.retrieveSuccess === false) {
+                setFeedbackMessage("The feedback submissions are not available at the moment. Please try again later.");
+            } else if (allFeedback.data.retrieveSuccess === true) {
+                setFeedbackMessage("Retrieval success");
+                console.log(allFeedback.data.allPosts);
+                setFeedbackArr(allFeedback.data.allPosts.reverse());
+            };
+        } catch (err) {
+            console.error("Error in getting all feedback");
+            console.error(err);
+            setFeedbackMessage("The feedback submissions are not available at the moment. Please try again later.");
+        };
+    };
 
-    // useEffect(() => {
-    //     getAllFeedback();
-    //     console.log("ReportAnyIssues UE");
-    // }, []);
+    useEffect(() => {
+        getAllFeedback();
+        console.log("ReportAnyIssues UE");
+    }, []);
 
     return (
         <div className="report-any-issues">
@@ -84,7 +101,34 @@ function ReportAnyIssues() {
                             }}/>
                     </fieldset>
                 </form>
-                <h3 style={{ color: reportResponseColour}}>{reportResponse}</h3>
+            <br />
+            <h2 style={{ color: "#404d72" }}>All Feedback So Far</h2>
+            <h3 style={{ color: reportResponseColour}}>{reportResponse}</h3>
+            <div className="feedback-collection-container">
+                {(feedbackMessage !== "" && feedbackMessage !== "Retrieval success") && <h4>feedbackMessage</h4>}
+                {(feedbackMessage === "" || feedbackMessage === "Retrieval success") && 
+                    <ul className="feedback-ul">
+                        {(newFeedback !== {} && newFeedback.reportType !== "") && 
+                            <li className="feedback-li">
+                                <h3 style={{ color: "#404d72" }}>{newFeedback.reportComments}</h3>
+                                <p><i>{newFeedback.reportType}</i> - {newFeedback.reportDate.slice(0, 15)} </p>
+                                <br />
+                                <p><b>Louis' Response:</b> {newFeedback.reportResponse}</p>
+                            </li>
+                        }
+                        {feedbackArr.map((item, index) => {
+                            return (
+                                <li className="feedback-li">
+                                    <h3 style={{ color: "#404d72" }}>{item.reportComments}</h3>
+                                    <p><i>{item.reportType}</i> - {item.reportDate.slice(0, 15)} </p>
+                                    <br />
+                                    <p><b>Louis' Response:</b> {item.reportResponse}</p>
+                                </li>
+                            )
+                        })}
+                    </ul>
+                }
+            </div>
         </div>
     )
 }

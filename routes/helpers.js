@@ -31,11 +31,11 @@ router.get("/getPostInfo", async (req, res) => {
 router.get("/getAllFeedback/responses", async (req, res) => {
     try {
         const allPosts = await Feedback.find();
-        res.json({ retreiveSuccess: true, allPosts: allPosts });
+        res.json({ retrieveSuccess: true, allPosts: allPosts });
     } catch (err) {
         console.error("Error in helpers > getAllFeedback");
         console.error(err);
-        res.json({ retreiveSuccess: false, feedbackSubmissions: [] });
+        res.json({ retrieveSuccess: false, feedbackSubmissions: [] });
     };
 });
 
