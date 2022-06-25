@@ -35,6 +35,12 @@
     /* border-left: 1px solid lightgrey; */
 /* } */
 
+.username-column:hover,
+.ffpoints-column:hover,
+.avg-brier-column:hover {
+    background-color: orange;
+}
+
 .leaderboard-title-row > th:first-child,
 .leaderboard-row > td:first-child,
 .leaderboard-row-matching-username > td:first-child {

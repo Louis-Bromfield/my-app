@@ -103,9 +103,15 @@
 }
 
 .profile-details-container { 
+    display: grid;
+    grid-template-columns: 45% 45%;
+    column-gap: 5%;
+    /* width: 60%; */
+}
+
+.profile-details-sub-container {
     display: flex;
     flex-direction: column;
-    width: 20%;
 }
 
 .change-pw-btn {
@@ -136,9 +142,9 @@
         height: 30vh;
         margin-bottom: 3vh;
     }
-    .profile-details-container {
+    /* .profile-details-container {
         width: 50%;
-    }
+    } */
 }
 
 @media (max-width: 620px) {
@@ -150,6 +156,11 @@
     }
     .profile {
         font-size: 0.85em;
+    }
+    .profile-details-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
     }
 }
 

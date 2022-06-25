@@ -12,6 +12,9 @@ function Leaderboard(props) {
     const [width, setWidth] = useState(window.innerWidth >= 600);
     const [biggerWidth, setBiggerWidth] = useState(window.innerWidth >= 1030);
     const [loading, setLoading] = useState(true);
+    const [usernameSortOrder, setUsernameSortOrder] = useState("");
+    const [pointsSortOrder, setPointsSortOrder] = useState("");
+    const [avgBrierScoreSortOrder, setAvgBrierScoreSortOrder] = useState("");
     // const history = useHistory();
 
     const updateWidth = () => {
@@ -306,6 +309,49 @@ function Leaderboard(props) {
 
     let numOfConsecutiveSameIndices = 0;
 
+    const sortByCol = (sort) => {
+        setLoading(true);
+        console.log(usersData);
+        console.log(sort);
+        let newSortedData = [];
+        if (sort === "Username") {
+            if (usernameSortOrder === "" || usernameSortOrder === "ZA") {
+                newSortedData = usersData.sort((a, b) => (a.username > b.username) ? 1: ((b.username > a.username) ? -1 : 0));
+                setUsernameSortOrder("AZ");
+            } else if (usernameSortOrder === "AZ") {
+                newSortedData = usersData.sort((a, b) => (b.username > a.username) ? 1: ((a.username > b.username) ? -1 : 0));
+                setUsernameSortOrder("ZA");
+            };
+        } else if (sort === "Market Points") {
+            if (pointsSortOrder === "" || pointsSortOrder === "9-0") {
+                newSortedData = usersData.sort((a, b) => (a.totalBrier < b.totalBrier) ? 1: ((b.totalBrier < a.totalBrier) ? -1 : 0));
+                setPointsSortOrder("0-9");
+            } else if (pointsSortOrder === "0-9") {
+                newSortedData = usersData.sort((a, b) => (b.totalBrier < a.totalBrier) ? 1: ((a.totalBrier < b.totalBrier) ? -1 : 0));
+                setPointsSortOrder("9-0");
+            }
+        } else if (sort === "Fantasy Forecast Points") {
+            if (pointsSortOrder === "" || pointsSortOrder === "9-0") {
+                newSortedData = usersData.sort((a, b) => (a.fantasyForecastPoints < b.fantasyForecastPoints) ? 1: ((b.fantasyForecastPoints < a.fantasyForecastPoints) ? -1 : 0));
+                setPointsSortOrder("0-9")
+            } else if (pointsSortOrder === "0-9") {
+                newSortedData = usersData.sort((a, b) => (b.fantasyForecastPoints < a.fantasyForecastPoints) ? 1: ((a.fantasyForecastPoints < b.fantasyForecastPoints) ? -1 : 0));
+                setPointsSortOrder("9-0")
+            }
+        } else if (sort === "Avg Brier Score") {
+            if (avgBrierScoreSortOrder === "" || avgBrierScoreSortOrder === "9-0") {
+                newSortedData = usersData.sort((a, b) => (a.avgBrierScore < b.avgBrierScore) ? 1: ((b.avgBrierScore < a.avgBrierScore) ? -1 : 0));
+                setAvgBrierScoreSortOrder("0-9");
+            } else if (avgBrierScoreSortOrder === "0-9") {
+                newSortedData = usersData.sort((a, b) => (b.avgBrierScore < a.avgBrierScore) ? 1: ((a.avgBrierScore < b.avgBrierScore) ? -1 : 0));
+                setAvgBrierScoreSortOrder("9-0");
+            };
+        };
+        setUsersData([...newSortedData]);
+        console.log([...newSortedData]);
+        setLoading(false);
+    };
+
     return (
         <div className="leaderboard">
             {loading === true && 
@@ -320,9 +366,9 @@ function Leaderboard(props) {
                 <tbody>
                     <tr className="leaderboard-title-row">
                         <th className="position-column">#</th>
-                        <th className="username-column">Username</th>
-                        <th className="ffpoints-column">Market Points</th>
-                        <th className="avg-brier-column">Average Brier Score</th>
+                        <th className="username-column" onClick={() => sortByCol("Username")} style={{ cursor: "pointer" }}>Username</th>
+                        <th className="ffpoints-column" onClick={() => sortByCol("Market Points")} style={{ cursor: "pointer" }}>Market Points</th>
+                        <th className="avg-brier-column" onClick={() => sortByCol("Avg Brier Score")} style={{ cursor: "pointer" }}>Average Brier Score</th>
                         {width && <th className="last-five-briers-column">Last 5 Forecasts (&nbsp;&nbsp;/110&nbsp;&nbsp;)</th>}
                     </tr>
                     {usersData.map((item, index) => {
@@ -608,9 +654,9 @@ function Leaderboard(props) {
                 <tbody>
                     <tr className="leaderboard-title-row">
                         <th className="position-column">#</th>
-                        <th className="username-column">Username</th>
-                        <th className="ffpoints-column">Fantasy Forecast Points</th>
-                        <th className="avg-brier-column">AVG Brier Score (All Markets)</th>
+                        <th className="username-column" onClick={() => sortByCol("Username")} style={{ cursor: "pointer" }}>Username</th>
+                        <th className="ffpoints-column" onClick={() => sortByCol("Fantasy Forecast Points")} style={{ cursor: "pointer" }}>Fantasy Forecast Points</th>
+                        <th className="avg-brier-column" onClick={() => sortByCol("Avg Brier Score")} style={{ cursor: "pointer" }}>AVG Brier Score (All Markets)</th>
                         {width && <th className="last-five-briers-column">Last 5 Forecasts (All Markets)</th>}
                     </tr>
                     {usersData.map((item, index) => {
