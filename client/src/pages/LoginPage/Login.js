@@ -192,12 +192,12 @@ function Login(props) {
                 </div>
                 <div className="survey-explanation-div">
                     <h2 style={{ color: "orange" }}><u>What's involved?</u></h2>
-                    <p>Fantasy Forecast is a website dedicated to crowdsourcing political forecasts. Over the next 6 weeks, we will provide you with a variety of things to forecast under the umbrella of UK Politics. This includes things like predicting whether Boris Johnson will resign, to forecasting how polls will change over a week, to whether or not a general election will be called before the end of July. When a forecast reaches its deadline, you will recieve a score based on how accurate you were and how early you were, which will determine your place on the leaderboards.</p>
+                    <p>Fantasy Forecast is a website dedicated to crowdsourcing political forecasts. Over the next 6 weeks, we will provide you with a variety of UK Politics-related things to forecast, including things like predicting whether Boris Johnson will resign, to polls, to whether or not a general election will be called. When a forecast reaches its deadline, you will recieve a score based on your accurate and how early you were. This will determine your place on the leaderboards. It's all free-to-play to whoever signs up, no restrictions. If you sign up and change your mind, email us at <b style={{ color: "orange" }}>fantasyforecastcontact@gmail.com</b> and we will delete your account, no questions asked.</p>
                     <br />
-                    <p>There's nothing financial to this, we aren't taking any payment info, it's all free-to-play to whoever signs up, no restrictions. If you sign up and change your mind, email us at <b style={{ color: "orange" }}>fantasyforecastcontact@gmail.com</b> and we will delete your account, no questions asked.</p>
+                    <a href="https://youtu.be/XmPjXjH4Sfo" target="_blank" style={{ color: "#fff"}}>Click here for a video explaining it all!</a>
                     <br />
                     <h2 style={{ color: "orange" }}><u>Want to play for $$$?</u></h2>
-                    <p>Starting on Monday 27th June for the next 6 weeks, Fantasy Forecast is running its inaugural forecasting tournament on UK Politics. The top three forecasters will win:</p>
+                    <p>Starting on Monday 27th June for the next 6 weeks, we are running a forecasting tournament on UK Politics. The top three forecasters will win:</p>
                     <br />
                     <div className="prize-container">
                         <p>1st: £250 Amazon Gift Certificate</p>
@@ -205,7 +205,7 @@ function Login(props) {
                         <p>3rd: £100 Amazon Gift Certificate</p>
                     </div>
                     <br />
-                    <p>Anyone can enter, however to be eligible for the prizes you <strong><u style={{ color: "orange" }}>must</u></strong> complete a survey before <u style={{ color: "orange" }}>11:59pm (BST) on Tuesday 28th June</u>. This survey will be available after you login from the "Survey" tab at the top of the screen (or the dropdown menu if you're on a mobile device). This survey looks at the relationship between political knowledge and forecasting accuracy and, importantly, your answers to these questions don't bear on the tournament (so don't Google the answers!).</p>
+                    <p>Anyone can enter, however to be eligible for the prizes you <strong><u style={{ color: "orange" }}>must</u></strong> complete a survey before <u style={{ color: "orange" }}>11:59pm (BST) on Tuesday 28th June</u> and will be available after you login from the "Survey" tab at the top of the screen. It looks at the relationship between political knowledge and forecasting accuracy.</p>
                     <br />
                     <p>You can still fully participate in the tournament without completing the survey, <u style={{ color: "orange" }}>but only those who complete the survey will be eligible for prizes</u> (so if someone who hasn't completed the survey finishes 1st, the prizes will be allocated to 2nd, 3rd, and 4th, etc.)</p>
                 </div>

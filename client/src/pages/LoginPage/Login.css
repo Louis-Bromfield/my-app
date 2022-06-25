@@ -11,7 +11,7 @@
 }
 
 .login-logo {
-    width: 30%;
+    width: 20%;
     margin-bottom: 5vh;
     margin-top: 1vh;
 }
@@ -19,7 +19,7 @@
 .signup-container {
     width: 90%;
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 40% 60%;
     border: 1px solid #fff;
 }
 
