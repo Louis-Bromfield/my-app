@@ -192,7 +192,7 @@ function Login(props) {
                 </div>
                 <div className="survey-explanation-div">
                     <h2 style={{ color: "orange" }}><u>What's involved?</u></h2>
-                    <p>Fantasy Forecast is a website dedicated to crowdsourcing political forecasts. Over the next 6 weeks, we will provide you with a variety of UK Politics-related things to forecast, including things like predicting whether Boris Johnson will resign, to polls, to whether or not a general election will be called. When a forecast reaches its deadline, you will recieve a score based on your accurate and how early you were. This will determine your place on the leaderboards. It's all free-to-play to whoever signs up, no restrictions. If you sign up and change your mind, email us at <b style={{ color: "orange" }}>fantasyforecastcontact@gmail.com</b> and we will delete your account, no questions asked.</p>
+                    <p>Fantasy Forecast is a website dedicated to crowdsourcing political forecasts. Over the next 6 weeks, we will provide you with a variety of UK Politics-related things to forecast, from whether Boris Johnson will resign, to poll outcomes, to whether or not a general election will be called. When a forecast reaches its deadline, you will recieve a score based on how accurate and how early your forecasts were. This will determine your place on the leaderboards. It's all free-to-play to whoever signs up, no restrictions. If you sign up and change your mind, email us at <b style={{ color: "orange" }}>fantasyforecastcontact@gmail.com</b> and we will delete your account, no questions asked.</p>
                     <br />
                     <a href="https://youtu.be/XmPjXjH4Sfo" target="_blank" style={{ color: "#fff"}}>Click here for a video explaining it all!</a>
                     <br />
@@ -205,9 +205,9 @@ function Login(props) {
                         <p>3rd: £100 Amazon Gift Certificate</p>
                     </div>
                     <br />
-                    <p>Anyone can enter, however to be eligible for the prizes you <strong><u style={{ color: "orange" }}>must</u></strong> complete a survey before <u style={{ color: "orange" }}>11:59pm (BST) on Tuesday 28th June</u> and will be available after you login from the "Survey" tab at the top of the screen. It looks at the relationship between political knowledge and forecasting accuracy.</p>
+                    <p>Anyone can enter, however to be eligible for the prizes you <strong><u style={{ color: "orange" }}>must</u></strong> complete a survey before <u style={{ color: "orange" }}>11:59pm (BST) on Tuesday 28th June</u> which is available after you login from the "Survey" tab at the top of the screen. It looks at the relationship between political knowledge and forecasting accuracy.</p>
                     <br />
-                    <p>You can still fully participate in the tournament without completing the survey, <u style={{ color: "orange" }}>but only those who complete the survey will be eligible for prizes</u> (so if someone who hasn't completed the survey finishes 1st, the prizes will be allocated to 2nd, 3rd, and 4th, etc.)</p>
+                    <p>You can still fully participate in the tournament without completing the survey, <u style={{ color: "orange" }}>but only those who complete the survey will be eligible for prizes</u>.</p>
                 </div>
             </div>
             <div className="login-div">
