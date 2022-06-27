@@ -3,6 +3,7 @@ import './ChangeLog.css';
 
 function ChangeLog() {
     const changeLogArr = [
+        `27.06.2022 Added extra support for the Articles tab on the My Forecasts page for the long-term problems so they should now perform more accurate searches based on the problem wording, previously they were searching for "UK Politics" as they didn't match previous criteria for the article scraper.`,
         `25.06.2022 Added ability to sort leaderboards by username, points, or AVG Brier Score by clicking the column name row. The Feedback page (found at the bottom of the Home page) also now shows the submitted feedback (still anonymously) and my response to them to hopefully help make the development process even more transparent.`,
         `24.06.2022 Added fix for the learn quizzes not accepting responses if the first attempt had the wrong number of answers (the first time is fine but subsequent attempts to submit with the right amount of responses were blocked improperly).`,
         `24.06.2022 Added password resetting on the login page, as well as more information for new users about what the site involves. Also added a fix for the Fantasy Forecast All-Time leaderboard as it wasn't updating the Average Brier Score column. Also reduced the requirement to see your stats from Level 10 to 6, as Onboarding tasks were changed recently and this reduced requirement reflects that.`,

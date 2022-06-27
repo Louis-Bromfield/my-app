@@ -23,6 +23,12 @@ function ForecastArticlesDisplay(props) {
                 term = "Starmer";
             } else if (searchTerm.includes("poll")) {
                 term = "UK poll";
+            } else if (searchTerm.includes("Scotland") || searchTerm.includes("Independence")) {
+                term = "Indyref";
+            } else if (searchTerm.includes("General Elections")) {
+                term = "General Election";
+            } else if (searchTerm.includes("Cabinet")) {
+                term = "Johnson Cabinet";
             } else {
                 term = "UK Politics";
             };
