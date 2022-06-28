@@ -205,7 +205,7 @@ function Login(props) {
                         <p>3rd: £100 Amazon Gift Certificate</p>
                     </div>
                     <br />
-                    <p>Anyone can enter, however to be eligible for the prizes you <strong><u style={{ color: "orange" }}>must</u></strong> complete a survey before <u style={{ color: "orange" }}>11:59pm (BST) on Tuesday 28th June</u> which is available after you login from the "Survey" tab at the top of the screen. It looks at the relationship between political knowledge and forecasting accuracy.</p>
+                    <p>Anyone can enter, however to be eligible for the prizes you <strong><u style={{ color: "orange" }}>must</u></strong> complete a survey before <u style={{ color: "orange" }}>11:59pm (BST) on Friday 1st July</u> which is available after you login from the "Survey" tab at the top of the screen. It looks at the relationship between political knowledge and forecasting accuracy.</p>
                     <br />
                     <p>You can still fully participate in the tournament without completing the survey, <u style={{ color: "orange" }}>but only those who complete the survey will be eligible for prizes</u>.</p>
                 </div>

@@ -159,11 +159,11 @@ function HelpOurResearch(props) {
 
     return (
         <div className="help-our-research">
-            <h1 className="help-our-research-header">Survey</h1>
+            <h1 className="help-our-research-header">Survey - Deadline: 11:59pm BST Friday 1st July 2022</h1>
             <div className="help-our-research-explainer">
                 <p>Welcome to the survey. As a part of your time in our inaugural forecasting tournament, we ask that anyone wanting to compete for the Amazon prizes (totalling £500!) fills out the survey below. This information,
                     alongside the data generated from your time using this site, will be used in a research paper published by Dr Matthew Wall (Associate Professor of Politics, Swansea University) and Mr Louis Bromfield (PhD Student
-                    in Politics, Swansea University). To be eligible for the tournament prizes <b>the survey must be completed before 11:59pm (BST) on Tuesday 28th June 2022. If you haven't completed the survey before the deadline,
+                    in Politics, Swansea University). To be eligible for the tournament prizes <b>the survey must be completed before 11:59pm (BST) on Friday 1st July 2022. If you haven't completed the survey before the deadline,
                     you will not be eligible for the prizes.</b> 
                 </p>
                 <br />
