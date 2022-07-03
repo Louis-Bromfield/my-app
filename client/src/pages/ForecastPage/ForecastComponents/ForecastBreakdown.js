@@ -195,15 +195,15 @@ function ForecastBreakdown(props) {
                                                 return (
                                                     <li key={index} className="prediction-li">
                                                         <h3 style={{ color: "#404d72" }}><u>Forecast #{index}</u></h3>
-                                                        <p>Certainty: {(item.certainty*100).toFixed(2)}%&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Brier Score: {item.newBrier.toFixed(0)} / 100</p>
+                                                        <p>Certainty: {(item.certainty*100).toFixed(2)}%&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Brier Score: {item.newBrier === undefined  || item.newBrier === null ? "N/A" : item.newBrier.toFixed(0)} / 100</p>
                                                         <p>Comments: <i>{item.comments.includes("~") ? item.comments.split("~")[1] : item.comments}</i></p>
                                                         <br />
                                                         <h3 style={{ color: "#404d72" }}>Forecast Duration</h3>
                                                         <p>Date: {item.date}</p>
                                                         {/* <p>Duration (Time spent as latest prediction): {duration.weeks} week(s), {duration.days} day(s), {duration.hours} hour(s), {duration.minutes} minute(s), {duration.seconds} second(s).</p> */}
-                                                        <p>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</p>
+                                                        <p>% of the entire forecast window spent at this prediction: <u>{item.percentageOfTimeAtThisScore === undefined || item.percentageOfTimeAtThisScore === null ? "N/A" : item.percentageOfTimeAtThisScore.toFixed(2)}%</u>~</p>
                                                         <br />
-                                                        <p>This forecast scored you: {item.newBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {(item.newBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</p>
+                                                        <p>This forecast scored you: {item.newBrier === undefined  || item.newBrier === null ? "N/A" : item.newBrier.toFixed(0)} * {(item.percentageOfTimeAtThisScore/100).toFixed(2)}~ = {item.newBrier === undefined  || item.newBrier === null ? "N/A" : (item.newBrier.toFixed(0) * item.percentageOfTimeAtThisScore/100).toFixed(2)}</p>
                                                         <br />
                                                         <h2 style={{ color: "#404d72"}}>Time Score - {tScore.toFixed(2)} / 10</h2>
                                                         <p>As this was your first prediction, it determines your Time Score (Earlier = Higher Score)</p>
