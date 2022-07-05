@@ -185,6 +185,10 @@ function ForecastBreakdown(props) {
                             <button className="show-btn" onClick={() => setShowForecastByForecastBreakdown(!showForecastByForecastBreakdown)}>{showForecastByForecastBreakdown === true ? "Hide" : "Show"} Individual Predictions</button>
                             <ul className="prediction-ul">
                                 {predictionData.map((item, index) => {
+                                    console.log(item);
+                                    // console.log(new Date(item.date));
+                                    // console.log(new Date(predictionData[0].closeDate));
+                                    // console.log(new Date(item.date) < new Date(predictionData[0].closeDate));
                                     // Index !== 0 is because at element 0 is an object containing start and close dates
                                     // Predictions submitted after closing date will still be in DB so must be filtered
                                     if (index !== 0 && new Date(item.date) < new Date(predictionData[0].closeDate)) {

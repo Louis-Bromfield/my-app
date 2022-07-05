@@ -250,7 +250,8 @@ router.get("/:problemName/:closedStatus/:username/:singleCertainty", async (req,
 
                         let newBrierWeightedByDuration;
                         let thisForecastTimeDate = new Date(userForecastData.forecasts[i].date);
-                        if (i < userForecastData.forecasts.length-1) {
+                        // if it is not the last element and the next forecast along is legit as well
+                        if (i < userForecastData.forecasts.length-1 && new Date(userForecastData.forecasts[i+1].date) < closeDate) {
                             let nextForecastTimeDate = new Date(userForecastData.forecasts[i+1].date);
                             let forecastTimeFrame = (closeDate - startDate)/1000;
                             let duration = (nextForecastTimeDate - thisForecastTimeDate)/1000;
@@ -260,7 +261,8 @@ router.get("/:problemName/:closedStatus/:username/:singleCertainty", async (req,
                             newBrierWeightedByDuration = (newBrier * (percentageOfTimeAtThisScore/100));
                             sumOfNewWeightedBriers = sumOfNewWeightedBriers + newBrierWeightedByDuration;
                         }
-                        else if (i === userForecastData.forecasts.length-1) {
+                        // if it is the last element (last forecast submitted) or if the next forecast along is after the last date (we want to use the deadline as the new endpoint, not the date of the next forecast)
+                        else if (i === userForecastData.forecasts.length-1 || new Date(userForecastData.forecasts[i+1].date) > closeDate) {
                             let forecastTimeFrame = (closeDate - startDate)/1000;
                             let duration = (closeDate - thisForecastTimeDate)/1000;
                             fullArrayToReturn[i+1].duration = duration;
