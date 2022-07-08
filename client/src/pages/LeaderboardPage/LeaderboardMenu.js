@@ -367,14 +367,14 @@ function LeaderboardMenu(props) {
         <div className="leaderboard-menu">
             <h1>
                 Leaderboards
-                <FaInfoCircle 
+                {/* <FaInfoCircle 
                     color={"orange"} 
                     className="modal-i-btn"
                     onClick={() => { 
                         setShowModal(true); 
                         setModalContent(`To get forecasting, you need to join a market, which you can do by pressing the "Join A Market" button.`)
                     }}
-                />
+                /> */}
             </h1>
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
