@@ -4,6 +4,7 @@ import axios from 'axios';
 import Modal from '../../../components/Modal';
 import { FaInfoCircle } from 'react-icons/fa';
 import ForecastBreakdown from './ForecastBreakdown';
+import { AiFillExclamationCircle } from "react-icons/ai";
 
 
 function ForecastSubmission(props) {
@@ -77,6 +78,7 @@ function ForecastSubmission(props) {
             // console.log(userMarkets);
             let filtered = [];
             let filteredAndOrganised = [];
+            let globalIndex = 0;
             for (let i = 0; i < userMarkets.length; i++) {
                 if (userMarkets[i] !== '"Fantasy Forecast All-Time"' || userMarkets[i] !== "Fantasy Forecast All-Time") {
                     filteredAndOrganised.push([userMarkets[i]]);
@@ -85,12 +87,36 @@ function ForecastSubmission(props) {
             let forecastsAreAvailable = false;
             for (let i = 0; i < props.allForecasts.length; i++) {
                 if (userMarkets.includes(props.allForecasts[i].market) && new Date() > new Date(props.allForecasts[i].startDate)) {
+                //     filtered.push(props.allForecasts[i]);
+                //     let index = userMarkets.indexOf(props.allForecasts[i].market);
+                //     globalIndex = index;
+                //     filteredAndOrganised[index].push(props.allForecasts[i]);
+                //     forecastsAreAvailable = true;
+                // };
+                let found = false;
+                for (let j = 0; j < props.allForecasts[i].submittedForecasts.length; j++) {
+                    if (props.allForecasts[i].submittedForecasts[j].username === props.username) {
+                        found = true;
+                        continue;
+                    };
+                };
+                if (found) {
+                    props.allForecasts[i].userHasAttempted = true;
+                    console.log(props.allForecasts[i]);
+                    console.log("yes attempted" + props.allForecasts[i].problemName);
+                } else {
+                    console.log(props.allForecasts[i]);
+                    props.allForecasts[i].userHasAttempted = false;
+                    console.log("no not attempted" + props.allForecasts[i].problemName);
+                };
+                // if (userMarkets.includes(props.allForecasts[i].market) && new Date() > new Date(props.allForecasts[i].startDate)) {
                     filtered.push(props.allForecasts[i]);
                     let index = userMarkets.indexOf(props.allForecasts[i].market);
                     filteredAndOrganised[index].push(props.allForecasts[i]);
                     forecastsAreAvailable = true;
                 };
             };
+            
             if (forecastsAreAvailable === false) {
                 setMarketWarning(true);
             } else {
@@ -766,7 +792,7 @@ function ForecastSubmission(props) {
                                                                 key={nestedIndex} 
                                                                 value={nestedItem.problemName}
                                                                 style={{  color: "green" }}>
-                                                                    OPEN: {nestedItem.problemName}
+                                                                    {nestedItem.userHasAttempted === false ? "OPEN AND UNATTEMEPTED" : "OPEN"}: {nestedItem.problemName}
                                                             </option>
                                                         )
                                                     } else if ((typeof(nestedItem) === 'object') && (new Date(nestedItem.closeDate) <= new Date())) {
