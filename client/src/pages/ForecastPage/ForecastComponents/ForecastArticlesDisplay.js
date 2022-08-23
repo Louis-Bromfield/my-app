@@ -7,7 +7,7 @@ import ReactLoading from 'react-loading';
 function ForecastArticlesDisplay(props) {
     const [articles, setArticles] = useState("loading");
 
-    const googleNewsScrape = async (searchTerm, market) => {
+    const googleNewsScrape = async (searchTerm) => {
         try {
             let term;
             let googleNewsScrapeResult;
@@ -40,9 +40,10 @@ function ForecastArticlesDisplay(props) {
     };
 
     useEffect(() => {
+        console.log(props);
         setArticles("loading");
-        googleNewsScrape(props.searchTerm, props.market);
-    }, [props.searchTerm, props.market]);
+        googleNewsScrape(props.searchTerm.problemName);
+    }, [props.searchTerm]);
 
     if (articles === "loading") {
         return <div className="articles-loading">
@@ -53,28 +54,34 @@ function ForecastArticlesDisplay(props) {
     } else {
         return (
             <div className="articles">
-                <h3>The articles shown below are generated from a web scrape of Google News using key words in the problem above. This can result in a wide variety in terms of their relevance and usefulness.</h3>
+                <h2 style={{ color: "#404d72", margin: "0 auto"}}>Articles</h2>
+                <h4 style={{ margin: "0 auto", textAlign: "center" }}>The articles shown below are generated from a web scrape of Google News using key words in the problem above. This can result in a wide variety in terms of their relevance and usefulness.</h4>
                 {articles !== "loading" && <div className="articles-grid">
-                    {articles.map((article, index) => {
-                        if (article.img === "N/A") {
-                            article.img = PlaceholderIcon;
-                        }
-                        return (
-                            <a href={article.link} rel="noreferrer" target="_blank" key={index} style={{ "textDecoration": "none"}}>
-                                <div className="article-list-item">
-                                    <div className="article-list-item-img-container">
-                                        <img className="article-list-item-img" src={article.img} alt="" />
-                                    </div>
-                                    <div className="article-list-item-text-div">
-                                        <h3 className="article-list-item-title">{article.title}</h3>
-                                        <p className="article-list-item-description">{article.description}</p>
-                                        <hr />
-                                        <h5 className="article-list-item-publisher">{article.source}</h5>
-                                    </div>
-                                </div>
-                            </a>
-                        )
-                    })}
+                    {/* <ul> */}
+                        {articles.map((article, index) => {
+                            if (article.img === "N/A") {
+                                article.img = PlaceholderIcon;
+                            }
+                            return (
+                                // <li>
+                                    <a href={article.link} rel="noreferrer" target="_blank" key={index} style={{ "textDecoration": "none"}}>
+                                        {/* <p>{article.title}</p> */}
+                                        <div className="article-list-item">
+                                            <div className="article-list-item-img-container">
+                                                <img className="article-list-item-img" src={article.img} alt="" />
+                                            </div>
+                                            <div className="article-list-item-text-div">
+                                                <h3 className="article-list-item-title">{article.title}</h3>
+                                                {/* <p className="article-list-item-description">{article.description}</p> */}
+                                                <hr />
+                                                <h5 className="article-list-item-publisher">{article.source}</h5>
+                                            </div>
+                                        </div>
+                                    </a>
+                                // </li>
+                            )
+                        })}
+                    {/* </ul> */}
                 </div>}
             </div>
         )

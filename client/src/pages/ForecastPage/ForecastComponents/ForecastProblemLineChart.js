@@ -23,26 +23,32 @@ function ForecastProblemLineChart(props) {
   const [simulatedUserData, setSimulatedUserData] = useState([]);
 
   useEffect(() => {
-    formatCertainties(props.selectedForecast, props.updateTodayStats, props.username);
+    console.log(props);
+    console.log()
+    if (props.selectedForecastObject === {} || props.forecastSingleCertainty === undefined) {
+        return;
+    } else {
+        formatCertainties(props.selectedForecastObject, props.updateTodayStats, props.username);
+    }
     // console.log("==================");
     // console.log(props.selectedForecast);
     // console.log("==================");
     console.log("Line Chart UE");
-  }, [props.selectedForecast, props.refresh]);
+  }, [props.selectedForecastObject, props.refresh]);
 
-  const formatCertainties = (selectedForecast, updateTodayStats, username) => {
+  const formatCertainties = (selectedForecastObject, updateTodayStats, username) => {
     // No forecasts yet submitted
-    if (selectedForecast.submittedForecasts.length === 0) {
+    if (selectedForecastObject.submittedForecasts.length === 0) {
         setChartData({ label: "All Forecasts", data: [] });
         setUserChartData({ label: "Your Forecasts", data: [] });
         setAverageChartData({ label: "Daily Average Certainty", data: [] });
-      //   createLabelsArray(new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
+      //   createLabelsArray(new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate));
         return;
     };
     if (props.forecastSingleCertainty === true) {
         // Forecasts Submitted
         let lastForecastDate = "";
-        let newCertainties = selectedForecast.submittedForecasts;
+        let newCertainties = selectedForecastObject.submittedForecasts;
         // console.log(newCertainties);
         let userData = {
             label: "Your Forecasts",
@@ -62,7 +68,7 @@ function ForecastProblemLineChart(props) {
             pointRadius: 4
         };
         let sliceIndex = 0;
-        if ((new Date(selectedForecast.closeDate) - new Date(selectedForecast.startDate))/1000 < 604800) {
+        if ((new Date(selectedForecastObject.closeDate) - new Date(selectedForecastObject.startDate))/1000 < 604800) {
             // Until WE CAN GET CONSISTENCY KEEP IT ALL AT 15
             // sliceIndex = 18;
             sliceIndex = 15;
@@ -151,7 +157,7 @@ function ForecastProblemLineChart(props) {
                 };
             };
             // console.log(data.data);
-            const dailyAverages = getNewDailyAverages(data.data, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate), selectedForecast.isClosed);
+            const dailyAverages = getNewDailyAverages(data.data, new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate), selectedForecastObject.isClosed);
             updateTodayStats(`${dailyAverages[dailyAverages.length-1].y.toFixed(2)}%`, todayForecasts.length);
             // Simulate data for days with no predictions
             let simulatedUserData = {
@@ -174,7 +180,7 @@ function ForecastProblemLineChart(props) {
                 // Check if current date is later than the close date
                 // if true, the x value in the 2nd object to push should be the close date
                 // if false, the x value should be the current day
-                if (new Date() < new Date(selectedForecast.closeDate)) {
+                if (new Date() < new Date(selectedForecastObject.closeDate)) {
                     simulatedUserData.data.push(
                         {
                             y: userData.data[userData.data.length-1].y,
@@ -186,7 +192,7 @@ function ForecastProblemLineChart(props) {
                     simulatedUserData.data.push(
                         {
                             y: userData.data[userData.data.length-1].y,
-                            x: new Date(selectedForecast.closeDate).toString().slice(0, 15),
+                            x: new Date(selectedForecastObject.closeDate).toString().slice(0, 15),
                             description: userData.data[userData.data.length-1].description
                         }
                     );
@@ -197,7 +203,7 @@ function ForecastProblemLineChart(props) {
             setSimulatedUserData(simulatedUserData);
             setAverageChartData({
                 label: "Average Certainty",
-                data: ((new Date(selectedForecast.closeDate) - new Date(selectedForecast.startDate))/1000 >= 0) ? dailyAverages : [],
+                data: ((new Date(selectedForecastObject.closeDate) - new Date(selectedForecastObject.startDate))/1000 >= 0) ? dailyAverages : [],
                 backgroundColor: "#404d72",
                 borderColor: "#404d72",
                 borderWidth: 4,
@@ -206,7 +212,7 @@ function ForecastProblemLineChart(props) {
             // Create line for days with no prediction (since the last prediction was made)
             // let today = new Date();
             // let averageSinceLatestPrediction = [];
-            // if ((today > new Date(data.data[data.data.length-1].x)) && (today < new Date(selectedForecast.closeDate))) {
+            // if ((today > new Date(data.data[data.data.length-1].x)) && (today < new Date(selectedForecastObject.closeDate))) {
             //     averageSinceLatestPrediction = [dailyAverages[dailyAverages.length-1], {x: today.toString().slice(0, 15), y: dailyAverages[dailyAverages.length-1].y}];
             // };
             // setAverageSinceLastPredictionData({
@@ -218,7 +224,7 @@ function ForecastProblemLineChart(props) {
             //     pointRadius: 0
             // });
         };
-        createLabelsArray(new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
+        createLabelsArray(new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate));
     } else if (props.forecastSingleCertainty === false) {
         let allData = [];
         let outcomeOneData = [];
@@ -227,157 +233,157 @@ function ForecastProblemLineChart(props) {
         let userOutcomeOneData = [];
         let userOutcomeTwoData = [];
         let userOutcomeThreeData = [];
-        for (let i = 0; i < selectedForecast.submittedForecasts.length; i++) {
-            for (let j = 0; j < selectedForecast.submittedForecasts[i].forecasts.length; j++) {
+        for (let i = 0; i < selectedForecastObject.submittedForecasts.length; i++) {
+            for (let j = 0; j < selectedForecastObject.submittedForecasts[i].forecasts.length; j++) {
                 // No data date to compare to
                 if (outcomeOneData.length === 0) {
                     outcomeOneData.push({ 
-                        username: selectedForecast.submittedForecasts[i].username,
-                        y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty1*100, 
-                        x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                        description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
+                        username: selectedForecastObject.submittedForecasts[i].username,
+                        y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty1*100, 
+                        x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                        description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments 
                     });
                     outcomeTwoData.push({ 
-                        username: selectedForecast.submittedForecasts[i].username,
-                        y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty2*100, 
-                        x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                        description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
+                        username: selectedForecastObject.submittedForecasts[i].username,
+                        y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty2*100, 
+                        x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                        description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments 
                     });
                     outcomeThreeData.push({ 
-                        username: selectedForecast.submittedForecasts[i].username,
-                        y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty3*100, 
-                        x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                        description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
+                        username: selectedForecastObject.submittedForecasts[i].username,
+                        y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty3*100, 
+                        x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                        description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments 
                     });
                 } else if (outcomeOneData.length > 0) {
-                    if (selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) !== outcomeOneData[outcomeOneData.length-1].x) {
+                    if (selectedForecastObject.submittedForecasts[i].forecasts[j].date.slice(0, 15) !== outcomeOneData[outcomeOneData.length-1].x) {
                         // Different days - add to entries (doesn't matter if it's same user or not)
                         outcomeOneData.push({ 
-                            username: selectedForecast.submittedForecasts[i].username,
-                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty1*100, 
-                            x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                            description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
+                            username: selectedForecastObject.submittedForecasts[i].username,
+                            y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty1*100, 
+                            x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                            description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments 
                         });
                         outcomeTwoData.push({ 
-                            username: selectedForecast.submittedForecasts[i].username,
-                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty2*100, 
-                            x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                            description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
+                            username: selectedForecastObject.submittedForecasts[i].username,
+                            y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty2*100, 
+                            x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                            description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments 
                         });
                         outcomeThreeData.push({ 
-                            username: selectedForecast.submittedForecasts[i].username,
-                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty3*100, 
-                            x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                            description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
+                            username: selectedForecastObject.submittedForecasts[i].username,
+                            y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty3*100, 
+                            x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                            description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments 
                         });
                     // Same day - so we need to check if it's from the same user as the last forecast (replace) or not (append)
-                    } else if (selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) === outcomeOneData[outcomeOneData.length-1].x) {
+                    } else if (selectedForecastObject.submittedForecasts[i].forecasts[j].date.slice(0, 15) === outcomeOneData[outcomeOneData.length-1].x) {
                         // Same user - replace last entry
-                        if (selectedForecast.submittedForecasts[i].username === outcomeOneData[outcomeOneData.length-1].username) {
+                        if (selectedForecastObject.submittedForecasts[i].username === outcomeOneData[outcomeOneData.length-1].username) {
                             outcomeOneData[outcomeOneData.length-1] = { 
-                                username: selectedForecast.submittedForecasts[i].username,
-                                y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty1*100, 
-                                x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
+                                username: selectedForecastObject.submittedForecasts[i].username,
+                                y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty1*100, 
+                                x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                                description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments 
                             };
                             outcomeTwoData[outcomeTwoData.length-1] = { 
-                                username: selectedForecast.submittedForecasts[i].username,
-                                y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty2*100, 
-                                x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
+                                username: selectedForecastObject.submittedForecasts[i].username,
+                                y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty2*100, 
+                                x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                                description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments 
                             };
                             outcomeThreeData[outcomeThreeData.length-1] = { 
-                                username: selectedForecast.submittedForecasts[i].username,
-                                y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty3*100, 
-                                x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
+                                username: selectedForecastObject.submittedForecasts[i].username,
+                                y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty3*100, 
+                                x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                                description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments 
                             };
                         // Different User - add to entries
-                        } else if (selectedForecast.submittedForecasts[i].username !== outcomeOneData[outcomeOneData.length-1].username) {
+                        } else if (selectedForecastObject.submittedForecasts[i].username !== outcomeOneData[outcomeOneData.length-1].username) {
                             outcomeOneData.push({ 
-                                username: selectedForecast.submittedForecasts[i].username,
-                                y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty1*100, 
-                                x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
+                                username: selectedForecastObject.submittedForecasts[i].username,
+                                y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty1*100, 
+                                x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                                description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments 
                             });
                             outcomeTwoData.push({ 
-                                username: selectedForecast.submittedForecasts[i].username,
-                                y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty2*100, 
-                                x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
+                                username: selectedForecastObject.submittedForecasts[i].username,
+                                y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty2*100, 
+                                x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                                description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments 
                             });
                             outcomeThreeData.push({ 
-                                username: selectedForecast.submittedForecasts[i].username,
-                                y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty3*100, 
-                                x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
+                                username: selectedForecastObject.submittedForecasts[i].username,
+                                y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty3*100, 
+                                x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                                description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments 
                             });
                         };
                     };
                 };
                 // Here
                 // If the forecast was made by the logged in user, add to user array but check if date is same (replace) or different (append)
-                if (selectedForecast.submittedForecasts[i].username === username) {
+                if (selectedForecastObject.submittedForecasts[i].username === username) {
                     // Same date as last forecast, so replace
                     if (userOutcomeOneData.length === 0) {
                         userOutcomeOneData.push({
-                            username: selectedForecast.submittedForecasts[i].username,
-                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty1*100, 
-                            x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                            description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
+                            username: selectedForecastObject.submittedForecasts[i].username,
+                            y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty1*100, 
+                            x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                            description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments 
                         });
                         userOutcomeTwoData.push({
-                            username: selectedForecast.submittedForecasts[i].username,
-                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty2*100, 
-                            x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                            description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
+                            username: selectedForecastObject.submittedForecasts[i].username,
+                            y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty2*100, 
+                            x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                            description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments 
                         });
                         userOutcomeThreeData.push({
-                            username: selectedForecast.submittedForecasts[i].username,
-                            y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty3*100, 
-                            x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                            description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
+                            username: selectedForecastObject.submittedForecasts[i].username,
+                            y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty3*100, 
+                            x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                            description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments 
                         });
                     } else if (userOutcomeOneData.length > 0) {
-                        if (selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) === userOutcomeOneData[userOutcomeOneData.length-1].x) {
+                        if (selectedForecastObject.submittedForecasts[i].forecasts[j].date.slice(0, 15) === userOutcomeOneData[userOutcomeOneData.length-1].x) {
                             userOutcomeOneData[userOutcomeOneData.length-1] = {
-                                username: selectedForecast.submittedForecasts[i].username,
-                                y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty1*100, 
-                                x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments
+                                username: selectedForecastObject.submittedForecasts[i].username,
+                                y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty1*100, 
+                                x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                                description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments
                             };
                             userOutcomeTwoData[userOutcomeTwoData.length-1] = {
-                                username: selectedForecast.submittedForecasts[i].username,
-                                y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty2*100, 
-                                x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments
+                                username: selectedForecastObject.submittedForecasts[i].username,
+                                y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty2*100, 
+                                x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                                description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments
                             };
                             userOutcomeThreeData[userOutcomeThreeData.length-1] = {
-                                username: selectedForecast.submittedForecasts[i].username,
-                                y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty3*100, 
-                                x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments
+                                username: selectedForecastObject.submittedForecasts[i].username,
+                                y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty3*100, 
+                                x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                                description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments
                             };
                         // Different date as last forecast so append
-                        } else if (selectedForecast.submittedForecasts[i].forecasts[j].date.slice(0, 15) !== userOutcomeOneData[userOutcomeOneData.length-1].x) {
+                        } else if (selectedForecastObject.submittedForecasts[i].forecasts[j].date.slice(0, 15) !== userOutcomeOneData[userOutcomeOneData.length-1].x) {
                             // Different date, append
                             userOutcomeOneData.push({
-                                username: selectedForecast.submittedForecasts[i].username,
-                                y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty1*100, 
-                                x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
+                                username: selectedForecastObject.submittedForecasts[i].username,
+                                y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty1*100, 
+                                x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                                description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments 
                             });
                             userOutcomeTwoData.push({
-                                username: selectedForecast.submittedForecasts[i].username,
-                                y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty2*100, 
-                                x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
+                                username: selectedForecastObject.submittedForecasts[i].username,
+                                y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty2*100, 
+                                x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                                description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments 
                             });
                             userOutcomeThreeData.push({
-                                username: selectedForecast.submittedForecasts[i].username,
-                                y: selectedForecast.submittedForecasts[i].forecasts[j].certainties.certainty3*100, 
-                                x: new Date(selectedForecast.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
-                                description: selectedForecast.submittedForecasts[i].forecasts[j].comments 
+                                username: selectedForecastObject.submittedForecasts[i].username,
+                                y: selectedForecastObject.submittedForecasts[i].forecasts[j].certainties.certainty3*100, 
+                                x: new Date(selectedForecastObject.submittedForecasts[i].forecasts[j].date).toString().slice(0, 15),
+                                description: selectedForecastObject.submittedForecasts[i].forecasts[j].comments 
                             });
                         };
                     };
@@ -387,9 +393,9 @@ function ForecastProblemLineChart(props) {
 
         allData = outcomeOneData.concat(outcomeTwoData, outcomeThreeData);
         allData.sort((a, b) => a.x < b.x);
-        let avgOutcomeOneArr = getNewDailyAverages(outcomeOneData, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate), selectedForecast.isClosed);
-        let avgOutcomeTwoArr = getNewDailyAverages(outcomeTwoData, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate), selectedForecast.isClosed);
-        let avgOutcomeThreeArr = getNewDailyAverages(outcomeThreeData, new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate), selectedForecast.isClosed);
+        let avgOutcomeOneArr = getNewDailyAverages(outcomeOneData, new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate), selectedForecastObject.isClosed);
+        let avgOutcomeTwoArr = getNewDailyAverages(outcomeTwoData, new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate), selectedForecastObject.isClosed);
+        let avgOutcomeThreeArr = getNewDailyAverages(outcomeThreeData, new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate), selectedForecastObject.isClosed);
 
         // Adding in simulated data for days with no predictions (copying last data over to all days) - for AVERAGE
         if ((avgOutcomeOneArr.length > 0) && (avgOutcomeOneArr[avgOutcomeOneArr.length-1].x !== new Date().toString().slice(0, 15))) {
@@ -402,10 +408,10 @@ function ForecastProblemLineChart(props) {
             let lastDayWithData = new Date(avgOutcomeOneArr[avgOutcomeOneArr.length-1].x);
             lastDayWithData.setDate(lastDayWithData.getDate() + 1);
             let lastDay;
-            if (new Date() < selectedForecast.closeDate) {
+            if (new Date() < selectedForecastObject.closeDate) {
                 lastDay = new Date().toString().slice(0, 15)
             } else {
-                lastDay = selectedForecast.closeDate.slice(0, 15);
+                lastDay = selectedForecastObject.closeDate.slice(0, 15);
             };
             for (let d = lastDayWithData; d <= lastDay; d.setDate(d.getDate() + 1)) {
                 let newDate = new Date(d).toString().slice(0, 15);
@@ -455,10 +461,10 @@ function ForecastProblemLineChart(props) {
             let outcomeThreeY = userOutcomeThreeData[userOutcomeThreeData.length-1].y;
             let comments = userOutcomeOneData[userOutcomeOneData.length-1].description;
             let newDate;
-            if (selectedForecast.isClosed === false) {
+            if (selectedForecastObject.isClosed === false) {
                 newDate = new Date().toString().slice(0, 15);
-            } else if (selectedForecast.isClosed === true) {
-                newDate = selectedForecast.closeDate.slice(0, 15);
+            } else if (selectedForecastObject.isClosed === true) {
+                newDate = selectedForecastObject.closeDate.slice(0, 15);
             }
             userOutcomeOneData.push({
                 y: outcomeOneY,
@@ -487,7 +493,7 @@ function ForecastProblemLineChart(props) {
             pointRadius: 3
         }
         let outcomeOneChData = {
-            label: `${props.selectedForecast.potentialOutcomes[0]} (Avg)`, //JOB AFTER DINNER: RENAME THESE LABELS
+            label: `${props.selectedForecastObject.potentialOutcomes[0]} (Avg)`, //JOB AFTER DINNER: RENAME THESE LABELS
             data: avgOutcomeOneArr,
             backgroundColor: "darkblue",
             borderColor: "darkblue",
@@ -496,7 +502,7 @@ function ForecastProblemLineChart(props) {
             pointRadius: 1
         };
         let outcomeTwoChData = {
-            label: `${props.selectedForecast.potentialOutcomes[1]} (Avg)`,
+            label: `${props.selectedForecastObject.potentialOutcomes[1]} (Avg)`,
             data: avgOutcomeTwoArr,
             backgroundColor: "red",
             borderColor: "red",
@@ -505,7 +511,7 @@ function ForecastProblemLineChart(props) {
             pointRadius: 1
         };
         let outcomeThreeChData = {
-            label: `${props.selectedForecast.potentialOutcomes[2]} (Avg)`,
+            label: `${props.selectedForecastObject.potentialOutcomes[2]} (Avg)`,
             data: avgOutcomeThreeArr,
             backgroundColor: "green",
             borderColor: "green",
@@ -514,7 +520,7 @@ function ForecastProblemLineChart(props) {
             pointRadius: 1
         };
         let userOutcomeOneChData = {
-            label: `${props.selectedForecast.potentialOutcomes[0]} (Me)`,
+            label: `${props.selectedForecastObject.potentialOutcomes[0]} (Me)`,
             data: userOutcomeOneData,
             backgroundColor: "lightblue",
             borderColor: "lightblue",
@@ -523,7 +529,7 @@ function ForecastProblemLineChart(props) {
             pointRadius: 2
         };
         let userOutcomeTwoChData = {
-            label: `${props.selectedForecast.potentialOutcomes[1]} (Me)`,
+            label: `${props.selectedForecastObject.potentialOutcomes[1]} (Me)`,
             data: userOutcomeTwoData,
             backgroundColor: "pink",
             borderColor: "pink",
@@ -532,7 +538,7 @@ function ForecastProblemLineChart(props) {
             pointRadius: 2
         };
         let userOutcomeThreeChData = {
-            label: `${props.selectedForecast.potentialOutcomes[2]} (Me)`,
+            label: `${props.selectedForecastObject.potentialOutcomes[2]} (Me)`,
             data: userOutcomeThreeData,
             backgroundColor: "lightgreen",
             borderColor: "lightgreen",
@@ -540,7 +546,7 @@ function ForecastProblemLineChart(props) {
             borderWidth: 3,
             pointRadius: 2
         };
-        createLabelsArray(new Date(selectedForecast.startDate), new Date(selectedForecast.closeDate));
+        createLabelsArray(new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate));
         setAllChartData(allChData);
         setOutcomeOneChartData(outcomeOneChData);
         setOutcomeTwoChartData(outcomeTwoChData);
@@ -803,8 +809,8 @@ function ForecastProblemLineChart(props) {
                 <p>{modalContent}</p>
                 <p>{modalContent2}</p>
             </Modal>
-            <h2>
-                {props.selectedForecast.problemName}
+            {/* <h2>
+                {props.selectedForecastObject.problemName}
                 <FaInfoCircle 
                     color={"orange"} 
                     className="modal-i-btn"
@@ -814,7 +820,7 @@ function ForecastProblemLineChart(props) {
                         setModalContent2("All forecast data has been converted to GMT (Greenwich Mean Time), purely for visualisation purposes.");
                     }}
                 />
-            </h2>
+            </h2> */}
             {/* Copy this and make one just for mobile (like if width) */}
             <div className="chart-container" style={{ position: "relative", margin: "auto", width: "100%", height: "60vh" }}>
                 <Line data={props.forecastSingleCertainty === true ? data : multiOutcomeData} options={options} height={"100%"}/>

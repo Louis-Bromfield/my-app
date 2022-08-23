@@ -1,6 +1,9 @@
 .forecast-submission-and-selection-div {
     display: flex;
     flex-direction: column;
+    /* border: 2px dashed blue; */
+    margin: 0 auto;
+    width: 100%;
 }
 
 .forecast-top-bar {
@@ -9,8 +12,10 @@
     column-gap: 5%;
     border: 1px solid black;
     border-radius: 10px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
     padding: 1%;
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
 }
 
@@ -27,19 +32,28 @@
     color: #404d72;
 }
 
+.forecast-submission-and-chart-div {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    border: 1px solid black;
+    border-top: none;
+    padding-top: 1.5vh;
+}
+
 .forecast-submission-div {
     margin: 0 auto;
     margin-bottom: 2vh;
     display: flex;
     flex-direction: column;
     padding: 1%;
-    padding-bottom: 0%;
-    width: 70%;
-    border: 1px solid black;
+    /* padding-bottom: 0%; */
+    width: 90%;
+    /* border: 1px solid black;
     border-top-style: none;
     border-radius: 10px;
     border-top-right-radius: 0%;
-    border-top-left-radius: 0%;
+    border-top-left-radius: 0%; */
+    /* border: 1px solid black; */
 }
 
 .forecast-submission-div {
@@ -51,7 +65,7 @@
 }
 
 .selected-forecast {
-    margin: 0 auto;
+    /* margin: 0 auto; */
     margin-bottom: 1vh;
     background-color: #404d72;
     color: #fff;
@@ -69,18 +83,22 @@
     background-color: rgba(211, 211, 211, 0.233);
     border-radius: 8px;
     margin-bottom: 1vh;
+    /* height: 35%; */
 }
 
 .forecast-submission-input {
-    display: grid;
-    grid-template-columns: 25% 45% 20%;
-    column-gap: 5%;
+    display: flex;
+    flex-direction: column;
+    /* grid-template-columns: 25% 45% 20%; */
+    /* column-gap: 5%; */
+    row-gap: 8%;
+    height: 100%;
     margin: 0 auto;
-    margin-bottom: 1vh;
+    /* margin-bottom: 1vh; */
     padding: 1%;
     text-align: center;
     width: 100%;
-    align-items: center;
+    /* align-items: center; */
 }
 
 .forecast-submission-input-certainty-section,
@@ -123,8 +141,9 @@
 }
 
 .placeholder-container-no-error {
-    display: grid;
-    grid-template-columns: 25% 75%;
+    display: flex;
+    flex-direction: column;
+    /* grid-template-columns: 25% 75%; */
 }
 
 .last-certainty-div,
@@ -209,11 +228,11 @@
 .forecast-review-div {
     display: grid;
     grid-template-columns: 40% 40%;
-    column-gap: 10%;
+    column-gap: 20%;
     border: 1px solid lightgray;
     border-radius: 8px;
     padding: 1%;
-    font-size: 0.95em;
+    font-size: 0.9em;
 }
 
 .forecast-review-div-left > h3 {
@@ -232,6 +251,12 @@
     }
     .forecast-submission-and-selection-div {
         font-size: 0.9em;
+    }
+    .forecast-submission-and-chart-div {
+        grid-template-columns: 100%;
+    }
+    .forecast-submission-potential-scores {
+        margin-top: 3vh;
     }
 }
 

@@ -5,9 +5,9 @@
 }
 
 .forecast-results-title {
-    background-color: #404d72;
-    color: #fff;
-    margin-bottom: 1vh;
+    /* background-color: #404d72; */
+    color: #404d72;
+    /* margin-bottom: 1vh; */
     padding: 1%;
 }
 
@@ -15,6 +15,7 @@
     width: 100%;
     text-align: center;
     margin: 1%;
+    font-size: 0.95em;
 }
 
 .table-title-row {

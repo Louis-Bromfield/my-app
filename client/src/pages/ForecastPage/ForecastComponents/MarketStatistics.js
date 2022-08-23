@@ -8,13 +8,15 @@ function MarketStatistics(props) {
 
     useEffect(() => {
         console.log(props);
-        setForecasterCount(props.leaderboard.length);
-        setMarketLeader(props.leaderboard[0].username.length > 9 ? `${props.leaderboard[0].username.slice(0, 9)}...` : props.leaderboard[0].username);
-        for (let i = 0; i < props.leaderboard.length; i++) {
-            if (props.leaderboard[i].username === props.username) {
-                setUserRank(`${i+1} / ${props.leaderboard.length}`);
+        if (props.leaderboard.length > 0) {
+            setForecasterCount(props.leaderboard.length);
+            setMarketLeader(props.leaderboard[0].username.length > 9 ? `${props.leaderboard[0].username.slice(0, 9)}...` : props.leaderboard[0].username);
+            for (let i = 0; i < props.leaderboard.length; i++) {
+                if (props.leaderboard[i].username === props.username) {
+                    setUserRank(`${i+1} / ${props.leaderboard.length}`);
+                };
             };
-        };
+        }
         console.log("Market Statistics UE");
     }, [props.leaderboard, props.username, props.refresh]);
 

@@ -4,14 +4,28 @@ import ForecastAdmin from './ForecastComponents/ForecastAdmin';
 import ForecastSubmission from './ForecastComponents/ForecastSubmission';
 import ForecastTabPane from './ForecastComponents/ForecastTabPane';
 import axios from 'axios';
+import ForecastArticlesDisplay from './ForecastComponents/ForecastArticlesDisplay';
+import ForecastProblemLineChart from './ForecastComponents/ForecastProblemLineChart';
+import ForecastStatistics from './ForecastComponents/ForecastStatistics';
+import MarketStatistics from './ForecastComponents/MarketStatistics';
+import ForecastMarketLeaderboard from './ForecastComponents/ForecastMarketLeaderboard';
+import ForecastResults from './ForecastComponents/ForecastResults';
 
 function Forecast(props) {
     const [forecastSelected, setForecastSelected] = useState(false);
     const [forecast, setForecast] = useState("");
+    const [hasAForecastBeenSelected, setHasAForecastBeenSelected] = useState(false);
     const [leaderboardData, setLeaderboardData] = useState([]);
     const [refresh, setRefresh] = useState(0);
     const [forecastSingleCertainty, setForecastSingleCertainty] = useState();
     const [allForecasts, setAllForecasts] = useState([]);
+    const [todayAverage, setTodayAverage] = useState("");
+    const [todayForecastCount, setTodayForecastCount] = useState("");
+
+    const updateTodayStats = (avg, fc) => {
+        setTodayAverage(avg);
+        setTodayForecastCount(fc);
+    };
 
     const handleForecastChange = (newForecast) => {
         console.log("yes there's been a change");
@@ -58,7 +72,77 @@ function Forecast(props) {
             </div>
             {/* Replace aPW with JWT verification? */}
             {(props.username === "LouisB" && localStorage.getItem("aPW") === "73485093485734974592398190489025736hbn45") && <ForecastAdmin username={props.username} allForecasts={allForecasts} />}
-            <ForecastSubmission 
+            <div className="new-forecast-container">
+                <div className="new-forecast-container-top-half">
+                    {/* submissions */}
+                    <ForecastSubmission 
+                        allForecasts={allForecasts}
+                        toggleDiv={setForecastSelected} 
+                        setForecastSingleCertainty={setForecastSingleCertainty}
+                        changeForecast={handleForecastChange} 
+                        handleLeaderboardChange={handleLeaderboardChange}
+                        markets={props.markets} 
+                        selectedForecast={forecast} 
+                        username={props.username}
+                        causeRefresh={causeRefresh}
+                        userObjectMarkets={props.userObjectMarkets}
+                        userBriers={props.userBriers}
+                        updateTodayStats={updateTodayStats}
+                        handleForecastSet={setHasAForecastBeenSelected}
+                    />
+                    {/* line chart */}
+                </div>
+                {hasAForecastBeenSelected === true &&
+                    <div className="new-forecast-container-bottom-half">
+                        {/* articles */}
+                        <div className="bottom-half-articles-div">
+                            <ForecastArticlesDisplay 
+                                searchTerm={forecast}   
+                            />
+                        </div>
+                        {/* stats and leaderboard */}
+                        <div className="bottom-half-right-results-and-metrics">
+                            <div className="forecast-results">
+                                {forecast.isClosed === true && 
+                                    <ForecastResults 
+                                        market={forecast.market} 
+                                        problemName={forecast.problemName}
+                                        leaderboard={leaderboardData} 
+                                        username={props.username} 
+                                        isClosed={forecast.isClosed}
+                                    />
+                                }
+                            </div>
+                            <div className="bottom-half-stats-and-leaderboard">
+                                <ForecastStatistics 
+                                    selectedForecast={forecast} 
+                                    today={false} 
+                                    forecastSingleCertainty={forecastSingleCertainty}
+                                />
+                                <ForecastStatistics 
+                                    selectedForecast={forecast} 
+                                    today={true} 
+                                    todayAverage={todayAverage} 
+                                    todayForecastCount={todayForecastCount} 
+                                    forecastSingleCertainty={forecastSingleCertainty}
+                                />
+                                <MarketStatistics 
+                                    leaderboard={leaderboardData} 
+                                    username={props.username} 
+                                    refresh={refresh} 
+                                    market={forecast.market}
+                                />
+                                <ForecastMarketLeaderboard 
+                                    market={forecast.market} 
+                                    leaderboard={leaderboardData} 
+                                    username={props.username} 
+                                />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            {/* <ForecastSubmission 
                 allForecasts={allForecasts}
                 toggleDiv={setForecastSelected} 
                 setForecastSingleCertainty={setForecastSingleCertainty}
@@ -83,7 +167,7 @@ function Forecast(props) {
             }
             {!forecastSelected &&
                 <div className="empty-div"></div>
-            }
+            } */}
         </div>
     )
 }
