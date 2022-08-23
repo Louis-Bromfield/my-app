@@ -59,6 +59,14 @@
     }
 }
 
+@media (max-width: 600px) {
+    .new-forecast-container-bottom-half {
+        grid-template-columns: 100%;
+        border: 1px solid red;
+        padding: 0%;
+    }
+}
+
 @media (max-width: 500px) {
     .forecast-header > p {
         font-size: 0.85em;
