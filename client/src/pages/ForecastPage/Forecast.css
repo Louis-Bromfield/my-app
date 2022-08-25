@@ -25,14 +25,14 @@
 .bottom-half-right-results-and-metrics {
     display: flex;
     flex-direction: column;
-    row-gap: 2vh;
+    /* row-gap: 2vh; */
 }
 
 .new-forecast-container-bottom-half {
     display: grid;
-    grid-template-columns: 45% 45%;
-    column-gap: 5%;
-    padding-left: 5%;
+    grid-template-columns: 49% 49%;
+    column-gap: 2%;
+    /* padding-left: 5%; */
     margin: 0 auto;
     margin-top: 2vh;
 }
@@ -62,7 +62,7 @@
 @media (max-width: 600px) {
     .new-forecast-container-bottom-half {
         grid-template-columns: 100%;
-        border: 1px solid red;
+        /* border: 1px solid red; */
         padding: 0%;
     }
 }

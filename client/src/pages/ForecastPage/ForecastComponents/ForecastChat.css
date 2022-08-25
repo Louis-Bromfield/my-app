@@ -1,0 +1,26 @@
+.forecast-chat {
+    margin: 0 auto;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+.chat {
+    text-align: left;
+    /* border: 1px solid black; */
+    padding: 1%;
+    /* font-size: 0.9em; */
+    list-style: none;
+}
+
+.chat-item {
+    margin-bottom: 1vh;
+    padding-bottom: 1vh;
+}
+
+.chat-item {
+    border-bottom: 1px solid lightgray;
+}
+
+.reply-chat-item {
+    margin-left: 1vw;
+}

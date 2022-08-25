@@ -32,6 +32,9 @@ const ForecastsSchema = mongoose.Schema({
     },
     outcome: {
         type: String
+    },
+    chat: {
+        type: Array
     }
 });
 

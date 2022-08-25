@@ -239,6 +239,40 @@
     margin-bottom: 0.3vh;
 }
 
+.forecast-chart-stats-switcher {
+    display: flex;
+    flex-direction: column;
+}
+
+.forecast-chart-stats-switcher-tab-menu {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    width: 100%;
+    text-align: center;
+}
+
+.forecast-chart-stats-switcher-tab {
+    padding: 2%;
+    border: 1px solid lightgray;
+}
+
+.forecast-chart-stats-switcher-tab:hover {
+    cursor: pointer;
+    background-color: #404d72;
+    color: #fff;
+    transition: 0.2s ease;
+}
+
+.switcher-problem-stats {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 0 auto;
+    padding-bottom: 2vh;
+    font-size: 0.9em;
+}
+
 @media (max-width: 1100px) {
     .forecast-selection-select {
         width: 85%;

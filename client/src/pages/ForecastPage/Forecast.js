@@ -10,6 +10,7 @@ import ForecastStatistics from './ForecastComponents/ForecastStatistics';
 import MarketStatistics from './ForecastComponents/MarketStatistics';
 import ForecastMarketLeaderboard from './ForecastComponents/ForecastMarketLeaderboard';
 import ForecastResults from './ForecastComponents/ForecastResults';
+import ForecastChat from './ForecastComponents/ForecastChat';
 
 function Forecast(props) {
     const [forecastSelected, setForecastSelected] = useState(false);
@@ -89,6 +90,8 @@ function Forecast(props) {
                         userBriers={props.userBriers}
                         updateTodayStats={updateTodayStats}
                         handleForecastSet={setHasAForecastBeenSelected}
+                        leaderboardData={leaderboardData}
+                        refresh={refresh}
                     />
                     {/* line chart */}
                 </div>
@@ -103,7 +106,7 @@ function Forecast(props) {
                         {/* stats and leaderboard */}
                         <div className="bottom-half-right-results-and-metrics">
                             <div className="forecast-results">
-                                {forecast.isClosed === true && 
+                                {/* {forecast.isClosed === true && 
                                     <ForecastResults 
                                         market={forecast.market} 
                                         problemName={forecast.problemName}
@@ -111,10 +114,15 @@ function Forecast(props) {
                                         username={props.username} 
                                         isClosed={forecast.isClosed}
                                     />
-                                }
+                                } */}
                             </div>
                             <div className="bottom-half-stats-and-leaderboard">
-                                <ForecastStatistics 
+                                {/* Add chat window here */}
+                                <ForecastChat
+                                    forecast={forecast}
+                                    username={props.username}
+                                />
+                                {/* <ForecastStatistics 
                                     selectedForecast={forecast} 
                                     today={false} 
                                     forecastSingleCertainty={forecastSingleCertainty}
@@ -136,7 +144,7 @@ function Forecast(props) {
                                     market={forecast.market} 
                                     leaderboard={leaderboardData} 
                                     username={props.username} 
-                                />
+                                /> */}
                             </div>
                         </div>
                     </div>
