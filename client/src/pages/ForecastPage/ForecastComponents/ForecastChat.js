@@ -11,6 +11,8 @@ function ForecastChat(props) {
     const [replyComment, setReplyComment] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
+    const [newCommentToRender, setNewCommentToRender] = useState();
+    const [newCommentStatus, setNewCommentStatus] = useState(false);
 
     useEffect(() => {
         console.log("ForecastChat UE");
@@ -53,6 +55,14 @@ function ForecastChat(props) {
                 author: props.username,
                 comment: comment
             });
+            const commentToRender = {
+                comment: comment,
+                author: props.username,
+                date: new Date().toString(),
+                replies: [],
+            };
+            setNewCommentStatus(true);
+            setNewCommentToRender(commentToRender);
             console.log(res);
         } catch (err) {
             console.error(err);
@@ -112,6 +122,46 @@ function ForecastChat(props) {
             </div>
             {/* Show all comments */}
                 <div className="chat">
+                    {newCommentStatus === true &&
+                    <div key={newCommentToRender.comment} className="chat-item">
+                        <h4>
+                            <Link 
+                                to={newCommentToRender.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: newCommentToRender.author}}
+                                onClick={() => localStorage.setItem("selectedPage", "Search")}
+                                style={{ textDecoration: "none", color: "#404d72"}}>
+                                    {newCommentToRender.author} ({findLastCertainty(newCommentToRender.author)}%)
+                            </Link> | {newCommentToRender.date !== undefined ? newCommentToRender.date.slice(0, 21) : newCommentToRender.date}</h4>
+                        <p>{newCommentToRender.comment}</p>
+                        {newCommentToRender.replies.map((newItem, newIndex) => {
+                            if (newCommentToRender.replies.length > 0) {
+                                return (
+                                    <li key={newItem} className="reply-chat-item">
+                                        <h4>
+                                            <Link 
+                                                to={newItem.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: newItem.author}}
+                                                onClick={() => localStorage.setItem("selectedPage", "Search")}
+                                                style={{ textDecoration: "none", color: "#404d72"}}>
+                                                    {newItem.author} ({findLastCertainty(newItem.author)}%)
+                                            </Link> | {newItem.date !== undefined ? newItem.date.slice(0, 21) : newItem.date}</h4>
+                                        <p>{newItem.comment}</p>
+                                    </li>
+                                )
+                            } else return null;
+                        })}
+                        <div className="sub-comment-submit-field">
+                            <input 
+                                type="text" 
+                                // value={replyComment}
+                                className="comment-field" 
+                                onChange={(e) => handleReplyCommentChange(e)}/>
+                            <button 
+                                className="submit-comment-btn"
+                                onClick={() => submitNewReply(replyComment, newCommentToRender)}>
+                                Reply
+                            </button>
+                        </div>
+                    </div>
+                    }
                     {props.forecast.chat.map((item, index) => {
                         return (
                             <div key={item} className="chat-item">
