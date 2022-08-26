@@ -48,6 +48,7 @@ function ForecastChat(props) {
     const submitNewComment = async (comment) => {
         try {
             const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/addNewComment`, {
+                problemName: props.forecast.problemName,
                 isFirstComment: true,
                 author: props.username,
                 comment: comment
@@ -63,8 +64,10 @@ function ForecastChat(props) {
         console.log(commentYouAreRespondingTo);
         try {
             const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/addNewComment`, {
+                problemName: props.forecast.problemName,
                 isFirstComment: false,
                 author: props.username,
+                comment: comment,
                 commentToReplyTo: commentYouAreRespondingTo.comment
             });
             console.log(res);
