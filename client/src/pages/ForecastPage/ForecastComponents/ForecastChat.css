@@ -3,6 +3,7 @@
     border: 1px solid lightgray;
     border-radius: 5px;
     width: 100%;
+    padding-top: 1vh;
 }
 
 .chat {
@@ -24,4 +25,5 @@
 
 .reply-chat-item {
     margin-left: 1vw;
+    margin-top: 1vh;
 }
