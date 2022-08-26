@@ -14,6 +14,9 @@ function ForecastChat(props) {
     const [modalContent, setModalContent] = useState("");
     const [newCommentToRender, setNewCommentToRender] = useState();
     const [newCommentStatus, setNewCommentStatus] = useState(false);
+    const [newReplyCommentToRender, setNewReplyCommentToRender] = useState();
+    const [newReplyCommentStatus, setNewReplyCommentStatus] = useState(false);
+    const [idForCommentToReplyTo, setIDForCommentToReplyTo] = useState();
 
     useEffect(() => {
         console.log("ForecastChat UE");
@@ -83,12 +86,22 @@ function ForecastChat(props) {
         };
     };
 
-    const submitNewReply = async (comment, commentYouAreRespondingTo) => {
+    const submitNewReply = async (comment, commentYouAreRespondingTo, commentIndex) => {
         console.log(comment);
         console.log(commentYouAreRespondingTo);
         if (comment === "" || (/\s/.test(comment))) {
             return;
         };
+        const commentToRender = {
+            comment: comment,
+            author: props.username,
+            date: new Date().toString(),
+            replies: [],
+        };
+        setNewReplyCommentStatus(true);
+        setIDForCommentToReplyTo(commentIndex);
+        setNewReplyCommentToRender(commentToRender);
+        console.log(newCommentStatus);
         try {
             const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/addNewComment`, {
                 problemName: props.forecast.problemName,
@@ -166,7 +179,7 @@ function ForecastChat(props) {
                                     )
                                 } else return null;
                             })}
-                            <div className="sub-comment-submit-field">
+                            {/* <div className="sub-comment-submit-field">
                                 <input 
                                     type="text" 
                                     // value={replyComment}
@@ -177,7 +190,7 @@ function ForecastChat(props) {
                                     onClick={() => submitNewReply(replyComment, newCommentToRender)}>
                                     Reply
                                 </button>
-                            </div>
+                            </div> */}
                         </div>
                     }
                     {props.forecast.chat.map((item, index) => {
@@ -209,6 +222,20 @@ function ForecastChat(props) {
                                         )
                                     } else return null;
                                 })}
+                                {(newReplyCommentStatus === true && index === idForCommentToReplyTo) &&
+                                    <li key={newReplyCommentToRender} className="reply-chat-item">
+                                        <h4>
+                                            <Link 
+                                                to={newReplyCommentToRender.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: newReplyCommentToRender.author}}
+                                                onClick={() => localStorage.setItem("selectedPage", "Search")}
+                                                style={{ textDecoration: "none", color: "#404d72"}}>
+                                                    {newReplyCommentToRender.author} ({findLastCertainty(newReplyCommentToRender.author)}%)
+                                            </Link> | {newReplyCommentToRender.date !== undefined ? newReplyCommentToRender.date.slice(0, 21) : newReplyCommentToRender.date}
+
+                                            </h4>
+                                        <p>{newReplyCommentToRender.comment}</p>
+                                    </li>
+                                }
                                 {/* <hr /> */}
                                 {/* Add a comment field here (think Instagram, not replying to specific people but just add your comment 
                                     to this particular thread for now) */}
@@ -220,7 +247,7 @@ function ForecastChat(props) {
                                         onChange={(e) => handleReplyCommentChange(e)}/>
                                     <button 
                                         className="submit-comment-btn"
-                                        onClick={() => submitNewReply(replyComment, item)}>
+                                        onClick={() => submitNewReply(replyComment, item, index)}>
                                         Reply
                                     </button>
                                 </div>
