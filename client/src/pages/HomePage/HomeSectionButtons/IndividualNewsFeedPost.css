@@ -24,19 +24,27 @@
     margin-bottom: 2vh;
 }
 
-.comment-submit-field {
+.comment-submit-field,
+.sub-comment-submit-field {
     display: grid;
     grid-template-columns: 80% 20%;
     /* height: 10%; */
 }
 
-.comment-field {
+.comment-field,
+.sub-comment-submit-field {
     width: 100%;
     height: 90%;
     margin: 0 auto;
     border: 1px solid lightgray;
     padding: 1%;
     margin-bottom: 2%;
+}
+
+.sub-comment-submit-field {
+    width: 60%;
+    margin-left: 0.5vw;
+    border: none;
 }
 
 .submit-comment-btn {

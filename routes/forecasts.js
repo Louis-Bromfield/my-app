@@ -841,6 +841,36 @@ router.patch("/updateMultiple", async (req, res) => {
     }
 });
 
+// Add a new comment or reply to the forecast chat
+router.patch("/addNewComment", async (req, res) => {
+    try {
+        const forecast = await Forecasts.findOne({ problemName: req.body.problemName });
+        if (req.body.isFirstComment === true) {
+            forecast.chat.shift({
+                author: req.body.author,
+                comment: req.body.comment,
+                date: new Date().toString(),
+                replies: []
+            });      
+        } else if (req.body.isFirstComment === false) {
+            for (let i = 0; i < forecast.chat.length; i++) {
+                if (forecast.chat[i].comment === req.body.commentToReplyTo) {
+                    forecast.chat[i].replies.push({
+                        author: req.body.author,
+                        comment: req.body.comment,
+                        date: new Date().toString()
+                    });
+                };
+            };
+        };
+        return ({ msg: "Comment successfully added!" });
+    } catch (err) {
+        console.error("Error in forecasts > addNewComment");
+        console.error(err);
+        return ({ err: "There was an error" });
+    };
+})
+
 // Update all instances of a username where a user has changed theirs
 router.patch("/changeUsername/:username", async (req, res) => {
     try {

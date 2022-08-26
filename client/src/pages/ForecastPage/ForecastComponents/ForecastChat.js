@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import './ForecastChat.css';
 import { FaInfoCircle } from 'react-icons/fa';
 import Modal from '../../../components/Modal';
+import axios from 'axios';
 
 function ForecastChat(props) {
     const [chat, setChat] = useState([props.forecast.chat]);
     const [comment, setComment] = useState("");
+    const [replyComment, setReplyComment] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
 
@@ -37,12 +39,38 @@ function ForecastChat(props) {
         // setNewCommentStatus(false);
     };
 
-    // CHARMANDER
-    const submitNewComment = (comment) => {
-
+    const handleReplyCommentChange = (e) => {
+        setReplyComment(e.target.value);
+        // setNewCommentStatus(false);
     };
 
-    const submitNewReply = (comment, commentYouAreRespondingTo) => {
+    // CHARMANDER
+    const submitNewComment = async (comment) => {
+        try {
+            const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/addNewComment`, {
+                isFirstComment: true,
+                author: props.username,
+                comment: comment
+            });
+            console.log(res);
+        } catch (err) {
+            console.error(err);
+        };
+    };
+
+    const submitNewReply = async (comment, commentYouAreRespondingTo) => {
+        console.log(comment);
+        console.log(commentYouAreRespondingTo);
+        try {
+            const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/addNewComment`, {
+                isFirstComment: false,
+                author: props.username,
+                commentToReplyTo: commentYouAreRespondingTo.comment
+            });
+            console.log(res);
+        } catch (err) {
+            console.error(err);
+        };
         // Maybe add a reply button next to every comment
         // and then when you click it a comment field identicial to the 
         // current one appears but instead of "Post Comment" on the submit
@@ -68,17 +96,17 @@ function ForecastChat(props) {
             <div className="chat">
             {/* New comment input field */}
             <div className="comment-submit-field">
-                    <input 
-                        type="text" 
-                        value={comment}
-                        className="comment-field" 
-                        onChange={(e) => handleCommentChange(e)}/>
-                    <button 
-                        className="submit-comment-btn"
-                        onClick={() => submitNewComment(comment)}>
-                        Post Comment
-                    </button>
-                </div>
+                <input 
+                    type="text" 
+                    value={comment}
+                    className="comment-field" 
+                    onChange={(e) => handleCommentChange(e)}/>
+                <button 
+                    className="submit-comment-btn"
+                    onClick={() => submitNewComment(comment)}>
+                    Post Comment
+                </button>
+            </div>
             {/* Show all comments */}
                 <div className="chat">
                     {props.forecast.chat.map((item, index) => {
@@ -109,6 +137,20 @@ function ForecastChat(props) {
                                     } else return null;
                                 })}
                                 {/* <hr /> */}
+                                {/* Add a comment field here (think Instagram, not replying to specific people but just add your comment 
+                                    to this particular thread for now) */}
+                                <div className="sub-comment-submit-field">
+                                    <input 
+                                        type="text" 
+                                        // value={replyComment}
+                                        className="comment-field" 
+                                        onChange={(e) => handleReplyCommentChange(e)}/>
+                                    <button 
+                                        className="submit-comment-btn"
+                                        onClick={() => submitNewReply(replyComment, item)}>
+                                        Reply
+                                    </button>
+                                </div>
                             </div>
                         )
                     })}
