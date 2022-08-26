@@ -846,7 +846,7 @@ router.patch("/addNewComment", async (req, res) => {
     try {
         const forecast = await Forecasts.findOne({ problemName: req.body.problemName });
         if (req.body.isFirstComment === true) {
-            forecast.chat.shift({
+            forecast.chat.unshift({
                 author: req.body.author,
                 comment: req.body.comment,
                 date: new Date().toString(),
