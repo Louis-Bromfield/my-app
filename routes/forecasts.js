@@ -863,6 +863,9 @@ router.patch("/addNewComment", async (req, res) => {
                 };
             };
         };
+        await Forecasts.findOneAndUpdate({ problemName: forecast.problemName }, {
+            chat: forecast.chat
+        });
         return ({ msg: "Comment successfully added!" });
     } catch (err) {
         console.error("Error in forecasts > addNewComment");
