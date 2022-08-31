@@ -379,7 +379,7 @@ router.patch("/newNotification/:username", async (req, res) => {
             // e.g. if it's someone liking your news feed post, then this will be the OID of that post so that onClick it takes you to the individual news feed post
             notificationSourceObjectID: req.body.notificationSourceObjectID
         });
-        await Users.findOneAndUpdate(user._id, { notifications: user.notifications });
+        await Users.findOneAndUpdate({ username: req.params.username }, { notifications: user.notifications });
         res.json({message: "success ASDKASDL:AS" })
     } catch (error) {
         console.error("Error in patch users > newNotification");

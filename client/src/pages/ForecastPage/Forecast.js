@@ -68,7 +68,7 @@ function Forecast(props) {
 
     const testNotification = async () => {
         try {
-            const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/"LouisB"`, {
+            const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/LouisB`, {
                 notificationMessage: "This is a new notification!",
                 notificationSourcePath: "/forecast",
                 notificationSourceObjectID: "62a8f6dc2ad128ed5f3f951e"
