@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import './Forecast.css';
 import ForecastAdmin from './ForecastComponents/ForecastAdmin';
 import ForecastSubmission from './ForecastComponents/ForecastSubmission';
-import ForecastTabPane from './ForecastComponents/ForecastTabPane';
+// import ForecastTabPane from './ForecastComponents/ForecastTabPane';
 import axios from 'axios';
 import ForecastArticlesDisplay from './ForecastComponents/ForecastArticlesDisplay';
-import ForecastProblemLineChart from './ForecastComponents/ForecastProblemLineChart';
-import ForecastStatistics from './ForecastComponents/ForecastStatistics';
-import MarketStatistics from './ForecastComponents/MarketStatistics';
-import ForecastMarketLeaderboard from './ForecastComponents/ForecastMarketLeaderboard';
-import ForecastResults from './ForecastComponents/ForecastResults';
+// import ForecastProblemLineChart from './ForecastComponents/ForecastProblemLineChart';
+// import ForecastStatistics from './ForecastComponents/ForecastStatistics';
+// import MarketStatistics from './ForecastComponents/MarketStatistics';
+// import ForecastMarketLeaderboard from './ForecastComponents/ForecastMarketLeaderboard';
+// import ForecastResults from './ForecastComponents/ForecastResults';
 import ForecastChat from './ForecastComponents/ForecastChat';
+import Modal from '../../components/Modal';
 
 function Forecast(props) {
     const [forecastSelected, setForecastSelected] = useState(false);
@@ -22,6 +23,9 @@ function Forecast(props) {
     const [allForecasts, setAllForecasts] = useState([]);
     const [todayAverage, setTodayAverage] = useState("");
     const [todayForecastCount, setTodayForecastCount] = useState("");
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState("");
+    const [modalContent2, setModalContent2] = useState("");
 
     const updateTodayStats = (avg, fc) => {
         setTodayAverage(avg);
@@ -64,6 +68,10 @@ function Forecast(props) {
 
     return (
         <div className="forecast">
+            <Modal show={showModal} handleClose={() => setShowModal(false)}>
+                <p>{modalContent}</p>
+                <p>{modalContent2}</p>
+            </Modal>
             <div className="forecast-header">
                 <h1>My Forecasts</h1>
                 <p>This is the page for submitting your forecasts. In the dropdown menu below, you can
@@ -73,6 +81,22 @@ function Forecast(props) {
             </div>
             {/* Replace aPW with JWT verification? */}
             {(props.username === "LouisB" && localStorage.getItem("aPW") === "73485093485734974592398190489025736hbn45") && <ForecastAdmin username={props.username} allForecasts={allForecasts} />}
+            <div className="forecast-info-bar-container">
+                <div className="individual-forecast-info-container" onClick={() => {
+                    setShowModal(true);
+                    setModalContent("This is where you manage all of your forecasts. Select a problem from the dropdown menu below and submit new forecasts or update previous ones. A chart will show the forecasts submitted by all other users who have attempted this problem, and relevant statistics and articles will be available to assist you, as well as a comment section for you to discuss with other forecasters.")
+                    setModalContent2("");
+                }}>
+                    <h3>What do I do on this page?</h3>
+                </div>
+                <div className="individual-forecast-info-container" onClick={() => {
+                    setShowModal(true);
+                    setModalContent("You can submit an unlimited number of predictions for any given forecast problem, with each one contributing to your final score. Each forecast is assessed based on how accurate you were and then weighted by that submission's duration (so forecasts that aren't updated for longer will receive a larger weighting than one that was updated quickly, so as to incentivise you to update your forecasts as soon as possible).")
+                    setModalContent2(<a href="https://youtu.be/OkLP72O3hmo" target="_blank" rel="noreferrer nofollow" style={{ color: "#fff" }}><p>For a full breakdown, watch this video</p></a>)
+                }}>
+                    <h3>How are forecasts assessed for accuracy?</h3>
+                </div>
+            </div>
             <div className="new-forecast-container">
                 <div className="new-forecast-container-top-half">
                     {/* submissions */}

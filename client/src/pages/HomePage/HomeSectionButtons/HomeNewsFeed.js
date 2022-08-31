@@ -7,6 +7,8 @@ import ReactLoading from 'react-loading';
 import * as AiIcons from 'react-icons/ai';
 import ImagePlaceholder from '../../../media/sd.png';
 import ConfirmationModal from '../../../components/ConfirmationModal';
+import { FaInfoCircle } from 'react-icons/fa';
+import Modal from '../../../components/Modal';
 
 function HomeNewsFeed(props) {
     const [feed, setFeed] = useState([]);
@@ -32,6 +34,8 @@ function HomeNewsFeed(props) {
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);
     const [postIDToDelete, setPostIDToDelete] = useState();
     const [alternateArticleTitle, setAlternateArticleTitle] = useState("");
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState("");
     let userMarketsForPost = [];
     
     useEffect(() => {
@@ -348,6 +352,9 @@ function HomeNewsFeed(props) {
 
     return (
             <div className="home-page-news-feed-container">
+                <Modal show={showModal} handleClose={() => setShowModal(false)}>
+                    <p>{modalContent}</p>
+                </Modal>
                 <ConfirmationModal 
                     show={showConfirmationModal} 
                     handleClose={() => {
@@ -356,7 +363,16 @@ function HomeNewsFeed(props) {
                     }} 
                     justClose={() => setShowConfirmationModal(false)}
                 />
-                <h1 className="news-feed-title">News Feed</h1>
+                <h1 className="news-feed-title">
+                    My Feed
+                    <FaInfoCircle 
+                        onClick={() => {
+                            setShowModal(true);
+                            setModalContent(`This is the main feed for Fantasy Forecast where all users can post links to articles, videos and websites they feel might be of use or of interest to others in the same market. Feel free to post whatever you feel other users might want to see here!`)
+                        }}
+                        style={{ "color": "orange", "cursor": "pointer" }}
+                    />
+                </h1>
                 <div className="post">
                     {post === false && 
                         <div className="feed-top-buttons">

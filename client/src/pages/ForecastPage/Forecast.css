@@ -13,6 +13,31 @@
     margin-bottom: 2vh;
 }
 
+.forecast-info-bar-container {
+    display: flex;
+    flex-direction: row;
+    /* border: 1px solid red; */
+    width: 90%;
+    margin: 0 auto;
+    justify-content: center;
+    height: 6vh;
+    margin-bottom: 2vh;
+}
+
+.individual-forecast-info-container {
+    border: 1px solid lightgray;
+    padding: 1%;
+    border-radius: 5px;
+    background-color: #2d4ca121;
+    text-align: center;
+}
+
+.individual-forecast-info-container:hover {
+    cursor: pointer;
+    background-color: #517ae911;
+    transition: 0.2s ease;
+}
+
 .new-forecast-container-top-half,
 .new-forecast-container-bottom-half {
     display: flex;
@@ -64,6 +89,9 @@
         grid-template-columns: 100%;
         /* border: 1px solid red; */
         padding: 0%;
+    }
+    .forecast-info-bar-container {
+        flex-direction: column;
     }
 }
 
