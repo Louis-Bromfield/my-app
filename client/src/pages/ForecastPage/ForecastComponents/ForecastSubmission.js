@@ -457,271 +457,298 @@ function ForecastSubmission(props) {
 
     // Add the loading animation until it's submitted?
     const handleForecastUpdate = async (forecast, newCertainty, newComments, username) => {
-        if (newCertainty === undefined) {
-            setForecastResponseMessage("Please enter a certainty between 0.00-100.00");
+        if (props.username === "Guest") {
+            setShowModal(true);
+            setModalContent("You must be logged into your own account to submit a forecast.");
+            setModalContent2("");
             return;
-        };
-        if ((newCertainty*100) > 100 || (newCertainty*100) < 0) {
-            setForecastResponseMessage("Please enter a certainty within 0.00-100.00");
-            return;
-        };
-        if (newComments === "") {
-            setForecastResponseMessage("Please enter a comment");
-            return;
-        }
-        try {
-            // ------------------------------------------------- //
-            // This is brute-force approach of just altering and replacing the entire submitted forecasts array. It works, but I'm 
-            // concerned about race conditions. I'm also questioning why I'm working out indices here on client (on previous approach below), 
-            // when I should just send the forecast object to the backend and do it all there.
-            // const document = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${forecast}`);
-            // const documentForecastData = document.data[0].submittedForecasts;
-            // let index = 0;
-            // for (let i = 0; i < documentForecastData.length; i++) {
-            //     if (documentForecastData[i].username === username) {
-            //         index = i;
-            //     };
-            // };
-            // documentForecastData[index].forecasts.push({
-            //     certainty: newCertainty, 
-            //     comments: `(${username})~ ${newComments}`, 
-            //     date: new Date().toString()
-            // });
-            // const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
-            //     problemID: document.data[0]._id,
-            //     newSubmittedForecasts: documentForecastData
-            // });
-            // console.log(newForecast);
-            // ------------------------------------------------- //
-
-            let date = new Date().toString();
-            let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
-            let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20)).toString();
-            let nDateBSTSuffix = nDate.slice(0, 25) + "GMT+0100 (British Summer Time)";
-            const newForecastObj = {
-                certainty: newCertainty, 
-                comments: `(${username})~ ${newComments}`, 
-                // date: new Date().toString()
-                date: nDateBSTSuffix
+        } else {
+            if (newCertainty === undefined) {
+                setForecastResponseMessage("Please enter a certainty between 0.00-100.00");
+                return;
             };
-            const newForecastTwo = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
-                documentID: selectedForecastDocumentID,
-                newForecastObject: newForecastObj,
-                username: username
-            });
-            console.log(newForecastTwo);
-            props.changeForecast(newForecastTwo.data);
-            setForecastResponseMessage("Forecast successfully updated!");
-            document.getElementsByClassName("forecast-certainty-input").value = 0;
-            setCertainty(0);
-            setCertaintyOne(0);
-            setCertaintyTwo(0);
-            setCertaintyThree(0);
-            setForecastComments("");
-            setUserPreviousAttemptCertainty(certainty*100);
-            setUserPreviousAttemptComments(forecastComments);
-            updateOnboarding(username);
+            if ((newCertainty*100) > 100 || (newCertainty*100) < 0) {
+                setForecastResponseMessage("Please enter a certainty within 0.00-100.00");
+                return;
+            };
+            if (newComments === "") {
+                setForecastResponseMessage("Please enter a comment");
+                return;
+            }
+            try {
+                // ------------------------------------------------- //
+                // This is brute-force approach of just altering and replacing the entire submitted forecasts array. It works, but I'm 
+                // concerned about race conditions. I'm also questioning why I'm working out indices here on client (on previous approach below), 
+                // when I should just send the forecast object to the backend and do it all there.
+                // const document = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${forecast}`);
+                // const documentForecastData = document.data[0].submittedForecasts;
+                // let index = 0;
+                // for (let i = 0; i < documentForecastData.length; i++) {
+                //     if (documentForecastData[i].username === username) {
+                //         index = i;
+                //     };
+                // };
+                // documentForecastData[index].forecasts.push({
+                //     certainty: newCertainty, 
+                //     comments: `(${username})~ ${newComments}`, 
+                //     date: new Date().toString()
+                // });
+                // const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
+                //     problemID: document.data[0]._id,
+                //     newSubmittedForecasts: documentForecastData
+                // });
+                // console.log(newForecast);
+                // ------------------------------------------------- //
 
-            // const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
-            //     problemName: forecast,
-            //     updatedForecastsForUser: { certainty: newCertainty, comments: `(${username})~ ${newComments}`, date: new Date().toString() },
-            //     locationOfForecasts: `submittedForecasts.${index}.forecasts`,
-            // });
-            // props.changeForecast(newForecast.data);
+                let date = new Date().toString();
+                let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
+                let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20)).toString();
+                let nDateBSTSuffix = nDate.slice(0, 25) + "GMT+0100 (British Summer Time)";
+                const newForecastObj = {
+                    certainty: newCertainty, 
+                    comments: `(${username})~ ${newComments}`, 
+                    // date: new Date().toString()
+                    date: nDateBSTSuffix
+                };
+                const newForecastTwo = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
+                    documentID: selectedForecastDocumentID,
+                    newForecastObject: newForecastObj,
+                    username: username
+                });
+                console.log(newForecastTwo);
+                props.changeForecast(newForecastTwo.data);
+                setForecastResponseMessage("Forecast successfully updated!");
+                document.getElementsByClassName("forecast-certainty-input").value = 0;
+                setCertainty(0);
+                setCertaintyOne(0);
+                setCertaintyTwo(0);
+                setCertaintyThree(0);
+                setForecastComments("");
+                setUserPreviousAttemptCertainty(certainty*100);
+                setUserPreviousAttemptComments(forecastComments);
+                updateOnboarding(username);
 
-        } catch (error) {
-            console.error("error in ForecastSubmission.js > handleForecastUpdate");
-            console.error(error);
+                // const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/update`, {
+                //     problemName: forecast,
+                //     updatedForecastsForUser: { certainty: newCertainty, comments: `(${username})~ ${newComments}`, date: new Date().toString() },
+                //     locationOfForecasts: `submittedForecasts.${index}.forecasts`,
+                // });
+                // props.changeForecast(newForecast.data);
+            } catch (error) {
+                console.error("error in ForecastSubmission.js > handleForecastUpdate");
+                console.error(error);
+            };
         };
     };
 
     const handleForecastSubmit = async (forecast, certainty, comments, username) => {
-        if (certainty === undefined) {
-            setForecastResponseMessage("Please enter a certainty between 0.00-100.00");
+        if (props.username === "Guest") {
+            setShowModal(true);
+            setModalContent("You must be logged into your own account to submit a forecast.");
+            setModalContent2("");
             return;
-        };
-        if ((certainty*100) > 100 || (certainty*100) < 0) {
-            setForecastResponseMessage("Please enter a certainty within 0.00-100.00");
-            return;
-        };
-        if (certainty === "") {
-            setForecastResponseMessage("Please enter a comment");
-            return;
-        }
-        try {
-            let date = new Date().toString();
-            let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
-            let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20)).toString();
-            let nDateBSTSuffix = nDate.slice(0, 25) + "GMT+0100 (British Summer Time)";
-            const submittedForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/submit`, {
-                problemName: forecast,
-                username: username,
-                certainty: certainty,
-                comments: `(${username})~ ${comments}`,
-                // date: new Date().toString()
-                date: nDateBSTSuffix
-            });
-            setForecastResponseMessage("Forecast successfully submitted!")
-            props.changeForecast(submittedForecast.data);
-            setUserHasAttempted(true);
-            document.getElementsByClassName("forecast-certainty-input").value = 0;
-            setCertainty(0);
-            setCertaintyOne(0);
-            setCertaintyTwo(0);
-            setCertaintyThree(0);
-            setForecastComments("");
-            setUserPreviousAttemptCertainty(certainty*100);
-            setUserPreviousAttemptComments(forecastComments);
-            updateOnboarding(username);
-        } catch (error) {
-            console.error("error in ForecastSubmission.js > handleForecastSubmit")
-            console.error(error);
+        } else {
+            if (certainty === undefined) {
+                setForecastResponseMessage("Please enter a certainty between 0.00-100.00");
+                return;
+            };
+            if ((certainty*100) > 100 || (certainty*100) < 0) {
+                setForecastResponseMessage("Please enter a certainty within 0.00-100.00");
+                return;
+            };
+            if (certainty === "") {
+                setForecastResponseMessage("Please enter a comment");
+                return;
+            }
+            try {
+                let date = new Date().toString();
+                let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
+                let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20)).toString();
+                let nDateBSTSuffix = nDate.slice(0, 25) + "GMT+0100 (British Summer Time)";
+                const submittedForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/submit`, {
+                    problemName: forecast,
+                    username: username,
+                    certainty: certainty,
+                    comments: `(${username})~ ${comments}`,
+                    // date: new Date().toString()
+                    date: nDateBSTSuffix
+                });
+                setForecastResponseMessage("Forecast successfully submitted!")
+                props.changeForecast(submittedForecast.data);
+                setUserHasAttempted(true);
+                document.getElementsByClassName("forecast-certainty-input").value = 0;
+                setCertainty(0);
+                setCertaintyOne(0);
+                setCertaintyTwo(0);
+                setCertaintyThree(0);
+                setForecastComments("");
+                setUserPreviousAttemptCertainty(certainty*100);
+                setUserPreviousAttemptComments(forecastComments);
+                updateOnboarding(username);
+            } catch (error) {
+                console.error("error in ForecastSubmission.js > handleForecastSubmit")
+                console.error(error);
+            };
         };
     };
 
     // Add the loading animation until it's submitted?
     const handleMultipleForecastUpdate = async (forecast, newCertainty1, newCertainty2, newCertainty3, newComments, username) => {
-        if (newCertainty1 === undefined || newCertainty2 === undefined || newCertainty3 === undefined) {
-            setForecastResponseMessage("One or more certainties is missing.");
+        if (props.username === "Guest") {
+            setShowModal(true);
+            setModalContent("You must be logged into your own account to submit a forecast.");
+            setModalContent2("");
             return;
-        };
-        if (((newCertainty1*100) > 100 || (newCertainty1*100) < 0) || ((newCertainty2*100) > 100 || (newCertainty2*100) < 0) || ((newCertainty3*100) > 100 || (newCertainty3*100) < 0)) {
-            setForecastResponseMessage("One or more certainties is not between 0 and 100.");
-            return;
-        };
-        if ((newCertainty1*100) + (newCertainty2*100) + (newCertainty3*100) !== 100) {
-            setForecastResponseMessage("The three certainties must equal 100");
-            return;
-        }
-        if (newComments === "") {
-            setForecastResponseMessage("Please enter a comment");
-            return;
-        }
-        try {
-            let date = new Date().toString();
-            let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
-            let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20)).toString();
-            let nDateBSTSuffix = nDate.slice(0, 25) + "GMT+0100 (British Summer Time)";
-            const newForecastObj = {
-                certainties: {
-                    certainty1: newCertainty1, 
-                    certainty2: newCertainty2, 
-                    certainty3: newCertainty3, 
-                },
-                comments: `(${username})~ ${newComments}`, 
-                // date: new Date().toString()
-                date: nDateBSTSuffix
+        } else {
+            if (newCertainty1 === undefined || newCertainty2 === undefined || newCertainty3 === undefined) {
+                setForecastResponseMessage("One or more certainties is missing.");
+                return;
             };
-            const newForecastTwo = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple`, {
-                documentID: selectedForecastDocumentID,
-                newForecastObject: newForecastObj,
-                username: username
-            });
-            console.log(newForecastTwo);
-            setForecastResponseMessage("Forecast successfully updated!");
-            props.changeForecast(newForecastTwo.data);
-            document.getElementsByClassName("forecast-certainty-input").value = 0;
-            setCertainty(0);
-            setCertaintyOne(0);
-            setCertaintyTwo(0);
-            setCertaintyThree(0);
-            setForecastComments("");
-            setUserPreviousAttemptCertainty(`${newCertainty1*100} / ${newCertainty2*100} / ${newCertainty3*100}`);
-            setUserPreviousAttemptComments(newComments);
-            updateOnboarding(username);
+            if (((newCertainty1*100) > 100 || (newCertainty1*100) < 0) || ((newCertainty2*100) > 100 || (newCertainty2*100) < 0) || ((newCertainty3*100) > 100 || (newCertainty3*100) < 0)) {
+                setForecastResponseMessage("One or more certainties is not between 0 and 100.");
+                return;
+            };
+            if ((newCertainty1*100) + (newCertainty2*100) + (newCertainty3*100) !== 100) {
+                setForecastResponseMessage("The three certainties must equal 100");
+                return;
+            }
+            if (newComments === "") {
+                setForecastResponseMessage("Please enter a comment");
+                return;
+            }
+            try {
+                let date = new Date().toString();
+                let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
+                let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20)).toString();
+                let nDateBSTSuffix = nDate.slice(0, 25) + "GMT+0100 (British Summer Time)";
+                const newForecastObj = {
+                    certainties: {
+                        certainty1: newCertainty1, 
+                        certainty2: newCertainty2, 
+                        certainty3: newCertainty3, 
+                    },
+                    comments: `(${username})~ ${newComments}`, 
+                    // date: new Date().toString()
+                    date: nDateBSTSuffix
+                };
+                const newForecastTwo = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple`, {
+                    documentID: selectedForecastDocumentID,
+                    newForecastObject: newForecastObj,
+                    username: username
+                });
+                console.log(newForecastTwo);
+                setForecastResponseMessage("Forecast successfully updated!");
+                props.changeForecast(newForecastTwo.data);
+                document.getElementsByClassName("forecast-certainty-input").value = 0;
+                setCertainty(0);
+                setCertaintyOne(0);
+                setCertaintyTwo(0);
+                setCertaintyThree(0);
+                setForecastComments("");
+                setUserPreviousAttemptCertainty(`${newCertainty1*100} / ${newCertainty2*100} / ${newCertainty3*100}`);
+                setUserPreviousAttemptComments(newComments);
+                updateOnboarding(username);
 
-            // Brute force method
-            // const document = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${forecast}`);
-            // console.log("the document you just got was this one:");
-            // console.log(document);
-            // const documentForecastData = document.data[0].submittedForecasts;
-            // let index = 0;
-            // for (let i = 0; i < documentForecastData.length; i++) {
-            //     if (documentForecastData[i].username === username) {
-            //         index = i;
-            //     };
-            // };
-            // documentForecastData[index].forecasts.push({
-            //     certainties: {
-            //         certainty1: newCertainty1, 
-            //         certainty2: newCertainty2, 
-            //         certainty3: newCertainty3, 
-            //     },
-            //     comments: `(${username})~ ${newComments}`, 
-            //     date: new Date().toString()
-            // });
-            // const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple`, {
-            //     problemID: document.data[0]._id,
-            //     newSubmittedForecasts: documentForecastData
-            // });
-            // console.log(newForecast);
+                // Brute force method
+                // const document = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${forecast}`);
+                // console.log("the document you just got was this one:");
+                // console.log(document);
+                // const documentForecastData = document.data[0].submittedForecasts;
+                // let index = 0;
+                // for (let i = 0; i < documentForecastData.length; i++) {
+                //     if (documentForecastData[i].username === username) {
+                //         index = i;
+                //     };
+                // };
+                // documentForecastData[index].forecasts.push({
+                //     certainties: {
+                //         certainty1: newCertainty1, 
+                //         certainty2: newCertainty2, 
+                //         certainty3: newCertainty3, 
+                //     },
+                //     comments: `(${username})~ ${newComments}`, 
+                //     date: new Date().toString()
+                // });
+                // const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple`, {
+                //     problemID: document.data[0]._id,
+                //     newSubmittedForecasts: documentForecastData
+                // });
+                // console.log(newForecast);
 
-            // const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple`, {
-            //     problemName: forecast,
-            //     updatedForecastsForUser: {
-            //         certainty1: newCertainty1, 
-            //         certainty2: newCertainty2, 
-            //         certainty3: newCertainty3, 
-            //         comments: `(${username})~ ${newComments}`,
-            //         date: new Date().toString()
-            //     },
-            //     locationOfForecasts: `submittedForecasts.${index}.forecasts`,
-            //     locationOfForecastCount: `submittedForecasts.${index}.numberOfForecastsSubmittedByUser`
-            // });
-            // props.changeForecast(newForecast.data);
-        } catch (error) {
-            console.error("error in ForecastSubmission.js > handleForecastUpdate");
-            console.error(error);
+                // const newForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/updateMultiple`, {
+                //     problemName: forecast,
+                //     updatedForecastsForUser: {
+                //         certainty1: newCertainty1, 
+                //         certainty2: newCertainty2, 
+                //         certainty3: newCertainty3, 
+                //         comments: `(${username})~ ${newComments}`,
+                //         date: new Date().toString()
+                //     },
+                //     locationOfForecasts: `submittedForecasts.${index}.forecasts`,
+                //     locationOfForecastCount: `submittedForecasts.${index}.numberOfForecastsSubmittedByUser`
+                // });
+                // props.changeForecast(newForecast.data);
+            } catch (error) {
+                console.error("error in ForecastSubmission.js > handleForecastUpdate");
+                console.error(error);
+            };
         };
     };
 
     const handleMultipleForecastSubmit = async (forecast, certainty1, certainty2, certainty3, comments, username) => {
-        if ((certainty1*100) + (certainty2*100) + (certainty3*100) !== 100) {
-            setForecastResponseMessage("Your certainties do not equal 100.");
+        if (props.username === "Guest") {
+            setShowModal(true);
+            setModalContent("You must be logged into your own account to submit a forecast.");
+            setModalContent2("");
             return;
-        };
-        if (certainty1 === undefined || certainty2 === undefined || certainty3 === undefined) {
-            setForecastResponseMessage("One or more certainties is missing.");
-            return;
-        };
-        if (((certainty1*100) > 100 || (certainty1*100) < 0) || ((certainty2*100) > 100 || (certainty2*100) < 0) || ((certainty3*100) > 100 || (certainty3*100) < 0)) {
-            setForecastResponseMessage("One or more certainties is not between 0 and 100.");
-            return;
-        };
-        if (comments === "") {
-            setForecastResponseMessage("Please enter a comment");
-            return;
-        }
-        try {
-            let date = new Date().toString();
-            let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
-            let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20)).toString();
-            let nDateBSTSuffix = nDate.slice(0, 25) + "GMT+0100 (British Summer Time)";
-            const submittedForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/submitMultiple`, {
-                problemName: forecast,
-                username: username,
-                certainty1: certainty1,
-                certainty2: certainty2,
-                certainty3: certainty3,
-                comments: `(${username})~ ${comments}`,
-                // date: new Date().toString()
-                date: nDateBSTSuffix
-            });
-            setForecastResponseMessage("Forecast successfully submitted!")
-            props.changeForecast(submittedForecast.data);
-            setUserHasAttempted(true);
-            document.getElementsByClassName("forecast-certainty-input").value = 0;
-            setCertainty(0);
-            setCertaintyOne(0);
-            setCertaintyTwo(0);
-            setCertaintyThree(0);
-            setForecastComments("");
-            setUserPreviousAttemptCertainty(`${certainty1*100} / ${certainty2*100} / ${certainty3*100}`);
-            setUserPreviousAttemptComments(comments);
-            updateOnboarding(username);
-        } catch (error) {
-            console.error("error in ForecastSubmission.js > handleForecastSubmit")
-            console.error(error);
+        } else {
+            if ((certainty1*100) + (certainty2*100) + (certainty3*100) !== 100) {
+                setForecastResponseMessage("Your certainties do not equal 100.");
+                return;
+            };
+            if (certainty1 === undefined || certainty2 === undefined || certainty3 === undefined) {
+                setForecastResponseMessage("One or more certainties is missing.");
+                return;
+            };
+            if (((certainty1*100) > 100 || (certainty1*100) < 0) || ((certainty2*100) > 100 || (certainty2*100) < 0) || ((certainty3*100) > 100 || (certainty3*100) < 0)) {
+                setForecastResponseMessage("One or more certainties is not between 0 and 100.");
+                return;
+            };
+            if (comments === "") {
+                setForecastResponseMessage("Please enter a comment");
+                return;
+            }
+            try {
+                let date = new Date().toString();
+                let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
+                let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20)).toString();
+                let nDateBSTSuffix = nDate.slice(0, 25) + "GMT+0100 (British Summer Time)";
+                const submittedForecast = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/submitMultiple`, {
+                    problemName: forecast,
+                    username: username,
+                    certainty1: certainty1,
+                    certainty2: certainty2,
+                    certainty3: certainty3,
+                    comments: `(${username})~ ${comments}`,
+                    // date: new Date().toString()
+                    date: nDateBSTSuffix
+                });
+                setForecastResponseMessage("Forecast successfully submitted!")
+                props.changeForecast(submittedForecast.data);
+                setUserHasAttempted(true);
+                document.getElementsByClassName("forecast-certainty-input").value = 0;
+                setCertainty(0);
+                setCertaintyOne(0);
+                setCertaintyTwo(0);
+                setCertaintyThree(0);
+                setForecastComments("");
+                setUserPreviousAttemptCertainty(`${certainty1*100} / ${certainty2*100} / ${certainty3*100}`);
+                setUserPreviousAttemptComments(comments);
+                updateOnboarding(username);
+            } catch (error) {
+                console.error("error in ForecastSubmission.js > handleForecastSubmit")
+                console.error(error);
+            };
         };
     };
     

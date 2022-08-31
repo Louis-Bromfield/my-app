@@ -151,26 +151,32 @@ console.log("Profile.js UE");
     };
 
     const changePassword = async (newPW) => {
-        try {
-            if (newPW.length < 4) {
-                setPasswordChangeMsg("Your username and password must be at least 5 characters and contain no spaces.");
-                return;
-            } else if (/\s/.test(newPW)) {
-                setPasswordChangeMsg("Your username and password must be at least 5 characters and contain no spaces.");
-                return;
-            } else {
-                console.log(newPW);
-                const newDoc = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newPW/${props.username}`, { password: newPW });
-                console.log(newDoc);
-                if (newDoc) {
-                    setPasswordChangeMsg("Password succesfully changed.");
+        if (props.username === "Guest") {
+            setShowModal(true);
+            setModalContent("You must be logged into your own account to change your password.");
+            return;
+        } else {
+            try {
+                if (newPW.length < 4) {
+                    setPasswordChangeMsg("Your username and password must be at least 5 characters and contain no spaces.");
+                    return;
+                } else if (/\s/.test(newPW)) {
+                    setPasswordChangeMsg("Your username and password must be at least 5 characters and contain no spaces.");
+                    return;
                 } else {
-                    setPasswordChangeMsg("There was an error, please try again later.");
-                };
-            }
-        } catch (error) {
-            console.error(error);
-            console.error("Error in change PW");
+                    console.log(newPW);
+                    const newDoc = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newPW/${props.username}`, { password: newPW });
+                    console.log(newDoc);
+                    if (newDoc) {
+                        setPasswordChangeMsg("Password succesfully changed.");
+                    } else {
+                        setPasswordChangeMsg("There was an error, please try again later.");
+                    };
+                }
+            } catch (error) {
+                console.error(error);
+                console.error("Error in change PW");
+            };
         };
     };
     

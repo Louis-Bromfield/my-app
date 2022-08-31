@@ -1,24 +1,33 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './TopicQuiz.css';
+import Modal from '../../../components/Modal';
 
 function TopicQuiz(props) {
     const [quizMessage, setQuizMessage] = useState("");
     // const [selectedAnswers, setSelectedAnswers] = useState([]);
     const [showSubmit, setShowSubmit] = useState(false);
     const [selectedAnswersForMarking, setSelectedAnswersForMarking] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState("");
     let selectedAnswers = [];
 
     const verifyAndSubmit = async (username) => {
-        // persistQuizCompletionToDBAndUpdateOnboarding(username, props.topic);
-        const correctAnswers = checkAnswers();
-        props.updateQuizResults(correctAnswers);
-        if (correctAnswers !== "FAIL") {
-            await persistQuizCompletionToDBAndUpdateOnboarding(username, props.topic);
-            props.changeLearnPage("loading", props.topic)
-            setTimeout(() => {
-                props.changeLearnPage("results", props.topic);
-            }, 2500);
+        if (username === "Guest") {
+            setShowModal(true);
+            setModalContent("You must be logged into your own account to submit a quiz response.");
+            return;
+        } else {
+            // persistQuizCompletionToDBAndUpdateOnboarding(username, props.topic);
+            const correctAnswers = checkAnswers();
+            props.updateQuizResults(correctAnswers);
+            if (correctAnswers !== "FAIL") {
+                await persistQuizCompletionToDBAndUpdateOnboarding(username, props.topic);
+                props.changeLearnPage("loading", props.topic)
+                setTimeout(() => {
+                    props.changeLearnPage("results", props.topic);
+                }, 2500);
+            };
         };
     };
 
@@ -180,6 +189,9 @@ function TopicQuiz(props) {
 
     return (
         <div className="topic-quiz">
+            <Modal show={showModal} handleClose={() => setShowModal(false)}>
+                <p>{modalContent}</p>
+            </Modal>
             <h1 className="topic-title">{props.topic}</h1>
             {props.quizQuestions.map((item, index) => {
                 selectedAnswers[index] = [];

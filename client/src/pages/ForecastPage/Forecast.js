@@ -66,6 +66,19 @@ function Forecast(props) {
         console.log("Forecast.js UE")
     }, [refresh, forecast, leaderboardData]);
 
+    const testNotification = async () => {
+        try {
+            const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/"LouisB"`, {
+                notificationMessage: "This is a new notification!",
+                notificationSourcePath: "/forecast",
+                notificationSourceObjectID: "62a8f6dc2ad128ed5f3f951e"
+            });
+            console.log(res);
+        } catch (err) {
+            console.error(err);
+        };
+    };
+
     return (
         <div className="forecast">
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
@@ -86,6 +99,7 @@ function Forecast(props) {
                     setShowModal(true);
                     setModalContent("This is where you manage all of your forecasts. Select a problem from the dropdown menu below and submit new forecasts or update previous ones. A chart will show the forecasts submitted by all other users who have attempted this problem, and relevant statistics and articles will be available to assist you, as well as a comment section for you to discuss with other forecasters.")
                     setModalContent2("");
+                    testNotification();
                 }}>
                     <h3>What do I do on this page?</h3>
                 </div>

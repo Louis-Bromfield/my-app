@@ -27,35 +27,49 @@ function ForecastAnalysisPage(props) {
 
     useEffect(() => {
         async function doUE() {
-            console.log("ForecastAnalysisPage UE");
-            let forecastInfo = {
-                submittedForecasts: ["empty"],
-                singleCertainty: false,
-                startDate: "",
-                closeDate: ""
-            };
-            if (props.location.needLocalStorage !== false || props.location === undefined) {
-                forecastInfo = await retrieveForecastInfo(localStorage.getItem("selectedForecastID"));
-                setForecastObj(forecastInfo);
-            } else {
-                forecastInfo.singleCertainty = props.location.forecastObj.singleCertainty;
-                forecastInfo.startDate = props.location.forecastObj.startDate;
-                forecastInfo.closeDate = props.location.forecastObj.closeDate;
-            }
-            const submittedForecasts = props.location.forecastObj === undefined ? forecastInfo.submittedForecasts : props.location.forecastObj.submittedForecasts;
-            const forecastObj = submittedForecasts[submittedForecasts.findIndex(sF => sF.username === props.username)];
-            if (forecastObj.forecasts.length > 0) {
+            if (props.username === "Guest") {
                 setAtLeastOneForecast(true);
-                setNumberOfForecastsSubmitted(forecastObj.forecasts.length);
-                calculateConfidenceScore(forecastObj, props.username, forecastInfo.singleCertainty);
-                calculateTimelinessScore(forecastObj, props.username, forecastInfo.startDate, forecastInfo.closeDate);
-                if (forecastObj.forecasts.length > 1) {
-                    calculateReactivenessScore(forecastObj, props.username, forecastInfo.singleCertainty);
-                } else {
-                    setReactivenessScore("N/A");
-                }
+                setNumberOfForecastsSubmitted(2);
+                setReactivenessScore(75);
+                setReactivenessScoreForCSS(`${75}%`);
+                setOppositeReactivenessScoreForCSS(`${100-75}%`);
+                setConfidenceScore(63);
+                setConfidenceScoreForCSS(`${63}%`)
+                setOppositeConfidenceScoreForCSS(`${100-63}%`);
+                setTimelinessScore(85);
+                setTimelinessScoreForCSS(`${85}%`);
+                setOppositeTimelinessScoreForCSS(`${100-85}%`);
             } else {
-                setAtLeastOneForecast(false);
+                console.log("ForecastAnalysisPage UE");
+                let forecastInfo = {
+                    submittedForecasts: ["empty"],
+                    singleCertainty: false,
+                    startDate: "",
+                    closeDate: ""
+                };
+                if (props.location.needLocalStorage !== false || props.location === undefined) {
+                    forecastInfo = await retrieveForecastInfo(localStorage.getItem("selectedForecastID"));
+                    setForecastObj(forecastInfo);
+                } else {
+                    forecastInfo.singleCertainty = props.location.forecastObj.singleCertainty;
+                    forecastInfo.startDate = props.location.forecastObj.startDate;
+                    forecastInfo.closeDate = props.location.forecastObj.closeDate;
+                }
+                const submittedForecasts = props.location.forecastObj === undefined ? forecastInfo.submittedForecasts : props.location.forecastObj.submittedForecasts;
+                const forecastObj = submittedForecasts[submittedForecasts.findIndex(sF => sF.username === props.username)];
+                if (forecastObj.forecasts.length > 0) {
+                    setAtLeastOneForecast(true);
+                    setNumberOfForecastsSubmitted(forecastObj.forecasts.length);
+                    calculateConfidenceScore(forecastObj, props.username, forecastInfo.singleCertainty);
+                    calculateTimelinessScore(forecastObj, props.username, forecastInfo.startDate, forecastInfo.closeDate);
+                    if (forecastObj.forecasts.length > 1) {
+                        calculateReactivenessScore(forecastObj, props.username, forecastInfo.singleCertainty);
+                    } else {
+                        setReactivenessScore("N/A");
+                    }
+                } else {
+                    setAtLeastOneForecast(false);
+                };
             };
         };
         doUE();
@@ -156,14 +170,15 @@ function ForecastAnalysisPage(props) {
             <h1 className="forecast-analysis-header">Forecast Analysis</h1>
             <p className="forecast-analysis-para">This page is designed around giving you more detailed feedback on your forecast performance. Your predictions are assessed based on three key metrics - 
                 Reactiveness (how big or small are your forecast updates?), Confidence (how close to 0 or 100 are your forecasts?) and Timeliness (how early was your first forecast submitted?). Under each
-                sub-heading you'll find more information that corresponds to your specific scores in each dimension.
+                sub-heading you'll find more information that corresponds to your specific scores in each dimension.<b> As you are currently logged in as a Guest, the scores below are made up to allow you to see what
+                    information is given to forecasters to help them improve their performance. So long as you are logged in on the Guest account, these scores will be identical no matter what problem you select.</b>
             </p>
             <div className="problem-and-scores-container">
                 {/* Problem name and what user scored */}
                 <div className="problem-container">
                     <h2 className="selected-problem">{props.location.forecastObj === undefined ? forecastObj.problemName : props.location.forecastObj.problemName }</h2>
                     <h3>
-                        You Scored: {Number(localStorage.getItem("closedForecastScore")).toFixed(0)} / 110
+                        You Scored: {props.username === "Guest" ? 104 : Number(localStorage.getItem("closedForecastScore")).toFixed(0)} / 110
                         <FaInfoCircle 
                             onClick={() => {
                                 setShowModal(true);

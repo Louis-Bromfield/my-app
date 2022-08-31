@@ -364,7 +364,28 @@ router.post("/surveyResponse", async (req, res) => {
         console.err(err);
         res.json({ surveySuccess: false });
     };
-})
+});
+
+// Add a notification to the user's notification array
+router.patch("/newNotification/:username", async (req, res) => {
+    try {
+        let user = await Users.findOne({ username: req.params.username });
+        user.notifications.push({
+            notificationMessage: req.body.notificationMessage,
+            date: new Date(),
+            // e.g. if it's someone liking your news feed post, then this will be /news-post
+            // if it's a forecast closing, this will be /forecast
+            notificationSourcePath: req.body.notificationSourcePath,
+            // e.g. if it's someone liking your news feed post, then this will be the OID of that post so that onClick it takes you to the individual news feed post
+            notificationSourceObjectID: req.body.notificationSourceObjectID
+        });
+        await Users.findOneAndUpdate(user._id, { notifications: user.notifications });
+        res.json({message: "success ASDKASDL:AS" })
+    } catch (error) {
+        console.error("Error in patch users > newNotification");
+        console.error(error);
+    };
+});
 
 // Picture upload
 router.patch("/imageAPI/:username", parser.single("image"), async (req, res) => {

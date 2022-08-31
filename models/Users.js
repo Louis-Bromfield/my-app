@@ -133,6 +133,9 @@ const UserSchema = mongoose.Schema({
     },
     completedSurvey: {
         type: Boolean
+    },
+    notifications: {
+        type: Array
     }
 });
 

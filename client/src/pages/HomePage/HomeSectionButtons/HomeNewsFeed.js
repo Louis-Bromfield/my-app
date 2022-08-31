@@ -105,11 +105,17 @@ function HomeNewsFeed(props) {
     };
 
     const openPostSubmission = () => {
-        setPost(true);
-        setEditingPost(false);
-        setNewPostURL("");
-        setNewPostDescription("");
-    }
+        if (props.username === "Guest") {
+            setShowModal(true);
+            setModalContent("You must be logged into your own account to post to the feed.");
+            return;
+        } else {
+            setPost(true);
+            setEditingPost(false);
+            setNewPostURL("");
+            setNewPostDescription("");
+        };
+    };
 
     const handlePostURLChange = async (e, changeFromState) => {
         console.log(e.target.value);

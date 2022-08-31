@@ -38,6 +38,7 @@ function ForecastBreakdown(props) {
             if (forecastClosed === true) {
                 const userForecastsDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${selectedForecast}/${true}/${username}/${singleCertainty}`);
                 console.log(userForecastsDocument.data)
+                console.log(userForecastsDocument.data);
                 setPredictionData(userForecastsDocument.data);
                 calculateTScore(userForecastsDocument.data);
             } else if (forecastClosed === false) {
@@ -139,11 +140,13 @@ function ForecastBreakdown(props) {
         <div className="predictions-container">
             {showBreakdown === false && 
                 <div className="show-prediction-breakdown-buttons">
-                    <button 
-                        className="show-btn" 
-                        onClick={() => setShowBreakdown(!showBreakdown)}>
-                            Show Prediction Breakdown
-                    </button>
+                    {props.username !== "Guest" &&
+                        <button 
+                            className="show-btn" 
+                            onClick={() => setShowBreakdown(!showBreakdown)}>
+                                Show Prediction Breakdown
+                        </button>
+                    }
                     {forecastClosed === true &&
                         <Link  
                             className="go-to-analysis-page-btn" 

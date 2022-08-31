@@ -59,19 +59,22 @@ function Login(props) {
         };
     };
 
-    const loginFromLogin = async (username, passwordOrResetCode, isPassword) => {
+    const loginFromLogin = async (username, passwordOrResetCode, isPassword, isGuest) => {
         try {
             let userObj;
-            console.log(username);
-            console.log(passwordOrResetCode);
-            console.log(isPassword);
-
-            if (isPassword === true) {
-                // userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/${passwordOrResetCode}/${true}`);
+            if (isGuest === true) {
                 userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/${username}/${passwordOrResetCode}/${true}`);
-            } else if (isPassword === false) {
-                // userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/${passwordOrResetCode}/${false}`);
-                userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/${username}/${passwordOrResetCode}/${false}`);
+            } else if (isGuest === false) {
+                // console.log(username);
+                // console.log(passwordOrResetCode);
+                // console.log(isPassword);
+                if (isPassword === true) {
+                    // userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/${passwordOrResetCode}/${true}`);
+                    userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/${username}/${passwordOrResetCode}/${true}`);
+                } else if (isPassword === false) {
+                    // userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/${passwordOrResetCode}/${false}`);
+                    userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/${username}/${passwordOrResetCode}/${false}`);
+                };
             };
             console.log(userObj);
             if (userObj.data.loginSuccess === false) {
@@ -190,7 +193,13 @@ function Login(props) {
                     }
                     {errorMessageForAccountCreation}
                 </div>
-                <div className="survey-explanation-div">
+                <div className="signup-div">
+                    <h2>Don't want to create an account?</h2>
+                    <button className="login-btn" onClick={() => loginFromLogin("Guest", "guestAccount123", true, true)}>
+                        Enter Without Logging In
+                    </button>
+                </div>
+                {/* <div className="survey-explanation-div">
                     <h2 style={{ color: "orange" }}><u>What's involved?</u></h2>
                     <p>Fantasy Forecast is a website dedicated to crowdsourcing political forecasts. Over the next 6 weeks, we will provide you with a variety of UK Politics-related things to forecast, from whether Boris Johnson will resign, to poll outcomes, to whether or not a general election will be called. When a forecast reaches its deadline, you will recieve a score based on how accurate and how early your forecasts were. This will determine your place on the leaderboards. It's all free-to-play to whoever signs up, no restrictions. If you sign up and change your mind, email us at <b style={{ color: "orange" }}>fantasyforecastcontact@gmail.com</b> and we will delete your account, no questions asked.</p>
                     <br />
@@ -208,7 +217,7 @@ function Login(props) {
                     <p>Anyone can enter, however to be eligible for the prizes you <strong><u style={{ color: "orange" }}>must</u></strong> complete a survey before <u style={{ color: "orange" }}>11:59pm (BST) on Friday 1st July</u> which is available after you login from the "Survey" tab at the top of the screen. It looks at the relationship between political knowledge and forecasting accuracy.</p>
                     <br />
                     <p>You can still fully participate in the tournament without completing the survey, <u style={{ color: "orange" }}>but only those who complete the survey will be eligible for prizes</u>.</p>
-                </div>
+                </div> */}
             </div>
             <div className="login-div">
                 <h2>Already have an account? Login here:</h2>
@@ -236,7 +245,7 @@ function Login(props) {
                             setPasswordForLogin(e.target.value);
                         }}
                     />
-                <button className="login-btn" onClick={() => loginFromLogin(usernameForLogin, passwordForLogin, true)}>Login to Fantasy Forecast</button>
+                <button className="login-btn" onClick={() => loginFromLogin(usernameForLogin, passwordForLogin, true, false)}>Login to Fantasy Forecast</button>
                 {errorMessage}
             </div>
             {/* <div className="login-div">

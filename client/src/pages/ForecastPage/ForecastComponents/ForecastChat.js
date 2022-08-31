@@ -52,7 +52,54 @@ function ForecastChat(props) {
 
     // CHARMANDER
     const submitNewComment = async (comment) => {
-        try {
+        if (props.username === "Guest") {
+            setShowModal(true);
+            setModalContent("You must be logged into your own account to post a comment here.");
+            return;
+        } else {
+            try {
+                if (comment === "" || (/\s/.test(comment))) {
+                    return;
+                };
+                const commentToRender = {
+                    comment: comment,
+                    author: props.username,
+                    date: new Date().toString(),
+                    replies: [],
+                };
+                setNewCommentStatus(true);
+                setNewCommentToRender(commentToRender);
+                console.log(newCommentStatus);
+                const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/addNewComment`, {
+                    problemName: props.forecast.problemName,
+                    isFirstComment: true,
+                    author: props.username,
+                    comment: comment
+                });
+                // const commentToRender = {
+                //     comment: comment,
+                //     author: props.username,
+                //     date: new Date().toString(),
+                //     replies: [],
+                // };
+                // setNewCommentStatus(true);
+                // setNewCommentToRender(commentToRender);
+                // console.log(newCommentStatus);
+                console.log(res);
+            } catch (err) {
+                console.error(err);
+            };
+        };
+    };
+
+    const submitNewReply = async (comment, commentYouAreRespondingTo, commentIndex) => {
+        if (props.username === "Guest") {
+            setShowModal(true);
+            setModalContent("You must be logged into your own account to reply to this comment.");
+            return;
+        } else {
+            console.log(comment);
+            console.log(commentYouAreRespondingTo);
             if (comment === "" || (/\s/.test(comment))) {
                 return;
             };
@@ -62,62 +109,27 @@ function ForecastChat(props) {
                 date: new Date().toString(),
                 replies: [],
             };
-            setNewCommentStatus(true);
-            setNewCommentToRender(commentToRender);
+            setNewReplyCommentStatus(true);
+            setIDForCommentToReplyTo(commentIndex);
+            setNewReplyCommentToRender(commentToRender);
             console.log(newCommentStatus);
-            const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/addNewComment`, {
-                problemName: props.forecast.problemName,
-                isFirstComment: true,
-                author: props.username,
-                comment: comment
-            });
-            // const commentToRender = {
-            //     comment: comment,
-            //     author: props.username,
-            //     date: new Date().toString(),
-            //     replies: [],
-            // };
-            // setNewCommentStatus(true);
-            // setNewCommentToRender(commentToRender);
-            // console.log(newCommentStatus);
-            console.log(res);
-        } catch (err) {
-            console.error(err);
+            try {
+                const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/addNewComment`, {
+                    problemName: props.forecast.problemName,
+                    isFirstComment: false,
+                    author: props.username,
+                    comment: comment,
+                    commentToReplyTo: commentYouAreRespondingTo.comment
+                });
+                console.log(res);
+            } catch (err) {
+                console.error(err);
+            };
+            // Maybe add a reply button next to every comment
+            // and then when you click it a comment field identicial to the 
+            // current one appears but instead of "Post Comment" on the submit
+            // button it says "Reply to LouisB" or "Reply to MattW" etc
         };
-    };
-
-    const submitNewReply = async (comment, commentYouAreRespondingTo, commentIndex) => {
-        console.log(comment);
-        console.log(commentYouAreRespondingTo);
-        if (comment === "" || (/\s/.test(comment))) {
-            return;
-        };
-        const commentToRender = {
-            comment: comment,
-            author: props.username,
-            date: new Date().toString(),
-            replies: [],
-        };
-        setNewReplyCommentStatus(true);
-        setIDForCommentToReplyTo(commentIndex);
-        setNewReplyCommentToRender(commentToRender);
-        console.log(newCommentStatus);
-        try {
-            const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/addNewComment`, {
-                problemName: props.forecast.problemName,
-                isFirstComment: false,
-                author: props.username,
-                comment: comment,
-                commentToReplyTo: commentYouAreRespondingTo.comment
-            });
-            console.log(res);
-        } catch (err) {
-            console.error(err);
-        };
-        // Maybe add a reply button next to every comment
-        // and then when you click it a comment field identicial to the 
-        // current one appears but instead of "Post Comment" on the submit
-        // button it says "Reply to LouisB" or "Reply to MattW" etc
     };
     // CHARMANDER
 

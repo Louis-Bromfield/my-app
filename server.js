@@ -105,6 +105,9 @@ const UserSchema = mongoose.Schema({
     completedSurvey: {
         type: Boolean,
         default: false
+    },
+    notifications: {
+        type: Array
     }
 });
 

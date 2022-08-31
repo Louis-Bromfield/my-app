@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import './ForecastProblemLineChart.css';
-import { FaInfoCircle } from 'react-icons/fa';
+// import { FaInfoCircle } from 'react-icons/fa';
 import Modal from '../../../components/Modal';
 
 function ForecastProblemLineChart(props) {
@@ -21,10 +21,11 @@ function ForecastProblemLineChart(props) {
   const [userOutcomeThreeChartData, setUserOutcomeThreeChartData] = useState([]);      
   const [allChartData, setAllChartData] = useState([]);
   const [simulatedUserData, setSimulatedUserData] = useState([]);
+//   const [hasLoadedAlready, setHasLoadedAlready] = useState(1000);
 
   useEffect(() => {
     console.log(props);
-    console.log()
+    // console.log("")
     if (props.selectedForecastObject === {} || props.forecastSingleCertainty === undefined) {
         return;
     } else {
@@ -34,6 +35,7 @@ function ForecastProblemLineChart(props) {
     // console.log(props.selectedForecast);
     // console.log("==================");
     console.log("Line Chart UE");
+    // setHasLoadedAlready(0);
   }, [props.selectedForecastObject, props.refresh]);
 
   const formatCertainties = (selectedForecastObject, updateTodayStats, username) => {
@@ -771,6 +773,9 @@ function ForecastProblemLineChart(props) {
     const options = {
         responsive: true,
         maintainAspectRatio: false,
+        animation: {
+            duration: 0
+        },
         scales: {
             y: {
                 beginAtZero: true,
@@ -823,7 +828,12 @@ function ForecastProblemLineChart(props) {
             </h2> */}
             {/* Copy this and make one just for mobile (like if width) */}
             <div className="chart-container" style={{ position: "relative", margin: "auto", width: "100%", height: "60vh" }}>
-                <Line data={props.forecastSingleCertainty === true ? data : multiOutcomeData} options={options} height={"100%"}/>
+                <Line 
+                    data={props.forecastSingleCertainty === true ? data : multiOutcomeData} 
+                    options={options} 
+                    height={"100%"} 
+                    // onLoad={() => setHasLoadedAlready(0)}
+                />
             </div>
         </div>
     )
