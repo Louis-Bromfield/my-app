@@ -237,7 +237,7 @@ function Navbar(props) {
                                         {showNotifications === true && 
                                         <div className="notification-dropdown">
                                             {/* each item to be message above date in left column, and right column to be an arrow icon pointing right */}
-                                            {props.userObj.notifications !== undefined ? props.userObj.notifications.reverse().map((item, index) => {
+                                            {props.userObj.notifications !== undefined ? props.userObj.notifications.map((item, index) => {
                                                 return (
                                                     <div className="notification-item" onClick={() => handleNotificationSelection(item)}>
                                                         <div className="notification-item-info">
