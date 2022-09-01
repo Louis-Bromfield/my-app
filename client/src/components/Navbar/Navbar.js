@@ -57,19 +57,25 @@ function Navbar(props) {
         logout();
     };
 
-    // copy-paste this into Notifications.js when updated
+    /// copy-paste this into Notifications.js when updated
     const handleNotificationSelection = (notification) => {
         // if it's problem related, go to forecasts page. Ideal would be it auto-selects from the dropdown for you
         if (notification.notificationSourcePath === "/forecast") {
+            localStorage.setItem("selectedForecastID", notification.notificationSourceObjectID);
+            localStorage.setItem("forecastSelectedFromNotifications", true);
+            setShowNotifications(false);
             history.push("/forecast");
             return;
         // if it's post related, go to home page. Ideal would be it goes to individual news feed page with post already loaded
         } else if (notification.notificationSourcePath === "/news-post") {
-            history.push("/home"); //replace this with news-post, not /home
+            localStorage.setItem("postID", notification.notificationSourceObjectID);
+            history.push("/news-post"); //replace this with news-post, not /home
+            setShowNotifications(false);
             return;
         // if it's response to feedback, go to feedback page
         } else if (notification.notificationSourcePath === "/report-any-issues") {
             history.push("/report-any-issues");
+            setShowNotifications(false);
             return;
         };
     };
@@ -96,7 +102,7 @@ function Navbar(props) {
                                     <li 
                                         key={index} 
                                         className="mobile-nav-text-selected"
-                                        onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title)}}>
+                                        onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title); setShowNotifications(false)}}>
                                             <Link to={item.path}>
                                                 {item.iconSelected}
                                                 <span className="mobile-nav-title">{item.title}</span>
@@ -108,7 +114,7 @@ function Navbar(props) {
                                     <li 
                                         key={index} 
                                         className="mobile-nav-text"
-                                        onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title)}}>
+                                        onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title); setShowNotifications(false)}}>
                                             <Link to={item.path}>
                                                 {item.icon}
                                                 <span className="mobile-nav-title">{item.title}</span>
@@ -149,7 +155,7 @@ function Navbar(props) {
                                                                 <li 
                                                                 key={index} 
                                                                 className="nav-text-selected" 
-                                                                onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title)}}>
+                                                                onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title); setShowNotifications(false)}}>
                                                                     <Link to={item.path}>
                                                                         {item.iconSelected}
                                                                     </Link>
@@ -160,7 +166,7 @@ function Navbar(props) {
                                                                 <li 
                                                                 key={index} 
                                                                 className="nav-text" 
-                                                                onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title)}}>
+                                                                onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title); setShowNotifications(false)}}>
                                                                     <Link to={item.path}>
                                                                         {item.icon}
                                                                     </Link>
@@ -180,7 +186,7 @@ function Navbar(props) {
                                                                 <li 
                                                                     key={index} 
                                                                     className="nav-text-selected" 
-                                                                    onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title)}}>
+                                                                    onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title); setShowNotifications(false)}}>
                                                                     <Link to={item.path}>
                                                                         {item.iconSelected}
                                                                         <span className="nav-title">{item.title}</span>
@@ -192,7 +198,7 @@ function Navbar(props) {
                                                                 <li 
                                                                     key={index} 
                                                                     className="nav-text" 
-                                                                    onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title)}}>
+                                                                    onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title); setShowNotifications(false)}}>
                                                                     <Link to={item.path}>
                                                                         {item.icon}
                                                                         <span className="nav-title">{item.title}</span>

@@ -310,11 +310,13 @@ function HomeNewsFeed(props) {
             } else if (vote === "downvote") {
                 await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/vote/${postID}`, { vote: "downvote", username: props.username })
             }
-            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${postAuthor}`, {
-                notificationMessage: `${props.username === undefined ? "Someone" : props.username} just voted on your news feed post!`,
-                notificationSourcePath: "/news-post",
-                notificationSourceObjectID: postID
-            });
+            if (props.username !== postAuthor) {
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${postAuthor}`, {
+                    notificationMessage: `${props.username === undefined ? "Someone" : props.username} just voted on your news feed post!`,
+                    notificationSourcePath: "/news-post",
+                    notificationSourceObjectID: postID
+                });
+            };
             setCauseFeedNewsFeedRefreshWithoutAnimation(true);
         } catch (error) {
             console.error(error);

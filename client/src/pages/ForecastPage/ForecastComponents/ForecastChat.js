@@ -12,7 +12,7 @@ function ForecastChat(props) {
     const [replyComment, setReplyComment] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
-    const [newCommentToRender, setNewCommentToRender] = useState();
+    const [newCommentToRender, setNewCommentToRender] = useState({});
     const [newCommentStatus, setNewCommentStatus] = useState(false);
     const [newReplyCommentToRender, setNewReplyCommentToRender] = useState();
     const [newReplyCommentStatus, setNewReplyCommentStatus] = useState(false);
@@ -21,7 +21,7 @@ function ForecastChat(props) {
     useEffect(() => {
         console.log("ForecastChat UE");
         console.log(props);
-    }, []);
+    }, [props]);
 
     const findLastCertainty = (userToFind) => {
         let found = false;
@@ -122,11 +122,13 @@ function ForecastChat(props) {
                     commentToReplyTo: commentYouAreRespondingTo.comment
                 });
                 console.log(res);
-                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${commentYouAreRespondingTo.author}`, {
-                    notificationMessage: `${props.username === undefined ? "Someone" : props.username} just replied to your comment!`,
-                    notificationSourcePath: "/forecasts",
-                    notificationSourceObjectID: props.forecast._id,
-                });
+                if (props.username !== commentYouAreRespondingTo.author) {
+                    await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${commentYouAreRespondingTo.author}`, {
+                        notificationMessage: `${props.username === undefined ? "Someone" : props.username} just replied to your comment!`,
+                        notificationSourcePath: "/forecasts",
+                        notificationSourceObjectID: props.forecast._id,
+                    });
+                };
             } catch (err) {
                 console.error(err);
             };
@@ -171,7 +173,7 @@ function ForecastChat(props) {
                 <div className="chat">
                     {newCommentStatus === true &&
                         // <h3>HAHAHHAAHAHHA</h3>
-                        <div key={newCommentToRender.comment} className="chat-item">
+                        <div className="chat-item">
                             <h4>
                                 <Link 
                                     to={newCommentToRender.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: newCommentToRender.author}}
@@ -180,7 +182,7 @@ function ForecastChat(props) {
                                         {newCommentToRender.author} ({findLastCertainty(newCommentToRender.author)}%)
                                 </Link> | {newCommentToRender.date !== undefined ? newCommentToRender.date.slice(0, 21) : newCommentToRender.date}</h4>
                             <p>{newCommentToRender.comment}</p>
-                            {newCommentToRender.replies.map((newItem, newIndex) => {
+                            {/* {newCommentToRender !== {} ? newCommentToRender.replies.map((newItem, newIndex) => {
                                 if (newCommentToRender.replies.length > 0) {
                                     return (
                                         <li key={newItem} className="reply-chat-item">
@@ -195,7 +197,7 @@ function ForecastChat(props) {
                                         </li>
                                     )
                                 } else return null;
-                            })}
+                            }) : null} */}
                             {/* <div className="sub-comment-submit-field">
                                 <input 
                                     type="text" 
@@ -210,7 +212,7 @@ function ForecastChat(props) {
                             </div> */}
                         </div>
                     }
-                    {props.forecast.chat.map((item, index) => {
+                    {props.forecast.chat !== undefined ? props.forecast.chat.map((item, index) => {
                         return (
                             <div key={item} className="chat-item">
                                 <h4>
@@ -270,7 +272,7 @@ function ForecastChat(props) {
                                 </div>
                             </div>
                         )
-                    })}
+                    }) : null}
                 </div>
             </div>
         </div>

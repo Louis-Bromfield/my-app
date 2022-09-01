@@ -9,14 +9,18 @@ function Notifications(props) {
         console.log(props);
     }, []);
 
+    // copy-paste this into Notifications.js when updated
     const handleNotificationSelection = (notification) => {
         // if it's problem related, go to forecasts page. Ideal would be it auto-selects from the dropdown for you
         if (notification.notificationSourcePath === "/forecast") {
+            localStorage.setItem("selectedForecastID", notification.notificationSourceObjectID);
+            localStorage.setItem("forecastSelectedFromNotifications", true);
             history.push("/forecast");
             return;
         // if it's post related, go to home page. Ideal would be it goes to individual news feed page with post already loaded
         } else if (notification.notificationSourcePath === "/news-post") {
-            history.push("/home"); //replace this with news-post and get it to auto-load the post, not /home
+            localStorage.setItem("postID", notification.notificationSourceObjectID);
+            history.push("/news-post"); //replace this with news-post, not /home
             return;
         // if it's response to feedback, go to feedback page
         } else if (notification.notificationSourcePath === "/report-any-issues") {

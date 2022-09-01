@@ -52,6 +52,7 @@ function ForecastSubmission(props) {
     const [switcherTab, setSwitcherTab] = useState("chart");
     const [todayAverage, setTodayAverage] = useState("");
     const [todayForecastCount, setTodayForecastCount] = useState("");
+    const [forecastFoundFromNotifications, setForecastFoundFromNotifications] = useState(false);
 
     const updateTodayStats = (avg, fc) => {
         setTodayAverage(avg);
@@ -84,7 +85,30 @@ function ForecastSubmission(props) {
         //     pullForecastDetailsAndCheckIfAlreadyAttempted(props.selectedForecast);
         // }
         // console.log("+++++++++++++++++++++++");
+
+
+
+        // if (localStorage.getItem("forecastSelectedFromNotifications") === "true") {
+        //     console.log("yes - we are here");
+        //     // autoSelectForecast()
+        //     console.log(forecastProblems);
+        //     for (let i = 0; i < forecastProblems.length; i++) {
+        //         console.log(forecastProblems[i]);
+        //         if (forecastProblems[i]._id === localStorage.getItem("selectedForecastID")) {
+        //             console.log("Found!");
+        //             handleChange(forecastProblems[i].problemName);
+        //             setSelectedForecast(forecastProblems[i].problemName);
+        //             setForecastFoundFromNotifications(true);
+        //         };
+        //     };
+        //     localStorage.setItem("forecastSelectedFromNotifications", false);
+        // };
+
+
+
     }, [props.selectedForecast, props.markets, props.allForecasts, props.userObject]);
+
+    // const autoSelectForecast = 
 
     const getAllForecastsFromDB = async (userMarkets) => {
         try {
@@ -135,8 +159,41 @@ function ForecastSubmission(props) {
             } else {
                 setMarketWarning(false);
             };
+            console.log(filtered);
             setForecastProblems(filtered);
             setForecastProblemsForDropdown(filteredAndOrganised);
+
+            // let forecastListForAutoPull = filtered;
+
+            if (localStorage.getItem("forecastSelectedFromNotifications") === "true") {
+                console.log("yes - we are here");
+                // autoSelectForecast()
+                console.log(filtered);
+                for (let i = 0; i < filtered.length; i++) {
+                    console.log(filtered[i]._id);
+                    console.log(localStorage.getItem("selectedForecastID"));
+                    if (filtered[i]._id === localStorage.getItem("selectedForecastID")) {
+                        console.log("Found!");
+                        // handleChange(filtered[i].problemName);
+                        props.toggleDiv(true);
+                        setHasAForecastBeenSelected(true);
+                        props.handleForecastSet(true);
+                        setSelectedForecast(filtered[i].problemName);
+                        pullForecastDetailsAndCheckIfAlreadyAttempted(filtered[i].problemName, true, filtered);
+                        setIsInputDisabled(false);
+                        getForecastDetails(filtered[i].problemName, true, filtered);
+                        setForecastResponseMessage("");
+                        setCertainty(0);
+                        setCertaintyOne(0);
+                        setCertaintyTwo(0);
+                        setCertaintyThree(0);
+                        setForecastComments("");
+                        setForecastFoundFromNotifications(true);
+                        localStorage.setItem("forecastSelectedFromNotifications", false);
+                        continue;
+                    };
+                };
+            };
         } catch (error) {
             console.error(error);
         };
@@ -168,7 +225,8 @@ function ForecastSubmission(props) {
 
     // When a forecast problem is selected from the dropdown
     const handleChange = (e) => {
-        if (e.target.value === "All currently open forecasts are available here...") {
+        console.log(e);
+        if (e === "All currently open forecasts are available here...") {
             props.toggleDiv(false);
             setHasAForecastBeenSelected(false);
             props.handleForecastSet(false);
@@ -182,10 +240,10 @@ function ForecastSubmission(props) {
             props.toggleDiv(true);
             setHasAForecastBeenSelected(true);
             props.handleForecastSet(true);
-            setSelectedForecast(e.target.value);
-            pullForecastDetailsAndCheckIfAlreadyAttempted(e.target.value);
+            setSelectedForecast(e);
+            pullForecastDetailsAndCheckIfAlreadyAttempted(e, false);
             setIsInputDisabled(false);
-            getForecastDetails(e.target.value);
+            getForecastDetails(e, false);
             setForecastResponseMessage("");
             setCertainty(0);
             setCertaintyOne(0);
@@ -195,8 +253,22 @@ function ForecastSubmission(props) {
         };
     };
 
-    const getForecastDetails = (etv) => {
-        const forecast = forecastProblems[forecastProblems.findIndex(fP => fP.problemName === etv)];
+    const getForecastDetails = (etv, fromNotifications, filtered) => {
+console.log(etv);
+// for some reason forecastProblems is an empty array
+console.log(forecastProblems);
+        let forecast; 
+        if (fromNotifications === true) {
+            console.log("here true");
+            console.log(filtered);
+            forecast = filtered[filtered.findIndex(f => f.problemName === etv)];
+            console.log(forecast);
+        } else {
+            console.log("here false");
+            forecast = forecastProblems[forecastProblems.findIndex(fP => fP.problemName === etv)];
+            console.log(forecast);
+        }
+console.log(forecast);
         setForecastObjForAnalysis(forecast);
         localStorage.setItem("selectedForecastID", forecast._id);
         if (new Date(forecast.closeDate) < new Date()) {
@@ -300,24 +372,30 @@ function ForecastSubmission(props) {
     };
 
     // Nested loop - clean this up if you can. Over half the lines are state setting but could be moved to backend?
-    const pullForecastDetailsAndCheckIfAlreadyAttempted = (forecast) => {
+    const pullForecastDetailsAndCheckIfAlreadyAttempted = (forecast, fromNotifications, filtered) => {
         console.log(forecast);
-        for (let i = 0; i < forecastProblems.length; i++) {
-            if (forecastProblems[i].problemName === forecast) {
-                setSelectedForecastMarket(forecastProblems[i].market);
-                setSelectedForecastDocumentID(forecastProblems[i]._id);
-                setSelectedForecastObject(forecastProblems[i]);
-                console.log(forecastProblems[i]);
-                props.changeForecast(forecastProblems[i]);
-                if (forecastProblems[i].singleCertainty === false) {
-                    setForecastPotentialOutcomes(forecastProblems[i].potentialOutcomes);
+        let forecastProbs;
+        if (fromNotifications === true) {
+            forecastProbs = filtered;
+        } else {
+            forecastProbs = forecastProblems;
+        }
+        for (let i = 0; i < forecastProbs.length; i++) {
+            if (forecastProbs[i].problemName === forecast) {
+                setSelectedForecastMarket(forecastProbs[i].market);
+                setSelectedForecastDocumentID(forecastProbs[i]._id);
+                setSelectedForecastObject(forecastProbs[i]);
+                console.log(forecastProbs[i]);
+                props.changeForecast(forecastProbs[i]);
+                if (forecastProbs[i].singleCertainty === false) {
+                    setForecastPotentialOutcomes(forecastProbs[i].potentialOutcomes);
                 };
                 // If only one certainty, this = true. False is multiple certainties are required from user.
-                setForecastSingleCertainty(forecastProblems[i].singleCertainty);
-                props.setForecastSingleCertainty(forecastProblems[i].singleCertainty);
-                setForecastPotentialOutcomes(forecastProblems[i].potentialOutcomes);
+                setForecastSingleCertainty(forecastProbs[i].singleCertainty);
+                props.setForecastSingleCertainty(forecastProbs[i].singleCertainty);
+                setForecastPotentialOutcomes(forecastProbs[i].potentialOutcomes);
                 // If no forecasts have been submitted by anyone at all
-                if (forecastProblems[i].submittedForecasts.length === 0) {
+                if (forecastProbs[i].submittedForecasts.length === 0) {
                     setUserHasAttempted(false);
                     setUserPreviousAttemptCertainty("-");
                     setUserPreviousAttemptComments("No Forecast Submitted");
@@ -328,16 +406,16 @@ function ForecastSubmission(props) {
                     return;
                 } else {
                     // If at least one forecast has been submitted by anyone
-                    for (let j = 0; j < forecastProblems[i].submittedForecasts.length; j++) {
-                        if (forecastProblems[i].submittedForecasts[j].username === props.username) {
+                    for (let j = 0; j < forecastProbs[i].submittedForecasts.length; j++) {
+                        if (forecastProbs[i].submittedForecasts[j].username === props.username) {
                             // You have submitted at least one forecast for this problem
                             setUserHasAttempted(true);
-                            if (forecastProblems[i].singleCertainty === true) {
-                                setUserPreviousAttemptCertainty((forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].certainty*100).toFixed(2));    
-                            } else if (forecastProblems[i].singleCertainty === false) {
-                                setUserPreviousAttemptCertainty(`${(forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].certainties.certainty1*100).toFixed(2)}% / ${(forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].certainties.certainty2*100).toFixed(2)}% / ${(forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].certainties.certainty3*100).toFixed(2)}`);
+                            if (forecastProbs[i].singleCertainty === true) {
+                                setUserPreviousAttemptCertainty((forecastProbs[i].submittedForecasts[j].forecasts[forecastProbs[i].submittedForecasts[j].forecasts.length-1].certainty*100).toFixed(2));    
+                            } else if (forecastProbs[i].singleCertainty === false) {
+                                setUserPreviousAttemptCertainty(`${(forecastProbs[i].submittedForecasts[j].forecasts[forecastProbs[i].submittedForecasts[j].forecasts.length-1].certainties.certainty1*100).toFixed(2)}% / ${(forecastProbs[i].submittedForecasts[j].forecasts[forecastProbs[i].submittedForecasts[j].forecasts.length-1].certainties.certainty2*100).toFixed(2)}% / ${(forecastProbs[i].submittedForecasts[j].forecasts[forecastProbs[i].submittedForecasts[j].forecasts.length-1].certainties.certainty3*100).toFixed(2)}`);
                             }
-                            setUserPreviousAttemptComments(forecastProblems[i].submittedForecasts[j].forecasts[forecastProblems[i].submittedForecasts[j].forecasts.length-1].comments);
+                            setUserPreviousAttemptComments(forecastProbs[i].submittedForecasts[j].forecasts[forecastProbs[i].submittedForecasts[j].forecasts.length-1].comments);
                             return;
                         } else {
                             // You have not attempted this problem yet
@@ -815,8 +893,9 @@ function ForecastSubmission(props) {
                             className="forecast-selection-select"
                             name="forecast-selection" 
                             id="forecast-selection"
-                            defaultValue={selectedForecast}
-                            onChange={handleChange}
+                            // defaultValue={selectedForecast}
+                            value={selectedForecast}
+                            onChange={(e) => handleChange(e.target.value)}
                             style={alertStyle}
                             onClick={() => setDropdownHighlight(false)}>
                                 <option 
