@@ -104,9 +104,44 @@
 .user-logout-container {
     display: grid;
     grid-template-columns: 20% 70%;
+    grid-template-rows: 100% 100%;
+    row-gap: 5vh;
     justify-content: center;
     align-items: center;
     max-height: 6vh;
+}
+
+.notification-dropdown {
+    border: 2px solid #404d72;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 11vh;
+    background-color: #fff;
+    width: 25%;
+    background: #fff;
+    margin-left: -10vw;
+}
+
+.notification-item {
+    display: grid;
+    grid-template-columns: 75% 25%;
+    padding: 1%;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+    border-bottom: 1px solid lightgray;
+}
+
+.notification-item:hover {
+    cursor: pointer;
+    background-color: #404d72;
+    color: #fff;
+}
+
+.notification-item-info {
+    display: flex;
+    flex-direction: column;
 }
 
 .navbar-profile-pic {
@@ -118,6 +153,7 @@
     max-height: 95%;
     /* border: 1px solid white; */
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .user-logout-column-container {

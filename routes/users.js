@@ -370,7 +370,7 @@ router.post("/surveyResponse", async (req, res) => {
 router.patch("/newNotification/:username", async (req, res) => {
     try {
         let user = await Users.findOne({ username: req.params.username });
-        user.notifications.push({
+        user.notifications.unshift({
             notificationMessage: req.body.notificationMessage,
             date: new Date(),
             // e.g. if it's someone liking your news feed post, then this will be /news-post
@@ -379,7 +379,10 @@ router.patch("/newNotification/:username", async (req, res) => {
             // e.g. if it's someone liking your news feed post, then this will be the OID of that post so that onClick it takes you to the individual news feed post
             notificationSourceObjectID: req.body.notificationSourceObjectID
         });
-        await Users.findOneAndUpdate({ username: req.params.username }, { notifications: user.notifications });
+        await Users.findOneAndUpdate({ username: req.params.username }, {
+            notifications: user.notifications,
+            unseenNotificationCount: user.unseenNotificationCount + 1
+        });
         res.json({message: "success ASDKASDL:AS" })
     } catch (error) {
         console.error("Error in patch users > newNotification");

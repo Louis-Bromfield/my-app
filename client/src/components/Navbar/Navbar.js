@@ -7,6 +7,7 @@ import { IconContext } from 'react-icons';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import FantasyForecastLogo from '../../media/sd2.png';
+import { AiOutlineArrowRight } from 'react-icons/ai';
 
 function Navbar(props) {
     const [selectedPage, setSelectedPage] = useState("Home");
@@ -14,6 +15,22 @@ function Navbar(props) {
     const [mobileWidth, setMobileWidth] = useState(window.innerWidth > 650);
     const [sidebar, setSidebar] = useState(false);
     const [profilePicture, setProfilePicture] = useState(props.profilePicture);
+    const [showNotifications, setShowNotifications] = useState(false);
+    const [linkObject, setLinkObject] = useState({
+        pathname: "/notifications",
+        userObj: props.userObj
+    });
+    // dummy data for now:
+    const [nots, setNots] = useState([
+        {
+            notMsg: "Someone liked your news feed post!",
+            date: "Today",
+        },
+        {
+            notMsg: "You have been invited to join The Boys!",
+            date: "Yesterday"
+        }
+    ]);
     const history = useHistory();
 
     const showSidebar = () => setSidebar(!sidebar);
@@ -24,15 +41,37 @@ function Navbar(props) {
     };
 
     useEffect(() => {
+        console.log(props);
         setProfilePicture(props.profilePicture);
         setWidth(window.innerWidth > 1350);
         setMobileWidth(window.innerWidth <= 650);
+        setLinkObject({
+            pathname: "/notifications",
+            userObj: props.userObj
+        })
         window.addEventListener("resize", updateWidth);
         return () => window.addEventListener("resize", updateWidth);
     }, [props.profilePicture]);
 
     const signOut = (logout) => {
         logout();
+    };
+
+    // copy-paste this into Notifications.js when updated
+    const handleNotificationSelection = (notification) => {
+        // if it's problem related, go to forecasts page. Ideal would be it auto-selects from the dropdown for you
+        if (notification.notificationSourcePath === "/forecast") {
+            history.push("/forecast");
+            return;
+        // if it's post related, go to home page. Ideal would be it goes to individual news feed page with post already loaded
+        } else if (notification.notificationSourcePath === "/news-post") {
+            history.push("/home"); //replace this with news-post, not /home
+            return;
+        // if it's response to feedback, go to feedback page
+        } else if (notification.notificationSourcePath === "/report-any-issues") {
+            history.push("/report-any-issues");
+            return;
+        };
     };
 
     return (
@@ -78,6 +117,7 @@ function Navbar(props) {
                                 );
                             };
                     })}
+                    <h4>5</h4>
                     <li>
                         <button 
                             className="mobile-nav-logout-btn" 
@@ -167,7 +207,7 @@ function Navbar(props) {
                                     </div>
                                     <div className="user-logout-container">
                                         {/* <img src={props.profilePicture || localStorage.getItem("profilePicture")} className="navbar-profile-pic" alt="User's profile pic" /> */}
-                                        <img src={profilePicture} className="navbar-profile-pic" alt="User's profile pic" />
+                                        <img src={profilePicture} className="navbar-profile-pic" alt="User's profile pic" onClick={() => setShowNotifications(!showNotifications)}/>
                                         <div className="user-logout-column-container">
                                             <p>
                                                 <Link 
@@ -188,6 +228,29 @@ function Navbar(props) {
                                                     Log Out
                                                 </button>
                                         </div>
+                                        {showNotifications === true && 
+                                        <div className="notification-dropdown">
+                                            {/* each item to be message above date in left column, and right column to be an arrow icon pointing right */}
+                                            {props.userObj.notifications !== undefined ? props.userObj.notifications.reverse().map((item, index) => {
+                                                return (
+                                                    <div className="notification-item" onClick={() => handleNotificationSelection(item)}>
+                                                        <div className="notification-item-info">
+                                                            <p>{item.notificationMessage}</p>
+                                                            <p>{new Date(item.date).toString().slice(0, 21)}</p>
+                                                        </div>
+                                                        <AiOutlineArrowRight color={"#404d72"}/>
+                                                    </div>
+                                                )
+                                            }) : null}
+                                            {/* Might want to replace this div with a Link so we can pass in props like userObj / username to access notifications array */}
+                                            <Link className="notification-item" onClick={() => setShowNotifications(false)} to={linkObject}>
+                                                <div className="notification-item-info">
+                                                    <p><b>See all notifications</b></p>
+                                                </div>
+                                                <AiOutlineArrowRight color={"#404d72"}/>
+                                            </Link>
+                                        </div>
+                                        }
                                     </div>
                                 </div>
                             </div>

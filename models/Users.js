@@ -136,6 +136,10 @@ const UserSchema = mongoose.Schema({
     },
     notifications: {
         type: Array
+    },
+    unseenNotificationCount: {
+        type: Number,
+        default: 0
     }
 });
 

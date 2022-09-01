@@ -18,6 +18,7 @@ import Login from './pages/LoginPage/Login';
 import LoginSuccess from './pages/LoginSuccessPage/LoginSuccess';
 import HelpOurResearch from './pages/HelpOurResearchPage/HelpOurResearch';
 import ReportAnyIssues from './pages/ReportAnyIssuesPage/ReportAnyIssues';
+import Notifications from './pages/NotificationsPage/Notifications';
 import { useCookies } from 'react-cookie';
 
 function App() {
@@ -167,7 +168,7 @@ function App() {
       {isLoggedIn === true &&
         <Router>
           <ScrollToTop /> 
-          <Navbar logOut={logOut} username={username} profilePicture={profilePicture} />
+          <Navbar logOut={logOut} username={username} profilePicture={profilePicture} userObj={userObject} />
           <Switch>
             {/* <Route exact path='/' component={Home} /> */}
             {/* <Route path='/forecast' component={Forecast} /> */}
@@ -222,6 +223,7 @@ function App() {
             {/* <Route path='/my-profile' render={(props) => <Profile {...props} user={userObject} username={username} name={name} updateUsername={updateUsername} profilePicture={profilePicture}/>} /> */}
             <Route path='/my-profile' render={(props) => <Profile {...props} user={userObject} username={username} name={name} profilePicture={profilePicture}/>} />
             <Route path='/report-any-issues' render={(props) => <ReportAnyIssues {...props} />} />
+            <Route path='/notifications' render={(props) => <Notifications {...props} />} />
           </Switch>
         </Router>
       }
@@ -273,6 +275,10 @@ function App() {
                 {localStorage.setItem("selectedPage", "Home")}
             </Route>
             <Route exact path="/report-any-issues">
+                <Redirect to="/"></Redirect>
+                {localStorage.setItem("selectedPage", "Home")}
+            </Route>
+            <Route exact path="/notifications">
                 <Redirect to="/"></Redirect>
                 {localStorage.setItem("selectedPage", "Home")}
             </Route>

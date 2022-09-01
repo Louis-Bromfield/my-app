@@ -303,13 +303,18 @@ function HomeNewsFeed(props) {
         }
     };
 
-    const voteOnPost = async (vote, postID, postVotes) => {
+    const voteOnPost = async (vote, postID, postVotes, postAuthor) => {
         try {
             if (vote === "upvote") {
                 await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/vote/${postID}`, { vote: "upvote", username: props.username })
             } else if (vote === "downvote") {
                 await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/vote/${postID}`, { vote: "downvote", username: props.username })
             }
+            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${postAuthor}`, {
+                notificationMessage: "Someone just voted on your news feed post!",
+                notificationSourcePath: "/news-post",
+                notificationSourceObjectID: postID
+            });
             setCauseFeedNewsFeedRefreshWithoutAnimation(true);
         } catch (error) {
             console.error(error);
@@ -625,13 +630,13 @@ function HomeNewsFeed(props) {
                                                     size={25} 
                                                     className="post-control-btn" 
                                                     color={"green"} 
-                                                    onClick={() => voteOnPost("upvote", item._id, item.likes)} />
+                                                    onClick={() => voteOnPost("upvote", item._id, item.likes, item.author)} />
                                                     {item.likes.length}
                                                 <AiIcons.AiFillDislike 
                                                     size={25} 
                                                     className="post-control-btn" 
                                                     color={"darkred"} 
-                                                    onClick={() => voteOnPost("downvote", item._id, item.dislikes)} />
+                                                    onClick={() => voteOnPost("downvote", item._id, item.dislikes, item.author)} />
                                                     {item.dislikes.length}
                                             </div>
                                         </div>
@@ -705,13 +710,13 @@ function HomeNewsFeed(props) {
                                                         size={25} 
                                                         className="post-control-btn" 
                                                         color={"green"} 
-                                                        onClick={() => voteOnPost("upvote", item._id, item.likes)} />
+                                                        onClick={() => voteOnPost("upvote", item._id, item.likes, item.author)} />
                                                         {item.likes.length}
                                                     <AiIcons.AiFillDislike 
                                                         size={25} 
                                                         className="post-control-btn" 
                                                         color={"darkred"} 
-                                                        onClick={() => voteOnPost("downvote", item._id, item.dislikes)} />
+                                                        onClick={() => voteOnPost("downvote", item._id, item.dislikes, item.author)} />
                                                         {item.dislikes.length}
                                                 </div>
                                             </div>
