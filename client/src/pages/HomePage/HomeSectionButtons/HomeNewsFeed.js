@@ -311,7 +311,7 @@ function HomeNewsFeed(props) {
                 await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/vote/${postID}`, { vote: "downvote", username: props.username })
             }
             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${postAuthor}`, {
-                notificationMessage: "Someone just voted on your news feed post!",
+                notificationMessage: `${props.username === undefined ? "Someone" : props.username} just voted on your news feed post!`,
                 notificationSourcePath: "/news-post",
                 notificationSourceObjectID: postID
             });

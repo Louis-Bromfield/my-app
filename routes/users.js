@@ -377,7 +377,9 @@ router.patch("/newNotification/:username", async (req, res) => {
             // if it's a forecast closing, this will be /forecast
             notificationSourcePath: req.body.notificationSourcePath,
             // e.g. if it's someone liking your news feed post, then this will be the OID of that post so that onClick it takes you to the individual news feed post
-            notificationSourceObjectID: req.body.notificationSourceObjectID
+            notificationSourceObjectID: req.body.notificationSourceObjectID,
+            // set this to true when the user either clicks on the alert itself or set all falses to true when they select "See all notifications"
+            seenByUser: false
         });
         await Users.findOneAndUpdate({ username: req.params.username }, {
             notifications: user.notifications,
@@ -721,7 +723,13 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
                 $push: { brierScores: toPush },
                 fantasyForecastPoints: Number(user.fantasyForecastPoints) + toPush.brierScore,
                 forecastClosedStatus: true,
-                numberOfClosedForecasts: Number(user.numberOfClosedForecasts) + 1
+                numberOfClosedForecasts: Number(user.numberOfClosedForecasts) + 1,
+                $push: { notifications: {
+                    notificationMessage: `You scored ${toPush.brierScore} on the following forecast: ${toPush.problemName}!`,
+                    notificationSourcePath: "/forecast",
+                    notificationSourceObjectID: forecastObj._id
+                }},
+                unseenNotificationCount: Number(user.unseenNotificationCount) + 1
             },
             { new: true }
             );

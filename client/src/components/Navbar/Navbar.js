@@ -235,7 +235,7 @@ function Navbar(props) {
                                                 return (
                                                     <div className="notification-item" onClick={() => handleNotificationSelection(item)}>
                                                         <div className="notification-item-info">
-                                                            <p>{item.notificationMessage}</p>
+                                                            <p>{item.notificationMessage.length > 75 ? `${item.notificationMessage.slice(0, 75)}...` : item.notificationMessage}</p>
                                                             <p>{new Date(item.date).toString().slice(0, 21)}</p>
                                                         </div>
                                                         <AiOutlineArrowRight color={"#404d72"}/>

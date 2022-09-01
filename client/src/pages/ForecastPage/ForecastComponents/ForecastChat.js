@@ -122,6 +122,11 @@ function ForecastChat(props) {
                     commentToReplyTo: commentYouAreRespondingTo.comment
                 });
                 console.log(res);
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${commentYouAreRespondingTo.author}`, {
+                    notificationMessage: `${props.username === undefined ? "Someone" : props.username} just replied to your comment!`,
+                    notificationSourcePath: "/forecasts",
+                    notificationSourceObjectID: props.forecast._id,
+                });
             } catch (err) {
                 console.error(err);
             };
