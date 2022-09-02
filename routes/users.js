@@ -395,6 +395,9 @@ router.patch("/newNotification/:username", async (req, res) => {
 // Set seenByUser value to true
 router.patch("/editNotifications/:username", async (req, res) => {
     try {
+        console.log(req.body);
+        console.log(req.params);
+        console.log("+++++++++++++++++++++++++++");
         let user = Users.findOne({ username: req.params.username });
         if (req.body.setAllToTrue === true) {
             for (let i = 0; i < user.notifications.length; i++) {
