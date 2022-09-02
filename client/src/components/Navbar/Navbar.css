@@ -17,7 +17,7 @@
 
 .navbar-grid {
     display: grid;
-    grid-template-columns: 18% 55% 18%;
+    grid-template-columns: 16% 55% 20%;
     column-gap: 5%;
     justify-content: center;
     width: 85%;
@@ -103,12 +103,34 @@
 
 .user-logout-container {
     display: grid;
-    grid-template-columns: 20% 70%;
+    grid-template-columns: 22% 63%;
     grid-template-rows: 100% 100%;
     row-gap: 5vh;
     justify-content: center;
     align-items: center;
     max-height: 6vh;
+}
+
+.image-and-noti-container {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    cursor: pointer;
+    /* column-gap: 1vw; */
+    /* border: 1px solid green; */
+}
+
+/* .navbar-profile-pic, 
+.notification-counter {
+    grid-column: 1;
+    grid-row: 1
+} */
+
+.notification-counter {
+    color: #fff;
+    background-color: rgb(214, 34, 34);
+    border-radius: 3.5px;
+    height: 45%;
+    margin: 0 auto;
 }
 
 .notification-dropdown {

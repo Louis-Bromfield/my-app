@@ -392,6 +392,38 @@ router.patch("/newNotification/:username", async (req, res) => {
     };
 });
 
+// Set seenByUser value to true
+router.patch("/editNotifications/:username", async (req, res) => {
+    try {
+        let user = Users.findOne({ username: req.params.username });
+        if (req.body.setAllToTrue === true) {
+            for (let i = 0; i < user.notifications.length; i++) {
+                if (user.notifications[i].seenByUser === false) {
+                    user.notifications[i].seenByUser = true;
+                };
+            };
+        } else if (req.body.setAllToTrue === false) {
+            for (let i = 0; i < user.notifications.length; i++) {
+                if (user.notifications[i].notificationMessage === req.body.notificationMessage) {
+                    user.notifications[i].seenByUser = true;
+                    break;
+                };
+            };
+        };
+        await Users.findOneAndUpdate({ username: req.params.username }, {
+            notifications: user.notifications
+        });
+        res.json({ message: "Notification successfully updated "});
+    } catch (err) {
+        console.error("Error in patch users > editNotifications");
+        console.error(err);
+        res.json({
+            message: "Notification unsuccessfully updated",
+            err: err
+        });
+    };
+});
+
 // Picture upload
 router.patch("/imageAPI/:username", parser.single("image"), async (req, res) => {
     try {

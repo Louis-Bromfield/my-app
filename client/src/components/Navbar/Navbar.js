@@ -8,6 +8,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import FantasyForecastLogo from '../../media/sd2.png';
 import { AiOutlineArrowRight } from 'react-icons/ai';
+import axios from 'axios';
 
 function Navbar(props) {
     const [selectedPage, setSelectedPage] = useState("Home");
@@ -16,6 +17,7 @@ function Navbar(props) {
     const [sidebar, setSidebar] = useState(false);
     const [profilePicture, setProfilePicture] = useState(props.profilePicture);
     const [showNotifications, setShowNotifications] = useState(false);
+    const [numberOfNewNotis, setNumberOfNewNotis] = useState(0);
     const [linkObject, setLinkObject] = useState({
         pathname: "/notifications",
         userObj: props.userObj
@@ -43,6 +45,16 @@ function Navbar(props) {
     useEffect(() => {
         console.log(props);
         setProfilePicture(props.profilePicture);
+        let numberOfNewNotifications = 0;
+        if (props.userObj.notifications !== undefined) {
+            for (let i = 0; i < props.userObj.notifications.length; i++) {
+                // tally number of false seenByUsers here CHARMANDER
+                if (props.userObj.notifications[i].seenByUser === false) {
+                    numberOfNewNotifications = numberOfNewNotifications + 1;
+                };
+            };
+            setNumberOfNewNotis(numberOfNewNotifications);
+        };
         setWidth(window.innerWidth > 1350);
         setMobileWidth(window.innerWidth <= 650);
         setLinkObject({
@@ -58,7 +70,13 @@ function Navbar(props) {
     };
 
     /// copy-paste this into Notifications.js when updated
-    const handleNotificationSelection = (notification) => {
+    const handleNotificationSelection = async (notification) => {
+        // set seenByUser value to true
+        const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/editNotifications/${props.username}`, {
+            setAllToTrue: false,
+            notificationMessage: notification.notificationMessage
+        });
+        console.log(res);
         // if it's problem related, go to forecasts page. Ideal would be it auto-selects from the dropdown for you
         if (notification.notificationSourcePath === "/forecast") {
             localStorage.setItem("selectedForecastID", notification.notificationSourceObjectID);
@@ -213,7 +231,10 @@ function Navbar(props) {
                                     </div>
                                     <div className="user-logout-container">
                                         {/* <img src={props.profilePicture || localStorage.getItem("profilePicture")} className="navbar-profile-pic" alt="User's profile pic" /> */}
-                                        <img src={profilePicture} className="navbar-profile-pic" alt="User's profile pic" onClick={() => setShowNotifications(!showNotifications)}/>
+                                        <div className="image-and-noti-container">
+                                            <img src={profilePicture} className="navbar-profile-pic" alt="User's profile pic" onClick={() => setShowNotifications(!showNotifications)}/>
+                                            {numberOfNewNotis > 0 ? <h3 className="notification-counter" onClick={() => setShowNotifications(!showNotifications)}>{numberOfNewNotis}</h3> : null}
+                                        </div>
                                         <div className="user-logout-column-container">
                                             <p>
                                                 <Link 
