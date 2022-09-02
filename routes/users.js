@@ -398,7 +398,7 @@ router.patch("/editNotifications/:username", async (req, res) => {
         console.log(req.body);
         console.log(req.params);
         console.log("+++++++++++++++++++++++++++");
-        let user = Users.findOne({ username: req.params.username });
+        let user = await Users.findOne({ username: req.params.username });
         console.log(user);
         console.log("+++++++++++++++++++++++++++++++++++++");
         if (req.body.setAllToTrue === true) {
