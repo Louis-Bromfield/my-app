@@ -72,7 +72,8 @@ function Navbar(props) {
     /// copy-paste this into Notifications.js when updated
     const handleNotificationSelection = async (notification) => {
         // set seenByUser value to true
-        const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/editNotifications/${props.username}`, {
+        let username = props.username === undefined ? props.userObj.username : props.username;
+        const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/editNotifications/${username}`, {
             setAllToTrue: false,
             notificationMessage: notification.notificationMessage
         });

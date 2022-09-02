@@ -137,10 +137,6 @@ const UserSchema = mongoose.Schema({
     notifications: {
         type: Array
     },
-    unseenNotificationCount: {
-        type: Number,
-        default: 0
-    }
 });
 
 module.exports = mongoose.model("Users", UserSchema);

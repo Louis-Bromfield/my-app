@@ -379,11 +379,11 @@ router.patch("/newNotification/:username", async (req, res) => {
             // e.g. if it's someone liking your news feed post, then this will be the OID of that post so that onClick it takes you to the individual news feed post
             notificationSourceObjectID: req.body.notificationSourceObjectID,
             // set this to true when the user either clicks on the alert itself or set all falses to true when they select "See all notifications"
-            seenByUser: false
+            seenByUser: false,
+            notificationIndex: user.notifications.length+1
         });
         await Users.findOneAndUpdate({ username: req.params.username }, {
             notifications: user.notifications,
-            unseenNotificationCount: user.unseenNotificationCount + 1
         });
         res.json({message: "success ASDKASDL:AS" })
     } catch (error) {
@@ -399,16 +399,21 @@ router.patch("/editNotifications/:username", async (req, res) => {
         console.log(req.params);
         console.log("+++++++++++++++++++++++++++");
         let user = Users.findOne({ username: req.params.username });
+        console.log(user);
+        console.log("+++++++++++++++++++++++++++++++++++++");
         if (req.body.setAllToTrue === true) {
+            console.log("HERE TRUE");
             for (let i = 0; i < user.notifications.length; i++) {
                 if (user.notifications[i].seenByUser === false) {
                     user.notifications[i].seenByUser = true;
                 };
             };
         } else if (req.body.setAllToTrue === false) {
+            console.log("HERE FALSE");
             for (let i = 0; i < user.notifications.length; i++) {
-                if (user.notifications[i].notificationMessage === req.body.notificationMessage) {
+                if ((user.notifications[i].notificationMessage === req.body.notificationMessage) && (user.notifications[i].notificationIndex === req.body.notificationIndex)) {
                     user.notifications[i].seenByUser = true;
+                    console.log("Changed one to true! Index " + req.body.notificationIndex);
                     break;
                 };
             };
