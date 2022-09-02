@@ -73,30 +73,43 @@ function Navbar(props) {
     const handleNotificationSelection = async (notification) => {
         // set seenByUser value to true
         let username = props.username === undefined ? props.userObj.username : props.username;
-        const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/editNotifications/${username}`, {
-            setAllToTrue: false,
-            notificationMessage: notification.notificationMessage
-        });
-        console.log(res);
-        // if it's problem related, go to forecasts page. Ideal would be it auto-selects from the dropdown for you
-        if (notification.notificationSourcePath === "/forecast") {
-            localStorage.setItem("selectedForecastID", notification.notificationSourceObjectID);
-            localStorage.setItem("forecastSelectedFromNotifications", true);
-            setShowNotifications(false);
-            history.push("/forecast");
-            return;
-        // if it's post related, go to home page. Ideal would be it goes to individual news feed page with post already loaded
-        } else if (notification.notificationSourcePath === "/news-post") {
-            localStorage.setItem("postID", notification.notificationSourceObjectID);
-            history.push("/news-post"); //replace this with news-post, not /home
-            setShowNotifications(false);
-            return;
-        // if it's response to feedback, go to feedback page
-        } else if (notification.notificationSourcePath === "/report-any-issues") {
-            history.push("/report-any-issues");
-            setShowNotifications(false);
-            return;
-        };
+        // if (changeAll === true) {
+        //     const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/editNotifications/${username}`, {
+        //         setAllToTrue: true
+        //     });
+        //     setNumberOfNewNotis(0);
+        //     console.log(res);
+        //     return;
+        // } else {
+            if (notification.seenByUser === false) {
+                const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/editNotifications/${username}`, {
+                    setAllToTrue: false,
+                    notificationMessage: notification.notificationMessage,
+                    notificationIndex: notification.notificationIndex
+                });
+                setNumberOfNewNotis(numberOfNewNotis-1);
+                console.log(res);
+            };
+            // if it's problem related, go to forecasts page. Ideal would be it auto-selects from the dropdown for you
+            if (notification.notificationSourcePath === "/forecast") {
+                localStorage.setItem("selectedForecastID", notification.notificationSourceObjectID);
+                localStorage.setItem("forecastSelectedFromNotifications", true);
+                setShowNotifications(false);
+                history.push("/forecast");
+                return;
+            // if it's post related, go to home page. Ideal would be it goes to individual news feed page with post already loaded
+            } else if (notification.notificationSourcePath === "/news-post") {
+                localStorage.setItem("postID", notification.notificationSourceObjectID);
+                history.push("/news-post"); //replace this with news-post, not /home
+                setShowNotifications(false);
+                return;
+            // if it's response to feedback, go to feedback page
+            } else if (notification.notificationSourcePath === "/report-any-issues") {
+                history.push("/report-any-issues");
+                setShowNotifications(false);
+                return;
+            };
+        // };
     };
 
     return (
@@ -261,9 +274,9 @@ function Navbar(props) {
                                             {/* each item to be message above date in left column, and right column to be an arrow icon pointing right */}
                                             {props.userObj.notifications !== undefined ? props.userObj.notifications.map((item, index) => {
                                                 return (
-                                                    <div className="notification-item" onClick={() => handleNotificationSelection(item)}>
+                                                    <div className={item.seenByUser === false ? "notification-item-new" : "notification-item-seen"} onClick={() => { handleNotificationSelection(item); item.seenByUser = true; }}>
                                                         <div className="notification-item-info">
-                                                            <p>{item.notificationMessage.length > 75 ? `${item.notificationMessage.slice(0, 75)}...` : item.notificationMessage}</p>
+                                                            <p>{item.seenByUser === false ? <b>NEW</b> : ""} {item.notificationMessage.length > 75 ? `${item.notificationMessage.slice(0, 75)}...` : item.notificationMessage}</p>
                                                             <p>{new Date(item.date).toString().slice(0, 21)}</p>
                                                         </div>
                                                         <AiOutlineArrowRight color={"#404d72"}/>
@@ -271,7 +284,7 @@ function Navbar(props) {
                                                 )
                                             }) : null}
                                             {/* Might want to replace this div with a Link so we can pass in props like userObj / username to access notifications array */}
-                                            <Link className="notification-item" onClick={() => setShowNotifications(false)} to={linkObject}>
+                                            <Link className="notification-item-seen" onClick={() => setShowNotifications(false)} to={linkObject}>
                                                 <div className="notification-item-info">
                                                     <p><b>See all notifications</b></p>
                                                 </div>

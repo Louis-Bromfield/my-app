@@ -10,7 +10,8 @@
     margin: 0 auto;
 }
 
-.notification-page-item {
+.notification-page-item-seen,
+.notification-page-item-new {
     width: 100%;
     border-bottom: 1px solid lightgray;
     display: grid;
@@ -18,7 +19,12 @@
     padding: 2%;
 }
 
-.notification-page-item:hover {
+.notification-page-item-new {
+    background-color: rgba(173, 216, 230, 0.411);
+}
+
+.notification-page-item-seen:hover,
+.notification-page-item-new:hover {
     cursor: pointer;
     background-color: #404d72;
     color: #fff;

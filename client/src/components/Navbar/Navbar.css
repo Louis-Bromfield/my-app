@@ -146,9 +146,10 @@
     margin-left: -10vw;
 }
 
-.notification-item {
+.notification-item-seen,
+.notification-item-new {
     display: grid;
-    grid-template-columns: 75% 25%;
+    grid-template-columns: 85% 15%;
     padding: 1%;
     align-items: center;
     margin: 0 auto;
@@ -156,7 +157,12 @@
     border-bottom: 1px solid lightgray;
 }
 
-.notification-item:hover {
+.notification-item-new {
+    background-color: rgba(173, 216, 230, 0.411);
+}
+
+.notification-item-seen:hover,
+.notification-item-new:hover {
     cursor: pointer;
     background-color: #404d72;
     color: #fff;
