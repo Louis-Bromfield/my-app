@@ -312,16 +312,17 @@
 
 .mobile-image-and-noti-container {
     display: grid;
-    grid-template-columns: 70% 10%;
+    grid-template-columns: 80% 10%;
+    align-items: center;
 }
 
 .mobile-navbar-profile-pic {
-    width: 100%;
-    height: 100%;
-    min-width: 100%;
-    max-width: 100%;
-    min-height: 100%;
-    max-height: 100%;
+    width: 80%;
+    height: 80%;
+    min-width: 80%;
+    max-width: 80%;
+    min-height: 80%;
+    max-height: 80%;
 }
 
 .mobile-menu-bars {
