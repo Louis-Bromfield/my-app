@@ -120,6 +120,10 @@ function Navbar(props) {
                         <Link to='#' className='mobile-menu-bars'>
                             <FaIcons.FaBars onClick={showSidebar} />
                         </Link>
+                        <div className="mobile-image-and-noti-container">
+                            <img src={profilePicture} className="mobile-navbar-profile-pic" alt="User's profile pic" onClick={() => setShowNotifications(!showNotifications)}/>
+                            {numberOfNewNotis > 0 ? <h3 className="notification-counter" onClick={() => setShowNotifications(!showNotifications)}>{numberOfNewNotis}</h3> : null}
+                        </div>
                     </div>
                     <nav className={sidebar ? 'mobile-nav-menu active' : 'mobile-nav-menu'}>
                         <ul className='mobile-nav-menu-items' onClick={showSidebar}>
@@ -155,7 +159,6 @@ function Navbar(props) {
                                 );
                             };
                     })}
-                    <h4>5</h4>
                     <li>
                         <button 
                             className="mobile-nav-logout-btn" 
@@ -168,6 +171,31 @@ function Navbar(props) {
                     </li>
                     </ul>
                 </nav>
+                {showNotifications === true && 
+                    <div className="notification-dropdown">
+                        {/* each item to be message above date in left column, and right column to be an arrow icon pointing right */}
+                        {props.userObj.notifications !== undefined ? props.userObj.notifications.map((item, index) => {
+                            if (index < 5) {
+                                return (
+                                    <div className={item.seenByUser === false ? "notification-item-new" : "notification-item-seen"} onClick={() => { handleNotificationSelection(item); item.seenByUser = true; }}>
+                                        <div className="notification-item-info">
+                                            <p>{item.seenByUser === false ? <b>NEW</b> : ""} {item.notificationMessage.length > 75 ? `${item.notificationMessage.slice(0, 75)}...` : item.notificationMessage}</p>
+                                            <p>{new Date(item.date).toString().slice(0, 21)}</p>
+                                        </div>
+                                        <AiOutlineArrowRight color={"#404d72"}/>
+                                    </div>
+                                )
+                            } else return null;
+                        }) : null}
+                        {/* Might want to replace this div with a Link so we can pass in props like userObj / username to access notifications array */}
+                        <Link className="notification-item-seen" onClick={() => setShowNotifications(false)} to={linkObject}>
+                            <div className="notification-item-info">
+                                <p><b>See all notifications</b></p>
+                            </div>
+                            <AiOutlineArrowRight color={"#404d72"}/>
+                        </Link>
+                    </div>
+                }
             </IconContext.Provider>   
             }
             {mobileWidth === false &&
@@ -273,15 +301,17 @@ function Navbar(props) {
                                         <div className="notification-dropdown">
                                             {/* each item to be message above date in left column, and right column to be an arrow icon pointing right */}
                                             {props.userObj.notifications !== undefined ? props.userObj.notifications.map((item, index) => {
-                                                return (
-                                                    <div className={item.seenByUser === false ? "notification-item-new" : "notification-item-seen"} onClick={() => { handleNotificationSelection(item); item.seenByUser = true; }}>
-                                                        <div className="notification-item-info">
-                                                            <p>{item.seenByUser === false ? <b>NEW</b> : ""} {item.notificationMessage.length > 75 ? `${item.notificationMessage.slice(0, 75)}...` : item.notificationMessage}</p>
-                                                            <p>{new Date(item.date).toString().slice(0, 21)}</p>
+                                                if (index < 5) {
+                                                    return (
+                                                        <div className={item.seenByUser === false ? "notification-item-new" : "notification-item-seen"} onClick={() => { handleNotificationSelection(item); item.seenByUser = true; }}>
+                                                            <div className="notification-item-info">
+                                                                <p>{item.seenByUser === false ? <b>NEW</b> : ""} {item.notificationMessage.length > 75 ? `${item.notificationMessage.slice(0, 75)}...` : item.notificationMessage}</p>
+                                                                <p>{new Date(item.date).toString().slice(0, 21)}</p>
+                                                            </div>
+                                                            <AiOutlineArrowRight color={"#404d72"}/>
                                                         </div>
-                                                        <AiOutlineArrowRight color={"#404d72"}/>
-                                                    </div>
-                                                )
+                                                    )
+                                                } else return null;
                                             }) : null}
                                             {/* Might want to replace this div with a Link so we can pass in props like userObj / username to access notifications array */}
                                             <Link className="notification-item-seen" onClick={() => setShowNotifications(false)} to={linkObject}>
