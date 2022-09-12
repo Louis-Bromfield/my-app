@@ -66,7 +66,9 @@ router.patch("/:id", async (req, res) => {
                 dislikes: req.body.dislikes,
                 postDate: req.body.postDate,
                 markets: req.body.markets,
-                authorProfilePicture: req.body.authorProfilePicture
+                authorProfilePicture: req.body.authorProfilePicture,
+                comments: req.body.comments,
+                ratings: req.body.ratings
             },
             { new: true }
         );
@@ -93,6 +95,26 @@ router.patch("/postComment/:id", async (req, res) => {
         } else if (req.body.isNewComment === false) {
             
         };
+    } catch (error) {
+        res.json({ error: error.message });
+    }
+});
+
+// Update a post's ratings
+router.patch("/postRatings/:id", async (req, res) => {
+    try {
+        const newRatings = {
+            username: req.body.username,
+            truthful: req.body.truthful,
+            relevant: req.body.relevant
+        }
+        const updatedPost = await HomePageNewsFeedPost.findByIdAndUpdate(req.params.id,
+            {
+                $push: { ratings: newRatings }
+            },
+            { new: true }
+        );
+        res.json({ newPost: updatedPost });
     } catch (error) {
         res.json({ error: error.message });
     }

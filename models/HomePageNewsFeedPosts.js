@@ -43,6 +43,10 @@ const HomePageNewsFeedPostsSchema = mongoose.Schema({
     comments: {
         type: Array,
         default: []
+    },
+    ratings: {
+        type: Array,
+        default: []
     }
 });
 

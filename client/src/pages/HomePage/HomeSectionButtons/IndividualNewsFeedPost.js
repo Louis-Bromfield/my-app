@@ -5,6 +5,7 @@ import ImagePlaceholder from '../../../media/sd.png';
 import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
+import Modal from '../../../components/Modal';
 
 function IndividualNewsFeedPost(props) {
     const [comment, setComment] = useState("");
@@ -23,10 +24,20 @@ function IndividualNewsFeedPost(props) {
     const [comments, setComments] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
+    const [submittedRatings, setSubmittedRatings] = useState(false);
+    const [submittedTruthfulRating, setSubmittedTruthfulRating] = useState(false);
+    const [submittedRelevantRating, setSubmittedRelevantRating] = useState(false);
+    const [truthfulRatingCount, setTruthfulRatingCount] = useState(0);
+    const [relevantRatingCount, setRelevantRatingCount] = useState(0);
+    const [postID, setPostID] = useState();
+    const [truthful, setTruthful] = useState(false);
+    const [relevant, setRelevant] = useState(false);
+
     const history = useHistory();
     const [cookie, setCookie] = useCookies(['username']);
 
     useEffect(() => {
+        console.log(props);
         doEffect();
         console.log("IndividualNewsFeedPost UE");
     }, [props.location.postObject]);
@@ -52,6 +63,22 @@ function IndividualNewsFeedPost(props) {
             setArticleURL(res.data.articleURL);
             setMarkets(res.data.markets);
             setComments(res.data.comments.reverse());
+            setPostID(res.data._id);
+            let truthfulCount = 0;
+            let relevantCount = 0;
+            for (let i = 0; i < res.data.ratings.length; i++) {
+                if (res.data.ratings[i].truthful === true) {
+                    truthfulCount++;
+                };
+                if (res.data.ratings[i].relevant === true) {
+                    relevantCount++;
+                };
+                if (res.data.ratings[i].username === cookie.username) {
+                    setSubmittedRatings(true);
+                };
+            };
+            setTruthfulRatingCount(truthfulCount);
+            setRelevantRatingCount(relevantCount);
         } else {
             setAuthor(props.location.postObject.author);
             setAuthorProfilePicture(props.location.postObject.authorProfilePicture);
@@ -65,6 +92,22 @@ function IndividualNewsFeedPost(props) {
             setArticleURL(props.location.postObject.articleURL);
             setMarkets(props.location.postObject.markets);
             setComments(props.location.postObject.comments.reverse());
+            setPostID(props.location.postObject._id);
+            let truthfulCount = 0;
+            let relevantCount = 0;
+            for (let i = 0; i < props.location.postObject.ratings.length; i++) {
+                if (props.location.postObject.ratings[i].truthful === true) {
+                    truthfulCount++;
+                };
+                if (props.location.postObject.ratings[i].relevant === true) {
+                    relevantCount++;
+                };
+                if (props.location.postObject.ratings[i].username === cookie.username) {
+                    setSubmittedRatings(true);
+                };
+            };
+            setTruthfulRatingCount(truthfulCount);
+            setRelevantRatingCount(relevantCount);
         };
     };
 
@@ -91,13 +134,13 @@ function IndividualNewsFeedPost(props) {
             // CHARMANDER
             // giveUserPoints(localStorage.getItem("username"));
             giveUserPoints(cookie.username);
-            if (cookie.username !== undefined && author !== cookie.username) {
+            // if (cookie.username !== undefined && author !== cookie.username) {
                 await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${author}`, {
                     notificationMessage: `${cookie.username === undefined ? "Someone" : cookie.username} just commented on your news feed post!`,
                     notificationSourcePath: "/news-post",
                     notificationSourceObjectID: ID
                 });
-            }
+            // }
         } catch (error) {
             console.error("Error in IndividualNewsFeedPost > submitComment");
             console.error(error);
@@ -122,8 +165,75 @@ function IndividualNewsFeedPost(props) {
         };
     };
 
+    const submitRatingOnPost = async (attribute, upvote) => {
+        try {
+            if (cookie.username === "Guest") {
+                setShowModal(true);
+                setModalContent("You must be logged into your own account to rate posts.");
+                return;
+            } else if (cookie.username === author) {
+                setShowModal(true);
+                setModalContent("You cannot rate your own post.");
+            } else {
+                if (attribute === "truthful") {
+                    setSubmittedTruthfulRating(true);
+                    if (submittedRelevantRating === true) {
+                        // add in axios here to edit post document
+                        await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/postRatings/${postID}`, {
+                            username: cookie.username,
+                            truthful: truthful,
+                            relevant: relevant
+                        });
+                        if (truthful === true) {
+                            setTruthfulRatingCount(truthfulRatingCount +1);
+                        }
+                        if (relevant === true) {
+                            setRelevantRatingCount(relevantRatingCount + 1);
+                        };
+                        // send user a notification for when they receive a rating
+                        await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${author}`, {
+                            notificationMessage: `${cookie.username === undefined ? "Someone" : cookie.username} just rated your news feed post!`,
+                            notificationSourcePath: "/news-post",
+                            notificationSourceObjectID: postID
+                        });
+                        setSubmittedRatings(true);
+                    };
+                } else if (attribute === "relevant") {
+                    setSubmittedRelevantRating(true);
+                    if (submittedTruthfulRating === true) {
+                        // add in axios here to edit post document
+                        await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/postRatings/${postID}`, {
+                            username: cookie.username,
+                            truthful: truthful,
+                            relevant: relevant
+                        });
+                        if (truthful === true) {
+                            setTruthfulRatingCount(truthfulRatingCount +1);
+                        }
+                        if (relevant === true) {
+                            setRelevantRatingCount(relevantRatingCount + 1);
+                        };
+                        // send user a notification for when they receive a rating
+                        await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${author}`, {
+                            notificationMessage: `${cookie.username === undefined ? "Someone" : cookie.username} just rated your news feed post!`,
+                            notificationSourcePath: "/news-post",
+                            notificationSourceObjectID: postID
+                        });
+                        setSubmittedRatings(true);
+                    };
+                };
+            };
+        } catch (err) {
+            console.error("Error in IndividualNewsFeedPost > submitRatingOnPost");
+            console.error(err);
+        };
+    };
+
     return (
         <div className="individual-post-container">
+            <Modal show={showModal} handleClose={() => setShowModal(false)}>
+                <p>{modalContent}</p>
+            </Modal>
             <button 
                 className="post-button"
                 onClick={() => history.push("/home")}>
@@ -146,22 +256,22 @@ function IndividualNewsFeedPost(props) {
                                 <h5>{new Date(postDate).toString().slice(0, 21)}</h5>
                             </div>
                         </div>
-                        <div className="post-author-right">
-                            <div className="post-votes">
-                                <AiIcons.AiFillLike 
-                                    size={25} 
-                                    className="post-control-btn" 
-                                    color={"green"} />
+                        {/* <div className="post-author-right"> */}
+                            {/* <div className="post-votes"> */}
+                                {/* <AiIcons.AiFillLike  */}
+                                    {/* size={25}  */}
+                                    {/* className="post-control-btn"  */}
+                                    {/* color={"green"} /> */}
                                     {/* onClick={() => voteOnPost("upvote", _id, likes)} /> */}
-                                    {likes.length}
-                                <AiIcons.AiFillDislike 
-                                    size={25} 
-                                    className="post-control-btn" 
-                                    color={"darkred"} />
+                                    {/* {likes.length} */}
+                                {/* <AiIcons.AiFillDislike  */}
+                                    {/* size={25}  */}
+                                    {/* className="post-control-btn"  */}
+                                    {/* color={"darkred"} /> */}
                                     {/* onClick={() => voteOnPost("downvote", _id, dislikes)} /> */}
-                                    {dislikes.length}
-                            </div>
-                        </div>
+                                    {/* {dislikes.length} */}
+                            {/* </div> */}
+                        {/* </div> */}
                     </div>
                     <p className="post-author-description">{postDescription}</p>
                     <div className="post-news-preview">
@@ -183,6 +293,59 @@ function IndividualNewsFeedPost(props) {
                             )
                         })}
                     </div>
+                </div>
+                <div className="post-rating-container">
+                    <h3 style={{ color: "#404d72" }}>Post Ratings:</h3>
+                    {submittedRatings === false &&
+                        <div>
+                            <p>Submit a rating on all the below measures to see how everyone else reviewed it:</p>
+                            <div className="post-rate-submission">
+                                {submittedTruthfulRating === false && <div className="individual-post-rate-submission">
+                                    <p>Truthful?</p>
+                                    <div className="individual-post-rate-submission-button-container">
+                                        <AiIcons.AiFillLike 
+                                            size={25} 
+                                            className="post-control-btn" 
+                                            color={"green"} 
+                                            onClick={() => { setTruthful(true); submitRatingOnPost("truthful", true)}}
+                                            />
+                                        <AiIcons.AiFillDislike 
+                                            size={25} 
+                                            className="post-control-btn" 
+                                            color={"darkred"} 
+                                            onClick={() => { setTruthful(false); submitRatingOnPost("truthful", false)}}
+                                            />
+                                    </div>
+                                </div>}
+                                {submittedRelevantRating === false && <div className="individual-post-rate-submission">
+                                    <p>Relevant?</p>
+                                    <div className="individual-post-rate-submission-button-container">
+                                        <AiIcons.AiFillLike 
+                                            size={25} 
+                                            className="post-control-btn" 
+                                            color={"green"} 
+                                            onClick={() => { setRelevant(true); submitRatingOnPost("relevant", true)}}
+                                            />
+                                        <AiIcons.AiFillDislike 
+                                            size={25} 
+                                            className="post-control-btn" 
+                                            color={"darkred"} 
+                                            onClick={() => { setRelevant(false); submitRatingOnPost("relevant", false)}}
+                                            />
+                                    </div>
+                                </div>}
+                            </div>
+                        </div>
+                    }
+                    {(submittedRatings === true || cookie.username === author) &&
+                        // show rating results
+                        <div className="post-rate-results">
+                            <p><b>{likes.length}</b> {likes.length === 1 ? "forecaster" : "forecasters"} liked this post.</p>
+                            <p><b>{dislikes.length}</b> {dislikes.length === 1 ? "forecaster" : "forecasters"} disliked this post.</p>
+                            <p><b>{truthfulRatingCount}</b> {truthfulRatingCount === 1 ? "forecaster" : "forecasters"} rated this post as Truthful.</p>
+                            <p><b>{relevantRatingCount}</b> {relevantRatingCount === 1 ? "forecaster" : "forecasters"} rated this post as Relevant.</p>
+                        </div>
+                    }
                 </div>
             </div>
             <div className="comments-container">
