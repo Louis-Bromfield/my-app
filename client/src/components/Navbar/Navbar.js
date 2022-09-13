@@ -277,7 +277,7 @@ function Navbar(props) {
                                             <img src={profilePicture} className="navbar-profile-pic" alt="User's profile pic" onClick={() => setShowNotifications(!showNotifications)}/>
                                             {numberOfNewNotis > 0 ? <h3 className="notification-counter" onClick={() => setShowNotifications(!showNotifications)}>{numberOfNewNotis}</h3> : null}
                                         </div>
-                                        <div className="user-logout-column-container">
+                                        {/* <div className="user-logout-column-container">
                                             <p>
                                                 <Link 
                                                     to={"/my-profile"} 
@@ -296,7 +296,7 @@ function Navbar(props) {
                                                 }}>
                                                     Log Out
                                                 </button>
-                                        </div>
+                                        </div> */}
                                         {showNotifications === true && 
                                         <div className="notification-dropdown">
                                             {/* each item to be message above date in left column, and right column to be an arrow icon pointing right */}
@@ -320,6 +320,27 @@ function Navbar(props) {
                                                 </div>
                                                 <AiOutlineArrowRight color={"#404d72"}/>
                                             </Link>
+                                            <div className="profile-and-logout-container">
+                                                <p className="nav-text-profile-link">
+                                                    <Link 
+                                                        to={"/my-profile"} 
+                                                        className="nav-text-profile" 
+                                                        onClick={() => {
+                                                            localStorage.setItem('selectedPage', 'My Profile'); 
+                                                            setSelectedPage("My Profile");
+                                                            setShowNotifications(false)}}>
+                                                        <h4>Go to My Profile</h4>
+                                                    </Link>
+                                                </p>
+                                                <button 
+                                                    className="nav-logout-btn" 
+                                                    onClick={() => {
+                                                        signOut(props.logOut); 
+                                                        history.push("/")
+                                                    }}>
+                                                        <h4>Log Out</h4>
+                                                    </button>
+                                            </div>
                                         </div>
                                         }
                                     </div>
