@@ -1357,13 +1357,48 @@ console.log(forecast);
                             />
                         }
                     </div>
-                    <ForecastProblemLineChart
-                        selectedForecastObject={selectedForecastObject} 
-                        updateTodayStats={props.updateTodayStats} 
-                        username={props.username} 
-                        refresh={"test"} 
-                        forecastSingleCertainty={forecastSingleCertainty}
-                    />
+                    <div className="forecast-chart-stats-switcher">
+                        <div className="forecast-chart-stats-switcher-tab-menu">
+                            <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("chart")}><h3>Chart</h3></div>
+                            <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("problemStats")}><h3>Problem Stats</h3></div>
+                        </div>
+                        {switcherTab === "problemStats" && 
+                            <div className="switcher-problem-stats">
+                                <ForecastStatistics 
+                                    selectedForecast={props.selectedForecast} 
+                                    today={false} 
+                                    forecastSingleCertainty={forecastSingleCertainty}
+                                />
+                                <ForecastStatistics 
+                                    selectedForecast={props.selectedForecast}
+                                    today={true} 
+                                    todayAverage={todayAverage} 
+                                    todayForecastCount={todayForecastCount} 
+                                    forecastSingleCertainty={forecastSingleCertainty}
+                                />
+                                <MarketStatistics 
+                                    leaderboard={props.leaderboardData} 
+                                    username={props.username} 
+                                    refresh={props.refresh} 
+                                    market={props.selectedForecast.market}
+                                />
+                                <ForecastMarketLeaderboard 
+                                    market={props.selectedForecast.market} 
+                                    leaderboard={props.leaderboardData} 
+                                    username={props.username} 
+                                />
+                            </div>
+                        }
+                        {switcherTab === "chart" && 
+                            <ForecastProblemLineChart
+                                selectedForecastObject={selectedForecastObject} 
+                                updateTodayStats={props.updateTodayStats} 
+                                username={props.username} 
+                                refresh={"test"} 
+                                forecastSingleCertainty={forecastSingleCertainty}
+                            />
+                        }
+                    </div>
                 </div>
             }
             {(forecastClosed === true && hasAForecastBeenSelected === false) && 

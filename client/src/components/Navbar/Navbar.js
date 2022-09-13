@@ -321,7 +321,7 @@ function Navbar(props) {
                                                 <AiOutlineArrowRight color={"#404d72"}/>
                                             </Link>
                                             <div className="profile-and-logout-container">
-                                                <p className="nav-text-profile-link">
+                                                {/* <p className="nav-text-profile-link"> */}
                                                     <Link 
                                                         to={"/my-profile"} 
                                                         className="nav-text-profile" 
@@ -329,9 +329,9 @@ function Navbar(props) {
                                                             localStorage.setItem('selectedPage', 'My Profile'); 
                                                             setSelectedPage("My Profile");
                                                             setShowNotifications(false)}}>
-                                                        <h4>Go to My Profile</h4>
+                                                        <h5>Go to My Profile</h5>
                                                     </Link>
-                                                </p>
+                                                {/* </p> */}
                                                 <button 
                                                     className="nav-logout-btn" 
                                                     onClick={() => {
