@@ -48,12 +48,12 @@
     padding: 1%;
 }
 
-.profile-main-info {
+/* .profile-main-info {
     display: grid;
     grid-template-columns: 20% 80%;
     grid-template-rows: 20% 80%;
     
-}
+} */
 
 .profile-profile-pic {
     /* width: 85%;
@@ -85,9 +85,9 @@
     margin-bottom: 1%;
 }
 
-.profile-summary-list-item > h3 {
+/* .profile-summary-list-item > h3 {
     color: #242d75;
-}
+} */
 
 .selected {
     background-color: #404d72;

@@ -11,6 +11,7 @@ function Profile(props) {
     const [index, setIndex] = useState();
     const [brierAverage, setBrierAverage] = useState("N/A");
     const [bestForecast, setBestForecast] = useState("N/A");
+    const [bestForecastForModal, setBestForecastForModal] = useState("");
     const [fantasyForecastPoints, setFantasyForecastPoints] = useState(0);
     const [brierScoresArr, setBrierScoresArr] = useState([]);
     const [userObj, setUserObj] = useState();
@@ -73,7 +74,8 @@ console.log("Profile.js UE");
                 setFantasyForecastPoints(userDocument.data.userObj.fantasyForecastPoints);
                 setLevel(Math.floor((userDocument.data.userObj.fantasyForecastPoints/100)).toFixed(0));
                 setBrierAverage(Number(userDocument.data.averageBrier).toFixed(0));
-                setBestForecast(`${(userDocument.data.bestBrier).toFixed(2)} / 110 - ${userDocument.data.bestForecastProblem}`);
+                setBestForecastForModal(`${(userDocument.data.bestBrier).toFixed(2)} / 110 - ${userDocument.data.bestForecastProblem}`);
+                setBestForecast(`${(userDocument.data.bestBrier).toFixed(2)}`);
                 setBrierScoresArr(userDocument.data.userObj.brierScoresArr);
                 if (userDocument.data.userObj.fantasyForecastPoints < 500) {
                     setForecasterRank("Guesser");
@@ -194,32 +196,40 @@ console.log("Profile.js UE");
                         {/* <img className="profile-profile-pic" src={props.profilePicture || localStorage.getItem("profilePicture")} alt="Temporary profile pic"/> */}
                         <img className="profile-profile-pic" src={props.profilePicture} alt="Temporary profile pic"/>
                         <div className="profile-summary">
-                            <ul className="profile-summary-list"> 
-                                <li key={0} className="profile-summary-list-item">
-                                    <h3>Forecaster Level:</h3>
-                                    <h4>{fantasyForecastPoints === undefined ? (Math.floor(props.user.fantasyForecastPoints/100)).toFixed(0): level} - {forecasterRank}</h4>
-                                </li>
-                                <li key={1} className="profile-summary-list-item">
-                                    <h3>Fantasy Forecast Points:</h3>
-                                    <h4>{fantasyForecastPoints === undefined ? props.user.fantasyForecastPoints.toFixed(0): fantasyForecastPoints.toFixed(0)}</h4>
-                                </li>
-                                <li key={2} className="profile-summary-list-item">
-                                    <h3>Brier Score Average:</h3>
-                                    <h4>{isNaN(brierAverage) ? "N/A" : brierAverage }</h4>
-                                </li>
-                                <li key={3} className="profile-summary-list-item">
-                                    <h3>Best Forecast:</h3>
-                                    <h4>{bestForecast}</h4>
-                                </li>
-                                <li key={4} className="profile-summary-list-item">
-                                    <h3>Fantasy Forecast All-Time Rank:</h3>
-                                    <h4>{index}</h4>
-                                </li>
-                                <li key={5} className="profile-summary-list-item">
-                                    <h3>Markets</h3>
-                                    <h4>{markets}</h4>
-                                </li>
-                            </ul>
+                            {/* <ul className="profile-summary-list">  */}
+                                <div key={0} className="profile-summary-list-item">
+                                    <h2 className="profile-summary-list-item-value">{fantasyForecastPoints === undefined ? (Math.floor(props.user.fantasyForecastPoints/100)).toFixed(0): level}</h2>
+                                    <h3>Forecaster Level</h3>
+                                </div>
+                                <div key={1} className="profile-summary-list-item">
+                                    <h2 className="profile-summary-list-item-value">{fantasyForecastPoints === undefined ? props.user.fantasyForecastPoints.toFixed(0): fantasyForecastPoints.toFixed(0)}</h2>
+                                    <h3>Fantasy Forecast Points</h3>
+                                </div>
+                                <div key={2} className="profile-summary-list-item">
+                                    <h2 className="profile-summary-list-item-value">{isNaN(brierAverage) ? "N/A" : brierAverage }</h2>
+                                    <h3>Brier Score Average</h3>
+                                </div>
+                                <div key={3} className="profile-summary-list-item">
+                                    <h2 
+                                        className="profile-summary-list-item-value"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() => {
+                                            setModalContent(bestForecastForModal);
+                                            setShowModal(true);
+                                        }}>
+                                            {bestForecast}
+                                    </h2>
+                                    <h3>Best Forecast</h3>
+                                </div>
+                                <div key={4} className="profile-summary-list-item">
+                                    <h2 className="profile-summary-list-item-value">{index}</h2>
+                                    <h3>Fantasy Forecast All-Time Rank</h3>
+                                </div>
+                                <div key={5} className="profile-summary-list-item">
+                                    <h2 className="profile-summary-list-item-value">{markets.split(", ").length}</h2>
+                                    <h3># Of Markets In</h3>
+                                </div>
+                            {/* </ul> */}
                         </div>
                     </div>
                     <div className="profile-stats-rewards-container">

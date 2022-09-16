@@ -7,6 +7,7 @@ import ReactLoading from 'react-loading';
 import ProfileForecasts from '../ProfilePage/ProfileForecasts';
 import ProfileRewards from '../ProfilePage/ProfileRewards';
 import { useCookies } from 'react-cookie';
+import Modal from '../../components/Modal';
 
 function Search(props) {
     const [markets, setMarkets] = useState("");
@@ -18,6 +19,7 @@ function Search(props) {
     const [errorMessage, setErrorMessage] = useState("");
     const [brierAverage, setBrierAverage] = useState("N/A");
     const [bestForecast, setBestForecast] = useState("N/A");
+    const [bestForecastForModal, setBestForecastForModal] = useState("N/A");
     const [playerProfilePic, setPlayerProfilePic] = useState("");
     const [recentData, setRecentData] = useState([]);
     const [recentLabels, setRecentLabels] = useState([]);
@@ -47,6 +49,8 @@ function Search(props) {
     const [searchTab, setSearchTab] = useState("my-stats");
     const [searchUserObj, setSearchUserObj] = useState({});
     const [cookie, setCookie] = useCookies(['username']);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState("");
 
     useEffect(() => {
         if (props.location.clickedUsername !== undefined) {
@@ -124,7 +128,8 @@ function Search(props) {
                 formatBrierData(userDocument.data.userObj, playerUsername);
                 findUniquePlayerStats(userDocument.data.userObj, playerUsername);
                 setBrierAverage(userDocument.data.averageBrier);
-                setBestForecast(`${(userDocument.data.bestBrier).toFixed(2)} / 110 - ${userDocument.data.bestForecastProblem}`);
+                setBestForecast(userDocument.data.bestBrier.toFixed(2));
+                setBestForecastForModal(`${(userDocument.data.bestBrier).toFixed(2)} / 110 - ${userDocument.data.bestForecastProblem}`);
                 if (userDocument.data.userObj.fantasyForecastPoints < 500) {
                     setForecasterRank("Guesser");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 500 && userDocument.data.userObj.fantasyForecastPoints < 1000) {
@@ -321,6 +326,9 @@ function Search(props) {
 
     return (
         <div className="profile">
+            <Modal show={showModal} handleClose={() => setShowModal(false)}>
+                <p>{modalContent}</p>
+            </Modal>
             <h1>Search</h1>
             <div className="search-container">
                 <input className="search-field" type="text" onChange={(e) => { setSearchName(e.target.value); setErrorMessage("")}}/>
@@ -340,32 +348,39 @@ function Search(props) {
                         <div className="profile-main-info">
                             <img className="profile-profile-pic" src={playerProfilePic || FakeProfilePic2} alt="Temporary profile pic"/>
                             <div className="profile-summary">
-                                <ul className="profile-summary-list">
-                                    <li key={0} className="profile-summary-list-item">
-                                        <h3>Forecaster Level:</h3>
-                                        <h4>{playerLevel} - {forecasterRank}</h4>
-                                    </li>
-                                    <li key={1} className="profile-summary-list-item">
-                                        <h3>Fantasy Forecast Points:</h3>
-                                        <h4>{playerPoints}</h4>
-                                    </li>
-                                    <li key={2} className="profile-summary-list-item">
-                                        <h3>Brier Score Average:</h3>
-                                        <h4>{isNaN(brierAverage) ? "N/A" : brierAverage}</h4>
-                                    </li>
-                                    <li key={3} className="profile-summary-list-item">
-                                        <h3>Best Forecast:</h3>
-                                        <h4>{bestForecast}</h4>
-                                    </li>
-                                    <li key={4} className="profile-summary-list-item">
-                                        <h3>Fantasy Forecast All-Time Rank:</h3>
-                                        <h4>{index}</h4>
-                                    </li>
-                                    <li key={5} className="profile-summary-list-item">
+                                {/* <ul className="profile-summary-list"> */}
+                                    <div key={0} className="profile-summary-list-item">
+                                        <h2 className="profile-summary-list-item-value">{playerLevel}</h2>
+                                        <h3>Forecaster Level</h3>
+                                    </div>
+                                    <div key={1} className="profile-summary-list-item">
+                                        <h2 className="profile-summary-list-item-value">{playerPoints}</h2>
+                                        <h3>Fantasy Forecast Points</h3>
+                                    </div>
+                                    <div key={2} className="profile-summary-list-item">
+                                        <h2 className="profile-summary-list-item-value">{isNaN(brierAverage) ? "N/A" : brierAverage}</h2>
+                                        <h3>Brier Score Average</h3>
+                                    </div>
+                                    <div key={3} className="profile-summary-list-item">
+                                        <h2
+                                            className="profile-summary-list-item-value"
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => {
+                                                setModalContent(bestForecastForModal);
+                                                setShowModal(true);
+                                            }}>
+                                            {bestForecast}</h2>
+                                        <h3>Best Forecast</h3>
+                                    </div>
+                                    <div key={4} className="profile-summary-list-item">
+                                        <h2 className="profile-summary-list-item-value">{index}</h2>
+                                        <h3>Fantasy Forecast All-Time Rank</h3>
+                                    </div>
+                                    <div key={5} className="profile-summary-list-item">
+                                        <h2 className="profile-summary-list-item-value">{markets.split(", ").length}</h2>
                                         <h3>Markets</h3>
-                                        <h4>{markets}</h4>
-                                    </li>
-                                </ul>
+                                    </div>
+                                {/* </ul> */}
                             </div>
                         </div>
                         <br/>
