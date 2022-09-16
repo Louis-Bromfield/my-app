@@ -155,11 +155,22 @@
     } */
 }
 
+@media (max-width: 1350px) {
+    .profile-summary {
+        font-size: 0.8em;
+        grid-template-columns: 50% 50%;
+    }
+}
+
 @media (max-width: 900px) {
     .profile-main-info {
         grid-template-columns: 40% 60%;
         height: 30vh;
         margin-bottom: 3vh;
+    }
+    .profile-summary {
+        grid-template-columns: 100%;
+        border: 1px solid red;
     }
     /* .profile-details-container {
         width: 50%;
@@ -226,6 +237,9 @@
     }
     .profile-summary {
         text-align: center;
+        grid-template-columns: 50% 50%;
+        font-size: 0.85em;
+        margin-bottom: 0vh;
     }
 }
 
