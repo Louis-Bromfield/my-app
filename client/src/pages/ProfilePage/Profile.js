@@ -8,7 +8,7 @@ import ProfileForecasts from './ProfileForecasts';
 
 function Profile(props) {
     const [markets, setMarkets] = useState("");
-    const [index, setIndex] = useState();
+    const [index, setIndex] = useState(-1);
     const [brierAverage, setBrierAverage] = useState("N/A");
     const [bestForecast, setBestForecast] = useState("N/A");
     const [bestForecastForModal, setBestForecastForModal] = useState("");

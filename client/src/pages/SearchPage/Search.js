@@ -11,7 +11,7 @@ import Modal from '../../components/Modal';
 
 function Search(props) {
     const [markets, setMarkets] = useState("");
-    const [index, setIndex] = useState();
+    const [index, setIndex] = useState(-1);
     const [searchName, setSearchName] = useState("");
     const [playerUsername, setPlayerUsername] = useState("");
     const [playerName, setPlayerName] = useState("");
