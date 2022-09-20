@@ -3,3 +3,49 @@
     flex-direction: column;
     padding: 1%
 }
+
+.trophy-img {
+    width: 10%;
+}
+
+.trophy-grid-container {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    /* border: 1px solid red; */
+}
+
+.individual-trophy-container {
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid blue; */
+    /* border-bottom: 1px solid darkgray; */
+    width: 100%;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.individual-trophy-container:hover {
+    cursor: pointer;
+    background-color: #254aaf2d;
+    transition: 0.2s ease;
+}
+
+@media (max-width: 1350px) {
+    .trophy-grid-container {
+        grid-template-columns: 33% 33% 33%;
+        column-gap: 0.3%;
+    }
+}
+
+@media (max-width: 900px) {
+    .trophy-grid-container {
+        grid-template-columns: 50% 50%;
+    }
+}
+
+@media (max-width: 450px) {
+    .trophy-grid-container {
+        /* grid-template-columns: 100%; */
+        font-size: 0.9em;
+    }
+}

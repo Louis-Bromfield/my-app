@@ -137,6 +137,71 @@ const UserSchema = mongoose.Schema({
     notifications: {
         type: Array
     },
+    trophies: {
+        type: Array,
+        default: [
+            {
+                trophyText: "Ready To Go",
+                obtained: false,
+                trophyModalText: "This trophy is earned by completing all of the tasks in the onboarding list, which can be found on the home page. By doing so, you'll be given access to the Stats section of your profile to help you view your own performance."
+            },
+            {
+                trophyText: "Seer",
+                obtained: false,
+                trophyModalText: "This trophy is earned by reaching Level 15, or 1500 Fantasy Forecast Points. You will be given a Level-exclusive profile border (bronze) to let other forecasters know of your rank, and you'll be given the ability to use Forecast Chats (which can be found at the bottom of the My Forecasts page when you have selected a problem from the dropdown list)."
+            },
+            {
+                trophyText: "Soothsayer",
+                obtained: false,
+                trophyModalText: "Reach Level 20 (2000 Fantasy Forecast Points). You'll receive a new Level-exclusive profile border (silver) to show off to other forecasters, and the ability to rate posts on your Feed as truthful and/or relevant."
+            },
+            {
+                trophyText: "Oracle",
+                obtained: false,
+                trophyModalText: "Reach Level 25 (2500 Fantasy Forecast Points). You'll receive a new Level-exclusive profile border (gold) to show off."
+            },
+            {
+                trophyText: "Diviner",
+                obtained: false,
+                trophyModalText: "Reach Level 50 (5000 Fantasy Forecast Points), you'll receive a new Level-exclusive profiler border (platinum) to display."
+            },
+            {
+                trophyText: "First Time Around",
+                obtained: false,
+                trophyModalText: "Submit your first forecast."
+            },
+            {
+                trophyText: "Gather Round!",
+                obtained: false,
+                trophyModalText: "Receive a positive truthful or relevant rating on one of your feed posts."
+            },
+            {
+                trophyText: "Here, have a cookie.",
+                obtained: false,
+                trophyModalText: "Award another forecaster a positive truthful or relevant rating on one of their feed posts."
+            },
+            {
+                trophyText: "The Gold Standard",
+                obtained: false,
+                trophyModalText: "Score 100 or more points on a forecast."
+            },
+            {
+                trophyText: "The Triple Gold Standard",
+                obtained: false,
+                trophyModalText: "Score 100 or more points on three consecutive forecasts."
+            },
+            {
+                trophyText: "Quick off the Mark",
+                obtained: false,
+                trophyModalText: "Submit a prediction within 24 hours of a forecast opening."
+            },
+            {
+                trophyText: "Perfection",
+                obtained: false,
+                trophyModalText: "Score full marks on a quiz in the Learn section."
+            }
+        ]
+    }
 });
 
 module.exports = mongoose.model("Users", UserSchema);

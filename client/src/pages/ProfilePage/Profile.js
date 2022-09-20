@@ -198,7 +198,7 @@ console.log("Profile.js UE");
                         <div className="profile-summary">
                             {/* <ul className="profile-summary-list">  */}
                                 <div key={0} className="profile-summary-list-item">
-                                    <h2 className="profile-summary-list-item-value">{fantasyForecastPoints === undefined ? (Math.floor(props.user.fantasyForecastPoints/100)).toFixed(0): level}</h2>
+                                    <h2 className="profile-summary-list-item-value">{fantasyForecastPoints === undefined ? (Math.floor(props.user.fantasyForecastPoints/100)).toFixed(0): level}<h5>{forecasterRank}</h5></h2>
                                     <h3>Forecaster Level</h3>
                                 </div>
                                 <div key={1} className="profile-summary-list-item">
@@ -236,7 +236,7 @@ console.log("Profile.js UE");
                         <div className="profile-nav-menu">
                             <div className="profile-tab" onClick={() => setProfileTab("my-stats")}><h3>My Stats</h3></div>
                             <div className="profile-tab" onClick={() => setProfileTab("my-forecasts")}><h3>My Forecasts</h3></div>
-                            <div className="profile-tab" onClick={() => setProfileTab("my-rewards")}><h3>My Rewards</h3></div>
+                            <div className="profile-tab" onClick={() => setProfileTab("my-trophies")}><h3>My Trophies</h3></div>
                         </div>
                         {profileTab === "my-stats" && <ProfileStats 
                             username={props.username} 
@@ -246,7 +246,7 @@ console.log("Profile.js UE");
                             ffPoints={fantasyForecastPoints}
                         />}
                         {profileTab === "my-forecasts" && <ProfileForecasts userObj={userObj} searched={false} />}
-                        {profileTab === "my-rewards" && <ProfileRewards />}
+                        {profileTab === "my-trophies" && <ProfileRewards userObj={userObj} />}
                     </div>
                     <br />
                     <div className="profile-details-container">

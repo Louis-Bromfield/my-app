@@ -350,7 +350,7 @@ function Search(props) {
                             <div className="profile-summary">
                                 {/* <ul className="profile-summary-list"> */}
                                     <div key={0} className="profile-summary-list-item">
-                                        <h2 className="profile-summary-list-item-value">{playerLevel}</h2>
+                                        <h2 className="profile-summary-list-item-value">{playerLevel} <h5>{forecasterRank}</h5></h2>
                                         <h3>Forecaster Level</h3>
                                     </div>
                                     <div key={1} className="profile-summary-list-item">

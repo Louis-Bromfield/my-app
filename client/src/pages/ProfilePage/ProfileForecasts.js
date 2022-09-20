@@ -14,7 +14,7 @@ function ProfileForecasts(props) {
     });
     return (
         <div className="profile-forecasts">
-            <h1 className="profile-header">{props.searched === true ? `${props.playerUsername}'s Forecasts` : `My Forecasts`}</h1>
+            <h2 className="profile-header">{props.searched === true ? `${props.playerUsername}'s Forecasts` : `My Forecasts`}</h2>
             {(brierReverse[0].problemName === null || props.userObj.brierScores.length === 0) &&
                 <h3>No scores here; scores achieved for forecasting a problem found on the "My Forecasts" page will be shown here.</h3>
             }

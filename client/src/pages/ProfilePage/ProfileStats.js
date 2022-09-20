@@ -207,7 +207,7 @@ function ProfileStats(props) {
 
     return (
         <div className="profile-stats">
-            <h1 className="profile-header">My Stats</h1>
+            <h2 className="profile-header">My Stats</h2>
             {isHiddenBehindLevel === true &&
             <h3>This section of your profile is locked until you reach Level 6 (600 Fantasy ForecastPoints). Complete the onboarding tasks on the Home page, submit forecasts, post to the feed and more to earn the points you need!</h3>
             }

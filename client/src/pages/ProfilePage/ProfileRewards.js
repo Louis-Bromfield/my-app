@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './ProfileRewards.css';
+import Trophy from '../../media/Trophy.png';
+import TrophyModified from '../../media/TrophyModified.png';
+import Modal from '../../components/Modal';
 
 function ProfileRewards(props) {
     const [rewards, setRewards] = useState([
@@ -15,12 +18,39 @@ function ProfileRewards(props) {
         { levelRequired: 45, rewards: ["Rank Title: Omniscient"] },
         { levelRequired: 50, rewards: ["Rank Title: Diviner"] },
     ]);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState("");
+    const [completeTrophyCount, setCompleteTrophyCount] = useState(0);
+
+    useEffect(() => {
+        let trophyCount = 0;
+        for (let i = 0; i < props.userObj.trophies.length; i++) {
+            if (props.userObj.trophies[i].obtained === true) {
+                trophyCount++;
+            };
+        };
+        setCompleteTrophyCount(trophyCount);
+    }, [props.userObj.trophies]);
+
     return (
         <div className="profile-rewards">
-            <h2 className="profile-header">This section is currently under construction, come back soon!</h2>
-            <p>At the moment, rewards are limited to forecaster "titles" (Guesser, Predictor, Forecaster, Seer etc up to Level 50), and the unlocking of the "My Stats" section on your profile and
-                on the home page. More rewards and incentives will be added in due course.
+            <Modal show={showModal} handleClose={() => setShowModal(false)}>
+                <p>{modalContent}</p>
+            </Modal>
+            <h2 className="profile-header">My Trophies ({completeTrophyCount}/{props.userObj.trophies.length})</h2>
+            <p>Here you can find all possible trophies that you can obtain through Fantasy Forecast. Trophies you have obtained are in colour, and those that are not are in
+                grey. Each trophy can be clicked on to tell you how it has been or can be obtained.
             </p>
+            <div className="trophy-grid-container">
+                {props.userObj !== undefined ? props.userObj.trophies.map((item, index) => {
+                    return (
+                        <div className="individual-trophy-container" onClick={() => { setShowModal(true); setModalContent(item.trophyModalText)}}>
+                            <img src={item.obtained === true ? Trophy : TrophyModified} alt="" className="trophy-img" />
+                            <h4>{item.trophyText}</h4>
+                        </div>
+                    )
+                }) : null}
+            </div>
         </div>
     )
 }
