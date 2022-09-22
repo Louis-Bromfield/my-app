@@ -392,7 +392,7 @@ router.patch("/newNotification/:username", async (req, res) => {
                 user.ratings = user.ratings + 2;
             } else if ((req.body.truthful === true && req.body.relevant === false) || (req.body.truthful === false && req.body.relevant === true)) {
                 // do nothing as the positive and negative cancel each other out
-            } else if (req.body.truthful === true && req.body.relevant === true) {
+            } else if (req.body.truthful === false && req.body.relevant === false) {
                 user.ratings = user.ratings - 2;
             }
             // await Users.findOneAndUpdate({ username: req.body.author }, {

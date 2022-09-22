@@ -165,7 +165,7 @@ function IndividualNewsFeedPost(props) {
         };
     };
 
-    const submitRatingOnPost = async (attribute, upvote) => {
+    const submitRatingOnPost = async () => {
         try {
             if (cookie.username === "Guest") {
                 setShowModal(true);
@@ -286,13 +286,13 @@ function IndividualNewsFeedPost(props) {
                                             size={25} 
                                             className="post-control-btn" 
                                             color={"green"} 
-                                            onClick={() => { setTruthful(true); setSubmittedTruthfulRating(true); submitRatingOnPost("truthful", true)}}
+                                            onClick={() => { setTruthful(true); setSubmittedTruthfulRating(true)}}
                                             />
                                         <AiIcons.AiFillDislike 
                                             size={25} 
                                             className="post-control-btn" 
                                             color={"darkred"} 
-                                            onClick={() => { setTruthful(false); setSubmittedTruthfulRating(true); submitRatingOnPost("truthful", false)}}
+                                            onClick={() => { setTruthful(false); setSubmittedTruthfulRating(true)}}
                                             />
                                     </div>
                                 </div>}
@@ -303,16 +303,19 @@ function IndividualNewsFeedPost(props) {
                                             size={25} 
                                             className="post-control-btn" 
                                             color={"green"} 
-                                            onClick={() => { setRelevant(true); setSubmittedRelevantRating(true); submitRatingOnPost("relevant", true)}}
+                                            onClick={() => { setRelevant(true); setSubmittedRelevantRating(true)}}
                                             />
                                         <AiIcons.AiFillDislike 
                                             size={25} 
                                             className="post-control-btn" 
                                             color={"darkred"} 
-                                            onClick={() => { setRelevant(false); setSubmittedRelevantRating(true); submitRatingOnPost("relevant", false)}}
+                                            onClick={() => { setRelevant(false); setSubmittedRelevantRating(true)}}
                                             />
                                     </div>
                                 </div>}
+                                {((submittedTruthfulRating === true && submittedRelevantRating === true) && submittedRatings === false) &&
+                                    <button className="submit-ratings-btn" onClick={submitRatingOnPost}>Submit Ratings</button>
+                                }
                             </div>
                         </div>
                     }

@@ -43,6 +43,21 @@
     margin: 0 auto;
 }
 
+.submit-ratings-btn {
+    background-color: #404d72;
+    color: #fff;
+    border: none;
+    padding: 1%;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.submit-ratings-btn:hover {
+    cursor: pointer;
+    background-color: #66749b;
+    transition: 0.2s ease;
+}
+
 .post-rate-results {
     display: flex;
     flex-direction: column;
