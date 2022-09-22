@@ -122,16 +122,17 @@ router.patch("/postRatings/:id", async (req, res) => {
             truthful: req.body.truthful,
             relevant: req.body.relevant
         }
-        if (req.body.truthful === true && req.body.relevant === true) {
-            user.ratings = user.ratings + 2;
-        } else if ((req.body.truthful === true && req.body.relevant === false) || (req.body.truthful === false && req.body.relevant === true)) {
-            // do nothing as the positive and negative cancel each other out
-        } else if (req.body.truthful === true && req.body.relevant === true) {
-            user.ratings = user.ratings - 2;
-        }
-        await Users.findOneAndUpdate({ username: req.body.author }, {
-            ratings: user.ratings
-        });
+
+        // if (req.body.truthful === true && req.body.relevant === true) {
+        //     user.ratings = user.ratings + 2;
+        // } else if ((req.body.truthful === true && req.body.relevant === false) || (req.body.truthful === false && req.body.relevant === true)) {
+        //     // do nothing as the positive and negative cancel each other out
+        // } else if (req.body.truthful === true && req.body.relevant === true) {
+        //     user.ratings = user.ratings - 2;
+        // }
+        // await Users.findOneAndUpdate({ username: req.body.author }, {
+        //     ratings: user.ratings
+        // });
         const updatedPost = await HomePageNewsFeedPost.findByIdAndUpdate(req.params.id,
             {
                 $push: { ratings: newRatings }

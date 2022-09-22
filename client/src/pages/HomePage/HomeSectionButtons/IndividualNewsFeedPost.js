@@ -200,7 +200,9 @@ function IndividualNewsFeedPost(props) {
                             notificationMessage: `${cookie.username === undefined ? "Someone" : cookie.username} just rated your news feed post! If this was the first rating you received, you have been awarded the Gather Round trophy!`,
                             notificationSourcePath: "/news-post",
                             notificationSourceObjectID: postID,
-                            notificationRating: true
+                            notificationRating: true,
+                            truthful: truthful,
+                            relevant: relevant
                         });
                         setSubmittedRatings(true);
                     };

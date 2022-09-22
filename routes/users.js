@@ -388,10 +388,21 @@ router.patch("/newNotification/:username", async (req, res) => {
                     user.trophies[i].obtained = true;
                 };
             };
+            if (req.body.truthful === true && req.body.relevant === true) {
+                user.ratings = user.ratings + 2;
+            } else if ((req.body.truthful === true && req.body.relevant === false) || (req.body.truthful === false && req.body.relevant === true)) {
+                // do nothing as the positive and negative cancel each other out
+            } else if (req.body.truthful === true && req.body.relevant === true) {
+                user.ratings = user.ratings - 2;
+            }
+            // await Users.findOneAndUpdate({ username: req.body.author }, {
+            //     ratings: user.ratings
+            // });
         };
         await Users.findOneAndUpdate({ username: req.params.username }, {
             notifications: user.notifications,
-            trophies: user.trophies
+            trophies: user.trophies,
+            ratings: user.ratings
         });
         res.json({message: "successful notification send" })
     } catch (error) {
