@@ -174,62 +174,33 @@ function IndividualNewsFeedPost(props) {
             } else if (cookie.username === author) {
                 setShowModal(true);
                 setModalContent("You cannot rate your own post.");
-            } else {
-                if (attribute === "truthful") {
-                    setSubmittedTruthfulRating(true);
-                    if (submittedRelevantRating === true) {
-                        // add in axios here to edit post document
-                        const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/postRatings/${postID}`, {
-                            username: cookie.username,
-                            truthful: truthful,
-                            relevant: relevant,
-                            author: author
-                        });
-                        if (res.statusCode === -1 && res.status === "Error in user rank") {
-                            setShowModal(true);
-                            setModalContent("You must be at least Level 20 to submit Truthful / Relevance ratings.");
-                        };
-                        if (truthful === true) {
-                            setTruthfulRatingCount(truthfulRatingCount +1);
-                        }
-                        if (relevant === true) {
-                            setRelevantRatingCount(relevantRatingCount + 1);
-                        };
-                        // send user a notification for when they receive a rating
-                        await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${author}`, {
-                            notificationMessage: `${cookie.username === undefined ? "Someone" : cookie.username} just rated your news feed post! If this was the first rating you received, you have been awarded the Gather Round trophy!`,
-                            notificationSourcePath: "/news-post",
-                            notificationSourceObjectID: postID,
-                            notificationRating: true,
-                            truthful: truthful,
-                            relevant: relevant
-                        });
-                        setSubmittedRatings(true);
-                    };
-                } else if (attribute === "relevant") {
-                    setSubmittedRelevantRating(true);
-                    if (submittedTruthfulRating === true) {
-                        // add in axios here to edit post document
-                        await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/postRatings/${postID}`, {
-                            username: cookie.username,
-                            truthful: truthful,
-                            relevant: relevant
-                        });
-                        if (truthful === true) {
-                            setTruthfulRatingCount(truthfulRatingCount +1);
-                        }
-                        if (relevant === true) {
-                            setRelevantRatingCount(relevantRatingCount + 1);
-                        };
-                        // send user a notification for when they receive a rating
-                        await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${author}`, {
-                            notificationMessage: `${cookie.username === undefined ? "Someone" : cookie.username} just rated your news feed post!`,
-                            notificationSourcePath: "/news-post",
-                            notificationSourceObjectID: postID
-                        });
-                        setSubmittedRatings(true);
-                    };
+            } else if (submittedTruthfulRating === true && submittedRelevantRating === true) {
+                // add in axios here to edit post document
+                const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/postRatings/${postID}`, {
+                    username: cookie.username,
+                    truthful: truthful,
+                    relevant: relevant
+                });
+                if (res.statusCode === -1 && res.status === "Error in user rank") {
+                    setShowModal(true);
+                    setModalContent("You must be at least Level 20 to submit Truthful / Relevance ratings.");
                 };
+                if (truthful === true) {
+                    setTruthfulRatingCount(truthfulRatingCount + 1);
+                }
+                if (relevant === true) {
+                    setRelevantRatingCount(relevantRatingCount + 1);
+                };
+                // send user a notification for when they receive a rating
+                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${author}`, {
+                    notificationMessage: `${cookie.username === undefined ? "Someone" : cookie.username} just rated your news feed post! If this was the first rating you received, you have been awarded the Gather Round trophy!`,
+                    notificationSourcePath: "/news-post",
+                    notificationSourceObjectID: postID,
+                    notificationRating: true,
+                    truthful: truthful,
+                    relevant: relevant
+                });
+                setSubmittedRatings(true);
             };
         } catch (err) {
             console.error("Error in IndividualNewsFeedPost > submitRatingOnPost");
@@ -315,13 +286,13 @@ function IndividualNewsFeedPost(props) {
                                             size={25} 
                                             className="post-control-btn" 
                                             color={"green"} 
-                                            onClick={() => { setTruthful(true); submitRatingOnPost("truthful", true)}}
+                                            onClick={() => { setTruthful(true); setSubmittedTruthfulRating(true); submitRatingOnPost("truthful", true)}}
                                             />
                                         <AiIcons.AiFillDislike 
                                             size={25} 
                                             className="post-control-btn" 
                                             color={"darkred"} 
-                                            onClick={() => { setTruthful(false); submitRatingOnPost("truthful", false)}}
+                                            onClick={() => { setTruthful(false); setSubmittedTruthfulRating(true); submitRatingOnPost("truthful", false)}}
                                             />
                                     </div>
                                 </div>}
@@ -332,13 +303,13 @@ function IndividualNewsFeedPost(props) {
                                             size={25} 
                                             className="post-control-btn" 
                                             color={"green"} 
-                                            onClick={() => { setRelevant(true); submitRatingOnPost("relevant", true)}}
+                                            onClick={() => { setRelevant(true); setSubmittedRelevantRating(true); submitRatingOnPost("relevant", true)}}
                                             />
                                         <AiIcons.AiFillDislike 
                                             size={25} 
                                             className="post-control-btn" 
                                             color={"darkred"} 
-                                            onClick={() => { setRelevant(false); submitRatingOnPost("relevant", false)}}
+                                            onClick={() => { setRelevant(false); setSubmittedRelevantRating(true); submitRatingOnPost("relevant", false)}}
                                             />
                                     </div>
                                 </div>}
