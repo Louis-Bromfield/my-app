@@ -179,11 +179,15 @@ function IndividualNewsFeedPost(props) {
                     setSubmittedTruthfulRating(true);
                     if (submittedRelevantRating === true) {
                         // add in axios here to edit post document
-                        await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/postRatings/${postID}`, {
+                        const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/postRatings/${postID}`, {
                             username: cookie.username,
                             truthful: truthful,
                             relevant: relevant
                         });
+                        if (res.statusCode === -1 && res.status === "Error in user rank") {
+                            setShowModal(true);
+                            setModalContent("You must be at least Level 20 to submit Truthful / Relevance ratings.");
+                        };
                         if (truthful === true) {
                             setTruthfulRatingCount(truthfulRatingCount +1);
                         }
@@ -192,9 +196,10 @@ function IndividualNewsFeedPost(props) {
                         };
                         // send user a notification for when they receive a rating
                         await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${author}`, {
-                            notificationMessage: `${cookie.username === undefined ? "Someone" : cookie.username} just rated your news feed post!`,
+                            notificationMessage: `${cookie.username === undefined ? "Someone" : cookie.username} just rated your news feed post! If this was the first rating you received, you have been awarded the Gather Round trophy!`,
                             notificationSourcePath: "/news-post",
-                            notificationSourceObjectID: postID
+                            notificationSourceObjectID: postID,
+                            notificationRating: true
                         });
                         setSubmittedRatings(true);
                     };

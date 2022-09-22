@@ -159,6 +159,7 @@ function Forecast(props) {
                                 <ForecastChat
                                     forecast={forecast}
                                     username={props.username}
+                                    userObject={props.userObject}
                                 />
                                 {/* <ForecastStatistics 
                                     selectedForecast={forecast} 

@@ -56,6 +56,10 @@ function ForecastChat(props) {
             setShowModal(true);
             setModalContent("You must be logged into your own account to post a comment here.");
             return;
+        } else if (props.userObject.fantasyForecastPoints < 1500) {
+            setShowModal(true);
+            setModalContent("You must be at least Level 15 to post comments in this chat.");
+            return;
         } else {
             try {
                 if (comment === "" || (/\s/.test(comment))) {
@@ -96,6 +100,10 @@ function ForecastChat(props) {
         if (props.username === "Guest") {
             setShowModal(true);
             setModalContent("You must be logged into your own account to reply to this comment.");
+            return;
+        } else if (props.userObject.fantasyForecastPoints < 1500) {
+            setShowModal(true);
+            setModalContent("You must be at least Level 15 to post comments in this chat.");
             return;
         } else {
             console.log(comment);

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Forecasts = require('../models/Forecasts');
+const Users = require('../models/Users');
 
 // Get all forecasts
 router.get("/", async (req, res) => {
@@ -658,6 +659,20 @@ router.patch("/submit", async (req, res) => {
             // ], 
             // captainedStatus: req.body.captainedStatus
         };
+
+        if ((new Date(req.body.date) - new Date(document.startDate))/1000 <= 86400) {
+            const user = await Users.findOne({ username: req.body.username });
+            for (let i = 0; i < user.trophies.length; i++) {
+                if (user.trophies[i].trophyText === "Quick off the Mark" && user.trophies[i].obtained === false) {
+                    user.trophies[i].obtained = true;
+                    break;
+                };
+            };
+            await Users.findOneAndUpdate({ username: req.body.username }, {
+                trophies: user.trophies
+            });
+        };
+
         const newForecastSavedToDB = await Forecasts.findByIdAndUpdate(document._id, 
             { 
                 $push: { submittedForecasts: toPushToDB },

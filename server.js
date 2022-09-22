@@ -173,6 +173,10 @@ const UserSchema = mongoose.Schema({
                 trophyModalText: "Score full marks on a quiz in the Learn section."
             }
         ]
+    },
+    ratings: {
+        type: Number,
+        default: 0
     }
 });
 

@@ -823,6 +823,12 @@ console.log(forecast);
                 setUserPreviousAttemptCertainty(`${certainty1*100} / ${certainty2*100} / ${certainty3*100}`);
                 setUserPreviousAttemptComments(comments);
                 updateOnboarding(username);
+
+                if ((new Date(nDateBSTSuffix) - new Date(selectedForecastObject.startDate))/1000 <= 86400) {
+                    setShowModal(true);
+                    setModalContent("You submitted within 24 hours of the problem going live, you've unlocked the Quick off the Mark trophy!");
+                };
+                
             } catch (error) {
                 console.error("error in ForecastSubmission.js > handleForecastSubmit")
                 console.error(error);
@@ -1061,7 +1067,7 @@ console.log(forecast);
                                             className="submit-forecast-btn" 
                                             disabled={buttonDisabled}
                                             onClick={() => {
-                                                handleForecastSubmit(selectedForecast, certainty, forecastComments, props.username); 
+                                                handleForecastSubmit(selectedForecast, certainty, forecastComments, props.username, selectedForecastObject); 
                                                 // setForecastResponseMessage("Forecast successfully submitted!");
                                                 // setUserPreviousAttemptCertainty(certainty*100);
                                                 // setUserPreviousAttemptComments(forecastComments);
@@ -1189,7 +1195,7 @@ console.log(forecast);
                                                 className="submit-forecast-btn" 
                                                 disabled={buttonDisabled}
                                                 onClick={() => {
-                                                    handleMultipleForecastSubmit(selectedForecast, certaintyOne, certaintyTwo, certaintyThree, forecastComments, props.username); 
+                                                    handleMultipleForecastSubmit(selectedForecast, certaintyOne, certaintyTwo, certaintyThree, forecastComments, props.username, selectedForecastObject); 
                                                     // setForecastResponseMessage("Forecast successfully submitted!");
                                                     setUserPreviousAttemptCertainty(`${certaintyOne*100} / ${certaintyTwo*100} / ${certaintyThree*100}`);
                                                     setUserPreviousAttemptComments(forecastComments);

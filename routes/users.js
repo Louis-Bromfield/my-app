@@ -382,10 +382,18 @@ router.patch("/newNotification/:username", async (req, res) => {
             seenByUser: false,
             notificationIndex: user.notifications.length+1
         });
+        if (req.body.notificationRating === true) {
+            for (let i = 0; i < user.trophies.length; i++) {
+                if (user.trophies[i].trophyText === "Gather Round!" && user.trophies[i].obtained === false) {
+                    user.trophies[i].obtained = true;
+                };
+            };
+        };
         await Users.findOneAndUpdate({ username: req.params.username }, {
             notifications: user.notifications,
+            trophies: user.trophies
         });
-        res.json({message: "success ASDKASDL:AS" })
+        res.json({message: "successful notification send" })
     } catch (error) {
         console.error("Error in patch users > newNotification");
         console.error(error);
@@ -527,6 +535,12 @@ router.patch("/onboardingTask/:username", async (req, res) => {
                 userOnboarding.submitAForecast = true;
                 userFFPoints += req.body.ffPointsIfFalse;
                 firstTime = true;
+                for (let i = 0; i < user.trophies.length; i++) {
+                    if (user.trophies[i].trophyText === "First Time Around") {
+                        user.trophies[i].obtained = true;
+                        break;
+                    };
+                };
             } else {
                 userFFPoints += req.body.ffPointsIfTrue;
                 firstTime = false;
@@ -546,6 +560,7 @@ router.patch("/onboardingTask/:username", async (req, res) => {
         console.log(userFFPoints);
         console.log("======================");
         const updatedUser = await Users.findByIdAndUpdate(user._id, {
+            trophies: user.trophies,
             onboarding: userOnboarding,
             fantasyForecastPoints: userFFPoints
         });
@@ -574,7 +589,9 @@ router.patch("/:username", async (req, res) => {
             numberOfClosedForecasts: req.body.numberOfClosedForecasts,
             profilePicture: req.body.profilePicture,
             articleVisits: req.body.articleVisits,
-            completedSurvey: req.body.completedSurvey
+            completedSurvey: req.body.completedSurvey,
+            notifications: req.body.notifications,
+            trophies: req.body.trophies
         },
         { new: true }
     );
@@ -674,8 +691,25 @@ console.log(user);
             };
 console.log("15 TOPUSH");
 console.log(toPush);
+            if (calculatedBriers[i].finalScore >= 100) {
+                for (let j = 0; j < user.trophies.length; j++) {
+                    if (user.trophies[j].trophyText === "The Gold Standard" && user.trophies[j].obtained === false) {
+                        user.trophies[j].obtained = true;
+                        break;
+                    };
+                };
+                if (user.brierScores[user.brierScores.length-1].brierScore >= 100 && user.brierScores[user.brierScores.length-2].brierScore >= 100) {
+                    for (let j = 0; j < user.trophies.length; j++) {
+                        if (user.trophies[j].trophyText === "The Triple Gold Standard" && user.trophies[j].obtained === false) {
+                            user.trophies[j].obtained = true;
+                            break;
+                        };
+                    };  
+                }
+            };
             const updatedUser = await Users.findOneAndUpdate({ username: calculatedBriers[i].username }, {
                 $push: { brierScores: toPush },
+                trophies: user.trophies,
                 fantasyForecastPoints: Number(user.fantasyForecastPoints) + toPush.brierScore,
                 forecastClosedStatus: true,
                 numberOfClosedForecasts: Number(user.numberOfClosedForecasts) + 1

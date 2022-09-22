@@ -389,7 +389,7 @@ function Search(props) {
                             <div className="profile-nav-menu">
                                 <div className="profile-tab" onClick={() => setSearchTab("my-stats")}><h3>{playerUsername !== "" ? `${playerUsername}'s Stats` : "Player Stats"}</h3></div>
                                 <div className="profile-tab" onClick={() => setSearchTab("my-forecasts")}><h3>{playerUsername !== "" ? `${playerUsername}'s Forecasts` : "Player Forecasts"}</h3></div>
-                                <div className="profile-tab" onClick={() => setSearchTab("my-rewards")}><h3>{playerUsername !== "" ? `${playerUsername}'s Rewards` : "Player Rewards"}</h3></div>
+                                <div className="profile-tab" onClick={() => setSearchTab("my-rewards")}><h3>{playerUsername !== "" ? `${playerUsername}'s Trophies` : "Player Trophies"}</h3></div>
                             </div>
                             {searchTab === "my-stats" && 
                                 <div className="profile-stats">
@@ -443,7 +443,7 @@ function Search(props) {
                                 </div>
                             }
                             {searchTab === "my-forecasts" && <ProfileForecasts userObj={searchUserObj} searched={true} playerUsername={playerUsername} />}
-                            {searchTab === "my-rewards" && <ProfileRewards />}
+                            {searchTab === "my-rewards" && <ProfileRewards userObj={searchUserObj} />}
                         </div>
                         <hr />
                     </div>

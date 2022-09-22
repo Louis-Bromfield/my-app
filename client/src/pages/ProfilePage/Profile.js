@@ -226,8 +226,9 @@ console.log("Profile.js UE");
                                     <h3>Fantasy Forecast All-Time Rank</h3>
                                 </div>
                                 <div key={5} className="profile-summary-list-item">
-                                    <h2 className="profile-summary-list-item-value">{markets.split(", ").length}</h2>
-                                    <h3># Of Markets In</h3>
+                                    {/* <h2 className="profile-summary-list-item-value">{markets.split(", ").length}</h2> */}
+                                    <h2 className="profile-summary-list-item-value">{props.user.ratings > 0 ? "+" + props.user.ratings : props.user.ratings === 0 ? "+/-" + props.user.ratings : "-" + props.user.ratings}</h2>
+                                    <h3>Post Rating</h3>
                                 </div>
                             {/* </ul> */}
                         </div>

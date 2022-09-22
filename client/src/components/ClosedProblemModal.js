@@ -77,6 +77,7 @@ const ClosedProblemModal = (props) => {
                         <p>You Scored: <u>{currentProblem.brierScore.toFixed(2)} / 110</u></p>
                         <p>You Scored: <u>{currentProblem.brierScore.toFixed(0)}</u> Market Points and FFPoints!</p>
                         <br />
+                        {currentProblem.brierScore >= 100 && <p>If this was your first 100+ score or your third in a row, you will have received the "Gold Standard" or "Triple Gold Standard" trophies respectively!</p>}
                         {/* {(currentProblem.performanceBoost >= 1 && currentProblem.brierScore >= 75) &&
                             <p>
                                 As you scored 75 or above on this problem, you received a Boost of <u>5% ({(currentProblem.brierScore - (currentProblem.brierScore / 105) * 100).toFixed(2)} points)</u> on this prediction.

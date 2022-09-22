@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const HomePageNewsFeedPost = require('../models/HomePageNewsFeedPosts');
 const { extract } = require('article-parser');
+const Users = require('../models/Users');
 
 // Get all posts
 router.get("/", async (req, res) => {
@@ -97,17 +98,40 @@ router.patch("/postComment/:id", async (req, res) => {
         };
     } catch (error) {
         res.json({ error: error.message });
-    }
+    };
 });
 
 // Update a post's ratings
 router.patch("/postRatings/:id", async (req, res) => {
     try {
+        const user = await Users.findOne({ username: req.body.username });
+        if (user.fantasyForecastPoints < 2000) {
+            res.json({
+                status: "Error in user rank",
+                statusCode: -1
+            });
+        };
+        for (let i = 0; i < user.trophies.length; i++) {
+            if (user.trophies[i].trophyText === "Here, have a cookie." && user.trophies[i].obtained === false) {
+                user.trophies[i].obtained = true;
+            };
+        };
+        await Users.findByIdAndUpdate(user._id, { trophies: user.trophies });
         const newRatings = {
             username: req.body.username,
             truthful: req.body.truthful,
             relevant: req.body.relevant
         }
+        if (req.body.truthful === true && req.body.relevant === true) {
+            user.ratings = user.ratings + 2;
+        } else if ((req.body.truthful === true && req.body.relevant === false) || (req.body.truthful === false && req.body.relevant === true)) {
+            // do nothing as the positive and negative cancel each other out
+        } else if (req.body.truthful === true && req.body.relevant === true) {
+            user.ratings = user.ratings - 2;
+        }
+        await Users.findByIdAndUpdate(user._id, {
+            ratings: user.ratings
+        });
         const updatedPost = await HomePageNewsFeedPost.findByIdAndUpdate(req.params.id,
             {
                 $push: { ratings: newRatings }
@@ -117,7 +141,7 @@ router.patch("/postRatings/:id", async (req, res) => {
         res.json({ newPost: updatedPost });
     } catch (error) {
         res.json({ error: error.message });
-    }
+    };
 });
 
 // Update all posts when a user changes their username
