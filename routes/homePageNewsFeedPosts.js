@@ -129,7 +129,7 @@ router.patch("/postRatings/:id", async (req, res) => {
         } else if (req.body.truthful === true && req.body.relevant === true) {
             user.ratings = user.ratings - 2;
         }
-        await Users.findByIdAndUpdate(user._id, {
+        await Users.findOneAndUpdate({ username: req.body.author }, {
             ratings: user.ratings
         });
         const updatedPost = await HomePageNewsFeedPost.findByIdAndUpdate(req.params.id,

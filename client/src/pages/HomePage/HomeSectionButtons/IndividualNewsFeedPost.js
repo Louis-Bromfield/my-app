@@ -182,7 +182,8 @@ function IndividualNewsFeedPost(props) {
                         const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/postRatings/${postID}`, {
                             username: cookie.username,
                             truthful: truthful,
-                            relevant: relevant
+                            relevant: relevant,
+                            author: author
                         });
                         if (res.statusCode === -1 && res.status === "Error in user rank") {
                             setShowModal(true);
