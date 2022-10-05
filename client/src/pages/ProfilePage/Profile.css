@@ -67,6 +67,12 @@
     text-align: center;
 }
 
+.profile-summary-list-item-value:hover {
+    cursor: pointer;
+    background-color: #66749b;
+    transition: 0.2s ease;
+}
+
 .profile-summary > h1 {
     margin-bottom: 1%;
 }

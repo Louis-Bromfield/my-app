@@ -24,6 +24,7 @@ function IndividualNewsFeedPost(props) {
     const [comments, setComments] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
+    const [modalContent2, setModalContent2] = useState("");
     const [submittedRatings, setSubmittedRatings] = useState(false);
     const [submittedTruthfulRating, setSubmittedTruthfulRating] = useState(false);
     const [submittedRelevantRating, setSubmittedRelevantRating] = useState(false);
@@ -150,15 +151,42 @@ function IndividualNewsFeedPost(props) {
     const giveUserPoints = async (username) => {
         try {
             const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            let userPrePoints = userDocument.data[0].fantasyForecastPoints;
+
+            let trophyUpdate = false;
+            let trophyText = "";
+            if ((userPrePoints < 1500) && (userDocument.data[0].fantasyForecastPoints+10 >= 1500)) {
+                trophyUpdate = true;
+                trophyText = "Seer"
+            } else if ((userPrePoints < 2000) && (userDocument.data[0].fantasyForecastPoints+10 >= 2000)) {
+                trophyUpdate = true;
+                trophyText = "Soothsayer"
+            } else if ((userPrePoints < 2500) && (userDocument.data[0].fantasyForecastPoints+10 >= 2500)) {
+                trophyUpdate = true;
+                trophyText = "Oracle"
+            } else if ((userPrePoints < 5000) && (userDocument.data[0].fantasyForecastPoints+10 >= 5000)) {
+                trophyUpdate = true;
+                trophyText = "Divine"
+            };
+            if (trophyUpdate === true) {
+                for (let i = 0; i < userDocument.data[0].trophies.length; i++) {
+                    if (userDocument.data[0].trophies[i].trophyText === trophyText && userDocument.data[0].trophies[i].obtained === false) {
+                        userDocument.data[0].trophies[i].obtained = true;
+                        setModalContent2("And you just reached the Divine rank, unlocking a new trophy for your profile!");
+                    };
+                };
+            };
             userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 10
             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, {
-                fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints
+                fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints,
+                trophies: userDocument.data[0].trophies
             });
             setModalContent("You just earned 10 Fantasy Forecast Points for commenting!");
             setShowModal(true);
             setTimeout(() => {
                 setShowModal("false");
                 setModalContent("");
+                setModalContent2("");
             }, 2500);
         } catch (error) {
             console.error(error);
@@ -212,6 +240,7 @@ function IndividualNewsFeedPost(props) {
         <div className="individual-post-container">
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
+                <p>{modalContent2}</p>
             </Modal>
             <button 
                 className="post-button"

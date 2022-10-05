@@ -570,6 +570,48 @@ router.patch("/onboardingTask/:username", async (req, res) => {
         console.log(userOnboarding);
         console.log(userFFPoints);
         console.log("======================");
+
+        // Check if they've completed all onboarding tasks
+        let allOnboardingTrue = true;
+        for (let i = 0; i < user.onboarding.length; i++) {
+            if (user.onboarding[i] === false) {
+                allOnboardingTrue = false;
+                break;
+            };
+        };
+        if (allOnboardingTrue === true) {
+            for (let i = 0; i < user.trophies.length; i++) {
+                if (user.trophies[i].trophyText === "Ready to Go" && user.trophies[i].obtained === false) {
+                    user.trophies[i].obtained = true;
+                };
+            };
+        };
+
+        let trophyUpdate = false;
+        let trophyText = "";
+        if ((user.fantasyForecastPoints < 1500) && (userFFPoints >= 1500)) {
+            trophyUpdate = true;
+            trophyText = "Seer"
+        } else if ((user.fantasyForecastPoints < 2000) && (userFFPoints >= 2000)) {
+            trophyUpdate = true;
+            trophyText = "Soothsayer"
+        } else if ((user.fantasyForecastPoints < 2500) && (userFFPoints >= 2500)) {
+            trophyUpdate = true;
+            trophyText = "Oracle"
+        } else if ((user.fantasyForecastPoints < 5000) && (userFFPoints >= 5000)) {
+            trophyUpdate = true;
+            trophyText = "Divine"
+        };
+
+        if (trophyUpdate === true) {
+            for (let i = 0; i < user.trophies.length; i++) {
+                if (user.trophies[i].trophyText === trophyText && user.trophies[i].obtained === false) {
+                    user.trophies[i].obtained = true;
+                };
+            };
+        };
+
+        // Update user document
         const updatedUser = await Users.findByIdAndUpdate(user._id, {
             trophies: user.trophies,
             onboarding: userOnboarding,

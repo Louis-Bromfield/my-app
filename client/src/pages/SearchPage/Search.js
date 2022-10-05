@@ -48,6 +48,7 @@ function Search(props) {
     const [forecasterRank, setForecasterRank] = useState("");
     const [searchTab, setSearchTab] = useState("my-stats");
     const [searchUserObj, setSearchUserObj] = useState({});
+    const [postRating, setPostRating] = useState(0);
     const [cookie, setCookie] = useCookies(['username']);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
@@ -107,7 +108,7 @@ function Search(props) {
         if (username === "" || username.length === 0) {
             return;
         } else if (username === props.username) {
-            setErrorMessage("If you want to see your own profile, click your username in the top-right or select My Profile from the top-left dropdown menu if you're on mobile.")
+            setErrorMessage("If you want to see your own profile, click your profile picture in the top-right and select Go to My Profile, or select My Profile from the top-left dropdown menu on mobile.")
             setLoading(false);
             return;
         };
@@ -130,6 +131,7 @@ function Search(props) {
                 setBrierAverage(userDocument.data.averageBrier);
                 setBestForecast(userDocument.data.bestBrier.toFixed(2));
                 setBestForecastForModal(`${(userDocument.data.bestBrier).toFixed(2)} / 110 - ${userDocument.data.bestForecastProblem}`);
+                setPostRating(userDocument.data.userObj.ratings);
                 if (userDocument.data.userObj.fantasyForecastPoints < 500) {
                     setForecasterRank("Guesser");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 500 && userDocument.data.userObj.fantasyForecastPoints < 1000) {
@@ -377,8 +379,15 @@ function Search(props) {
                                         <h3>Fantasy Forecast All-Time Rank</h3>
                                     </div>
                                     <div key={5} className="profile-summary-list-item">
-                                        <h2 className="profile-summary-list-item-value">{markets.split(", ").length}</h2>
-                                        <h3>Markets</h3>
+                                    <h2 
+                                        className="profile-summary-list-item-value"
+                                        onClick={() => {
+                                            setModalContent("This is your net score from truthful and relevant ratings received on your news feed posts. For example, if 3 forecasters said your post was both truthful and relevant, your score would be +6. If a fourth forecaster then rated your post as neither truthful or relevant, your score would drop to +4. This score can be useful for learning more about other forecasters. Submitting ratings on other forecaster's posts for truthfulness and relevance is locked until you reach Level 20.");
+                                            setShowModal(true);
+                                        }}>
+                                            {postRating > 0 ? "+" + postRating : postRating === 0 ? "+/-" + postRating : "-" + postRating}
+                                    </h2>
+                                        <h3>Post Rating</h3>
                                     </div>
                                 {/* </ul> */}
                             </div>
