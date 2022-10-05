@@ -22,7 +22,7 @@ let passwordFromClient = "_TEMP_PASSWORD";
 let passwordResetCodeFromClient = "_TEMP_PASSWORD_RESET_CODE";
 // let accessTokenToReturnToClient = "_TEMP_TOKEN";
 // let isSignedUpForSurveyFromClient = "SIGNUPFORSURVEY_VALUE_UNCHANGED";
-// let prolificIDFromClient = "_TEMP_PROLIFIC_ID_UNIMPORTED";
+let prolificIDFromClient = "_TEMP_PROLIFIC_ID_UNIMPORTED";
 
 app.use(cookieParser());
 
@@ -45,6 +45,9 @@ const UserSchema = mongoose.Schema({
         type: String
     },
     password: {
+        type: String
+    },
+    pID: {
         type: String
     },
     fantasyForecastPoints: {
@@ -247,6 +250,7 @@ passport.use(new GoogleStrategy({
     User.findOrCreate({ 
         username: usernameFromClient, 
         // pwdResetCode: passwordResetCodeFromClient,
+        pID: prolificIDFromClient,
         profilePicture: profile.photos[0].value || "",
         email: profile.emails[0].value || "No email address",
         password: passwordCheck
@@ -327,6 +331,7 @@ const loggingMiddleWare = async (params, next) => {
     console.log(params.password);
     console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     usernameFromClient = params.username;
+    prolificIDFromClient = params.prolific;
     passwordResetCodeFromClient = params.resetCode;
     // passwordFromClient = params.password;
     // isSignedUpForSurveyFromClient = params.isSignedUpForSurvey;
@@ -399,7 +404,7 @@ const loggingMiddleWare = async (params, next) => {
 // };
 
 
-app.get("/auth/google/not_callback/:username/:password", (req, res, next) => loggingMiddleWare(req.params, next), passport.authenticate("google", {
+app.get("/auth/google/not_callback/:username/:password/:prolific", (req, res, next) => loggingMiddleWare(req.params, next), passport.authenticate("google", {
     scope: [
         'https://www.googleapis.com/auth/userinfo.profile',
         'https://www.googleapis.com/auth/userinfo.email'

@@ -9,6 +9,7 @@ import { useCookies } from 'react-cookie';
 function Login(props) {
     // localStorage.setItem("loggedInFromGoogle", true)
     const [usernameForCreate, setUsernameForCreate] = useState("");
+    const [prolificIDForCreate, setProlificIDForCreate] = useState("");
     const [passwordForCreate, setPasswordForCreate] = useState("");
     const [passwordResetCodeForCreate, setPasswordResetCodeForCreate] = useState("");
     const [usernameForLogin, setUsernameForLogin] = useState("");
@@ -16,7 +17,7 @@ function Login(props) {
     const [passwordResetCodeForLogin, setPasswordResetCodeForLogin] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [errorMessageForAccountCreation, setErrorMessageForAccountCreation] = useState("");
-    // const [prolificID, setProlificID] = useState("");
+    const [prolificID, setProlificID] = useState("");
     // const [loggedIn, setLoggedIn] = useState(false);
     const [problematicInfo, setProblematicInfo] = useState("_");
     const [credentialsSuccessfullyChecked, setCredentialsSuccessfullyChecked] = useState(null);
@@ -30,12 +31,15 @@ function Login(props) {
     //     setLoggedIn(localStorage.getItem("loggedInFromGoogle"));
     // }, []);
 
-    const checkCredentials = async (uName, pWord) => {
+    const checkCredentials = async (uName, pWord, pID) => {
         if (uName.length < 4 || pWord.length < 4) {
             setErrorMessageForAccountCreation("Your username and password must be at least 5 characters and contain no spaces.");
             return;
         } else if (/\s/.test(uName) || (/\s/.test(uName))) {
             setErrorMessageForAccountCreation("Your username and password must be at least 5 characters and contain no spaces.");
+            return;
+        } else if (/\s/.test(pID)) {
+            setErrorMessageForAccountCreation("Your ProlificID cannot contain spaces.");
             return;
         } else {
             try {
@@ -146,6 +150,18 @@ function Login(props) {
                             setErrorMessageForAccountCreation("");
                         }} 
                     />
+                    <label htmlFor="prolificID">Enter Your ProlificID:</label>
+                    <input 
+                        type="text" 
+                        name="prolificID" 
+                        id="prolificID" 
+                        maxLength={15}
+                        onChange={(e) => { 
+                            setCredentialsSuccessfullyChecked(null);
+                            setProlificIDForCreate(e.target.value);
+                            setErrorMessageForAccountCreation("");
+                        }} 
+                    />
                     <label htmlFor="password">Password:</label>
                     <input 
                         type="password" 
@@ -173,12 +189,12 @@ function Login(props) {
                         }}
                     /> */}
                     {credentialsSuccessfullyChecked === null &&
-                        <button className="check-your-details-btn" onClick={() => checkCredentials(usernameForCreate, passwordForCreate)}>Click Here: Check Your Details</button>
+                        <button className="check-your-details-btn" onClick={() => checkCredentials(usernameForCreate, passwordForCreate, prolificIDForCreate)}>Click Here: Check Your Details</button>
                     }
                     {credentialsSuccessfullyChecked === true && 
                         <div className="credentials-passed-login">
                             {/* <h2>Your details are perfect!</h2> */}
-                            <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/not_callback/${usernameForCreate}/${passwordForCreate}`}>
+                            <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/not_callback/${usernameForCreate}/${passwordForCreate}/${prolificIDForCreate}`}>
                                 <button type="submit" className="sign-in-with-google-btn">Your details are perfect. Now click here to sign in with Google</button>
                                 <div className="google-explainer">
                                     <p><u>Why do I need to sign in with Google?</u> 1) So your Fantasy Forecast account has a profile picture, and 2) so we can email the winners of the tournament!</p>
