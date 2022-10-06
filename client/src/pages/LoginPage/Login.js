@@ -32,13 +32,13 @@ function Login(props) {
     // }, []);
 
     const checkCredentials = async (uName, pWord, pID) => {
-        if (uName.length < 4 || pWord.length < 4) {
+        if (uName.length < 4 || /\s/.test(uName) || uName === "") {
             setErrorMessageForAccountCreation("Your username and password must be at least 5 characters.");
             return;
-        } else if (/\s/.test(uName) || (/\s/.test(pWord))) {
+        } else if (pWord.length < 4|| (/\s/.test(pWord)) || pWord === "") {
             setErrorMessageForAccountCreation("Your username and password must contain no spaces.");
             return;
-        } else if (/\s/.test(pID) || pID.length < 4) {
+        } else if (pID.length < 4 || /\s/.test(pID) || pID === "") {
             setErrorMessageForAccountCreation("Your ProlificID is too short and cannot contain spaces.");
             return;
         } else {
