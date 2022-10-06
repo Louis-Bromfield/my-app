@@ -33,13 +33,13 @@ function Login(props) {
 
     const checkCredentials = async (uName, pWord, pID) => {
         if (uName.length < 4 || pWord.length < 4) {
-            setErrorMessageForAccountCreation("Your username and password must be at least 5 characters and contain no spaces.");
+            setErrorMessageForAccountCreation("Your username and password must be at least 5 characters.");
             return;
-        } else if (/\s/.test(uName) || (/\s/.test(uName))) {
-            setErrorMessageForAccountCreation("Your username and password must be at least 5 characters and contain no spaces.");
+        } else if (/\s/.test(uName) || (/\s/.test(pWord))) {
+            setErrorMessageForAccountCreation("Your username and password must contain no spaces.");
             return;
-        } else if (/\s/.test(pID)) {
-            setErrorMessageForAccountCreation("Your ProlificID cannot contain spaces.");
+        } else if (/\s/.test(pID) || pID.length < 4) {
+            setErrorMessageForAccountCreation("Your ProlificID is too short and cannot contain spaces.");
             return;
         } else {
             try {
