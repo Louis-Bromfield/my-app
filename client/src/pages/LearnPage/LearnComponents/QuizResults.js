@@ -1,8 +1,12 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import './QuizResults.css';
+import Modal from '../../../components/Modal';
 
 function QuizResults(props) {
     const [formattedArray, setFormattedArray] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState("");
     let youSelected = "";
     let correctAnswer = "";
     let numberOfCorrectAnswers = 0;
@@ -29,8 +33,35 @@ function QuizResults(props) {
         };
     }, [props.quizQuestions, props.quizResults]);
 
+    useEffect(() => {
+        console.log("2nd QR UE");
+        if (numberOfCorrectAnswers > 0 && numberOfQuestions > 0 && numberOfCorrectAnswers === numberOfQuestions) {
+            awardTrophy(props.username);
+        }
+    }, [numberOfCorrectAnswers, numberOfQuestions]);
+
+    const awardTrophy = async (username) => {
+        try {
+            const user = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            for (let i = 0; i < user.data[0].trophies.length; i++) {
+                if (user.data[0].trophies[i].trophyText === "Perfection" && user.data[0].trophies[i].obtained === false) {
+                    user.data[0].trophies[i].obtained = true;
+                    setShowModal(true);
+                    setModalContent("You just unlocked the Perfection trophy! Trophies can be found on your profile page in the My Trophies section.")
+                    break;
+                }
+            }      
+        } catch (err) {
+            console.error("Error in QuizResults > awardTrophy");
+            console.err(err);
+        };
+    };
+
     return (
         <div className="quiz-results-container">
+            <Modal show={showModal} handleClose={() => setShowModal(false)}>
+                <p>{modalContent}</p>
+            </Modal>
             <h2>Quiz Results</h2>
             <hr />
             {formattedArray.map((item, index) => {
@@ -117,7 +148,7 @@ function QuizResults(props) {
             <div className="quiz-results-total">
                 <h1>Total: {numberOfCorrectAnswers} / {numberOfQuestions}</h1>
                 {/* <h2>You scored {numberOfCorrectAnswers} / {numberOfQuestions}</h2> */}
-                {numberOfQuestions - numberOfCorrectAnswers === 0 && <h3>Congratulations, you got them all correct!</h3>}
+                {numberOfQuestions - numberOfCorrectAnswers === 0 && <h3>Congratulations, you got them all correct! If this is the first time this has happened, you'll have unlocked the Perfection trophy!</h3>}
                 {numberOfQuestions - numberOfCorrectAnswers === 1 && <h4>An impressive score, but not quite all correct. Feel free to check out the topic content by either re-selecting it from the left-hand menu or the button below, and you always have unlimited attempts at the quiz to test yourself!</h4>}
                 {numberOfQuestions - numberOfCorrectAnswers > 1 && <h4>Don't worry if you didn't get all the answers, you have unlimited access to and unlimited attempts at this quiz!</h4>}
             </div>

@@ -130,14 +130,15 @@ function Topic(props) {
                 }
             </div>}
             {props.paneContent === "results" &&
-            <div className="topic">
-                <QuizResults 
-                    topic={props.title} 
-                    quizResults={quizResults} 
-                    quizQuestions={quizQuestions} 
-                    changeLearnPage={props.changeLearnPage} 
-                    nextTopic={() => props.nextTopic(props.title)} />
-            </div>
+                <div className="topic">
+                    <QuizResults 
+                        username={props.username}
+                        topic={props.title} 
+                        quizResults={quizResults} 
+                        quizQuestions={quizQuestions} 
+                        changeLearnPage={props.changeLearnPage} 
+                        nextTopic={() => props.nextTopic(props.title)} />
+                </div>
             }
         </div>
     )

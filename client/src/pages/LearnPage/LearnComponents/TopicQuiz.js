@@ -86,14 +86,14 @@ function TopicQuiz(props) {
                 } else if (topic === "Superforecasters") {
                     userDocument.data[0].learnQuizzes.superforecastersComplete = true;
                 };
-                for (let i = 0; i < userDocument.data[0].trophies.length; i++) {
-                    if (userDocument.data[0].trophies[i].trophyText === "Perfection" && userDocument.data[0].trophies[i].obtained === false) {
-                        userDocument.data[0].trophies[i].obtained = true;
-                        setShowModal(true);
-                        setModalContent("You just unlocked the Perfection trophy! Trophies can be found on your profile page in the My Trophies section.")
-                        break;
-                    }
-                }
+                // for (let i = 0; i < userDocument.data[0].trophies.length; i++) {
+                //     if (userDocument.data[0].trophies[i].trophyText === "Perfection" && userDocument.data[0].trophies[i].obtained === false) {
+                //         userDocument.data[0].trophies[i].obtained = true;
+                //         setShowModal(true);
+                //         setModalContent("You just unlocked the Perfection trophy! Trophies can be found on your profile page in the My Trophies section.")
+                //         break;
+                //     }
+                // }
                 await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
                     { 
                         onboarding: userDocument.data[0].onboarding,
