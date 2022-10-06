@@ -7,6 +7,7 @@ function QuizResults(props) {
     const [formattedArray, setFormattedArray] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
+    const [trophyAwarded, setTrophyAwarded] = useState(false);
     let youSelected = "";
     let correctAnswer = "";
     let numberOfCorrectAnswers = 0;
@@ -31,32 +32,42 @@ function QuizResults(props) {
                 setFormattedArray(formattedArray => ([...formattedArray, [questionsAndAnswers[i][0][0], questionsAndAnswers[i][1]]]));
             };
         };
+        console.log(formattedArray);
     }, [props.quizQuestions, props.quizResults]);
 
-    useEffect(() => {
-        console.log("2nd QR UE");
-        if (numberOfCorrectAnswers > 0 && numberOfQuestions > 0 && numberOfCorrectAnswers === numberOfQuestions) {
-            awardTrophy(props.username);
-        }
-    }, [numberOfCorrectAnswers, numberOfQuestions]);
+    // useEffect(() => {
+    //     console.log("2nd QR UE");
+    //     if (numberOfCorrectAnswers > 0 && numberOfQuestions > 0 && numberOfCorrectAnswers === numberOfQuestions) {
+    //         console.log("yes here");
+    //         awardTrophy(props.username);
+    //     }
+    // }, [numberOfCorrectAnswers, numberOfQuestions]);
 
-    const awardTrophy = async (username) => {
-        try {
-            const user = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
-            for (let i = 0; i < user.data[0].trophies.length; i++) {
-                if (user.data[0].trophies[i].trophyText === "Perfection" && user.data[0].trophies[i].obtained === false) {
-                    user.data[0].trophies[i].obtained = true;
-                    setShowModal(true);
-                    setModalContent("You just unlocked the Perfection trophy! Trophies can be found on your profile page in the My Trophies section.")
-                    await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, {
-                        trophies: user.data[0].trophies
-                    });
-                    break;
-                };
-            }; 
-        } catch (err) {
-            console.error("Error in QuizResults > awardTrophy");
-            console.err(err);
+    const awardTrophy = async (numberOfQuestions, numberOfCorrectAnswers, username) => {
+        console.log("in awardTrophy");
+        if ((trophyAwarded === false) && (numberOfCorrectAnswers > 0 && numberOfQuestions > 0 && numberOfCorrectAnswers === numberOfQuestions)) {
+            console.log("in awardTrophy passed condition");
+            try {
+                const user = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+                console.log("+++++++++++++++++++++++++++++++++++++++");
+                console.log(user);
+                for (let i = 0; i < user.data[0].trophies.length; i++) {
+                    if (user.data[0].trophies[i].trophyText === "Perfection" && user.data[0].trophies[i].obtained === false) {
+                        setTrophyAwarded(true);
+                        user.data[0].trophies[i].obtained = true;
+                        setShowModal(true);
+                        setModalContent("You just unlocked the Perfection trophy! Trophies can be found on your profile page in the My Trophies section.")
+                        await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, {
+                            trophies: user.data[0].trophies
+                        });
+                        break;
+                    };
+                }; 
+                setTrophyAwarded(true);
+            } catch (err) {
+                console.error("Error in QuizResults > awardTrophy");
+                console.err(err);
+            };
         };
     };
 
@@ -78,6 +89,9 @@ function QuizResults(props) {
                     numberOfQuestions++;
                     if (youSelected === correctAnswer) {
                         numberOfCorrectAnswers++;
+                        if (index+1 === formattedArray.length) {
+                            awardTrophy(numberOfQuestions, numberOfCorrectAnswers, props.username);
+                        };
                     };
                     let color;
                     switch(item[1]) {
@@ -114,6 +128,9 @@ function QuizResults(props) {
                     numberOfQuestions++;
                     if (youSelected === correctAnswer) {
                         numberOfCorrectAnswers++;
+                        if (index+1 === formattedArray.length) {
+                            awardTrophy(numberOfQuestions, numberOfCorrectAnswers, props.username);
+                        };
                     };
                     return (
                         <div key={item} className="">

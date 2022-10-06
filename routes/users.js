@@ -581,7 +581,7 @@ router.patch("/onboardingTask/:username", async (req, res) => {
         };
         if (allOnboardingTrue === true) {
             for (let i = 0; i < user.trophies.length; i++) {
-                if (user.trophies[i].trophyText === "Ready to Go" && user.trophies[i].obtained === false) {
+                if (user.trophies[i].trophyText === "Ready To Go" && user.trophies[i].obtained === false) {
                     user.trophies[i].obtained = true;
                 };
             };

@@ -65,7 +65,7 @@ const UserSchema = mongoose.Schema({
         type: Object,
         default: {
             visitProfilePage: false,
-            joinAMarket: false,
+            // joinAMarket: false,
             submitAPost: false,
             submitAForecast: false,
             completeALearnQuiz: false
