@@ -172,7 +172,7 @@ function IndividualNewsFeedPost(props) {
                 for (let i = 0; i < userDocument.data[0].trophies.length; i++) {
                     if (userDocument.data[0].trophies[i].trophyText === trophyText && userDocument.data[0].trophies[i].obtained === false) {
                         userDocument.data[0].trophies[i].obtained = true;
-                        setModalContent2("And you just reached the Divine rank, unlocking a new trophy for your profile!");
+                        setModalContent2(`And you just reached the ${trophyText} rank, unlocking a new trophy for your profile!`);
                     };
                 };
             };
@@ -183,11 +183,11 @@ function IndividualNewsFeedPost(props) {
             });
             setModalContent("You just earned 10 Fantasy Forecast Points for commenting!");
             setShowModal(true);
-            setTimeout(() => {
-                setShowModal("false");
-                setModalContent("");
-                setModalContent2("");
-            }, 2500);
+            // setTimeout(() => {
+            //     setShowModal("false");
+            //     setModalContent("");
+            //     setModalContent2("");
+            // }, 2500);
         } catch (error) {
             console.error(error);
         };
@@ -375,9 +375,9 @@ function IndividualNewsFeedPost(props) {
                     </button>
                 </div>
                 <div className="comments-sub-container">
-                    {showModal === true &&
+                    {/* {showModal === true &&
                         <h3 style={{ "color": "#404d72"}}>You just earned 10 Fantasy Forecast Points for commenting!</h3>
-                    }
+                    } */}
                     {newCommentStatus === true && 
                         <div className="comment-in-chain">
                             <Link 

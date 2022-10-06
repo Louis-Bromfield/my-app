@@ -600,7 +600,7 @@ router.patch("/onboardingTask/:username", async (req, res) => {
             trophyText = "Oracle"
         } else if ((user.fantasyForecastPoints < 5000) && (userFFPoints >= 5000)) {
             trophyUpdate = true;
-            trophyText = "Divine"
+            trophyText = "Diviner"
         };
 
         if (trophyUpdate === true) {
