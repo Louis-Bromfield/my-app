@@ -166,7 +166,7 @@ function IndividualNewsFeedPost(props) {
                 trophyText = "Oracle"
             } else if ((userPrePoints < 5000) && (userDocument.data[0].fantasyForecastPoints+10 >= 5000)) {
                 trophyUpdate = true;
-                trophyText = "Divine"
+                trophyText = "Diviner"
             };
             if (trophyUpdate === true) {
                 for (let i = 0; i < userDocument.data[0].trophies.length; i++) {
