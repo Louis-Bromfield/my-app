@@ -48,9 +48,12 @@ function QuizResults(props) {
                     user.data[0].trophies[i].obtained = true;
                     setShowModal(true);
                     setModalContent("You just unlocked the Perfection trophy! Trophies can be found on your profile page in the My Trophies section.")
+                    await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, {
+                        trophies: user.data[0].trophies
+                    });
                     break;
-                }
-            }      
+                };
+            }; 
         } catch (err) {
             console.error("Error in QuizResults > awardTrophy");
             console.err(err);
