@@ -765,7 +765,7 @@ console.log(toPush);
             };
             user.brierScores.push(toPush);
             user.notifications.unshift({
-                notificationMessage: `You scored ${toPush.brierScore} on the following forecast: ${toPush.problemName}!`,
+                notificationMessage: `You scored ${toPush.brierScore.toFixed(2)} on the following forecast: ${toPush.problemName}!`,
                 notificationSourcePath: "/forecast",
                 notificationSourceObjectID: forecastObj._id,
                 seenByUser: false,
@@ -870,7 +870,7 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
             };
             user.brierScores.push(toPush);
             user.notifications.unshift({
-                notificationMessage: `You scored ${toPush.brierScore} on the following forecast: ${toPush.problemName}!`,
+                notificationMessage: `You scored ${toPush.brierScore.toFixed(2)} on the following forecast: ${toPush.problemName}!`,
                 notificationSourcePath: "/forecast",
                 notificationSourceObjectID: forecastObj._id,
                 seenByUser: false,
