@@ -751,14 +751,17 @@ console.log(toPush);
                         break;
                     };
                 };
-                if (user.brierScores[user.brierScores.length-1].brierScore >= 100 && user.brierScores[user.brierScores.length-2].brierScore >= 100) {
-                    for (let j = 0; j < user.trophies.length; j++) {
-                        if (user.trophies[j].trophyText === "The Triple Gold Standard" && user.trophies[j].obtained === false) {
-                            user.trophies[j].obtained = true;
-                            break;
-                        };
-                    };  
-                }
+                // check it's length 2 or longer rather than 3 or longer as this current brier hasn't been added yet
+                if (user.brierScores.length >= 2) {
+                    if (user.brierScores[user.brierScores.length-1].brierScore >= 100 && user.brierScores[user.brierScores.length-2].brierScore >= 100) {
+                        for (let j = 0; j < user.trophies.length; j++) {
+                            if (user.trophies[j].trophyText === "The Triple Gold Standard" && user.trophies[j].obtained === false) {
+                                user.trophies[j].obtained = true;
+                                break;
+                            };
+                        };  
+                    }
+                };
             };
             const updatedUser = await Users.findOneAndUpdate({ username: calculatedBriers[i].username }, {
                 $push: { brierScores: toPush },

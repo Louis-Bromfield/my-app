@@ -663,6 +663,11 @@ console.log(forecast);
                 setUserPreviousAttemptCertainty(certainty*100);
                 setUserPreviousAttemptComments(forecastComments);
                 updateOnboarding(username);
+
+                if ((new Date(nDateBSTSuffix) - new Date(selectedForecastObject.startDate))/1000 <= 86400) {
+                    setShowModal(true);
+                    setModalContent("You submitted within 24 hours of the problem going live, you've unlocked the Quick off the Mark trophy!");
+                };
             } catch (error) {
                 console.error("error in ForecastSubmission.js > handleForecastSubmit")
                 console.error(error);
