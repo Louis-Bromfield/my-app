@@ -771,7 +771,10 @@ console.log(toPush);
                 $push: { notifications: {
                     notificationMessage: `You scored ${toPush.brierScore} on the following forecast: ${toPush.problemName}!`,
                     notificationSourcePath: "/forecast",
-                    notificationSourceObjectID: forecastObj._id
+                    notificationSourceObjectID: forecastObj._id,
+                    seenByUser: false,
+                    date: new Date(),
+                    notificationIndex: user.notifications.length+1
                 }},
                 numberOfClosedForecasts: Number(user.numberOfClosedForecasts) + 1
             },
@@ -862,7 +865,10 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
                 $push: { notifications: {
                     notificationMessage: `You scored ${toPush.brierScore} on the following forecast: ${toPush.problemName}!`,
                     notificationSourcePath: "/forecast",
-                    notificationSourceObjectID: forecastObj._id
+                    notificationSourceObjectID: forecastObj._id,
+                    seenByUser: false,
+                    date: new Date(),
+                    notificationIndex: user.notifications.length+1
                 }},
                 unseenNotificationCount: Number(user.unseenNotificationCount) + 1
             },
