@@ -763,19 +763,30 @@ console.log(toPush);
                     }
                 };
             };
+            user.brierScores.push(toPush);
+            user.notifications.unshift({
+                notificationMessage: `You scored ${toPush.brierScore} on the following forecast: ${toPush.problemName}!`,
+                notificationSourcePath: "/forecast",
+                notificationSourceObjectID: forecastObj._id,
+                seenByUser: false,
+                date: new Date(),
+                notificationIndex: user.notifications.length+1
+            });
             const updatedUser = await Users.findOneAndUpdate({ username: calculatedBriers[i].username }, {
-                $push: { brierScores: toPush },
+                // $push: { brierScores: toPush },
+                brierScores: user.brierScores,
                 trophies: user.trophies,
                 fantasyForecastPoints: Number(user.fantasyForecastPoints) + toPush.brierScore,
                 forecastClosedStatus: true,
-                $push: { notifications: {
-                    notificationMessage: `You scored ${toPush.brierScore} on the following forecast: ${toPush.problemName}!`,
-                    notificationSourcePath: "/forecast",
-                    notificationSourceObjectID: forecastObj._id,
-                    seenByUser: false,
-                    date: new Date(),
-                    notificationIndex: user.notifications.length+1
-                }},
+                notifications: user.notifications,
+                // $push: { notifications: {
+                //     notificationMessage: `You scored ${toPush.brierScore} on the following forecast: ${toPush.problemName}!`,
+                //     notificationSourcePath: "/forecast",
+                //     notificationSourceObjectID: forecastObj._id,
+                //     seenByUser: false,
+                //     date: new Date(),
+                //     notificationIndex: user.notifications.length+1
+                // }},
                 numberOfClosedForecasts: Number(user.numberOfClosedForecasts) + 1
             },
             { new: true }
@@ -857,19 +868,30 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
                 // performanceBoost: performanceBoostVal,
                 averageScore: averageScoreForProblem
             };
+            user.brierScores.push(toPush);
+            user.notifications.unshift({
+                notificationMessage: `You scored ${toPush.brierScore} on the following forecast: ${toPush.problemName}!`,
+                notificationSourcePath: "/forecast",
+                notificationSourceObjectID: forecastObj._id,
+                seenByUser: false,
+                date: new Date(),
+                notificationIndex: user.notifications.length+1
+            });
             await Users.findOneAndUpdate({ username: calculatedBriers[i].username }, {
-                $push: { brierScores: toPush },
+                // $push: { brierScores: toPush },
+                brierScores: user.brierScores,
                 fantasyForecastPoints: Number(user.fantasyForecastPoints) + toPush.brierScore,
                 forecastClosedStatus: true,
                 numberOfClosedForecasts: Number(user.numberOfClosedForecasts) + 1,
-                $push: { notifications: {
-                    notificationMessage: `You scored ${toPush.brierScore} on the following forecast: ${toPush.problemName}!`,
-                    notificationSourcePath: "/forecast",
-                    notificationSourceObjectID: forecastObj._id,
-                    seenByUser: false,
-                    date: new Date(),
-                    notificationIndex: user.notifications.length+1
-                }},
+                notifications: user.notifications,
+                // $push: { notifications: {
+                //     notificationMessage: `You scored ${toPush.brierScore} on the following forecast: ${toPush.problemName}!`,
+                //     notificationSourcePath: "/forecast",
+                //     notificationSourceObjectID: forecastObj._id,
+                //     seenByUser: false,
+                //     date: new Date(),
+                //     notificationIndex: user.notifications.length+1
+                // }},
                 unseenNotificationCount: Number(user.unseenNotificationCount) + 1
             },
             { new: true }
