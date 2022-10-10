@@ -768,6 +768,11 @@ console.log(toPush);
                 trophies: user.trophies,
                 fantasyForecastPoints: Number(user.fantasyForecastPoints) + toPush.brierScore,
                 forecastClosedStatus: true,
+                $push: { notifications: {
+                    notificationMessage: `You scored ${toPush.brierScore} on the following forecast: ${toPush.problemName}!`,
+                    notificationSourcePath: "/forecast",
+                    notificationSourceObjectID: forecastObj._id
+                }},
                 numberOfClosedForecasts: Number(user.numberOfClosedForecasts) + 1
             },
             { new: true }
