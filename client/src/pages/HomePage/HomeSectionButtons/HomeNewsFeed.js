@@ -69,7 +69,7 @@ function HomeNewsFeed(props) {
             console.log(process.env.API_CALL_HPNFP);
             const allPosts = await axios.get(`${process.env.API_CALL_HPNFP}`);
             console.log(allPosts);
-            setFeed(allPosts.data.reverse());
+            setFeed(allPosts === undefined ? [] : allPosts.data.reverse());
             setFilteredFeed(feed);
         } catch (error) {
             console.error("Error in getAllNewsFeedPostsFromDB");
