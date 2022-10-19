@@ -67,7 +67,6 @@ function HomeNewsFeed(props) {
         try {
             // const allPosts = await axios.get('https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts');
             // console.log(process.env.API_CALL_HPNFP);
-            console.log(process.env.REACT_APP_API_CALL_HPNFP);
             // const allPosts = await axios.get(`${process.env.API_CALL_HPNFP}`);
             const allPosts = await axios.get(`${process.env.REACT_APP_API_CALL_HPNFP}`);
             console.log(allPosts);
