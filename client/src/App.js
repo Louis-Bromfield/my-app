@@ -58,13 +58,15 @@ function App() {
 
   const login = async (username) => {
     console.log("In login function");
-    const userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+    // const userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+    const userObj = await axios.get(`${process.env.API_CALL_U}/${username}`);
     if (userObj.data.length === 0) {
         return;
     };
     // Add user to leaderboard
     const ffAllTime = "Fantasy Forecast All-Time";
-    await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${ffAllTime}`, {
+    // await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${ffAllTime}`, {
+    await axios.patch(`${process.env.API_CALL_L}/${ffAllTime}`, {
         username: username,
         isGroup: false,
         profilePicture: userObj.data[0].profilePicture
@@ -143,7 +145,7 @@ function App() {
             console.log("paIFDBTPDB");
             // const userPulledFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);  
             const userPulledFromDB = await axios.get(`${process.env.API_CALL_U}/${username}`);  
-            console.log(userPulledFromDB);
+            // console.log(userPulledFromDB);
             console.log(userPulledFromDB.data);
             if (userPulledFromDB.data === [] || userPulledFromDB.data[0].username === undefined) {
                 console.log("here1");
