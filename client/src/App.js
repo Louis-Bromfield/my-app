@@ -133,30 +133,33 @@ function App() {
 
   const pullAllInfoFromDBToPassDown = async (username) => {
       try {
-          console.log("FIRED");
-          if (username === undefined || username !== null || typeof username !== "string") {
-              return;
-          };
-          console.log(username);
-          console.log("paIFDBTPDB");
-        const userPulledFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);  
-        console.log(userPulledFromDB);
-        console.log(userPulledFromDB.data);
-        if (userPulledFromDB.data === [] || userPulledFromDB.data[0].username === undefined) {
-            console.log("here1");
-            return;
-        } else {
-            console.log("here2");
-            setUserObject(userPulledFromDB.data[0]);
-            setUsername(userPulledFromDB.data[0].username);
-            setUserFFPoints(userPulledFromDB.data[0].fantasyForecastPoints);
-            setMarkets(userPulledFromDB.data[0].markets);
-            setProfilePicture(userPulledFromDB.data[0].profilePicture);
-            setUserOnboarding(userPulledFromDB.data[0].onboarding);
-            setUserClosedForecastCount(userPulledFromDB.data[0].numberOfClosedForecasts);
-            setUserBrierScores(userPulledFromDB.data[0].brierScores);
-        }
-        // console.log(userPulledFromDB.data[0].brierScores);
+            console.log("FIRED");
+            if (username === undefined || username === null || typeof username !== "string") {
+                console.log("HERE");
+                console.log(username);
+                return;
+            };
+            console.log(username);
+            console.log("paIFDBTPDB");
+            // const userPulledFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);  
+            const userPulledFromDB = await axios.get(`${process.env.API_CALL_U}/${username}`);  
+            console.log(userPulledFromDB);
+            console.log(userPulledFromDB.data);
+            if (userPulledFromDB.data === [] || userPulledFromDB.data[0].username === undefined) {
+                console.log("here1");
+                return;
+            } else {
+                console.log("here2");
+                setUserObject(userPulledFromDB.data[0]);
+                setUsername(userPulledFromDB.data[0].username);
+                setUserFFPoints(userPulledFromDB.data[0].fantasyForecastPoints);
+                setMarkets(userPulledFromDB.data[0].markets);
+                setProfilePicture(userPulledFromDB.data[0].profilePicture);
+                setUserOnboarding(userPulledFromDB.data[0].onboarding);
+                setUserClosedForecastCount(userPulledFromDB.data[0].numberOfClosedForecasts);
+                setUserBrierScores(userPulledFromDB.data[0].brierScores);
+            }
+            // console.log(userPulledFromDB.data[0].brierScores);
       } catch(error) {
           console.error("Error in pAIFDBTPD");
           console.error(error);

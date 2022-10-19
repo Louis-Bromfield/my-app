@@ -61,8 +61,12 @@ function Home(props) {
 
     const getUserInfo = async (username) => {
         try {
-            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
-            // console.log(userDocument);
+            // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            // const userDocument = await axios.get(`${process.env.API_CALL_U}/${username}`);
+            const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
+console.log("+++++++++++++++++++++++++");
+console.log(userDocument);
+console.log("+++++++++++++++++++++++++");
             if (userDocument.data[0].numberOfClosedForecasts > 0) {
                 setShowClosedProblemModal(true);
             };
