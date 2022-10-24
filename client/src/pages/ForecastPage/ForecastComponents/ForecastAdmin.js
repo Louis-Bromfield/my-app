@@ -61,7 +61,8 @@ function ForecastAdmin(props) {
 
     const getAllMarketsFromDB = async () => {
         try {
-            const allMarketsDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/justNames/${props.username}`);
+            // const allMarketsDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/justNames/${props.username}`);
+            const allMarketsDocument = await axios.get(`${process.env.REACT_APP_API_CALL_L}/justNames/${props.username}`);
             let filteredbyIsFFOrNot = [];
             for (let i = 0; i < allMarketsDocument.data.length; i++) {
                 if (allMarketsDocument.data[i][2] === true) {
@@ -82,7 +83,8 @@ function ForecastAdmin(props) {
         } else {
             setAdminText("");
             try {
-                await axios.post('https://fantasy-forecast-politics.herokuapp.com/forecasts/newProblem', {
+                // await axios.post('https://fantasy-forecast-politics.herokuapp.com/forecasts/newProblem', {
+                await axios.post(`${process.env.REACT_APP_API_CALL_F}/newProblem`, {
                     problemName: problemName,
                     startDate: oDateTime,
                     closeDate: cDateTime,
@@ -114,7 +116,8 @@ function ForecastAdmin(props) {
             let scores;
             if (closeEarly === true) {
                 console.log("Here2");
-                scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
+                // scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
+                scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
                     problemName: problemName,
                     newProblemCloseDateTime: newProblemCloseDateTime
                 });
@@ -122,8 +125,9 @@ console.log("17A - SCORES");
 // console.log(scores);
             } else if (closeEarly === false) {
                 console.log("Here3");
-                scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
-                    problemName: problemName
+                // scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
+                scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
+                problemName: problemName
                 });
             };
 console.log("17B - SCORES");
@@ -149,12 +153,14 @@ console.log("17B - SCORES");
             // to find out
             let scores;
             if (closeEarly === true) {
-                scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
+                // scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
+                scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
                     problemName: problemName,
                     newProblemCloseDateTime: newProblemCloseDateTime
                 });
             } else if (closeEarly === false) {
-                scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
+                // scores = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
+                scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
                     problemName: problemName
                 });
             };

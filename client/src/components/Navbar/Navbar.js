@@ -82,7 +82,8 @@ function Navbar(props) {
         //     return;
         // } else {
             if (notification.seenByUser === false) {
-                const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/editNotifications/${username}`, {
+                // const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/editNotifications/${username}`, {
+                const res = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/editNotifications/${username}`, {
                     setAllToTrue: false,
                     notificationMessage: notification.notificationMessage,
                     notificationIndex: notification.notificationIndex

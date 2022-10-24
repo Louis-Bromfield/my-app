@@ -32,7 +32,8 @@ function ForecastArticlesDisplay(props) {
             } else {
                 term = "UK Politics";
             };
-            googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${term}`);
+            // googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${term}`);
+            googleNewsScrapeResult = await axios.get(`${process.env.REACT_APP_API_CALL_GSN}/${term}`);
             setArticles(googleNewsScrapeResult.data);
         } catch (error) {
             console.error(error);

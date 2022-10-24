@@ -36,13 +36,15 @@ function ForecastBreakdown(props) {
         try {
             console.log(`forecastClosed === ${forecastClosed}`)
             if (forecastClosed === true) {
-                const userForecastsDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${selectedForecast}/${true}/${username}/${singleCertainty}`);
+                // const userForecastsDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${selectedForecast}/${true}/${username}/${singleCertainty}`);
+                const userForecastsDocument = await axios.get(`${process.env.REACT_APP_API_CALL_F}/${selectedForecast}/${true}/${username}/${singleCertainty}`);
                 console.log(userForecastsDocument.data)
                 console.log(userForecastsDocument.data);
                 setPredictionData(userForecastsDocument.data);
                 calculateTScore(userForecastsDocument.data);
             } else if (forecastClosed === false) {
-                const userForecastsDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${selectedForecast}/${false}/${username}/${singleCertainty}`);
+                // const userForecastsDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/${selectedForecast}/${false}/${username}/${singleCertainty}`);
+                const userForecastsDocument = await axios.get(`${process.env.REACT_APP_API_CALL_F}/${selectedForecast}/${false}/${username}/${singleCertainty}`);
                 console.log(userForecastsDocument.data);
                 setPredictionData(userForecastsDocument.data);
                 calculateTScore(userForecastsDocument.data);

@@ -74,7 +74,8 @@ function ForecastChat(props) {
                 setNewCommentStatus(true);
                 setNewCommentToRender(commentToRender);
                 console.log(newCommentStatus);
-                const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/addNewComment`, {
+                // const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/addNewComment`, {
+                const res = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/addNewComment`, {
                     problemName: props.forecast.problemName,
                     isFirstComment: true,
                     author: props.username,
@@ -122,7 +123,8 @@ function ForecastChat(props) {
             setNewReplyCommentToRender(commentToRender);
             console.log(newCommentStatus);
             try {
-                const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/addNewComment`, {
+                // const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/forecasts/addNewComment`, {
+                const res = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/addNewComment`, {
                     problemName: props.forecast.problemName,
                     isFirstComment: false,
                     author: props.username,
@@ -131,7 +133,8 @@ function ForecastChat(props) {
                 });
                 console.log(res);
                 if (props.username !== commentYouAreRespondingTo.author) {
-                    await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${commentYouAreRespondingTo.author}`, {
+                    // await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${commentYouAreRespondingTo.author}`, {
+                    await axios.patch(`${process.env.REACT_APP_API_CALL_U}/newNotification/${commentYouAreRespondingTo.author}`, {
                         notificationMessage: `${props.username === undefined ? "Someone" : props.username} just replied to your comment!`,
                         notificationSourcePath: "/forecasts",
                         notificationSourceObjectID: props.forecast._id,

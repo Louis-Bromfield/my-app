@@ -47,7 +47,8 @@ function Forecast(props) {
 
     const getAllForecastsFromDB = async () => {
         try {
-            const allForecastsUnfiltered = await axios.get('https://fantasy-forecast-politics.herokuapp.com/forecasts');
+            // const allForecastsUnfiltered = await axios.get('https://fantasy-forecast-politics.herokuapp.com/forecasts');
+            const allForecastsUnfiltered = await axios.get(`${process.env.REACT_APP_API_CALL_F}`);
             // console.log(allForecastsUnfiltered);
             setAllForecasts(allForecastsUnfiltered.data);
         } catch (error) {

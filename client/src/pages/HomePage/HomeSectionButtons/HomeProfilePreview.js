@@ -66,7 +66,8 @@ function HomeProfilePreview(props) {
     // so it won't fire everytime, only if we've lost that user prop
     const getUserDetails = async (username) => {
         try {
-            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
             console.log(userDocument.data[0]);
             setFFPoints(userDocument.data[0].fantasyForecastPoints);
         } catch (error) {

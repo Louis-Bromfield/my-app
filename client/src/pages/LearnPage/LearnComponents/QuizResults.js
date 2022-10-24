@@ -48,7 +48,8 @@ function QuizResults(props) {
         if ((trophyAwarded === false) && (numberOfCorrectAnswers > 0 && numberOfQuestions > 0 && numberOfCorrectAnswers === numberOfQuestions)) {
             console.log("in awardTrophy passed condition");
             try {
-                const user = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+                // const user = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+                const user = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
                 console.log("+++++++++++++++++++++++++++++++++++++++");
                 console.log(user);
                 for (let i = 0; i < user.data[0].trophies.length; i++) {
@@ -57,7 +58,8 @@ function QuizResults(props) {
                         user.data[0].trophies[i].obtained = true;
                         setShowModal(true);
                         setModalContent("You just unlocked the Perfection trophy! Trophies can be found on your profile page in the My Trophies section.")
-                        await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, {
+                        // await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, {
+                        await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, {
                             trophies: user.data[0].trophies
                         });
                         break;

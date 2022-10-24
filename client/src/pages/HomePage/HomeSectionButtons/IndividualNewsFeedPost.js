@@ -46,7 +46,8 @@ function IndividualNewsFeedPost(props) {
     const doEffect = async () => {
         // if page is refreshed
         if (props.location.postObject === undefined) {
-            const res = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/${localStorage.getItem("postID")}`);
+            // const res = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/${localStorage.getItem("postID")}`);
+            const res = await axios.get(`${process.env.REACT_APP_API_CALL_HPNFP}/${localStorage.getItem("postID")}`);
             console.log(res.message);
             // if the postID in LS has been tampered with, just return to home
             if (res.data.message !== undefined) {
@@ -120,7 +121,8 @@ function IndividualNewsFeedPost(props) {
     const submitNewComment = async (comment) => {
         const ID = props.location.postObject === undefined ? localStorage.getItem("postID") : props.location.postObject._id;
         try {
-            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/postComment/${ID}`, 
+            // await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/postComment/${ID}`, 
+            await axios.patch(`${process.env.REACT_APP_API_CALL_HPNFP}/postComment/${ID}`, 
             {
                 postID: ID,
                 isNewComment: true,
@@ -136,7 +138,8 @@ function IndividualNewsFeedPost(props) {
             // giveUserPoints(localStorage.getItem("username"));
             giveUserPoints(cookie.username);
             // if (cookie.username !== undefined && author !== cookie.username) {
-                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${author}`, {
+                // await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${author}`, {
+                await axios.patch(`${process.env.REACT_APP_API_CALL_U}/newNotification/${author}`, {
                     notificationMessage: `${cookie.username === undefined ? "Someone" : cookie.username} just commented on your news feed post!`,
                     notificationSourcePath: "/news-post",
                     notificationSourceObjectID: ID
@@ -150,7 +153,8 @@ function IndividualNewsFeedPost(props) {
 
     const giveUserPoints = async (username) => {
         try {
-            const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
             let userPrePoints = userDocument.data[0].fantasyForecastPoints;
 
             let trophyUpdate = false;
@@ -177,7 +181,8 @@ function IndividualNewsFeedPost(props) {
                 };
             };
             userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 10
-            await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, {
+            // await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, {
+            await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, {
                 fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints,
                 trophies: userDocument.data[0].trophies
             });
@@ -204,7 +209,8 @@ function IndividualNewsFeedPost(props) {
                 setModalContent("You cannot rate your own post.");
             } else if (submittedTruthfulRating === true && submittedRelevantRating === true) {
                 // add in axios here to edit post document
-                const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/postRatings/${postID}`, {
+                // const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/postRatings/${postID}`, {
+                const res = await axios.patch(`${process.env.REACT_APP_API_CALL_HPNFP}/postRatings/${postID}`, {
                     username: cookie.username,
                     truthful: truthful,
                     relevant: relevant
@@ -220,7 +226,8 @@ function IndividualNewsFeedPost(props) {
                     setRelevantRatingCount(relevantRatingCount + 1);
                 };
                 // send user a notification for when they receive a rating
-                await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${author}`, {
+                // await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${author}`, {
+                await axios.patch(`${process.env.REACT_APP_API_CALL_U}/newNotification/${author}`, {
                     notificationMessage: `${cookie.username === undefined ? "Someone" : cookie.username} just rated your news feed post! If this was the first rating you received, you have been awarded the Gather Round trophy!`,
                     notificationSourcePath: "/news-post",
                     notificationSourceObjectID: postID,

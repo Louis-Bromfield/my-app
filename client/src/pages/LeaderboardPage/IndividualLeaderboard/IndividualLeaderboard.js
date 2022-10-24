@@ -73,7 +73,8 @@ function IndividualLeaderboard(props) {
             // const lbData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${leaderboard}`);
             // const lbRankings = lbData.data;
             // console.log(lbRankings);
-            const lbData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/`);
+            // const lbData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/`);
+            const lbData = await axios.get(`${process.env.REACT_APP_API_CALL_}/`);
             // console.log(lbData);
             // let lbRankings = [];
             // for (let i = 0; i < lbData.data.length; i++) {
