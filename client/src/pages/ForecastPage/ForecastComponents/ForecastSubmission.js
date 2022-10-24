@@ -932,7 +932,7 @@ console.log(forecast);
                                                                 key={nestedIndex} 
                                                                 value={nestedItem.problemName}
                                                                 style={{  color: "green" }}>
-                                                                    {nestedItem.userHasAttempted === false ? "OPEN AND UNATTEMEPTED" : "OPEN"}: {nestedItem.problemName}
+                                                                    {nestedItem.userHasAttempted === false ? "OPEN AND UNATTEMPTED" : "OPEN"}: {nestedItem.problemName}
                                                             </option>
                                                         )
                                                     } else if ((typeof(nestedItem) === 'object') && (new Date(nestedItem.closeDate) <= new Date())) {
