@@ -74,7 +74,7 @@ function IndividualLeaderboard(props) {
             // const lbRankings = lbData.data;
             // console.log(lbRankings);
             // const lbData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/`);
-            const lbData = await axios.get(`${process.env.REACT_APP_API_CALL_L}/`);
+            const lbData = await axios.get(`${process.env.REACT_APP_API_CALL_U}/`);
             // console.log(lbData);
             // let lbRankings = [];
             // for (let i = 0; i < lbData.data.length; i++) {
