@@ -52,6 +52,11 @@
     border-bottom: 1px solid rgba(211, 211, 211, 0.549);
 }
 
+.leaderboard-row:hover,
+.leaderboard-row-matching-username:hover {
+    background-color: #7a95de76;
+}
+
 .leaderboard-row-matching-username {
     background-color: #404d72;
     color: #fff;
