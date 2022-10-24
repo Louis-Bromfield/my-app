@@ -88,28 +88,28 @@ console.log("Profile.js UE");
                     setForecasterRank("Forecaster");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 1500 && userDocument.data.userObj.fantasyForecastPoints < 2000) {
                     setForecasterRank("Seer");
-                    setProfilePicStyle("2px solid bronze")
+                    setProfilePicStyle("7px solid #cd7f32");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 2000 && userDocument.data.userObj.fantasyForecastPoints < 2500) {
                     setForecasterRank("Soothsayer");
-                    setProfilePicStyle("2px solid silver")
+                    setProfilePicStyle("7px solid silver");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 2500 && userDocument.data.userObj.fantasyForecastPoints < 3000) {
                     setForecasterRank("Oracle");
-                    setProfilePicStyle("2px solid #383D67")
+                    setProfilePicStyle("7px solid goldenrod");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 3000 && userDocument.data.userObj.fantasyForecastPoints < 3500) {
                     setForecasterRank("Prophet");
-                    setProfilePicStyle("2px solid #383D67")
+                    setProfilePicStyle("7px solid goldenrod");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 3500 && userDocument.data.userObj.fantasyForecastPoints < 4000) {
                     setForecasterRank("Clairvoyant");
-                    setProfilePicStyle("2px solid #383D67")
+                    setProfilePicStyle("7px solid goldenrod");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 4000 && userDocument.data.userObj.fantasyForecastPoints < 4500) {
                     setForecasterRank("Augur");
-                    setProfilePicStyle("2px solid #383D67")
+                    setProfilePicStyle("7px solid goldenrod");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 4500 && userDocument.data.userObj.fantasyForecastPoints < 5000) {
                     setForecasterRank("Omniscient");
-                    setProfilePicStyle("2px solid #383D67")
+                    setProfilePicStyle("7px solid goldenrod");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 5000) {
                     setForecasterRank("Diviner");
-                    setProfilePicStyle("2px solid #383D67")
+                    setProfilePicStyle("7px solid #383D67");
                 };
             };
         } catch (error) {

@@ -18,6 +18,7 @@ function Navbar(props) {
     const [profilePicture, setProfilePicture] = useState(props.profilePicture);
     const [showNotifications, setShowNotifications] = useState(false);
     const [numberOfNewNotis, setNumberOfNewNotis] = useState(0);
+    const [profilePicStyle, setProfilePicStyle] = useState("none");
     const [linkObject, setLinkObject] = useState({
         pathname: "/notifications",
         userObj: props.userObj
@@ -54,6 +55,26 @@ function Navbar(props) {
                 };
             };
             setNumberOfNewNotis(numberOfNewNotifications);
+        };
+        if (props.userObj.fantasyForecastPoints < 500) {
+        } else if (props.userObj.fantasyForecastPoints >= 500 && props.userObj.fantasyForecastPoints < 1000) {
+        } else if (props.userObj.fantasyForecastPoints >= 1000 && props.userObj.fantasyForecastPoints < 1500) {
+        } else if (props.userObj.fantasyForecastPoints >= 1500 && props.userObj.fantasyForecastPoints < 2000) {
+            setProfilePicStyle("2px solid #cd7f32")
+        } else if (props.userObj.fantasyForecastPoints >= 2000 && props.userObj.fantasyForecastPoints < 2500) {
+            setProfilePicStyle("2px solid silver")
+        } else if (props.userObj.fantasyForecastPoints >= 2500 && props.userObj.fantasyForecastPoints < 3000) {
+            setProfilePicStyle("2px solid goldenrod")
+        } else if (props.userObj.fantasyForecastPoints >= 3000 && props.userObj.fantasyForecastPoints < 3500) {
+            setProfilePicStyle("2px solid goldenrod")
+        } else if (props.userObj.fantasyForecastPoints >= 3500 && props.userObj.fantasyForecastPoints < 4000) {
+            setProfilePicStyle("2px solid goldenrod")
+        } else if (props.userObj.fantasyForecastPoints >= 4000 && props.userObj.fantasyForecastPoints < 4500) {
+            setProfilePicStyle("2px solid goldenrod")
+        } else if (props.userObj.fantasyForecastPoints >= 4500 && props.userObj.fantasyForecastPoints < 5000) {
+            setProfilePicStyle("2px solid goldenrod")
+        } else if (props.userObj.fantasyForecastPoints >= 5000) {
+            setProfilePicStyle("5px solid #383D67")
         };
         setWidth(window.innerWidth > 1350);
         setMobileWidth(window.innerWidth <= 650);
@@ -122,7 +143,7 @@ function Navbar(props) {
                             <FaIcons.FaBars onClick={showSidebar} />
                         </Link>
                         <div className="mobile-image-and-noti-container">
-                            <img src={profilePicture} className="mobile-navbar-profile-pic" alt="User's profile pic" onClick={() => setShowNotifications(!showNotifications)}/>
+                            <img src={profilePicture} className="mobile-navbar-profile-pic" alt="User's profile pic" style={{border: profilePicStyle}} onClick={() => setShowNotifications(!showNotifications)}/>
                             {numberOfNewNotis > 0 ? <h3 className="notification-counter" onClick={() => setShowNotifications(!showNotifications)}>{numberOfNewNotis}</h3> : null}
                         </div>
                     </div>

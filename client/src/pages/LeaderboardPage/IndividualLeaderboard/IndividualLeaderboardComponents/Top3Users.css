@@ -34,7 +34,7 @@
     border-radius: 50%;
 }
 
-.rank-one-profile-pic {
+/* .rank-one-profile-pic {
     border: 4px solid gold;
     outline: 1px solid darkgray;
 }
@@ -47,7 +47,7 @@
 .rank-three-profile-pic {
     border: 4px solid #cd7f32;
     outline: 1px solid darkgray;
-}
+} */
 
 @media (max-width: 1500px) {
     .top-three-users-highlight {

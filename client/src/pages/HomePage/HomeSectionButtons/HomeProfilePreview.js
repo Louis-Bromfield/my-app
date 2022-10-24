@@ -13,6 +13,7 @@ function HomeProfilePreview(props) {
     const [forecasterRank, setForecasterRank] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
+    const [profilePicStyle, setProfilePicStyle] = useState("none");
 
     useEffect(() => {
         console.log("HomeProfilePreviewUE");
@@ -45,20 +46,28 @@ function HomeProfilePreview(props) {
             setForecasterRank("Forecaster");
         } else if (props.userObj.fantasyForecastPoints >= 1500 && props.userObj.fantasyForecastPoints < 2000) {
             setForecasterRank("Seer");
+            setProfilePicStyle("5px solid #cd7f32");
         } else if (props.userObj.fantasyForecastPoints >= 2000 && props.userObj.fantasyForecastPoints < 2500) {
             setForecasterRank("Soothsayer");
+            setProfilePicStyle("5px solid silver");
         } else if (props.userObj.fantasyForecastPoints >= 2500 && props.userObj.fantasyForecastPoints < 3000) {
             setForecasterRank("Oracle");
+            setProfilePicStyle("5px solid goldenrod");
         } else if (props.userObj.fantasyForecastPoints >= 3000 && props.userObj.fantasyForecastPoints < 3500) {
             setForecasterRank("Prophet");
+            setProfilePicStyle("5px solid goldenrod");
         } else if (props.userObj.fantasyForecastPoints >= 3500 && props.userObj.fantasyForecastPoints < 4000) {
             setForecasterRank("Clairvoyant");
+            setProfilePicStyle("5px solid goldenrod");
         } else if (props.userObj.fantasyForecastPoints >= 4000 && props.userObj.fantasyForecastPoints < 4500) {
             setForecasterRank("Augur");
+            setProfilePicStyle("5px solid goldenrod");
         } else if (props.userObj.fantasyForecastPoints >= 4500 && props.userObj.fantasyForecastPoints < 5000) {
             setForecasterRank("Omniscient");
+            setProfilePicStyle("5px solid goldenrod");
         } else if (props.userObj.fantasyForecastPoints >= 5000) {
             setForecasterRank("Diviner");
+            setProfilePicStyle("5px solid #383D67");
         };
     }, [props.userObj.fantasyForecastPoints, ffPoints]);
 
@@ -83,7 +92,7 @@ function HomeProfilePreview(props) {
             </Modal>
             <h2 className="home-button-large-title">My Profile Preview</h2>
             <div className="home-profile-preview-container">
-            <img className="home-profile-preview-img" src={props.userObj.profilePicture} alt="" />
+            <img className="home-profile-preview-img" src={props.userObj.profilePicture} alt="" style={{border: profilePicStyle}}/>
                 {/* <div className="home-profile-preview-container-top-grid"> */}
                     {/* <div className="profile-top-info-container"> */}
                         <Link to="/my-profile" style={{ textDecoration: "none", color: "#404d72" }}><h2>{props.userObj.username}</h2></Link>

@@ -52,6 +52,7 @@ function Search(props) {
     const [cookie, setCookie] = useCookies(['username']);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
+    const [profilePicStyle, setProfilePicStyle] = useState("none");
 
     useEffect(() => {
         if (props.location.clickedUsername !== undefined) {
@@ -142,20 +143,28 @@ function Search(props) {
                     setForecasterRank("Forecaster");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 1500 && userDocument.data.userObj.fantasyForecastPoints < 2000) {
                     setForecasterRank("Seer");
+                    setProfilePicStyle("7px solid #cd7f32");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 2000 && userDocument.data.userObj.fantasyForecastPoints < 2500) {
                     setForecasterRank("Soothsayer");
+                    setProfilePicStyle("7px solid silver");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 2500 && userDocument.data.userObj.fantasyForecastPoints < 3000) {
                     setForecasterRank("Oracle");
+                    setProfilePicStyle("7px solid goldenrod");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 3000 && userDocument.data.userObj.fantasyForecastPoints < 3500) {
                     setForecasterRank("Prophet");
+                    setProfilePicStyle("7px solid goldenrod");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 3500 && userDocument.data.userObj.fantasyForecastPoints < 4000) {
                     setForecasterRank("Clairvoyant");
+                    setProfilePicStyle("7px solid goldenrod");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 4000 && userDocument.data.userObj.fantasyForecastPoints < 4500) {
                     setForecasterRank("Augur");
+                    setProfilePicStyle("7px solid goldenrod");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 4500 && userDocument.data.userObj.fantasyForecastPoints < 5000) {
                     setForecasterRank("Omniscient");
+                    setProfilePicStyle("7px solid goldenrod");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 5000) {
                     setForecasterRank("Diviner");
+                    setProfilePicStyle("7px solid #383D67");
                 };
             };
             // setTimeout(() => {
@@ -352,7 +361,7 @@ function Search(props) {
                     <div className="profile-grid">
                         <h1 className="profile-header">{playerUsername}</h1>
                         <div className="profile-main-info">
-                            <img className="profile-profile-pic" src={playerProfilePic || FakeProfilePic2} alt="Temporary profile pic"/>
+                            <img className="profile-profile-pic" src={playerProfilePic || FakeProfilePic2} alt="Temporary profile pic" style={{border: profilePicStyle}}/>
                             <div className="profile-summary">
                                 {/* <ul className="profile-summary-list"> */}
                                     <div key={0} className="profile-summary-list-item">
