@@ -82,6 +82,8 @@
 
 .leaderboard-username-data {
     padding-left: 1vw;
+    display: flex;
+    flex-direction: row;
 }
 
 .leaderboards-profile-pic {
