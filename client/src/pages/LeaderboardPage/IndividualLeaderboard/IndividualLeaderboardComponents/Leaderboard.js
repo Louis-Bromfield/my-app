@@ -664,8 +664,8 @@ function Leaderboard(props) {
                     })
                 }
                 </tbody>
-                } */}
-                {(props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") &&
+            } */}
+            {(props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") &&
                 <tbody>
                     <tr className="leaderboard-title-row">
                         <th className="position-column">#</th>
@@ -697,7 +697,7 @@ function Leaderboard(props) {
                                             })()}
                                         </td>
                                         <td className="leaderboard-username-data">
-                                            {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                            {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" style={{border: (item.fantasyForecastPoints >= 1500 && item.fantasyForecastPoints < 2000) ? "2px solid brown" : (item.fantasyForecastPoints >= 2000 && item.fantasyForecastPoints < 2500 ? "2px solid silver" : (item.fantasyForecastPoints >= 2500 && item.fantasyForecastPoints < 5000) ? "2px solid goldenrod" : "2px solid #383D67")}}/>}
                                             <Link 
                                                 // to={item.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: item.author}}
                                                 to={{pathname: "/my-profile"}}
@@ -746,7 +746,7 @@ function Leaderboard(props) {
                                             })()}
                                         </td>
                                         <td className="leaderboard-username-data">
-                                            {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                            {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" style={{border: (item.fantasyForecastPoints >= 1500 && item.fantasyForecastPoints < 2000) ? "2px solid brown" : (item.fantasyForecastPoints >= 2000 && item.fantasyForecastPoints < 2500 ? "2px solid silver" : (item.fantasyForecastPoints >= 2500 && item.fantasyForecastPoints < 5000) ? "2px solid goldenrod" : "2px solid #383D67")}}/>}
                                             <Link 
                                                 // to={item.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: item.author}}
                                                 to={{pathname: "/search", clickedUsername: item.username}}
