@@ -597,7 +597,7 @@ console.log(forecast);
                 });
                 console.log(newForecastTwo);
                 props.changeForecast(newForecastTwo.data);
-                setForecastResponseMessage("Forecast successfully updated!");
+                setForecastResponseMessage("Forecast successfully updated! Refresh to see it on the chart.");
                 document.getElementsByClassName("forecast-certainty-input").value = 0;
                 setCertainty(0);
                 setCertaintyOne(0);
@@ -654,7 +654,7 @@ console.log(forecast);
                     // date: new Date().toString()
                     date: nDateBSTSuffix
                 });
-                setForecastResponseMessage("Forecast successfully submitted!")
+                setForecastResponseMessage("Forecast successfully submitted! Refresh to see it on the chart.")
                 props.changeForecast(submittedForecast.data);
                 setUserHasAttempted(true);
                 document.getElementsByClassName("forecast-certainty-input").value = 0;
@@ -669,7 +669,7 @@ console.log(forecast);
 
                 if ((new Date(nDateBSTSuffix) - new Date(selectedForecastObject.startDate))/1000 <= 86400) {
                     setShowModal(true);
-                    setModalContent("You submitted within 24 hours of the problem going live, you've unlocked the Quick off the Mark trophy!");
+                    setModalContent("You submitted within 24 hours of the problem going live, if you haven't yet got it, you've just unlocked the Quick off the Mark trophy!");
                 };
             } catch (error) {
                 console.error("error in ForecastSubmission.js > handleForecastSubmit")
@@ -724,7 +724,7 @@ console.log(forecast);
                     username: username
                 });
                 console.log(newForecastTwo);
-                setForecastResponseMessage("Forecast successfully updated!");
+                setForecastResponseMessage("Forecast successfully updated! Refresh to see it on the chart.");
                 props.changeForecast(newForecastTwo.data);
                 document.getElementsByClassName("forecast-certainty-input").value = 0;
                 setCertainty(0);
@@ -821,7 +821,7 @@ console.log(forecast);
                     // date: new Date().toString()
                     date: nDateBSTSuffix
                 });
-                setForecastResponseMessage("Forecast successfully submitted!")
+                setForecastResponseMessage("Forecast successfully submitted! Refresh to see it on the chart.")
                 props.changeForecast(submittedForecast.data);
                 setUserHasAttempted(true);
                 document.getElementsByClassName("forecast-certainty-input").value = 0;
@@ -836,7 +836,7 @@ console.log(forecast);
 
                 if ((new Date(nDateBSTSuffix) - new Date(selectedForecastObject.startDate))/1000 <= 86400) {
                     setShowModal(true);
-                    setModalContent("You submitted within 24 hours of the problem going live, you've unlocked the Quick off the Mark trophy!");
+                    setModalContent("You submitted within 24 hours of the problem going live, if you haven't yet got it, you've just unlocked the Quick off the Mark trophy!");
                 };
                 
             } catch (error) {
@@ -984,7 +984,7 @@ console.log(forecast);
                         {/* {selectedForecast.includes("Politico's") && <h2><a href="https://www.politico.eu/europe-poll-of-polls/united-kingdom/" target="_blank">Click Here For Politico's Poll of Polls</a></h2>} */}
                         {/* <br /> */}
                         <div className="forecast-submission-and-error-container">
-                            {(forecastSingleCertainty === true && (forecastResponseMessage !== "Forecast successfully updated!" && forecastResponseMessage !== "Forecast successfully submitted!")) &&
+                            {(forecastSingleCertainty === true && (forecastResponseMessage !== "Forecast successfully updated! Refresh to see it on the chart." && forecastResponseMessage !== "Forecast successfully submitted! Refresh to see it on the chart.")) &&
                                 <div className="forecast-submission-input">
                                     <div className="forecast-submission-input-certainty-section">
                                         <h3>Your Certainty (0.00 - 100.00%)</h3>
@@ -1089,7 +1089,7 @@ console.log(forecast);
                                     }
                                 </div>
                             }
-                            {(forecastSingleCertainty === false && (forecastResponseMessage !== "Forecast successfully updated!" && forecastResponseMessage !== "Forecast successfully submitted!")) &&
+                            {(forecastSingleCertainty === false && (forecastResponseMessage !== "Forecast successfully updated! Refresh to see it on the chart." && forecastResponseMessage !== "Forecast successfully submitted! Refresh to see it on the chart.")) &&
                                 <div className="multiple-forecast-submission-input">
                                     <div className="forecast-submission-input-certainty-section">
                                         <h3>
@@ -1218,10 +1218,10 @@ console.log(forecast);
                                     </div>
                                 </div>
                             }
-                            {(forecastResponseMessage === "Forecast successfully updated!" || forecastResponseMessage === "Forecast successfully submitted!") && 
+                            {(forecastResponseMessage === "Forecast successfully updated! Refresh to see it on the chart." || forecastResponseMessage === "Forecast successfully submitted! Refresh to see it on the chart.") && 
                                 <h3 className="forecast-message" style={{ color: "green" }}>{forecastResponseMessage}</h3>
                             }
-                            {(forecastResponseMessage !== "" && (forecastResponseMessage !== "Forecast successfully updated!" && forecastResponseMessage !== "Forecast successfully submitted!")) && 
+                            {(forecastResponseMessage !== "" && (forecastResponseMessage !== "Forecast successfully updated! Refresh to see it on the chart." && forecastResponseMessage !== "Forecast successfully submitted! Refresh to see it on the chart.")) && 
                                 <h3 className="forecast-message" style={{ color: "red" }}>{forecastResponseMessage}</h3>
                             }
                         </div>
