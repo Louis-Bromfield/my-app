@@ -47,6 +47,10 @@ const HomePageNewsFeedPostsSchema = mongoose.Schema({
     ratings: {
         type: Array,
         default: []
+    },
+    authorBorderColor: {
+        type: String,
+        default: "none"
     }
 });
 

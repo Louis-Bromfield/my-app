@@ -32,6 +32,16 @@ const getArticleHeadline = async (url) => {
 
 // Create a new post
 router.post("/", async (req, res) => {
+    let borderColour = "";
+    if (req.body.authorFFPoints >= 1500 && req.body.authorFFPoints < 2000) {
+        borderColour = "#cd7f32";
+    } else if (req.body.authorFFPoints >= 2000 && req.body.authorFFPoints < 2500) {
+        borderColour = "silver";
+    } else if (req.body.authorFFPoints >= 2500 && req.body.authorFFPoints < 5000) {
+        borderColour = "goldenrod";
+    } else if (req.body.authorFFPoints >= 5000) {
+        borderColour = "#383D67";
+    };
     let [ articleTitle, articleImage ] = await getArticleHeadline(req.body.articleURL);
 
     const newHomePageNewsFeedPost = new HomePageNewsFeedPost({
@@ -44,7 +54,8 @@ router.post("/", async (req, res) => {
         dislikes: req.body.dislikes,
         postDate: req.body.postDate,
         markets: req.body.markets,
-        authorProfilePicture: req.body.authorProfilePicture
+        authorProfilePicture: req.body.authorProfilePicture,
+        authorBorderColor: borderColour
     });
     try {
         const newPostSavedToDB = await newHomePageNewsFeedPost.save();

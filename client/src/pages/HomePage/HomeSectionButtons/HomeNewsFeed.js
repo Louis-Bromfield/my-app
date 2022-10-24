@@ -216,7 +216,8 @@ function HomeNewsFeed(props) {
                 markets: userMarketsForPost,
                 authorProfilePicture: props.profilePicture || props.userObj.profilePicture,
                 // authorProfilePicture: localStorage.getItem("profilePicture"),
-                alternateArticleTitle: alternateArticleTitle
+                alternateArticleTitle: alternateArticleTitle,
+                authorFFPoints: props.userObj.fantasyForecastPoints
             });
             setCauseFeedNewsFeedRefreshWithoutAnimation(false);
             setCauseFeedNewsFeedRefresh(causeNewsFeedRefresh+1);
