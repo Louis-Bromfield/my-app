@@ -296,7 +296,7 @@ function Navbar(props) {
                                     <div className="user-logout-container">
                                         {/* <img src={props.profilePicture || localStorage.getItem("profilePicture")} className="navbar-profile-pic" alt="User's profile pic" /> */}
                                         <div className="image-and-noti-container">
-                                            <img src={profilePicture} className="navbar-profile-pic" alt="User's profile pic" onClick={() => setShowNotifications(!showNotifications)}/>
+                                            <img src={profilePicture} className="navbar-profile-pic" alt="User's profile pic" style={{border: profilePicStyle}} onClick={() => setShowNotifications(!showNotifications)}/>
                                             {numberOfNewNotis > 0 ? <h3 className="notification-counter" onClick={() => setShowNotifications(!showNotifications)}>{numberOfNewNotis}</h3> : null}
                                         </div>
                                         {/* <div className="user-logout-column-container">
