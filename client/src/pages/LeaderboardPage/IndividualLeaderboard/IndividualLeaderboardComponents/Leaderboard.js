@@ -401,7 +401,7 @@ function Leaderboard(props) {
                                         {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
                                         <Link 
                                             // to={item.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: item.author}}
-                                            to={{pathname: "/search", clickedUsername: item.username}}
+                                            to={{pathname: "/my-profile"}}
                                             onClick={() => localStorage.setItem("selectedPage", "Search")}
                                             style={{ textDecoration: "none", color: "#fff"}}>
                                                 <p>{item.username}</p>
@@ -700,7 +700,7 @@ function Leaderboard(props) {
                                             {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
                                             <Link 
                                                 // to={item.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: item.author}}
-                                                to={{pathname: "/search", clickedUsername: item.username}}
+                                                to={{pathname: "/my-profile"}}
                                                 onClick={() => localStorage.setItem("selectedPage", "Search")}
                                                 style={{ textDecoration: "none", color: "#fff"}}>
                                                     <p>{item.username}</p>
