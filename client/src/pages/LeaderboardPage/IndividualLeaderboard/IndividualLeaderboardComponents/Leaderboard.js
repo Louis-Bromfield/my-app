@@ -452,7 +452,14 @@ function Leaderboard(props) {
                                     </td>
                                     <td className="leaderboard-username-data">
                                         {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
-                                        {item.username}
+                                        <Link 
+                                            // to={item.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: item.author}}
+                                            to={{pathname: "/search", clickedUsername: item.username}}
+                                            onClick={() => localStorage.setItem("selectedPage", "Search")}
+                                            style={{ textDecoration: "none", color: "#404d72"}}>
+                                                <h3>{item.username}</h3>
+                                        </Link>
+                                        {/* {item.username} */}
                                     </td>
                                     <td className="leaderboard-ffPoints-data">{isNaN(Number(item.totalBrier).toFixed(0)) ? 0.0 : Number(item.totalBrier).toFixed(0)}</td>
                                     <td className="leaderboard-avgBrierScore-data">{isNaN(Number(item.avgBrierScore).toFixed(1)) ? 0.0 : Number(item.avgBrierScore).toFixed(1)}</td>
@@ -691,7 +698,14 @@ function Leaderboard(props) {
                                         </td>
                                         <td className="leaderboard-username-data">
                                             {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
-                                            {item.username}
+                                            <Link 
+                                                // to={item.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: item.author}}
+                                                to={{pathname: "/search", clickedUsername: item.username}}
+                                                onClick={() => localStorage.setItem("selectedPage", "Search")}
+                                                style={{ textDecoration: "none", color: "#404d72"}}>
+                                                    <h3>{item.username}</h3>
+                                            </Link>
+                                            {/* {item.username} */}
                                         </td>
                                         <td className="leaderboard-ffPoints-data">{isNaN(Number(item.marketPoints).toFixed(0)) ? 0.0 : Number(item.marketPoints).toFixed(0)}</td>
                                         <td className="leaderboard-avgBrierScore-data">{isNaN(Number(item.avgAllTimeBrier).toFixed(1)) ? 0.0 : Number(item.avgAllTimeBrier).toFixed(1)}</td>
@@ -733,7 +747,14 @@ function Leaderboard(props) {
                                         </td>
                                         <td className="leaderboard-username-data">
                                             {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
-                                            {item.username}
+                                            <Link 
+                                                // to={item.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: item.author}}
+                                                to={{pathname: "/search", clickedUsername: item.username}}
+                                                onClick={() => localStorage.setItem("selectedPage", "Search")}
+                                                style={{ textDecoration: "none", color: "#404d72"}}>
+                                                    <h3>{item.username}</h3>
+                                            </Link>
+                                            {/* {item.username} */}
                                         </td>
                                         <td className="leaderboard-ffPoints-data">{isNaN(Number(item.marketPoints).toFixed(0)) ? 0.0 : Number(item.marketPoints).toFixed(0)}</td>
                                         <td className="leaderboard-avgBrierScore-data">{isNaN(Number(item.avgAllTimeBrier).toFixed(1)) ? 0.0 : Number(item.avgAllTimeBrier).toFixed(1)}</td>
