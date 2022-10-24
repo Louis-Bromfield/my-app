@@ -625,7 +625,7 @@ function HomeNewsFeed(props) {
                                     <div className="post-author">
                                         <div className="post-author-left">
                                             {/* <img className="author-profile-pic" src={item.author === props.username ? localStorage.getItem("profilePicture") : item.authorProfilePicture} alt=""/> */}
-                                            <img className="author-profile-pic" src={item.authorProfilePicture} alt=""/>
+                                            <img className="author-profile-pic" src={item.authorProfilePicture} alt="" style={{border: `3px solid ${item.authorBorderColor}`}} />
                                             <div className="post-author-details">
                                                 <Link 
                                                     to={item.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: item.author}}
@@ -705,7 +705,7 @@ function HomeNewsFeed(props) {
                                         <div className="post-author">
                                             <div className="post-author-left">
                                                 {/* <img className="author-profile-pic" src={item.author === props.username ? localStorage.getItem("profilePicture") : item.authorProfilePicture} alt=""/> */}
-                                                <img className="author-profile-pic" src={item.authorProfilePicture} alt=""/>
+                                                <img className="author-profile-pic" src={item.authorProfilePicture} alt="" style={{border: `3px solid ${item.authorBorderColor}`}}/>
                                                 <div className="post-author-details">
                                                     <Link 
                                                         to={item.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: item.author}}
