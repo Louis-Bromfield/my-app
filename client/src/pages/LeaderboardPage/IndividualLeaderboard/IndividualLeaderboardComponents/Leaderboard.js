@@ -703,7 +703,7 @@ function Leaderboard(props) {
                                                 to={{pathname: "/search", clickedUsername: item.username}}
                                                 onClick={() => localStorage.setItem("selectedPage", "Search")}
                                                 style={{ textDecoration: "none", color: "#404d72"}}>
-                                                    <h3>{item.username}</h3>
+                                                    <p>{item.username}</p>
                                             </Link>
                                             {/* {item.username} */}
                                         </td>
@@ -752,7 +752,7 @@ function Leaderboard(props) {
                                                 to={{pathname: "/search", clickedUsername: item.username}}
                                                 onClick={() => localStorage.setItem("selectedPage", "Search")}
                                                 style={{ textDecoration: "none", color: "#404d72"}}>
-                                                    <h3>{item.username}</h3>
+                                                    <p>{item.username}</p>
                                             </Link>
                                             {/* {item.username} */}
                                         </td>
