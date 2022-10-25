@@ -36,7 +36,7 @@ function ForecastArticlesDisplay(props) {
 
             // For now, use "US Midterms as search term" and then when problems are decided add handling for each one:
             term = "US Midterms"
-            
+
             // googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${term}`);
             googleNewsScrapeResult = await axios.get(`${process.env.REACT_APP_API_CALL_GSN}/${term}`);
             setArticles(googleNewsScrapeResult.data);
@@ -62,8 +62,10 @@ function ForecastArticlesDisplay(props) {
             <div className="articles">
                 <h2 style={{ color: "#404d72", margin: "0 auto"}}>Articles</h2>
                 <h4 style={{ margin: "0 auto", textAlign: "center" }}>The articles shown below are generated from a web scrape of Google News using key words in the problem above. This can result in a wide variety in terms of their relevance and usefulness.</h4>
+                <hr />
                 {articles !== "loading" && <div className="articles-grid">
                     {/* <ul> */}
+                        <h4>These articles have been handpicked by us:</h4>
                         <a href="https://projects.fivethirtyeight.com/biden-approval-rating/" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
                             {/* <p>{article.title}</p> */}
                             <div className="article-list-item">
@@ -106,6 +108,8 @@ function ForecastArticlesDisplay(props) {
                                 </div>
                             </div>
                         </a>
+                        <hr />
+                        <h4>These articles have been scraped from Google News:</h4>
                         {articles.map((article, index) => {
                             if (article.img === "N/A") {
                                 article.img = PlaceholderIcon;
