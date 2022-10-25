@@ -139,11 +139,13 @@ function IndividualNewsFeedPost(props) {
             giveUserPoints(cookie.username);
             // if (cookie.username !== undefined && author !== cookie.username) {
                 // await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/${author}`, {
+            if (cookie.username !== author && props.username !== author) {
                 await axios.patch(`${process.env.REACT_APP_API_CALL_U}/newNotification/${author}`, {
                     notificationMessage: `${cookie.username === undefined ? "Someone" : cookie.username} just commented on your news feed post!`,
                     notificationSourcePath: "/news-post",
                     notificationSourceObjectID: ID
                 });
+            };
             // }
         } catch (error) {
             console.error("Error in IndividualNewsFeedPost > submitComment");
