@@ -262,9 +262,19 @@ router.patch("/vote/:id", async (req, res) => {
 });
 
 // Delete a post
-router.delete("/:id", async (req, res) => {
+router.delete("/:id/:postAuthor", async (req, res) => {
     try {
         const deletedPost = await HomePageNewsFeedPost.findByIdAndDelete(req.params.id);
+        const user = await Users.findOne({username: req.params.postAuthor});
+        let newNotiArray = [];
+        for (let i = 0; i < user.notifications.length; i++) {
+            if (user.notifications[i].notification.SourceObjectID === req.params.id) {
+                newNotiArray.push(user.notifications[i]);
+            };
+        };
+        await Users.findByIdAndUpdate(user._id, {
+            notifications: newNotiArray
+        });
         res.json(deletedPost);
     } catch (error) {
         console.error(error);

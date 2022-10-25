@@ -310,7 +310,7 @@ function HomeNewsFeed(props) {
         try {
             // await axios.delete(`https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts/${postID}`);
             // await axios.delete(`${process.env.API_CALL_HPNFP}/${postID}`);
-            await axios.delete(`${process.env.REACT_APP_API_CALL_HPNFP}/${postID}`);
+            await axios.delete(`${process.env.REACT_APP_API_CALL_HPNFP}/${postID}/${props.username}`);
             setCauseFeedNewsFeedRefreshWithoutAnimation(false);
             setCauseFeedNewsFeedRefresh(causeNewsFeedRefresh+1);
         } catch (error) {
