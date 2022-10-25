@@ -268,8 +268,8 @@ router.delete("/:id/:postAuthor", async (req, res) => {
         const user = await Users.findOne({username: req.params.postAuthor});
         let newNotiArray = [];
         for (let i = 0; i < user.notifications.length; i++) {
-            console.log(`Does ${user.notifications[i].notification.SourceObjectID} === ${req.params.id.toString()}?`);
-            if (user.notifications[i].notification.SourceObjectID === req.params.id.toString()) {
+            console.log(`Does ${user.notifications[i].notificationSourceObjectID} === ${req.params.id.toString()}?`);
+            if (user.notifications[i].notificationSourceObjectID === req.params.id.toString()) {
                 console.log("yes for index " + i);
                 newNotiArray.push(user.notifications[i]);
             };
