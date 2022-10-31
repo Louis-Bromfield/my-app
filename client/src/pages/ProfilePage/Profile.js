@@ -270,7 +270,7 @@ console.log("Profile.js UE");
                         {profileTab === "my-trophies" && <ProfileRewards userObj={userObj} />}
                     </div>
                     <br />
-                    <div className="profile-details-container">
+                    {/* <div className="profile-details-container">
                         <div className="profile-details-sub-container">
                             <h3 className="profile-details-header">Want to change your password?</h3>
                             <label htmlFor="password" className="profile-details-label">Password:</label>
@@ -291,7 +291,7 @@ console.log("Profile.js UE");
                             <h3 className="profile-details-header">Want to delete your account?</h3>
                             <p>Send an email to <b>fantasyforecastcontact@gmail.com</b> and we will delete it for you.</p>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
