@@ -142,7 +142,7 @@ function Login(props) {
         <div className="login-main-div">
             <img className="login-logo" src={FFLogo} alt="" />
             <div className="login-div">
-                <h2>Already have an account? Login here:</h2>
+                <h2>Login here (Enter your Student Number for both Username and Password):</h2>
                 <label htmlFor="username-login">Username:</label>
                     <input 
                         type="text" 
