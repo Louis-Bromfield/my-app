@@ -581,8 +581,8 @@ function LeaderboardMenu(props) {
                 shouldRefresh={shouldRefresh}
             />
             <hr/>
-            <h3>All markets offered by Fantasy Forecast:</h3>
-            <p>Any new markets will appear here, and you can join them by using the "Join A Market" button at the top of the page.</p>
+            {/* <h3>All markets offered by Fantasy Forecast:</h3> */}
+            {/* <p>Any new markets will appear here, and you can join them by using the "Join A Market" button at the top of the page.</p> */}
             {/* <span 
                 className="markets-legend">
                 <h4 style={{color: "#404d72"}}> Blue</h4>
@@ -592,12 +592,12 @@ function LeaderboardMenu(props) {
                 <h4 style={{color: "#993131"}}>Red</h4>
                 <h4> = User-created Leaderboard, requires an invite to join.</h4>
             </span> */}
-            <LeaderboardGrid 
-                user={false} 
-                username={props.username} 
-                markets={allMarkets} 
-                shouldRefresh={shouldRefresh} 
-            />
+            {/* <LeaderboardGrid  */}
+                {/* user={false}  */}
+                {/* username={props.username}  */}
+                {/* markets={allMarkets}  */}
+                {/* shouldRefresh={shouldRefresh}  */}
+            {/* /> */}
         </div>
     )
 }
