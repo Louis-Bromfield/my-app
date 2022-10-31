@@ -35,7 +35,13 @@ function ForecastArticlesDisplay(props) {
 
 
             // For now, use "US Midterms as search term" and then when problems are decided add handling for each one:
-            term = "US Midterms"
+            if (searchTerm.includes("DeSantis")) {
+                term = "DeSantis Crist"
+            } else if (searchTerm.includes("Fetterman")) {
+                term = "Fetterman Oz"
+            } else {
+                term = "US Midterms"
+            };
 
             // googleNewsScrapeResult = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/googleNewsScraper/${term}`);
             googleNewsScrapeResult = await axios.get(`${process.env.REACT_APP_API_CALL_GSN}/${term}`);
