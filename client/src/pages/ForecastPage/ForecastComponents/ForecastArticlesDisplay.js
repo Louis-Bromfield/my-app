@@ -36,7 +36,7 @@ function ForecastArticlesDisplay(props) {
 
             // For now, use "US Midterms as search term" and then when problems are decided add handling for each one:
             if (searchTerm.includes("DeSantis")) {
-                term = "DeSantis Crist"
+                term = "DeSantis"
             } else if (searchTerm.includes("Fetterman")) {
                 term = "Fetterman Oz"
             } else {
