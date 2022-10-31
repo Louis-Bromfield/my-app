@@ -43,7 +43,8 @@ function Home(props) {
         console.log(props.username);
         if (localStorage.getItem("firstVisit") === "true") {
             setShowModal(true);
-            const welcomeString = "Welcome to Fantasy Forecast! The survey can be found by clicking on the 'Survey' tab at the top of the screen (or from the dropdown menu in the top-left if you're on a mobile device). If this is your first time here, we recommend checking out the Onboarding menu on the right (or down below if you're on mobile) for ideas on how to get started with the site - have fun!";
+            // const welcomeString = "Welcome to Fantasy Forecast! The survey can be found by clicking on the 'Survey' tab at the top of the screen (or from the dropdown menu in the top-left if you're on a mobile device). If this is your first time here, we recommend checking out the Onboarding menu on the right (or down below if you're on mobile) for ideas on how to get started with the site - have fun!";
+            const welcomeString = "Welcome to Fantasy Forecast! If this is your first time here, we recommend checking out the Onboarding menu on the right (or down below if you're on mobile) for ideas on how to get started with the site - have fun!";
             setModalContent(welcomeString);
             localStorage.setItem("firstVisit", false);
         };
