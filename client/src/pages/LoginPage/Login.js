@@ -199,33 +199,6 @@ function Login(props) {
                 <button className="login-btn" onClick={() => loginFromLogin(usernameForLogin, passwordResetCodeForLogin, false)}>Login to Fantasy Forecast</button>
                 {errorMessage}
             </div> */}
-            <div className="login-div">
-                <h2>Forgot your password?</h2>
-                <label htmlFor="username-reset-code">Username:</label>
-                    <input 
-                        type="text" 
-                        name="username-reset-code" 
-                        id="username-reset-code" 
-                        // maxLength={15}
-                        onChange={(e) => { 
-                            setResetMessage("");
-                            setUsernameForPasswordReset(e.target.value);
-                        }}
-                    />
-                <label htmlFor="email-reset-request">Gmail Address Account Created With:</label>
-                    <input 
-                        type="text" 
-                        name="email-reset-request" 
-                        id="email-reset-request"
-                        onChange={(e) => {
-                            setResetMessage("");
-                            setEmailForPasswordReset(e.target.value);
-                        }}
-                    />
-                <button className="login-btn" onClick={() => requestPasswordResetThroughEmail(usernameForPasswordReset, emailForPasswordReset)}>Request Password Reset</button>
-                {resetMessage !== "" && resetMessage}
-                {errorMessage}
-            </div>
         </div>
     //     <div className="login-main-div">
     //     <img className="login-logo" src={FFLogo} alt="" />
