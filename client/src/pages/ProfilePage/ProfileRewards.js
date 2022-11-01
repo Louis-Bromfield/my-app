@@ -46,7 +46,7 @@ function ProfileRewards(props) {
             <div className="trophy-grid-container">
                 {props.userObj.trophies !== undefined ? props.userObj.trophies.map((item, index) => {
                     return (
-                        <div className="individual-trophy-container" onClick={() => { setShowModal(true); setModalContent(item.trophyModalText)}}>
+                        <div className="individual-trophy-container" onClick={() => { setShowModal(true); setModalContent(item.trophyText === "Seer" ? "This trophy is earned by reaching Level 15, or 1500 Fantasy Forecast Points. You will be given a Level-exclusive profile border (bronze) to let other forecasters know of your rank." : item.trophyModalText)}}>
                             <img src={item.obtained === true ? Trophy : TrophyModified} alt="" className="trophy-img" />
                             <h4>{item.trophyText}</h4>
                         </div>
