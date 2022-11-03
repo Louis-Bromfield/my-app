@@ -27,7 +27,7 @@ function ProfileStats(props) {
     const [recentAverageData, setRecentAverageData] = useState([]);
 
     useEffect(() => {
-        if (props.ffPoints < 600) {
+        if (props.ffPoints < 600 || props.userObj.trophies[0].obtained === true) {
             setIsHiddenBehindLevel(true);
             return;
         } else {
