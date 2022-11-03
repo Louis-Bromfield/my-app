@@ -131,7 +131,7 @@ function HomeButtonLarge(props) {
             </Modal>
             <h2 className="home-button-large-title">
                 {props.title}
-                {(props.user.fantasyForecastPoints < 600 || props.userObj.trophies[0].obtained === true) &&
+                {(props.user.fantasyForecastPoints < 600 || props.user.trophies[0].obtained === true) &&
                     <FaInfoCircle 
                         onClick={() => {
                             setShowModal(true);
