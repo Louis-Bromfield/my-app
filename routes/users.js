@@ -574,8 +574,9 @@ router.patch("/onboardingTask/:username", async (req, res) => {
         // Check if they've completed all onboarding tasks
         let allOnboardingTrue = true;
 console.log("allOnboardingTrue should be true = " + allOnboardingTrue);
-        for (let i = 0; i < user.onboarding.length; i++) {
-            if (user.onboarding[i] === false) {
+        for (let i = 0; i < userOnboarding.length; i++) {
+console.log("Current item = " + userOnboarding[i]);
+            if (userOnboarding[i] === false) {
 console.log("I have found an onboarding task you haven't completed yet");
                 allOnboardingTrue = false;
                 // break;
