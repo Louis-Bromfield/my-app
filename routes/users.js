@@ -578,7 +578,7 @@ console.log("allOnboardingTrue should be true = " + allOnboardingTrue);
             if (user.onboarding[i] === false) {
 console.log("I have found an onboarding task you haven't completed yet");
                 allOnboardingTrue = false;
-                break;
+                // break;
             };
         };
 console.log("the for loop checking your onboarding has now finished, time to see if allOnboardingTrue is true or not. It should be false in these tests = " + allOnboardingTrue);
