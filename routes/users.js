@@ -573,15 +573,20 @@ router.patch("/onboardingTask/:username", async (req, res) => {
 
         // Check if they've completed all onboarding tasks
         let allOnboardingTrue = true;
+console.log("allOnboardingTrue should be true = " + allOnboardingTrue);
         for (let i = 0; i < user.onboarding.length; i++) {
             if (user.onboarding[i] === false) {
+console.log("I have found an onboarding task you haven't completed yet");
                 allOnboardingTrue = false;
                 break;
             };
         };
+console.log("the for loop checking your onboarding has now finished, time to see if allOnboardingTrue is true or not. It should be false in these tests = " + allOnboardingTrue);
         if (allOnboardingTrue === true) {
+console.log("allOnboardingTrue is " + allOnboardingTrue + ", it should only be calling this code if true");
             for (let i = 0; i < user.trophies.length; i++) {
                 if (user.trophies[i].trophyText === "Ready To Go" && user.trophies[i].obtained === false) {
+console.log("we have found the ready to go trophy, time to award it to you!");
                     user.trophies[i].obtained = true;
                 };
             };
