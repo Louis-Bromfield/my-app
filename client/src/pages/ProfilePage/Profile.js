@@ -142,7 +142,7 @@ console.log("Profile.js UE");
             // console.log(updatedUserDocument);
             if (updatedUserDocument.data.firstTime === true) {
                 setShowModal(true);
-                setModalContent("You just got 100 Fantasy Forecast Points for visiting your profile for the first time! If you forget your password, log back in using your Reset Code and then set your new password at the bottom of this page.");
+                setModalContent("You just got 100 Fantasy Forecast Points for visiting your profile for the first time!");
             };
             // Try to redo this so that we don't need to do the GET first 
             // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
