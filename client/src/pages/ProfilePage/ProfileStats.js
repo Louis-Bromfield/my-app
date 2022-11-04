@@ -27,10 +27,7 @@ function ProfileStats(props) {
     const [recentAverageData, setRecentAverageData] = useState([]);
 
     useEffect(() => {
-        if (props.ffPoints < 600 || props.userObj.trophies[0].obtained === false) {
-            setIsHiddenBehindLevel(true);
-            return;
-        } else {
+        if (props.ffPoints > 600 || props.userObj.trophies[0].obtained === true) {
                 setIsHiddenBehindLevel(false);
             if (props.userObj === undefined) {
                 formatBrierData(null, props.username);
@@ -41,6 +38,9 @@ function ProfileStats(props) {
             };
             getGlobalData();
             setStats(recentForecastData);
+        } else {
+            setIsHiddenBehindLevel(true);
+            return;
         };
         console.log("Profile Stats UE");
     }, [props.username, props.brierScores, props.profileTab, props.userObj, props.ffPoints]);
@@ -212,7 +212,7 @@ function ProfileStats(props) {
         <div className="profile-stats">
             <h2 className="profile-header">My Stats</h2>
             {isHiddenBehindLevel === true &&
-            <h3>This section of your profile is locked until you reach Level 6 (600 Fantasy ForecastPoints). Complete the onboarding tasks on the Home page, submit forecasts, post to the feed and more to earn the points you need!</h3>
+            <h3>This section of your profile is locked until you reach Level 6 (600 Fantasy ForecastPoints) or you unlock the Ready To Go trophy. Complete the onboarding tasks on the Home page, submit forecasts, post to the feed and more to earn the points you need!</h3>
             }
             {isHiddenBehindLevel === false && 
                 <div className="">
