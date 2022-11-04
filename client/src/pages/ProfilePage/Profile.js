@@ -14,7 +14,7 @@ function Profile(props) {
     const [bestForecastForModal, setBestForecastForModal] = useState("");
     const [fantasyForecastPoints, setFantasyForecastPoints] = useState(0);
     const [brierScoresArr, setBrierScoresArr] = useState([]);
-    const [userObj, setUserObj] = useState();
+    const [userObj, setUserObj] = useState(props.user);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
     const [level, setLevel] = useState(0);
@@ -70,6 +70,7 @@ console.log("Profile.js UE");
             };
             // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/profileData/${username}`);
             const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${username}`);
+            console.log(userDocument.data);
             if (userDocument.data.userObj === null) {
                 setErrorMessage("No profiles were found with this username. Please try again.");
             } else if (userDocument.data.userObj !== null) {
