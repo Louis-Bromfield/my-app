@@ -47,7 +47,6 @@ function Forecast(props) {
 
     const getAllForecastsFromDB = async () => {
         try {
-            // const allForecastsUnfiltered = await axios.get('https://fantasy-forecast-politics.herokuapp.com/forecasts');
             const allForecastsUnfiltered = await axios.get(`${process.env.REACT_APP_API_CALL_F}`);
             // console.log(allForecastsUnfiltered);
             setAllForecasts(allForecastsUnfiltered.data);
@@ -66,19 +65,6 @@ function Forecast(props) {
         handleLeaderboardChange(leaderboardData);
         console.log("Forecast.js UE")
     }, [refresh, forecast, leaderboardData]);
-
-    // const testNotification = async () => {
-    //     try {
-    //         const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newNotification/LouisB`, {
-    //             notificationMessage: "This is a new notification!",
-    //             notificationSourcePath: "/forecast",
-    //             notificationSourceObjectID: "62a8f6dc2ad128ed5f3f951e"
-    //         });
-    //         console.log(res);
-    //     } catch (err) {
-    //         console.error(err);
-    //     };
-    // };
 
     return (
         <div className="forecast">

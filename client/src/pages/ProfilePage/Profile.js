@@ -50,7 +50,6 @@ console.log("Profile.js UE");
         try {
             setErrorMessage("");
             const lbName = "Fantasy Forecast All-Time"
-            // const userData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${lbName}`);
             const userData = await axios.get(`${process.env.REACT_APP_API_CALL_L}/leaderboard/${lbName}`);
             // const lbRankings = userData.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
             for (let i = 0; i < userData.data.length; i++) {
@@ -68,7 +67,6 @@ console.log("Profile.js UE");
                     };      
                 };
             };
-            // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/profileData/${username}`);
             const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${username}`);
             console.log(userDocument.data);
             if (userDocument.data.userObj === null) {
@@ -133,7 +131,6 @@ console.log("Profile.js UE");
 
     const updateOnboarding = async (username) => {
         try {
-            // const updatedUserDocument = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/onboardingTask/${username}`, {
             const updatedUserDocument = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/onboardingTask/${username}`, {
                 onboardingTask: "visitProfilePage",
                 ffPointsIfFalse: 100,
@@ -145,13 +142,13 @@ console.log("Profile.js UE");
                 setModalContent("You just got 100 Fantasy Forecast Points for visiting your profile for the first time!");
             };
             // Try to redo this so that we don't need to do the GET first 
-            // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+            // const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
             // if (userDocument.data[0].onboarding.visitProfilePage === true) {
             //     return;
             // } else {
             //     userDocument.data[0].onboarding.visitProfilePage = true;
             //     userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 100
-            //     await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
+            //     await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, 
             //         { 
             //             onboarding: userDocument.data[0].onboarding,
             //             fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 
@@ -180,7 +177,6 @@ console.log("Profile.js UE");
                     return;
                 } else {
                     console.log(newPW);
-                    // const newDoc = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/newPW/${props.username}`, { password: newPW });
                     const newDoc = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/newPW/${props.username}`, { password: newPW });
                     console.log(newDoc);
                     if (newDoc) {

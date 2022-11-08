@@ -36,7 +36,7 @@ function App() {
   const [cookie, setCookies] = useCookies(["username"]);
 
 //   const updateUsername = async (newUsername) => {
-//     await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, { username: newUsername });
+//     await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, { username: newUsername });
 //     setUsername(newUsername);
 //     localStorage.setItem("username", newUsername);
 //   };
@@ -45,7 +45,6 @@ function App() {
     setIsLoggedIn(false);
     localStorage.setItem('isLoggedIn', false);
     localStorage.removeItem('username');
-    // await axios.delete(`https://fantasy-forecast-politics.herokuapp.com/deleteSession`);
     // localStorage.removeItem('name');
     // localStorage.removeItem('markets');
     // localStorage.removeItem('navigationOrder');
@@ -58,7 +57,6 @@ function App() {
 
   const login = async (username) => {
     console.log("In login function");
-    // const userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
     // const userObj = await axios.get(`${process.env.API_CALL_U}/${username}`);
     const userObj = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
     if (userObj.data.length === 0) {
@@ -66,16 +64,12 @@ function App() {
     };
     // Add user to leaderboard
     const ffAllTime = "Fantasy Forecast All-Time";
-    // await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${ffAllTime}`, {
     // await axios.patch(`${process.env.API_CALL_L}/${ffAllTime}`, {
     await axios.patch(`${process.env.REACT_APP_API_CALL_L}/${ffAllTime}`, {
         username: username,
         isGroup: false,
         profilePicture: userObj.data[0].profilePicture
     });
-
-    // Add user to learnQuizzes - commented out as we move learnQuizzes to user documents
-    // await axios.post(`https://fantasy-forecast-politics.herokuapp.com/learnQuizzes/`, { username: username });
 
     console.log(userObj);
     setUserObject(userObj.data[0]);
@@ -145,7 +139,6 @@ function App() {
             };
             console.log(username);
             console.log("paIFDBTPDB");
-            // const userPulledFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);  
             // const userPulledFromDB = await axios.get(`${process.env.API_CALL_U}/${username}`);  
             const userPulledFromDB = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);  
             // console.log(userPulledFromDB);

@@ -50,7 +50,6 @@ console.log("+++");
 
     const getGlobalData = async () => {
         try {
-            // const res = await axios.get('https://fantasy-forecast-politics.herokuapp.com/users/globalData');
             const res = await axios.get(`${process.env.REACT_APP_API_CALL_U}/globalData`);
             setGlobalBestBrier((res.data.bestBrier === null || res.data.bestBrier === -1)  ? "N/A" : res.data.bestBrier.toFixed(0));
             setGlobalWorstBrier((res.data.worstBrier === null || res.data.worstBrier === -1) ? "N/A" : res.data.worstBrier.toFixed(0));
@@ -66,7 +65,6 @@ console.log("+++");
         // keep it for insurance purposes as it doesn't fire otherwise
         if (userObj === null || userObj === undefined) {
             // Happy to keep as it's only if there's an issue with userObj
-            // const brierData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             const brierData = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
             userObj = brierData.data[0];
         };
@@ -189,7 +187,6 @@ console.log("+++");
     const findUniquePlayerStats = async (userObj, username) => {
         try {
             if (userObj === null) {
-                // const userDoc = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
                 const userDoc = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
                 userObj = userDoc.data[0];
             };

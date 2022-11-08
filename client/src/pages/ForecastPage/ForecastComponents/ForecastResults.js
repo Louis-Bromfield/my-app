@@ -27,7 +27,6 @@ function ForecastResults(props) {
 
     const pullAllScores = async (problemName) => {
         try {
-            // const resultsFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/getIndividualProblemResults/${problemName}`);
             const resultsFromDB = await axios.get(`${process.env.REACT_APP_API_CALL_U}/getIndividualProblemResults/${problemName}`);
             setResults(resultsFromDB.data);      
         } catch (err) {
@@ -38,7 +37,7 @@ function ForecastResults(props) {
 
     // const getAllUsers = async () => {
     //     try {
-    //         const userDocument = await axios.get("https://fantasy-forecast-politics.herokuapp.com/users");
+    //         const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}`);
     //         return userDocument.data;
     //     } catch (err) {
     //         console.error("Error in ForecastResults > getAllUsers");

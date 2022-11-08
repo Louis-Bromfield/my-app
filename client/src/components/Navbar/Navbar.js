@@ -95,7 +95,7 @@ function Navbar(props) {
         // set seenByUser value to true
         let username = props.username === undefined ? props.userObj.username : props.username;
         // if (changeAll === true) {
-        //     const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/editNotifications/${username}`, {
+        //     const res = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/editNotifications/${username}`, {
         //         setAllToTrue: true
         //     });
         //     setNumberOfNewNotis(0);

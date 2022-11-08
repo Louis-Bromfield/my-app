@@ -106,7 +106,7 @@ function LeaderboardMenu(props) {
     //         };
     //         setLeagueCreationError("");
     //         try {
-    //             await axios.post('https://fantasy-forecast-politics.herokuapp.com/leaderboards', {
+    //             await axios.post('${process.env.REACT_APP_API_CALL_L}', {
     //                 leaderboardName: league,
     //                 rankings: usersToInvite,
     //                 isPublic: publicStatus,
@@ -135,7 +135,7 @@ function LeaderboardMenu(props) {
     // Could this one and pullAllMarketsFromDB be merged into one API request?
     // const checkIfUserIsInMarkets = async (username) => {
     //     try {
-    //         const allUserLeaderboardsFromDB = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${username}`);
+    //         const allUserLeaderboardsFromDB = await axios.get(`${process.env.REACT_APP_API_CALL_L}/${username}`);
     //         // console.log(allUserLeaderboardsFromDB.data);
     //         if (allUserLeaderboardsFromDB.data[0].length === 0) {
     //             setAllUserLeaderboardsWithInviteAccepted([]);
@@ -157,7 +157,7 @@ function LeaderboardMenu(props) {
     // };
 
     // const pullAllMarketsFromDB = async (username) => {
-    //     const leaderboardDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/justNames/${username}`);
+    //     const leaderboardDocument = await axios.get(`${process.env.REACT_APP_API_CALL_L}/justNames/${username}`);
     //     // console.log(leaderboardDocument.data);
     //     setAllMarkets(leaderboardDocument.data);
     // };
@@ -201,7 +201,7 @@ function LeaderboardMenu(props) {
     // const leagueCreationMenu = async (openStatus, username) => {
     //     try {
     //         if (usersArray !== ["empty array"]) {
-    //             let allUsers = await axios.get('https://fantasy-forecast-politics.herokuapp.com/users');
+    //             let allUsers = await axios.get('${process.env.REACT_APP_API_CALL_U}');
     //             let filteredUsers = [];
     //             for (let i = 0; i < allUsers.data.length; i++) {
     //                 if (allUsers.data[i].username === username) {
@@ -268,10 +268,10 @@ function LeaderboardMenu(props) {
     //     try {
     //         // If we already have a get request for this stuff, set it into state and just pull from that state variable rather than do this request again
     //         // Answer: we don't
-    //         // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+    //         // const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
     //         setLoading(true);
     //         for (let i = 0; i < markets.length; i++) {
-    //             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/marketSignUp/${markets[i]}`, {
+    //             await axios.patch(`${process.env.REACT_APP_API_CALL_L}/marketSignUp/${markets[i]}`, {
     //                 username: username,
     //                 profilePicture: props.userObject.profilePicture,
     //                 isGroup: props.userObject.isGroup
@@ -286,7 +286,7 @@ function LeaderboardMenu(props) {
 
     // const updateOnboardingAndUserMarkets = async (markets, username) => {
     //     try {
-    //         const updatedUserDocument = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/onboardingTask/${username}`, {
+    //         const updatedUserDocument = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/onboardingTask/${username}`, {
     //             onboardingTask: "joinAMarket",
     //             ffPointsIfFalse: 150,
     //             ffPointsIfTrue: 5
@@ -296,11 +296,11 @@ function LeaderboardMenu(props) {
     //             setShowModal(true);
     //             setModalContent("You just got 150 Fantasy Forecast Points for joining your first market! Before you start forecasting, remember that if you want to be eligible for the tournament prizes (including £250 for 1st Place!), you MUST complete our survey before 11:59pm (BST) on Tuesday 28th June. Failing to do so will render you ineligible for the prizes. The survey can be found by selecting the Survey tab at the top of the screen or the top-left dropdown menu if you're on mobile.");
     //         };
-    //         // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+    //         // const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
     //         // if (userDocument.data[0].onboarding.joinAMarket === true) {
     //         //     userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 5;
     //         //     userDocument.data[0].markets = [...userDocument.data[0].markets, ...markets];
-    //         //     await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
+    //         //     await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, 
     //         //         { 
     //         //             onboarding: userDocument.data[0].onboarding,
     //         //             fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints,
@@ -313,7 +313,7 @@ function LeaderboardMenu(props) {
     //         //     userDocument.data[0].onboarding.joinAMarket = true;
     //         //     userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 150;
     //         //     userDocument.data[0].markets = [...userDocument.data[0].markets, ...markets];
-    //         //     await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
+    //         //     await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, 
     //         //         { 
     //         //             onboarding: userDocument.data[0].onboarding,
     //         //             fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints,
@@ -333,15 +333,15 @@ function LeaderboardMenu(props) {
     // const respondToInvite = async (market, response, username) => {
     //     try {
     //         if (response === "accept") {
-    //             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${market}/acceptInvite/${username}`);
-    //             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/addMarket/${market}`);
+    //             await axios.patch(`${process.env.REACT_APP_API_CALL_L}/${market}/acceptInvite/${username}`);
+    //             await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}/addMarket/${market}`);
     //             setInviteAlert(`Congratulations, you have now joined the ${market} market!`);
     //             setTimeout(() => {
     //                 setInviteAlert("No message");
     //             }, 1500);
     //         } else if (response === "reject") {
-    //             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${market}/removeUser/${username}`)
-    //             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/removeMarket/${market}`);
+    //             await axios.patch(`${process.env.REACT_APP_API_CALL_L}/${market}/removeUser/${username}`)
+    //             await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}/removeMarket/${market}`);
     //             setInviteAlert(`You have rejected this invitation to join ${market}.`);
     //             setTimeout(() => {
     //                 setInviteAlert("No message");

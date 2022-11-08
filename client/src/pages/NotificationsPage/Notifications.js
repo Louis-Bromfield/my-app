@@ -16,7 +16,7 @@ function Notifications(props) {
         // set seenByUser value to true
         // let username = props.location.userObj.username === undefined ? props.location.userObj.username : props.username;
         // if (changeAll === true) {
-        //     const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/editNotifications/${username}`, {
+        //     const res = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/editNotifications/${username}`, {
         //         setAllToTrue: true
         //     });
         //     setNumberOfNewNotis(0);
@@ -24,7 +24,6 @@ function Notifications(props) {
         //     return;
         // } else {
             if (notification.seenByUser === false) {
-                // const res = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/editNotifications/${props.location.userObj.username}`, {
                 const res = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/editNotifications/${props.location.userObj.username}`, {
                     setAllToTrue: false,
                     notificationMessage: notification.notificationMessage,

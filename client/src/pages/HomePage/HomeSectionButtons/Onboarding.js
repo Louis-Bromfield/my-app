@@ -43,7 +43,7 @@ function Onboarding(props) {
     // Querying server version
     // const getAllOnboardingBooleans = async (username) => {
     //     try {
-    //         const allOnboardingBooleans = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+    //         const allOnboardingBooleans = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
     //         setOnboardingLoading(true)
     //         setTimeout(() => {
     //             setOnboardingLoading(false);

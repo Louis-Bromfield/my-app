@@ -77,7 +77,6 @@ function ForecastAnalysisPage(props) {
 
     const retrieveForecastInfo = async (forecastID) => {
         try {
-            // const forecastDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/getByID/${forecastID}`);
             const forecastDocument = await axios.get(`${process.env.REACT_APP_API_CALL_F}/forecasts/getByID/${forecastID}`);
             return forecastDocument.data[0];
         } catch (error) {

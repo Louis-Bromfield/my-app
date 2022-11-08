@@ -70,10 +70,10 @@ function IndividualLeaderboard(props) {
     
     const getLeaderboardData = async (leaderboard) => {
         try {
-            // const lbData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/leaderboard/${leaderboard}`);
+            // const lbData = await axios.get(`${process.env.REACT_APP_API_CALL_L}/leaderboard/${leaderboard}`);
             // const lbRankings = lbData.data;
             // console.log(lbRankings);
-            // const lbData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/`);
+            // const lbData = await axios.get(`${process.env.REACT_APP_API_CALL_U}/`);
             const lbData = await axios.get(`${process.env.REACT_APP_API_CALL_U}/`);
             // console.log(lbData);
             // let lbRankings = [];
@@ -113,7 +113,7 @@ function IndividualLeaderboard(props) {
     //         };
     //         localStorage.setItem("markets", newMarkets);
     //         history.push("/leaderboard-select");
-    //         await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/removeUser/${leaderboard}/${username}`);
+    //         await axios.patch(`${process.env.REACT_APP_API_CALL_L}/removeUser/${leaderboard}/${username}`);
     //     } catch (error) {
     //         console.error("Error in IndividualLeaderboard > leaveMarket");
     //         console.error(error);
@@ -126,7 +126,7 @@ function IndividualLeaderboard(props) {
     //     } else if (usersPulled === false) {
     //         setUsersPulled(true);
     //         try {
-    //             let allUsers = await axios.get('https://fantasy-forecast-politics.herokuapp.com/users');
+    //             let allUsers = await axios.get('${process.env.REACT_APP_API_CALL_U}');
     //             let inviteList = [];
     //             let kickList = [];
     //             for (let i = 0; i < allUsers.data.length; i++) {
@@ -153,10 +153,10 @@ function IndividualLeaderboard(props) {
     // const send = async (inviteOrKick, user, market) => {
     //     try {
     //         if (inviteOrKick === "invite") {
-    //             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/${market}`, { username: user.username, isGroup: user.isGroup });
+    //             await axios.patch(`${process.env.REACT_APP_API_CALL_L}/${market}`, { username: user.username, isGroup: user.isGroup });
     //             setSendResponseText(`You have invited ${user.username}.`);
     //         } else if (inviteOrKick === "kick") {
-    //             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/kick/${market}`, { username: user });
+    //             await axios.patch(`${process.env.REACT_APP_API_CALL_L}/kick/${market}`, { username: user });
     //             setSendResponseText(`You have kicked ${user}.`);
     //         };
     //     } catch (error) {

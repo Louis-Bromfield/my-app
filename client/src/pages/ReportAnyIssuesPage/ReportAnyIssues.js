@@ -21,7 +21,6 @@ function ReportAnyIssues() {
         };
         try {
             setReportResponse("");
-            // const res = await axios.post('https://fantasy-forecast-politics.herokuapp.com/helpers/submitFeedback', {
             const res = await axios.post(`${process.env.REACT_APP_API_CALL_HELP}/submitFeedback`, {
                 reportType: type,
                 reportComments: comments,
@@ -48,7 +47,6 @@ function ReportAnyIssues() {
 
     const getAllFeedback = async () => {
         try {
-            // const allFeedback = await axios.get('https://fantasy-forecast-politics.herokuapp.com/helpers/getAllFeedback/responses');
             const allFeedback = await axios.get(`${process.env.REACT_APP_API_CALL_HELP}/getAllFeedback/responses`);
             console.log(allFeedback);
             if (allFeedback.data.retrieveSuccess === false) {

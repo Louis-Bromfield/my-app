@@ -47,7 +47,7 @@ function Leaderboard(props) {
     //             let ffRankings = [];
     //             for (let i = 0; i < rankings.length; i++) {
     //                 console.log(rankings[i]);
-    //                 const userDocumentFF = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${rankings[i].username}`);
+    //                 const userDocumentFF = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${rankings[i].username}`);
     //                 // if (rankings[i].username === props.username) {
     //                 //     props.setUserInMarket(true);
     //                 //     console.log("yes we did it");
@@ -90,7 +90,7 @@ function Leaderboard(props) {
     //             let totalAverageBrier = 0;
     //             for (let i = 0; i < rankings.length; i++) {
     //                 console.log(rankings[i]);
-    //                 const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${rankings[i].username}`);
+    //                 const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${rankings[i].username}`);
     //                 if (userDocument.data[0].username === props.username) {
     //                     props.setUserInMarket(true);
     //                 };
@@ -146,7 +146,7 @@ function Leaderboard(props) {
 
             // Tried to move to server but for some reason my additions to objects (like brierScoresForMarket arrays) weren't persisting, it just sent me back allUsers as if I did nothing
             // const lbFromLS = localStorage.getItem("currentLeaderboardName");
-            // const leaderboardData = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/leaderboards/getAllInfoToRender/${props.isFFLeaderboard}/${props.leaderboardTitle}/${lbFromLS}`);
+            // const leaderboardData = await axios.get(`${process.env.REACT_APP_API_CALL_L}/getAllInfoToRender/${props.isFFLeaderboard}/${props.leaderboardTitle}/${lbFromLS}`);
             // console.log(leaderboardData);
             // console.log(leaderboardData.data.rankings);
             // if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
@@ -238,7 +238,7 @@ function Leaderboard(props) {
         //   let ffRankings = [];
         //   for (let i = 0; i < rankings.length; i++) {
         //     // console.log(rankings[i]);
-        //     const userDocumentFF = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${rankings[i].username}`);
+        //     const userDocumentFF = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${rankings[i].username}`);
         //     // Check if logged in user is in market, true will allow them to invite etc
         //     if (userDocumentFF.data[0].username === props.username) {
         //       props.setUserInMarket(true);

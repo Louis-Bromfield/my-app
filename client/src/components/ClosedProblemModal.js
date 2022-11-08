@@ -35,7 +35,6 @@ const ClosedProblemModal = (props) => {
 
     const closeModal = async (username) => {
         props.setShowClosedProblemModal(false);
-        // await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, { numberOfClosedForecasts: 0});
         await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, { numberOfClosedForecasts: 0});
         props.setUserClosedForecastCount(0);
     };

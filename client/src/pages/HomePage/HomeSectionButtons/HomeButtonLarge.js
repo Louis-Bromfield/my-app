@@ -57,7 +57,7 @@ function HomeButtonLarge(props) {
     // Querying Server - not needed with props
     // const getBrierDataFromDB = async (username) => {
     //     try {
-    //         const brierDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
+    //         const brierDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
     //         if (brierDocument.data[0].brierScores.length === 0) {
     //             setData([]);
     //             setLabels([]);

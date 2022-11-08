@@ -99,7 +99,6 @@ function HelpOurResearch(props) {
             // console.log(householdIncome);
             // console.log(ukBased);
 
-            // const res = await axios.post(`https://fantasy-forecast-politics.herokuapp.com/users/surveyResponse`, {
             const res = await axios.post(`${process.env.REACT_APP_API_CALL_U}/surveyResponse`, {
                 username: props.userObject.username,
                 selfAssessedPolKnowledge: selfAssessedPolKnowledge,
@@ -144,7 +143,6 @@ function HelpOurResearch(props) {
                 setSubmitMsg("Your survey has been sent. Thank you for participating, and best of luck in the tournament!");
                 const username = props.username === undefined ? props.userObject.username === undefined : props.username;
                 console.log(username);
-                // const userRes = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, {
                 const userRes = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, {
                     completedSurvey: true
                 });

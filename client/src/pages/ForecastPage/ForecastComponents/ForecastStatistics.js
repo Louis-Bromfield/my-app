@@ -18,7 +18,7 @@ function ForecastStatistics(props) {
     }, [props.selectedForecast]);
 
     const getForecastInfo = async (today, selectedForecast) => {
-        // const response = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/forecasts/getDetailedForecastInfo/${selectedForecast.problemName}/${today}`)
+        // const response = await axios.get(`${process.env.REACT_APP_API_CALL_F}/getDetailedForecastInfo/${selectedForecast.problemName}/${today}`)
         // console.log(response);
         // if (today === true) {
         //     if (response.data.singleCertainty === true) {

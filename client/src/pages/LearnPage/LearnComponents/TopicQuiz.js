@@ -34,16 +34,16 @@ function TopicQuiz(props) {
     // const persistQuizCompletionToDB = async (username, topic) => {
     //     try {
     //         if (topic === "Brier Scores") {
-    //             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/learnQuizzes/${username}`, {
+    //             await axios.patch(`${process.env.REACT_APP_API_CALL_LQ}/${username}`, {
     //                 brierComplete: true
     //             });
                 
     //         } else if (topic === "The Good Judgment Project") {
-    //             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/learnQuizzes/${username}`, {
+    //             await axios.patch(`${process.env.REACT_APP_API_CALL_LQ}/${username}`, {
     //                 gjpComplete: true
     //             });
     //         } else if (topic === "Superforecasters") {
-    //             await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/learnQuizzes/${username}`, {
+    //             await axios.patch(`${process.env.REACT_APP_API_CALL_LQ}/${username}`, {
     //                 superforecastersComplete: true
     //             });
     //         };
@@ -56,7 +56,6 @@ function TopicQuiz(props) {
     const persistQuizCompletionToDBAndUpdateOnboarding = async (username, topic) => {
         try {
             // Try to redo this so that we don't need to do the GET first 
-            // const userDocument = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`);
             const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
             if (userDocument.data[0].onboarding.completeALearnQuiz === true) {
                 userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 5;
@@ -68,7 +67,6 @@ function TopicQuiz(props) {
                     userDocument.data[0].learnQuizzes.superforecastersComplete = true;
                 };
                 const updatedLQS = userDocument.data[0].learnQuizzes;
-                // await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
                 await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, 
                     { 
                         onboarding: userDocument.data[0].onboarding,
@@ -96,7 +94,6 @@ function TopicQuiz(props) {
                 //         break;
                 //     }
                 // }
-                // await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/${username}`, 
                 await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, 
                     { 
                         onboarding: userDocument.data[0].onboarding,

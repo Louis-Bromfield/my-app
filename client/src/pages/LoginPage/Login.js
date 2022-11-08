@@ -44,7 +44,6 @@ function Login(props) {
         //     return;
         } else {
             try {
-                // const userCheckedByUsername = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${uName}`);
                 const userCheckedByUsername = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${uName}`);
                 if (userCheckedByUsername.data.length === 1) {
                     setProblematicInfo("username");
@@ -69,19 +68,14 @@ function Login(props) {
         try {
             let userObj;
             if (isGuest === true) {
-                // userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/${username}/${passwordOrResetCode}/${true}`);
                 userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${username}/${passwordOrResetCode}/${true}`);
             } else if (isGuest === false) {
                 // console.log(username);
                 // console.log(passwordOrResetCode);
                 // console.log(isPassword);
                 if (isPassword === true) {
-                    // userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/${passwordOrResetCode}/${true}`);
-                    // userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/${username}/${passwordOrResetCode}/${true}`);
                     userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${username}/${passwordOrResetCode}/${true}`);
                 } else if (isPassword === false) {
-                    // userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/users/${username}/${passwordOrResetCode}/${false}`);
-                    // userObj = await axios.get(`https://fantasy-forecast-politics.herokuapp.com/${username}/${passwordOrResetCode}/${false}`);
                     userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${username}/${passwordOrResetCode}/${false}`);
                 };
             };
@@ -120,7 +114,6 @@ function Login(props) {
         try {
             console.log(username);
             console.log(email);
-            // const resetUser = await axios.patch(`https://fantasy-forecast-politics.herokuapp.com/users/reset/resetUserAccFromLogin/fireEmail/resetPW/r`, {
             const resetUser = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/reset/resetUserAccFromLogin/fireEmail/resetPW/r`, {
                 username: username,
                 email: email
@@ -262,7 +255,7 @@ function Login(props) {
     //             {credentialsSuccessfullyChecked === true && 
     //                 <div className="credentials-passed-login">
     //                     {/* <h2>Your details are perfect!</h2> */}
-    //                     {/* <form action={`https://fantasy-forecast-politics.herokuapp.com/auth/google/not_callback/${usernameForCreate}/${passwordForCreate}/${prolificIDForCreate}`}> */}
+    //                     {/* <form action={`${REACT_APP_API_NACB}/${usernameForCreate}/${passwordForCreate}/${prolificIDForCreate}`}> */}
     //                     {/* use this line below for Prolific, we removed the last one for PO-119 students */}
     //                     {/* <form action={`${process.env.REACT_APP_API_CALL_MAIN}/auth/google/not_callback/${usernameForCreate}/${passwordForCreate}/${prolificIDForCreate}`}> */}
     //                     <form action={`${process.env.REACT_APP_API_CALL_MAIN}/auth/google/not_callback/${usernameForCreate}/${passwordForCreate}`}>
