@@ -376,9 +376,9 @@ function Leaderboard(props) {
                     // if (props.leaderboardFilter === "all") {
                         if (item.username === props.username) {
                             if (item.username === "admin") return null;
-                            // console.log("___");
-                            // console.log(item);
-                            // console.log("___");
+                            console.log("___");
+                            console.log(item);
+                            console.log("___");
                             return (
                                 <tr className="leaderboard-row-matching-username" key={index}>
                                     <td className="leaderboard-rank-data">
