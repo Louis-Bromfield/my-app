@@ -429,9 +429,9 @@ function Leaderboard(props) {
                             )
                         } else if (item.username !== props.username) {
                             if (item.username === "admin") return null;
-                            // console.log("___");
-                            // console.log(item);
-                            // console.log("___");
+                            console.log("_2_");
+                            console.log(item);
+                            console.log("_2_");
                             return (
                                 <tr className="leaderboard-row" key={index}>
                                     <td className="leaderboard-rank-data">
