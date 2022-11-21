@@ -639,6 +639,8 @@ console.log(forecast);
                 return;
             }
             try {
+                console.log("date time = " + new Date().toString());
+                console.log(new Date().getTime());
                 // let date = new Date().toString();
                 // let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
                 // let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20)).toString();
