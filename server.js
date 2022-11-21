@@ -59,7 +59,7 @@ const UserSchema = mongoose.Schema({
     },
     markets: {
         type: Array,
-        default: ["Fantasy Forecast All-Time", "UK Politics Practice Tournament", "UK Politics Forecasting Tournament"]
+        default: ["Fantasy Forecast All-Time", "2022 Georgia Senate Runoff Election"]
     },
     onboarding: {
         type: Object,
