@@ -9,7 +9,7 @@ function ForecastArticlesDisplay(props) {
 
     const googleNewsScrape = async (searchTerm) => {
         try {
-            let term;
+            let term = "Georgia Senate";
             let googleNewsScrapeResult;
             // if (searchTerm.includes("Wakefield")) {
             //     term = "Wakefield by-election";
@@ -35,13 +35,13 @@ function ForecastArticlesDisplay(props) {
 
 
             // For now, use "US Midterms as search term" and then when problems are decided add handling for each one:
-            if (searchTerm.includes("DeSantis")) {
-                term = "DeSantis"
-            } else if (searchTerm.includes("Fetterman")) {
-                term = "Fetterman Oz"
-            } else {
-                term = "US Midterms"
-            };
+            // if (searchTerm.includes("DeSantis")) {
+            //     term = "DeSantis"
+            // } else if (searchTerm.includes("Fetterman")) {
+            //     term = "Fetterman Oz"
+            // } else {
+            //     term = "US Midterms"
+            // };
 
             googleNewsScrapeResult = await axios.get(`${process.env.REACT_APP_API_CALL_GSN}/${term}`);
             setArticles(googleNewsScrapeResult.data);
@@ -71,45 +71,45 @@ function ForecastArticlesDisplay(props) {
                 {articles !== "loading" && <div className="articles-grid">
                     {/* <ul> */}
                         <h4>These articles have been handpicked by us:</h4>
-                        <a href="https://projects.fivethirtyeight.com/biden-approval-rating/" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
+                        <a href="https://www.npr.org/2022/11/09/1135685554/runoff-election-georgia-senate-race-raphael-warnock-herschel-walker" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
+                            {/* <p>{article.title}</p> */}
+                            <div className="article-list-item">
+                                <div className="article-list-item-img-container">
+                                    <img className="article-list-item-img" src="https://media.npr.org/assets/img/2022/11/09/gettyimages-1440117548-1137e85c8b9a57b106b19cac51902341a0cb5ad8-s800-c85.webp" alt="" />
+                                </div>
+                                <div className="article-list-item-text-div">
+                                    <h3 className="article-list-item-title">What is a runoff election? Let's break down what's happening in Georgia</h3>
+                                    {/* <p className="article-list-item-description">{article.description}</p> */}
+                                    <hr />
+                                    <h5 className="article-list-item-publisher">NPR</h5>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://projects.fivethirtyeight.com/polls/senate/2022/georgia/" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
                             {/* <p>{article.title}</p> */}
                             <div className="article-list-item">
                                 <div className="article-list-item-img-container">
                                     <img className="article-list-item-img" src="https://s.abcnews.com/images/Business/fivethirtyeight-logo-v2-ht-ps2-180417_hpMain_16x9_992.jpg" alt="" />
                                 </div>
                                 <div className="article-list-item-text-div">
-                                    <h3 className="article-list-item-title">How Popular is Joe Biden?</h3>
+                                    <h3 className="article-list-item-title">Who's ahead in the Georgia Senate race?</h3>
                                     {/* <p className="article-list-item-description">{article.description}</p> */}
                                     <hr />
                                     <h5 className="article-list-item-publisher">FiveThirtyEight</h5>
                                 </div>
                             </div>
                         </a>
-                        <a href="https://www.bbc.co.uk/news/world-us-canada-61274333" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
+                        <a href="https://www.cbsnews.com/news/runoff-election-georgia-senate-2022-raphael-warnock-herschel-walker/" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
                             {/* <p>{article.title}</p> */}
                             <div className="article-list-item">
                                 <div className="article-list-item-img-container">
-                                    <img className="article-list-item-img" src="https://ichef.bbci.co.uk/news/976/cpsprodpb/3475/production/_127292431_pin_badger_update-nc.jpg.webp" alt="" />
+                                    <img className="article-list-item-img" src="https://election-assets.cbsnewsstatic.com/general-2022/GA-S-D-RAPHAEL_WARNOCK.jpg" alt="" />
                                 </div>
                                 <div className="article-list-item-text-div">
-                                    <h3 className="article-list-item-title">What are the US midterms? A simple guide</h3>
+                                    <h3 className="article-list-item-title">What is a runoff election, and how will it work in Georgia's Senate race?</h3>
                                     {/* <p className="article-list-item-description">{article.description}</p> */}
                                     <hr />
-                                    <h5 className="article-list-item-publisher">BBC News</h5>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="https://www.theguardian.com/us-news/2022/oct/06/us-midterm-elections-explainer" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
-                            {/* <p>{article.title}</p> */}
-                            <div className="article-list-item">
-                                <div className="article-list-item-img-container">
-                                    <img className="article-list-item-img" src="https://i.guim.co.uk/img/media/ab3aa1cd86a992b571c457f6c0df6ec5398d2f21/0_0_5000_3000/master/5000.jpg?width=1900&quality=85&dpr=1&s=none" alt="" />
-                                </div>
-                                <div className="article-list-item-text-div">
-                                    <h3 className="article-list-item-title">What are the US midterm elections and who’s running?</h3>
-                                    {/* <p className="article-list-item-description">{article.description}</p> */}
-                                    <hr />
-                                    <h5 className="article-list-item-publisher">The Guardian</h5>
+                                    <h5 className="article-list-item-publisher">CBS News</h5>
                                 </div>
                             </div>
                         </a>
