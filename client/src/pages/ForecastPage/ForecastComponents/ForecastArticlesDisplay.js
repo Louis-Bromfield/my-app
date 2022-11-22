@@ -56,13 +56,13 @@ function ForecastArticlesDisplay(props) {
         try {
             console.log("in log user action");
             console.log("username = " + username);
-            console.log("previous props.userobj.articlevists count = " + props.userObj.articleVisits);
+            console.log("previous props.userobj.articlevists count = " + props.userObject.articleVisits);
             // if (visitArticleYet === false) {
                 const res = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, {
-                    articleVisits: props.userObj.articleVisits + 1
+                    articleVisits: props.userObject.articleVisits + 1
                 });
                 setVisitArticleYet(true);
-                props.userObj.articleVisits++;
+                props.userObject.articleVisits++;
                 console.log("props.userobj.articlevists now = (should be above +1): " + props.userObject.articleVisits);
                 // setArticleVisitsThisTime(props.userObj.articleVisits + 1);
             // } else { 
