@@ -98,7 +98,8 @@ function ForecastAdmin(props) {
     };
 
     const formatDate = (type, date, time) => {
-        const formattedDateTime = new Date(`${date.toString().slice(0, 15)} ${time.toString().slice(0, 5)}:00 GMT+0000 (Greenwich Mean Time)`).toString();
+        // const formattedDateTime = new Date(`${date.toString().slice(0, 15)} ${time.toString().slice(0, 5)}:00 GMT+0000 (Greenwich Mean Time)`).toString();
+        const formattedDateTime = new Date(`${date.toString().slice(0, 15)} ${time.toString().slice(0, 5)}:00 GMT-0500 (Eastern Standard Time)`).toString();
         if (type === "Open") {
             setFormattedOpenDateTime(formattedDateTime);
         } else if (type === "Close") {
@@ -465,8 +466,9 @@ console.log("17B - SCORES");
                     onClick={() => { 
                         console.log(problemNewCloseDate); 
                         console.log(problemNewCloseTime); 
-                        console.log(new Date(`${problemNewCloseDate.toString().slice(0, 15)} ${problemNewCloseTime.toString().slice(0, 5)}:00 GMT+0000 (Greenwich Mean Time)`).toString())
-                        setNewProblemCloseDateTime(new Date(`${problemNewCloseDate.toString().slice(0, 15)} ${problemNewCloseTime.toString().slice(0, 5)}:00 GMT+0000 (Greenwich Mean Time)`).toString())}}>
+                        // console.log(new Date(`${problemNewCloseDate.toString().slice(0, 15)} ${problemNewCloseTime.toString().slice(0, 5)}:00 GMT+0000 (Greenwich Mean Time)`).toString())
+                        console.log(new Date(`${problemNewCloseDate.toString().slice(0, 15)} ${problemNewCloseTime.toString().slice(0, 5)}:00 GMT-0500 (Eastern Standard Time)`).toString())
+                        setNewProblemCloseDateTime(new Date(`${problemNewCloseDate.toString().slice(0, 15)} ${problemNewCloseTime.toString().slice(0, 5)}:00 GMT-0500 (Eastern Standard Time)`).toString())}}>
                             MUST CLICK: Format New Close Date Time
                 </button>
                 <br />

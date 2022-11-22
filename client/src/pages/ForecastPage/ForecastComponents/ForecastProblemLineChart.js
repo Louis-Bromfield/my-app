@@ -823,6 +823,7 @@ function ForecastProblemLineChart(props) {
                         setShowModal(true);
                         setModalContent(`Beneath this info button is the main visualisation of all forecasts made for the given problem. The chart displays the most recent prediction made by any user on each day (so if you submit 10 predictions today, only your tenth will show on the chart unless you update it again - in which case, your 11th will show instead). While this may obscure some data, it prevents the chart from becoming unreadable (if I submit 100 predictions today at each integer from 0-100, the chart would have a vertical line of data which is of no use to anybody). The buttons underneath the chart allow you to alter the chart's visualisation and display various permutations of the forecast data. Click on any of them to see the chart change! Look under the chart for more info and data on the problem and market!`)
                         setModalContent2("All forecast data has been converted to GMT (Greenwich Mean Time), purely for visualisation purposes.");
+                        setModalContent2("All forecast data has been converted to EST (Eastern Standard Time), purely for visualisation purposes.");
                     }}
                 />
             </h2> */}
