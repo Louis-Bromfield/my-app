@@ -978,7 +978,8 @@ console.log(forecast);
                             {selectedForecast.includes("Scotland") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://whatscotlandthinks.org/questions/how-would-you-vote-in-the-in-a-scottish-independence-referendum-if-held-now-ask/?removed" target="_blank"><h4>(<u>Link: What Scotland Thinks</u>)</h4></a>}
                             {selectedForecast.includes("Statesman's") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://sotn.newstatesman.com/2022/07/conservative-leadership-election-candidates-who-backing/" target="_blank"><h4>(<u>Link: The New Statesman's Tracker</u>)</h4></a>}
                         </h2>
-                        <h3 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 38)}</h3>
+                        {/* <h3 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 38)}</h3> */}
+                        <h3 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 34)}</h3>
                         {/* {selectedForecast.includes("Politico's") && <h2><a href="https://www.politico.eu/europe-poll-of-polls/united-kingdom/" target="_blank">Click Here For Politico's Poll of Polls</a></h2>} */}
                         {/* <br /> */}
                         <div className="forecast-submission-and-error-container">
@@ -1306,7 +1307,8 @@ console.log(forecast);
                         {/* {(forecastClosed === true && hasAForecastBeenSelected === true) &&  */}
                             <div className="">
                                 {forecastClosed === true ? <h2 className="selected-forecast" style={{ backgroundColor: "darkred" }}>{selectedForecast}</h2> : <h2 className="selected-forecast">{selectedForecast}</h2>}
-                                <h4 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 41)}</h4>
+                                {/* <h4 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 41)}</h4> */}
+                                <h4 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 34)}</h4>
                                 <div className="forecast-review-div">
                                     <div className="forecast-review-div-left">
                                         <h2 style={{ color: "#404d72" }}><u>Your Stats</u></h2>
