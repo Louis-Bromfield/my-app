@@ -38,7 +38,6 @@ function IndividualNewsFeedPost(props) {
     const [cookie, setCookie] = useCookies(['username']);
 
     useEffect(() => {
-        console.log(props);
         doEffect();
         console.log("IndividualNewsFeedPost UE");
     }, [props.location.postObject]);
@@ -47,7 +46,6 @@ function IndividualNewsFeedPost(props) {
         // if page is refreshed
         if (props.location.postObject === undefined) {
             const res = await axios.get(`${process.env.REACT_APP_API_CALL_HPNFP}/${localStorage.getItem("postID")}`);
-            console.log(res.message);
             // if the postID in LS has been tampered with, just return to home
             if (res.data.message !== undefined) {
                 history.push("/home");
@@ -83,7 +81,6 @@ function IndividualNewsFeedPost(props) {
         } else {
             setAuthor(props.location.postObject.author);
             setAuthorProfilePicture(props.location.postObject.authorProfilePicture);
-            console.log(props.location.postObject.authorProfilePicture);
             setPostDescription(props.location.postObject.postDescription);
             setPostDate(props.location.postObject.postDate);
             setLikes(props.location.postObject.likes);

@@ -32,25 +32,19 @@ function QuizResults(props) {
                 setFormattedArray(formattedArray => ([...formattedArray, [questionsAndAnswers[i][0][0], questionsAndAnswers[i][1]]]));
             };
         };
-        console.log(formattedArray);
     }, [props.quizQuestions, props.quizResults]);
 
     // useEffect(() => {
     //     console.log("2nd QR UE");
     //     if (numberOfCorrectAnswers > 0 && numberOfQuestions > 0 && numberOfCorrectAnswers === numberOfQuestions) {
-    //         console.log("yes here");
     //         awardTrophy(props.username);
     //     }
     // }, [numberOfCorrectAnswers, numberOfQuestions]);
 
     const awardTrophy = async (numberOfQuestions, numberOfCorrectAnswers, username) => {
-        console.log("in awardTrophy");
         if ((trophyAwarded === false) && (numberOfCorrectAnswers > 0 && numberOfQuestions > 0 && numberOfCorrectAnswers === numberOfQuestions)) {
-            console.log("in awardTrophy passed condition");
             try {
                 const user = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
-                console.log("+++++++++++++++++++++++++++++++++++++++");
-                console.log(user);
                 for (let i = 0; i < user.data[0].trophies.length; i++) {
                     if (user.data[0].trophies[i].trophyText === "Perfection" && user.data[0].trophies[i].obtained === false) {
                         setTrophyAwarded(true);

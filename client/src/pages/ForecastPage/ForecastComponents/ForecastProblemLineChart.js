@@ -24,16 +24,11 @@ function ForecastProblemLineChart(props) {
 //   const [hasLoadedAlready, setHasLoadedAlready] = useState(1000);
 
   useEffect(() => {
-    console.log(props);
-    // console.log("")
     if (props.selectedForecastObject === {} || props.forecastSingleCertainty === undefined) {
         return;
     } else {
         formatCertainties(props.selectedForecastObject, props.updateTodayStats, props.username);
     }
-    // console.log("==================");
-    // console.log(props.selectedForecast);
-    // console.log("==================");
     console.log("Line Chart UE");
     // setHasLoadedAlready(0);
   }, [props.selectedForecastObject, props.refresh]);
@@ -51,7 +46,6 @@ function ForecastProblemLineChart(props) {
         // Forecasts Submitted
         let lastForecastDate = "";
         let newCertainties = selectedForecastObject.submittedForecasts;
-        // console.log(newCertainties);
         let userData = {
             label: "Your Forecasts",
             data: [],
@@ -80,10 +74,8 @@ function ForecastProblemLineChart(props) {
         if (newCertainties.length > 0 || newCertainties[0] === '') {
             for (let i = 0; i < newCertainties.length; i++) {
                 for (let j = 0; j < newCertainties[i].forecasts.length; j++) {
-                    // console.log(newCertainties[i].forecasts[j]);
                     // if it's on a new day to the one before, keep that one and add this one in as a new data point
                     if (newCertainties[i].forecasts[j].date.slice(0, sliceIndex) !== lastForecastDate) {
-                        // console.log(`no ${newCertainties[i].forecasts[j].date.slice(0, sliceIndex)} !== ${lastForecastDate}`);
                         data.data.push({
                             username: newCertainties[i].username,
                             x: new Date(newCertainties[i].forecasts[j].date).toString().slice(0, sliceIndex),
@@ -92,7 +84,6 @@ function ForecastProblemLineChart(props) {
                         });
                         // set the lastForecastDate for comparing the next forecast
                         lastForecastDate = data.data[data.data.length-1].x;
-                        // console.log("lastForecastDate updated to " + lastForecastDate);
                         // if it's from the logged in user, also add to a separate dataset
                         if (newCertainties[i].username === username) {
                             userData.data.push({
@@ -104,7 +95,6 @@ function ForecastProblemLineChart(props) {
                         }
                     // else if it is from the same day as the last forecast, replace the last forecast with this newer one
                     } else if (newCertainties[i].forecasts[j].date.slice(0, sliceIndex) === lastForecastDate) {
-                        // console.log(`yes ${newCertainties[i].forecasts[j].date.slice(0, sliceIndex)} === ${lastForecastDate}`);
                         // this should ONLY be doing data.data[data.data.length-1] = ({ if the previous forecast located at data.data[data.data.length-1] was from
                         // the same user as the one you're working with right now (that's how the multi outcome chart works) - what this code is doing is 
                         // overriding the last forecast in the chart's data if they're from the same date, so it's always overriding them and whoever was last that
@@ -158,7 +148,6 @@ function ForecastProblemLineChart(props) {
                     todayForecasts.push(data.data[i].x);
                 };
             };
-            // console.log(data.data);
             const dailyAverages = getNewDailyAverages(data.data, new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate), selectedForecastObject.isClosed);
             updateTodayStats(`${dailyAverages[dailyAverages.length-1].y.toFixed(2)}%`, todayForecasts.length);
             // Simulate data for days with no predictions
@@ -566,7 +555,6 @@ function ForecastProblemLineChart(props) {
           labelsToReturn.push(newDate);
       };
       setLabelsArray(labelsToReturn);
-    //   console.log((end - start)/1000)
     //   let labelsToReturn = [];
     // // Problem is live for 48 hours or less - 1 tick per hour
     //   if ((end - start)/1000 <= 172800) {

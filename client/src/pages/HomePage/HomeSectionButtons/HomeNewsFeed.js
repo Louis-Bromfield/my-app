@@ -49,12 +49,6 @@ function HomeNewsFeed(props) {
             setNewPostLoading(true);
             // setTimeout(() => {
                 getAllNewsFeedPostsFromDB();
-                // getUserMarketsFromDB(props.username);
-                
-                // Version without querying server:
-                // console.log("1");
-                // console.log(props.userMarkets);
-                // console.log("==========");
                 getUserMarketsFromDB(props.userMarkets);
                 setNewPostLoading(false);
             // }, 500);
@@ -66,7 +60,6 @@ function HomeNewsFeed(props) {
     const getAllNewsFeedPostsFromDB = async () => {
         try {
             const allPosts = await axios.get(`${process.env.REACT_APP_API_CALL_HPNFP}`);
-            console.log(allPosts);
             setFeed(allPosts === undefined ? [] : allPosts.data.reverse());
             setFilteredFeed(feed);
         } catch (error) {
@@ -95,8 +88,6 @@ function HomeNewsFeed(props) {
     // Not-querying server
     const getUserMarketsFromDB = (userMarkets) => {
         try {
-            // console.log("DEBUGGING");
-            // console.log(userMarkets);
             // const allMarkets = userMarkets;
             setUserMarkets(userMarkets);
             setFilters(userMarkets);
@@ -119,7 +110,6 @@ function HomeNewsFeed(props) {
     };
 
     const handlePostURLChange = async (e, changeFromState) => {
-        console.log(e.target.value);
         if (e.target.value.length === 0 || e.target.value === "") {
             setPostPreview(false);
             setNewPostURL("");
@@ -135,7 +125,6 @@ function HomeNewsFeed(props) {
                     URL: postURL
                 }
             });
-            console.log(postPreviewObj.data.articleTitle);
             if (postPreviewObj.data.error === "Error" || postPreviewObj.data.articleTitle === "") {
                 setPostPreviewTitle("There was an error. Please check the link you have pasted is correct.");
                 setAlternateArticleTitle("There was an error. Please check the link you have pasted is correct.");
@@ -229,7 +218,6 @@ function HomeNewsFeed(props) {
                 ffPointsIfFalse: 200,
                 ffPointsIfTrue: 15
             });
-            console.log(updatedUserDocument);
             if (updatedUserDocument.data.firstTime === true) {
                 props.handleFirstPost(true);
                 props.handleFirstPostModalContent("You just earned 200 Fantasy Forecast Points for your first post! Future posts will earn you 15 points per post.")    
@@ -348,9 +336,7 @@ function HomeNewsFeed(props) {
         };
         let filterArray = filters;
         if (filterArray.includes(leaderboardName)) {
-// console.log(userMarkets);
             filterArray.splice(filterArray.indexOf(leaderboardName), 1);
-// console.log(userMarkets);
         } else if (!filterArray.includes(leaderboardName)) {
             filterArray.push(leaderboardName);
         };
@@ -534,8 +520,6 @@ function HomeNewsFeed(props) {
                         <div className="news-feed-filter-div">
                             <div className="checkbox-div">
                                 {userMarkets.map((item, index) => {
-                                    console.log(item);
-                                    console.log(filters.includes(item));
                                     if (filters.includes(item)) {
                                         return (
                                             <div className="filter-market-checkbox" key={index} >

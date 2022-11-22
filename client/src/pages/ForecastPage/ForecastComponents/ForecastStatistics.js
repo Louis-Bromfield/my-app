@@ -13,13 +13,11 @@ function ForecastStatistics(props) {
 
     useEffect(() => {
         getForecastInfo(props.today, props.selectedForecast);
-        console.log(props);
         console.log("Forecast Statistics UE");
     }, [props.selectedForecast]);
 
     const getForecastInfo = async (today, selectedForecast) => {
         // const response = await axios.get(`${process.env.REACT_APP_API_CALL_F}/getDetailedForecastInfo/${selectedForecast.problemName}/${today}`)
-        // console.log(response);
         // if (today === true) {
         //     if (response.data.singleCertainty === true) {
         //         setHighestCertainty(response.data.highestCertainty);

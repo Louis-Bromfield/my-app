@@ -7,7 +7,6 @@ function ForecastMarketLeaderboard(props) {
 
     useEffect(() => {
         findUserRank(props.leaderboard, props.username, start, finish);
-        console.log(props);
     });
 
     const findUserRank = (leaderboard, username) => {

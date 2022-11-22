@@ -56,7 +56,6 @@ function App() {
   };
 
   const login = async (username) => {
-    console.log("In login function");
     // const userObj = await axios.get(`${process.env.API_CALL_U}/${username}`);
     const userObj = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
     if (userObj.data.length === 0) {
@@ -71,7 +70,6 @@ function App() {
         profilePicture: userObj.data[0].profilePicture
     });
 
-    console.log(userObj);
     setUserObject(userObj.data[0]);
     setUsername(userObj.data[0].username);
     setUserFFPoints(userObj.data[0].fantasyForecastPoints);
@@ -103,11 +101,11 @@ function App() {
 };
 
   useEffect(() => {
-      console.log("A UE");
-      setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
-      setUsername(localStorage.getItem('username'));
-      setUsername(cookie.username);
-      setUsername((localStorage.getItem("username") === undefined || localStorage.getItem("username") === null) ? cookie.username : localStorage.getItem("username"));
+        console.log("A UE");
+        setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
+        setUsername(localStorage.getItem('username'));
+        setUsername(cookie.username);
+        setUsername((localStorage.getItem("username") === undefined || localStorage.getItem("username") === null) ? cookie.username : localStorage.getItem("username"));
     //   setName(localStorage.getItem('name'));
     //   setMarkets(localStorage.getItem('markets'));
     //   setUserObject(localStorage.getItem('userObj'));
@@ -117,37 +115,23 @@ function App() {
             // e.g. right now we have Home.js retrieving and passing stuff on, but we 
             // might be able to put it all inside this conditional and pass down from
             // here instead?
-
-            // Might be able to avoid using localStorage then right? It's possible.
-            // console.log(localStorage.getItem("username"));
-            // console.log(cookie.username);
-            console.log(localStorage.getItem("username"));
-            console.log(cookie.username);
-            if (localStorage.getItem("isLoggedIn") === "true") {
-                pullAllInfoFromDBToPassDown(localStorage.getItem("username") === undefined || localStorage.getItem("username") === null ? cookie.username : localStorage.getItem("username"))
-            };
+        if (localStorage.getItem("isLoggedIn") === "true") {
+            pullAllInfoFromDBToPassDown(localStorage.getItem("username") === undefined || localStorage.getItem("username") === null ? cookie.username : localStorage.getItem("username"))
+        };
     //   };
   }, [isLoggedIn, cookie.username]);
 
   const pullAllInfoFromDBToPassDown = async (username) => {
       try {
-            console.log("FIRED");
             if (username === undefined || username === null || typeof username !== "string") {
-                console.log("HERE");
-                console.log(username);
                 return;
             };
-            console.log(username);
             console.log("paIFDBTPDB");
             // const userPulledFromDB = await axios.get(`${process.env.API_CALL_U}/${username}`);  
             const userPulledFromDB = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);  
-            // console.log(userPulledFromDB);
-            console.log(userPulledFromDB.data);
             if (userPulledFromDB.data === [] || userPulledFromDB.data[0].username === undefined) {
-                console.log("here1");
                 return;
             } else {
-                console.log("here2");
                 setUserObject(userPulledFromDB.data[0]);
                 setUsername(userPulledFromDB.data[0].username);
                 setUserFFPoints(userPulledFromDB.data[0].fantasyForecastPoints);
@@ -157,7 +141,6 @@ function App() {
                 setUserClosedForecastCount(userPulledFromDB.data[0].numberOfClosedForecasts);
                 setUserBrierScores(userPulledFromDB.data[0].brierScores);
             }
-            // console.log(userPulledFromDB.data[0].brierScores);
       } catch(error) {
           console.error("Error in pAIFDBTPD");
           console.error(error);

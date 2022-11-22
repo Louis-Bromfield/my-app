@@ -29,10 +29,8 @@ function Leaderboard(props) {
             getAllUserFFPoints(props.leaderboardRankings);
         };
         console.log("Leaderboard UE");
-        // console.log(props);
         // if (props.isFFLeaderboard === undefined) {
         //     history.push("/leaderboard-select");
-        //     console.log("undefined");
         // }
         setWidth(window.innerWidth > 600);
         setBiggerWidth(window.innerWidth > 1030);
@@ -46,15 +44,12 @@ function Leaderboard(props) {
     //         if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
     //             let ffRankings = [];
     //             for (let i = 0; i < rankings.length; i++) {
-    //                 console.log(rankings[i]);
     //                 const userDocumentFF = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${rankings[i].username}`);
     //                 // if (rankings[i].username === props.username) {
     //                 //     props.setUserInMarket(true);
-    //                 //     console.log("yes we did it");
     //                 // }
     //                 if (userDocumentFF.data[0].username === props.username) {
     //                     props.setUserInMarket(true);
-    //                     console.log("yes we did it");
     //                 };
     //                 ffRankings[i] = {
     //                     profilePicture: "",
@@ -89,13 +84,11 @@ function Leaderboard(props) {
     //         } else {
     //             let totalAverageBrier = 0;
     //             for (let i = 0; i < rankings.length; i++) {
-    //                 console.log(rankings[i]);
     //                 const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${rankings[i].username}`);
     //                 if (userDocument.data[0].username === props.username) {
     //                     props.setUserInMarket(true);
     //                 };
     //                 if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
-    //                     console.log("does it never come here?");
     //                     rankings[i].marketPoints = userDocument.data[0].fantasyForecastPoints;
     //                 };
     //                 rankings[i].brierScores = [];
@@ -147,8 +140,6 @@ function Leaderboard(props) {
             // Tried to move to server but for some reason my additions to objects (like brierScoresForMarket arrays) weren't persisting, it just sent me back allUsers as if I did nothing
             // const lbFromLS = localStorage.getItem("currentLeaderboardName");
             // const leaderboardData = await axios.get(`${process.env.REACT_APP_API_CALL_L}/getAllInfoToRender/${props.isFFLeaderboard}/${props.leaderboardTitle}/${lbFromLS}`);
-            // console.log(leaderboardData);
-            // console.log(leaderboardData.data.rankings);
             // if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
             //     setUsersData(leaderboardData.data.rankings);
             //     props.setRankingsForTop3(leaderboardData.data.topThree);
@@ -164,7 +155,6 @@ function Leaderboard(props) {
             // };
             let ffRankings = [];
             for (let i = 0; i < rankings.length; i++) {
-                // console.log(rankings[i]);
                 if (rankings[i].markets.includes(props.leaderboardTitle)) {
                     if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
                         ffRankings[i] = {
@@ -191,7 +181,6 @@ function Leaderboard(props) {
                             ffRankings[i].avgAllTimeBrier = 0;
                         } else {
                             let avgBrierScore = ffRankings[i].totalBrier / numberOfBriers;
-                            console.log(avgBrierScore);
                             ffRankings[i].avgAllTimeBrier = isNaN(avgBrierScore) ? 0.0 : ffRankings[i].totalBrier/numberOfBriers;
                         };
                     } else {
@@ -237,7 +226,6 @@ function Leaderboard(props) {
             };
         //   let ffRankings = [];
         //   for (let i = 0; i < rankings.length; i++) {
-        //     // console.log(rankings[i]);
         //     const userDocumentFF = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${rankings[i].username}`);
         //     // Check if logged in user is in market, true will allow them to invite etc
         //     if (userDocumentFF.data[0].username === props.username) {
@@ -312,8 +300,6 @@ function Leaderboard(props) {
 
     const sortByCol = (sort) => {
         setLoading(true);
-        console.log(usersData);
-        console.log(sort);
         let newSortedData = [];
         if (sort === "Username") {
             if (usernameSortOrder === "" || usernameSortOrder === "ZA") {
@@ -349,7 +335,6 @@ function Leaderboard(props) {
             };
         };
         setUsersData([...newSortedData]);
-        console.log([...newSortedData]);
         setLoading(false);
     };
 
@@ -376,9 +361,6 @@ function Leaderboard(props) {
                     // if (props.leaderboardFilter === "all") {
                         if (item.username === props.username) {
                             if (item.username === "admin") return null;
-                            console.log("___");
-                            console.log(item);
-                            console.log("___");
                             return (
                                 <tr className="leaderboard-row-matching-username" key={index}>
                                     <td className="leaderboard-rank-data">
@@ -429,9 +411,6 @@ function Leaderboard(props) {
                             )
                         } else if (item.username !== props.username) {
                             if (item.username === "admin") return null;
-                            console.log("_2_");
-                            console.log(item);
-                            console.log("_2_");
                             return (
                                 <tr className="leaderboard-row" key={index}>
                                     <td className="leaderboard-rank-data">

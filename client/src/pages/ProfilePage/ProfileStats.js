@@ -27,9 +27,6 @@ function ProfileStats(props) {
     const [recentAverageData, setRecentAverageData] = useState([]);
 
     useEffect(() => {
-console.log("+++");
-console.log(props);
-console.log("+++");
         if (props.ffPoints > 600 || props.userObj.trophies[0].obtained === true) {
                 setIsHiddenBehindLevel(false);
             if (props.userObj === undefined) {
@@ -45,7 +42,6 @@ console.log("+++");
             setIsHiddenBehindLevel(true);
             return;
         };
-        console.log("Profile Stats UE");
     }, [props.username, props.brierScores, props.profileTab, props.userObj, props.ffPoints]);
 
     const getGlobalData = async () => {

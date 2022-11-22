@@ -36,7 +36,6 @@ function LeaderboardMenu(props) {
     const [modalContent, setModalContent] = useState("");
 
     useEffect(() => {
-        // console.log(props);        
         // if (props.userFFPoints > 1500) setCanCreateLeagueDueToLevel(true);
         // checkIfUserIsInMarkets(props.username);
         setAllUserLeaderboardsWithInviteAccepted(props.userObject.markets);
@@ -94,8 +93,6 @@ function LeaderboardMenu(props) {
     //     if (found === true) {
     //         return;
     //     } else {
-    //         console.log(usersToInvite);
-    //         console.log(usersArray);
     //         for (let i = 0; i < usersToInvite.length; i++) {
     //             for (let j = 0; j < usersArray.length; j++) {
     //                 if (usersToInvite[i].username === usersArray[j].username) {
@@ -136,7 +133,6 @@ function LeaderboardMenu(props) {
     // const checkIfUserIsInMarkets = async (username) => {
     //     try {
     //         const allUserLeaderboardsFromDB = await axios.get(`${process.env.REACT_APP_API_CALL_L}/${username}`);
-    //         // console.log(allUserLeaderboardsFromDB.data);
     //         if (allUserLeaderboardsFromDB.data[0].length === 0) {
     //             setAllUserLeaderboardsWithInviteAccepted([]);
     //             // setUserInNoMarkets(true)
@@ -148,7 +144,6 @@ function LeaderboardMenu(props) {
     //             // setAllUserLeaderboardsWithInviteNotYetAccepted(marketsFilteredByInviteNotYetAccepted);
     //             setAllUserLeaderboardsWithInviteAccepted(allUserLeaderboardsFromDB.data);
     //             setAllMarkets(allUserLeaderboardsFromDB.data);
-    //             // console.log(allUserLeaderboardsFromDB.data);
     //         };
     //     } catch (error) {
     //         console.error("Error occured in LeaderboardMenu.js > checkIfUserIsInMarkets");
@@ -158,7 +153,6 @@ function LeaderboardMenu(props) {
 
     // const pullAllMarketsFromDB = async (username) => {
     //     const leaderboardDocument = await axios.get(`${process.env.REACT_APP_API_CALL_L}/justNames/${username}`);
-    //     // console.log(leaderboardDocument.data);
     //     setAllMarkets(leaderboardDocument.data);
     // };
     // ------------------------------------------------------------------------------------
@@ -170,13 +164,11 @@ function LeaderboardMenu(props) {
     //         let filteredMarkets = [];
     //         for (let i = 0; i < markets.length; i++) {
     //             if (markets[i].isFFLeaderboard === true) {
-    //                 console.log("True1");
     //                 filteredMarkets.push(markets[i]);
     //                 continue;
     //             }
     //             for (let j = 0; j < markets[i].rankings.length; j++) {
     //                 if (markets[i].rankings[j].username === username && markets[i].rankings[j].acceptedInvite === true) {
-    //                     console.log("True");
     //                     filteredMarkets.push(markets[i]);
     //                 };
     //             };
@@ -228,14 +220,11 @@ function LeaderboardMenu(props) {
     //     } else if (!marketsForSignUp.includes(item)) {
     //         marketsForSignUp.push(item);
     //     };
-    //     console.log(marketsForSignUp);
     //     setMarketsForSignUp(markets);
     // };
 
     // const submitMarketChoices = async (markets, username) => {
-    //     // console.log(markets);
     //     const success = await persistMarketChoicesToDB(markets, username);
-    //     // console.log(success);
     //     if (success === false) {
     //         return;
     //     } else {
@@ -291,7 +280,6 @@ function LeaderboardMenu(props) {
     //             ffPointsIfFalse: 150,
     //             ffPointsIfTrue: 5
     //         });
-    //         console.log(updatedUserDocument);
     //         if (updatedUserDocument.data.firstTime === true) {
     //             setShowModal(true);
     //             setModalContent("You just got 150 Fantasy Forecast Points for joining your first market! Before you start forecasting, remember that if you want to be eligible for the tournament prizes (including £250 for 1st Place!), you MUST complete our survey before 11:59pm (BST) on Tuesday 28th June. Failing to do so will render you ineligible for the prizes. The survey can be found by selecting the Survey tab at the top of the screen or the top-left dropdown menu if you're on mobile.");

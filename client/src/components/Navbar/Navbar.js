@@ -44,7 +44,6 @@ function Navbar(props) {
     };
 
     useEffect(() => {
-        console.log(props);
         setProfilePicture(props.profilePicture);
         let numberOfNewNotifications = 0;
         if (props.userObj.notifications !== undefined) {
@@ -99,7 +98,6 @@ function Navbar(props) {
         //         setAllToTrue: true
         //     });
         //     setNumberOfNewNotis(0);
-        //     console.log(res);
         //     return;
         // } else {
             if (notification.seenByUser === false) {
@@ -109,7 +107,6 @@ function Navbar(props) {
                     notificationIndex: notification.notificationIndex
                 });
                 setNumberOfNewNotis(numberOfNewNotis-1);
-                console.log(res);
             };
             // if it's problem related, go to forecasts page. Ideal would be it auto-selects from the dropdown for you
             if (notification.notificationSourcePath === "/forecast") {

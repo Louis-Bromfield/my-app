@@ -20,7 +20,6 @@ function ForecastChat(props) {
 
     useEffect(() => {
         console.log("ForecastChat UE");
-        console.log(props);
     }, [props]);
 
     const findLastCertainty = (userToFind) => {
@@ -61,7 +60,6 @@ function ForecastChat(props) {
         //     setModalContent("You must be at least Level 15 to post comments in this chat.");
         //     return;
         } else {
-            console.log("h");
             try {
                 if (comment === "" || (/\s/.test(comment))) {
                     return;
@@ -74,7 +72,6 @@ function ForecastChat(props) {
                 };
                 setNewCommentStatus(true);
                 setNewCommentToRender(commentToRender);
-                console.log(newCommentStatus);
                 const res = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/addNewComment`, {
                     problemName: props.forecast.problemName,
                     isFirstComment: true,
@@ -89,8 +86,6 @@ function ForecastChat(props) {
                 // };
                 // setNewCommentStatus(true);
                 // setNewCommentToRender(commentToRender);
-                // console.log(newCommentStatus);
-                console.log(res);
             } catch (err) {
                 console.error(err);
             };
@@ -107,8 +102,6 @@ function ForecastChat(props) {
         //     setModalContent("You must be at least Level 15 to post comments in this chat.");
         //     return;
         } else {
-            console.log(comment);
-            console.log(commentYouAreRespondingTo);
             if (comment === "" || (/\s/.test(comment))) {
                 return;
             };
@@ -121,7 +114,6 @@ function ForecastChat(props) {
             setNewReplyCommentStatus(true);
             setIDForCommentToReplyTo(commentIndex);
             setNewReplyCommentToRender(commentToRender);
-            console.log(newCommentStatus);
             try {
                 const res = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/addNewComment`, {
                     problemName: props.forecast.problemName,
@@ -130,7 +122,6 @@ function ForecastChat(props) {
                     comment: comment,
                     commentToReplyTo: commentYouAreRespondingTo.comment
                 });
-                console.log(res);
                 if (props.username !== commentYouAreRespondingTo.author) {
                     await axios.patch(`${process.env.REACT_APP_API_CALL_U}/newNotification/${commentYouAreRespondingTo.author}`, {
                         notificationMessage: `${props.username === undefined ? "Someone" : props.username} just replied to your comment!`,

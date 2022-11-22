@@ -111,10 +111,6 @@ function TopicQuiz(props) {
 
     const checkAnswers = () => {
         // Calculate how many they got right and check they have selected enough answers
-        console.log("////////////////");
-        console.log(selectedAnswers);
-        console.log("////////////////");
-        console.log(selectedAnswersForMarking);
         let correctAnswers = [];
         let answers = [];
         let numberOfAnswers = 0;
@@ -175,7 +171,6 @@ function TopicQuiz(props) {
         // Switch boolean to true:
         selectedAnswers[index][indexOfAnswer][0][2] = true;
         // setSelectedAnswersForMarking(selectedAnswers);
-        console.log(selectedAnswers);
         
         // if (showSubmit === false) {
             let numOfAnswers = 0;
@@ -186,7 +181,6 @@ function TopicQuiz(props) {
                     };
                 };
             };
-            console.log(numOfAnswers);
             // setSelectedAnswersForMarking(selectedAnswers);
             if (numOfAnswers === props.quizQuestions.length) {
                 setShowSubmit(true);

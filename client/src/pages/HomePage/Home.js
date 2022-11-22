@@ -40,7 +40,6 @@ function Home(props) {
     };
 
     useEffect(() => {
-        console.log(props.username);
         if (localStorage.getItem("firstVisit") === "true") {
             setShowModal(true);
             // const welcomeString = "Welcome to Fantasy Forecast! The survey can be found by clicking on the 'Survey' tab at the top of the screen (or from the dropdown menu in the top-left if you're on a mobile device). If this is your first time here, we recommend checking out the Onboarding menu on the right (or down below if you're on mobile) for ideas on how to get started with the site - have fun!";
@@ -48,7 +47,6 @@ function Home(props) {
             setModalContent(welcomeString);
             localStorage.setItem("firstVisit", false);
         };
-        // console.log(`username cookie = ${cookie.username}`);
         // if (props.user.numberOfClosedForecasts === undefined) {
             // getClosedForecastCount(localStorage.getItem("username") || props.username);
             // Version without contacting server (use props instead) - was having issues, defined props.user as [object Object], maybe as it 
@@ -64,9 +62,6 @@ function Home(props) {
         try {
             // const userDocument = await axios.get(`${process.env.API_CALL_U}/${username}`);
             const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
-console.log("+++++++++++++++++++++++++");
-console.log(userDocument);
-console.log("+++++++++++++++++++++++++");
             if (userDocument.data[0].numberOfClosedForecasts > 0) {
                 setShowClosedProblemModal(true);
             };
@@ -80,7 +75,6 @@ console.log("+++++++++++++++++++++++++");
             setUserMarkets(userDocument.data[0].markets);
             setUserOnboarding(userDocument.data[0].onboarding);
             setUserClosedForecastCount(userDocument.data[0].numberOfClosedForecasts);
-            // console.log(userDocument.data[0].learnQuizzes);
             setUserLearnQuizzes(userDocument.data[0].learnQuizzes);
             props.setUserObject(userDocument.data[0]);
             props.setUserFFPoints(userDocument.data[0].fantasyForecastPoints);

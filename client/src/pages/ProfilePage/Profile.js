@@ -68,7 +68,6 @@ console.log("Profile.js UE");
                 };
             };
             const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${username}`);
-            console.log(userDocument.data);
             if (userDocument.data.userObj === null) {
                 setErrorMessage("No profiles were found with this username. Please try again.");
             } else if (userDocument.data.userObj !== null) {
@@ -136,7 +135,6 @@ console.log("Profile.js UE");
                 ffPointsIfFalse: 100,
                 ffPointsIfTrue: 0
             });
-            // console.log(updatedUserDocument);
             if (updatedUserDocument.data.firstTime === true) {
                 setShowModal(true);
                 setModalContent("You just got 100 Fantasy Forecast Points for visiting your profile for the first time!");
@@ -176,9 +174,7 @@ console.log("Profile.js UE");
                     setPasswordChangeMsg("Your username and password must be at least 5 characters and contain no spaces.");
                     return;
                 } else {
-                    console.log(newPW);
                     const newDoc = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/newPW/${props.username}`, { password: newPW });
-                    console.log(newDoc);
                     if (newDoc) {
                         setPasswordChangeMsg("Password succesfully changed.");
                     } else {

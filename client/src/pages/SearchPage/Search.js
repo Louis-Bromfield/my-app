@@ -115,7 +115,6 @@ function Search(props) {
         };
         try {
             const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${username}`);
-            // console.log(userDocument);
             if (userDocument.data.userObj === null) {
                 setErrorMessage("No profiles were found with this username. Please try again.");
             } else if (userDocument.data.userObj !== null) {

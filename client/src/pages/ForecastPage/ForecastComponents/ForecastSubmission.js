@@ -74,28 +74,19 @@ function ForecastSubmission(props) {
 
     useEffect(() => {
         console.log("ForecastSubmission UE");
-        // console.log(props);
         getAllForecastsFromDB(props.userObjectMarkets);
         getLeaderboardFromDB(props.selectedForecast.market);
-        // console.log("+++++++++++++++++++++++");
-        // console.log(props.selectedForecast);
-        // console.log(typeof props.selectedForecast);
         // // if props.selectedForecast !== somehting then fire the pullForecastDetails function?
         // if (props.selectedForecast !== "") {
         //     pullForecastDetailsAndCheckIfAlreadyAttempted(props.selectedForecast);
         // }
-        // console.log("+++++++++++++++++++++++");
 
 
 
         // if (localStorage.getItem("forecastSelectedFromNotifications") === "true") {
-        //     console.log("yes - we are here");
         //     // autoSelectForecast()
-        //     console.log(forecastProblems);
         //     for (let i = 0; i < forecastProblems.length; i++) {
-        //         console.log(forecastProblems[i]);
         //         if (forecastProblems[i]._id === localStorage.getItem("selectedForecastID")) {
-        //             console.log("Found!");
         //             handleChange(forecastProblems[i].problemName);
         //             setSelectedForecast(forecastProblems[i].problemName);
         //             setForecastFoundFromNotifications(true);
@@ -112,7 +103,6 @@ function ForecastSubmission(props) {
 
     const getAllForecastsFromDB = async (userMarkets) => {
         try {
-            // console.log(userMarkets);
             let filtered = [];
             let filteredAndOrganised = [];
             let globalIndex = 0;
@@ -139,12 +129,8 @@ function ForecastSubmission(props) {
                 };
                 if (found) {
                     props.allForecasts[i].userHasAttempted = true;
-                    // console.log(props.allForecasts[i]);
-                    // console.log("yes attempted" + props.allForecasts[i].problemName);
                 } else {
-                    // console.log(props.allForecasts[i]);
                     props.allForecasts[i].userHasAttempted = false;
-                    // console.log("no not attempted" + props.allForecasts[i].problemName);
                 };
                 // if (userMarkets.includes(props.allForecasts[i].market) && new Date() > new Date(props.allForecasts[i].startDate)) {
                     filtered.push(props.allForecasts[i]);
@@ -159,21 +145,15 @@ function ForecastSubmission(props) {
             } else {
                 setMarketWarning(false);
             };
-            console.log(filtered);
             setForecastProblems(filtered);
             setForecastProblemsForDropdown(filteredAndOrganised);
 
             // let forecastListForAutoPull = filtered;
 
             if (localStorage.getItem("forecastSelectedFromNotifications") === "true") {
-                console.log("yes - we are here");
                 // autoSelectForecast()
-                console.log(filtered);
                 for (let i = 0; i < filtered.length; i++) {
-                    console.log(filtered[i]._id);
-                    console.log(localStorage.getItem("selectedForecastID"));
                     if (filtered[i]._id === localStorage.getItem("selectedForecastID")) {
-                        console.log("Found!");
                         // handleChange(filtered[i].problemName);
                         props.toggleDiv(true);
                         setHasAForecastBeenSelected(true);
@@ -204,7 +184,6 @@ function ForecastSubmission(props) {
         if (marketName === undefined) return;
         try {
             const leaderboardResponse = await axios.get(`${process.env.REACT_APP_API_CALL_L}/newGetLeaderboardRoute/${marketName}`);
-            // console.log(leaderboardResponse);
             for (let i = 0; i < leaderboardResponse.data.length; i++) {
                 leaderboardResponse.data[i].marketPoints = 0;
                 for (let j = 0; j < leaderboardResponse.data[i].brierScores.length; j++) {
@@ -214,7 +193,6 @@ function ForecastSubmission(props) {
                 };
             };
             let lbRankings = leaderboardResponse.data.sort((a, b) => b.marketPoints - a.marketPoints);
-            // console.log(lbRankings);
             formatUserRank(lbRankings);
             props.handleLeaderboardChange(lbRankings);
         } catch (error) { 
@@ -224,7 +202,6 @@ function ForecastSubmission(props) {
 
     // When a forecast problem is selected from the dropdown
     const handleChange = (e) => {
-        console.log(e);
         if (e === "All currently open forecasts are available here...") {
             props.toggleDiv(false);
             setHasAForecastBeenSelected(false);
@@ -253,21 +230,13 @@ function ForecastSubmission(props) {
     };
 
     const getForecastDetails = (etv, fromNotifications, filtered) => {
-console.log(etv);
 // for some reason forecastProblems is an empty array
-console.log(forecastProblems);
         let forecast; 
         if (fromNotifications === true) {
-            console.log("here true");
-            console.log(filtered);
             forecast = filtered[filtered.findIndex(f => f.problemName === etv)];
-            console.log(forecast);
         } else {
-            console.log("here false");
             forecast = forecastProblems[forecastProblems.findIndex(fP => fP.problemName === etv)];
-            console.log(forecast);
         }
-console.log(forecast);
         setForecastObjForAnalysis(forecast);
         localStorage.setItem("selectedForecastID", forecast._id);
         if (new Date(forecast.closeDate) < new Date()) {
@@ -338,7 +307,6 @@ console.log(forecast);
 
     const getBrierForClosedForecast = async (username, problemName) => {
         try {
-            // console.log(props.userBriers);
             // const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
             const forecastDetails = props.userBriers.find(el => el.problemName === problemName);
             // setClosedForecastScore(forecastDetails === undefined ? "No Forecast Submitted" : forecastDetails.brierScore.toFixed(0));
@@ -372,7 +340,6 @@ console.log(forecast);
 
     // Nested loop - clean this up if you can. Over half the lines are state setting but could be moved to backend?
     const pullForecastDetailsAndCheckIfAlreadyAttempted = (forecast, fromNotifications, filtered) => {
-        console.log(forecast);
         let forecastProbs;
         if (fromNotifications === true) {
             forecastProbs = filtered;
@@ -384,7 +351,6 @@ console.log(forecast);
                 setSelectedForecastMarket(forecastProbs[i].market);
                 setSelectedForecastDocumentID(forecastProbs[i]._id);
                 setSelectedForecastObject(forecastProbs[i]);
-                console.log(forecastProbs[i]);
                 props.changeForecast(forecastProbs[i]);
                 if (forecastProbs[i].singleCertainty === false) {
                     setForecastPotentialOutcomes(forecastProbs[i].potentialOutcomes);
@@ -434,7 +400,6 @@ console.log(forecast);
 
     const handleCertaintyChange = (e) => {
         const certainty = e.target.value;
-        console.log(e.target.value);
         // if (certainty.contains("e") || certainty.contains("--")) {
         //     setButtonDisabled(true);
         //     setForecastResponseMessage("Certainty contains letters or symbols it shouldn't. Only numbers are allowed.");
@@ -462,7 +427,6 @@ console.log(forecast);
 
     const handleMultipleCertaintyChange = (certaintyVal, e) => {
         const certainty = e.target.value;
-        console.log(e.target.value);
         // if (certainty.contains("e") || certainty.contains("--")) {
         //     setButtonDisabled(true);
         //     setForecastResponseMessage("Certainty contains letters or symbols it shouldn't. Only numbers are allowed.");
@@ -574,7 +538,6 @@ console.log(forecast);
                 //     problemID: document.data[0]._id,
                 //     newSubmittedForecasts: documentForecastData
                 // });
-                // console.log(newForecast);
                 // ------------------------------------------------- //
 
                 // let date = new Date().toString();
@@ -593,7 +556,6 @@ console.log(forecast);
                     newForecastObject: newForecastObj,
                     username: username
                 });
-                console.log(newForecastTwo);
                 props.changeForecast(newForecastTwo.data);
                 setForecastResponseMessage("Forecast successfully updated! Refresh to see it on the chart.");
                 document.getElementsByClassName("forecast-certainty-input").value = 0;
@@ -639,8 +601,6 @@ console.log(forecast);
                 return;
             }
             try {
-                console.log("date time = " + new Date().toString());
-                console.log(new Date().getTime());
                 // let date = new Date().toString();
                 // let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
                 // let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20)).toString();
@@ -722,7 +682,6 @@ console.log(forecast);
                     newForecastObject: newForecastObj,
                     username: username
                 });
-                console.log(newForecastTwo);
                 setForecastResponseMessage("Forecast successfully updated! Refresh to see it on the chart.");
                 props.changeForecast(newForecastTwo.data);
                 document.getElementsByClassName("forecast-certainty-input").value = 0;
@@ -737,8 +696,6 @@ console.log(forecast);
 
                 // Brute force method
                 // const document = await axios.get(`${process.env.REACT_APP_API_CALL_F}/${forecast}`);
-                // console.log("the document you just got was this one:");
-                // console.log(document);
                 // const documentForecastData = document.data[0].submittedForecasts;
                 // let index = 0;
                 // for (let i = 0; i < documentForecastData.length; i++) {
@@ -759,7 +716,6 @@ console.log(forecast);
                 //     problemID: document.data[0]._id,
                 //     newSubmittedForecasts: documentForecastData
                 // });
-                // console.log(newForecast);
 
                 // const newForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/updateMultiple`, {
                 //     problemName: forecast,

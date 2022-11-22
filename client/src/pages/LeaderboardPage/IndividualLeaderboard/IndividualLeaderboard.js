@@ -43,9 +43,6 @@ function IndividualLeaderboard(props) {
     }, []);
 
     useEffect(() => {
-        // console.log("==================");
-        // console.log(props);
-        // console.log("==================");
         if (props.location.user === true) {
             const leaderboardObj = props.location.navigationOrderUnsorted.find(el => el.leaderboardName === localStorage.getItem('currentLeaderboardName'));
             // setIsFFLeaderboard(leaderboardObj.isFFLeaderboard);
@@ -72,10 +69,8 @@ function IndividualLeaderboard(props) {
         try {
             // const lbData = await axios.get(`${process.env.REACT_APP_API_CALL_L}/leaderboard/${leaderboard}`);
             // const lbRankings = lbData.data;
-            // console.log(lbRankings);
             // const lbData = await axios.get(`${process.env.REACT_APP_API_CALL_U}/`);
             const lbData = await axios.get(`${process.env.REACT_APP_API_CALL_U}/`);
-            // console.log(lbData);
             // let lbRankings = [];
             // for (let i = 0; i < lbData.data.length; i++) {
             //     if (lbData.data[i].markets.includes(leaderboard)) {

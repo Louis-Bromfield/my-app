@@ -26,24 +26,16 @@ function ForecastBreakdown(props) {
                 needLocalStorage: false
             });
         };
-        console.log(linkObject);
     }, [props.selectedForecast, props.username, props.userHasAttempted, forecastClosed]);
 
     const getPredictionData = async (selectedForecast, username, forecastClosed) => {
-        console.log(selectedForecast)
-        console.log(username)
-        console.log(forecastClosed)
         try {
-            console.log(`forecastClosed === ${forecastClosed}`)
             if (forecastClosed === true) {
                 const userForecastsDocument = await axios.get(`${process.env.REACT_APP_API_CALL_F}/${selectedForecast}/${true}/${username}/${singleCertainty}`);
-                console.log(userForecastsDocument.data)
-                console.log(userForecastsDocument.data);
                 setPredictionData(userForecastsDocument.data);
                 calculateTScore(userForecastsDocument.data);
             } else if (forecastClosed === false) {
-                const userForecastsDocument = await axios.get(`${process.env.REACT_APP_API_CALL_F}/${selectedForecast}/${false}/${username}/${singleCertainty}`);
-                console.log(userForecastsDocument.data);
+                const userForecastsDocument = await axios.get(`${process.env.REACT_APP_API_CALL_F}/${selectedForecast}/${false}/${username}/${singleCertainty}`);;
                 setPredictionData(userForecastsDocument.data);
                 calculateTScore(userForecastsDocument.data);
             }
@@ -188,10 +180,6 @@ function ForecastBreakdown(props) {
                             <button className="show-btn" onClick={() => setShowForecastByForecastBreakdown(!showForecastByForecastBreakdown)}>{showForecastByForecastBreakdown === true ? "Hide" : "Show"} Individual Predictions</button>
                             <ul className="prediction-ul">
                                 {predictionData.map((item, index) => {
-                                    console.log(item);
-                                    // console.log(new Date(item.date));
-                                    // console.log(new Date(predictionData[0].closeDate));
-                                    // console.log(new Date(item.date) < new Date(predictionData[0].closeDate));
                                     // Index !== 0 is because at element 0 is an object containing start and close dates
                                     // Predictions submitted after closing date will still be in DB so must be filtered
                                     if (index !== 0 && new Date(item.date) < new Date(predictionData[0].closeDate)) {

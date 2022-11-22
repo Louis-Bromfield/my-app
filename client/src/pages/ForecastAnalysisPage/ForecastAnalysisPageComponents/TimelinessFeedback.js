@@ -25,7 +25,6 @@ function TimelinessFeedback(props) {
     ];
 
     useEffect(() => {
-        console.log(props);
         if (props.finalScore >= 90) {
             if (props.timelinessScore >= 70) {
                 // High Accuracy + High Timeliness

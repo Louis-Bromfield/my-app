@@ -17,19 +17,14 @@ function HomeProfilePreview(props) {
 
     useEffect(() => {
         console.log("HomeProfilePreviewUE");
-        // console.log(props);
         // if (props.userFFPoints === undefined) {
-        //     console.log("here1");
         //     getUserDetails(props.username);
         // } else {
-        //     console.log("here2");
         //     setFFPoints(props.userFFPoints);
         // };
         if (props.userObj === undefined || props.userObj === {}) {
-            // console.log("here1");
             getUserDetails(props.username);
         } else {
-            // console.log("here2");
             setFFPoints(props.userObj.fantasyForecastPoints);
         };
         
@@ -76,7 +71,6 @@ function HomeProfilePreview(props) {
     const getUserDetails = async (username) => {
         try {
             const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
-            console.log(userDocument.data[0]);
             setFFPoints(userDocument.data[0].fantasyForecastPoints);
         } catch (error) {
             console.error("Error in HomeProfilePreview > getUserDetails");

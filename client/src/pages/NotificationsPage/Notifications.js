@@ -7,7 +7,6 @@ import axios from 'axios';
 function Notifications(props) {
     const history = useHistory();
     useEffect(() => {
-        console.log(props);
     }, []);
 
     // copy-paste this into Notifications.js when updated
@@ -20,7 +19,6 @@ function Notifications(props) {
         //         setAllToTrue: true
         //     });
         //     setNumberOfNewNotis(0);
-        //     console.log(res);
         //     return;
         // } else {
             if (notification.seenByUser === false) {
@@ -30,7 +28,6 @@ function Notifications(props) {
                     notificationIndex: notification.notificationIndex
                 });
                 // setNumberOfNewNotis(numberOfNewNotis-1);
-                console.log(res);
             };
             // if it's problem related, go to forecasts page. Ideal would be it auto-selects from the dropdown for you
             if (notification.notificationSourcePath === "/forecast") {

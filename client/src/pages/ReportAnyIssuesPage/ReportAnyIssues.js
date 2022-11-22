@@ -48,12 +48,10 @@ function ReportAnyIssues() {
     const getAllFeedback = async () => {
         try {
             const allFeedback = await axios.get(`${process.env.REACT_APP_API_CALL_HELP}/getAllFeedback/responses`);
-            console.log(allFeedback);
             if (allFeedback.data.retrieveSuccess === false) {
                 setFeedbackMessage("The feedback submissions are not available at the moment. Please try again later.");
             } else if (allFeedback.data.retrieveSuccess === true) {
                 setFeedbackMessage("Retrieval success");
-                console.log(allFeedback.data.allPosts);
                 setFeedbackArr(allFeedback.data.allPosts.reverse());
             };
         } catch (err) {

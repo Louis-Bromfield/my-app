@@ -11,7 +11,6 @@ const ClosedProblemModal = (props) => {
     const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
 
     useEffect(() => {
-        console.log(props);
         if (props.userBrierScores.length === 0 || props.userClosedForecastCount === null || props.userClosedForecastCount === undefined) {
             return;
         } else {

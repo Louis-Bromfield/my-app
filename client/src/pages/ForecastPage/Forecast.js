@@ -33,7 +33,6 @@ function Forecast(props) {
     };
 
     const handleForecastChange = (newForecast) => {
-        console.log("yes there's been a change");
         setForecast(newForecast);
     };
 
@@ -48,7 +47,6 @@ function Forecast(props) {
     const getAllForecastsFromDB = async () => {
         try {
             const allForecastsUnfiltered = await axios.get(`${process.env.REACT_APP_API_CALL_F}`);
-            // console.log(allForecastsUnfiltered);
             setAllForecasts(allForecastsUnfiltered.data);
         } catch (error) {
             console.error(error);

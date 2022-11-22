@@ -18,7 +18,6 @@ function HomeButtonSmall(props) {
     let mainData, subtitle, path;
     
     const getBrierScore = (userObj) => {
-        // console.log(userObj);
         if (userObj.length === 15 || userObj === {} || userObj.brierScores === undefined) {
             setBrierScore(props.currentAvgBrier);
             // localStorage.setItem("brierScore", props.currentAvgBrier);
@@ -90,9 +89,6 @@ function HomeButtonSmall(props) {
     // };
 
     useEffect(() => {
-        // if (props.userLearnQuizzes !== undefined && props.userLearnQuizzes !== null) {
-        //     console.log(props.userLearnQuizzes);
-        // };
         if (props.user !== {} || props.user === {} || props.user.brierScores === undefined) {
             getBrierScore(props.user);
         };

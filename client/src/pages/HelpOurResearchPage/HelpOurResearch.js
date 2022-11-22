@@ -45,7 +45,6 @@ function HelpOurResearch(props) {
 
     useEffect(() => {
         // Query database or check user object and check if user has already completed the survey
-        console.log(props);
         // if (props.userObject !== undefined) {
         //     if (props.userObject.completedSurvey === true) {
         //         setCompletedSurvey(true)
@@ -58,47 +57,6 @@ function HelpOurResearch(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // console.log(selfAssessedPolKnowledge);
-            // console.log(currentHomeSecretary);
-            // console.log(currentDeputyPM);
-            // console.log(currentSOSHSC);
-            // console.log(currentSOSLUHC);
-            // console.log(currentSOSScotland);
-            // console.log(currentLibDemLeader);
-            // console.log(currentSNPHOCLeader);
-            // console.log(currentShadowChanc);
-            // console.log(currentShadowSOST);
-            // console.log(currentSpeaker);
-            // console.log(pollStationCloseTime);
-            // console.log(typeof pollStationCloseTime);
-            // console.log(dayOfPMQs);
-            // console.log(constituencyCount);
-            // console.log(depositPay);
-            // console.log(electoralSystemName);
-            // console.log(ethicsAdvisorNames);
-            // console.log(inflationPercentage);
-            // console.log(unemploymentPercentage);
-            // console.log(noConfidenceVoteCount);
-            // console.log(publicBillsName);
-            // console.log(opposingArgumentConvince);
-            // console.log(evidenceAgainstBeliefs);
-            // console.log(reviseBeliefs);
-            // console.log(changingYourMind);
-            // console.log(intuitionIsBest);
-            // console.log(perservereBeliefs);
-            // console.log(disregardEvidence);
-            // console.log(foxHedgehogRating);
-            // console.log(politicalInterest);
-            // console.log(politicalSpectrumPosition);
-            // console.log(typeof politicalSpectrumPosition);
-            // console.log(ukPartySupporter);
-            // console.log(currentAge);
-            // console.log(typeof currentAge);
-            // console.log(identification);
-            // console.log(highestQual);
-            // console.log(householdIncome);
-            // console.log(ukBased);
-
             const res = await axios.post(`${process.env.REACT_APP_API_CALL_U}/surveyResponse`, {
                 username: props.userObject.username,
                 selfAssessedPolKnowledge: selfAssessedPolKnowledge,
@@ -142,7 +100,6 @@ function HelpOurResearch(props) {
             if (res.data.surveySuccess === true) {
                 setSubmitMsg("Your survey has been sent. Thank you for participating, and best of luck in the tournament!");
                 const username = props.username === undefined ? props.userObject.username === undefined : props.username;
-                console.log(username);
                 const userRes = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, {
                     completedSurvey: true
                 });

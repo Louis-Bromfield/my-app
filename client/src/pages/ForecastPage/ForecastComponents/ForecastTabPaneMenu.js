@@ -5,7 +5,6 @@ import './ForecastTabPaneMenu.css';
 function ForecastTabPaneMenu(props) {
 
     const updateArticleTabVisits = async (username) => {
-        console.log(props);
         try {
             // const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
             // let increasedVisits = userDocument.data[0].articleVisits + 1;
