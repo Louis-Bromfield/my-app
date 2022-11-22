@@ -1307,8 +1307,7 @@ console.log(forecast);
                         {/* {(forecastClosed === true && hasAForecastBeenSelected === true) &&  */}
                             <div className="">
                                 {forecastClosed === true ? <h2 className="selected-forecast" style={{ backgroundColor: "darkred" }}>{selectedForecast}</h2> : <h2 className="selected-forecast">{selectedForecast}</h2>}
-                                {/* <h4 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 41)}</h4> */}
-                                <h4 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 34)}</h4>
+                                <h4 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 41)}</h4>
                                 <div className="forecast-review-div">
                                     <div className="forecast-review-div-left">
                                         <h2 style={{ color: "#404d72" }}><u>Your Stats</u></h2>
