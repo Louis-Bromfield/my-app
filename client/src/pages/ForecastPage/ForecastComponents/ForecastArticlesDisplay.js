@@ -6,6 +6,8 @@ import ReactLoading from 'react-loading';
 
 function ForecastArticlesDisplay(props) {
     const [articles, setArticles] = useState("loading");
+    const [visitArticleYet, setVisitArticleYet] = useState(false);
+    const [articleVisitsThisTime, setArticleVisitsThisTime] = useState(0);
 
     const googleNewsScrape = async (searchTerm) => {
         try {
@@ -50,6 +52,31 @@ function ForecastArticlesDisplay(props) {
         };
     };
 
+    const logUserAction = async (username) => {
+        try {
+            console.log("in log user action");
+            console.log("username = " + username);
+            console.log("previous props.userobj.articlevists count = " + props.userObj.articleVisits);
+            // if (visitArticleYet === false) {
+                const res = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, {
+                    articleVisits: props.userObj.articleVisits + 1
+                });
+                setVisitArticleYet(true);
+                props.userObj.articleVisits++;
+                console.log("props.userobj.articlevists now = (should be above +1): " + props.userObject.articleVisits);
+                // setArticleVisitsThisTime(props.userObj.articleVisits + 1);
+            // } else { 
+            //     const res = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, {
+            //         articleVisits: props.userObj.articleVisits + 1
+            //     });
+            // };
+
+        } catch (err) {
+            console.error("Error in logging user action");
+            console.error(err);
+        };
+    };
+
     useEffect(() => {
         console.log(props);
         setArticles("loading");
@@ -73,7 +100,7 @@ function ForecastArticlesDisplay(props) {
                         <h4>These articles have been handpicked by us:</h4>
                         <a href="https://www.npr.org/2022/11/09/1135685554/runoff-election-georgia-senate-race-raphael-warnock-herschel-walker" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
                             {/* <p>{article.title}</p> */}
-                            <div className="article-list-item">
+                            <div className="article-list-item" onClick={() => logUserAction(props.username === undefined ? props.userObject.username : props.username)}>
                                 <div className="article-list-item-img-container">
                                     <img className="article-list-item-img" src="https://media.npr.org/assets/img/2022/11/09/gettyimages-1440117548-1137e85c8b9a57b106b19cac51902341a0cb5ad8-s800-c85.webp" alt="" />
                                 </div>
@@ -87,7 +114,7 @@ function ForecastArticlesDisplay(props) {
                         </a>
                         <a href="https://projects.fivethirtyeight.com/polls/senate/2022/georgia/" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
                             {/* <p>{article.title}</p> */}
-                            <div className="article-list-item">
+                            <div className="article-list-item" onClick={() => logUserAction(props.username === undefined ? props.userObject.username : props.username)}>
                                 <div className="article-list-item-img-container">
                                     <img className="article-list-item-img" src="https://s.abcnews.com/images/Business/fivethirtyeight-logo-v2-ht-ps2-180417_hpMain_16x9_992.jpg" alt="" />
                                 </div>
@@ -101,7 +128,7 @@ function ForecastArticlesDisplay(props) {
                         </a>
                         <a href="https://www.cbsnews.com/news/runoff-election-georgia-senate-2022-raphael-warnock-herschel-walker/" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
                             {/* <p>{article.title}</p> */}
-                            <div className="article-list-item">
+                            <div className="article-list-item" onClick={() => logUserAction(props.username === undefined ? props.userObject.username : props.username)}>
                                 <div className="article-list-item-img-container">
                                     <img className="article-list-item-img" src="https://election-assets.cbsnewsstatic.com/general-2022/GA-S-D-RAPHAEL_WARNOCK.jpg" alt="" />
                                 </div>

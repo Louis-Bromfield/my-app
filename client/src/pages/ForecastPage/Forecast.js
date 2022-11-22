@@ -125,7 +125,9 @@ function Forecast(props) {
                         {/* articles */}
                         <div className="bottom-half-articles-div">
                             <ForecastArticlesDisplay 
-                                searchTerm={forecast}   
+                                searchTerm={forecast}
+                                userObject={props.userObject}   
+                                username={props.username}
                             />
                         </div>
                         {/* stats and leaderboard */}
