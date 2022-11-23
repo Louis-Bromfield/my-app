@@ -1342,6 +1342,7 @@ console.log("here 343");
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("chart")}><h3>Chart</h3></div>
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("problemStats")}><h3>Problem Stats</h3></div>
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("results")}><h3>Results</h3></div>
+                        </div>
                         {switcherTab === "problemStats" && 
                             <div className="switcher-problem-stats">
                                 <ForecastStatistics 
