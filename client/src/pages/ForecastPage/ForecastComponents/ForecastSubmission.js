@@ -244,6 +244,7 @@ function ForecastSubmission(props) {
             setButtonDisabled(true);
             setForecastClosed(true);
             setForecastCloseDate(`FORECAST CLOSED: ${new Date(forecast.closeDate).toString()}`);
+            console.log("forecast is closed");
             let highest = 0;
             let lowest = 100;
             let totalOutcomeOne = 0;
@@ -340,6 +341,7 @@ function ForecastSubmission(props) {
 
     // Nested loop - clean this up if you can. Over half the lines are state setting but could be moved to backend?
     const pullForecastDetailsAndCheckIfAlreadyAttempted = (forecast, fromNotifications, filtered) => {
+console.log("here 343");
         let forecastProbs;
         if (fromNotifications === true) {
             forecastProbs = filtered;
@@ -1214,11 +1216,11 @@ function ForecastSubmission(props) {
                         </div>
                     </div>
                     <div className="forecast-chart-stats-switcher">
-                        {selectedForecastObject.isClosed === false && <div className="forecast-chart-stats-switcher-tab-menu">
+                        {(selectedForecastObject.isClosed === false || forecastClosed === true) && <div className="forecast-chart-stats-switcher-tab-menu">
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("chart")}><h3>Chart</h3></div>
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("problemStats")}><h3>Problem Stats</h3></div>
                         </div>}
-                        {selectedForecastObject.isClosed === true && <div className="forecast-chart-stats-switcher-tab-menu-three">
+                        {(selectedForecastObject.isClosed === true || forecastClosed === true) && <div className="forecast-chart-stats-switcher-tab-menu-three">
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("chart")}><h3>Chart</h3></div>
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("problemStats")}><h3>Problem Stats</h3></div>
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("results")}><h3>Results</h3></div>
