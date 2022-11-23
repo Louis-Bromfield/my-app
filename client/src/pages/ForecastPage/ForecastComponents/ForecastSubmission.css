@@ -251,6 +251,13 @@
     text-align: center;
 }
 
+.forecast-chart-stats-switcher-tab-menu-three {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    width: 100%;
+    text-align: center;
+}
+
 .forecast-chart-stats-switcher-tab {
     padding: 2%;
     border: 1px solid lightgray;

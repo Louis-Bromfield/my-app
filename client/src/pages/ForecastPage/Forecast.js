@@ -9,7 +9,7 @@ import ForecastArticlesDisplay from './ForecastComponents/ForecastArticlesDispla
 // import ForecastStatistics from './ForecastComponents/ForecastStatistics';
 // import MarketStatistics from './ForecastComponents/MarketStatistics';
 // import ForecastMarketLeaderboard from './ForecastComponents/ForecastMarketLeaderboard';
-// import ForecastResults from './ForecastComponents/ForecastResults';
+import ForecastResults from './ForecastComponents/ForecastResults';
 import ForecastChat from './ForecastComponents/ForecastChat';
 import Modal from '../../components/Modal';
 

@@ -9,7 +9,7 @@ import ForecastProblemLineChart from './ForecastProblemLineChart';
 import ForecastStatistics from './ForecastStatistics';
 import MarketStatistics from './MarketStatistics';
 import ForecastMarketLeaderboard from './ForecastMarketLeaderboard';
-
+import ForecastResults from './ForecastResults';
 
 function ForecastSubmission(props) {
     const [forecastProblems, setForecastProblems] = useState([]);
@@ -1218,6 +1218,11 @@ function ForecastSubmission(props) {
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("chart")}><h3>Chart</h3></div>
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("problemStats")}><h3>Problem Stats</h3></div>
                         </div>
+                        <div className="forecast-chart-stats-switcher-tab-menu-three">
+                            <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("chart")}><h3>Chart</h3></div>
+                            <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("problemStats")}><h3>Problem Stats</h3></div>
+                            <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("results")}><h3>Results</h3></div>
+                        </div>
                         {switcherTab === "problemStats" && 
                             <div className="switcher-problem-stats">
                                 <ForecastStatistics 
@@ -1252,6 +1257,13 @@ function ForecastSubmission(props) {
                                 username={props.username} 
                                 refresh={"test"} 
                                 forecastSingleCertainty={forecastSingleCertainty}
+                            />
+                        }
+                        {switcherTab === "results" && 
+                            <ForecastResults 
+                                selectedForecastObject={selectedForecastObject} 
+                                leaderboard={props.leaderboardData} 
+                                username={props.username} 
                             />
                         }
                     </div>
