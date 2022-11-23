@@ -136,7 +136,7 @@ function Login(props) {
     return (
         <div className="login-main-div">
             <img className="login-logo" src={FFLogo} alt="" />
-            <div className="login-div">
+            {/* <div className="login-div">
                 <h2>Login here:</h2>
                 <label htmlFor="login-password">Prolific ID:</label>
                 <input 
@@ -164,13 +164,13 @@ function Login(props) {
                 />
                 <button className="login-btn" onClick={() => loginFromLogin(prolificIDForLogin, passwordForLogin, true, false)}>Login to Fantasy Forecast</button>
                 {errorMessage}
-            </div>
-            <div className="login-div">
+            </div> */}
+            {/* <div className="login-div">
                 <h2>Forgot your password?</h2>
                 <h2>Email fantasyforecastcontact@gmail.com with your username and Prolific ID and we'll reset it for you.</h2>
-            </div>
+            </div> */}
             <div className="login-main-div">
-                <img className="login-logo" src={FFLogo} alt="" />
+                {/* <img className="login-logo" src={FFLogo} alt="" /> */}
                     <div className="signup-container">
                         <div className="signup-div">
                             <h2>Create an Account:</h2>
@@ -236,9 +236,9 @@ function Login(props) {
                             {errorMessageForAccountCreation}
                         </div>
                         <div className="signup-div">
-                            <h2>Don't want to create an account?</h2>
+                            <h2>Preview the site as a Guest</h2>
                             <button className="login-btn" onClick={() => loginFromLogin("Guest", "guestAccount123", true, true)}>
-                            Enter Without Logging In
+                                Enter Without Logging In
                             </button>
                         </div>
                     </div>
@@ -271,6 +271,10 @@ function Login(props) {
                         <button className="login-btn" onClick={() => loginFromLogin(prolificIDForLogin, passwordForLogin, true, false)}>Login to Fantasy Forecast</button>
                         {errorMessage}
                     </div> 
+                    <div className="login-div">
+                        <h2>Forgot your password?</h2>
+                        <h2>Email fantasyforecastcontact@gmail.com with your username and Prolific ID and we'll reset it for you.</h2>
+                    </div>
             </div>
         </div>  
     )
