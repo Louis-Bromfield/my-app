@@ -287,29 +287,30 @@ router.get("/getIndividualProblemResults/:problemName", async (req, res) => {
 
 // Create a new user
 router.post("/", async (req, res) => {
+    console.log("NEW USER CREATION");
+    // CHARMANDER - hash password:
+    // const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newUser = new Users({
         username: req.body.username,
-        password: req.body.password,
-        email: req.body.email,
-        fantasyForecastPoints: req.body.fantasyForecastPoints,
-        name: req.body.name,
-        markets: ["Fantasy Forecast All-Time"],
-        onboarding: {},
-        learnQuizzes: {},
-        brierScores: [],
-        numberOfClosedForecasts: 0,
-        profilePicture: req.body.profilePicture,
-        isGroup: req.body.isGroup
+        password: hashedPassword
     });
     try {
         // Save to DB
         const newUserSavedToDB = await newUser.save();
-
-        res.status(200).json(newUserSavedToDB);
+        // res.status(200).json(newUserSavedToDB);
+        res.json({
+            userCreationSuccess: true,
+            userObject: newUserSavedToDB,
+            err: FALSE
+        });
     } catch (error) {
         console.error("Error in router.post in users.js");
         console.error(error);
-        res.json({ message: error.message });
+        res.json({
+            message: error.message,
+            err: TRUE
+        });
     };
 });
 

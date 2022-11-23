@@ -45,16 +45,20 @@ function Login(props) {
         //     return;
         } else {
             try {
-                const userCheckedByUsername = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${pID}`);
-                if (userCheckedByUsername.data.length === 1) {
+                // CHARMANDER - ADD CODE FOR CREATING USER, THEN LOGIN WITH RETURNED OBJECT
+                const user = await axios.post(`${process.env.REACT_APP_API_CALL_U}/`, {
+                    username: pID,
+                    password: pWord
+                });
+                if (user.data.err === true) {
                     setProblematicInfo("Prolific ID");
                     setCredentialsSuccessfullyChecked(false);
+                    console.log(user.data.message === undefined ? null : user.data.message);
                     return;
                 } else {
-                    // New
+                    // login
                     setProblematicInfo("");
                     setCredentialsSuccessfullyChecked(true);
-                    // CHARMANDER - possibly allow this but delete it from localstorage when you get to home
                     localStorage.setItem("username", pID);
                     setCookie('username', pID, { path: "/", sameSite: "Lax" });
                     loginFromLogin(pID, pWord, true, false);
