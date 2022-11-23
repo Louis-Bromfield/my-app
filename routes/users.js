@@ -302,14 +302,14 @@ router.post("/", async (req, res) => {
         res.json({
             userCreationSuccess: true,
             userObject: newUserSavedToDB,
-            err: FALSE
+            err: false
         });
     } catch (error) {
         console.error("Error in router.post in users.js");
         console.error(error);
         res.json({
             message: error.message,
-            err: TRUE
+            err: true
         });
     };
 });
