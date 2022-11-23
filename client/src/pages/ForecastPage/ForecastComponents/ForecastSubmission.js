@@ -1255,13 +1255,6 @@ console.log("here 343");
                                 forecastSingleCertainty={forecastSingleCertainty}
                             />
                         }
-                        {switcherTab === "results" && 
-                            <ForecastResults 
-                                selectedForecastObject={selectedForecastObject} 
-                                leaderboard={props.leaderboardData} 
-                                username={props.username} 
-                            />
-                        }
                     </div>
                 </div>
             }
@@ -1377,6 +1370,13 @@ console.log("here 343");
                                 username={props.username} 
                                 refresh={"test"} 
                                 forecastSingleCertainty={forecastSingleCertainty}
+                            />
+                        }
+                        {switcherTab === "results" && 
+                            <ForecastResults 
+                                selectedForecastObject={selectedForecastObject} 
+                                leaderboard={props.leaderboardData} 
+                                username={props.username} 
                             />
                         }
                     </div>
