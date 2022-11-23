@@ -1220,11 +1220,11 @@ console.log("here 343");
                         </div>
                     </div>
                     <div className="forecast-chart-stats-switcher">
-                        {setShowResultsTab === false && <div className="forecast-chart-stats-switcher-tab-menu">
+                        {showResultsTab === false && <div className="forecast-chart-stats-switcher-tab-menu">
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("chart")}><h3>Chart</h3></div>
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("problemStats")}><h3>Problem Stats</h3></div>
                         </div>}
-                        {setShowResultsTab === true && <div className="forecast-chart-stats-switcher-tab-menu-three">
+                        {showResultsTab === true && <div className="forecast-chart-stats-switcher-tab-menu-three">
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("chart")}><h3>Chart</h3></div>
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("problemStats")}><h3>Problem Stats</h3></div>
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("results")}><h3>Results</h3></div>
