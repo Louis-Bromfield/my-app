@@ -53,6 +53,7 @@ function ForecastSubmission(props) {
     const [todayAverage, setTodayAverage] = useState("");
     const [todayForecastCount, setTodayForecastCount] = useState("");
     const [forecastFoundFromNotifications, setForecastFoundFromNotifications] = useState(false);
+    const [showResultsTab, setShowResultsTab] = useState(false);
 
     const updateTodayStats = (avg, fc) => {
         setTodayAverage(avg);
@@ -243,6 +244,7 @@ function ForecastSubmission(props) {
             getBrierForClosedForecast(props.username, etv);
             setButtonDisabled(true);
             setForecastClosed(true);
+            setShowResultsTab(true);
             setForecastCloseDate(`FORECAST CLOSED: ${new Date(forecast.closeDate).toString()}`);
             console.log("forecast is closed");
             let highest = 0;
@@ -300,9 +302,11 @@ function ForecastSubmission(props) {
             };
             setNumberOfForecastsSubmitted(totalNumOfForecasts);
         } else {
+console.log("here 305");
             setButtonDisabled(false);
             setForecastClosed(false);
             setForecastCloseDate(`Deadline: ${new Date(forecast.closeDate).toString()}`);
+            setShowResultsTab(false);
         };
     };
 
@@ -1216,11 +1220,11 @@ console.log("here 343");
                         </div>
                     </div>
                     <div className="forecast-chart-stats-switcher">
-                        {(selectedForecastObject.isClosed === false || forecastClosed === true) && <div className="forecast-chart-stats-switcher-tab-menu">
+                        {setShowResultsTab === false && <div className="forecast-chart-stats-switcher-tab-menu">
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("chart")}><h3>Chart</h3></div>
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("problemStats")}><h3>Problem Stats</h3></div>
                         </div>}
-                        {(selectedForecastObject.isClosed === true || forecastClosed === true) && <div className="forecast-chart-stats-switcher-tab-menu-three">
+                        {setShowResultsTab === true && <div className="forecast-chart-stats-switcher-tab-menu-three">
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("chart")}><h3>Chart</h3></div>
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("problemStats")}><h3>Problem Stats</h3></div>
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("results")}><h3>Results</h3></div>
