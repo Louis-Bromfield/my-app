@@ -16,7 +16,7 @@ function ForecastResults(props) {
             // const allUsers = await getAllUsers();
             // scrape all users for those names that appear in the leaderboard
             // findAllScores(allUsers, props.problemName);
-            pullAllScores(props.problemName);
+            pullAllScores(props.selectedForecastObject.problemName);
         // };
         setTimeout(() => {
             setLoading(false);
@@ -69,9 +69,9 @@ function ForecastResults(props) {
 
     return (
         <div className="forecast-results">
-            <h2 className="forecast-results-title">Forecast Results</h2>
+            {/* <h2 className="forecast-results-title">Forecast Results</h2> */}
             <div className="show-div">
-                <h3>Here's a breakdown of how everyone who attempted this problem fared.</h3>
+                <h4>Here's a breakdown of how everyone who attempted this problem fared.</h4>
                 <table className="forecast-results-table">
                     <tbody>
                         <tr className="table-title-row">
