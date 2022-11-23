@@ -119,7 +119,7 @@ const UserSchema = mongoose.Schema({
     },
     profilePicture: {
         type: String,
-        default: ""
+        default: "https://lh3.googleusercontent.com/a/AItbvmkRUSgd_Izrhz4X-ft3do7Li1X0OsBPAzgh9r4G=s96-c"
     },
     articleVisits: {
         type: Number,

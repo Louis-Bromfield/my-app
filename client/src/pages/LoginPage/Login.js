@@ -11,6 +11,7 @@ function Login(props) {
     const [usernameForCreate, setUsernameForCreate] = useState("");
     const [prolificIDForCreate, setProlificIDForCreate] = useState("");
     const [passwordForCreate, setPasswordForCreate] = useState("");
+    const [confirmPasswordForCreate, setConfirmPasswordForCreate] = useState("");
     // const [passwordResetCodeForCreate, setPasswordResetCodeForCreate] = useState("");
     const [usernameForLogin, setUsernameForLogin] = useState("");
     const [passwordForLogin, setPasswordForLogin] = useState("");
@@ -33,12 +34,15 @@ function Login(props) {
     // }, []);
 
     // const checkCredentials = async (uName, pWord, pID) => {
-    const checkCredentials = async (pID, pWord) => {
+    const checkCredentials = async (pID, pWord, cpWord) => {
         if (pID.length < 4 || /\s/.test(pID) || pID === "") {
             setErrorMessageForAccountCreation("Your ProlificID should be 24 characters long and contain no spaces.");
             return;
         } else if (pWord.length < 4|| (/\s/.test(pWord)) || pWord === "") {
             setErrorMessageForAccountCreation("Your password must contain no spaces.");
+            return;
+        } else if (pWord !== cpWord) {
+            setErrorMessageForAccountCreation("Your passwords do not match.");
             return;
         // } else if (pID.length < 4 || /\s/.test(pID) || pID === "") {
         //     setErrorMessageForAccountCreation("Your ProlificID is too short and cannot contain spaces.");
@@ -213,10 +217,22 @@ function Login(props) {
                                     setErrorMessageForAccountCreation("");
                                 }}
                             />
+                            <label htmlFor="password">Confirm Password:</label>
+                            <input 
+                                type="password" 
+                                name="confirm-password" 
+                                id="confirm-password" 
+                                // maxLength={15}
+                                onChange={(e) => { 
+                                    setCredentialsSuccessfullyChecked(null);
+                                    setConfirmPasswordForCreate(e.target.value);
+                                    setErrorMessageForAccountCreation("");
+                                }}
+                            />
                             <br />
                             {credentialsSuccessfullyChecked === null &&
                                 // <button className="check-your-details-btn" onClick={() => checkCredentials(usernameForCreate, passwordForCreate, prolificIDForCreate)}>Click Here: Check Your Details</button>
-                                <button className="check-your-details-btn" onClick={() => checkCredentials(prolificIDForCreate, passwordForCreate)}>Login</button>
+                                <button className="check-your-details-btn" onClick={() => checkCredentials(prolificIDForCreate, passwordForCreate, confirmPasswordForCreate)}>Login</button>
                             }
                             {/* {credentialsSuccessfullyChecked === true &&  */}
                                 {/* <div className="credentials-passed-login"> */}
