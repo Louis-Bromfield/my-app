@@ -75,9 +75,9 @@ function ForecastResults(props) {
                 <table className="forecast-results-table">
                     <tbody>
                         <tr className="table-title-row">
-                            <th><h2>#</h2></th>
-                            <th><h2>Username</h2></th>
-                            <th><h2>Score</h2></th>
+                            <th><h3>#</h3></th>
+                            <th><h3>Username</h3></th>
+                            <th><h3>Score</h3></th>
                         </tr>
                         {results.map((item, index) => {
                             if (item.username === props.username) {
