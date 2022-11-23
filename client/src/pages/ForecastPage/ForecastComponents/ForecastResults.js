@@ -9,7 +9,6 @@ function ForecastResults(props) {
 
     useEffect(() => {
         console.log("Forecast Results UE2");
-        console.log(props);
         // async function doEffect() {
         if (props.selectedForecast.isClosed === true) {
             setLoading(true);
@@ -29,7 +28,6 @@ function ForecastResults(props) {
     const pullAllScores = async (problemName) => {
         try {
             const resultsFromDB = await axios.get(`${process.env.REACT_APP_API_CALL_U}/getIndividualProblemResults/${problemName}`);
-console.log(resultsFromDB);
             setResults(resultsFromDB.data);      
         } catch (err) {
             console.error("Error in ForecastResults > pullAllScores");

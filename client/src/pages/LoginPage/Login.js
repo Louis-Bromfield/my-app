@@ -11,18 +11,19 @@ function Login(props) {
     const [usernameForCreate, setUsernameForCreate] = useState("");
     const [prolificIDForCreate, setProlificIDForCreate] = useState("");
     const [passwordForCreate, setPasswordForCreate] = useState("");
-    const [passwordResetCodeForCreate, setPasswordResetCodeForCreate] = useState("");
+    // const [passwordResetCodeForCreate, setPasswordResetCodeForCreate] = useState("");
     const [usernameForLogin, setUsernameForLogin] = useState("");
     const [passwordForLogin, setPasswordForLogin] = useState("");
-    const [passwordResetCodeForLogin, setPasswordResetCodeForLogin] = useState("");
+    // const [passwordResetCodeForLogin, setPasswordResetCodeForLogin] = useState("");
+    const [prolificIDForLogin, setProlificIDForLogin] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [errorMessageForAccountCreation, setErrorMessageForAccountCreation] = useState("");
-    const [prolificID, setProlificID] = useState("");
+    // const [prolificID, setProlificID] = useState("");
     // const [loggedIn, setLoggedIn] = useState(false);
     const [problematicInfo, setProblematicInfo] = useState("_");
     const [credentialsSuccessfullyChecked, setCredentialsSuccessfullyChecked] = useState(null);
-    const [emailForPasswordReset, setEmailForPasswordReset] = useState("");
-    const [usernameForPasswordReset, setUsernameForPasswordReset] = useState("");
+    // const [emailForPasswordReset, setEmailForPasswordReset] = useState("");
+    // const [usernameForPasswordReset, setUsernameForPasswordReset] = useState("");
     const [resetMessage, setResetMessage] = useState("");
 
     const [cookie, setCookie] = useCookies(['username']);
@@ -32,21 +33,21 @@ function Login(props) {
     // }, []);
 
     // const checkCredentials = async (uName, pWord, pID) => {
-    const checkCredentials = async (uName, pWord) => {
-        if (uName.length < 4 || /\s/.test(uName) || uName === "") {
-            setErrorMessageForAccountCreation("Your username and password must be at least 5 characters.");
+    const checkCredentials = async (pID, pWord) => {
+        if (pID.length < 4 || /\s/.test(pID) || pID === "") {
+            setErrorMessageForAccountCreation("Your ProlificID should be 24 characters long and contain no spaces.");
             return;
         } else if (pWord.length < 4|| (/\s/.test(pWord)) || pWord === "") {
-            setErrorMessageForAccountCreation("Your username and password must contain no spaces.");
+            setErrorMessageForAccountCreation("Your password must contain no spaces.");
             return;
         // } else if (pID.length < 4 || /\s/.test(pID) || pID === "") {
         //     setErrorMessageForAccountCreation("Your ProlificID is too short and cannot contain spaces.");
         //     return;
         } else {
             try {
-                const userCheckedByUsername = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${uName}`);
+                const userCheckedByUsername = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${pID}`);
                 if (userCheckedByUsername.data.length === 1) {
-                    setProblematicInfo("username");
+                    setProblematicInfo("Prolific ID");
                     setCredentialsSuccessfullyChecked(false);
                     return;
                 } else {
@@ -54,8 +55,9 @@ function Login(props) {
                     setProblematicInfo("");
                     setCredentialsSuccessfullyChecked(true);
                     // CHARMANDER - possibly allow this but delete it from localstorage when you get to home
-                    localStorage.setItem("username", uName);
-                    setCookie('username', uName, { path: "/", sameSite: "Lax" });
+                    localStorage.setItem("username", pID);
+                    setCookie('username', pID, { path: "/", sameSite: "Lax" });
+                    loginFromLogin(pID, pWord, true, false);
                 };
             } catch (error) {
                 console.error("Error in Login > checkCredentials");
@@ -64,19 +66,19 @@ function Login(props) {
         };
     };
 
-    const loginFromLogin = async (username, passwordOrResetCode, isPassword, isGuest) => {
+    const loginFromLogin = async (prolificID, passwordOrResetCode, isPassword, isGuest) => {
         try {
             let userObj;
             if (isGuest === true) {
-                userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${username}/${passwordOrResetCode}/${true}`);
+                userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${true}`);
             } else if (isGuest === false) {
                 // console.log(username);
                 // console.log(passwordOrResetCode);
                 // console.log(isPassword);
                 if (isPassword === true) {
-                    userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${username}/${passwordOrResetCode}/${true}`);
+                    userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${true}`);
                 } else if (isPassword === false) {
-                    userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${username}/${passwordOrResetCode}/${false}`);
+                    userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${false}`);
                 };
             };
             console.log(userObj);
@@ -110,281 +112,167 @@ function Login(props) {
         };
     };
 
-    const requestPasswordResetThroughEmail = async (username, email) => {
-        try {
-            console.log(username);
-            console.log(email);
-            const resetUser = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/reset/resetUserAccFromLogin/fireEmail/resetPW/r`, {
-                username: username,
-                email: email
-            });
-            console.log(resetUser);
-            if (resetUser.data.resetSuccess === true) {
-                setResetMessage("Your password has been reset. Check your email address.")
-            } else {
-                setResetMessage("There is no user with this username and email. Please try again.");
-            };
-        } catch (err) {
-            console.error("Error in requestPasswordResetThroughEmail");
-            console.error(err);
-            setResetMessage("There was an error. Please try again later.");
-        };
-    };
+    // const requestPasswordResetThroughEmail = async (username, email) => {
+    //     try {
+    //         console.log(username);
+    //         console.log(email);
+    //         const resetUser = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/reset/resetUserAccFromLogin/fireEmail/resetPW/r`, {
+    //             username: username,
+    //             email: email
+    //         });
+    //         console.log(resetUser);
+    //         if (resetUser.data.resetSuccess === true) {
+    //             setResetMessage("Your password has been reset. Check your email address.")
+    //         } else {
+    //             setResetMessage("There is no user with this username and email. Please try again.");
+    //         };
+    //     } catch (err) {
+    //         console.error("Error in requestPasswordResetThroughEmail");
+    //         console.error(err);
+    //         setResetMessage("There was an error. Please try again later.");
+    //     };
+    // };
 
     return (
         <div className="login-main-div">
             <img className="login-logo" src={FFLogo} alt="" />
             <div className="login-div">
-                <h2>Login here (Enter your Student Number for both Username and Password):</h2>
-                <label htmlFor="username-login">Username:</label>
-                    <input 
-                        type="text" 
-                        name="login-username" 
-                        id="login-username" 
-                        maxLength={15}
-                        onChange={(e) => { 
-                            setCredentialsSuccessfullyChecked(null);
-                            setErrorMessage("");
-                            setUsernameForLogin(e.target.value);
-                        }}
-                    />
+                <h2>Login here:</h2>
+                <label htmlFor="login-password">Prolific ID:</label>
+                <input 
+                    type="prolificID" 
+                    name="login-prolificID" 
+                    id="login-prolificID" 
+                    // maxLength={15}
+                    onChange={(e) => { 
+                        setCredentialsSuccessfullyChecked(null);
+                        setErrorMessage("");
+                        setProlificIDForLogin(e.target.value);
+                    }}
+                />
                 <label htmlFor="login-password">Password:</label>
-                    <input 
-                        type="password" 
-                        name="login-password" 
-                        id="login-password" 
-                        // maxLength={15}
-                        onChange={(e) => { 
-                            setCredentialsSuccessfullyChecked(null);
-                            setErrorMessage("");
-                            setPasswordForLogin(e.target.value);
-                        }}
-                    />
-                <button className="login-btn" onClick={() => loginFromLogin(usernameForLogin, passwordForLogin, true, false)}>Login to Fantasy Forecast</button>
+                <input 
+                    type="password" 
+                    name="login-password" 
+                    id="login-password" 
+                    maxLength={15}
+                    onChange={(e) => { 
+                        setCredentialsSuccessfullyChecked(null);
+                        setErrorMessage("");
+                        setPasswordForLogin(e.target.value);
+                    }}
+                />
+                <button className="login-btn" onClick={() => loginFromLogin(prolificIDForLogin, passwordForLogin, true, false)}>Login to Fantasy Forecast</button>
                 {errorMessage}
             </div>
-            {/* <div className="login-div">
+            <div className="login-div">
                 <h2>Forgot your password?</h2>
-                <label htmlFor="username-reset-code">Username:</label>
-                    <input 
-                        type="text" 
-                        name="username-reset-code" 
-                        id="username-reset-code" 
-                        maxLength={15}
-                        onChange={(e) => { 
-                            setCredentialsSuccessfullyChecked(null);
-                            setErrorMessage("");
-                            setUsernameForLogin(e.target.value);
-                        }}
-                    />
-                <label htmlFor="password-reset-code">Password Reset Code:</label>
-                    <input 
-                        type="password" 
-                        name="password-reset-code" 
-                        id="password-reset-code" 
-                        // maxLength={15}
-                        onChange={(e) => { 
-                            setCredentialsSuccessfullyChecked(null);
-                            setErrorMessage("");
-                            setPasswordResetCodeForLogin(e.target.value);
-                        }}
-                    />
-                <button className="login-btn" onClick={() => loginFromLogin(usernameForLogin, passwordResetCodeForLogin, false)}>Login to Fantasy Forecast</button>
-                {errorMessage}
-            </div> */}
-        </div>
-    //     <div className="login-main-div">
-    //     <img className="login-logo" src={FFLogo} alt="" />
-    //     <div className="signup-container">
-    //         <div className="signup-div">
-    //             <h2>Create an Account:</h2>
-    //             <label htmlFor="username">Create Your Username:</label>
-    //             <input 
-    //                 type="text" 
-    //                 name="username" 
-    //                 id="username" 
-    //                 maxLength={15}
-    //                 onChange={(e) => { 
-    //                     setCredentialsSuccessfullyChecked(null);
-    //                     setUsernameForCreate(e.target.value);
-    //                     setErrorMessageForAccountCreation("");
-    //                 }} 
-    //             />
-    //             <label htmlFor="prolificID">Enter Your ProlificID:</label>
-    //             <input 
-    //                 type="text" 
-    //                 name="prolificID" 
-    //                 id="prolificID" 
-    //                 maxLength={15}
-    //                 onChange={(e) => { 
-    //                     setCredentialsSuccessfullyChecked(null);
-    //                     setProlificIDForCreate(e.target.value);
-    //                     setErrorMessageForAccountCreation("");
-    //                 }} 
-    //             />
-    //             <label htmlFor="password">Password:</label>
-    //             <input 
-    //                 type="password" 
-    //                 name="password" 
-    //                 id="password" 
-    //                 // maxLength={15}
-    //                 onChange={(e) => { 
-    //                     setCredentialsSuccessfullyChecked(null);
-    //                     setPasswordForCreate(e.target.value);
-    //                     setErrorMessageForAccountCreation("");
-    //                 }}
-    //             />
-    //             <br />
-    //             <label htmlFor="pw-reset-code">Password Reset Code:</label>
-    //             <p>Type in a secret code to use if you ever forget your password.</p>
-    //             <input 
-    //                 type="pw-reset-code" 
-    //                 name="pw-reset-code" 
-    //                 id="pw-reset-code" 
-    //                 // maxLength={15}
-    //                 onChange={(e) => { 
-    //                     setCredentialsSuccessfullyChecked(null);
-    //                     setPasswordResetCodeForCreate(e.target.value);
-    //                     setErrorMessageForAccountCreation("");
-    //                 }}
-    //             />
-    //             {credentialsSuccessfullyChecked === null &&
-    //                 // <button className="check-your-details-btn" onClick={() => checkCredentials(usernameForCreate, passwordForCreate, prolificIDForCreate)}>Click Here: Check Your Details</button>
-    //                 <button className="check-your-details-btn" onClick={() => checkCredentials(usernameForCreate, passwordForCreate)}>Click Here: Check Your Details</button>
-    //             }
-    //             {credentialsSuccessfullyChecked === true && 
-    //                 <div className="credentials-passed-login">
-    //                     {/* <h2>Your details are perfect!</h2> */}
-    //                     {/* <form action={`${process.env.REACT_APP_API_NACB}/${usernameForCreate}/${passwordForCreate}/${prolificIDForCreate}`}> */}
-    //                     {/* use this line below for Prolific, we removed the last one for PO-119 students */}
-    //                     {/* <form action={`${process.env.REACT_APP_API_CALL_MAIN}/auth/google/not_callback/${usernameForCreate}/${passwordForCreate}/${prolificIDForCreate}`}> */}
-    //                     <form action={`${process.env.REACT_APP_API_CALL_MAIN}/auth/google/not_callback/${usernameForCreate}/${passwordForCreate}`}>
-    //                         <button type="submit" className="sign-in-with-google-btn">Your details are perfect. Now click here to sign in with Google</button>
-    //                         <div className="google-explainer">
-    //                             <p><u>Why do I need to sign in with Google?</u> 1) So your Fantasy Forecast account has a profile picture, and 2) so we can email the winners of the tournament!</p>
-    //                             {/* <br />
-    //                             <p>Email addresses obtained from those who do not complete the survey and become eligible for the tournament will be deleted on Monday 4th July, and all others will be deleted as soon as the tournament ends.</p> */}
-    //                         </div>
-    //                     </form>
-    //                 </div>
-    //             }
-    //             {credentialsSuccessfullyChecked === false &&
-    //                 <h2>An account with this {problematicInfo} already exists. Please try again.</h2>
-    //             }
-    //             {errorMessageForAccountCreation}
-    //         </div>
-    //         <div className="signup-div">
-    //             <h2>Don't want to create an account?</h2>
-    //             <button className="login-btn" onClick={() => loginFromLogin("Guest", "guestAccount123", true, true)}>
-    //                 Enter Without Logging In
-    //             </button>
-    //         </div>
-    //         {/* <div className="survey-explanation-div">
-    //             <h2 style={{ color: "orange" }}><u>What's involved?</u></h2>
-    //             <p>Fantasy Forecast is a website dedicated to crowdsourcing political forecasts. Over the next 6 weeks, we will provide you with a variety of UK Politics-related things to forecast, from whether Boris Johnson will resign, to poll outcomes, to whether or not a general election will be called. When a forecast reaches its deadline, you will recieve a score based on how accurate and how early your forecasts were. This will determine your place on the leaderboards. It's all free-to-play to whoever signs up, no restrictions. If you sign up and change your mind, email us at <b style={{ color: "orange" }}>fantasyforecastcontact@gmail.com</b> and we will delete your account, no questions asked.</p>
-    //             <br />
-    //             <a href="https://youtu.be/XmPjXjH4Sfo" target="_blank" style={{ color: "#fff"}}>Click here for a video explaining it all!</a>
-    //             <br />
-    //             <h2 style={{ color: "orange" }}><u>Want to play for $$$?</u></h2>
-    //             <p>Starting on Monday 27th June for the next 6 weeks, we are running a forecasting tournament on UK Politics. The top three forecasters will win:</p>
-    //             <br />
-    //             <div className="prize-container">
-    //                 <p>1st: £250 Amazon Gift Certificate</p>
-    //                 <p>2nd: £150 Amazon Gift Certificate</p>
-    //                 <p>3rd: £100 Amazon Gift Certificate</p>
-    //             </div>
-    //             <br />
-    //             <p>Anyone can enter, however to be eligible for the prizes you <strong><u style={{ color: "orange" }}>must</u></strong> complete a survey before <u style={{ color: "orange" }}>11:59pm (BST) on Friday 1st July</u> which is available after you login from the "Survey" tab at the top of the screen. It looks at the relationship between political knowledge and forecasting accuracy.</p>
-    //             <br />
-    //             <p>You can still fully participate in the tournament without completing the survey, <u style={{ color: "orange" }}>but only those who complete the survey will be eligible for prizes</u>.</p>
-    //         </div> */}
-    //     </div>
-    //     <div className="login-div">
-    //         <h2>Already have an account? Login here:</h2>
-    //         <label htmlFor="username-login">Username:</label>
-    //             <input 
-    //                 type="text" 
-    //                 name="login-username" 
-    //                 id="login-username" 
-    //                 maxLength={15}
-    //                 onChange={(e) => { 
-    //                     setCredentialsSuccessfullyChecked(null);
-    //                     setErrorMessage("");
-    //                     setUsernameForLogin(e.target.value);
-    //                 }}
-    //             />
-    //         <label htmlFor="login-password">Password:</label>
-    //             <input 
-    //                 type="password" 
-    //                 name="login-password" 
-    //                 id="login-password" 
-    //                 // maxLength={15}
-    //                 onChange={(e) => { 
-    //                     setCredentialsSuccessfullyChecked(null);
-    //                     setErrorMessage("");
-    //                     setPasswordForLogin(e.target.value);
-    //                 }}
-    //             />
-    //         <button className="login-btn" onClick={() => loginFromLogin(usernameForLogin, passwordForLogin, true, false)}>Login to Fantasy Forecast</button>
-    //         {errorMessage}
-    //     </div>
-    //     {/* <div className="login-div">
-    //         <h2>Forgot your password?</h2>
-    //         <label htmlFor="username-reset-code">Username:</label>
-    //             <input 
-    //                 type="text" 
-    //                 name="username-reset-code" 
-    //                 id="username-reset-code" 
-    //                 maxLength={15}
-    //                 onChange={(e) => { 
-    //                     setCredentialsSuccessfullyChecked(null);
-    //                     setErrorMessage("");
-    //                     setUsernameForLogin(e.target.value);
-    //                 }}
-    //             />
-    //         <label htmlFor="password-reset-code">Password Reset Code:</label>
-    //             <input 
-    //                 type="password" 
-    //                 name="password-reset-code" 
-    //                 id="password-reset-code" 
-    //                 // maxLength={15}
-    //                 onChange={(e) => { 
-    //                     setCredentialsSuccessfullyChecked(null);
-    //                     setErrorMessage("");
-    //                     setPasswordResetCodeForLogin(e.target.value);
-    //                 }}
-    //             />
-    //         <button className="login-btn" onClick={() => loginFromLogin(usernameForLogin, passwordResetCodeForLogin, false)}>Login to Fantasy Forecast</button>
-    //         {errorMessage}
-    //     </div> */}
-    //     <div className="login-div">
-    //         <h2>Forgot your password?</h2>
-    //         <label htmlFor="username-reset-code">Username:</label>
-    //             <input 
-    //                 type="text" 
-    //                 name="username-reset-code" 
-    //                 id="username-reset-code" 
-    //                 // maxLength={15}
-    //                 onChange={(e) => { 
-    //                     setResetMessage("");
-    //                     setUsernameForPasswordReset(e.target.value);
-    //                 }}
-    //             />
-    //         <label htmlFor="email-reset-request">Gmail Address Account Created With:</label>
-    //             <input 
-    //                 type="text" 
-    //                 name="email-reset-request" 
-    //                 id="email-reset-request"
-    //                 onChange={(e) => {
-    //                     setResetMessage("");
-    //                     setEmailForPasswordReset(e.target.value);
-    //                 }}
-    //             />
-    //         <button className="login-btn" onClick={() => requestPasswordResetThroughEmail(usernameForPasswordReset, emailForPasswordReset)}>Request Password Reset</button>
-    //         {resetMessage !== "" && resetMessage}
-    //         {errorMessage}
-    //     </div>
-    // </div>
+                <h2>Email fantasyforecastcontact@gmail.com with your username and Prolific ID and we'll reset it for you.</h2>
+            </div>
+            <div className="login-main-div">
+                <img className="login-logo" src={FFLogo} alt="" />
+                    <div className="signup-container">
+                        <div className="signup-div">
+                            <h2>Create an Account:</h2>
+                            {/* <label htmlFor="username">Create Your Username:</label>
+                            <input 
+                                type="text" 
+                                name="username" 
+                                id="username" 
+                                maxLength={15}
+                                onChange={(e) => { 
+                                    setCredentialsSuccessfullyChecked(null);
+                                    setUsernameForCreate(e.target.value);
+                                    setErrorMessageForAccountCreation("");
+                                }} 
+                            /> */}
+                            <label htmlFor="prolificID">Enter Your ProlificID:</label>
+                            <input 
+                                type="text" 
+                                name="prolificID" 
+                                id="prolificID" 
+                                onChange={(e) => { 
+                                    setCredentialsSuccessfullyChecked(null);
+                                    setProlificIDForCreate(e.target.value);
+                                    setErrorMessageForAccountCreation("");
+                                }} 
+                            />
+                            <label htmlFor="password">Password:</label>
+                            <input 
+                                type="password" 
+                                name="password" 
+                                id="password" 
+                                // maxLength={15}
+                                onChange={(e) => { 
+                                    setCredentialsSuccessfullyChecked(null);
+                                    setPasswordForCreate(e.target.value);
+                                    setErrorMessageForAccountCreation("");
+                                }}
+                            />
+                            <br />
+                            {credentialsSuccessfullyChecked === null &&
+                                // <button className="check-your-details-btn" onClick={() => checkCredentials(usernameForCreate, passwordForCreate, prolificIDForCreate)}>Click Here: Check Your Details</button>
+                                <button className="check-your-details-btn" onClick={() => checkCredentials(prolificIDForCreate, passwordForCreate)}>Click Here: Check Your Details</button>
+                            }
+                            {/* {credentialsSuccessfullyChecked === true &&  */}
+                                {/* <div className="credentials-passed-login"> */}
+                                    {/* <h2>Your details are perfect!</h2> */}
+                                    {/* <form action={`${process.env.REACT_APP_API_NACB}/${usernameForCreate}/${passwordForCreate}/${prolificIDForCreate}`}> */}
+                                    {/* use this line below for Prolific, we removed the last one for PO-119 students */}
+                                    {/* <form action={`${process.env.REACT_APP_API_CALL_MAIN}/auth/google/not_callback/${usernameForCreate}/${passwordForCreate}/${prolificIDForCreate}`}> */}
+                                    {/* <form action={`${process.env.REACT_APP_API_CALL_MAIN}/auth/google/not_callback/${usernameForCreate}/${passwordForCreate}`}> */}
+                                        {/* <button type="submit" className="sign-in-with-google-btn">Your details are perfect. Now click here to sign in with Google</button> */}
+                                        {/* <div className="google-explainer"> */}
+                                            {/* <p><u>Why do I need to sign in with Google?</u> 1) So your Fantasy Forecast account has a profile picture, and 2) so we can email the winners of the tournament!</p> */}
+                                            {/* <br />
+                                            <p>Email addresses obtained from those who do not complete the survey and become eligible for the tournament will be deleted on Monday 4th July, and all others will be deleted as soon as the tournament ends.</p> */}
+                                        {/* </div> */}
+                                    {/* </form> */}
+                                {/* </div> */}
+                            {/* } */}
+                            {credentialsSuccessfullyChecked === false &&
+                                <h2>An account with this {problematicInfo} already exists. Please try again.</h2>
+                            }
+                            {errorMessageForAccountCreation}
+                        </div>
+                        <div className="signup-div">
+                            <h2>Don't want to create an account?</h2>
+                            <button className="login-btn" onClick={() => loginFromLogin("Guest", "guestAccount123", true, true)}>
+                            Enter Without Logging In
+                            </button>
+                        </div>
+                    </div>
+                    <div className="login-div">
+                        <h2>Already have an account? Login here:</h2>
+                        <label htmlFor="username-login">Prolific ID:</label>
+                        <input 
+                            type="text" 
+                            name="login-prolificID" 
+                            id="login-prolificID" 
+                            onChange={(e) => { 
+                                setCredentialsSuccessfullyChecked(null);
+                                setErrorMessage("");
+                                // setUsernameForLogin(e.target.value);
+                                setProlificIDForLogin(e.target.value);
+                            }}
+                        />
+                        <label htmlFor="login-password">Password:</label>
+                        <input 
+                            type="password" 
+                            name="login-password" 
+                            id="login-password" 
+                            // maxLength={15}
+                            onChange={(e) => { 
+                                setCredentialsSuccessfullyChecked(null);
+                                setErrorMessage("");
+                                setPasswordForLogin(e.target.value);
+                            }}
+                        />
+                        <button className="login-btn" onClick={() => loginFromLogin(prolificIDForLogin, passwordForLogin, true, false)}>Login to Fantasy Forecast</button>
+                        {errorMessage}
+                    </div> 
+            </div>
+        </div>  
     )
 }
 
