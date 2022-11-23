@@ -212,7 +212,7 @@ function Login(props) {
                             <br />
                             {credentialsSuccessfullyChecked === null &&
                                 // <button className="check-your-details-btn" onClick={() => checkCredentials(usernameForCreate, passwordForCreate, prolificIDForCreate)}>Click Here: Check Your Details</button>
-                                <button className="check-your-details-btn" onClick={() => checkCredentials(prolificIDForCreate, passwordForCreate)}>Click Here: Check Your Details</button>
+                                <button className="check-your-details-btn" onClick={() => checkCredentials(prolificIDForCreate, passwordForCreate)}>Login</button>
                             }
                             {/* {credentialsSuccessfullyChecked === true &&  */}
                                 {/* <div className="credentials-passed-login"> */}
