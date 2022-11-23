@@ -1374,7 +1374,7 @@ console.log("here 343");
                         }
                         {switcherTab === "results" && 
                             <ForecastResults 
-                                selectedForecastObject={selectedForecastObject} 
+                                selectedForecast={props.selectedForecast} 
                                 leaderboard={props.leaderboardData} 
                                 username={props.username} 
                             />

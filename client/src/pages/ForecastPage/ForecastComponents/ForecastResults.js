@@ -16,7 +16,7 @@ function ForecastResults(props) {
             // const allUsers = await getAllUsers();
             // scrape all users for those names that appear in the leaderboard
             // findAllScores(allUsers, props.problemName);
-            pullAllScores(props.selectedForecastObject.problemName);
+            pullAllScores(props.selectedForecast.problemName);
         // };
         setTimeout(() => {
             setLoading(false);
