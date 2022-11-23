@@ -9,6 +9,7 @@ function ForecastResults(props) {
 
     useEffect(() => {
         console.log("Forecast Results UE2");
+        console.log(props);
         // async function doEffect() {
             if (props.isClosed === true) {
             setLoading(true);
