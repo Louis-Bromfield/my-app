@@ -1214,11 +1214,11 @@ function ForecastSubmission(props) {
                         </div>
                     </div>
                     <div className="forecast-chart-stats-switcher">
-                        {forecastClosed === false && <div className="forecast-chart-stats-switcher-tab-menu">
+                        {selectedForecastObject.isClosed === false && <div className="forecast-chart-stats-switcher-tab-menu">
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("chart")}><h3>Chart</h3></div>
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("problemStats")}><h3>Problem Stats</h3></div>
                         </div>}
-                        {forecastClosed === true && <div className="forecast-chart-stats-switcher-tab-menu-three">
+                        {selectedForecastObject.isClosed === true && <div className="forecast-chart-stats-switcher-tab-menu-three">
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("chart")}><h3>Chart</h3></div>
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("problemStats")}><h3>Problem Stats</h3></div>
                             <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("results")}><h3>Results</h3></div>
