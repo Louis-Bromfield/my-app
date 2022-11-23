@@ -11,7 +11,7 @@ function ForecastResults(props) {
         console.log("Forecast Results UE2");
         console.log(props);
         // async function doEffect() {
-            if (props.isClosed === true) {
+        if (props.selectedForecast.isClosed === true) {
             setLoading(true);
             // get all users
             // const allUsers = await getAllUsers();
@@ -19,9 +19,9 @@ function ForecastResults(props) {
             // findAllScores(allUsers, props.problemName);
             pullAllScores(props.selectedForecast.problemName);
         // };
-        setTimeout(() => {
-            setLoading(false);
-        }, 500);
+            setTimeout(() => {
+                setLoading(false);
+            }, 500);
         };
         // doEffect();
     }, [props.problemName, props.isClosed]);
