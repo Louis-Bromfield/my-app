@@ -495,12 +495,14 @@ console.log("17B - SCORES");
                 <input 
                     type="text" 
                     placeholder="Type new problem here"
+                    style={{ width: "100%" }}
                     onChange={(e) => setNewProblemName(e.target.value)}
                 />
                 <h3 className="forecast-admin-header">What are the possible outcomes? | Separate each outcome with a "/" |</h3>
                 <input 
                     type="text"
                     placeholder="Insert potential outcomes here"
+                    style={{ width: "100%" }}
                     onChange={(e) => setNewProblemPotentialOutcomes(e.target.value.split("/"))}
                 />
                 <h3 className="forecast-admin-header">Forecast Open Date:</h3>
