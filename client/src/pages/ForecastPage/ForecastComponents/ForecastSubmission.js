@@ -943,7 +943,17 @@ console.log("here 343");
                             {(forecastSingleCertainty === true && (forecastResponseMessage !== "Forecast successfully updated! Refresh to see it on the chart." && forecastResponseMessage !== "Forecast successfully submitted! Refresh to see it on the chart.")) &&
                                 <div className="forecast-submission-input">
                                     <div className="forecast-submission-input-certainty-section">
-                                        <h3>Your Certainty (0.00 - 100.00%)</h3>
+                                        <h3>
+                                            Your Certainty (0.00 - 100.00%)
+                                            <FaInfoCircle 
+                                                color={"orange"} 
+                                                className="modal-i-btn"
+                                                onClick={() => { 
+                                                    setShowModal(true); 
+                                                    setModalContent(`Here you need to enter a number representing your CONFIDENCE that the stated forecast WILL HAPPEN. For example, if the forecast is stating that Warnock will defeat Walker, your number from 0 to 100 is your confidence that he will do so. If you think Warnock will absolutely defeat Walker, you will probably submit a number closer to 100. If you think Walker will win, you will probably enter a number closer to 0. You have unlimited submissions for each forecast, so if you change your mind or learn something new and want to update your prediction, come back here and submit a new prediction!`); 
+                                                }}
+                                            />
+                                        </h3>
                                         {userHasAttempted === false && 
                                             <input 
                                                 type="number" 
