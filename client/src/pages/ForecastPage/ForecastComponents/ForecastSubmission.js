@@ -928,12 +928,13 @@ console.log("here 343");
                                 onClick={() => { 
                                     setShowModal(true); 
                                     setModalContent(`This is where you will submit all of your predictions. Each problem has a deadline, found below the button that opened this box, and you are able to submit as many predictions as you want before said deadline. EVERY forecast you make contributes to your final score for the problem, so getting it right earlier will be more rewarding! We also ask that you submit an explanation of your 0-100% forecast, this will help remind you why you forecasted what you did in case you come back to update it.`); 
-                                    setModalContent2(`The Articles tab below returns articles based on a web scrape of the problem, so they may vary in terms of usefulness. The Forecast Stats tab will show you what other forecasters are saying for this problem.`)
+                                    setModalContent2(`The Articles section below contains handpicked and web-scraped articles based on the forecast wording, so the scraped ones may vary in terms of usefulness. The Chart and Problem Stats tabs will show you what other users are saying for this forecast.`)
                                 }}
                             />
-                            {selectedForecast.includes("Politico's") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://www.politico.eu/europe-poll-of-polls/united-kingdom/" target="_blank"><h4>(<u>Link: Politico</u>)</h4></a>}
-                            {selectedForecast.includes("Scotland") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://whatscotlandthinks.org/questions/how-would-you-vote-in-the-in-a-scottish-independence-referendum-if-held-now-ask/?removed" target="_blank"><h4>(<u>Link: What Scotland Thinks</u>)</h4></a>}
-                            {selectedForecast.includes("Statesman's") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://sotn.newstatesman.com/2022/07/conservative-leadership-election-candidates-who-backing/" target="_blank"><h4>(<u>Link: The New Statesman's Tracker</u>)</h4></a>}
+                            {/* {selectedForecast.includes("Politico's") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://www.politico.eu/europe-poll-of-polls/united-kingdom/" target="_blank"><h4>(<u>Link: Politico</u>)</h4></a>} */}
+                            {/* {selectedForecast.includes("Scotland") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://whatscotlandthinks.org/questions/how-would-you-vote-in-the-in-a-scottish-independence-referendum-if-held-now-ask/?removed" target="_blank"><h4>(<u>Link: What Scotland Thinks</u>)</h4></a>} */}
+                            {/* {selectedForecast.includes("Statesman's") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://sotn.newstatesman.com/2022/07/conservative-leadership-election-candidates-who-backing/" target="_blank"><h4>(<u>Link: The New Statesman's Tracker</u>)</h4></a>} */}
+                            {selectedForecast.includes("538") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://projects.fivethirtyeight.com/biden-approval-rating/" target="_blank"><h4>(<u>Link: 538 Biden Polls</u>)</h4></a>}
                         </h2>
                         {/* <h3 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 38)}</h3> */}
                         <h3 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 34)}</h3>
@@ -950,7 +951,8 @@ console.log("here 343");
                                                 className="modal-i-btn"
                                                 onClick={() => { 
                                                     setShowModal(true); 
-                                                    setModalContent(`Here you need to enter a number representing your CONFIDENCE that the stated forecast WILL HAPPEN. For example, if the forecast is stating that Warnock will defeat Walker, your number from 0 to 100 is your confidence that he will do so. If you think Warnock will absolutely defeat Walker, you will probably submit a number closer to 100. If you think Walker will win, you will probably enter a number closer to 0. You have unlimited submissions for each forecast, so if you change your mind or learn something new and want to update your prediction, come back here and submit a new prediction!`); 
+                                                    setModalContent(`Here you need to enter a number representing your CONFIDENCE that the stated forecast WILL HAPPEN. For example, if the forecast is stating that Warnock will defeat Walker, your number from 0 to 100 is your confidence that he will do so. If you think Warnock will absolutely defeat Walker, you will probably submit a number closer to 100. If you think Walker will win, you will probably enter a number closer to 0. You have unlimited submissions for each forecast, so if you change your mind or learn something new and want to update your prediction, come back here and submit a new one!`); 
+                                                    setModalContent2("");
                                                 }}
                                             />
                                         </h3>
@@ -1201,7 +1203,7 @@ console.log("here 343");
                                             className="modal-i-btn"
                                             onClick={() => { 
                                                 setShowModal(true); 
-                                                setModalContent(`If you submit a forecast, click on a different problem from the dropdown menu, and then click back onto this one, the "Your Last Forecast" and "Your Last Comments" field may not have updated and still be showing an older forecast or none at all if you had only submitted one forecast for this problem. Don't worry, it's there, you just need to refresh the page :) I'm working on some code to avoid having to refresh to double-check your forecast is there, but for now please don't worry! - Louis`); 
+                                                setModalContent(`If you submit a forecast, click on a different problem from the dropdown menu, and then click back onto this one, the "Your Last Forecast" and "Your Last Comments" field may not have updated and still be showing an older forecast or none at all if you had only submitted one forecast for this problem. Don't worry, it's there, you just need to refresh the page :) I'm working on a fix!`); 
                                             }}
                                         />
                                     </h2>
@@ -1215,7 +1217,7 @@ console.log("here 343");
                                             className="modal-i-btn"
                                             onClick={() => { 
                                                 setShowModal(true); 
-                                                setModalContent(`If you submit a forecast, click on a different problem from the dropdown menu, and then click back onto this one, the "Your Last Forecast" and "Your Last Comments" field may not have updated and still be showing an older forecast or none at all if you had only submitted one forecast for this problem. Don't worry, it's there, you just need to refresh the page :) I'm working on some code to avoid having to refresh to double-check your forecast is there, but for now please don't worry! - Louis`); 
+                                                setModalContent(`If you submit a forecast, click on a different problem from the dropdown menu, and then click back onto this one, the "Your Last Forecast" and "Your Last Comments" field may not have updated and still be showing an older forecast or none at all if you had only submitted one forecast for this problem. Don't worry, it's there, you just need to refresh the page :) I'm working on a fix!`); 
                                             }}
                                         />
                                     </h2>

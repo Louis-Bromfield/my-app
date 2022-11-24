@@ -676,7 +676,7 @@ function Leaderboard(props) {
                                             })()}
                                         </td>
                                         <td className="leaderboard-username-data">
-                                            {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" style={{border: (item.marketPoints < 1500) ? "none" : (item.marketPoints >= 1500 && item.marketPoints < 2000) ? "2px solid brown" : (item.marketPoints >= 2000 && item.marketPoints < 2500 ? "2px solid silver" : (item.marketPoints >= 2500 && item.marketPoints < 5000) ? "2px solid goldenrod" : "2px solid #383D67")}}/>}
+                                            {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" style={{border: (item.marketPoints < 1500) ? "none" : (item.marketPoints >= 1500 && item.marketPoints < 2000) ? "2px solid rgb(205, 127, 50)" : (item.marketPoints >= 2000 && item.marketPoints < 2500 ? "2px solid silver" : (item.marketPoints >= 2500 && item.marketPoints < 5000) ? "2px solid goldenrod" : "2px solid #383D67")}}/>}
                                             <Link 
                                                 // to={item.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: item.author}}
                                                 to={{pathname: "/my-profile"}}
@@ -725,7 +725,7 @@ function Leaderboard(props) {
                                             })()}
                                         </td>
                                         <td className="leaderboard-username-data">
-                                            {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" style={{border: (item.marketPoints < 1500) ? "none" : (item.marketPoints >= 1500 && item.marketPoints < 2000) ? "2px solid brown" : (item.marketPoints >= 2000 && item.marketPoints < 2500 ? "2px solid silver" : (item.marketPoints >= 2500 && item.marketPoints < 5000) ? "2px solid goldenrod" : "2px solid #383D67")}}/>}
+                                            {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" style={{border: (item.marketPoints < 1500) ? "none" : (item.marketPoints >= 1500 && item.marketPoints < 2000) ? "2px solid rgb(205, 127, 50)" : (item.marketPoints >= 2000 && item.marketPoints < 2500 ? "2px solid silver" : (item.marketPoints >= 2500 && item.marketPoints < 5000) ? "2px solid goldenrod" : "2px solid #383D67")}}/>}
                                             <Link 
                                                 // to={item.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: item.author}}
                                                 to={{pathname: "/search", clickedUsername: item.username}}
