@@ -3,6 +3,7 @@ import './ChangeLog.css';
 
 function ChangeLog() {
     const changeLogArr = [
+        `29.11.2022 Big wave of changes in the months since the summer. New additions include: Text to show unattempted forecasts, redesign of the My Forecasts page, including a new Forecast Chat, more info (i) buttons around the site to help explain features, a notifications menu (which can be accessed by clicking on your profile picture in the top right), trophies on the profile page and profile picture borders, brought back the Results tab on the forecast page for closed forecasts, and various styling elements throughout the site, amongst other features!`,
         `27.06.2022 Added extra support for the Articles tab on the My Forecasts page for the long-term problems so they should now perform more accurate searches based on the problem wording, previously they were searching for "UK Politics" as they didn't match previous criteria for the article scraper.`,
         `25.06.2022 Added ability to sort leaderboards by username, points, or AVG Brier Score by clicking the column name row. The Feedback page (found at the bottom of the Home page) also now shows the submitted feedback (still anonymously) and my response to them to hopefully help make the development process even more transparent.`,
         `24.06.2022 Added fix for the learn quizzes not accepting responses if the first attempt had the wrong number of answers (the first time is fine but subsequent attempts to submit with the right amount of responses were blocked improperly).`,

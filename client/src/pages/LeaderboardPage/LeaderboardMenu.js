@@ -561,7 +561,7 @@ function LeaderboardMenu(props) {
                 </div>
             } */}
             {/* {leagueSetupConfirmation === true && <h2 style={{ "color": "green" }}>League Successfully Created</h2>} */}
-            <h3>Your Markets:</h3>
+            {/* <h3>Your Markets:</h3> */}
             <LeaderboardGrid 
                 user={true} 
                 username={props.username} 
