@@ -222,6 +222,10 @@ function App() {
                 <Redirect to="/"></Redirect>
                 {localStorage.setItem("selectedPage", "Home")}
             </Route>
+            <Route exact path="/change-log">
+                <Redirect to="/"></Redirect>
+                {localStorage.setItem("selectedPage", "Home")}
+            </Route>
             <Route exact path="/news-post">
                 <Redirect to="/"></Redirect>
                 {localStorage.setItem("selectedPage", "Home")}
