@@ -34,8 +34,11 @@ function Login(props) {
     // }, []);
 
     // const checkCredentials = async (uName, pWord, pID) => {
-    const checkCredentials = async (pID, pWord, cpWord) => {
-        if (pID.length < 4 || /\s/.test(pID) || pID === "") {
+    const checkCredentials = async (uName, pID, pWord, cpWord) => {
+        if (/\s/.test(uName) || uName === "") {
+            setErrorMessageForAccountCreation("Your username should contain no spaces.");
+            return;
+        } else if (pID.length < 4 || /\s/.test(pID) || pID === "") {
             setErrorMessageForAccountCreation("Your ProlificID should be 24 characters long and contain no spaces.");
             return;
         } else if (pWord.length < 4|| (/\s/.test(pWord)) || pWord === "") {
@@ -51,7 +54,8 @@ function Login(props) {
             try {
                 // CHARMANDER - ADD CODE FOR CREATING USER, THEN LOGIN WITH RETURNED OBJECT
                 const user = await axios.post(`${process.env.REACT_APP_API_CALL_U}/`, {
-                    username: pID,
+                    username: uName,
+                    pID: pID,
                     password: pWord
                 });
                 if (user.data.err === true) {
@@ -64,8 +68,8 @@ function Login(props) {
                     setProblematicInfo("");
                     setCredentialsSuccessfullyChecked(true);
                     localStorage.setItem("username", pID);
-                    setCookie('username', pID, { path: "/", sameSite: "Lax" });
-                    loginFromLogin(pID, pWord, true, false);
+                    setCookie('username', uName, { path: "/", sameSite: "Lax" });
+                    loginFromLogin(uName, pID, pWord, true, false);
                 };
             } catch (error) {
                 console.error("Error in Login > checkCredentials");
@@ -74,19 +78,16 @@ function Login(props) {
         };
     };
 
-    const loginFromLogin = async (prolificID, passwordOrResetCode, isPassword, isGuest) => {
+    const loginFromLogin = async (username, prolificID, passwordOrResetCode, isPassword, isGuest) => {
         try {
             let userObj;
             if (isGuest === true) {
-                userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${true}`);
+                userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${username}/${passwordOrResetCode}/${true}`);
             } else if (isGuest === false) {
-                // console.log(username);
-                // console.log(passwordOrResetCode);
-                // console.log(isPassword);
                 if (isPassword === true) {
-                    userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${true}`);
+                    userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${username}/${passwordOrResetCode}/${true}`);
                 } else if (isPassword === false) {
-                    userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${false}`);
+                    userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${username}/${passwordOrResetCode}/${false}`);
                 };
             };
             console.log(userObj);
@@ -182,7 +183,7 @@ function Login(props) {
                     <div className="signup-container">
                         <div className="signup-div">
                             <h2>Create an Account:</h2>
-                            {/* <label htmlFor="username">Create Your Username:</label>
+                            <label htmlFor="username">Create Your Username:</label>
                             <input 
                                 type="text" 
                                 name="username" 
@@ -193,7 +194,7 @@ function Login(props) {
                                     setUsernameForCreate(e.target.value);
                                     setErrorMessageForAccountCreation("");
                                 }} 
-                            /> */}
+                            />
                             <label htmlFor="prolificID">Enter Your ProlificID:</label>
                             <input 
                                 type="text" 
@@ -232,7 +233,7 @@ function Login(props) {
                             <br />
                             {credentialsSuccessfullyChecked === null &&
                                 // <button className="check-your-details-btn" onClick={() => checkCredentials(usernameForCreate, passwordForCreate, prolificIDForCreate)}>Click Here: Check Your Details</button>
-                                <button className="check-your-details-btn" onClick={() => checkCredentials(prolificIDForCreate, passwordForCreate, confirmPasswordForCreate)}>Login</button>
+                                <button className="check-your-details-btn" onClick={() => checkCredentials(usernameForCreate, prolificIDForCreate, passwordForCreate, confirmPasswordForCreate)}>Login</button>
                             }
                             {/* {credentialsSuccessfullyChecked === true &&  */}
                                 {/* <div className="credentials-passed-login"> */}

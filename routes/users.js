@@ -293,6 +293,7 @@ router.post("/", async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newUser = new Users({
         username: req.body.username,
+        pID: req.body.pID,
         password: hashedPassword
     });
     try {
