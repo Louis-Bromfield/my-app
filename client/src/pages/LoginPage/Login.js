@@ -78,7 +78,7 @@ function Login(props) {
         };
     };
 
-    const loginFromLogin = async (username, prolificID, passwordOrResetCode, isPassword, isGuest) => {
+    const loginFromLogin = async (username, passwordOrResetCode, isPassword, isGuest) => {
         try {
             let userObj;
             if (isGuest === true) {
@@ -265,7 +265,19 @@ function Login(props) {
                     </div>
                     <div className="login-div">
                         <h2>Already have an account? Login here:</h2>
-                        <label htmlFor="username-login">Prolific ID:</label>
+                        <label htmlFor="username-login">Username:</label>
+                        <input 
+                            type="text" 
+                            name="login-username" 
+                            id="login-username" 
+                            onChange={(e) => { 
+                                setCredentialsSuccessfullyChecked(null);
+                                setErrorMessage("");
+                                setUsernameForLogin(e.target.value);
+                                // setProlificIDForLogin(e.target.value);
+                            }}
+                        />
+                        {/* <label htmlFor="username-login">Prolific ID:</label>
                         <input 
                             type="text" 
                             name="login-prolificID" 
@@ -276,7 +288,7 @@ function Login(props) {
                                 // setUsernameForLogin(e.target.value);
                                 setProlificIDForLogin(e.target.value);
                             }}
-                        />
+                        /> */}
                         <label htmlFor="login-password">Password:</label>
                         <input 
                             type="password" 
@@ -289,7 +301,7 @@ function Login(props) {
                                 setPasswordForLogin(e.target.value);
                             }}
                         />
-                        <button className="login-btn" onClick={() => loginFromLogin(prolificIDForLogin, passwordForLogin, true, false)}>Login to Fantasy Forecast</button>
+                        <button className="login-btn" onClick={() => loginFromLogin(usernameForLogin, passwordForLogin, true, false)}>Login to Fantasy Forecast</button>
                         {errorMessage}
                     </div> 
                     <div className="login-div">
