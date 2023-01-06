@@ -652,11 +652,41 @@ router.patch("/:username", async (req, res) => {
             articleVisits: req.body.articleVisits,
             completedSurvey: req.body.completedSurvey,
             notifications: req.body.notifications,
-            trophies: req.body.trophies
+            trophies: req.body.trophies,
+            inTeam: req.body.inTeam,
+            teamName: req.body.teamName
         },
         { new: true }
     );
     res.json(updatedUser);
+    } catch (error) {
+        res.json({ error: error.message })
+    }
+});
+
+router.patch("createJoinLeaveTeam/:username", async (req, res) => {
+    try {
+        const document = await Users.findOne({ username: req.params.username });
+        if (req.body.action === "leave") {
+            const updatedUser = await Users.findByIdAndUpdate(document._id, {
+                inTeam: false,
+                teamName: ""
+            });
+            const teamDocument = await Users.findOne({ username: req.body.oldTeam });
+            let newMembersArr = [];
+            for (let i = 0; i < teamDocument.members.length; i++) {
+                if (teamDocument.members[i] !== req.params.username) {
+                    newMembersArr.push(teamDocument.members[i]);
+                };
+            };
+            await Users.findByIdAndUpdate(teamDocument._id, {
+                members: newMembersArr
+            });
+        } else if (req.body.action === "join") {
+            
+        } else if (req.body.action === "create") {
+
+        };
     } catch (error) {
         res.json({ error: error.message })
     }

@@ -208,6 +208,14 @@ const UserSchema = mongoose.Schema({
     ratings: {
         type: Number,
         default: 0
+    },
+    inTeam: {
+        type: Boolean,
+        default: false
+    },
+    teamName: {
+        type: String,
+        default: ""
     }
 });
 
