@@ -216,6 +216,10 @@ const UserSchema = mongoose.Schema({
     teamName: {
         type: String,
         default: ""
+    },
+    isTeam: {
+        type: Boolean,
+        default: false
     }
 });
 

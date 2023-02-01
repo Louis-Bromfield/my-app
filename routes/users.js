@@ -227,7 +227,9 @@ router.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
         const user = await Users.findOne({ username: req.params.username });
         if (!user) {
             res.json({ loginSuccess: false, message: "This user does not exist in the database"});
-        };
+        } else if (user.isTeam === true) {
+            res.json({ loginSuccess: false, message: "This is a team account. Please login to your individual account."})
+        }
         let match;
         console.log(req.params);
         if (req.params.isPassword === "true") {
@@ -667,6 +669,7 @@ router.patch("/:username", async (req, res) => {
 router.patch("createJoinLeaveTeam/:username", async (req, res) => {
     try {
         const document = await Users.findOne({ username: req.params.username });
+        
         if (req.body.action === "leave") {
             const updatedUser = await Users.findByIdAndUpdate(document._id, {
                 inTeam: false,
@@ -682,10 +685,55 @@ router.patch("createJoinLeaveTeam/:username", async (req, res) => {
             await Users.findByIdAndUpdate(teamDocument._id, {
                 members: newMembersArr
             });
-        } else if (req.body.action === "join") {
             
-        } else if (req.body.action === "create") {
+        } else if (req.body.action === "join") {
+            // update user document
+            const user = await Users.findOneAndUpdate({ username: req.params.username}, {
+                inTeam: true,
+                teamName: req.body.teamName 
+            });
+            // update team document members array (just push)
+            let team = await Users.findOne({ username: req.body.teamName});
+            team.members.push(req.params.username);
+            const updatedTeam = await Users.findByIdAndUpdate(team._id, {
+                members: team.members
+            });
+            // send notification to all team members informing them of new team mate
+            for (let i = 0; i < team.members.length; i++) {
+                if (team.members[i] !== req.params.username) {
+                    let user = await Users.findOne({ username: team.members[i] });
+                    user.notifications.push({
+                        notificationMessage: `${team.members[i]} has joined your team! Head to your profile page and select "My Team" to see them!)`,
+                        notificationSourcePath: "/profile",
+                        notificationSourceObjectID: 1
+                    });
+                    await Users.findByIdAndUpdate(user._id, {
+                        notifications: user.notifications
+                    });
+                };
+            };
 
+        } else if (req.body.action === "create") {
+            // Check if name has already been taken
+            const users = await Users.findOne();
+            for (let i = 0; i < users.length; i++) {
+                if (users[i].username === req.body.teamName) {
+                    res.json({ success: false, message: "Team name already taken. Please choose a different one."});
+                } 
+            }
+            const res = await Users.findOneAndUpdate({ username: req.params.username }, {
+                inTeam: true,
+                teamName: req.body.teamName
+            });
+            // create new user document for the team
+            const newTeamDocument = new Users({
+                username: req.body.teamName,
+                members: [req.params.username],
+                profilePicture: "https://lh3.googleusercontent.com/a/AItbvmkRUSgd_Izrhz4X-ft3do7Li1X0OsBPAzgh9r4G=s96-c",
+                isTeam: false
+            });
+            await newTeamDocument.save();
+            res.json({ success: true, message: "Team successfully created"})
         };
     } catch (error) {
         res.json({ error: error.message })
@@ -848,6 +896,7 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
     try {
         const forecastObj = await Forecasts.findOne({ problemName: req.body.problemName });
         let outcome = req.params.outcome;
+
         // If a problem is being closed early, update the date in the obj and then persist to DB
         if (req.params.closeEarly === "true") {
             forecastObj.closeDate = req.body.newProblemCloseDateTime;
@@ -857,6 +906,7 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
             await Forecasts.findByIdAndUpdate(forecastObj._id, { isClosed: true, outcome: outcome });
         };
         const calculatedBriers = calculateBriers(forecastObj, "N/A", outcome);
+        
         // Calculate overall average
         let total = 0;
         for (let i = 0; i < calculatedBriers.length; i++) {
@@ -864,46 +914,15 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
         };
         let averageScoreForProblem = total / calculatedBriers.length;
         let scoresToReturn = [];
-        let newScorePerformanceBoosted;
-        let performanceBoostVal = 0;
+        let teamsArr = [];
+
         for (let i = 0; i < calculatedBriers.length; i++) {
             const user = await Users.findOne({ username: calculatedBriers[i].username });
-            // Work out if they should receive a performance bonus for this Brier Score
-            // let scoreChain = 1;
-            // if (calculatedBriers[i].finalScore >= 75) {
-            // //     for (let i = user.brierScores.length-1; i >= 0; i--) {
-            // //         if (user.brierScores[i].marketName === req.params.marketName) {
-            // //             if (user.brierScores[i].brierScore >= 90) {
-            // //                 scoreChain++;
-            // //             } else {
-            // //                 break;
-            // //             }
-            // //         }
-            // //     };
-            // //     // if scoreChain is 1, then only their current prediction is above 90 or 180, just a 1x streak, bonuses only start at 2x streak
-            // //     if (scoreChain === 1) {
-            // //         boost = 0;
-            // //     // 2x streak = 0.03 + 0.02 = 0.05, 5% boost 
-            // //     } else {
-            // //         boost = 0.03 + (scoreChain/100);
-            // //     }
-            //     // console.log(`boost = ${boost}`);
-            //     // newScorePerformanceBoosted = calculatedBriers[i].finalScore + (calculatedBriers[i].finalScore * boost);
-            //     let boost = (calculatedBriers[i].finalScore/100)*5;
-            //     console.log(`boost = ${boost}`);
-            //     newScorePerformanceBoosted = (calculatedBriers[i].finalScore + boost);
-            //     console.log(`so the boosted score is = ${newScorePerformanceBoosted}`);
-            //     performanceBoostVal = 1;
-            // } else {
-            //     newScorePerformanceBoosted = calculatedBriers[i].finalScore;
-            //     performanceBoostVal = 0;
-            // }
             const toPush = {
                 brierScore: calculatedBriers[i].finalScore,
                 problemName: req.body.problemName,
                 marketName: req.params.marketName,
                 captainedStatus: calculatedBriers[i].captainedStatus,
-                // performanceBoost: performanceBoostVal,
                 averageScore: averageScoreForProblem
             };
             user.brierScores.push(toPush);
@@ -936,7 +955,70 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
             );
             toPush.username = calculatedBriers[i].username;
             scoresToReturn.push(toPush);
+            // if user is in team, add to teams array
+            if (user.inTeam === true && teamsArr.length > 0) {
+                let found = false;
+                for (let j = 0; j < teamsArr.length; j++) {
+                    if (teamsArr[j][0] === user.teamName) {
+                        found = true;
+                        teamsArr[j].push({
+                            username: user.username,
+                            score: calculatedBriers[i].finalScore
+                        });
+                    }
+                };
+                if (found === false) {
+                    teamsArr.push([
+                        user.teamName,
+                        {
+                            username: user.username,
+                            score: calculatedBriers[i].finalScore
+                        }
+                    ])
+                }
+            };
         };
+        // Calculate team scores
+        let allUserDocuments = await Users.find();
+        for (let i = 0; i < teamsArr.length; i++) {
+            let teamTotalScore = 0;
+            // j = 1 as we don't want to include first element - as that's the team name string
+            for (let j = 1; j < teamsArr[i].length; j++) {
+                teamTotalScore += teamsArr[i][j].score
+            };
+            // length-1 as we don't want to include first element
+            let teamFinalScore = teamTotalScore / teamsArr[i].length-1;
+            for (let k = 0; k < allUserDocuments.length; k++) {
+                if (allUserDocuments[k].username === teamsArr[i][0]) {
+                    let updatedTeamDoc = allUserDocuments[k];
+                    updatedTeamDoc.brierScores.push({
+                        brierScore: teamFinalScore,
+                        problemName: req.body.problemName,
+                        marketName: req.params.marketName,
+                        averageScore: averageScoreForProblem
+                    });
+                    await Users.findByIdAndUpdate(updatedTeamDoc._id, {
+                        brierScores: updatedTeamDoc.brierScores
+                    });
+                }
+            }
+            // Send each team member a notification about how their team performed
+            for (let j = 1; j < teamsArr[i].length; j++) {
+                let userForTeamNoti = await Users.findOne({ username: teamsArr[i][j].username });
+                userForTeamNoti.notifications.unshift({
+                    notificationMessage: `Your team scored ${teamTotalScore.toFixed(2)} on the following forecast: ${req.body.problemName}! To see the breakdown of how your team performed, go to your profile page, select your team from the dropdown at the top, and go to the "My Team" tab!`,
+                    notificationSourcePath: "/profile",
+                    notificationSourceObjectID: 1,
+                    seenByUser: false,
+                    date: new Date(),
+                    notificationIndex: userForTeamNoti.notifications.length+1
+                });
+                await Users.findOneAndUpdate({ username: teamsArr[i][j].username }, {
+                    notifications: userForTeamNoti.notifications
+                });
+            };
+        };
+
         res.json({ scores: scoresToReturn });
     } catch (error) {
         console.error("error in users > patch calculateBriers");
