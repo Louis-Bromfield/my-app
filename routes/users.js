@@ -668,6 +668,7 @@ router.patch("/:username", async (req, res) => {
 
 router.patch("/createJoinLeaveTeam/:username", async (req, res) => {
     try {
+        let message = "No message yet";
         const document = await Users.findOne({ username: req.params.username });
         console.log("_________________");
         console.log(document);
@@ -677,19 +678,19 @@ router.patch("/createJoinLeaveTeam/:username", async (req, res) => {
                 inTeam: false,
                 teamName: ""
             });
-            console.log("_________________");
-            console.log(updatedUser);
-            console.log("oldteam = " + req.body.oldTeam);
+console.log("_________________");
+console.log(updatedUser);
+console.log("oldteam = " + req.body.oldTeam);
             const teamDocument = await Users.findOne({ username: req.body.oldTeam });
-            console.log("_________________");
-            console.log(teamDocument);
-            console.log(teamDocument.username);
-            console.log(teamDocument._id);
-            console.log(teamDocument.ratings);
-            console.log(teamDocument.inTeam);
-            console.log(teamDocument.isTeam);
-            console.log(teamDocument.members);
-            console.log(teamDocument.members.length);
+console.log("_________________");
+console.log(teamDocument);
+console.log(teamDocument.username);
+console.log(teamDocument._id);
+console.log(teamDocument.ratings);
+console.log(teamDocument.inTeam);
+console.log(teamDocument.isTeam);
+console.log(teamDocument.members);
+console.log(teamDocument.members.length);
             let newMembersArr = [];
             for (let i = 0; i < teamDocument.members.length; i++) {
                 if (teamDocument.members[i] !== req.params.username) {
@@ -699,7 +700,7 @@ router.patch("/createJoinLeaveTeam/:username", async (req, res) => {
             await Users.findByIdAndUpdate(teamDocument._id, {
                 members: newMembersArr
             });
-            res.json({ success: true, message: "Member has left team"});
+            message = "Member has left team";
 
         } else if (req.body.action === "join") {
             // check if they joining user is already in the team
@@ -734,6 +735,7 @@ router.patch("/createJoinLeaveTeam/:username", async (req, res) => {
                     });
                 };
             };
+            message = "Player successfully invited"
 
         } else if (req.body.action === "create") {
             // Check if name has already been taken
@@ -755,12 +757,13 @@ router.patch("/createJoinLeaveTeam/:username", async (req, res) => {
                 isTeam: false
             });
             await newTeamDocument.save();
-            res.json({ success: true, message: "Team successfully created"});
+            message = "Team successfully created";
         };
+        res.json({ success: true, message: message});
     } catch (error) {
         console.log("ERROR");
         console.log(error);
-        res.json({ error: error.message })
+        res.json({ success: false, error: error.message })
     }
 });
 
