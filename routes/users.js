@@ -681,7 +681,13 @@ router.patch("/createJoinLeaveTeam/:username", async (req, res) => {
             console.log(updatedUser);
             console.log("oldteam = " + req.body.oldTeam);
             const teamDocument = await Users.findOne({ username: req.body.oldTeam });
+            console.log("_________________");
             console.log(teamDocument);
+            console.log(teamDocument.username);
+            console.log(teamDocument._id);
+            console.log(teamDocument.ratings);
+            console.log(teamDocument.inTeam);
+            console.log(teamDocument.isTeam);
             console.log(teamDocument.members);
             console.log(teamDocument.members.length);
             let newMembersArr = [];

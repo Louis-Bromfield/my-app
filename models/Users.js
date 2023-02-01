@@ -220,6 +220,10 @@ const UserSchema = mongoose.Schema({
     isTeam: {
         type: Boolean,
         default: false
+    },
+    members: {
+        type: Array,
+        default: []
     }
 });
 
