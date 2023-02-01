@@ -673,14 +673,15 @@ router.patch("/createJoinLeaveTeam/:username", async (req, res) => {
         console.log(document);
         
         if (req.body.action === "leave") {
-            const updatedUser = await Users.findByIdAndUpdate(document._id, {
-                inTeam: false,
-                teamName: ""
-            });
-            console.log("_________________");
-            console.log(updatedUser);
-        
+            // const updatedUser = await Users.findByIdAndUpdate(document._id, {
+            //     inTeam: false,
+            //     teamName: ""
+            // });
+            // console.log("_________________");
+            // console.log(updatedUser);
+            console.log("oldteam = " + req.body.oldTeam);
             const teamDocument = await Users.findOne({ username: req.body.oldTeam });
+            console.log(teamDocument);
             let newMembersArr = [];
             for (let i = 0; i < teamDocument.members.length; i++) {
                 if (teamDocument.members[i] !== req.params.username) {
