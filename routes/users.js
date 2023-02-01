@@ -666,7 +666,7 @@ router.patch("/:username", async (req, res) => {
     }
 });
 
-router.patch("createJoinLeaveTeam/:username", async (req, res) => {
+router.patch("/createJoinLeaveTeam/:username", async (req, res) => {
     try {
         const document = await Users.findOne({ username: req.params.username });
         
@@ -687,13 +687,20 @@ router.patch("createJoinLeaveTeam/:username", async (req, res) => {
             });
             
         } else if (req.body.action === "join") {
+            // check if they joining user is already in the team
+            let team = await Users.findOne({ username: req.body.teamName});
+            for (let i = 0; i < team.members.length; i++) {
+                if (team.members[i] === req.params.username) {
+                    res.json({ success: false, message: "User is already in this team" });
+                };
+            };
             // update user document
             const user = await Users.findOneAndUpdate({ username: req.params.username}, {
                 inTeam: true,
                 teamName: req.body.teamName 
             });
             // update team document members array (just push)
-            let team = await Users.findOne({ username: req.body.teamName});
+            // let team = await Users.findOne({ username: req.body.teamName});
             team.members.push(req.params.username);
             const updatedTeam = await Users.findByIdAndUpdate(team._id, {
                 members: team.members
