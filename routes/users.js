@@ -682,6 +682,8 @@ router.patch("/createJoinLeaveTeam/:username", async (req, res) => {
             console.log("oldteam = " + req.body.oldTeam);
             const teamDocument = await Users.findOne({ username: req.body.oldTeam });
             console.log(teamDocument);
+            console.log(teamDocument.members);
+            console.log(teamDocument.members.length);
             let newMembersArr = [];
             for (let i = 0; i < teamDocument.members.length; i++) {
                 if (teamDocument.members[i] !== req.params.username) {
@@ -750,6 +752,8 @@ router.patch("/createJoinLeaveTeam/:username", async (req, res) => {
             res.json({ success: true, message: "Team successfully created"});
         };
     } catch (error) {
+        console.log("ERROR");
+        console.log(error);
         res.json({ error: error.message })
     }
 });
