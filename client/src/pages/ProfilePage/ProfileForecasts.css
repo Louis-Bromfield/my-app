@@ -4,10 +4,24 @@
 
 .profile-forecasts-individual-result {
     padding: 1%;
+    border-bottom: 1px solid lightgray;
 }
 
 .problem-header, 
 .score-header {
     display: flex;
     flex-direction: row;
+}
+
+@media (max-width: 450px) {
+    .profile-forecasts,
+    .profile-forecasts-individual-result,
+    .problem-header,
+    .score-header {
+        text-align: center;
+    }
+    .problem-header,
+    .score-header {
+        flex-direction: column;
+    }
 }

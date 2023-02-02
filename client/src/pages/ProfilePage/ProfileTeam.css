@@ -1,0 +1,109 @@
+.profile-team {
+    display: flex;
+    flex-direction: column;
+    padding: 1%;
+}
+
+.profile-team-container {
+    display: flex;
+    flex-direction: column;
+    /* border: 2px dotted red; */
+}
+
+.profile-team-top-row {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin: 0 auto;
+    /* border: 2px solid green; */
+    width: 100%;
+}
+
+.profile-team-stats {
+    /* border: 3px solid purple; */
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding-top: 3vh;
+    text-align: center;
+}
+
+.profile-team-picture { 
+    height: 10vh;
+    border-radius: 50%;
+}
+
+.profile-team-members-list {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.profile-team-bottom-row-individual-member {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    text-align: center;
+    border-bottom: 1px solid lightgray;
+    /* border: 1px solid yellow; */
+    padding: 1%;
+}
+
+.profile-team-member-link {
+    text-decoration: none;
+}
+
+.profile-team-bottom-row-individual-member:hover {
+    background-color: #3452a52d;
+}
+
+.profile-team-bottom-row-individual-member-photo {
+    width: 10%;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+
+.profile-team-bottom-row {
+    margin: 0 auto;
+}
+
+.profile-team-leave-btn {
+    font-size: 1.1em;
+    padding: 1%;
+    outline: none;
+    color: rgb(238, 52, 52);
+    /* width: 150%; */
+    cursor: pointer;
+}
+
+.create-new-team-btn {
+    width: 20%;
+    padding: 1%;
+    background-color: #404d72;
+    color: #fff;
+    cursor: pointer;
+}
+
+.profile-team-creation-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    border: 1px solid green;
+}
+
+.create-new-team-btn:hover {
+    background-color: #364f94;
+}
+
+.profile-team-individual-result {
+    border-bottom: 1px solid lightgray;
+}
+
+@media (max-width: 1000px) {
+    .profile-team-top-row {
+        display: flex;
+        flex-direction: column;
+    }
+    .profile-team-results {
+        text-align: center;
+    }
+}

@@ -7,7 +7,9 @@
 .home-page-stats-div {
     display: flex;
     flex-direction: column;
-    row-gap: 2vh;
+    row-gap: 1.5vh;
+    background-color: #fff;
+    border: 0.5px solid lightgray;
 }
 
 .onboarding-div-closed {
@@ -22,7 +24,7 @@
 
 .home-page-grid {
     display: grid;
-    grid-template-columns: 65% 33%;
+    grid-template-columns: 70% 28%;
     column-gap: 2%;
 }
 
@@ -32,7 +34,7 @@
     margin: 0 auto;
     margin-top: 1vh;
     /* background-color: rgb(243, 241, 241); */
-    border: 3px dashed rgba(128, 128, 128, 0.603);
+    border: 2px dashed rgba(128, 128, 128, 0.603);
     font-size: 1.5em;
     cursor: pointer;
     outline: none;
@@ -49,7 +51,8 @@
     -ms-overflow-style: none; /* for Internet Explorer, Edge */
     scrollbar-width: none; /* for Firefox */
     overflow-y: scroll; 
-    box-shadow: 1px 1px 5px #888888;
+    /* box-shadow: 1px 1px 5px #888888; */
+    border: 0.5px solid lightgray;
 }
 
 .home-page-news-feed::-webkit-scrollbar {
@@ -120,7 +123,8 @@
 .report-any-issues-container {
     display: flex;
     flex-direction: column;
-    box-shadow: 0.5px 1px 2.5px 0.5px #888888;
+    /* box-shadow: 0.5px 1px 2.5px 0.5px #888888; */
+    /* border-bottom: 2px solid lightgray; */
     padding: 2%;
     background-color: #fff;
     font-size: 0.9em;

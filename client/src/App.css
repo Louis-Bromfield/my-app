@@ -23,6 +23,7 @@ html {
 .leaderboard-menu,
 .learn,
 .profile,
+.search,
 .login,
 .forecast-analysis,
 .change-log,
@@ -32,6 +33,10 @@ html {
   display: flex;
   margin: 3vh 0vw 4vh 8vw;
   background-color: rgb(248, 247, 247);
+}
+
+.profile {
+    margin-top: 0vh;
 }
 
 .forecast {

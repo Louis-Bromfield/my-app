@@ -1,4 +1,4 @@
-.profile {
+.search {
     width: 85%;
     display: flex;
     flex-direction: column;
@@ -30,6 +30,20 @@
     transition: 0.2s ease;
 }
 
+.profile-team-invite-container {
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.profile-team-invite-btn {
+    color: green;
+    background-color: #6986e451;
+    padding: 1%;
+    border: none;
+    cursor: pointer;
+}
+
 .main-profile-grid {
     display: flex;
     flex-direction: column;
@@ -42,8 +56,8 @@
 }
 
 .profile-grid {
-    border: 1px outset lightgray;
-    box-shadow: 1px 1px 5px #888888;
+    /* border: 1px outset lightgray;
+    box-shadow: 1px 1px 5px #888888; */
     margin-bottom: 4vh;
     padding: 1%;
 }

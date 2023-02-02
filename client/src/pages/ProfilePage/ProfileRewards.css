@@ -45,7 +45,7 @@
 
 @media (max-width: 450px) {
     .trophy-grid-container {
-        /* grid-template-columns: 100%; */
+        grid-template-columns: 100%;
         font-size: 0.9em;
     }
 }

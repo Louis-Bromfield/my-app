@@ -116,11 +116,11 @@
     text-decoration: none;
 }
 
-.home-page-news-feed-container {
+/* .home-page-news-feed-container {
     box-shadow: 0.5px 1px 2.5px 0.5px #888888;
     padding: 1%;
     background-color: #fff;
-}
+} */
 
 .news-feed-title {
     font-size: 28px;

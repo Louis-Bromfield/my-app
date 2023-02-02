@@ -5,13 +5,14 @@
 }
 
 .navbar {
-    height: 11vh;
+    /* height: 11vh; */
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     top: 0;
-    padding-top: 1vh;
+    padding-top: 0.75vh;
+    /* padding-bottom: 0.75vh; */
     background-color: var(--main-theme);
 }
 
@@ -137,8 +138,9 @@
     color: #fff;
     background-color: rgb(214, 34, 34);
     border-radius: 3.5px;
-    height: 45%;
+    /* height: 45%; */
     margin: 0 auto;
+    margin-left: 2px;
 }
 
 .notification-dropdown {
@@ -147,11 +149,11 @@
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 11vh;
+    top: 14.5vh;
     background-color: #fff;
     width: 25%;
     background: #fff;
-    margin-left: -10vw;
+    margin-left: 50vw;
 }
 
 .notification-item-seen,
@@ -475,6 +477,13 @@ span {
     padding: 1%;
     margin-left: 9vw;
     width: 50%;
+}
+
+@media (max-width: 1000px) {
+    .nav-logo {
+        display: inline;
+        /* width: 33%; */
+    }
 }
 
 @media (max-width: 650px) {

@@ -59,7 +59,9 @@ function HomeNewsFeed(props) {
 
     const getAllNewsFeedPostsFromDB = async () => {
         try {
-            const allPosts = await axios.get(`${process.env.REACT_APP_API_CALL_HPNFP}`);
+            // const allPosts = await axios.get(`${process.env.REACT_APP_API_CALL_HPNFP}`);
+            const allPosts = await axios.get("https://fantasy-forecast-politics.herokuapp.com/homePageNewsFeedPosts");
+            console.log(allPosts);
             setFeed(allPosts === undefined ? [] : allPosts.data.reverse());
             setFilteredFeed(feed);
         } catch (error) {
@@ -372,7 +374,7 @@ function HomeNewsFeed(props) {
                     }} 
                     justClose={() => setShowConfirmationModal(false)}
                 />
-                <h1 className="news-feed-title">
+                <p className="news-feed-title">
                     My Feed
                     <FaInfoCircle 
                         onClick={() => {
@@ -381,7 +383,7 @@ function HomeNewsFeed(props) {
                         }}
                         style={{ "color": "orange", "cursor": "pointer" }}
                     />
-                </h1>
+                </p>
                 <div className="post">
                     {post === false && 
                         <div className="feed-top-buttons">
@@ -462,7 +464,7 @@ function HomeNewsFeed(props) {
                                                         className="market-cb" 
                                                         onClick={() => editMarketList(market)}
                                                     />
-                                                    <h4>{market}</h4>
+                                                    <p>{market}</p>
                                                     <hr />
                                                 </div>
                                             )
@@ -480,7 +482,7 @@ function HomeNewsFeed(props) {
                                                         defaultChecked={checkCheckBoxes(market, newPostMarkets)} 
                                                         onClick={() => editMarketList(market)} 
                                                     />
-                                                    <h4>{market}</h4>
+                                                    <p>{market}</p>
                                                     <hr />
                                                 </div>
                                             )
@@ -562,7 +564,7 @@ function HomeNewsFeed(props) {
                                         <img className="author-profile-pic" src={props.profilePicture || props.userObj.profilePicture} alt=""/>
                                         <div className="post-author-details">
                                             <h3>{props.username}</h3>
-                                            <h5>{new Date().toString().slice(0, 15)}</h5>
+                                            <p>{new Date().toString().slice(0, 15)}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -606,7 +608,7 @@ function HomeNewsFeed(props) {
                                                     style={{ textDecoration: "none", color: "#404d72"}}>
                                                         <h3>{item.author}</h3>
                                                 </Link>
-                                                <h5>{new Date(item.postDate).toString().slice(0, 21)}</h5>
+                                                <p style={{ fontSize: "0.85em" }}>{new Date(item.postDate).toString().slice(0, 21)}</p>
                                             </div>
                                         </div>
                                         <div className="post-author-right">
@@ -650,11 +652,11 @@ function HomeNewsFeed(props) {
                                             {item.markets.map((market, index) => {
                                                 if (index < item.markets.length-1) {
                                                     return (
-                                                        <h4 key={index}>&nbsp;{market}&nbsp;|</h4>
+                                                        <p key={index}>&nbsp;{market}&nbsp;|</p>
                                                     )
                                                 }
                                                 else return (
-                                                    <h4 key={index}>&nbsp;{market}&nbsp;</h4>
+                                                    <p key={index}>&nbsp;{market}&nbsp;</p>
                                                 )
                                             })}
                                         </div>
@@ -686,7 +688,7 @@ function HomeNewsFeed(props) {
                                                         style={{ textDecoration: "none", color: "#404d72"}}>
                                                             <h3>{item.author}</h3>
                                                     </Link>
-                                                    <h5>{new Date(item.postDate).toString().slice(0, 21)}</h5>
+                                                    <p style={{ fontSize: "0.85em" }}>{new Date(item.postDate).toString().slice(0, 21)}</p>
                                                 </div>
                                             </div>
                                             <div className="post-author-right">
@@ -730,11 +732,11 @@ function HomeNewsFeed(props) {
                                                 {item.markets.map((market, index) => {
                                                     if (index < item.markets.length-1) {
                                                         return (
-                                                            <h4 key={index}>&nbsp;{market}&nbsp;|</h4>
+                                                            <p key={index}>&nbsp;{market}&nbsp;|</p>
                                                         )
                                                     }
                                                     else return (
-                                                        <h4 key={index}>&nbsp;{market}&nbsp;</h4>
+                                                        <p key={index}>&nbsp;{market}&nbsp;</p>
                                                     )
                                                 })}
                                             </div>
