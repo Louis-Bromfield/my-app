@@ -39,7 +39,7 @@ function Navbar(props) {
     const showSidebar = () => setSidebar(!sidebar);
 
     const updateWidth = () => {
-        setWidth(window.innerWidth > 1350);
+        setWidth(window.innerWidth > 1100);
         setMobileWidth(window.innerWidth <= 650);
     };
 
@@ -126,7 +126,11 @@ function Navbar(props) {
                 history.push("/report-any-issues");
                 setShowNotifications(false);
                 return;
-            };
+            }  else if (notification.notificationSourcePath === "/team-invite") {
+                // setShowModal(true);
+            } else if (notification.notificationSourcePath === "/profile") {
+                history.push("/profile");
+            }
         // };
     };
 
@@ -151,31 +155,31 @@ function Navbar(props) {
                             </Link>
                     </li>
                     {NavbarData.map((item, index) => {
-                            if (localStorage.getItem('selectedPage') === item.title) {
-                                return (
-                                    <li 
-                                        key={index} 
-                                        className="mobile-nav-text-selected"
-                                        onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title); setShowNotifications(false)}}>
-                                            <Link to={item.path}>
-                                                {item.iconSelected}
-                                                <span className="mobile-nav-title">{item.title}</span>
-                                            </Link>
-                                    </li>
-                                )
-                            } else {
-                                return (
-                                    <li 
-                                        key={index} 
-                                        className="mobile-nav-text"
-                                        onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title); setShowNotifications(false)}}>
-                                            <Link to={item.path}>
-                                                {item.icon}
-                                                <span className="mobile-nav-title">{item.title}</span>
-                                            </Link>
-                                    </li>
-                                );
-                            };
+                        if (localStorage.getItem('selectedPage') === item.title) {
+                            return (
+                                <li 
+                                    key={index} 
+                                    className="mobile-nav-text-selected"
+                                    onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title); setShowNotifications(false)}}>
+                                        <Link to={item.path}>
+                                            {item.iconSelected}
+                                            <span className="mobile-nav-title">{item.title}</span>
+                                        </Link>
+                                </li>
+                            )
+                        } else {
+                            return (
+                                <li 
+                                    key={index} 
+                                    className="mobile-nav-text"
+                                    onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title); setShowNotifications(false)}}>
+                                        <Link to={item.path}>
+                                            {item.icon}
+                                            <span className="mobile-nav-title">{item.title}</span>
+                                        </Link>
+                                </li>
+                            );
+                        };
                     })}
                     <li>
                         <button 
@@ -220,8 +224,9 @@ function Navbar(props) {
                 <IconContext.Provider value ={{ color: "#fff" }}>
                         {/* <nav className="nav-menu"> */}
                             <div className="navbar">
-                                <div className="navbar-grid">
-                                    <img className="nav-logo" src={FantasyForecastLogo} alt="Fantasy Forecast Logo"/>
+                                {/* <div className="navbar-grid"> */}
+                                <div className="navbar-column" style={{ display: "flex", flexDirection: "column", margin: "0 auto", paddingTop: "1%" }}>
+                                    <img className="nav-logo" src={FantasyForecastLogo} alt="Fantasy Forecast Logo" style={{ width: "35%", margin: "0 auto", marginBottom: "0.5vh" }}/>
                                     {/* <h1 className="nav-bar-title">Fantasy Forecast <img src={FantasyForecastLogo} alt="Logo" width="15%"></img></h1> */}
                                     <div className="nav-menu-items-container">
                                         {width === false &&
@@ -231,12 +236,12 @@ function Navbar(props) {
                                                         if (localStorage.getItem('selectedPage') === item.title) {
                                                             return (
                                                                 <li 
-                                                                key={index} 
-                                                                className="nav-text-selected" 
-                                                                onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title); setShowNotifications(false)}}>
-                                                                    <Link to={item.path}>
-                                                                        {item.iconSelected}
-                                                                    </Link>
+                                                                    key={index} 
+                                                                    className="nav-text-selected" 
+                                                                    onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title); setShowNotifications(false)}}>
+                                                                        <Link to={item.path}>
+                                                                            {item.iconSelected}
+                                                                        </Link>
                                                                 </li>
                                                                 )
                                                         } else {
@@ -259,107 +264,129 @@ function Navbar(props) {
                                             <ul className="nav-menu-items">
                                                 {NavbarData.map((item, index) => {
                                                     if (item.title !== "My Profile") {
-                                                        if (localStorage.getItem('selectedPage') === item.title) {
-                                                            return (
-                                                                <li 
-                                                                    key={index} 
-                                                                    className="nav-text-selected" 
-                                                                    onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title); setShowNotifications(false)}}>
+                                                        return (
+                                                            <li 
+                                                                key={index} 
+                                                                className={localStorage.getItem("selectedPage") === item.title ? "nav-text-selected" : "nav-text"}
+                                                                onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title); setShowNotifications(false)}}>
                                                                     <Link to={item.path}>
                                                                         {item.iconSelected}
-                                                                        <span className="nav-title">{item.title}</span>
+                                                                        <span className="nav-title"><p>{item.title}</p></span>
                                                                     </Link>
-                                                                </li>
-                                                                )
-                                                        } else {
-                                                            return (
-                                                                <li 
-                                                                    key={index} 
-                                                                    className="nav-text" 
-                                                                    onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title); setShowNotifications(false)}}>
-                                                                    <Link to={item.path}>
-                                                                        {item.icon}
-                                                                        <span className="nav-title">{item.title}</span>
+                                                            </li>
+                                                        )
+                                                    } else {
+                                                        return (
+                                                            <li 
+                                                                key={index} 
+                                                                className={localStorage.getItem("selectedPage") === item.title ? "nav-text-selected" : "nav-text"}
+                                                                onClick={() => setShowNotifications(!showNotifications)}>
+                                                                    <Link>
+                                                                        {item.iconSelected}
+                                                                        <span className="nav-title"><p>{item.title}</p></span>
+                                                                        {numberOfNewNotis > 0 ? <h5 className="notification-counter" style={{ height: "100%" }}>{numberOfNewNotis}</h5> : null}
                                                                     </Link>
-                                                                </li>
-                                                            );
-                                                        };
-                                                    } else return null;
+                                                            </li>
+                                                        )
+                                                    }
                                                 })}
+                                                {/* NEW CHARMANDER */}
+                                                {showNotifications === true && 
+                                                    <div className="notification-dropdown">
+                                                        {/* each item to be message above date in left column, and right column to be an arrow icon pointing right */}
+                                                        {props.userObj.notifications !== undefined ? props.userObj.notifications.map((item, index) => {
+                                                            if (index < 5) {
+                                                                return (
+                                                                    <div className={item.seenByUser === false ? "notification-item-new" : "notification-item-seen"} onClick={() => { handleNotificationSelection(item); item.seenByUser = true; }}>
+                                                                        <div className="notification-item-info">
+                                                                            <p>{item.seenByUser === false ? <b>NEW</b> : ""} {item.notificationMessage.length > 75 ? `${item.notificationMessage.slice(0, 75)}...` : item.notificationMessage}</p>
+                                                                            <p>{new Date(item.date).toString().slice(0, 21)}</p>
+                                                                        </div>
+                                                                        <AiOutlineArrowRight color={"#404d72"}/>
+                                                                    </div>
+                                                                )
+                                                            } else return null;
+                                                        }) : null}
+                                                        {/* Might want to replace this div with a Link so we can pass in props like userObj / username to access notifications array */}
+                                                        <Link className="notification-item-seen" onClick={() => setShowNotifications(false)} to={linkObject}>
+                                                            <div className="notification-item-info">
+                                                                <p><b>See all notifications</b></p>
+                                                            </div>
+                                                            <AiOutlineArrowRight color={"#404d72"}/>
+                                                        </Link>
+                                                        <div className="profile-and-logout-container">
+                                                            {/* <p className="nav-text-profile-link"> */}
+                                                                <Link 
+                                                                    to={"/my-profile"} 
+                                                                    className="nav-text-profile" 
+                                                                    onClick={() => {
+                                                                        localStorage.setItem('selectedPage', 'My Profile'); 
+                                                                        setSelectedPage("My Profile");
+                                                                        setShowNotifications(false)}}>
+                                                                    <h5>Go to My Profile</h5>
+                                                                </Link>
+                                                            {/* </p> */}
+                                                            <button 
+                                                                className="nav-logout-btn" 
+                                                                onClick={() => {
+                                                                    signOut(props.logOut); 
+                                                                    history.push("/")
+                                                                }}>
+                                                                    <p>Log Out</p>
+                                                                </button>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                {/* NEW CHARMANDER */}
                                             </ul>
                                             }
                                     </div>
                                     <div className="user-logout-container">
-                                        {/* <img src={props.profilePicture || localStorage.getItem("profilePicture")} className="navbar-profile-pic" alt="User's profile pic" /> */}
-                                        <div className="image-and-noti-container">
-                                            <img src={profilePicture} className="navbar-profile-pic" alt="User's profile pic" style={{border: profilePicStyle}} onClick={() => setShowNotifications(!showNotifications)}/>
-                                            {numberOfNewNotis > 0 ? <h3 className="notification-counter" onClick={() => setShowNotifications(!showNotifications)}>{numberOfNewNotis}</h3> : null}
-                                        </div>
-                                        {/* <div className="user-logout-column-container">
-                                            <p>
-                                                <Link 
-                                                    to={"/my-profile"} 
-                                                    className="nav-text-profile" 
-                                                    onClick={() => {
-                                                        localStorage.setItem('selectedPage', 'My Profile'); 
-                                                        setSelectedPage("My Profile")}}>
-                                                    {props.username}
-                                                </Link>
-                                            </p>
-                                            <button 
-                                                className="nav-logout-btn" 
-                                                onClick={() => {
-                                                    signOut(props.logOut); 
-                                                    history.push("/")
-                                                }}>
-                                                    Log Out
-                                                </button>
-                                        </div> */}
                                         {showNotifications === true && 
-                                        <div className="notification-dropdown">
-                                            {/* each item to be message above date in left column, and right column to be an arrow icon pointing right */}
-                                            {props.userObj.notifications !== undefined ? props.userObj.notifications.map((item, index) => {
-                                                if (index < 5) {
-                                                    return (
-                                                        <div className={item.seenByUser === false ? "notification-item-new" : "notification-item-seen"} onClick={() => { handleNotificationSelection(item); item.seenByUser = true; }}>
-                                                            <div className="notification-item-info">
-                                                                <p>{item.seenByUser === false ? <b>NEW</b> : ""} {item.notificationMessage.length > 75 ? `${item.notificationMessage.slice(0, 75)}...` : item.notificationMessage}</p>
-                                                                <p>{new Date(item.date).toString().slice(0, 21)}</p>
+                                            <div className="notification-dropdown">
+                                                {/* each item to be message above date in left column, and right column to be an arrow icon pointing right */}
+                                                {props.userObj.notifications !== undefined ? props.userObj.notifications.map((item, index) => {
+                                                    if (index < 5) {
+                                                        return (
+                                                            <div className={item.seenByUser === false ? "notification-item-new" : "notification-item-seen"} onClick={() => { handleNotificationSelection(item); item.seenByUser = true; }}>
+                                                                <div className="notification-item-info">
+                                                                    <p>{item.seenByUser === false ? <b>NEW</b> : ""} {item.notificationMessage.length > 75 ? `${item.notificationMessage.slice(0, 75)}...` : item.notificationMessage}</p>
+                                                                    <p>{new Date(item.date).toString().slice(0, 21)}</p>
+                                                                </div>
+                                                                <AiOutlineArrowRight color={"#404d72"}/>
                                                             </div>
-                                                            <AiOutlineArrowRight color={"#404d72"}/>
-                                                        </div>
-                                                    )
-                                                } else return null;
-                                            }) : null}
-                                            {/* Might want to replace this div with a Link so we can pass in props like userObj / username to access notifications array */}
-                                            <Link className="notification-item-seen" onClick={() => setShowNotifications(false)} to={linkObject}>
-                                                <div className="notification-item-info">
-                                                    <p><b>See all notifications</b></p>
-                                                </div>
-                                                <AiOutlineArrowRight color={"#404d72"}/>
-                                            </Link>
-                                            <div className="profile-and-logout-container">
-                                                {/* <p className="nav-text-profile-link"> */}
-                                                    <Link 
-                                                        to={"/my-profile"} 
-                                                        className="nav-text-profile" 
+                                                        )
+                                                    } else return null;
+                                                }) : null}
+                                                {/* Might want to replace this div with a Link so we can pass in props like userObj / username to access notifications array */}
+                                                <Link className="notification-item-seen" onClick={() => setShowNotifications(false)} to={linkObject}>
+                                                    <div className="notification-item-info">
+                                                        <p><b>See all notifications</b></p>
+                                                    </div>
+                                                    <AiOutlineArrowRight color={"#404d72"}/>
+                                                </Link>
+                                                <div className="profile-and-logout-container">
+                                                    {/* <p className="nav-text-profile-link"> */}
+                                                        <Link 
+                                                            to={"/my-profile"} 
+                                                            className="nav-text-profile" 
+                                                            onClick={() => {
+                                                                localStorage.setItem('selectedPage', 'My Profile'); 
+                                                                setSelectedPage("My Profile");
+                                                                setShowNotifications(false)}}>
+                                                            <h5>Go to My Profile</h5>
+                                                        </Link>
+                                                    {/* </p> */}
+                                                    <button 
+                                                        className="nav-logout-btn" 
                                                         onClick={() => {
-                                                            localStorage.setItem('selectedPage', 'My Profile'); 
-                                                            setSelectedPage("My Profile");
-                                                            setShowNotifications(false)}}>
-                                                        <h5>Go to My Profile</h5>
-                                                    </Link>
-                                                {/* </p> */}
-                                                <button 
-                                                    className="nav-logout-btn" 
-                                                    onClick={() => {
-                                                        signOut(props.logOut); 
-                                                        history.push("/")
-                                                    }}>
-                                                        <h4>Log Out</h4>
-                                                    </button>
+                                                            signOut(props.logOut); 
+                                                            history.push("/")
+                                                        }}>
+                                                            <p>Log Out</p>
+                                                        </button>
+                                                </div>
                                             </div>
-                                        </div>
                                         }
                                     </div>
                                 </div>

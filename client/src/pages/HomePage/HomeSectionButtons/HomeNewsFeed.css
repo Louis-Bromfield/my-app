@@ -43,6 +43,8 @@
 .feed-top-buttons {
     display: grid;
     grid-template-columns: 49.5% 49.5%;
+    /* grid-template-columns: 40% 40%; */
+    /* padding-left: 18%; */
     column-gap: 1%;
     margin: 0 auto;
 }
@@ -50,6 +52,7 @@
 .create-post-button {
     background-color: rgba(255, 255, 255, 0.918);
     font-size: 19px;
+    height: 7vh;
 }
 
 .create-post-fieldset {

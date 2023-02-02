@@ -24,7 +24,7 @@
 
 .home-page-grid {
     display: grid;
-    grid-template-columns: 70% 28%;
+    grid-template-columns: 68% 30%;
     column-gap: 2%;
 }
 
