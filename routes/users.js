@@ -225,23 +225,25 @@ router.get("/findByProlificID/:prolificID", async (req, res) => {
 router.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
     try {
         const user = await Users.findOne({ username: req.params.username });
+console.log(user);
         if (!user) {
             res.json({ loginSuccess: false, message: "This user does not exist in the database"});
         } else if (user.isTeam === true) {
             res.json({ loginSuccess: false, message: "This is a team account. Please login to your individual account."})
-        }
-        let match;
-        console.log(req.params);
-        if (req.params.isPassword === "true") {
-            match = await bcrypt.compare(req.params.passwordOrResetCode, user.password);
-        } else if (req.params.isPassword === "false") {
-            match = await bcrypt.compare(req.params.passwordOrResetCode, user.pwdResetCode);
-        }
-        if (match) {
-            res.json(user);
         } else {
-            res.json({ loginSuccess: false, message: "Password/reset code does not match that stored in the database"});
-        };
+            let match;
+            console.log(req.params);
+            if (req.params.isPassword === "true") {
+                match = await bcrypt.compare(req.params.passwordOrResetCode, user.password);
+            } else if (req.params.isPassword === "false") {
+                match = await bcrypt.compare(req.params.passwordOrResetCode, user.pwdResetCode);
+            }
+            if (match) {
+                res.json(user);
+            } else {
+                res.json({ loginSuccess: false, message: "Password/reset code does not match that stored in the database"});
+            };
+        }
         // res.json({ loginSuccess: false, message: "An error occurred"});
     } catch (error) {
         console.error("Error in router.get/username/password in users.js");
