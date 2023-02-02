@@ -17,7 +17,7 @@ function Topic(props) {
         case("Fantasy Forecast Points"):
             //youtubeLink = 
             text = TopicContent[0];
-            break;
+        break;
         case("Brier Scores"):
             youtubeLink = <iframe 
                 className="youtube-iframe" 
@@ -28,7 +28,7 @@ function Topic(props) {
                 allowFullScreen>
             </iframe>
             text = TopicContent[1];
-            break;
+        break;
         case("The Good Judgment Project"):
             youtubeLink = <iframe 
                 className="youtube-iframe" 
@@ -39,7 +39,7 @@ function Topic(props) {
                 allowFullScreen>
             </iframe>
             text = TopicContent[2];
-            break;
+        break;
         case("Superforecasters"):
             youtubeLink = <iframe 
                 className="youtube-iframe" 
@@ -50,7 +50,10 @@ function Topic(props) {
                 allowFullScreen>
             </iframe>
             text = TopicContent[3];
-            break;
+        break;
+        case("Forecasting Teams"):
+            text = TopicContent[4];
+        break;
         default:
             youtubeLink = <iframe 
                 className="youtube-iframe" 
@@ -69,6 +72,10 @@ function Topic(props) {
 
     switch(props.title) {
         case("Fantasy Forecast Points"):
+            quizQuestions = QuizQuestions[0];
+            quizAnswers = QuizAnswers[0].correctAnswers;
+        break;
+        case("Forecasting Teams"):
             quizQuestions = QuizQuestions[0];
             quizAnswers = QuizAnswers[0].correctAnswers;
         break;
@@ -104,24 +111,25 @@ function Topic(props) {
             {props.paneContent === "info" && 
             <div className="topic">
                 <h1 className="topic-title">{props.title}</h1>
-                {props.title !== "Fantasy Forecast Points" && <div className="topic-youtube-video">{youtubeLink}</div>}
+                {(props.title !== "Fantasy Forecast Points" && props.title !== "Forecasting Teams") && <div className="topic-youtube-video">{youtubeLink}</div>}
                 <div className="topic-text">{text}</div>
             </div>
             }
             {props.paneContent === "quiz" && 
-            <div className="topic">
-                <TopicQuiz 
-                    topic={props.title} 
-                    quizQuestions={quizQuestions} 
-                    quizAnswers={quizAnswers} 
-                    changeLearnPage={props.changeLearnPage} 
-                    updateQuizResults={updateQuizResults} 
-                    username={props.username}
-                    handleQuizCompletion={props.handleQuizCompletion}
-                    handleQuizCompletionModalContent={props.handleQuizCompletionModalContent}
-                />
-            </div>}
-            {props.title !== "Fantasy Forecast Points" && <div className="btn-div">
+                <div className="topic">
+                    <TopicQuiz 
+                        topic={props.title} 
+                        quizQuestions={quizQuestions} 
+                        quizAnswers={quizAnswers} 
+                        changeLearnPage={props.changeLearnPage} 
+                        updateQuizResults={updateQuizResults} 
+                        username={props.username}
+                        handleQuizCompletion={props.handleQuizCompletion}
+                        handleQuizCompletionModalContent={props.handleQuizCompletionModalContent}
+                    />
+                </div>
+            }
+            {(props.title !== "Fantasy Forecast Points" && props.title !== "Forecasting Teams") && <div className="btn-div">
                 {props.paneContent === "quiz" &&
                     <button className="quiz-to-topic-btn" onClick={() => props.changeLearnPage("info", props.title)}>Return to Topic</button>
                 }

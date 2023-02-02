@@ -26,12 +26,13 @@ function NewForecastsCallToAction(props) {
     }, [props.username]);
 
     return (
-        <div className="new-forecasts-container" style={unattemptedForecasts.join(",").split(",").length-unattemptedForecasts.length >= 1 ? {border: "3px solid orange",} : {border: "none"}}>
+        // <div className="new-forecasts-container" style={{borderBottom: "2px solid darkgray"}}>
+        <div className="new-forecasts-container" style={unattemptedForecasts.join(",").split(",").length-unattemptedForecasts.length >= 1 ? {border: "3px solid orange", paddingTop: "2%" } : {borderBottom: "2px solid lightgray"}}>
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>
             <div className="container-header">
-                <h2 className="new-forecasts-title">
+                <p className="new-forecasts-title" style={{ fontSize: "1.2em" }}>
                     New Forecasts ({unattemptedForecasts.join(",").split(",").length-unattemptedForecasts.length})
                     <FaInfoCircle 
                         onClick={() => {
@@ -40,7 +41,7 @@ function NewForecastsCallToAction(props) {
                         }}
                         style={{ "color": "orange", "cursor": "pointer" }}
                     />
-                </h2>
+                </p>
                 <button 
                     className="show-hide-new-forecasts-c2a"
                     onClick={() => setIsPanelHidden(!isPanelHidden)}>
@@ -53,8 +54,8 @@ function NewForecastsCallToAction(props) {
                     {unattemptedForecasts.join(",").split(",").length-unattemptedForecasts.length === 0 && <h3 className="forecast-list-subtitle">No new forecasts yet!</h3>}
                     {unattemptedForecasts.join(",").split(",").length-unattemptedForecasts.length >= 1 && 
                         <div className="forecast-list-div">
-                            <h3 className="forecast-list-subtitle">You have some problems you haven't submitted a forecast for yet!</h3>
-                            <hr />
+                            <p className="forecast-list-subtitle" style={{ margin: "0 auto" }}>You have some problems you haven't submitted a forecast for yet!</p>
+                            {/* <hr /> */}
                             {unattemptedForecasts.map((item, index) => {
                                 if (item.length > 1 && item.length > 4) {
                                     return (

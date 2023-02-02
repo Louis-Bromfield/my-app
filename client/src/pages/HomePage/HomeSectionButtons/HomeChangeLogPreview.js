@@ -35,11 +35,11 @@ function HomeChangeLogPreview() {
 
     return (
         <div className="home-button-small">
-            <h2 className="home-button-small-title">Change Log & Dev Notes/Updates</h2>
+            <p className="home-button-small-title" style={{ fontSize: "1.2em" }}>Change Log & Dev Notes/Updates</p>
             <div className="change-log-list">
                 {changeLogArr.map((item, index) => {
                     if (index <= 4) {
-                        if (item.length <= 70) {
+                        if (item.length <= 60) {
                             return (
                                 <span key={item} className="list-span">
                                     <h4 style={{ color: "#404d72"}}>{item.slice(0, 10)}</h4>
@@ -49,7 +49,7 @@ function HomeChangeLogPreview() {
                         } else return (
                             <span key={item} className="list-span">
                                 <h4 style={{ color: "#404d72"}}>{item.slice(0, 10)}</h4>
-                                <p>{item.slice(11, 70)}...</p>
+                                <p>{item.slice(11, 60)}...</p>
                             </span>
                         )
                     } else return null;

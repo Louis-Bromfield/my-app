@@ -129,7 +129,7 @@ function HomeButtonLarge(props) {
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>
-            <h2 className="home-button-large-title">
+            <p className="home-button-large-title" style={{ fontSize: "1.2em" }}>
                 {props.title}
                 {props.user.fantasyForecastPoints < 600 &&
                 // {(props.user.fantasyForecastPoints < 600 || props.user.trophies[0].obtained === false) &&
@@ -141,7 +141,7 @@ function HomeButtonLarge(props) {
                         style={{ "color": "orange", "cursor": "pointer" }}
                     />
                 }
-            </h2>
+            </p>
             {props.user.fantasyForecastPoints >= 1000 && 
                 <Line data={recentForecastData} options={options}/>
             }

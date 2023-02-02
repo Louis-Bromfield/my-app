@@ -130,16 +130,16 @@ function HomeButtonSmall(props) {
             </Modal>
             <div className="home-button-small-title">
                 {props.title === "Your Average Brier Score" ?
-                <h2>
-                    {props.title}
-                    <FaInfoCircle 
-                        color={"orange"} 
-                        className="modal-i-btn"
-                        onClick={() => { setShowModal(true); setModalContent(`This score is made up of every score you've achieved for every problem you've submitted a forecast for. For more info, go to the Brier Scores tab on the Learn page.`)}}
-                    />
-                </h2>
+                    <p style={{ fontSize: "1.2em" }}>
+                        {props.title}
+                        <FaInfoCircle 
+                            color={"orange"} 
+                            className="modal-i-btn"
+                            onClick={() => { setShowModal(true); setModalContent(`This score is made up of every score you've achieved for every problem you've submitted a forecast for. For more info, go to the Brier Scores tab on the Learn page.`)}}
+                        />
+                    </p>
                 :
-                <h2 className="home-button-small-title">{props.title}</h2>
+                    <p className="home-button-small-title" style={{ fontSize: "1.2em" }}>{props.title}</p>
                 }
                 <div className="home-button-scroll">
                     <AiIcons.AiOutlineCaretRight 
