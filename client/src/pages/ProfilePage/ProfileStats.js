@@ -27,21 +27,28 @@ function ProfileStats(props) {
     const [recentAverageData, setRecentAverageData] = useState([]);
 
     useEffect(() => {
-        if (props.ffPoints > 600 || props.userObj.trophies[0].obtained === true) {
-                setIsHiddenBehindLevel(false);
-            if (props.userObj === undefined) {
-                formatBrierData(null, props.username);
-                findUniquePlayerStats(null, props.username);
-            } else if (props.userObj !== undefined) {
-                formatBrierData(props.userObj, props.username);
-                findUniquePlayerStats(props.userObj, props.username);
-            };
-            getGlobalData();
-            setStats(recentForecastData);
+        console.log(props.userObj);
+        if (props.userObj.isTeam === true) {
+            setIsHiddenBehindLevel(false);
+            formatBrierData(props.userObj, props.username);
+            findUniquePlayerStats(props.userObj, props.username);
         } else {
-            setIsHiddenBehindLevel(true);
-            return;
-        };
+            if (props.ffPoints > 600 || props.userObj.trophies[0].obtained === true) {
+                    setIsHiddenBehindLevel(false);
+                if (props.userObj === undefined) {
+                    formatBrierData(null, props.username);
+                    findUniquePlayerStats(null, props.username);
+                } else if (props.userObj !== undefined) {
+                    formatBrierData(props.userObj, props.username);
+                    findUniquePlayerStats(props.userObj, props.username);
+                };
+                getGlobalData();
+                setStats(recentForecastData);
+            } else {
+                setIsHiddenBehindLevel(true);
+                return;
+            };
+        }
     }, [props.username, props.brierScores, props.profileTab, props.userObj, props.ffPoints]);
 
     const getGlobalData = async () => {
@@ -208,18 +215,18 @@ function ProfileStats(props) {
         <div className="profile-stats">
             <h2 className="profile-header">My Stats</h2>
             {isHiddenBehindLevel === true &&
-            <h3>This section of your profile is locked until you reach Level 6 (600 Fantasy ForecastPoints) or you unlock the Ready To Go trophy. Complete the onboarding tasks on the Home page, submit forecasts, post to the feed and more to earn the points you need!</h3>
+                <h3>This section of your profile is locked until you reach Level 6 (600 Fantasy ForecastPoints) or you unlock the Ready To Go trophy. Complete the onboarding tasks on the Home page, submit forecasts, post to the feed and more to earn the points you need!</h3>
             }
             {isHiddenBehindLevel === false && 
                 <div className="">
-                    <h3>Check out your Fantasy Forecast stats and how you're stacking up to the rest of the playerbase.</h3>
+                    <h4>Check out your Fantasy Forecast stats and how you're stacking up to the rest of the playerbase.</h4>
                     <div className="profile-stats-inner">
                         <div className="profile-stats-recent-forecasts">
                             <br/>
                             <ul className="profile-stats-selectors">
-                                <li className={selectedStats} onClick={() => { setStats(recentForecastData); setSelectedStats("selected"); setSelectedStats2("unselected")}}><h3>Recent Forecasts</h3></li>
+                                <li className={selectedStats} onClick={() => { setStats(recentForecastData); setSelectedStats("selected"); setSelectedStats2("unselected")}}><h4>Recent Forecasts</h4></li>
                                 <h2>|</h2>
-                                <li className={selectedStats2} onClick={() => { setStats(allTimeForecastData); setSelectedStats("unselected"); setSelectedStats2("selected")}}><h3>All Forecasts</h3></li>
+                                <li className={selectedStats2} onClick={() => { setStats(allTimeForecastData); setSelectedStats("unselected"); setSelectedStats2("selected")}}><h4>All Forecasts</h4></li>
                             </ul>
                             <Line className="profile-stats-line-chart" data={stats || recentForecastData} options={options} />
                         </div>

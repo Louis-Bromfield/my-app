@@ -5,6 +5,7 @@ import ProfileStats from './ProfileStats';
 import Modal from '../../components/Modal';
 import ProfileRewards from './ProfileRewards';
 import ProfileForecasts from './ProfileForecasts';
+import ProfileTeam from './ProfileTeam';
 
 function Profile(props) {
     const [markets, setMarkets] = useState("");
@@ -24,6 +25,8 @@ function Profile(props) {
     const [newPassword, setNewPassword] = useState("");
     const [passwordChangeMsg, setPasswordChangeMsg] = useState("");
     const [profilePicStyle, setProfilePicStyle] = useState("none");
+    const [teamData, setTeamData] = useState();
+    const [isTeam, setIsTeam] = useState(false);
 
     useEffect(() => {
         if (props.user.markets === undefined) {
@@ -78,6 +81,11 @@ console.log("Profile.js UE");
                 setBestForecastForModal(`${(userDocument.data.bestBrier).toFixed(2)} / 110 - ${userDocument.data.bestForecastProblem}`);
                 setBestForecast(`${(userDocument.data.bestBrier).toFixed(2)}`);
                 setBrierScoresArr(userDocument.data.userObj.brierScoresArr);
+                if (userDocument.data.userObj.isTeam === true) {
+                    setIsTeam(true);
+                } else {
+                    setIsTeam(false);
+                }
                 if (userDocument.data.userObj.fantasyForecastPoints < 500) {
                     setForecasterRank("Guesser");
                 } else if (userDocument.data.userObj.fantasyForecastPoints >= 500 && userDocument.data.userObj.fantasyForecastPoints < 1000) {
@@ -109,6 +117,10 @@ console.log("Profile.js UE");
                     setForecasterRank("Diviner");
                     setProfilePicStyle("7px solid #383D67");
                 };
+            };
+            if (userDocument.data.userObj.inTeam === true) {
+                const teamDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${userDocument.data.userObj.teamName}`);
+                setTeamData(teamDocument.data);
             };
         } catch (error) {
             console.error("Error in Profile.js > retrieveUserInfoFromDB");
@@ -190,13 +202,26 @@ console.log("Profile.js UE");
     
     return (
         <div className="profile">
-            <h1>My Profile</h1>
+            {/* <h1>My Profile</h1> */}
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>
             <div className="main-profile-grid">
                 <div className="profile-grid">
-                    <h1 className="profile-header">{errorMessage === "" ? props.username : errorMessage}</h1>
+                    {props.user.inTeam === false ? 
+                        <h1 className="profile-header">{errorMessage === "" ? props.username : errorMessage}</h1> 
+                    :
+                        <select 
+                            style={{ fontWeight: "bold", fontSize: "32px"}}
+                            className="profile-dropdown-selection"
+                            onChange={(e) => { 
+                                retrieveUserInfoFromDB(e.target.value);
+                            }}
+                        >
+                                <option value={props.username}>{props.username}</option>
+                                <option value={props.teamName}>{props.user.teamName}</option>
+                        </select>
+                    }
                     <div className="profile-main-info">
                         {/* CHARMANDER */}
                         {/* <img className="profile-profile-pic" src={props.profilePicture || localStorage.getItem("profilePicture")} alt="Temporary profile pic"/> */}
@@ -204,14 +229,30 @@ console.log("Profile.js UE");
                         <div className="profile-summary">
                             {/* <ul className="profile-summary-list">  */}
                                 <div key={0} className="profile-summary-list-item">
-                                    <h2 className="profile-summary-list-item-value">{fantasyForecastPoints === undefined ? (Math.floor(props.user.fantasyForecastPoints/100)).toFixed(0): level}<h5>{forecasterRank}</h5></h2>
+                                    <h2 
+                                        className="profile-summary-list-item-value"
+                                        onClick={() => {
+                                            setModalContent("This is determined as your FF Points divided by 100. Earning more points = higher level, and these levels come with rewards.");
+                                            setShowModal(true);
+                                        }}>
+                                            {fantasyForecastPoints === undefined ? (Math.floor(props.user.fantasyForecastPoints/100)).toFixed(0): level}
+                                            <h5>{forecasterRank}</h5>
+                                    </h2>
                                     <h3>Forecaster Level</h3>
                                 </div>
-                                <div key={1} className="profile-summary-list-item">
+                                <div key={1} className="profile-summary-list-item"
+                                    onClick={() => {
+                                        setModalContent("Fantasy Forecast Points are earned by submitting forecasts, posting to your feed, completing learn quizzes, and more. If you haven't already, check out the Onboarding menu on the Home page for tips on getting started.");
+                                        setShowModal(true);
+                                    }}>
                                     <h2 className="profile-summary-list-item-value">{fantasyForecastPoints === undefined ? props.user.fantasyForecastPoints.toFixed(0): fantasyForecastPoints.toFixed(0)}</h2>
                                     <h3>Fantasy Forecast Points</h3>
                                 </div>
-                                <div key={2} className="profile-summary-list-item">
+                                <div key={2} className="profile-summary-list-item"
+                                    onClick={() => {
+                                        setModalContent("This is the average score you've received for every problem you have submitted at least one forecast to.");
+                                        setShowModal(true);
+                                    }}>
                                     <h2 className="profile-summary-list-item-value">{isNaN(brierAverage) ? "N/A" : brierAverage }</h2>
                                     <h3>Brier Score Average</h3>
                                 </div>
@@ -227,9 +268,13 @@ console.log("Profile.js UE");
                                     </h2>
                                     <h3>Best Forecast</h3>
                                 </div>
-                                <div key={4} className="profile-summary-list-item">
-                                    <h2 className="profile-summary-list-item-value">{index}</h2>
-                                    <h3>Fantasy Forecast All-Time Rank</h3>
+                                <div key={4} className="profile-summary-list-item"
+                                    onClick={() => {
+                                        setModalContent("This is your placement in the Fantasy Forecast All-Time leaderboard, which is determined solely by Fantasy Forecast Points. To see it in full, go the Leaderboards page and select the Fantasy Forecast All-Time leaderboard.");
+                                        setShowModal(true);
+                                    }}>
+                                        <h2 className="profile-summary-list-item-value">{index}</h2>
+                                        <h3>Fantasy Forecast All-Time Rank</h3>
                                 </div>
                                 <div key={5} className="profile-summary-list-item">
                                     {/* <h2 className="profile-summary-list-item-value">{markets.split(", ").length}</h2> */}
@@ -248,9 +293,10 @@ console.log("Profile.js UE");
                     </div>
                     <div className="profile-stats-rewards-container">
                         <div className="profile-nav-menu">
-                            <div className="profile-tab" onClick={() => setProfileTab("my-stats")}><h3>My Stats</h3></div>
-                            <div className="profile-tab" onClick={() => setProfileTab("my-forecasts")}><h3>My Forecasts</h3></div>
-                            <div className="profile-tab" onClick={() => setProfileTab("my-trophies")}><h3>My Trophies</h3></div>
+                            <div style={{ borderLeft: "0px solid #fff" }} className={profileTab === "my-stats" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-stats")}><h3>My Stats</h3></div>
+                            <div style={{borderLeft: "0px solid #fff" }} className={profileTab === "my-forecasts" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-forecasts")}><h3>My Forecasts</h3></div>
+                            {isTeam === false && <div style={{borderLeft: "0px solid #fff" }} className={profileTab === "my-trophies" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-trophies")}><h3>My Trophies</h3></div>}
+                            <div style={{ borderRight: "0px solid #fff", borderLeft: "0px solid #fff" }} className={profileTab === "my-team" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-team")}><h3>My Team</h3></div>
                         </div>
                         {profileTab === "my-stats" && <ProfileStats 
                             username={props.username} 
@@ -261,6 +307,7 @@ console.log("Profile.js UE");
                         />}
                         {profileTab === "my-forecasts" && <ProfileForecasts userObj={userObj} searched={false} />}
                         {profileTab === "my-trophies" && <ProfileRewards userObj={userObj} />}
+                        {profileTab === "my-team" && <ProfileTeam userObj={userObj} teamData={teamData} searchPage={false} />}
                     </div>
                     <br />
                     {/* <div className="profile-details-container">
