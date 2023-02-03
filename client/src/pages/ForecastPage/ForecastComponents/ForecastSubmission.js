@@ -311,7 +311,7 @@ function ForecastSubmission(props) {
             const forecastDetails = props.userBriers.find(el => el.problemName === problemName);
             // setClosedForecastScore(forecastDetails === undefined ? "No Forecast Submitted" : forecastDetails.brierScore.toFixed(0));
             // Don't think it should say "no forecast submitted" as they may just be waiting for a forecast to be closed
-            setClosedForecastScore(forecastDetails === undefined ? "No Forecast Score (Yet)" : forecastDetails.brierScore.toFixed(0));
+            setClosedForecastScore(forecastDetails === undefined ? "No Score (Yet)" : forecastDetails.brierScore.toFixed(0));
             localStorage.setItem("closedForecastScore", forecastDetails.brierScore);
         } catch (error) {
             console.error("Error in ForecastSubmission > getBrierForClosedForecast");
@@ -1302,12 +1302,12 @@ console.log("here 343");
                                         }
                                     </div>
                                     <div className="forecast-review-div-right">
-                                        <h1>{closedForecastScore}</h1>
-                                        <h2 style={{ color: "#404d72" }}>Your Brier Score</h2>
+                                        <h2>{closedForecastScore}</h2>
+                                        <h3 style={{ color: "#404d72" }}>Your Brier Score</h3>
                                         <h3>(110 = Best, 0 = Worst)</h3>
                                         <br />
-                                        <h1>{closedForecastScore}</h1>
-                                        <h2 style={{ color: "#404d72" }}>Market / FF Points Earned</h2>
+                                        <h2>{closedForecastScore}</h2>
+                                        <h3 style={{ color: "#404d72" }}>Market / FF Points Earned</h3>
                                     </div>
                                 </div>
                             {/* <ForecastProblemLineChart

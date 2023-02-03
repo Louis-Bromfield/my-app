@@ -4,6 +4,7 @@
     padding-left: 1vw;
     padding-right: 1vw;
     background-color: rgba(241, 241, 241, 0.103);
+    
 }
 
 .leaderboard-loading-container {
@@ -81,7 +82,7 @@
 }
 
 .username-column {
-    width: 40%;
+    width: 30%;
     border: 1px solid #fff;
 }
 
@@ -92,7 +93,7 @@
 }
 
 .leaderboards-profile-pic {
-    width: 5%;
+    /* width: 10%; */
     height: 3vh;
     border-radius: 50%;
     vertical-align: middle;

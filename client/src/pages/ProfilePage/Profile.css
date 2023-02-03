@@ -1,7 +1,9 @@
 .profile {
-    width: 85%;
+    width: 80%;
     display: flex;
     flex-direction: column;
+    margin: 0 auto;
+    margin-top: 0vh;
 }
 
 .main-profile-grid {
