@@ -744,7 +744,8 @@ console.log(teamDocument.members.length);
                 if (team.members[i] !== req.params.username) {
                     let user = await Users.findOne({ username: team.members[i] });
                     user.notifications.unshift({
-                        notificationMessage: `${req.params.username} has joined your team! Head to your profile page and select "My Team" to see them!)`,
+                        notificationMessage: `${req.params.username} has joined your team! Head to your profile page and select "My Team" to see them!`,
+                        date: new Date(),
                         notificationSourcePath: "/profile",
                         notificationSourceObjectID: 1
                     });
