@@ -175,7 +175,7 @@ function Home(props) {
                         /> 
                         <HomeChangeLogPreview />
                         <div className="report-any-issues-container">
-                            <h2 className="home-button-small-title">Got any site issues, feedback, or praise?</h2>
+                            <p className="home-button-small-title" style={{ fontSize: "1.2em" }}>Got any site issues, feedback, or praise?</p>
                             <Link to="/report-any-issues" className="home-button-nav-button">Submit Your Views Anonymously Here</Link>
                         </div>
                     </div>

@@ -39,7 +39,7 @@ function HomeChangeLogPreview() {
             <div className="change-log-list">
                 {changeLogArr.map((item, index) => {
                     if (index <= 4) {
-                        if (item.length <= 60) {
+                        if (item.length <= 50) {
                             return (
                                 <span key={item} className="list-span">
                                     <h4 style={{ color: "#404d72"}}>{item.slice(0, 10)}</h4>
@@ -49,7 +49,7 @@ function HomeChangeLogPreview() {
                         } else return (
                             <span key={item} className="list-span">
                                 <h4 style={{ color: "#404d72"}}>{item.slice(0, 10)}</h4>
-                                <p>{item.slice(11, 60)}...</p>
+                                <p>{item.slice(11, 50)}...</p>
                             </span>
                         )
                     } else return null;
