@@ -9,6 +9,7 @@ import * as AiIcons from 'react-icons/ai';
 import FantasyForecastLogo from '../../media/sd2.png';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import axios from 'axios';
+import TeamModal from '../TeamModal';
 
 function Navbar(props) {
     const [selectedPage, setSelectedPage] = useState("Home");
@@ -23,17 +24,10 @@ function Navbar(props) {
         pathname: "/notifications",
         userObj: props.userObj
     });
-    // dummy data for now:
-    const [nots, setNots] = useState([
-        {
-            notMsg: "Someone liked your news feed post!",
-            date: "Today",
-        },
-        {
-            notMsg: "You have been invited to join The Boys!",
-            date: "Yesterday"
-        }
-    ]);
+    const [confirmationModalContent, setConfirmationModalContent] = useState("");
+    const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+    const [selectedNotificationObject, setSelectedNotificationObject] = useState({});
+
     const history = useHistory();
 
     const showSidebar = () => setSidebar(!sidebar);
@@ -126,8 +120,8 @@ function Navbar(props) {
                 history.push("/report-any-issues");
                 setShowNotifications(false);
                 return;
-            }  else if (notification.notificationSourcePath === "/team-invite") {
-                // setShowModal(true);
+            } else if (notification.notificationSourcePath === "/team-invite") {
+                setShowConfirmationModal(true);
             } else if (notification.notificationSourcePath === "/profile") {
                 history.push("/profile");
             }
@@ -136,6 +130,13 @@ function Navbar(props) {
 
     return (
         <>
+            <TeamModal 
+                show={showConfirmationModal}
+                notificationObject={selectedNotificationObject}
+                username={props.username === undefined ? props.userObj.username : props.username}
+                justClose={() => setShowConfirmationModal(false)}
+                oldTeam={props.userObj.teamName}
+            />
             {mobileWidth === true &&
                 <IconContext.Provider value={{ color: '#fff' }}>
                     <div className='mobile-navbar'>
@@ -297,7 +298,7 @@ function Navbar(props) {
                                                         {props.userObj.notifications !== undefined ? props.userObj.notifications.map((item, index) => {
                                                             if (index < 5) {
                                                                 return (
-                                                                    <div className={item.seenByUser === false ? "notification-item-new" : "notification-item-seen"} onClick={() => { handleNotificationSelection(item); item.seenByUser = true; }}>
+                                                                    <div className={item.seenByUser === false ? "notification-item-new" : "notification-item-seen"} onClick={() => { setSelectedNotificationObject(item); handleNotificationSelection(item); item.seenByUser = true; }}>
                                                                         <div className="notification-item-info">
                                                                             <p>{item.seenByUser === false ? <b>NEW</b> : ""} {item.notificationMessage.length > 75 ? `${item.notificationMessage.slice(0, 75)}...` : item.notificationMessage}</p>
                                                                             <p>{new Date(item.date).toString().slice(0, 21)}</p>
@@ -348,7 +349,7 @@ function Navbar(props) {
                                                 {props.userObj.notifications !== undefined ? props.userObj.notifications.map((item, index) => {
                                                     if (index < 5) {
                                                         return (
-                                                            <div className={item.seenByUser === false ? "notification-item-new" : "notification-item-seen"} onClick={() => { handleNotificationSelection(item); item.seenByUser = true; }}>
+                                                            <div className={item.seenByUser === false ? "notification-item-new" : "notification-item-seen"} onClick={() => { setSelectedNotificationObject(item); handleNotificationSelection(item); item.seenByUser = true; }}>
                                                                 <div className="notification-item-info">
                                                                     <p>{item.seenByUser === false ? <b>NEW</b> : ""} {item.notificationMessage.length > 75 ? `${item.notificationMessage.slice(0, 75)}...` : item.notificationMessage}</p>
                                                                     <p>{new Date(item.date).toString().slice(0, 21)}</p>

@@ -705,6 +705,7 @@ console.log(teamDocument.members.length);
             message = "Member has left team";
 
         } else if (req.body.action === "join") {
+
             // check if they joining user is already in the team
             let team = await Users.findOne({ username: req.body.teamName});
             for (let i = 0; i < team.members.length; i++) {
@@ -712,11 +713,26 @@ console.log(teamDocument.members.length);
                     res.json({ success: false, message: "User is already in this team" });
                 };
             };
+
             // update user document
             const user = await Users.findOneAndUpdate({ username: req.params.username}, {
                 inTeam: true,
                 teamName: req.body.teamName 
             });
+
+            // update old team document (remove them from previous team)
+            const previousTeamDocument = await Users.findOne({ username: req.body.oldTeam });
+            let newMembersArr = [];
+            for (let i = 0; i < previousTeamDocument.members.length; i++) {
+                if (previousTeamDocument.members[i] !== req.params.username) {
+                    newMembersArr.push(previousTeamDocument.members[i]);
+                };
+            };
+            await Users.findByIdAndUpdate(previousTeamDocument._id, {
+                members: newMembersArr
+            });
+            message = "Member has left team";
+
             // update team document members array (just push)
             // let team = await Users.findOne({ username: req.body.teamName});
             team.members.push(req.params.username);
@@ -727,8 +743,8 @@ console.log(teamDocument.members.length);
             for (let i = 0; i < team.members.length; i++) {
                 if (team.members[i] !== req.params.username) {
                     let user = await Users.findOne({ username: team.members[i] });
-                    user.notifications.push({
-                        notificationMessage: `${team.members[i]} has joined your team! Head to your profile page and select "My Team" to see them!)`,
+                    user.notifications.unshift({
+                        notificationMessage: `${req.params.username} has joined your team! Head to your profile page and select "My Team" to see them!)`,
                         notificationSourcePath: "/profile",
                         notificationSourceObjectID: 1
                     });

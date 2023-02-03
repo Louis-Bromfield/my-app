@@ -102,7 +102,7 @@ function HomeProfilePreview(props) {
                     {/* </div> */}
                     {/* <img className="home-profile-preview-img" src={props.user.profilePicture} alt="" /> */}
                 {/* </div> */}
-                <h3>Progress To Next Level:</h3>
+                {/* <h3>Progress To Next Level:</h3> */}
                 <div className="home-profile-preview-level-and-xp">
                     <div className="home-profile-preview-level">
                         <h2>{Math.floor((ffPoints/100)).toFixed(0)}</h2>

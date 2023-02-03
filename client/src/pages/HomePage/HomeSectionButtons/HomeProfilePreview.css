@@ -36,6 +36,7 @@
     grid-template-columns: 20% 77%;
     column-gap: 3%;
     width: 90%;
+    margin: 0 auto;
 }
 
 .home-profile-preview-level {

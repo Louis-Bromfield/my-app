@@ -149,11 +149,11 @@
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 14.5vh;
+    top: 14.9vh;
     background-color: #fff;
     width: 25%;
     background: #fff;
-    margin-left: 50vw;
+    margin-left: 30vw;
 }
 
 .notification-item-seen,
