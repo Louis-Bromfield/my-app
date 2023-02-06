@@ -446,6 +446,10 @@ app.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
         if (!user) {
             res.json({ loginSuccess: false, message: "This user does not exist in the database"});
         };
+        if (user.isTeam === true) {
+            console.log("3");
+            res.json({ loginSuccess: false, message: "This is a team account. Please login to your individual account."});
+        }
         let match;
         console.log(req.params);
         if (req.params.isPassword === "true") {
