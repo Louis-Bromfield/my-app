@@ -229,7 +229,7 @@ console.log(user);
         if (!user) {
             res.json({ loginSuccess: false, message: "This user does not exist in the database"});
         } 
-        if (user.isTeam === true) {
+        if (user.isTeam === true || user.teamName !== "") {
             res.json({ loginSuccess: false, message: "This is a team account. Please login to your individual account."})
         }
         let match;
