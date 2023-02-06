@@ -226,12 +226,17 @@ router.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
     try {
         const user = await Users.findOne({ username: req.params.username });
 console.log(user);
+console.log(user.isTeam);
+console.log("1");
         if (!user) {
             res.json({ loginSuccess: false, message: "This user does not exist in the database"});
         } 
-        if (user.isTeam === true || user.members.length > 0) {
+console.log("2");
+        if (user.isTeam === true) {
+            console.log("3");
             res.json({ loginSuccess: false, message: "This is a team account. Please login to your individual account."});
         }
+console.log("4");
         let match;
         console.log(req.params);
         if (req.params.isPassword === "true") {
