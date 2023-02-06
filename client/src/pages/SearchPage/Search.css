@@ -53,11 +53,11 @@
     transition: 0.2s ease;
 }
 
-.main-profile-grid {
+.main-profile-grid-search {
     display: flex;
     flex-direction: column;
     margin-top: 3vh;
-    background-color: #fff;
+    /* background-color: #fff; */
     border: 1px solid lightgray;
 }
 
