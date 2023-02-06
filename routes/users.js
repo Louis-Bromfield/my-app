@@ -230,7 +230,7 @@ console.log(user);
             res.json({ loginSuccess: false, message: "This user does not exist in the database"});
         } 
         if (user.isTeam === true || user.members.length > 0) {
-            res.json({ loginSuccess: false, message: "This is a team account. Please login to your individual account."})
+            res.json({ loginSuccess: false, message: "This is a team account. Please login to your individual account."});
         }
         let match;
         console.log(req.params);
@@ -241,6 +241,8 @@ console.log(user);
         }
         if (match) {
             res.json(user);
+        } else if (user.isTeam === true) {
+            res.json({ loginSuccess: false, message: "This is a team account. Please login to your individual account."});
         } else {
             res.json({ loginSuccess: false, message: "Password/reset code does not match that stored in the database"});
         };
