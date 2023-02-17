@@ -982,8 +982,10 @@ console.log(`we have found the user document for the team called: ${teamsArr[i][
                         marketName: req.params.marketName,
                         averageScore: averageScoreForProblem
                     });
+                    let teamUpdatedFantasyPoints = updatedTeamDoc.fantasyForecastPoints + teamTotalScore;
                     await Users.findByIdAndUpdate(updatedTeamDoc._id, {
-                        brierScores: updatedTeamDoc.brierScores
+                        brierScores: updatedTeamDoc.brierScores,
+                        fantasyForecastPoints: teamUpdatedFantasyPoints
                     });
 console.log(`the team's user document has been updated and should contain a new score in the brierScores array`);
                 }
@@ -993,7 +995,7 @@ console.log(`we are now looping through the users who submitted a forecast to le
             for (let j = 1; j < teamsArr[i].length; j++) {
                 let userForTeamNoti = await Users.findOne({ username: teamsArr[i][j].username });
                 userForTeamNoti.notifications.unshift({
-                    notificationMessage: `Your team scored ${teamTotalScore.toFixed(2)} on the following forecast: ${req.body.problemName}! To see the breakdown of how your team performed, go to your profile page, select your team from the dropdown at the top, and go to the "My Team" tab!`,
+                    notificationMessage: `Your team scored ${teamFinalScore.toFixed(2)} on the following forecast: ${req.body.problemName}! To see the breakdown of how your team performed, go to your profile page, select your team from the dropdown at the top, and go to the "My Team" tab!`,
                     notificationSourcePath: "/profile",
                     notificationSourceObjectID: 1,
                     seenByUser: false,
