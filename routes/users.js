@@ -931,7 +931,7 @@ console.log(updatedUser);
             toPush.username = calculatedBriers[i].username;
             scoresToReturn.push(toPush);
             // if user is in team, add to teams array
-            if (user.inTeam === true && teamsArr.length > 0) {
+            if (user.inTeam === true) {
 console.log("934~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 console.log(`yes ${user.username} is in a team`);
                 let found = false;
