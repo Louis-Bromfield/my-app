@@ -862,6 +862,7 @@ console.log("================");
 console.log("AVERAGE");
 console.log(averageScoreForProblem);
         let scoresToReturn = [];
+        let teamsArr = [];
         // let newScorePerformanceBoosted;
         // let performanceBoostVal = 0;
         for (let i = 0; i < calculatedBriers.length; i++) {
@@ -1080,7 +1081,7 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
             toPush.username = calculatedBriers[i].username;
             scoresToReturn.push(toPush);
             // if user is in team, add to teams array
-            if (user.inTeam === true && teamsArr.length > 0) {
+            if (user.inTeam === true) {
 console.log("1084~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 console.log(`yes ${user.username} is in a team`);
                 let found = false;
