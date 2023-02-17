@@ -961,14 +961,15 @@ console.log("No this team has not yet been added to the teams array, but it's ad
         let allUserDocuments = await Users.find();
 console.log("all users retrieved");
         for (let i = 0; i < teamsArr.length; i++) {
-console.log("this is the number: " + i + "iteration going through the teams array");
+console.log("this is the number: " + i + " iteration going through the teams array");
             let teamTotalScore = 0;
             // j = 1 as we don't want to include first element - as that's the team name string
             for (let j = 1; j < teamsArr[i].length; j++) {
-                teamTotalScore += teamsArr[i][j].score
+                teamTotalScore += teamsArr[i][j].score;
 console.log(`this player scored ${teamsArr[i][j].score}, we have added this to the team score which is now = ${teamTotalScore}`);
             };
             // length-1 as we don't want to include first element
+console.log(`teamFinalScore = ${teamTotalScore} / ${teamsArr[i].length-1}`);
             let teamFinalScore = teamTotalScore / teamsArr[i].length-1;
 console.log(`this teams new final score (the avg score) is = ${teamFinalScore}`);
             for (let k = 0; k < allUserDocuments.length; k++) {
@@ -1000,7 +1001,7 @@ console.log(`we are now looping through the users who submitted a forecast to le
                     notificationIndex: userForTeamNoti.notifications.length+1
                 });
                 let usersUpdatedFantasyPoints = userForTeamNoti.fantasyForecastPoints + teamTotalScore;
-console.log(`this user has been awarded ${teamFinalScore} fantasy forecast points, so their new FFPoints total is = ${usersUpdatedFantasyPoints}`);
+console.log(`${userForTeamNoti.username} has been awarded ${teamFinalScore} fantasy forecast points, so their new FFPoints total is = ${usersUpdatedFantasyPoints}`);
                 await Users.findOneAndUpdate({ username: teamsArr[i][j].username }, {
                     notifications: userForTeamNoti.notifications,
                     fantasyForecastPoints: usersUpdatedFantasyPoints
