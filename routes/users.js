@@ -825,14 +825,14 @@ router.patch("/:username/removeMarket/:marketName", async (req, res) => {
 });
 
 router.patch("/calculateBrier/:happenedStatus/:marketName/:closeEarly", async (req, res) => {
-console.log("1 REQPARAMS");
-console.log(req.params);
-console.log("2 REQBODY");
-console.log(req.body);
+// console.log("1 REQPARAMS");
+// console.log(req.params);
+// console.log("2 REQBODY");
+// console.log(req.body);
     try {
         const forecastObj = await Forecasts.findOne({ problemName: req.body.problemName });
-console.log("3 FORECASTOBJ");
-console.log(forecastObj);
+// console.log("3 FORECASTOBJ");
+// console.log(forecastObj);
         let happened;
         if (req.params.happenedStatus === "true") {
             happened = true;
@@ -841,34 +841,34 @@ console.log(forecastObj);
         };
         // If a problem is being closed early, update the date in the obj and then persist to DB
         if (req.params.closeEarly === "true") {
-console.log("4 SHOULD PRINT AS CLOSEEARLY = TRUE")
+// console.log("4 SHOULD PRINT AS CLOSEEARLY = TRUE")
             forecastObj.closeDate = req.body.newProblemCloseDateTime;
             await Forecasts.findByIdAndUpdate(forecastObj._id, { closeDate: req.body.newProblemCloseDateTime, happened: happened, isClosed: true});
         } else if (req.params.closeEarly === "false") {
             // Close Forecast
-console.log("SHOULD NOT NOT NOT PRINT AS CLOSEEARLY = TRUE")
+// console.log("SHOULD NOT NOT NOT PRINT AS CLOSEEARLY = TRUE")
             await Forecasts.findByIdAndUpdate(forecastObj._id, { isClosed: true, happened: happened });
         };
         const calculatedBriers = calculateBriers(forecastObj, happened, "N/A");
-console.log("13 CALCULATEDBRIERS ARRAY");
-console.log(calculatedBriers);
-console.log("================");
+// console.log("13 CALCULATEDBRIERS ARRAY");
+// console.log(calculatedBriers);
+// console.log("================");
         // Calculate overall average
         let total = 0;
         for (let i = 0; i < calculatedBriers.length; i++) {
             total += calculatedBriers[i].finalScore;
         };
         let averageScoreForProblem = total / calculatedBriers.length;
-console.log("AVERAGE");
-console.log(averageScoreForProblem);
+// console.log("AVERAGE");
+// console.log(averageScoreForProblem);
         let scoresToReturn = [];
         let teamsArr = [];
         // let newScorePerformanceBoosted;
         // let performanceBoostVal = 0;
         for (let i = 0; i < calculatedBriers.length; i++) {
             const user = await Users.findOne({ username: calculatedBriers[i].username });
-console.log("14 - USERNAME");
-console.log(user);
+// console.log("14 - USERNAME");
+// console.log(user);
             const toPush = {
                 brierScore: calculatedBriers[i].finalScore,
                 problemName: req.body.problemName,
@@ -877,8 +877,8 @@ console.log(user);
                 // performanceBoost: performanceBoostVal
                 averageScore: averageScoreForProblem
             };
-console.log("15 TOPUSH");
-console.log(toPush);
+// console.log("15 TOPUSH");
+// console.log(toPush);
             if (calculatedBriers[i].finalScore >= 100) {
                 for (let j = 0; j < user.trophies.length; j++) {
                     if (user.trophies[j].trophyText === "The Gold Standard" && user.trophies[j].obtained === false) {
@@ -926,8 +926,8 @@ console.log(toPush);
             },
             { new: true }
             );
-console.log("16 UPDATEDUSER");
-console.log(updatedUser);
+// console.log("16 UPDATEDUSER");
+// console.log(updatedUser);
             toPush.username = calculatedBriers[i].username;
             scoresToReturn.push(toPush);
             // if user is in team, add to teams array
@@ -1119,7 +1119,7 @@ console.log("this is the number: " + i + "iteration going through the teams arra
 console.log(`this player scored ${teamsArr[i][j].score}, we have added this to the team score which is now = ${teamTotalScore}`);
             };
             // length-1 as we don't want to include first element
-            let teamFinalScore = teamTotalScore / teamsArr[i].length-1;
+            let teamFinalScore = teamTotalScore / (teamsArr[i].length-1);
 console.log(`this teams new final score (the avg score) is = ${teamFinalScore}`);
             for (let k = 0; k < allUserDocuments.length; k++) {
                 if (allUserDocuments[k].username === teamsArr[i][0]) {
