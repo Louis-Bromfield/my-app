@@ -970,7 +970,7 @@ console.log(`this player scored ${teamsArr[i][j].score}, we have added this to t
             };
             // length-1 as we don't want to include first element
 console.log(`teamFinalScore = ${teamTotalScore} / ${teamsArr[i].length-1}`);
-            let teamFinalScore = teamTotalScore / teamsArr[i].length-1;
+            let teamFinalScore = teamTotalScore / (teamsArr[i].length -1);
 console.log(`this teams new final score (the avg score) is = ${teamFinalScore}`);
             for (let k = 0; k < allUserDocuments.length; k++) {
                 if (allUserDocuments[k].username === teamsArr[i][0]) {
