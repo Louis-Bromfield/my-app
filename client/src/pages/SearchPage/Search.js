@@ -8,6 +8,7 @@ import ProfileForecasts from '../ProfilePage/ProfileForecasts';
 import ProfileRewards from '../ProfilePage/ProfileRewards';
 import { useCookies } from 'react-cookie';
 import Modal from '../../components/Modal';
+import ProfileTeam from '../ProfilePage/ProfileTeam';
 
 function Search(props) {
     const [markets, setMarkets] = useState("");
@@ -53,6 +54,12 @@ function Search(props) {
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
     const [profilePicStyle, setProfilePicStyle] = useState("none");
+    const [showInviteBtn, setShowInviteBtn] = useState(false);
+    const [inviteToTeamText, setInviteToTeamText] = useState("Invite to Team");
+    const [isTeam, setIsTeam] = useState(false);
+    const [teamName, setTeamName] = useState("");
+    const [inTeam, setInTeam] = useState(false);
+    const [teamData, setTeamData] = useState({});
 
     useEffect(() => {
         if (props.location.clickedUsername !== undefined) {
@@ -115,9 +122,22 @@ function Search(props) {
         };
         try {
             const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${username}`);
+            
             if (userDocument.data.userObj === null) {
                 setErrorMessage("No profiles were found with this username. Please try again.");
+                setShowInviteBtn(false);
             } else if (userDocument.data.userObj !== null) {
+                // Check if the searched player is in the same team as the searching user
+                if ((userDocument.data.userObj.teamName === props.userObject.teamName) && props.userObject.teamName !== "") {
+                    setShowInviteBtn(true);
+                } else {
+                    setShowInviteBtn(false);
+                }
+                if (userDocument.data.userObj.isTeam === true) {
+                    setIsTeam(true);
+                } else {
+                    setIsTeam(false);
+                }
                 retrieveUserRankFromDB(username);
                 setPlayerUsername(userDocument.data.userObj.username);
                 // setPlayerName(userDocument.data.userObj.name);
@@ -163,6 +183,17 @@ function Search(props) {
                     setForecasterRank("Diviner");
                     setProfilePicStyle("7px solid #383D67");
                 };
+                if (userDocument.data.userObj.inTeam === true) {
+                    setTeamName(userDocument.data.userObj.teamName);
+                    const teamDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${userDocument.data.userObj.teamName}`);
+                    
+                    console.log(teamDocument);
+                    setTeamData(teamDocument.data);
+                    setShowInviteBtn(false);
+                } else {
+                    setShowInviteBtn(true);
+                };
+                setInTeam(userDocument.data.userObj.inTeam ? true : false);
             };
             // setTimeout(() => {
             setLoading(false);
@@ -336,7 +367,7 @@ function Search(props) {
     };
 
     return (
-        <div className="profile">
+        <div className="search">
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>
@@ -346,7 +377,7 @@ function Search(props) {
                 <button className="search-btn" onClick={() => retrievePlayerInfo(searchName)}>Search</button>
             </div>
             {errorMessage !== "" && <h3 className="error-message" style={{ color: "red", marginTop: "1vh" }}>{errorMessage}</h3>}
-            <div className="main-profile-grid">
+            <div className="main-profile-grid-search">
                 {loading === true && 
                     <div className="profile-grid">
                         <h1 className="profile-header">Gathering player details...</h1>
@@ -355,20 +386,54 @@ function Search(props) {
                 }
                 {loading === false &&
                     <div className="profile-grid">
-                        <h1 className="profile-header">{playerUsername}</h1>
+                        {/* {(props.userObject.inTeam === true && showInviteBtn === true) && <div className="profile-team-invite-container">
+                            <button
+                                className="profile-team-invite-btn"
+                                onClick={() => inviteToTeam}
+                                >
+                                    <h3>{inviteToTeamText}</h3>
+                            </button>
+                        </div>} */}
+                        {/* <h1 className="profile-header">{playerUsername}</h1> */}
+                        {inTeam === false ? 
+                            <h1 className="profile-header">{errorMessage === "" ? playerUsername : errorMessage}</h1> 
+                        :
+                            <select 
+                                style={{ fontWeight: "bold", fontSize: "32px"}}
+                                className="profile-dropdown-selection"
+                                onChange={(e) => { 
+                                    retrievePlayerInfo(e.target.value);
+                                }}
+                            >
+                                    <option value={playerUsername}>{playerUsername}</option>
+                                    <option value={teamName}>{teamName}</option>
+                            </select>
+                        }
                         <div className="profile-main-info">
                             <img className="profile-profile-pic" src={playerProfilePic || FakeProfilePic2} alt="Temporary profile pic" style={{border: profilePicStyle}}/>
                             <div className="profile-summary">
                                 {/* <ul className="profile-summary-list"> */}
-                                    <div key={0} className="profile-summary-list-item">
+                                    <div key={0} className="profile-summary-list-item"
+                                        onClick={() => {
+                                            setModalContent("This is determined as their FF Points divided by 100. Earning more points = higher level, and these levels come with rewards.");
+                                            setShowModal(true);
+                                        }}>
                                         <h2 className="profile-summary-list-item-value">{playerLevel} <h5>{forecasterRank}</h5></h2>
                                         <h3>Forecaster Level</h3>
                                     </div>
-                                    <div key={1} className="profile-summary-list-item">
+                                    <div key={1} className="profile-summary-list-item"
+                                        onClick={() => {
+                                            setModalContent("Fantasy Forecast Points are earned by submitting forecasts, posting to your feed, completing learn quizzes, and more. If you haven't already, check out the Onboarding menu on the Home page for tips on getting started.");
+                                            setShowModal(true);
+                                        }}>
                                         <h2 className="profile-summary-list-item-value">{playerPoints}</h2>
                                         <h3>Fantasy Forecast Points</h3>
                                     </div>
-                                    <div key={2} className="profile-summary-list-item">
+                                    <div key={2} className="profile-summary-list-item"
+                                        onClick={() => {
+                                            setModalContent("This is the average score this player has received for every problem they have submitted at least one forecast to.");
+                                            setShowModal(true);
+                                        }}>
                                         <h2 className="profile-summary-list-item-value">{isNaN(brierAverage) ? "N/A" : brierAverage}</h2>
                                         <h3>Brier Score Average</h3>
                                     </div>
@@ -383,7 +448,11 @@ function Search(props) {
                                             {bestForecast}</h2>
                                         <h3>Best Forecast</h3>
                                     </div>
-                                    <div key={4} className="profile-summary-list-item">
+                                    <div key={4} className="profile-summary-list-item"
+                                        onClick={() => {
+                                            setModalContent("This is the player's placement in the Fantasy Forecast All-Time leaderboard, which is determined solely by Fantasy Forecast Points. To see it in full, go the Leaderboards page and select the Fantasy Forecast All-Time leaderboard.");
+                                            setShowModal(true);
+                                        }}>
                                         <h2 className="profile-summary-list-item-value">{index}</h2>
                                         <h3>Fantasy Forecast All-Time Rank</h3>
                                     </div>
@@ -405,20 +474,21 @@ function Search(props) {
                         {/* <hr/> */}
                         <div className="profile-stats-rewards-container">
                             <div className="profile-nav-menu">
-                                <div className="profile-tab" onClick={() => setSearchTab("my-stats")}><h3>{playerUsername !== "" ? `${playerUsername}'s Stats` : "Player Stats"}</h3></div>
-                                <div className="profile-tab" onClick={() => setSearchTab("my-forecasts")}><h3>{playerUsername !== "" ? `${playerUsername}'s Forecasts` : "Player Forecasts"}</h3></div>
-                                <div className="profile-tab" onClick={() => setSearchTab("my-rewards")}><h3>{playerUsername !== "" ? `${playerUsername}'s Trophies` : "Player Trophies"}</h3></div>
+                                <div style={{ borderLeft: "0px solid #fff" }} className={searchTab === "my-stats" ? "profile-tab-selected" : "profile-tab"} onClick={() => setSearchTab("my-stats")}><h3>{playerUsername !== "" ? `${playerUsername}'s Stats` : "Player Stats"}</h3></div>
+                                <div style={{borderLeft: "0px solid #fff" }}className={searchTab === "my-forecasts" ? "profile-tab-selected" : "profile-tab"} onClick={() => setSearchTab("my-forecasts")}><h3>{playerUsername !== "" ? `${playerUsername}'s Forecasts` : "Player Forecasts"}</h3></div>
+                                {isTeam === false && <div style={{borderLeft: "0px solid #fff" }} className={searchTab === "my-rewards" ? "profile-tab-selected" : "profile-tab"} onClick={() => setSearchTab("my-rewards")}><h3>{playerUsername !== "" ? `${playerUsername}'s Trophies` : "Player Trophies"}</h3></div>}
+                                <div style={{ borderRight: "0px solid #fff", borderLeft: "0px solid #fff" }} className={searchTab === "my-team" ? "profile-tab-selected" : "profile-tab"} onClick={() => setSearchTab("my-team")}><h3>{playerUsername !== "" ? `${playerUsername}'s Team` : "Player Team"}</h3></div>
                             </div>
                             {searchTab === "my-stats" && 
                                 <div className="profile-stats">
-                                    <h1 className="profile-header">{playerUsername !== "" ? `${playerUsername}'s Stats` : "Player Stats"}</h1>
+                                    <h3 className="profile-header">{playerUsername !== "" ? `${playerUsername}'s Stats` : "Player Stats"}</h3>
                                     <div className="profile-stats-inner">
                                         <div className="profile-stats-recent-forecasts">
                                             <br/>
                                             <ul className="profile-stats-selectors">
-                                            <li className={selectedStats} onClick={() => { setStats(recentForecastData); setSelectedStats("selected"); setSelectedStats2("unselected")}}><h3>Recent Forecasts</h3></li>
+                                            <li className={selectedStats} onClick={() => { setStats(recentForecastData); setSelectedStats("selected"); setSelectedStats2("unselected")}}><h4>Recent Forecasts</h4></li>
                                                 <h2>|</h2>
-                                                <li className={selectedStats2} onClick={() => { setStats(allTimeForecastData); setSelectedStats("unselected"); setSelectedStats2("selected")}}><h3>All Forecasts</h3></li>
+                                                <li className={selectedStats2} onClick={() => { setStats(allTimeForecastData); setSelectedStats("unselected"); setSelectedStats2("selected")}}><h4>All Forecasts</h4></li>
                                             </ul>
                                             <Line className="profile-stats-line-chart" data={stats || recentForecastData} options={options} />
                                         </div>
@@ -462,6 +532,7 @@ function Search(props) {
                             }
                             {searchTab === "my-forecasts" && <ProfileForecasts userObj={searchUserObj} searched={true} playerUsername={playerUsername} />}
                             {searchTab === "my-rewards" && <ProfileRewards userObj={searchUserObj} />}
+                            {searchTab === "my-team" && <ProfileTeam userObj={searchUserObj} teamData={teamData} searchPage={true} searchName={searchName} searchingUser={props.userObject} showInviteBtn={showInviteBtn} />}
                         </div>
                         <hr />
                     </div>

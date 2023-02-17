@@ -62,6 +62,7 @@ function ForecastAdmin(props) {
     const getAllMarketsFromDB = async () => {
         try {
             const allMarketsDocument = await axios.get(`${process.env.REACT_APP_API_CALL_L}/justNames/${props.username}`);
+            
             let filteredbyIsFFOrNot = [];
             for (let i = 0; i < allMarketsDocument.data.length; i++) {
                 if (allMarketsDocument.data[i][2] === true) {
@@ -83,6 +84,7 @@ function ForecastAdmin(props) {
             setAdminText("");
             try {
                 await axios.post(`${process.env.REACT_APP_API_CALL_F}/newProblem`, {
+                
                     problemName: problemName,
                     startDate: oDateTime,
                     closeDate: cDateTime,
@@ -99,7 +101,7 @@ function ForecastAdmin(props) {
 
     const formatDate = (type, date, time) => {
         // const formattedDateTime = new Date(`${date.toString().slice(0, 15)} ${time.toString().slice(0, 5)}:00 GMT+0000 (Greenwich Mean Time)`).toString();
-        const formattedDateTime = new Date(`${date.toString().slice(0, 15)} ${time.toString().slice(0, 5)}:00 GMT-0500 (Eastern Standard Time)`).toString();
+        const formattedDateTime = new Date(`${date.toString().slice(0, 15)} ${time.toString().slice(0, 5)}:00 GMT+0000 (Greenwich Mean Time)`).toString();
         if (type === "Open") {
             setFormattedOpenDateTime(formattedDateTime);
         } else if (type === "Close") {
@@ -116,6 +118,7 @@ function ForecastAdmin(props) {
             if (closeEarly === true) {
                 console.log("Here2");
                 scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
+                
                     problemName: problemName,
                     newProblemCloseDateTime: newProblemCloseDateTime
                 });
@@ -124,6 +127,7 @@ console.log("17A - SCORES");
             } else if (closeEarly === false) {
                 console.log("Here3");
                 scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
+                
                 problemName: problemName
                 });
             };
@@ -151,11 +155,13 @@ console.log("17B - SCORES");
             let scores;
             if (closeEarly === true) {
                 scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
+                
                     problemName: problemName,
                     newProblemCloseDateTime: newProblemCloseDateTime
                 });
             } else if (closeEarly === false) {
                 scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
+                
                     problemName: problemName
                 });
             };
@@ -467,8 +473,8 @@ console.log("17B - SCORES");
                         console.log(problemNewCloseDate); 
                         console.log(problemNewCloseTime); 
                         // console.log(new Date(`${problemNewCloseDate.toString().slice(0, 15)} ${problemNewCloseTime.toString().slice(0, 5)}:00 GMT+0000 (Greenwich Mean Time)`).toString())
-                        console.log(new Date(`${problemNewCloseDate.toString().slice(0, 15)} ${problemNewCloseTime.toString().slice(0, 5)}:00 GMT-0500 (Eastern Standard Time)`).toString())
-                        setNewProblemCloseDateTime(new Date(`${problemNewCloseDate.toString().slice(0, 15)} ${problemNewCloseTime.toString().slice(0, 5)}:00 GMT-0500 (Eastern Standard Time)`).toString())}}>
+                        console.log(new Date(`${problemNewCloseDate.toString().slice(0, 15)} ${problemNewCloseTime.toString().slice(0, 5)}:00 GMT+0000 (Greenwich Mean Time)`).toString())
+                        setNewProblemCloseDateTime(new Date(`${problemNewCloseDate.toString().slice(0, 15)} ${problemNewCloseTime.toString().slice(0, 5)}:00 GMT+0000 (Greenwich Mean Time)`).toString())}}>
                             MUST CLICK: Format New Close Date Time
                 </button>
                 <br />

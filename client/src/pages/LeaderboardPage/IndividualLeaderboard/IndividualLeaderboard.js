@@ -28,7 +28,7 @@ function IndividualLeaderboard(props) {
     // const [showConfirmationModal, setShowConfirmationModal] = useState(false);
     const [ffData, setFFData] = useState([]);
     const [rankingsForTop3, setRankingsForTop3] = useState([]);
-    // const [leaderboardFilter, setLeaderboardFilter] = useState("all");
+    const [leaderboardFilter, setLeaderboardFilter] = useState("all");
 
     useEffect(() => {
         if (props.location.leaderboardName === undefined) {
@@ -71,6 +71,7 @@ function IndividualLeaderboard(props) {
             // const lbRankings = lbData.data;
             // const lbData = await axios.get(`${process.env.REACT_APP_API_CALL_U}/`);
             const lbData = await axios.get(`${process.env.REACT_APP_API_CALL_U}/`);
+            
             // let lbRankings = [];
             // for (let i = 0; i < lbData.data.length; i++) {
             //     if (lbData.data[i].markets.includes(leaderboard)) {
@@ -267,7 +268,7 @@ function IndividualLeaderboard(props) {
                     leaderboardTitle={currentLeaderboardName}     
                 /> */}
             </div>
-            {/* <div className="leaderboard-filter-select">
+            <div className="leaderboard-filter-select">
                 <select name="leaderboard-filter" id="" onChange={(e) => setLeaderboardFilter(e.target.value)}>
                     <option 
                         value="all">
@@ -282,7 +283,7 @@ function IndividualLeaderboard(props) {
                             Teams
                     </option>
                 </select>
-            </div> */}
+            </div>
             <Leaderboard 
                 leaderboardTitle={currentLeaderboardName} 
                 leaderboardRankings={filteredRankings} 
@@ -292,7 +293,7 @@ function IndividualLeaderboard(props) {
                 setRankingsForTop3={setRankingsForTop3}
                 // setAverageBrier={setAverageBrier}
                 // setFFData={setFFData}
-                // leaderboardFilter={leaderboardFilter}
+                leaderboardFilter={leaderboardFilter}
             />
         </div>
     )

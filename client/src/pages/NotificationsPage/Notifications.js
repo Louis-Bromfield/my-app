@@ -3,10 +3,18 @@ import { useHistory } from 'react-router-dom';
 import './Notifications.css';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import axios from 'axios';
+import TeamModal from '../../components/TeamModal';
 
 function Notifications(props) {
     const history = useHistory();
+    const [selectedNotification, setSelectedNotification] = useState({});
+    const [showModal, setShowModal] = useState(false);
+    const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+    const [selectedNotificationObject, setSelectedNotificationObject] = useState({});
+
     useEffect(() => {
+        console.log(props.location.userObj);
+        console.log(props.username);
     }, []);
 
     // copy-paste this into Notifications.js when updated
@@ -23,6 +31,7 @@ function Notifications(props) {
         // } else {
             if (notification.seenByUser === false) {
                 const res = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/editNotifications/${props.location.userObj.username}`, {
+                
                     setAllToTrue: false,
                     notificationMessage: notification.notificationMessage,
                     notificationIndex: notification.notificationIndex
@@ -47,18 +56,30 @@ function Notifications(props) {
                 history.push("/report-any-issues");
                 // setShowNotifications(false);
                 return;
-            };
+            } else if (notification.notificationSourcePath === "/team-invite") {
+                setShowConfirmationModal(true);
+            } else if (notification.notificationSourcePath === "/profile") {
+                history.push("/profile");
+            }
         // };
     };
 
     return (
     <div className="notifications">
+        <TeamModal 
+            show={showConfirmationModal}
+            notificationObject={selectedNotification}
+            username={props.location.userObj === undefined ? props.username === undefined ? "" : props.username : props.location.userObj.username}
+            justClose={() => setShowConfirmationModal(false)}
+            oldTeam={props.location.userObj === undefined ? props.userObject.teamName : "N/A"} 
+            calledFromNav={false}
+        />
         <h1>Notifications</h1>
         <div className="notifications-list">
-            {props.location.userObj.notifications.length === 0 && <h3>You have no notifications to show here yet!</h3>}
-            {props.location.userObj.notifications.map((item, index) => {
+            {(props.location.userObj !== undefined && props.location.userObj.notifications.length === 0) && <h3>You have no notifications to show here yet!</h3>}
+            {props.location.userObj !== undefined ? props.location.userObj.notifications.map((item, index) => {
                 return (
-                    <div className={item.seenByUser === false ? "notification-page-item-new" : "notification-page-item-seen"} onClick={() => { handleNotificationSelection(item); item.seenByUser = true;}}>
+                    <div className={item.seenByUser === false ? "notification-page-item-new" : "notification-page-item-seen"} onClick={() => { setSelectedNotification(item); handleNotificationSelection(item); item.seenByUser = true;}}>
                         <div className="notification-item-info">
                             <p>{item.notificationMessage}</p>
                             <p>{new Date(item.date).toString().slice(0, 21)}</p>
@@ -66,7 +87,7 @@ function Notifications(props) {
                         <AiOutlineArrowRight color={"#404d72"}/>
                     </div>
                 )
-            })}
+            }) : null}
         </div>
     </div>
     )

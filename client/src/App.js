@@ -127,8 +127,8 @@ function App() {
                 return;
             };
             console.log("paIFDBTPDB");
-            // const userPulledFromDB = await axios.get(`${process.env.API_CALL_U}/${username}`);  
-            const userPulledFromDB = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);  
+            const userPulledFromDB = await axios.get(`${process.env.API_CALL_U}/${username}`);  
+            
             if (userPulledFromDB.data === [] || userPulledFromDB.data[0].username === undefined) {
                 return;
             } else {
@@ -202,12 +202,12 @@ function App() {
                 markets={markets}
             />} />
             <Route path='/learn' render={(props) => <Learn {...props} username={username} isLoggedIn={isLoggedIn} />} />
-            <Route path='/search' render={(props) => <Search {...props} username={username} />} />
+            <Route path='/search' render={(props) => <Search {...props} username={username} userObject={userObject} />} />
             <Route path='/survey' render={(props) => <HelpOurResearch {...props} username={username} userObject={userObject} />}/>
             {/* <Route path='/my-profile' render={(props) => <Profile {...props} user={userObject} username={username} name={name} updateUsername={updateUsername} profilePicture={profilePicture}/>} /> */}
             <Route path='/my-profile' render={(props) => <Profile {...props} user={userObject} username={username} name={name} profilePicture={profilePicture}/>} />
             <Route path='/report-any-issues' render={(props) => <ReportAnyIssues {...props} />} />
-            <Route path='/notifications' render={(props) => <Notifications {...props} />} />
+            <Route path='/notifications' render={(props) => <Notifications {...props} userObject={userObject} username={username} />} />
           </Switch>
         </Router>
       }

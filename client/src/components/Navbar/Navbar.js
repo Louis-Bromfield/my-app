@@ -96,6 +96,7 @@ function Navbar(props) {
         // } else {
             if (notification.seenByUser === false) {
                 const res = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/editNotifications/${username}`, {
+                
                     setAllToTrue: false,
                     notificationMessage: notification.notificationMessage,
                     notificationIndex: notification.notificationIndex
@@ -136,6 +137,7 @@ function Navbar(props) {
                 username={props.username === undefined ? props.userObj.username : props.username}
                 justClose={() => setShowConfirmationModal(false)}
                 oldTeam={props.userObj.teamName}
+                calledFromNav={true}
             />
             {mobileWidth === true &&
                 <IconContext.Provider value={{ color: '#fff' }}>

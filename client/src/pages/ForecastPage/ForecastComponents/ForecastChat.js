@@ -60,6 +60,7 @@ function ForecastChat(props) {
         //     setModalContent("You must be at least Level 15 to post comments in this chat.");
         //     return;
         } else {
+            console.log("HELLO");
             try {
                 if (comment === "" || (/\s/.test(comment))) {
                     return;
@@ -73,6 +74,7 @@ function ForecastChat(props) {
                 setNewCommentStatus(true);
                 setNewCommentToRender(commentToRender);
                 const res = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/addNewComment`, {
+                
                     problemName: props.forecast.problemName,
                     isFirstComment: true,
                     author: props.username,
@@ -93,6 +95,7 @@ function ForecastChat(props) {
     };
 
     const submitNewReply = async (comment, commentYouAreRespondingTo, commentIndex) => {
+        console.log("HELLO2");
         if (props.username === "Guest") {
             setShowModal(true);
             setModalContent("You must be logged into your own account to reply to this comment.");
@@ -116,6 +119,7 @@ function ForecastChat(props) {
             setNewReplyCommentToRender(commentToRender);
             try {
                 const res = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/addNewComment`, {
+                
                     problemName: props.forecast.problemName,
                     isFirstComment: false,
                     author: props.username,
@@ -124,6 +128,7 @@ function ForecastChat(props) {
                 });
                 if (props.username !== commentYouAreRespondingTo.author) {
                     await axios.patch(`${process.env.REACT_APP_API_CALL_U}/newNotification/${commentYouAreRespondingTo.author}`, {
+                    
                         notificationMessage: `${props.username === undefined ? "Someone" : props.username} just replied to your comment!`,
                         notificationSourcePath: "/forecasts",
                         notificationSourceObjectID: props.forecast._id,

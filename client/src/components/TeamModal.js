@@ -3,13 +3,17 @@ import './ClosedProblemModal.css';
 import FFLogo from '../media/Icon.png';
 import axios from 'axios';
 
-const TeamModal = ({ show, notificationObject, username, justClose, oldTeam }) => {
+const TeamModal = ({ show, notificationObject, username, justClose, oldTeam, calledFromNav }) => {
     console.log(notificationObject);
+    console.log("HERE");
+    console.log(username);
+    console.log(`=====================================${calledFromNav}`)
     const [teamResponse, setTeamResponse] = useState(-1);
     const showHideClassName = show ? "modal display-block" : "modal display-none";
 
     const acceptInvite = async () => {
         try {
+            
             const res = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/createJoinLeaveTeam/${username}`, {
                 action: "join",
                 teamName: notificationObject.notificationSourceObjectID,

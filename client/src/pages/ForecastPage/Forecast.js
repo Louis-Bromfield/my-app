@@ -47,6 +47,7 @@ function Forecast(props) {
     const getAllForecastsFromDB = async () => {
         try {
             const allForecastsUnfiltered = await axios.get(`${process.env.REACT_APP_API_CALL_F}`);
+            
             setAllForecasts(allForecastsUnfiltered.data);
         } catch (error) {
             console.error(error);
@@ -72,9 +73,7 @@ function Forecast(props) {
             </Modal>
             <div className="forecast-header">
                 <h1>My Forecasts</h1>
-                <p>This is the page for submitting your forecasts. In the dropdown menu below, you can
-                    select a problem to make a prediction on. The available forecasts in the list are
-                    determined by which markets you have joined. 
+                <p>This is the page for submitting your forecasts. To forecast, select a problem from the dropdown menu below. Your job is to predict how likely an outcome is to happen on a scale from 0-100, and you can update your prediction as many times as you like. 
                 </p>
             </div>
             {/* Replace aPW with JWT verification? */}
@@ -82,7 +81,7 @@ function Forecast(props) {
             <div className="forecast-info-bar-container">
                 <div className="individual-forecast-info-container" onClick={() => {
                     setShowModal(true);
-                    setModalContent("This is where you manage all of your forecasts. Select a problem from the dropdown menu below and submit new forecasts or update previous ones. A chart will show the forecasts submitted by all other users who have attempted this problem, and relevant statistics and articles will be available to assist you, as well as a comment section for you to discuss with other forecasters.")
+                    setModalContent("This is where you manage all of your forecasts. Your job is to select a problem from the dropdown menu below and submit predictions based on how confident you are of the outcome happening on a scale of 0-100. Once you submit a forecast, you are free to update it as many times as you like! A chart will show the forecasts submitted by all other users who have attempted this problem, and relevant statistics and articles will be available to assist you, as well as a comment section for you to discuss with other forecasters.")
                     setModalContent2("");
                     // testNotification();
                 }}>

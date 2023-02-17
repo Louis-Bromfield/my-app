@@ -62,6 +62,7 @@ function Home(props) {
         try {
             // const userDocument = await axios.get(`${process.env.API_CALL_U}/${username}`);
             const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
+            
             if (userDocument.data[0].numberOfClosedForecasts > 0) {
                 setShowClosedProblemModal(true);
             };
