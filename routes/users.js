@@ -982,7 +982,7 @@ console.log(`we have found the user document for the team called: ${teamsArr[i][
                         marketName: req.params.marketName,
                         averageScore: averageScoreForProblem
                     });
-                    let teamUpdatedFantasyPoints = updatedTeamDoc.fantasyForecastPoints + teamTotalScore;
+                    let teamUpdatedFantasyPoints = updatedTeamDoc.fantasyForecastPoints + teamFinalScore;
                     await Users.findByIdAndUpdate(updatedTeamDoc._id, {
                         brierScores: updatedTeamDoc.brierScores,
                         fantasyForecastPoints: teamUpdatedFantasyPoints
@@ -1134,8 +1134,10 @@ console.log(`we have found the user document for the team called: ${teamsArr[i][
                         marketName: req.params.marketName,
                         averageScore: averageScoreForProblem
                     });
+                    let teamUpdatedFantasyPoints = updatedTeamDoc.fantasyForecastPoints + teamFinalScore;
                     await Users.findByIdAndUpdate(updatedTeamDoc._id, {
-                        brierScores: updatedTeamDoc.brierScores
+                        brierScores: updatedTeamDoc.brierScores,
+                        fantasyForecastPoints: teamUpdatedFantasyPoints
                     });
 console.log(`the team's user document has been updated and should contain a new score in the brierScores array`);
                 }
@@ -1152,7 +1154,7 @@ console.log(`we are now looping through the users who submitted a forecast to le
                     date: new Date(),
                     notificationIndex: userForTeamNoti.notifications.length+1
                 });
-                let usersUpdatedFantasyPoints = userForTeamNoti.fantasyForecastPoints + teamTotalScore;
+                let usersUpdatedFantasyPoints = userForTeamNoti.fantasyForecastPoints + teamFinalScore;
 console.log(`this user has been awarded ${teamFinalScore} fantasy forecast points, so their new FFPoints total is = ${usersUpdatedFantasyPoints}`);
                 await Users.findOneAndUpdate({ username: teamsArr[i][j].username }, {
                     notifications: userForTeamNoti.notifications,
@@ -1169,14 +1171,14 @@ console.log(`this user has been awarded ${teamFinalScore} fantasy forecast point
 
 // New version without comments
 const calculateBriers = (forecastObj, happened, outcome) => {
-console.log("5 SHOULD PRINT AS WE ARE IN CALCULATE BRIER FUNCTION");
-console.log("6 ARGUMENTS");
-console.log("7 FORECASTOBJ");
-console.log(forecastObj);
-console.log("8 HAPPENED - SHOULD BE TRUE");
-console.log(happened)
-console.log("9 OUTCOME");
-console.log(outcome);
+// console.log("5 SHOULD PRINT AS WE ARE IN CALCULATE BRIER FUNCTION");
+// console.log("6 ARGUMENTS");
+// console.log("7 FORECASTOBJ");
+// console.log(forecastObj);
+// console.log("8 HAPPENED - SHOULD BE TRUE");
+// console.log(happened)
+// console.log("9 OUTCOME");
+// console.log(outcome);
     const startDate = new Date(forecastObj.startDate);
     const closeDate = new Date(forecastObj.closeDate);
 
@@ -1198,8 +1200,8 @@ console.log(outcome);
             let tValue = (closeDate - new Date(forecastObj.submittedForecasts[i].forecasts[0].date))/1000;
             let timeFrame = (closeDate - startDate)/1000;
             tScore = (tValue/timeFrame)*10;
-console.log("10 - tSCORE");
-console.log(tScore);
+// console.log("10 - tSCORE");
+// console.log(tScore);
         } else {
             tScore = 0;
         };
@@ -1209,7 +1211,7 @@ console.log(tScore);
         let sumOfNewWeightedBriers = 0;
         for (let j = 0; j < forecastObj.submittedForecasts[i].forecasts.length; j++) {
             // Forecast WAS made before close date
-console.log(`${new Date(forecastObj.submittedForecasts[i].forecasts[j].date)} < ${closeDate}`);
+// console.log(`${new Date(forecastObj.submittedForecasts[i].forecasts[j].date)} < ${closeDate}`);
             if (new Date(forecastObj.submittedForecasts[i].forecasts[j].date) < closeDate) {
 console.log("This forecast counts");
                 let originalBrier;
@@ -1238,8 +1240,8 @@ console.log("This forecast counts");
                     };
                 };
                 let newBrier = (2 - originalBrier) * 50;
-console.log("11 NEW BRIER");
-console.log(newBrier);
+// console.log("11 NEW BRIER");
+// console.log(newBrier);
                 let newBrierWeightedByDuration;
                 let thisForecastTimeDate = new Date(forecastObj.submittedForecasts[i].forecasts[j].date);
                 if (j < forecastObj.submittedForecasts[i].forecasts.length-1) {
@@ -1258,8 +1260,8 @@ console.log(newBrier);
 
                     sumOfNewWeightedBriers = sumOfNewWeightedBriers + newBrierWeightedByDuration;
                     formulaComponents[i].finalBrierSum = sumOfNewWeightedBriers;
-console.log("12 SUMOFNEWWEIGHTEDBRIERS");
-console.log(sumOfNewWeightedBriers);
+// console.log("12 SUMOFNEWWEIGHTEDBRIERS");
+// console.log(sumOfNewWeightedBriers);
                 };
             // Forecast was NOT made before close date
             } else if (new Date(forecastObj.submittedForecasts[i].forecasts[j].date) > closeDate) {
@@ -1272,13 +1274,13 @@ console.log("Forecast submitted after the problem's close date");
         };
         formulaComponents[i].brierSumPlusTScore = formulaComponents[i].finalBrierSum + formulaComponents[i].tScore;
         arrToReturn[i].finalScore = formulaComponents[i].brierSumPlusTScore;
-console.log(`arrToReturn[i].finalScore = ${arrToReturn[i].finalScore}`)
+// console.log(`arrToReturn[i].finalScore = ${arrToReturn[i].finalScore}`)
         arrToReturn[i].captainedStatus = forecastObj.submittedForecasts[i].captainedStatus;
     };
-console.log("================");
-    console.log(formulaComponents);
-    console.log(arrToReturn);
-console.log("================");
+// console.log("================");
+    // console.log(formulaComponents);
+    // console.log(arrToReturn);
+// console.log("================");
     return arrToReturn;
 };
 
