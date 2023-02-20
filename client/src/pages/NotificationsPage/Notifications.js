@@ -75,6 +75,7 @@ function Notifications(props) {
             calledFromNav={false}
         />
         <h1>Notifications</h1>
+        <p>Click on the notification to view it and be redirected to the relevant page!</p>
         <div className="notifications-list">
             {(props.location.userObj !== undefined && props.location.userObj.notifications.length === 0) && <h3>You have no notifications to show here yet!</h3>}
             {props.location.userObj !== undefined ? props.location.userObj.notifications.map((item, index) => {

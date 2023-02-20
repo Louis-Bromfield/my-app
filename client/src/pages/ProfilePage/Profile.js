@@ -55,6 +55,7 @@ console.log("Profile.js UE");
             const lbName = "Fantasy Forecast All-Time"
             const userData = await axios.get(`${process.env.REACT_APP_API_CALL_L}/leaderboard/${lbName}`);
             
+            
             // const lbRankings = userData.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
             for (let i = 0; i < userData.data.length; i++) {
                 if (userData.data[i].username === username) {
@@ -72,6 +73,7 @@ console.log("Profile.js UE");
                 };
             };
             const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${username}`);
+            
             
             if (userDocument.data.userObj === null) {
                 setErrorMessage("No profiles were found with this username. Please try again.");
@@ -123,6 +125,7 @@ console.log("Profile.js UE");
             if (userDocument.data.userObj.inTeam === true) {
                 const teamDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${userDocument.data.userObj.teamName}`);
                 
+                
                 setTeamData(teamDocument.data);
             }
         } catch (error) {
@@ -146,6 +149,7 @@ console.log("Profile.js UE");
     const updateOnboarding = async (username) => {
         try {
             const updatedUserDocument = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/onboardingTask/${username}`, {
+            
             
                 onboardingTask: "visitProfilePage",
                 ffPointsIfFalse: 100,

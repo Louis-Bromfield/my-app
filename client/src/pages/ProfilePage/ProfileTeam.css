@@ -97,6 +97,7 @@
 
 .profile-team-individual-result {
     border-bottom: 1px solid lightgray;
+    padding: 1%;
 }
 
 @media (max-width: 1000px) {

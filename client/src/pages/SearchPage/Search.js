@@ -129,9 +129,9 @@ function Search(props) {
             } else if (userDocument.data.userObj !== null) {
                 // Check if the searched player is in the same team as the searching user
                 if ((userDocument.data.userObj.teamName === props.userObject.teamName) && props.userObject.teamName !== "") {
-                    setShowInviteBtn(true);
-                } else {
                     setShowInviteBtn(false);
+                } else {
+                    setShowInviteBtn(true);
                 }
                 if (userDocument.data.userObj.isTeam === true) {
                     setIsTeam(true);

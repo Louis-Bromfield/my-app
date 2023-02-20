@@ -16,6 +16,7 @@ function Leaderboard(props) {
     const [usernameSortOrder, setUsernameSortOrder] = useState("");
     const [pointsSortOrder, setPointsSortOrder] = useState("");
     const [avgBrierScoreSortOrder, setAvgBrierScoreSortOrder] = useState("");
+    const [avgAllTimeBrierScoreSortOrder, setAvgAllTimeBrierScoreSortOrder] = useState("");
     // const history = useHistory();
 
     const updateWidth = () => {
@@ -319,20 +320,34 @@ function Leaderboard(props) {
                 setPointsSortOrder("9-0");
             }
         } else if (sort === "Fantasy Forecast Points") {
+            console.log("FFPoints");
+            console.log(usersData);
             if (pointsSortOrder === "" || pointsSortOrder === "9-0") {
-                newSortedData = usersData.sort((a, b) => (a.fantasyForecastPoints < b.fantasyForecastPoints) ? 1: ((b.fantasyForecastPoints < a.fantasyForecastPoints) ? -1 : 0));
+                newSortedData = usersData.sort((a, b) => (a.marketPoints < b.marketPoints) ? 1: ((b.marketPoints < a.marketPoints) ? -1 : 0));
                 setPointsSortOrder("0-9")
             } else if (pointsSortOrder === "0-9") {
-                newSortedData = usersData.sort((a, b) => (b.fantasyForecastPoints < a.fantasyForecastPoints) ? 1: ((a.fantasyForecastPoints < b.fantasyForecastPoints) ? -1 : 0));
+                newSortedData = usersData.sort((a, b) => (b.marketPoints < a.marketPoints) ? 1: ((a.marketPoints < b.marketPoints) ? -1 : 0));
                 setPointsSortOrder("9-0")
             }
         } else if (sort === "Avg Brier Score") {
+            console.log("AVG Brier Score");
+            console.log(usersData);
             if (avgBrierScoreSortOrder === "" || avgBrierScoreSortOrder === "9-0") {
                 newSortedData = usersData.sort((a, b) => (a.avgBrierScore < b.avgBrierScore) ? 1: ((b.avgBrierScore < a.avgBrierScore) ? -1 : 0));
                 setAvgBrierScoreSortOrder("0-9");
             } else if (avgBrierScoreSortOrder === "0-9") {
                 newSortedData = usersData.sort((a, b) => (b.avgBrierScore < a.avgBrierScore) ? 1: ((a.avgBrierScore < b.avgBrierScore) ? -1 : 0));
                 setAvgBrierScoreSortOrder("9-0");
+            };
+        } else if (sort === "Avg Brier Score (All Markets)") {
+            console.log("AVG Brier Score All Markets");
+            console.log(usersData);
+            if (avgAllTimeBrierScoreSortOrder === "" || avgAllTimeBrierScoreSortOrder === "9-0") {
+                newSortedData = usersData.sort((a, b) => (a.avgAllTimeBrier < b.avgAllTimeBrier) ? 1: ((b.avgAllTimeBrier < a.avgAllTimeBrier) ? -1 : 0));
+                setAvgAllTimeBrierScoreSortOrder("0-9");
+            } else if (avgAllTimeBrierScoreSortOrder === "0-9") {
+                newSortedData = usersData.sort((a, b) => (b.avgAllTimeBrier < a.avgAllTimeBrier) ? 1: ((a.avgAllTimeBrier < b.avgAllTimeBrier) ? -1 : 0));
+                setAvgAllTimeBrierScoreSortOrder("9-0");
             };
         };
         setUsersData([...newSortedData]);
@@ -359,7 +374,7 @@ function Leaderboard(props) {
                                 {width && <th className="last-five-briers-column">Last 5 Forecasts (&nbsp;&nbsp;/110&nbsp;&nbsp;)</th>}
                             </tr>
                             {usersData.map((item, index) => {
-                                console.log(item);
+                                // console.log(item);
                                 if (props.leaderboardFilter === "all") {
                                     if (item.username === props.username) {
                                         if (item.username === "admin" || item.username === "Guest") return null;
@@ -464,6 +479,7 @@ function Leaderboard(props) {
                                     }
                                     else return null;
                                 } else if (props.leaderboardFilter === "solo") {
+                                    if (item.username === "admin" || item.username === "Guest") return null;
                                     if (item.username === props.username && item.isTeam === false) {
                                         return (
                                             <tr className="leaderboard-row-matching-username" key={index}>
@@ -487,12 +503,12 @@ function Leaderboard(props) {
                                                     {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
                                                     {item.username}
                                                 </td>
-                                                <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
+                                                <td className="leaderboard-ffPoints-data">{Number(item.totalBrier).toFixed(0)}</td>
                                                 <td className="leaderboard-avgBrierScore-data">{Number(item.avgBrierScore).toFixed(1)}</td>
                                                 {width && <td className="leaderboard-last5Forecasts-data">
                                                     <span className="last-five-data-span">
-                                                        {item.brierScores.map((item2, index) => {
-                                                            if (index >= item.brierScores.length - 5) {
+                                                        {item.brierScoresForMarket.map((item2, index) => {
+                                                            if (index >= item.brierScoresForMarket.length - 5) {
                                                                 return (
                                                                     <ToolTip title={item2.problemName} key={index}>
                                                                         <h4 className="last-five-data-single-result">
@@ -529,12 +545,12 @@ function Leaderboard(props) {
                                                     {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
                                                     {item.username}
                                                 </td>
-                                                <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
+                                                <td className="leaderboard-ffPoints-data">{Number(item.totalBrier).toFixed(0)}</td>
                                                 <td className="leaderboard-avgBrierScore-data">{Number(item.avgBrierScore).toFixed(1)}</td>
                                                 {width && <td className="leaderboard-last5Forecasts-data">
                                                     <span className="last-five-data-span">
-                                                        {item.brierScores.map((item2, index) => {
-                                                            if (index >= item.brierScores.length - 5) {
+                                                        {item.brierScoresForMarket.map((item2, index) => {
+                                                            if (index >= item.brierScoresForMarket.length - 5) {
                                                                 return (
                                                                     <ToolTip title={item2.problemName} key={index}>
                                                                         <h4 className="last-five-data-single-result">
@@ -551,6 +567,7 @@ function Leaderboard(props) {
                                     }
                                     else return null;
                                 } else if (props.leaderboardFilter === "teams") {
+                                    if (item.username === "admin" || item.username === "Guest") return null;
                                     if (item.username === props.username && item.isTeam === true) {
                                         return (
                                             <tr className="leaderboard-row-matching-username" key={index}>
@@ -574,12 +591,12 @@ function Leaderboard(props) {
                                                     {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
                                                     {item.username}
                                                 </td>
-                                                <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
+                                                <td className="leaderboard-ffPoints-data">{Number(item.totalBrier).toFixed(0)}</td>
                                                 <td className="leaderboard-avgBrierScore-data">{Number(item.avgBrierScore).toFixed(1)}</td>
                                                 {width && <td className="leaderboard-last5Forecasts-data">
                                                     <span className="last-five-data-span">
-                                                        {item.brierScores.map((item2, index) => {
-                                                            if (index >= item.brierScores.length - 5) {
+                                                        {item.brierScoresForMarket.map((item2, index) => {
+                                                            if (index >= item.brierScoresForMarket.length - 5) {
                                                                 return (
                                                                     <ToolTip title={item2.problemName} key={index}>
                                                                         <h4 className="last-five-data-single-result">
@@ -616,12 +633,12 @@ function Leaderboard(props) {
                                                     {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
                                                     {item.username}
                                                 </td>
-                                                <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
+                                                <td className="leaderboard-ffPoints-data">{Number(item.totalBrier).toFixed(0)}</td>
                                                 <td className="leaderboard-avgBrierScore-data">{Number(item.avgBrierScore).toFixed(1)}</td>
                                                 {width && <td className="leaderboard-last5Forecasts-data">
                                                     <span className="last-five-data-span">
-                                                        {item.brierScores.map((item2, index) => {
-                                                            if (index >= item.brierScores.length - 5) {
+                                                        {item.brierScoresForMarket.map((item2, index) => {
+                                                            if (index >= item.brierScoresForMarket.length - 5) {
                                                                 return (
                                                                     <ToolTip title={item2.problemName} key={index}>
                                                                         <h4 className="last-five-data-single-result">
@@ -648,7 +665,7 @@ function Leaderboard(props) {
                                 <th className="position-column">#</th>
                                 <th className="username-column" onClick={() => sortByCol("Username")} style={{ cursor: "pointer" }}>Username</th>
                                 <th className="ffpoints-column" onClick={() => sortByCol("Fantasy Forecast Points")} style={{ cursor: "pointer" }}>Fantasy Forecast Points</th>
-                                <th className="avg-brier-column" onClick={() => sortByCol("Avg Brier Score")} style={{ cursor: "pointer" }}>AVG Brier Score (All Markets)</th>
+                                <th className="avg-brier-column" onClick={() => sortByCol("Avg Brier Score (All Markets)")} style={{ cursor: "pointer" }}>AVG Brier Score (All Markets)</th>
                                 {width && <th className="last-five-briers-column">Last 5 Forecasts (All Markets)</th>}
                             </tr>
                             {usersData.map((item, index) => {

@@ -17,15 +17,17 @@ function ProfileTeam(props) {
     const [teamName, setTeamName] = useState("");
     const [showInviteBtn, setShowInviteBtn] = useState(false);
     const [inviteToTeamText, setInviteToTeamText] = useState(`Invite ${props.searchPage === true ? props.searchName : ""} to ${props.searchPage === true ? props.searchingUser.inTeam === true ? props.searchingUser.teamName : "Team" : "Team"}`);
+    const [reversedBriers, setReversedBriers] = useState([]);
 
 
     useEffect(() => {
         console.log("ProfileTeam UE");
-        console.log(props);
-        // console.log(props.teamData.userObj);
         if (props.userObj.inTeam === true || userNowInTeam === true) {
             console.log("yes");
             retrieveMemberInfo(props.teamData.length !== 0 ? props.teamData.userObj.members : props.userObj.members);
+        };
+        if (props.userObj.brierScores.length !== 0 && props.userObj.brierScores !== undefined) {
+            setReversedBriers(props.userObj.brierScores.reverse());
         };
     }, [props.userObj.inTeam]);
 
@@ -172,54 +174,32 @@ function ProfileTeam(props) {
                         })}
                     </div>
                     {(props.searchPage === true && props.searchingUser.inTeam === true) && <div className="profile-team-invite-container">
-                        <button
+                        {((props.searchingUser.teamName !== props.userObj.teamName) && props.searchingUser.teamName !== "") && <button
                             className="profile-team-invite-btn"
                             onClick={() => { console.log("hello"); inviteToTeam()}}
                             >
-                                <h3>{inviteToTeamText}</h3>
-                        </button>
+                                <h3>{inviteToTeamText}blarg</h3>
+                        </button>}
                     </div>}
                 </div>
                 <div className="profile-team-results">
                     <br />
                     <h2 className="profile-header" style={{ color: "#404d72" }}>Team Forecast Results</h2>
                     {/* loop through team document to get all problems at least one member has attempted */}
-                    {props.teamData.length !== 0 ? (props.teamData !== undefined && props.teamData.userObj.brierScores.length !== 0 ? props.teamData.userObj.brierScores.map((item, index) => {
+                    {props.teamData.length !== 0 ? (props.teamData !== undefined && props.teamData.userObj.brierScores.length !== 0 ? reversedBriers.map((item, index) => {
                         console.log(item);
                         return (
                             <div className="profile-team-individual-result">
-                                <h3 style={{ color: "#404d72" }}>{index+1}. {item.problemName} ({item.brierScore.toFixed(2)} / 110)</h3>
-                                {/* then map through membersData to get their scores for each problem - triple loop tho :( */}
-                                {teamMembers.map((newItem, newIndex) => {
-                                    return (
-                                        newItem.brierScores.map((individualItem, individualIndex) => {
-                                            if (individualItem.problemName === item.problemName) {
-                                                return (
-                                                    <p key={newItem}>{newItem.username}: {individualItem.brierScore.toFixed(2)} / 110</p>
-                                                )
-                                            }
-                                        }) 
-                                    )
-                                })}
+                                <div className="problem-header"><h4 style={{ color: "#404d72"}}>Problem:&nbsp;</h4><h4>{item.problemName}</h4></div>
+                                <div className="score-header"><h4 style={{ color: "#404d72"}}>Score:&nbsp;</h4><h4>{item.brierScore.toFixed(2)}</h4></div>
                             </div>
                         )
-                    }) : <p>This team does not yet have any scores to show.</p>) : props.userObj.brierScores.length !== 0 ? props.userObj.brierScores.map((item, index) => {
+                    }) : <p>This team does not yet have any scores to show.</p>) : props.userObj.brierScores.length !== 0 ? reversedBriers.map((item, index) => {
                         console.log(item);
                         return (
                             <div className="profile-team-individual-result">
-                                <h3>{index+1}. {item.problemName} ({item.brierScore} / 110)</h3>
-                                {/* then map through membersData to get their scores for each problem - triple loop tho :( */}
-                                {teamMembers.map((newItem, newIndex) => {
-                                    return (
-                                        newItem.brierScores.map((individualItem, individualIndex) => {
-                                            if (individualItem.problemName === item.problemName) {
-                                                return (
-                                                    <p key={newItem}>{newItem.username}: {individualItem.brierScore} / 110</p>
-                                                )
-                                            }
-                                        }) 
-                                    )
-                                })}
+                                <div className="problem-header"><h4 style={{ color: "#404d72"}}>Problem:&nbsp;</h4><h4>{item.problemName}</h4></div>
+                                <div className="score-header"><h4 style={{ color: "#404d72"}}>Score:&nbsp;</h4><h4>{item.brierScore.toFixed(2)}</h4></div>
                             </div>
                         )
                     }) : <p>This team does not yet have any scores to show.</p>}

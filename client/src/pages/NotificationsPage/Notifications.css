@@ -1,13 +1,19 @@
 .notifications {
+    width: 80%;
+    display: flex;
     flex-direction: column;
+    margin: 0 auto;
+    margin-top: 3vh;
 }
 
 .notifications-list {
     /* border: 2px solid red; */
-    width: 50%;
+    width: 75%;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
+    margin-top: 1vh;
+    border: 1px solid lightgray;
 }
 
 .notification-page-item-seen,
@@ -15,7 +21,8 @@
     width: 100%;
     border-bottom: 1px solid lightgray;
     display: grid;
-    grid-template-columns: 75% 25%;
+    grid-template-columns: 85% 5%;
+    column-gap: 10%;
     padding: 2%;
 }
 
