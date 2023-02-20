@@ -603,15 +603,19 @@ console.log("we have found the ready to go trophy, time to award it to you!");
         let trophyUpdate = false;
         let trophyText = "";
         if ((user.fantasyForecastPoints < 1500) && (userFFPoints >= 1500)) {
+console.log("yes a threshold has been passed 1")
             trophyUpdate = true;
             trophyText = "Seer"
         } else if ((user.fantasyForecastPoints < 2000) && (userFFPoints >= 2000)) {
+console.log("yes a threshold has been passed 2")
             trophyUpdate = true;
             trophyText = "Soothsayer"
         } else if ((user.fantasyForecastPoints < 2500) && (userFFPoints >= 2500)) {
+console.log("yes a threshold has been passed 3")
             trophyUpdate = true;
             trophyText = "Oracle"
         } else if ((user.fantasyForecastPoints < 5000) && (userFFPoints >= 5000)) {
+console.log("yes a threshold has been passed 4")
             trophyUpdate = true;
             trophyText = "Diviner"
         };
