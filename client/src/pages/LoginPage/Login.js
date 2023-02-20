@@ -145,7 +145,6 @@ function Login(props) {
             }
         } catch(error) {
             console.error("Error in Login > loginFromLogin");
-            console.log(`${process.env.REACT_APP_API_CALL_MAIN}/${username}/${passwordOrResetCode}/${true}`);
             console.error(error);
         };
     };
