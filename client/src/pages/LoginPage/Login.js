@@ -210,81 +210,7 @@ function Login(props) {
             <div className="login-main-div">
                 {/* <img className="login-logo" src={FFLogo} alt="" /> */}
                     <div className="signup-container">
-                        <div className="signup-div">
-                            <h2>Create an Account:</h2>
-                            <label htmlFor="username">Create Your Username:</label>
-                            <input 
-                                type="text" 
-                                name="username" 
-                                id="username" 
-                                maxLength={15}
-                                onChange={(e) => { 
-                                    setCredentialsSuccessfullyChecked(null);
-                                    setUsernameForCreate(e.target.value);
-                                    setErrorMessageForAccountCreation("");
-                                }} 
-                            />
-                            <label htmlFor="prolificID">Enter Your ProlificID:</label>
-                            <input 
-                                type="text" 
-                                name="prolificID" 
-                                id="prolificID" 
-                                onChange={(e) => { 
-                                    setCredentialsSuccessfullyChecked(null);
-                                    setProlificIDForCreate(e.target.value);
-                                    setErrorMessageForAccountCreation("");
-                                }} 
-                            />
-                            <label htmlFor="password">Password:</label>
-                            <input 
-                                type="password" 
-                                name="password" 
-                                id="password" 
-                                // maxLength={15}
-                                onChange={(e) => { 
-                                    setCredentialsSuccessfullyChecked(null);
-                                    setPasswordForCreate(e.target.value);
-                                    setErrorMessageForAccountCreation("");
-                                }}
-                            />
-                            <label htmlFor="password">Confirm Password:</label>
-                            <input 
-                                type="password" 
-                                name="confirm-password" 
-                                id="confirm-password" 
-                                // maxLength={15}
-                                onChange={(e) => { 
-                                    setCredentialsSuccessfullyChecked(null);
-                                    setConfirmPasswordForCreate(e.target.value);
-                                    setErrorMessageForAccountCreation("");
-                                }}
-                            />
-                            <br />
-                            {credentialsSuccessfullyChecked === null &&
-                                // <button className="check-your-details-btn" onClick={() => checkCredentials(usernameForCreate, passwordForCreate, prolificIDForCreate)}>Click Here: Check Your Details</button>
-                                <button className="check-your-details-btn" onClick={() => checkCredentials(usernameForCreate, prolificIDForCreate, passwordForCreate, confirmPasswordForCreate)}>Login</button>
-                            }
-                            {/* {credentialsSuccessfullyChecked === true &&  */}
-                                {/* <div className="credentials-passed-login"> */}
-                                    {/* <h2>Your details are perfect!</h2> */}
-                                    {/* <form action={`${process.env.REACT_APP_API_NACB}/${usernameForCreate}/${passwordForCreate}/${prolificIDForCreate}`}> */}
-                                    {/* use this line below for Prolific, we removed the last one for PO-119 students */}
-                                    {/* <form action={`${process.env.REACT_APP_API_CALL_MAIN}/auth/google/not_callback/${usernameForCreate}/${passwordForCreate}/${prolificIDForCreate}`}> */}
-                                    {/* <form action={`${process.env.REACT_APP_API_CALL_MAIN}/auth/google/not_callback/${usernameForCreate}/${passwordForCreate}`}> */}
-                                        {/* <button type="submit" className="sign-in-with-google-btn">Your details are perfect. Now click here to sign in with Google</button> */}
-                                        {/* <div className="google-explainer"> */}
-                                            {/* <p><u>Why do I need to sign in with Google?</u> 1) So your Fantasy Forecast account has a profile picture, and 2) so we can email the winners of the tournament!</p> */}
-                                            {/* <br />
-                                            <p>Email addresses obtained from those who do not complete the survey and become eligible for the tournament will be deleted on Monday 4th July, and all others will be deleted as soon as the tournament ends.</p> */}
-                                        {/* </div> */}
-                                    {/* </form> */}
-                                {/* </div> */}
-                            {/* } */}
-                            {credentialsSuccessfullyChecked === false &&
-                                <h2>An account with this {problematicInfo} already exists. Please try again.</h2>
-                            }
-                            {errorMessageForAccountCreation}
-                        </div>
+                        
                         <div className="signup-div">
                             <h2>Preview the site as a Guest</h2>
                             <button className="login-btn" onClick={() => loginFromLogin("Guest", "guestAccount123", true, true)}>
@@ -292,51 +218,7 @@ function Login(props) {
                             </button>
                         </div>
                     </div>
-                    <div className="login-div">
-                        <h2>Already have an account? Login here:</h2>
-                        <label htmlFor="username-login">Username:</label>
-                        <input 
-                            type="text" 
-                            name="login-username" 
-                            id="login-username" 
-                            onChange={(e) => { 
-                                setCredentialsSuccessfullyChecked(null);
-                                setErrorMessage("");
-                                setUsernameForLogin(e.target.value);
-                                // setProlificIDForLogin(e.target.value);
-                            }}
-                        />
-                        {/* <label htmlFor="username-login">Prolific ID:</label>
-                        <input 
-                            type="text" 
-                            name="login-prolificID" 
-                            id="login-prolificID" 
-                            onChange={(e) => { 
-                                setCredentialsSuccessfullyChecked(null);
-                                setErrorMessage("");
-                                // setUsernameForLogin(e.target.value);
-                                setProlificIDForLogin(e.target.value);
-                            }}
-                        /> */}
-                        <label htmlFor="login-password">Password:</label>
-                        <input 
-                            type="password" 
-                            name="login-password" 
-                            id="login-password" 
-                            // maxLength={15}
-                            onChange={(e) => { 
-                                setCredentialsSuccessfullyChecked(null);
-                                setErrorMessage("");
-                                setPasswordForLogin(e.target.value);
-                            }}
-                        />
-                        <button className="login-btn" onClick={() => loginFromLogin(usernameForLogin, passwordForLogin, true, false)}>Login to Fantasy Forecast</button>
-                        {errorMessage}
-                    </div> 
-                    <div className="login-div">
-                        <h2>Forgot your password?</h2>
-                        <h2>Email fantasyforecastcontact@gmail.com with your username and Prolific ID and we'll reset it for you.</h2>
-                    </div>
+                    
             </div>
         </div>  
     )
