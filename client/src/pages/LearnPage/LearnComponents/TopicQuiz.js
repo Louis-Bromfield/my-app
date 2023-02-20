@@ -95,12 +95,15 @@ function TopicQuiz(props) {
                 //     }
                 // }
                 await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, 
-                    { 
-                        onboarding: userDocument.data[0].onboarding,
-                        learnQuizzes: userDocument.data[0].learnQuizzes,
-                        fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 
+                    {
+                        learnQuizzes: userDocument.data[0].learnQuizzes
                     }
                 );
+                await axios.patch(`${process.env.REACT_APP_API_CALL_U}/onboardingTask/${username}`, {
+                    onboardingTask: "completeALearnQuiz",
+                    ffPointsIfFalse: 100,
+                    ffPointsIfTrue: 0
+                });
                 props.handleQuizCompletion(true);
                 props.handleQuizCompletionModalContent("You just got 250 Fantasy Forecast Points for completing your first quiz! Completing quizzes will now return 5 points per quiz.");
             };

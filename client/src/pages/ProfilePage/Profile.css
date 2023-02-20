@@ -205,9 +205,9 @@
     .profile {
         width: 90%;
     }
-    .main-profile-grid {
+    /* .main-profile-grid {
         margin-left: -6vw;
-    }
+    } */
     .profile {
         font-size: 0.85em;
     }
@@ -242,12 +242,16 @@
 }
 
 @media (max-width: 450px) {
+    .profile {
+        margin: 0 auto;
+        width: 100%;
+    }
     .profile-main-info {
         display: grid;
         grid-template-columns: 100%;
         row-gap: 15vh;
         grid-template-rows: 20% 80%;
-        margin-bottom: 20vh;
+        margin-bottom: 30vh;
     }
     .profile-profile-pic {
         margin: 0 auto;
