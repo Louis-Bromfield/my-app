@@ -646,6 +646,7 @@ router.post("/newProblem", async (req, res) => {
 // Submit a prediction to a problem for the first time
 router.patch("/submit", async (req, res) => {
     try {
+console.log("in submit");
         const document = await Forecasts.findOne({ problemName: req.body.problemName });
         const toPushToDB = {
             username: req.body.username, 
@@ -663,6 +664,7 @@ router.patch("/submit", async (req, res) => {
         const user = await Users.findOne({ username: req.body.username });
 
         if ((new Date(req.body.date) - new Date(document.startDate))/1000 <= 86400) {
+console.log("yes was within 24 hours");
             // const user = await Users.findOne({ username: req.body.username });
             for (let i = 0; i < user.trophies.length; i++) {
                 if (user.trophies[i].trophyText === "Quick off the Mark" && user.trophies[i].obtained === false) {
@@ -678,6 +680,7 @@ router.patch("/submit", async (req, res) => {
                 numberOfAttemptedForecasts: user.numberOfAttemptedForecasts + 1
             });
         } else {
+console.log("no was not within 24 hours, still updating numberOfAttemptedForecasts anyway");
             await Users.findOneAndUpdate({ username: req.body.username }, {
                 numberOfAttemptedForecasts: user.numberOfAttemptedForecasts + 1
             });
