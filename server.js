@@ -196,6 +196,10 @@ const UserSchema = mongoose.Schema({
     members: {
         type: Array,
         default: []
+    },
+    numberOfAttemptedForecasts: {
+        type: Number,
+        default: 0
     }
 });
 
