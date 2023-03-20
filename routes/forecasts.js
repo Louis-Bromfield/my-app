@@ -721,6 +721,30 @@ router.patch("/submitMultiple", async (req, res) => {
             // ], 
             // captainedStatus: req.body.captainedStatus
         };
+
+        const user = await Users.findOne({ username: req.body.username });
+
+        if ((new Date(req.body.date) - new Date(document.startDate))/1000 <= 86400) {
+            // const user = await Users.findOne({ username: req.body.username });
+            for (let i = 0; i < user.trophies.length; i++) {
+                if (user.trophies[i].trophyText === "Quick off the Mark" && user.trophies[i].obtained === false) {
+                    user.trophies[i].obtained = true;
+                    break;
+                };
+            };
+            // The numberOfAttemptedForecasts variable will be used for when we send out the 2nd survey
+            // using a counter rather than a boolean for attempting all of them as we the number of 
+            // problems we give could change up until the beginning
+            await Users.findOneAndUpdate({ username: req.body.username }, {
+                trophies: user.trophies,
+                numberOfAttemptedForecasts: user.numberOfAttemptedForecasts + 1
+            });
+        } else {
+            await Users.findOneAndUpdate({ username: req.body.username }, {
+                numberOfAttemptedForecasts: user.numberOfAttemptedForecasts + 1
+            });
+        }
+
         const newForecastSavedToDB = await Forecasts.findByIdAndUpdate(document._id, 
             { 
                 $push: { submittedForecasts: toPushToDB },
