@@ -9,7 +9,7 @@ function ForecastArticlesDisplay(props) {
 
     const googleNewsScrape = async (searchTerm) => {
         try {
-            let term = "Georgia Senate";
+            let term = "UK Local Elections";
             let googleNewsScrapeResult;
             googleNewsScrapeResult = await axios.get(`${process.env.REACT_APP_API_CALL_GSN}/${term}`);
             setArticles(googleNewsScrapeResult.data);
