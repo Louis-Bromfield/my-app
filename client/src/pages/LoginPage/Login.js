@@ -72,7 +72,7 @@ function Login(props) {
                     setCredentialsSuccessfullyChecked(true);
                     localStorage.setItem("username", pID);
                     setCookie('username', pID, { path: "/", sameSite: "Lax" });
-                    loginFromLogin(pID, pID, pWord, true, false);
+                    loginFromLogin(pID, pWord, true, false);
                 };
             } catch (error) {
                 console.error("Error in Login > checkCredentials");
