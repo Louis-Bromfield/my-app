@@ -292,6 +292,11 @@ router.get("/getIndividualProblemResults/:problemName", async (req, res) => {
 
 // Create a new user
 router.post("/", async (req, res) => {
+    const user = await Users.findOne({ username: req.body.username });
+    console.log("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+    console.log("if no user is found, we get vvv");
+    console.log(user);
+    console.log("if no user is found, we get ^^^");
     console.log("NEW USER CREATION");
     // CHARMANDER - hash password:
     // const saltRounds = 10;
