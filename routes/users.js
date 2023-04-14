@@ -303,6 +303,7 @@ router.post("/", async (req, res) => {
             err: true,
             message: "User already exists."
         })
+        return;
     }
     console.log("NEW USER CREATION");
     // CHARMANDER - hash password:
