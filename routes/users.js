@@ -297,6 +297,13 @@ router.post("/", async (req, res) => {
     console.log("if no user is found, we get vvv");
     console.log(user);
     console.log("if no user is found, we get ^^^");
+    if (user !== null) {
+        res.json({
+            userCreationSuccess: false,
+            err: true,
+            message: "User already exists."
+        })
+    }
     console.log("NEW USER CREATION");
     // CHARMANDER - hash password:
     // const saltRounds = 10;
