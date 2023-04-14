@@ -327,6 +327,7 @@ function Login(props) {
                         <input 
                             type="text" 
                             name="login-prolificID" 
+                            className="login-prolificID" 
                             id="login-prolificID" 
                             onChange={(e) => { 
                                 setCredentialsSuccessfullyChecked(null);
@@ -339,6 +340,7 @@ function Login(props) {
                         <input 
                             type="password" 
                             name="login-password" 
+                            className="login-password" 
                             id="login-password" 
                             // maxLength={15}
                             onChange={(e) => { 

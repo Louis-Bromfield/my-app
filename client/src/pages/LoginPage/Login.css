@@ -107,7 +107,9 @@
 .prolificID,
 .confirmProlificID,
 .password,
-.confirm-password {
+.confirm-password,
+.login-prolificID,
+.login-password {
     width: 50%;
     text-align: center;
     height: 3vh;
@@ -144,6 +146,14 @@
     .login-signup-container {
         display: flex;
         flex-direction: column;
+    }
+    .prolificID,
+    .password,
+    .confirmProlificID,
+    .confirm-password,
+    .login-prolificID,
+    .login-password {
+        width: 100%;
     }
     .login-logo {
         width: 60%;
