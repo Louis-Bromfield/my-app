@@ -104,6 +104,15 @@
     color: rgb(100, 216, 100);
 }
 
+.prolificID,
+.confirmProlificID,
+.password,
+.confirm-password {
+    width: 50%;
+    text-align: center;
+    height: 3vh;
+}
+
 .login-success-btn {
     color: #fff;
     background-color: #359735;
@@ -120,6 +129,14 @@
     .signup-container {
         grid-template-columns: 100%;
         row-gap: 2vh;
+    }
+    .login-btn,
+    .signup-btn,
+    .check-your-details-btn {
+        width: 70%;
+    }
+    .login-main-div {
+        font-size: 0.9em;
     }
 }
 

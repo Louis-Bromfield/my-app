@@ -50,20 +50,22 @@ function ForecastArticlesDisplay(props) {
                 {articles !== "loading" && <div className="articles-grid">
                     {/* <ul> */}
                         <h4>These articles have been handpicked by us:</h4>
-                        <a href="https://www.npr.org/2022/11/09/1135685554/runoff-election-georgia-senate-race-raphael-warnock-herschel-walker" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
+                        {/* changed success */}
+                        <a href="https://www.telegraph.co.uk/politics/2023/04/06/local-elections-may-2023-when-who-vote-where-polling/" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
                             {/* <p>{article.title}</p> */}
                             <div className="article-list-item" onClick={() => logUserAction(props.username === undefined ? props.userObject.username : props.username)}>
                                 <div className="article-list-item-img-container">
-                                    <img className="article-list-item-img" src="https://media.npr.org/assets/img/2022/11/09/gettyimages-1440117548-1137e85c8b9a57b106b19cac51902341a0cb5ad8-s800-c85.webp" alt="" />
+                                    <img className="article-list-item-img" src="https://www.telegraph.co.uk/content/dam/politics/2023/04/06/TELEMMGLPICT000331337931_trans_NvBQzQNjv4Bqx5egiJ9MQyAqq6uO2mksLR6vTgUo7goj1e1R4oK598Y.jpeg?imwidth=1280" alt="" />
                                 </div>
                                 <div className="article-list-item-text-div">
-                                    <h3 className="article-list-item-title">What is a runoff election? Let's break down what's happening in Georgia</h3>
+                                    <h3 className="article-list-item-title">Local elections 2023: When are they and which results to watch out for?</h3>
                                     {/* <p className="article-list-item-description">{article.description}</p> */}
                                     <hr />
                                     <h5 className="article-list-item-publisher">NPR</h5>
                                 </div>
                             </div>
                         </a>
+                        {/* change this one */}
                         <a href="https://projects.fivethirtyeight.com/polls/senate/2022/georgia/" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
                             {/* <p>{article.title}</p> */}
                             <div className="article-list-item" onClick={() => logUserAction(props.username === undefined ? props.userObject.username : props.username)}>
@@ -78,6 +80,7 @@ function ForecastArticlesDisplay(props) {
                                 </div>
                             </div>
                         </a>
+                        {/* change this one */}
                         <a href="https://www.cbsnews.com/news/runoff-election-georgia-senate-2022-raphael-warnock-herschel-walker/" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
                             {/* <p>{article.title}</p> */}
                             <div className="article-list-item" onClick={() => logUserAction(props.username === undefined ? props.userObject.username : props.username)}>

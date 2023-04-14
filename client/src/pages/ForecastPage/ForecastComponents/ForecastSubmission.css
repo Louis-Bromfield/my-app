@@ -258,12 +258,21 @@
     text-align: center;
 }
 
-.forecast-chart-stats-switcher-tab {
+.forecast-chart-stats-switcher-tab,
+.forecast-chart-stats-switcher-tab-selected {
     padding: 2%;
     border: 1px solid lightgray;
+    cursor: pointer;
 }
 
-.forecast-chart-stats-switcher-tab:hover {
+.forecast-chart-stats-switcher-tab {
+    background-color: #404d72;
+    color: #fff;
+}
+
+
+.forecast-chart-stats-switcher-tab:hover,
+.forecast-chart-stats-switcher-tab-selected:hover {
     cursor: pointer;
     background-color: #404d72;
     color: #fff;

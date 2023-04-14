@@ -19,7 +19,7 @@ function Login(props) {
     const [prolificIDForLogin, setProlificIDForLogin] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [errorMessageForAccountCreation, setErrorMessageForAccountCreation] = useState("");
-    // const [prolificID, setProlificID] = useState("");
+    const [confirmProlificIDForCreate, setConfirmProlificIDForCreate] = useState("");
     // const [loggedIn, setLoggedIn] = useState(false);
     const [problematicInfo, setProblematicInfo] = useState("_");
     const [credentialsSuccessfullyChecked, setCredentialsSuccessfullyChecked] = useState(null);
@@ -34,15 +34,18 @@ function Login(props) {
     // }, []);
 
     // const checkCredentials = async (uName, pWord, pID) => {
-    const checkCredentials = async (uName, pID, pWord, cpWord) => {
-        if (/\s/.test(uName) || uName === "") {
-            setErrorMessageForAccountCreation("Your username should contain no spaces.");
+    const checkCredentials = async (pID, cpID, pWord, cpWord) => {
+        if (/\s/.test(pID) || pID === "") {
+            setErrorMessageForAccountCreation("Your ProlificID should contain no spaces.");
             return;
         } else if (pID.length < 4 || /\s/.test(pID) || pID === "") {
             setErrorMessageForAccountCreation("Your ProlificID should be 24 characters long and contain no spaces.");
             return;
-        } else if (pWord.length < 4|| (/\s/.test(pWord)) || pWord === "") {
-            setErrorMessageForAccountCreation("Your password must contain no spaces.");
+        } else if (pID !== cpID) {
+            setErrorMessageForAccountCreation("Your ProlificIDs do not match");
+            return;
+        } else if (pWord.length < 4 || (/\s/.test(pWord)) || pWord === "") {
+            setErrorMessageForAccountCreation("Your password must be longer than 4 characters and contain no spaces.");
             return;
         } else if (pWord !== cpWord) {
             setErrorMessageForAccountCreation("Your passwords do not match.");
@@ -54,7 +57,7 @@ function Login(props) {
             try {
                 // CHARMANDER - ADD CODE FOR CREATING USER, THEN LOGIN WITH RETURNED OBJECT
                 const user = await axios.post(`${process.env.REACT_APP_API_CALL_U}/`, {
-                    username: uName,
+                    username: pID,
                     pID: pID,
                     password: pWord
                 });
@@ -68,8 +71,8 @@ function Login(props) {
                     setProblematicInfo("");
                     setCredentialsSuccessfullyChecked(true);
                     localStorage.setItem("username", pID);
-                    setCookie('username', uName, { path: "/", sameSite: "Lax" });
-                    loginFromLogin(uName, pID, pWord, true, false);
+                    setCookie('username', pID, { path: "/", sameSite: "Lax" });
+                    loginFromLogin(pID, pID, pWord, true, false);
                 };
             } catch (error) {
                 console.error("Error in Login > checkCredentials");
@@ -78,15 +81,15 @@ function Login(props) {
         };
     };
 
-    const loginFromLogin = async (username, passwordOrResetCode, isPassword, isGuest) => {
+    const loginFromLogin = async (prolificID, passwordOrResetCode, isPassword, isGuest) => {
         console.log("1");
-        if (/\s/.test(username) || /\s/.test(passwordOrResetCode)) {
+        if (/\s/.test(prolificID) || /\s/.test(passwordOrResetCode)) {
             console.log("2");
-            setErrorMessage("Your username and password should contain no spaces.");
+            setErrorMessage("Your ProlificID and password should contain no spaces.");
             return;
-        } else if (username === "" || passwordOrResetCode === "") {
+        } else if (prolificID === "" || passwordOrResetCode === "") {
             console.log("3");
-            setErrorMessage("The username or password field is empty.");
+            setErrorMessage("The ProlificID or password field is empty.");
             return;
         };
         try {
@@ -94,19 +97,19 @@ function Login(props) {
             console.log("4");
             if (isGuest === true) {
                 console.log("5");
-                userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${username}/${passwordOrResetCode}/${true}`);
+                userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${true}`);
                 
             } else if (isGuest === false) {
                 console.log("5");
                 if (isPassword === true) {
                     console.log("6");
-                    userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${username}/${passwordOrResetCode}/${true}`);
+                    userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${true}`);
                 
                     console.log("7");
                     if (!userObj) return;
                 } else if (isPassword === false) {
                     console.log("8");
-                    userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${username}/${passwordOrResetCode}/${false}`);
+                    userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${false}`);
                 
                     if (!userObj) return;
                 };
@@ -211,7 +214,7 @@ function Login(props) {
                     <div className="signup-container">
                         <div className="signup-div">
                             <h2>Create an Account:</h2>
-                            <label htmlFor="username">Create Your Username:</label>
+                            {/* <label htmlFor="username">Create Your Username:</label>
                             <input 
                                 type="text" 
                                 name="username" 
@@ -222,11 +225,12 @@ function Login(props) {
                                     setUsernameForCreate(e.target.value);
                                     setErrorMessageForAccountCreation("");
                                 }} 
-                            />
+                            /> */}
                             <label htmlFor="prolificID">Enter Your ProlificID:</label>
                             <input 
                                 type="text" 
                                 name="prolificID" 
+                                className="prolificID" 
                                 id="prolificID" 
                                 onChange={(e) => { 
                                     setCredentialsSuccessfullyChecked(null);
@@ -234,10 +238,23 @@ function Login(props) {
                                     setErrorMessageForAccountCreation("");
                                 }} 
                             />
+                            <label htmlFor="confirmProlificID">Re-Enter ProlificID:</label>
+                            <input 
+                                type="text" 
+                                name="confirmProlificID" 
+                                className="confirmProlificID" 
+                                id="confirmProlificID" 
+                                onChange={(e) => { 
+                                    setCredentialsSuccessfullyChecked(null);
+                                    setConfirmProlificIDForCreate(e.target.value);
+                                    setErrorMessageForAccountCreation("");
+                                }} 
+                            />
                             <label htmlFor="password">Password:</label>
                             <input 
                                 type="password" 
                                 name="password" 
+                                className="password" 
                                 id="password" 
                                 // maxLength={15}
                                 onChange={(e) => { 
@@ -250,6 +267,7 @@ function Login(props) {
                             <input 
                                 type="password" 
                                 name="confirm-password" 
+                                className="confirm-password" 
                                 id="confirm-password" 
                                 // maxLength={15}
                                 onChange={(e) => { 
@@ -261,7 +279,7 @@ function Login(props) {
                             <br />
                             {credentialsSuccessfullyChecked === null &&
                                 // <button className="check-your-details-btn" onClick={() => checkCredentials(usernameForCreate, passwordForCreate, prolificIDForCreate)}>Click Here: Check Your Details</button>
-                                <button className="check-your-details-btn" onClick={() => checkCredentials(usernameForCreate, prolificIDForCreate, passwordForCreate, confirmPasswordForCreate)}>Login</button>
+                                <button className="check-your-details-btn" onClick={() => checkCredentials(prolificIDForCreate, confirmProlificIDForCreate, passwordForCreate, confirmPasswordForCreate)}>Login</button>
                             }
                             {/* {credentialsSuccessfullyChecked === true &&  */}
                                 {/* <div className="credentials-passed-login"> */}
@@ -293,7 +311,7 @@ function Login(props) {
                     </div>
                     <div className="login-div">
                         <h2>Already have an account? Login here:</h2>
-                        <label htmlFor="username-login">Username:</label>
+                        {/* <label htmlFor="username-login">Username:</label>
                         <input 
                             type="text" 
                             name="login-username" 
@@ -304,8 +322,8 @@ function Login(props) {
                                 setUsernameForLogin(e.target.value);
                                 // setProlificIDForLogin(e.target.value);
                             }}
-                        />
-                        {/* <label htmlFor="username-login">Prolific ID:</label>
+                        /> */}
+                        <label htmlFor="username-login">Prolific ID:</label>
                         <input 
                             type="text" 
                             name="login-prolificID" 
@@ -316,7 +334,7 @@ function Login(props) {
                                 // setUsernameForLogin(e.target.value);
                                 setProlificIDForLogin(e.target.value);
                             }}
-                        /> */}
+                        />
                         <label htmlFor="login-password">Password:</label>
                         <input 
                             type="password" 
@@ -329,12 +347,12 @@ function Login(props) {
                                 setPasswordForLogin(e.target.value);
                             }}
                         />
-                        <button className="login-btn" onClick={() => loginFromLogin(usernameForLogin, passwordForLogin, true, false)}>Login to Fantasy Forecast</button>
+                        <button className="login-btn" onClick={() => loginFromLogin(prolificIDForLogin, passwordForLogin, true, false)}>Login to Fantasy Forecast</button>
                         {errorMessage}
                     </div> 
                     <div className="login-div">
                         <h2>Forgot your password?</h2>
-                        <h2>Email fantasyforecastcontact@gmail.com with your username and Prolific ID and we'll reset it for you.</h2>
+                        <p>Email fantasyforecastcontact@gmail.com with your Prolific ID and we'll reset it for you.</p>
                     </div>
             </div>
         </div>  

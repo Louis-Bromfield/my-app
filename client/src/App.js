@@ -58,6 +58,7 @@ function App() {
   const login = async (username) => {
     // const userObj = await axios.get(`${process.env.API_CALL_U}/${username}`);
     const userObj = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
+    
     if (userObj.data.length === 0) {
         return;
     };
@@ -128,6 +129,7 @@ function App() {
             };
             console.log("paIFDBTPDB");
             const userPulledFromDB = await axios.get(`${process.env.API_CALL_U}/${username}`);  
+            
             
             if (userPulledFromDB.data === [] || userPulledFromDB.data[0].username === undefined) {
                 return;

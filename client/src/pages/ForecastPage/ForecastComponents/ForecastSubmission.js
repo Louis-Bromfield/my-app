@@ -44,6 +44,9 @@ function ForecastSubmission(props) {
     const [certaintyOne, setCertaintyOne] = useState(0);
     const [certaintyTwo, setCertaintyTwo] = useState(0);
     const [certaintyThree, setCertaintyThree] = useState(0);
+    const [previousCertaintyOne, setPreviousCertaintyOne] = useState(0);
+    const [previousCertaintyTwo, setPreviousCertaintyTwo] = useState(0);
+    const [previousCertaintyThree, setPreviousCertaintyThree] = useState(0);
     const [forecastObjForAnalysis, setForecastObjForAnalysis] = useState({});
     const [outcomeOneCertainty, setOutcomeOneCertainty] = useState("0%");
     const [outcomeTwoCertainty, setOutcomeTwoCertainty] = useState("0%");
@@ -53,6 +56,9 @@ function ForecastSubmission(props) {
     const [todayAverage, setTodayAverage] = useState("");
     const [todayForecastCount, setTodayForecastCount] = useState("");
     const [forecastFoundFromNotifications, setForecastFoundFromNotifications] = useState(false);
+    const [refreshChartAppearance, setRefreshChartAppearance] = useState(0);
+    const [newForecastSingleCertainty, setNewForecastSingleCertainty] = useState(0);
+    const [newForecastComments, setNewForecastComments] = useState("");
 
     const updateTodayStats = (avg, fc) => {
         setTodayAverage(avg);
@@ -179,11 +185,17 @@ function ForecastSubmission(props) {
         };
     };
 
+    // const causeRefresh = () => {
+    //     console.log("in cause refresh!");
+    //     setRefreshChartAppearance(refreshChartAppearance+1);
+    // };
+
     // Market Statistics uses the output of this (see props line at bottom of try block), good!
     const getLeaderboardFromDB = async (marketName) => {
         if (marketName === undefined) return;
         try {
             const leaderboardResponse = await axios.get(`${process.env.REACT_APP_API_CALL_L}/newGetLeaderboardRoute/${marketName}`);
+            
             for (let i = 0; i < leaderboardResponse.data.length; i++) {
                 leaderboardResponse.data[i].marketPoints = 0;
                 for (let j = 0; j < leaderboardResponse.data[i].brierScores.length; j++) {
@@ -226,6 +238,7 @@ function ForecastSubmission(props) {
             setCertaintyTwo(0);
             setCertaintyThree(0);
             setForecastComments("");
+            setRefreshChartAppearance(0);
         };
     };
 
@@ -553,12 +566,13 @@ console.log("here 343");
                 };
                 // const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/update`, {
                 const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/update`, {
+                
                     documentID: selectedForecastDocumentID,
                     newForecastObject: newForecastObj,
                     username: username
                 });
                 props.changeForecast(newForecastTwo.data);
-                setForecastResponseMessage("Forecast successfully updated! Refresh to see it on the chart.");
+                setForecastResponseMessage("Forecast successfully updated! Check out the chart to see it!");
                 document.getElementsByClassName("forecast-certainty-input").value = 0;
                 setCertainty(0);
                 setCertaintyOne(0);
@@ -568,6 +582,10 @@ console.log("here 343");
                 setUserPreviousAttemptCertainty(certainty*100);
                 setUserPreviousAttemptComments(forecastComments);
                 updateOnboarding(username);
+                setRefreshChartAppearance(refreshChartAppearance+1);
+                // causeRefresh();
+                // setNewForecastSingleCertainty(certainty*100);
+                // setNewForecastComments(forecastComments);
 
                 // const newForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/update`, {
                 //     problemName: forecast,
@@ -607,6 +625,7 @@ console.log("here 343");
                 // let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20)).toString();
                 // let nDateBSTSuffix = nDate.slice(0, 25) + "GMT+0100 (British Summer Time)";
                 const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submit`, {
+                
                     problemName: forecast,
                     username: username,
                     certainty: certainty,
@@ -614,7 +633,7 @@ console.log("here 343");
                     date: new Date().toString()
                     // date: nDateBSTSuffix
                 });
-                setForecastResponseMessage("Forecast successfully submitted! Refresh to see it on the chart.")
+                setForecastResponseMessage("Forecast successfully submitted! Check out the chart to see it!")
                 props.changeForecast(submittedForecast.data);
                 setUserHasAttempted(true);
                 document.getElementsByClassName("forecast-certainty-input").value = 0;
@@ -626,6 +645,8 @@ console.log("here 343");
                 setUserPreviousAttemptCertainty(certainty*100);
                 setUserPreviousAttemptComments(forecastComments);
                 updateOnboarding(username);
+                setRefreshChartAppearance(refreshChartAppearance+1);
+                // causeRefresh();
 
                 // if ((new Date(nDateBSTSuffix) - new Date(selectedForecastObject.startDate))/1000 <= 86400) {
                 if ((new Date() - new Date(selectedForecastObject.startDate))/1000 <= 86400) {
@@ -679,11 +700,12 @@ console.log("here 343");
                     // date: nDateBSTSuffix
                 };
                 const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/updateMultiple`, {
+                
                     documentID: selectedForecastDocumentID,
                     newForecastObject: newForecastObj,
                     username: username
                 });
-                setForecastResponseMessage("Forecast successfully updated! Refresh to see it on the chart.");
+                setForecastResponseMessage("Forecast successfully updated! Check out the chart to see it!");
                 props.changeForecast(newForecastTwo.data);
                 document.getElementsByClassName("forecast-certainty-input").value = 0;
                 setCertainty(0);
@@ -694,6 +716,10 @@ console.log("here 343");
                 setUserPreviousAttemptCertainty(`${newCertainty1*100} / ${newCertainty2*100} / ${newCertainty3*100}`);
                 setUserPreviousAttemptComments(newComments);
                 updateOnboarding(username);
+                setPreviousCertaintyOne(newCertainty1);
+                setPreviousCertaintyTwo(newCertainty2);
+                setPreviousCertaintyThree(newCertainty3);
+                setRefreshChartAppearance(refreshChartAppearance+1);
 
                 // Brute force method
                 // const document = await axios.get(`${process.env.REACT_APP_API_CALL_F}/${forecast}`);
@@ -767,6 +793,7 @@ console.log("here 343");
                 // let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20)).toString();
                 // let nDateBSTSuffix = nDate.slice(0, 25) + "GMT+0100 (British Summer Time)";
                 const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitMultiple`, {
+                
                     problemName: forecast,
                     username: username,
                     certainty1: certainty1,
@@ -776,7 +803,7 @@ console.log("here 343");
                     date: new Date().toString()
                     // date: nDateBSTSuffix
                 });
-                setForecastResponseMessage("Forecast successfully submitted! Refresh to see it on the chart.")
+                setForecastResponseMessage("Forecast successfully submitted! Check out the chart to see it!")
                 props.changeForecast(submittedForecast.data);
                 setUserHasAttempted(true);
                 document.getElementsByClassName("forecast-certainty-input").value = 0;
@@ -788,6 +815,10 @@ console.log("here 343");
                 setUserPreviousAttemptCertainty(`${certainty1*100} / ${certainty2*100} / ${certainty3*100}`);
                 setUserPreviousAttemptComments(comments);
                 updateOnboarding(username);
+                setPreviousCertaintyOne(certainty1);
+                setPreviousCertaintyTwo(certainty2);
+                setPreviousCertaintyThree(certainty3);
+                setRefreshChartAppearance(refreshChartAppearance+1);
 
                 // if ((new Date(nDateBSTSuffix) - new Date(selectedForecastObject.startDate))/1000 <= 86400) {
                 if ((new Date() - new Date(selectedForecastObject.startDate))/1000 <= 86400) {
@@ -805,6 +836,7 @@ console.log("here 343");
     const updateOnboarding = async (username) => {
         try {
             const updatedUserDocument = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/onboardingTask/${username}`, {
+            
                 onboardingTask: "submitAForecast",
                 ffPointsIfFalse: 300,
                 ffPointsIfTrue: 15
@@ -941,7 +973,7 @@ console.log("here 343");
                         {/* {selectedForecast.includes("Politico's") && <h2><a href="https://www.politico.eu/europe-poll-of-polls/united-kingdom/" target="_blank">Click Here For Politico's Poll of Polls</a></h2>} */}
                         {/* <br /> */}
                         <div className="forecast-submission-and-error-container">
-                            {(forecastSingleCertainty === true && (forecastResponseMessage !== "Forecast successfully updated! Refresh to see it on the chart." && forecastResponseMessage !== "Forecast successfully submitted! Refresh to see it on the chart.")) &&
+                            {(forecastSingleCertainty === true && (forecastResponseMessage !== "Forecast successfully updated! Check out the chart to see it!" && forecastResponseMessage !== "Forecast successfully submitted! Check out the chart to see it!")) &&
                                 <div className="forecast-submission-input">
                                     <div className="forecast-submission-input-certainty-section">
                                         <h3>
@@ -1029,7 +1061,7 @@ console.log("here 343");
                                                 // setForecastResponseMessage("Forecast successfully updated!");
                                                 // setUserPreviousAttemptCertainty(certainty*100);
                                                 // setUserPreviousAttemptComments(forecastComments);
-                                                props.causeRefresh();
+                                                // causeRefresh();
                                             }}>
                                                 Update Forecast
                                         </button>
@@ -1050,14 +1082,14 @@ console.log("here 343");
                                                 // setForecastResponseMessage("Forecast successfully submitted!");
                                                 // setUserPreviousAttemptCertainty(certainty*100);
                                                 // setUserPreviousAttemptComments(forecastComments);
-                                                props.causeRefresh();
+                                                // causeRefresh();
                                             }}>
                                                 Submit Forecast
                                         </button>
                                     }
                                 </div>
                             }
-                            {(forecastSingleCertainty === false && (forecastResponseMessage !== "Forecast successfully updated! Refresh to see it on the chart." && forecastResponseMessage !== "Forecast successfully submitted! Refresh to see it on the chart.")) &&
+                            {(forecastSingleCertainty === false && (forecastResponseMessage !== "Forecast successfully updated! Check out the chart to see it!" && forecastResponseMessage !== "Forecast successfully submitted! Check out the chart to see it!")) &&
                                 <div className="multiple-forecast-submission-input">
                                     <div className="forecast-submission-input-certainty-section">
                                         <h3>
@@ -1157,7 +1189,7 @@ console.log("here 343");
                                                     // setForecastResponseMessage("Forecast successfully updated!");
                                                     setUserPreviousAttemptCertainty(`${certaintyOne*100} / ${certaintyTwo*100} / ${certaintyThree*100}`);
                                                     setUserPreviousAttemptComments(forecastComments);
-                                                    props.causeRefresh();
+                                                    // causeRefresh();
                                                 }}>
                                                     Update Forecast
                                             </button>
@@ -1178,7 +1210,7 @@ console.log("here 343");
                                                     // setForecastResponseMessage("Forecast successfully submitted!");
                                                     setUserPreviousAttemptCertainty(`${certaintyOne*100} / ${certaintyTwo*100} / ${certaintyThree*100}`);
                                                     setUserPreviousAttemptComments(forecastComments);
-                                                    props.causeRefresh();
+                                                    // causeRefresh();
                                                 }}>
                                                     Submit Forecast
                                             </button>
@@ -1186,10 +1218,10 @@ console.log("here 343");
                                     </div>
                                 </div>
                             }
-                            {(forecastResponseMessage === "Forecast successfully updated! Refresh to see it on the chart." || forecastResponseMessage === "Forecast successfully submitted! Refresh to see it on the chart.") && 
+                            {(forecastResponseMessage === "Forecast successfully updated! Check out the chart to see it!" || forecastResponseMessage === "Forecast successfully submitted! Check out the chart to see it!") && 
                                 <h3 className="forecast-message" style={{ color: "green" }}>{forecastResponseMessage}</h3>
                             }
-                            {(forecastResponseMessage !== "" && (forecastResponseMessage !== "Forecast successfully updated! Refresh to see it on the chart." && forecastResponseMessage !== "Forecast successfully submitted! Refresh to see it on the chart.")) && 
+                            {(forecastResponseMessage !== "" && (forecastResponseMessage !== "Forecast successfully updated! Check out the chart to see it!" && forecastResponseMessage !== "Forecast successfully submitted! Check out the chart to see it!")) && 
                                 <h3 className="forecast-message" style={{ color: "red" }}>{forecastResponseMessage}</h3>
                             }
                         </div>
@@ -1228,8 +1260,8 @@ console.log("here 343");
                     </div>
                     <div className="forecast-chart-stats-switcher">
                         <div className="forecast-chart-stats-switcher-tab-menu">
-                            <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("chart")}><h3>Chart</h3></div>
-                            <div className="forecast-chart-stats-switcher-tab" onClick={() => setSwitcherTab("problemStats")}><h3>Problem Stats</h3></div>
+                            <div className={switcherTab === "problemStats" ? "forecast-chart-stats-switcher-tab-selected" : "forecast-chart-stats-switcher-tab"} onClick={() => setSwitcherTab("chart")}><h3>Chart</h3></div>
+                            <div className={switcherTab === "chart" ? "forecast-chart-stats-switcher-tab-selected" : "forecast-chart-stats-switcher-tab"} onClick={() => setSwitcherTab("problemStats")}><h3>Problem Stats</h3></div>
                         </div>
                         {switcherTab === "problemStats" && 
                             <div className="switcher-problem-stats">
@@ -1263,8 +1295,13 @@ console.log("here 343");
                                 selectedForecastObject={selectedForecastObject} 
                                 updateTodayStats={props.updateTodayStats} 
                                 username={props.username} 
-                                refresh={"test"} 
+                                refreshChartAppearance={refreshChartAppearance} 
                                 forecastSingleCertainty={forecastSingleCertainty}
+                                userPreviousAttemptCertainty={userPreviousAttemptCertainty}
+                                userPreviousAttemptComments={userPreviousAttemptComments}
+                                previousCertaintyOne={previousCertaintyOne}
+                                previousCertaintyTwo={previousCertaintyTwo}
+                                previousCertaintyThree={previousCertaintyThree}
                             />
                         }
                     </div>
@@ -1380,8 +1417,13 @@ console.log("here 343");
                                 selectedForecastObject={selectedForecastObject} 
                                 updateTodayStats={props.updateTodayStats} 
                                 username={props.username} 
-                                refresh={"test"} 
+                                refreshChartAppearance={refreshChartAppearance} 
                                 forecastSingleCertainty={forecastSingleCertainty}
+                                userPreviousAttemptCertainty={userPreviousAttemptCertainty}
+                                userPreviousAttemptComments={userPreviousAttemptComments}
+                                previousCertaintyOne={previousCertaintyOne}
+                                previousCertaintyTwo={previousCertaintyTwo}
+                                previousCertaintyThree={previousCertaintyThree}
                             />
                         }
                         {switcherTab === "results" && 

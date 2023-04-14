@@ -40,9 +40,10 @@ function Forecast(props) {
         setLeaderboardData(newLeaderboard);
     };
 
-    const causeRefresh = () => {
-        setRefresh(refresh+1);
-    };
+    // const causeRefresh = () => {
+    //     console.log("in cause refresh!");
+    //     setRefresh(refresh+1);
+    // };
 
     const getAllForecastsFromDB = async () => {
         try {
@@ -107,13 +108,13 @@ function Forecast(props) {
                         markets={props.markets} 
                         selectedForecast={forecast} 
                         username={props.username}
-                        causeRefresh={causeRefresh}
+                        // causeRefresh={causeRefresh}
                         userObjectMarkets={props.userObjectMarkets}
                         userBriers={props.userBriers}
                         updateTodayStats={updateTodayStats}
                         handleForecastSet={setHasAForecastBeenSelected}
                         leaderboardData={leaderboardData}
-                        refresh={refresh}
+                        // refresh={refresh}
                     />
                     {/* line chart */}
                 </div>

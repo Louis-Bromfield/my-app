@@ -28,10 +28,128 @@ function ForecastProblemLineChart(props) {
         return;
     } else {
         formatCertainties(props.selectedForecastObject, props.updateTodayStats, props.username);
+    } 
+    if (props.refreshChartAppearance !== 0) {
+        console.log("here yes");
+        if (props.selectedForecastObject.singleCertainty === true) {
+            console.log("HERE LOUIS");
+            console.log(userChartData);
+            let newUserChartData = userChartData.data;
+            if (newUserChartData.length >= 1) {
+                newUserChartData[newUserChartData.length-1] = {
+                    username: props.username,
+                    x: new Date().toString().slice(0, 15),
+                    y: props.userPreviousAttemptCertainty,
+                    description: props.userPreviousAttemptComments
+                };
+            } else {
+                newUserChartData.push({
+                    username: props.username,
+                    x: new Date().toString().slice(0, 15),
+                    y: props.userPreviousAttemptCertainty,
+                    description: props.userPreviousAttemptComments
+                });
+            };
+            let userData = {
+                label: "Your Forecasts",
+                data: newUserChartData,
+                backgroundColor: "green",
+                borderColor: "orange",
+                showLine: true,
+                borderWidth: 4,
+                pointRadius: 4
+            }
+            setUserChartData(userData);
+            // console.log(props.userPreviousAttemptCertainty);
+            // console.log(props.userPreviousAttemptComments);
+            // formatCertainties(props.selectedForecastObject, props.updateTodayStats, props.username);
+        } else if (props.selectedForecastObject.singleCertainty === false) {
+            console.log("HERE LOUIS MULTIPLE OUTCOME");
+            console.log(userOutcomeOneChartData);
+            let newUserOutcomeOneData = userOutcomeOneChartData.length === 0 ? userOutcomeOneChartData : userOutcomeOneChartData.data;
+            let newUserOutcomeTwoData = userOutcomeTwoChartData.length === 0 ? userOutcomeTwoChartData : userOutcomeTwoChartData.data;
+            let newUserOutcomeThreeData = userOutcomeThreeChartData.length === 0 ? userOutcomeThreeChartData : userOutcomeThreeChartData.data;
+            console.log(`${props.previousCertaintyOne} + ${props.previousCertaintyTwo} + ${props.previousCertaintyThree}`)
+            if (newUserOutcomeOneData.length >= 1) {
+                newUserOutcomeOneData[newUserOutcomeOneData.length-1] = {
+                    username: props.username,
+                    x: new Date().toString().slice(0, 15),
+                    y: props.previousCertaintyOne*100,
+                    description: props.userPreviousAttemptComments
+                };
+                newUserOutcomeTwoData[newUserOutcomeTwoData.length-1] = {
+                    username: props.username,
+                    x: new Date().toString().slice(0, 15),
+                    y: props.previousCertaintyTwo*100,
+                    description: props.userPreviousAttemptComments
+                };
+                newUserOutcomeThreeData[newUserOutcomeThreeData.length-1] = {
+                    username: props.username,
+                    x: new Date().toString().slice(0, 15),
+                    y: props.previousCertaintyThree*100,
+                    description: props.userPreviousAttemptComments
+                };
+            } else {
+                newUserOutcomeOneData.push({
+                    username: props.username,
+                    x: new Date().toString().slice(0, 15),
+                    y: props.previousCertaintyOne*100,
+                    description: props.userPreviousAttemptComments
+                });
+                newUserOutcomeTwoData.push({
+                    username: props.username,
+                    x: new Date().toString().slice(0, 15),
+                    y: props.previousCertaintyTwo*100,
+                    description: props.userPreviousAttemptComments
+                });
+                newUserOutcomeThreeData.push({
+                    username: props.username,
+                    x: new Date().toString().slice(0, 15),
+                    y: props.previousCertaintyThree*100,
+                    description: props.userPreviousAttemptComments
+                });
+            }
+            let userOutcomeOneChData = {
+                label: `${props.selectedForecastObject.potentialOutcomes[0]} (Me)`,
+                data: newUserOutcomeOneData,
+                backgroundColor: "lightblue",
+                borderColor: "lightblue",
+                showLine: true,
+                borderWidth: 3,
+                pointRadius: 2
+            };
+            let userOutcomeTwoChData = {
+                label: `${props.selectedForecastObject.potentialOutcomes[1]} (Me)`,
+                data: newUserOutcomeTwoData,
+                backgroundColor: "pink",
+                borderColor: "pink",
+                showLine: true,
+                borderWidth: 3,
+                pointRadius: 2
+            };
+            let userOutcomeThreeChData = {
+                label: `${props.selectedForecastObject.potentialOutcomes[2]} (Me)`,
+                data: newUserOutcomeThreeData,
+                backgroundColor: "lightgreen",
+                borderColor: "lightgreen",
+                showLine: true,
+                borderWidth: 3,
+                pointRadius: 2
+            };
+            setUserOutcomeOneChartData(userOutcomeOneChData);
+            setUserOutcomeTwoChartData(userOutcomeTwoChData);
+            setUserOutcomeThreeChartData(userOutcomeThreeChData);
+            // console.log(props.userPreviousAttemptCertainty);
+            // console.log(props.userPreviousAttemptComments);
+            // formatCertainties(props.selectedForecastObject, props.updateTodayStats, props.username);
+        };
+        createLabelsArray(new Date(props.selectedForecastObject.startDate), new Date(props.selectedForecastObject.closeDate));
+    } else {
+        console.log("here no");
     }
-    console.log("Line Chart UE");
+    console.log("Line Chart UEEEEEEEEE");
     // setHasLoadedAlready(0);
-  }, [props.selectedForecastObject, props.refresh]);
+  }, [props.selectedForecastObject, props.refreshChartAppearance]);
 
   const formatCertainties = (selectedForecastObject, updateTodayStats, username) => {
     // No forecasts yet submitted
@@ -798,6 +916,7 @@ function ForecastProblemLineChart(props) {
     };
     return (
         <div className="forecast-problem-line-chart">
+            {console.log("Line Chart Markup")}
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
                 <p>{modalContent2}</p>
