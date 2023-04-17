@@ -66,32 +66,32 @@ function ForecastArticlesDisplay(props) {
                             </div>
                         </a>
                         {/* change this one */}
-                        <a href="https://projects.fivethirtyeight.com/polls/senate/2022/georgia/" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
+                        <a href="https://www.bbc.co.uk/news/uk-politics-65013652" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
                             {/* <p>{article.title}</p> */}
                             <div className="article-list-item" onClick={() => logUserAction(props.username === undefined ? props.userObject.username : props.username)}>
                                 <div className="article-list-item-img-container">
-                                    <img className="article-list-item-img" src="https://s.abcnews.com/images/Business/fivethirtyeight-logo-v2-ht-ps2-180417_hpMain_16x9_992.jpg" alt="" />
+                                    <img className="article-list-item-img" src="https://ichef.bbci.co.uk/news/976/cpsprodpb/C1B7/production/_129219594_le_2023_index_promo_guide_to_elections_v2-nc.jpg.webp" alt="" />
                                 </div>
                                 <div className="article-list-item-text-div">
-                                    <h3 className="article-list-item-title">Who's ahead in the Georgia Senate race?</h3>
+                                    <h3 className="article-list-item-title">Local elections 2023: When are they and who can vote?</h3>
                                     {/* <p className="article-list-item-description">{article.description}</p> */}
                                     <hr />
-                                    <h5 className="article-list-item-publisher">FiveThirtyEight</h5>
+                                    <h5 className="article-list-item-publisher">BBC News</h5>
                                 </div>
                             </div>
                         </a>
                         {/* change this one */}
-                        <a href="https://www.cbsnews.com/news/runoff-election-georgia-senate-2022-raphael-warnock-herschel-walker/" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
+                        <a href="https://www.bbc.co.uk/news/uk-politics-65190787" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
                             {/* <p>{article.title}</p> */}
                             <div className="article-list-item" onClick={() => logUserAction(props.username === undefined ? props.userObject.username : props.username)}>
                                 <div className="article-list-item-img-container">
-                                    <img className="article-list-item-img" src="https://election-assets.cbsnewsstatic.com/general-2022/GA-S-D-RAPHAEL_WARNOCK.jpg" alt="" />
+                                    <img className="article-list-item-img" src="https://ichef.bbci.co.uk/news/976/cpsprodpb/11240/production/_129280207_le_2023_nick_eardley-nc.jpg.webp" alt="" />
                                 </div>
                                 <div className="article-list-item-text-div">
-                                    <h3 className="article-list-item-title">What is a runoff election, and how will it work in Georgia's Senate race?</h3>
+                                    <h3 className="article-list-item-title">Local elections 2023: What to expect from May's polls in England</h3>
                                     {/* <p className="article-list-item-description">{article.description}</p> */}
                                     <hr />
-                                    <h5 className="article-list-item-publisher">CBS News</h5>
+                                    <h5 className="article-list-item-publisher">BBC News</h5>
                                 </div>
                             </div>
                         </a>
