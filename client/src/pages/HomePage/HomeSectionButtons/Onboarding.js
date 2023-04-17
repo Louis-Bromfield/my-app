@@ -94,7 +94,7 @@ function Onboarding(props) {
                     <li 
                             className="onboarding-list-item" 
                             style={{ backgroundColor: onboardingBooleans.visitProfilePage ? "lightgreen" : "none" }}
-                            onClick={() => { props.setShowModal(true); props.setModalContent("This can be done by clicking on your username in the top right of the screen!")}}>
+                            onClick={() => { props.setShowModal(true); props.setModalContent("This can be done by clicking on the My Profile button at the top of the page, then selecting Go to my Profile, or by clicking Go to My Profile on the Home Page's Profile Preview!")}}>
                                 <h4>Visit your profile page</h4>
                                 <h4>Reward: 100pts</h4>
                         </li>
@@ -108,7 +108,7 @@ function Onboarding(props) {
                         <li 
                             className="onboarding-list-item" 
                             style={{ backgroundColor: onboardingBooleans.submitAForecast ? "lightgreen" : "none" }}
-                            onClick={() => { props.setShowModal(true); props.setModalContent("Once you've joined a market, the dropdown menu at the top of the My Forecasts page will contain problems you are able to tackle based on the markets you have joined. Submit a forecast to any problem to complete this onboarding task!")}}>
+                            onClick={() => { props.setShowModal(true); props.setModalContent("On the My Forecasts page, select a Problem from the dropdown menu at the top. Submit a forecast to any problem to complete this onboarding task!")}}>
                                 <h4>Submit a forecast</h4>
                                 <h4>Reward: 300pts</h4>
                         </li>
@@ -122,7 +122,7 @@ function Onboarding(props) {
                         <li 
                             className="onboarding-list-item" 
                             style={{ backgroundColor: onboardingBooleans.completeALearnQuiz ? "lightgreen" : "none" }}
-                            onClick={() => { props.setShowModal(true); props.setModalContent("All of the topics found on the Learn page (apart from Fantasy Forecast Points) contain a quiz at the end of their information page!")}}>
+                            onClick={() => { props.setShowModal(true); props.setModalContent("Three of the topics found on the Learn page contain a quiz at the end of their information page!")}}>
                                 <h4>Complete a Learn Quiz</h4>
                                 <h4>Reward: 250pts</h4>
                         </li>
