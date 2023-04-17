@@ -69,14 +69,14 @@ function Onboarding(props) {
             }
             {(onboardingComplete === false && props.isHidden) && <div className="onboarding-incomplete">
                 <div className="onboarding-title-div">
-                    <p className="onboarding-title">Onboarding</p>
+                    <p className="onboarding-title" style={{ fontSize: "1.2em" }}>Onboarding</p>
                     <button className="show-hide-onboarding-btn" onClick={props.handleClick}>{props.buttonText}</button>
                 </div>
             </div>}
             {(onboardingComplete === false && (!props.isHidden && onboardingLoading === true)) &&
                 <div className="onboarding">
                     <div className="onboarding-title-div">
-                        <p className="onboarding-title">Onboarding</p>
+                        <p className="onboarding-title" style={{ fontSize: "1.2em" }}>Onboarding</p>
                         <button className="show-hide-onboarding-btn" onClick={props.handleClick}>{props.buttonText}</button>
                     </div>
                     <div className="loading-div">
@@ -87,7 +87,7 @@ function Onboarding(props) {
             {(onboardingComplete === false && (!props.isHidden && onboardingLoading === false)) && 
                 <div className="onboarding">
                     <div className="onboarding-title-div">
-                        <p className="onboarding-title">Onboarding</p>
+                        <p className="onboarding-title" style={{ fontSize: "1.2em" }}>Onboarding</p>
                         <button className="show-hide-onboarding-btn" onClick={props.handleClick}>{props.buttonText}</button>
                     </div>
                     <ul className="onboarding-list">
