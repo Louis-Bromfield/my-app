@@ -887,7 +887,7 @@ console.log("here 343");
             <div className="forecast-top-bar">
                 {marketWarning === true &&
                     <div className="forecast-selection-div">
-                        <h4>You are not currently in any markets, so no forecasts are available. To join a market, go to the Leaderboards page and press the Join A Market button. If you've joined a market and are still seeing this message, refresh the page and the dropdown should appear here.</h4>
+                        <h4>There are currently no forecasts available right now. Try refreshing and returning to this page or hang tight until new forecast problems are released!</h4>
                     </div>
                 }
                 {marketWarning === false && 
