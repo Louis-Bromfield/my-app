@@ -966,7 +966,8 @@ console.log("here 343");
                             {/* {selectedForecast.includes("Politico's") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://www.politico.eu/europe-poll-of-polls/united-kingdom/" target="_blank"><h4>(<u>Link: Politico</u>)</h4></a>} */}
                             {/* {selectedForecast.includes("Scotland") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://whatscotlandthinks.org/questions/how-would-you-vote-in-the-in-a-scottish-independence-referendum-if-held-now-ask/?removed" target="_blank"><h4>(<u>Link: What Scotland Thinks</u>)</h4></a>} */}
                             {/* {selectedForecast.includes("Statesman's") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://sotn.newstatesman.com/2022/07/conservative-leadership-election-candidates-who-backing/" target="_blank"><h4>(<u>Link: The New Statesman's Tracker</u>)</h4></a>} */}
-                            {selectedForecast.includes("538") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://projects.fivethirtyeight.com/biden-approval-rating/" target="_blank"><h4>(<u>Link: 538 Biden Polls</u>)</h4></a>}
+                            {/* {selectedForecast.includes("538") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://projects.fivethirtyeight.com/biden-approval-rating/" target="_blank"><h4>(<u>Link: 538 Biden Polls</u>)</h4></a>} */}
+                            {selectedForecast.includes("scoreboard") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://www.bbc.co.uk/news/election/2022/england/results" target="_blank"><h4>(<u>Link: BBC</u>)</h4></a>}
                         </h2>
                         {/* <h3 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 38)}</h3> */}
                         <h3 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 34)}</h3>
