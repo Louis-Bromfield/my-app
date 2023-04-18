@@ -152,13 +152,13 @@ function ForecastChat(props) {
             </Modal>
             <h2 style={{ color: "#404d72" }}>
                 Forecast Chat
-                <FaInfoCircle 
+                {/* <FaInfoCircle 
                     onClick={() => {
                         setShowModal(true);
                         setModalContent(`The percentages next to each username below are that user's most recent forecast for this problem.`)
                     }}
                     style={{ "color": "orange", "cursor": "pointer" }}
-                />
+                /> */}
             </h2>
             <div className="chat">
             {/* New comment input field */}
@@ -184,7 +184,8 @@ function ForecastChat(props) {
                                     to={newCommentToRender.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: newCommentToRender.author}}
                                     onClick={() => localStorage.setItem("selectedPage", "Search")}
                                     style={{ textDecoration: "none", color: "#404d72"}}>
-                                        {newCommentToRender.author} ({findLastCertainty(newCommentToRender.author)}%)
+                                        {/* {newCommentToRender.author} ({findLastCertainty(newCommentToRender.author)}%) */}
+                                        {newCommentToRender.author}
                                 </Link> | {newCommentToRender.date !== undefined ? newCommentToRender.date.slice(0, 21) : newCommentToRender.date}</h4>
                             <p>{newCommentToRender.comment}</p>
                             {/* {newCommentToRender !== {} ? newCommentToRender.replies.map((newItem, newIndex) => {
@@ -225,7 +226,8 @@ function ForecastChat(props) {
                                         to={item.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: item.author}}
                                         onClick={() => localStorage.setItem("selectedPage", "Search")}
                                         style={{ textDecoration: "none", color: "#404d72"}}>
-                                            {item.author} ({findLastCertainty(item.author)}%)
+                                            {/* {item.author} ({findLastCertainty(item.author)}%) */}
+                                            {item.author}
                                     </Link> | {item.date !== undefined ? item.date.slice(0, 21) : item.date}</h4>
                                 <p>{item.comment}</p>
                                 {item.replies.map((newItem, newIndex) => {
@@ -253,7 +255,8 @@ function ForecastChat(props) {
                                                 to={newReplyCommentToRender.author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: newReplyCommentToRender.author}}
                                                 onClick={() => localStorage.setItem("selectedPage", "Search")}
                                                 style={{ textDecoration: "none", color: "#404d72"}}>
-                                                    {newReplyCommentToRender.author} ({findLastCertainty(newReplyCommentToRender.author)}%)
+                                                    {/* {newReplyCommentToRender.author} ({findLastCertainty(newReplyCommentToRender.author)}%) */}
+                                                    {newReplyCommentToRender.author}
                                             </Link> | {newReplyCommentToRender.date !== undefined ? newReplyCommentToRender.date.slice(0, 21) : newReplyCommentToRender.date}
 
                                             </h4>
