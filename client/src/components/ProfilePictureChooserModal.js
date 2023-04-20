@@ -38,25 +38,41 @@ const ProfilePictureChooserModal = ({ show, justClose, username }) => {
             <p>Choose a picture from the dropdown below:</p>
             {/* drop down here */}
             <select name="picChoiceSelector" id="picChoiceSelector">
-                <option value="Avatar1" onClick={() => setNewPic({Avatar1})}>Avatar1</option>
-                <option value="Avatar2" onClick={() => setNewPic({Avatar2})}>Avatar2</option>
-                <option value="Avatar3" onClick={() => setNewPic({Avatar3})}>Avatar3</option>
-                <option value="Avatar4" onClick={() => setNewPic({Avatar4})}>Avatar4</option>
-                <option value="Avatar5" onClick={() => setNewPic({Avatar5})}>Avatar5</option>
-                <option value="Avatar6" onClick={() => setNewPic({Avatar6})}>Avatar6</option>
-                <option value="Avatar7" onClick={() => setNewPic({Avatar7})}>Avatar7</option>
-                <option value="Avatar8" onClick={() => setNewPic({Avatar8})}>Avatar8</option>
-                <option value="Avatar9" onClick={() => setNewPic({Avatar9})}>Avatar9</option>
-                <option value="Avatar10" onClick={() => setNewPic({Avatar10})}>Avatar10</option>
-                <option value="Avatar11" onClick={() => setNewPic({Avatar11})}>Avatar11</option>
-                <option value="Avatar12" onClick={() => setNewPic({Avatar12})}>Avatar12</option>
-                <option value="Avatar9" onClick={() => setNewPic({Avatar13})}>Avatar9</option>
-                <option value="Avatar10" onClick={() => setNewPic({Avatar14})}>Avatar10</option>
-                <option value="Avatar11" onClick={() => setNewPic({Avatar15})}>Avatar11</option>
-                <option value="Avatar12" onClick={() => setNewPic({Avatar16})}>Avatar12</option>
+                <option value="Avatar1" onClick={() => setNewPic("Avatar1")}>Avatar1</option>
+                <option value="Avatar2" onClick={() => setNewPic("Avatar2")}>Avatar2</option>
+                <option value="Avatar3" onClick={() => setNewPic("Avatar3")}>Avatar3</option>
+                <option value="Avatar4" onClick={() => setNewPic("Avatar4")}>Avatar4</option>
+                <option value="Avatar5" onClick={() => setNewPic("Avatar5")}>Avatar5</option>
+                <option value="Avatar6" onClick={() => setNewPic("Avatar6")}>Avatar6</option>
+                <option value="Avatar7" onClick={() => setNewPic("Avatar7")}>Avatar7</option>
+                <option value="Avatar8" onClick={() => setNewPic("Avatar8")}>Avatar8</option>
+                <option value="Avatar9" onClick={() => setNewPic("Avatar9")}>Avatar9</option>
+                <option value="Avatar10" onClick={() => setNewPic("Avatar10")}>Avatar10</option>
+                <option value="Avatar11" onClick={() => setNewPic("Avatar11")}>Avatar11</option>
+                <option value="Avatar12" onClick={() => setNewPic("Avatar12")}>Avatar12</option>
+                <option value="Avatar9" onClick={() => setNewPic("Avatar13")}>Avatar9</option>
+                <option value="Avatar10" onClick={() => setNewPic("Avatar14")}>Avatar10</option>
+                <option value="Avatar11" onClick={() => setNewPic("Avatar15")}>Avatar11</option>
+                <option value="Avatar12" onClick={() => setNewPic("Avatar16")}>Avatar12</option>
             </select>
             <p>Preview:</p>
-            <img src={newPic} alt="Profile avatar preview" />
+            <img src={newPic === "Avatar1" ? {Avatar1} : 
+                      newPic === "Avatar2" ? {Avatar2} :
+                      newPic === "Avatar3" ? {Avatar3} :
+                      newPic === "Avatar4" ? {Avatar4} :
+                      newPic === "Avatar5" ? {Avatar5} :
+                      newPic === "Avatar6" ? {Avatar6} :
+                      newPic === "Avatar7" ? {Avatar7} :
+                      newPic === "Avatar8" ? {Avatar8} :
+                      newPic === "Avatar9" ? {Avatar9} :
+                      newPic === "Avatar10" ? {Avatar10} :
+                      newPic === "Avatar11" ? {Avatar11} :
+                      newPic === "Avatar12" ? {Avatar12} :
+                      newPic === "Avatar13" ? {Avatar13} :
+                      newPic === "Avatar14" ? {Avatar14} :
+                      newPic === "Avatar15" ? {Avatar15} :
+                      {Avatar16}
+                      } alt="Profile avatar preview" />
             <button type="button" onClick={() => changePicture} className="close-modal2-btn">
                 Confirm Choice
             </button>
