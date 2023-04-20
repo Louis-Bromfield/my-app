@@ -14,6 +14,10 @@ import Avatar9 from '../../media/Avatar9.png';
 import Avatar10 from '../../media/Avatar10.png';
 import Avatar11 from '../../media/Avatar11.png';
 import Avatar12 from '../../media/Avatar12.png';
+import Avatar13 from '../../media/Avatar13.png';
+import Avatar14 from '../../media/Avatar14.png';
+import Avatar15 from '../../media/Avatar15.png';
+import Avatar16 from '../../media/Avatar16.png';
 
 const ProfilePictureChooserModal = ({ show, username }) => {
     const showHideClassName = show ? "modal display-block" : "modal display-none";
