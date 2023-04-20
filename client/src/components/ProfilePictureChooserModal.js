@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './ClosedProblemModal.css';
 import FFLogo from '../media/Icon.png';
-import Avatar1 from '../../media/Avatar1.png';
-import Avatar2 from '../../media/Avatar2.png';
-import Avatar3 from '../../media/Avatar3.png';
-import Avatar4 from '../../media/Avatar4.png';
-import Avatar5 from '../../media/Avatar5.png';
-import Avatar6 from '../../media/Avatar6.png';
-import Avatar7 from '../../media/Avatar7.png';
-import Avatar8 from '../../media/Avatar8.png';
-import Avatar9 from '../../media/Avatar9.png';
-import Avatar10 from '../../media/Avatar10.png';
-import Avatar11 from '../../media/Avatar11.png';
-import Avatar12 from '../../media/Avatar12.png';
-import Avatar13 from '../../media/Avatar13.png';
-import Avatar14 from '../../media/Avatar14.png';
-import Avatar15 from '../../media/Avatar15.png';
-import Avatar16 from '../../media/Avatar16.png';
+import Avatar1 from '../media/Avatar1.png
+import Avatar2 from '../media/Avatar2.png';
+import Avatar3 from '../media/Avatar3.png';
+import Avatar4 from '../media/Avatar4.png';
+import Avatar5 from '../media/Avatar5.png';
+import Avatar6 from '../media/Avatar6.png';
+import Avatar7 from '../media/Avatar7.png';
+import Avatar8 from '../media/Avatar8.png';
+import Avatar9 from '../media/Avatar9.png';
+import Avatar10 from '../media/Avatar10.png';
+import Avatar11 from '../media/Avatar11.png';
+import Avatar12 from '../media/Avatar12.png';
+import Avatar13 from '../media/Avatar13.png';
+import Avatar14 from '../media/Avatar14.png';
+import Avatar15 from '../media/Avatar15.png';
+import Avatar16 from '../media/Avatar16.png';
 
 const ProfilePictureChooserModal = ({ show, username }) => {
     const showHideClassName = show ? "modal display-block" : "modal display-none";
