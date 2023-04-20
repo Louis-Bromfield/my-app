@@ -73,7 +73,7 @@ const ProfilePictureChooserModal = ({ show, justClose, username }) => {
                       newPic === "Avatar15" ? {Avatar15} :
                       {Avatar16}
                       } alt="Profile avatar preview" />
-            <button type="button" onClick={() => changePicture} className="close-modal2-btn">
+            <button type="button" onClick={() => changePicture(newPic)} className="close-modal2-btn">
                 Confirm Choice
             </button>
             <button type="button" onClick={justClose} className="close-modal2-btn">
