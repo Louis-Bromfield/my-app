@@ -223,6 +223,7 @@ console.log("Profile.js UE");
                 //     setOpenProfilePicChooser(false)
                 // }} 
                 justClose={() => setOpenProfilePicChooser(false)}
+                username={props.username}
             />
             <div className="main-profile-grid">
                 <div className="profile-grid">

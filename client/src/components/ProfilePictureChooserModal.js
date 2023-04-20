@@ -19,7 +19,7 @@ import Avatar14 from '../media/Avatar14.png';
 import Avatar15 from '../media/Avatar15.png';
 import Avatar16 from '../media/Avatar16.png';
 
-const ProfilePictureChooserModal = ({ show, username }) => {
+const ProfilePictureChooserModal = ({ show, justClose, username }) => {
     const showHideClassName = show ? "modal display-block" : "modal display-none";
     const [newPic, setNewPic] = useState("");
 
@@ -56,7 +56,7 @@ const ProfilePictureChooserModal = ({ show, username }) => {
             <button type="button" onClick={() => changePicture} className="close-modal2-btn">
                 Confirm Choice
             </button>
-            <button type="button" onClick={() => show = false} className="close-modal2-btn">
+            <button type="button" onClick={justClose} className="close-modal2-btn">
                 Close
             </button>
         </section>
