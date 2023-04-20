@@ -5,7 +5,8 @@ import ProfileStats from './ProfileStats';
 import Modal from '../../components/Modal';
 import ProfileRewards from './ProfileRewards';
 import ProfileForecasts from './ProfileForecasts';
-import ProfileTeam from './ProfileTeam';
+import ProfilePictureChooserModal from '../../components/ProfilePictureChooserModal';
+// import ProfileTeam from './ProfileTeam';
 
 function Profile(props) {
     const [markets, setMarkets] = useState("");
@@ -27,6 +28,7 @@ function Profile(props) {
     const [profilePicStyle, setProfilePicStyle] = useState("none");
     const [teamData, setTeamData] = useState();
     const [isTeam, setIsTeam] = useState(false);
+    const [openProfilePicChooser, setOpenProfilePicChooser] = useState(false);
 
     useEffect(() => {
         if (props.user.markets === undefined) {
@@ -214,6 +216,14 @@ console.log("Profile.js UE");
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>
+            <ProfilePictureChooserModal 
+                show={openProfilePicChooser} 
+                // handleClose={() => {
+                //     changeProfilePicture(postIDToDelete); 
+                //     setOpenProfilePicChooser(false)
+                // }} 
+                justClose={() => setOpenProfilePicChooser(false)}
+            />
             <div className="main-profile-grid">
                 <div className="profile-grid">
                     {/* {props.user.inTeam === false ?  */}
@@ -233,7 +243,13 @@ console.log("Profile.js UE");
                     <div className="profile-main-info">
                         {/* CHARMANDER */}
                         {/* <img className="profile-profile-pic" src={props.profilePicture || localStorage.getItem("profilePicture")} alt="Temporary profile pic"/> */}
-                        <img className="profile-profile-pic" src={props.profilePicture} alt="Temporary profile pic" style={{border: profilePicStyle}}/>
+                        <img 
+                            className="profile-profile-pic"
+                            src={props.profilePicture} 
+                            alt="Temporary profile pic" 
+                            style={{border: profilePicStyle}}
+                            onClick={() => setOpenProfilePicChooser(true)}
+                        />
                         <div className="profile-summary">
                             {/* <ul className="profile-summary-list">  */}
                                 <div key={0} className="profile-summary-list-item">
