@@ -952,7 +952,7 @@ function Leaderboard(props) {
                     } 
                 </table>
             }
-            <p>* (T) denotes a Team. To make a team, go to your Profile page and select the "My Team" tab.</p>
+            {/* <p>* (T) denotes a Team. To make a team, go to your Profile page and select the "My Team" tab.</p> */}
         </div>
     )
 }

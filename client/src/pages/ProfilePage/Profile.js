@@ -216,10 +216,10 @@ console.log("Profile.js UE");
             </Modal>
             <div className="main-profile-grid">
                 <div className="profile-grid">
-                    {props.user.inTeam === false ? 
+                    {/* {props.user.inTeam === false ?  */}
                         <h1 className="profile-header">{errorMessage === "" ? props.username : errorMessage}</h1> 
-                    :
-                        <select 
+                    {/* : */}
+                        {/* <select 
                             style={{ fontWeight: "bold", fontSize: "32px"}}
                             className="profile-dropdown-selection"
                             onChange={(e) => { 
@@ -229,7 +229,7 @@ console.log("Profile.js UE");
                                 <option value={props.username}>{props.username}</option>
                                 <option value={props.teamName}>{props.user.teamName}</option>
                         </select>
-                    }
+                    } */}
                     <div className="profile-main-info">
                         {/* CHARMANDER */}
                         {/* <img className="profile-profile-pic" src={props.profilePicture || localStorage.getItem("profilePicture")} alt="Temporary profile pic"/> */}
@@ -304,7 +304,7 @@ console.log("Profile.js UE");
                             <div style={{ borderLeft: "0px solid #fff" }} className={profileTab === "my-stats" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-stats")}><h3>My Stats</h3></div>
                             <div style={{borderLeft: "0px solid #fff" }} className={profileTab === "my-forecasts" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-forecasts")}><h3>My Forecasts</h3></div>
                             {isTeam === false && <div style={{borderLeft: "0px solid #fff" }} className={profileTab === "my-trophies" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-trophies")}><h3>My Trophies</h3></div>}
-                            <div style={{ borderRight: "0px solid #fff", borderLeft: "0px solid #fff" }} className={profileTab === "my-team" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-team")}><h3>My Team</h3></div>
+                            {/* <div style={{ borderRight: "0px solid #fff", borderLeft: "0px solid #fff" }} className={profileTab === "my-team" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-team")}><h3>My Team</h3></div> */}
                         </div>
                         {profileTab === "my-stats" && <ProfileStats 
                             username={props.username} 
@@ -315,7 +315,7 @@ console.log("Profile.js UE");
                         />}
                         {profileTab === "my-forecasts" && <ProfileForecasts userObj={userObj} searched={false} />}
                         {profileTab === "my-trophies" && <ProfileRewards userObj={userObj} />}
-                        {profileTab === "my-team" && <ProfileTeam userObj={userObj} teamData={teamData} searchPage={false} />}
+                        {/* {profileTab === "my-team" && <ProfileTeam userObj={userObj} teamData={teamData} searchPage={false} />} */}
                     </div>
                     <br />
                     {/* <div className="profile-details-container">

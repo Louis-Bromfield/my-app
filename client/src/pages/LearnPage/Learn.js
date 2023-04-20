@@ -8,7 +8,7 @@ import Modal from '../../components/Modal';
 function Learn(props) {
     const [topic, setTopic] = useState("Fantasy Forecast Points");
     const [content, setContent] = useState("info");
-    const topicsArray = ["Fantasy Forecast Points", "Brier Scores", "The Good Judgment Project", "Superforecasters", "Forecasting Teams"];
+    const topicsArray = ["Fantasy Forecast Points", "Brier Scores", "The Good Judgment Project", "Superforecasters"];
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
 

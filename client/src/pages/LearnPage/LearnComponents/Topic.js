@@ -51,9 +51,9 @@ function Topic(props) {
             </iframe>
             text = TopicContent[3];
         break;
-        case("Forecasting Teams"):
-            text = TopicContent[4];
-        break;
+        // case("Forecasting Teams"):
+        //     text = TopicContent[4];
+        // break;
         default:
             youtubeLink = <iframe 
                 className="youtube-iframe" 
@@ -75,10 +75,10 @@ function Topic(props) {
             quizQuestions = QuizQuestions[0];
             quizAnswers = QuizAnswers[0].correctAnswers;
         break;
-        case("Forecasting Teams"):
-            quizQuestions = QuizQuestions[0];
-            quizAnswers = QuizAnswers[0].correctAnswers;
-        break;
+        // case("Forecasting Teams"):
+        //     quizQuestions = QuizQuestions[0];
+        //     quizAnswers = QuizAnswers[0].correctAnswers;
+        // break;
         case("Brier Scores"):
             quizQuestions = QuizQuestions[1];
             quizAnswers = QuizAnswers[1].correctAnswers;

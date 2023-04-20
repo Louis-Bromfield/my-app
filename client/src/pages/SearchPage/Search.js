@@ -127,12 +127,12 @@ function Search(props) {
                 setErrorMessage("No profiles were found with this username. Please try again.");
                 setShowInviteBtn(false);
             } else if (userDocument.data.userObj !== null) {
-                // Check if the searched player is in the same team as the searching user
-                if ((userDocument.data.userObj.teamName === props.userObject.teamName) && props.userObject.teamName !== "") {
-                    setShowInviteBtn(false);
-                } else {
-                    setShowInviteBtn(true);
-                }
+                // // Check if the searched player is in the same team as the searching user
+                // if ((userDocument.data.userObj.teamName === props.userObject.teamName) && props.userObject.teamName !== "") {
+                //     setShowInviteBtn(false);
+                // } else {
+                //     setShowInviteBtn(true);
+                // }
                 if (userDocument.data.userObj.isTeam === true) {
                     setIsTeam(true);
                 } else {
@@ -183,17 +183,17 @@ function Search(props) {
                     setForecasterRank("Diviner");
                     setProfilePicStyle("7px solid #383D67");
                 };
-                if (userDocument.data.userObj.inTeam === true) {
-                    setTeamName(userDocument.data.userObj.teamName);
-                    const teamDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${userDocument.data.userObj.teamName}`);
+                // if (userDocument.data.userObj.inTeam === true) {
+                //     setTeamName(userDocument.data.userObj.teamName);
+                //     const teamDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${userDocument.data.userObj.teamName}`);
                     
-                    console.log(teamDocument);
-                    setTeamData(teamDocument.data);
-                    setShowInviteBtn(false);
-                } else {
-                    setShowInviteBtn(true);
-                };
-                setInTeam(userDocument.data.userObj.inTeam ? true : false);
+                //     console.log(teamDocument);
+                //     setTeamData(teamDocument.data);
+                //     setShowInviteBtn(false);
+                // } else {
+                //     setShowInviteBtn(true);
+                // };
+                // setInTeam(userDocument.data.userObj.inTeam ? true : false);
             };
             // setTimeout(() => {
             setLoading(false);
@@ -395,9 +395,9 @@ function Search(props) {
                             </button>
                         </div>} */}
                         {/* <h1 className="profile-header">{playerUsername}</h1> */}
-                        {inTeam === false ? 
+                        {/* {inTeam === false ?  */}
                             <h1 className="profile-header">{errorMessage === "" ? playerUsername : errorMessage}</h1> 
-                        :
+                        {/* :
                             <select 
                                 style={{ fontWeight: "bold", fontSize: "32px"}}
                                 className="profile-dropdown-selection"
@@ -408,7 +408,7 @@ function Search(props) {
                                     <option value={playerUsername}>{playerUsername}</option>
                                     <option value={teamName}>{teamName}</option>
                             </select>
-                        }
+                        } */}
                         <div className="profile-main-info">
                             <img className="profile-profile-pic" src={playerProfilePic || FakeProfilePic2} alt="Temporary profile pic" style={{border: profilePicStyle}}/>
                             <div className="profile-summary">
@@ -477,7 +477,7 @@ function Search(props) {
                                 <div style={{ borderLeft: "0px solid #fff" }} className={searchTab === "my-stats" ? "profile-tab-selected" : "profile-tab"} onClick={() => setSearchTab("my-stats")}><h3>{playerUsername !== "" ? `${playerUsername}'s Stats` : "Player Stats"}</h3></div>
                                 <div style={{borderLeft: "0px solid #fff" }}className={searchTab === "my-forecasts" ? "profile-tab-selected" : "profile-tab"} onClick={() => setSearchTab("my-forecasts")}><h3>{playerUsername !== "" ? `${playerUsername}'s Forecasts` : "Player Forecasts"}</h3></div>
                                 {isTeam === false && <div style={{borderLeft: "0px solid #fff" }} className={searchTab === "my-rewards" ? "profile-tab-selected" : "profile-tab"} onClick={() => setSearchTab("my-rewards")}><h3>{playerUsername !== "" ? `${playerUsername}'s Trophies` : "Player Trophies"}</h3></div>}
-                                <div style={{ borderRight: "0px solid #fff", borderLeft: "0px solid #fff" }} className={searchTab === "my-team" ? "profile-tab-selected" : "profile-tab"} onClick={() => setSearchTab("my-team")}><h3>{playerUsername !== "" ? `${playerUsername}'s Team` : "Player Team"}</h3></div>
+                                {/* <div style={{ borderRight: "0px solid #fff", borderLeft: "0px solid #fff" }} className={searchTab === "my-team" ? "profile-tab-selected" : "profile-tab"} onClick={() => setSearchTab("my-team")}><h3>{playerUsername !== "" ? `${playerUsername}'s Team` : "Player Team"}</h3></div> */}
                             </div>
                             {searchTab === "my-stats" && 
                                 <div className="profile-stats">
@@ -532,7 +532,7 @@ function Search(props) {
                             }
                             {searchTab === "my-forecasts" && <ProfileForecasts userObj={searchUserObj} searched={true} playerUsername={playerUsername} />}
                             {searchTab === "my-rewards" && <ProfileRewards userObj={searchUserObj} />}
-                            {searchTab === "my-team" && <ProfileTeam userObj={searchUserObj} teamData={teamData} searchPage={true} searchName={searchName} searchingUser={props.userObject} showInviteBtn={showInviteBtn} />}
+                            {/* {searchTab === "my-team" && <ProfileTeam userObj={searchUserObj} teamData={teamData} searchPage={true} searchName={searchName} searchingUser={props.userObject} showInviteBtn={showInviteBtn} />} */}
                         </div>
                         <hr />
                     </div>

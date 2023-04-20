@@ -698,19 +698,19 @@ router.patch("/createJoinLeaveTeam/:username", async (req, res) => {
                 inTeam: false,
                 teamName: ""
             });
-console.log("_________________");
-console.log(updatedUser);
-console.log("oldteam = " + req.body.oldTeam);
+// console.log("_________________");
+// console.log(updatedUser);
+// console.log("oldteam = " + req.body.oldTeam);
             const teamDocument = await Users.findOne({ username: req.body.oldTeam });
-console.log("_________________");
-console.log(teamDocument);
-console.log(teamDocument.username);
-console.log(teamDocument._id);
-console.log(teamDocument.ratings);
-console.log(teamDocument.inTeam);
-console.log(teamDocument.isTeam);
-console.log(teamDocument.members);
-console.log(teamDocument.members.length);
+// console.log("_________________");
+// console.log(teamDocument);
+// console.log(teamDocument.username);
+// console.log(teamDocument._id);
+// console.log(teamDocument.ratings);
+// console.log(teamDocument.inTeam);
+// console.log(teamDocument.isTeam);
+// console.log(teamDocument.members);
+// console.log(teamDocument.members.length);
             let newMembersArr = [];
             for (let i = 0; i < teamDocument.members.length; i++) {
                 if (teamDocument.members[i] !== req.params.username) {
@@ -943,92 +943,92 @@ router.patch("/calculateBrier/:happenedStatus/:marketName/:closeEarly", async (r
             },
             { new: true }
             );
-// console.log("16 UPDATEDUSER");
-// console.log(updatedUser);
+            // console.log("16 UPDATEDUSER");
+            // console.log(updatedUser);
             toPush.username = calculatedBriers[i].username;
             scoresToReturn.push(toPush);
-            // if user is in team, add to teams array
-            if (user.inTeam === true) {
-console.log("934~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-console.log(`yes ${user.username} is in a team`);
-                let found = false;
-                for (let j = 0; j < teamsArr.length; j++) {
-                    if (teamsArr[j][0] === user.teamName) {
-                        found = true;
-                        teamsArr[j].push({
-                            username: user.username,
-                            score: calculatedBriers[i].finalScore
-                        });
-console.log("yes we already have this team in the teams array, we have added the newest user");
-                    }
-                };
-                if (found === false) {
-                    teamsArr.push([
-                        user.teamName,
-                        {
-                            username: user.username,
-                            score: calculatedBriers[i].finalScore
-                        }
-                    ]);
-console.log("No this team has not yet been added to the teams array, but it's added now");
-                }
-            };
+            // // if user is in team, add to teams array
+            // if (user.inTeam === true) {
+            //     console.log("934~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            //     console.log(`yes ${user.username} is in a team`);
+            //     let found = false;
+            //     for (let j = 0; j < teamsArr.length; j++) {
+            //         if (teamsArr[j][0] === user.teamName) {
+            //             found = true;
+            //             teamsArr[j].push({
+            //                 username: user.username,
+            //                 score: calculatedBriers[i].finalScore
+            //             });
+            //         console.log("yes we already have this team in the teams array, we have added the newest user");
+            //         }
+            //     };
+            //     if (found === false) {
+            //         teamsArr.push([
+            //             user.teamName,
+            //             {
+            //                 username: user.username,
+            //                 score: calculatedBriers[i].finalScore
+            //             }
+            //         ]);
+            //     console.log("No this team has not yet been added to the teams array, but it's added now");
+            //     }
+            // };
         };
-        // Calculate team scores
-        let allUserDocuments = await Users.find();
-console.log("all users retrieved");
-        for (let i = 0; i < teamsArr.length; i++) {
-console.log("this is the number: " + i + " iteration going through the teams array");
-            let teamTotalScore = 0;
-            // j = 1 as we don't want to include first element - as that's the team name string
-            for (let j = 1; j < teamsArr[i].length; j++) {
-                teamTotalScore += teamsArr[i][j].score;
-console.log(`this player scored ${teamsArr[i][j].score}, we have added this to the team score which is now = ${teamTotalScore}`);
-            };
-            // length-1 as we don't want to include first element
-console.log(`teamFinalScore = ${teamTotalScore} / ${teamsArr[i].length-1}`);
-            let teamFinalScore = teamTotalScore / (teamsArr[i].length -1);
-console.log(`this teams new final score (the avg score) is = ${teamFinalScore}`);
-            for (let k = 0; k < allUserDocuments.length; k++) {
-                if (allUserDocuments[k].username === teamsArr[i][0]) {
-console.log(`we have found the user document for the team called: ${teamsArr[i][0]}`)
-                    let updatedTeamDoc = allUserDocuments[k];
-                    updatedTeamDoc.brierScores.push({
-                        brierScore: teamFinalScore,
-                        problemName: req.body.problemName,
-                        marketName: req.params.marketName,
-                        averageScore: averageScoreForProblem
-                    });
-                    let teamUpdatedFantasyPoints = updatedTeamDoc.fantasyForecastPoints + teamFinalScore;
-                    await Users.findByIdAndUpdate(updatedTeamDoc._id, {
-                        brierScores: updatedTeamDoc.brierScores,
-                        fantasyForecastPoints: teamUpdatedFantasyPoints
-                    });
-console.log(`the team's user document has been updated and should contain a new score in the brierScores array`);
-                }
-            }
-            // Send each team member a notification about how their team performed
-console.log(`we are now looping through the users who submitted a forecast to let them know how their team did. currently, no noti is sent to users who didn't forecast`);
-            for (let j = 1; j < teamsArr[i].length; j++) {
-                let userForTeamNoti = await Users.findOne({ username: teamsArr[i][j].username });
-                userForTeamNoti.notifications.unshift({
-                    notificationMessage: `Your team scored ${teamFinalScore.toFixed(2)} on the following forecast: ${req.body.problemName}! To see the breakdown of how your team performed, go to your profile page, select your team from the dropdown at the top, and go to the "My Team" tab!`,
-                    notificationSourcePath: "/profile",
-                    notificationSourceObjectID: 1,
-                    seenByUser: false,
-                    date: new Date(),
-                    notificationIndex: userForTeamNoti.notifications.length+1
-                });
-                let usersUpdatedFantasyPoints = userForTeamNoti.fantasyForecastPoints + teamTotalScore;
-console.log(`${userForTeamNoti.username} has been awarded ${teamFinalScore} fantasy forecast points, so their new FFPoints total is = ${usersUpdatedFantasyPoints}`);
-                await Users.findOneAndUpdate({ username: teamsArr[i][j].username }, {
-                    notifications: userForTeamNoti.notifications,
-                    fantasyForecastPoints: usersUpdatedFantasyPoints
-                });
-            };
-        };
-// console.log("====++++====");
-// console.log(scoresToReturn);
+        // // Calculate team scores - removed for now, commented out 977-1029
+        // let allUserDocuments = await Users.find();
+        // console.log("all users retrieved");
+        // for (let i = 0; i < teamsArr.length; i++) {
+        //     console.log("this is the number: " + i + " iteration going through the teams array");
+        //     let teamTotalScore = 0;
+        //     // j = 1 as we don't want to include first element - as that's the team name string
+        //     for (let j = 1; j < teamsArr[i].length; j++) {
+        //         teamTotalScore += teamsArr[i][j].score;
+        //         console.log(`this player scored ${teamsArr[i][j].score}, we have added this to the team score which is now = ${teamTotalScore}`);
+        //     };
+        //     // length-1 as we don't want to include first element
+        //     console.log(`teamFinalScore = ${teamTotalScore} / ${teamsArr[i].length-1}`);
+        //     let teamFinalScore = teamTotalScore / (teamsArr[i].length -1);
+        //     console.log(`this teams new final score (the avg score) is = ${teamFinalScore}`);
+        //     for (let k = 0; k < allUserDocuments.length; k++) {
+        //         if (allUserDocuments[k].username === teamsArr[i][0]) {
+        //             console.log(`we have found the user document for the team called: ${teamsArr[i][0]}`)
+        //             let updatedTeamDoc = allUserDocuments[k];
+        //             updatedTeamDoc.brierScores.push({
+        //                 brierScore: teamFinalScore,
+        //                 problemName: req.body.problemName,
+        //                 marketName: req.params.marketName,
+        //                 averageScore: averageScoreForProblem
+        //             });
+        //             let teamUpdatedFantasyPoints = updatedTeamDoc.fantasyForecastPoints + teamFinalScore;
+        //             await Users.findByIdAndUpdate(updatedTeamDoc._id, {
+        //                 brierScores: updatedTeamDoc.brierScores,
+        //                 fantasyForecastPoints: teamUpdatedFantasyPoints
+        //             });
+        //         console.log(`the team's user document has been updated and should contain a new score in the brierScores array`);
+        //         }
+        //     }
+        //     // Send each team member a notification about how their team performed
+        //     console.log(`we are now looping through the users who submitted a forecast to let them know how their team did. currently, no noti is sent to users who didn't forecast`);
+        //     for (let j = 1; j < teamsArr[i].length; j++) {
+        //         let userForTeamNoti = await Users.findOne({ username: teamsArr[i][j].username });
+        //         userForTeamNoti.notifications.unshift({
+        //             notificationMessage: `Your team scored ${teamFinalScore.toFixed(2)} on the following forecast: ${req.body.problemName}! To see the breakdown of how your team performed, go to your profile page, select your team from the dropdown at the top, and go to the "My Team" tab!`,
+        //             notificationSourcePath: "/profile",
+        //             notificationSourceObjectID: 1,
+        //             seenByUser: false,
+        //             date: new Date(),
+        //             notificationIndex: userForTeamNoti.notifications.length+1
+        //         });
+        //         let usersUpdatedFantasyPoints = userForTeamNoti.fantasyForecastPoints + teamTotalScore;
+        //         console.log(`${userForTeamNoti.username} has been awarded ${teamFinalScore} fantasy forecast points, so their new FFPoints total is = ${usersUpdatedFantasyPoints}`);
+        //         await Users.findOneAndUpdate({ username: teamsArr[i][j].username }, {
+        //             notifications: userForTeamNoti.notifications,
+        //             fantasyForecastPoints: usersUpdatedFantasyPoints
+        //         });
+        //     };
+        // };
+        // console.log("====++++====");
+        // console.log(scoresToReturn);
         // return scoresToReturn;
         res.json({ scores: scoresToReturn });
     } catch (error) {
@@ -1059,7 +1059,7 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
         };
         let averageScoreForProblem = total / calculatedBriers.length;
         let scoresToReturn = [];
-        let teamsArr = [];
+        // let teamsArr = [];
 
         for (let i = 0; i < calculatedBriers.length; i++) {
             const user = await Users.findOne({ username: calculatedBriers[i].username });
@@ -1100,85 +1100,85 @@ router.patch("/calculateBriersMultipleOutcomes/:outcome/:marketName/:closeEarly"
             );
             toPush.username = calculatedBriers[i].username;
             scoresToReturn.push(toPush);
-            // if user is in team, add to teams array
-            if (user.inTeam === true) {
-console.log("1084~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-console.log(`yes ${user.username} is in a team`);
-                let found = false;
-                for (let j = 0; j < teamsArr.length; j++) {
-                    if (teamsArr[j][0] === user.teamName) {
-                        found = true;
-                        teamsArr[j].push({
-                            username: user.username,
-                            score: calculatedBriers[i].finalScore
-                        });
-                        console.log("yes we already have this team in the teams array, we have added the newest user");
-                    }
-                };
-                if (found === false) {
-                    teamsArr.push([
-                        user.teamName,
-                        {
-                            username: user.username,
-                            score: calculatedBriers[i].finalScore
-                        }
-                    ]);
-                    console.log("No this team has not yet been added to the teams array, but it's added now");
-                }
-            };
+            // // if user is in team, add to teams array
+            // if (user.inTeam === true) {
+            //     console.log("1084~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            //     console.log(`yes ${user.username} is in a team`);
+            //     let found = false;
+            //     for (let j = 0; j < teamsArr.length; j++) {
+            //         if (teamsArr[j][0] === user.teamName) {
+            //             found = true;
+            //             teamsArr[j].push({
+            //                 username: user.username,
+            //                 score: calculatedBriers[i].finalScore
+            //             });
+            //             console.log("yes we already have this team in the teams array, we have added the newest user");
+            //         }
+            //     };
+            //     if (found === false) {
+            //         teamsArr.push([
+            //             user.teamName,
+            //             {
+            //                 username: user.username,
+            //                 score: calculatedBriers[i].finalScore
+            //             }
+            //         ]);
+            //         console.log("No this team has not yet been added to the teams array, but it's added now");
+            //     }
+            // };
         };
-        // Calculate team scores
-        let allUserDocuments = await Users.find();
-console.log("all users retrieved");
-        for (let i = 0; i < teamsArr.length; i++) {
-console.log("this is the number: " + i + "iteration going through the teams array");
-            let teamTotalScore = 0;
-            // j = 1 as we don't want to include first element - as that's the team name string
-            for (let j = 1; j < teamsArr[i].length; j++) {
-                teamTotalScore += teamsArr[i][j].score
-console.log(`this player scored ${teamsArr[i][j].score}, we have added this to the team score which is now = ${teamTotalScore}`);
-            };
-            // length-1 as we don't want to include first element
-            let teamFinalScore = teamTotalScore / (teamsArr[i].length-1);
-console.log(`this teams new final score (the avg score) is = ${teamFinalScore}`);
-            for (let k = 0; k < allUserDocuments.length; k++) {
-                if (allUserDocuments[k].username === teamsArr[i][0]) {
-console.log(`we have found the user document for the team called: ${teamsArr[i][0]}`)
-                    let updatedTeamDoc = allUserDocuments[k];
-                    updatedTeamDoc.brierScores.push({
-                        brierScore: teamFinalScore,
-                        problemName: req.body.problemName,
-                        marketName: req.params.marketName,
-                        averageScore: averageScoreForProblem
-                    });
-                    let teamUpdatedFantasyPoints = updatedTeamDoc.fantasyForecastPoints + teamFinalScore;
-                    await Users.findByIdAndUpdate(updatedTeamDoc._id, {
-                        brierScores: updatedTeamDoc.brierScores,
-                        fantasyForecastPoints: teamUpdatedFantasyPoints
-                    });
-console.log(`the team's user document has been updated and should contain a new score in the brierScores array`);
-                }
-            }
-            // Send each team member a notification about how their team performed
-console.log(`we are now looping through the users who submitted a forecast to let them know how their team did. currently, no noti is sent to users who didn't forecast`);
-            for (let j = 1; j < teamsArr[i].length; j++) {
-                let userForTeamNoti = await Users.findOne({ username: teamsArr[i][j].username });
-                userForTeamNoti.notifications.unshift({
-                    notificationMessage: `Your team scored ${teamFinalScore.toFixed(2)} on the following forecast: ${req.body.problemName}! To see the breakdown of how your team performed, go to your profile page, select your team from the dropdown at the top, and go to the "My Team" tab!`,
-                    notificationSourcePath: "/profile",
-                    notificationSourceObjectID: 1,
-                    seenByUser: false,
-                    date: new Date(),
-                    notificationIndex: userForTeamNoti.notifications.length+1
-                });
-                let usersUpdatedFantasyPoints = userForTeamNoti.fantasyForecastPoints + teamFinalScore;
-console.log(`this user has been awarded ${teamFinalScore} fantasy forecast points, so their new FFPoints total is = ${usersUpdatedFantasyPoints}`);
-                await Users.findOneAndUpdate({ username: teamsArr[i][j].username }, {
-                    notifications: userForTeamNoti.notifications,
-                    fantasyForecastPoints: usersUpdatedFantasyPoints
-                });
-            };
-        };
+        // Calculate team scores - removed for now, commented out 1130-1181
+        // let allUserDocuments = await Users.find();
+        // console.log("all users retrieved");
+        // for (let i = 0; i < teamsArr.length; i++) {
+        //     console.log("this is the number: " + i + "iteration going through the teams array");
+        //     let teamTotalScore = 0;
+        //     // j = 1 as we don't want to include first element - as that's the team name string
+        //     for (let j = 1; j < teamsArr[i].length; j++) {
+        //         teamTotalScore += teamsArr[i][j].score
+        //         console.log(`this player scored ${teamsArr[i][j].score}, we have added this to the team score which is now = ${teamTotalScore}`);
+        //     };
+        //     // length-1 as we don't want to include first element
+        //     let teamFinalScore = teamTotalScore / (teamsArr[i].length-1);
+        //     console.log(`this teams new final score (the avg score) is = ${teamFinalScore}`);
+        //     for (let k = 0; k < allUserDocuments.length; k++) {
+        //         if (allUserDocuments[k].username === teamsArr[i][0]) {
+        //             console.log(`we have found the user document for the team called: ${teamsArr[i][0]}`)
+        //             let updatedTeamDoc = allUserDocuments[k];
+        //             updatedTeamDoc.brierScores.push({
+        //                 brierScore: teamFinalScore,
+        //                 problemName: req.body.problemName,
+        //                 marketName: req.params.marketName,
+        //                 averageScore: averageScoreForProblem
+        //             });
+        //             let teamUpdatedFantasyPoints = updatedTeamDoc.fantasyForecastPoints + teamFinalScore;
+        //             await Users.findByIdAndUpdate(updatedTeamDoc._id, {
+        //                 brierScores: updatedTeamDoc.brierScores,
+        //                 fantasyForecastPoints: teamUpdatedFantasyPoints
+        //             });
+        //         console.log(`the team's user document has been updated and should contain a new score in the brierScores array`);
+        //         }
+        //     }
+        //     // Send each team member a notification about how their team performed
+        //     console.log(`we are now looping through the users who submitted a forecast to let them know how their team did. currently, no noti is sent to users who didn't forecast`);
+        //     for (let j = 1; j < teamsArr[i].length; j++) {
+        //         let userForTeamNoti = await Users.findOne({ username: teamsArr[i][j].username });
+        //         userForTeamNoti.notifications.unshift({
+        //             notificationMessage: `Your team scored ${teamFinalScore.toFixed(2)} on the following forecast: ${req.body.problemName}! To see the breakdown of how your team performed, go to your profile page, select your team from the dropdown at the top, and go to the "My Team" tab!`,
+        //             notificationSourcePath: "/profile",
+        //             notificationSourceObjectID: 1,
+        //             seenByUser: false,
+        //             date: new Date(),
+        //             notificationIndex: userForTeamNoti.notifications.length+1
+        //         });
+        //         let usersUpdatedFantasyPoints = userForTeamNoti.fantasyForecastPoints + teamFinalScore;
+        //         console.log(`this user has been awarded ${teamFinalScore} fantasy forecast points, so their new FFPoints total is = ${usersUpdatedFantasyPoints}`);
+        //         await Users.findOneAndUpdate({ username: teamsArr[i][j].username }, {
+        //             notifications: userForTeamNoti.notifications,
+        //             fantasyForecastPoints: usersUpdatedFantasyPoints
+        //         });
+        //     };
+        // };
         res.json({ scores: scoresToReturn });
     } catch (error) {
         console.error("error in users > patch calculateBriers");
@@ -1210,15 +1210,19 @@ const calculateBriers = (forecastObj, happened, outcome) => {
 
         // tScore
         let tScore;
-        // Condition to catch if the first prediction a user makes is AFTER I have closed the market
+        // Else-Condition to catch if the first prediction a user makes is AFTER I have closed the market
         // i.e. they submit but I close the problem early, and it closes to a time before they submitted
         if (new Date(forecastObj.submittedForecasts[i].forecasts[0].date) < closeDate) {
-            // Add in a check that says if first forecast submitted is ON THE SAME DAY as startDate, give them 10/10
-            let tValue = (closeDate - new Date(forecastObj.submittedForecasts[i].forecasts[0].date))/1000;
-            let timeFrame = (closeDate - startDate)/1000;
-            tScore = (tValue/timeFrame)*10;
-// console.log("10 - tSCORE");
-// console.log(tScore);
+            // If first forecast submitted is ON THE SAME DAY as startDate, give them 10/10
+            if (forecastObj.submittedForecasts[i].forecasts[0].date.slice(0, 14) === forecastObj.startDate.slice(0, 14)) {
+                tScore = 10;
+            } else {
+                let tValue = (closeDate - new Date(forecastObj.submittedForecasts[i].forecasts[0].date))/1000;
+                let timeFrame = (closeDate - startDate)/1000;
+                tScore = (tValue/timeFrame)*10;
+            }
+            // console.log("10 - tSCORE");
+            // console.log(tScore);
         } else {
             tScore = 0;
         };
@@ -1228,9 +1232,9 @@ const calculateBriers = (forecastObj, happened, outcome) => {
         let sumOfNewWeightedBriers = 0;
         for (let j = 0; j < forecastObj.submittedForecasts[i].forecasts.length; j++) {
             // Forecast WAS made before close date
-// console.log(`${new Date(forecastObj.submittedForecasts[i].forecasts[j].date)} < ${closeDate}`);
+            // console.log(`${new Date(forecastObj.submittedForecasts[i].forecasts[j].date)} < ${closeDate}`);
             if (new Date(forecastObj.submittedForecasts[i].forecasts[j].date) < closeDate) {
-console.log("This forecast counts");
+                console.log("This forecast counts");
                 let originalBrier;
                 // Single Cert Problem - using happened
                 if (happened !== "N/A") {

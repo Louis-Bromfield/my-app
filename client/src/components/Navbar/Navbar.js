@@ -131,14 +131,14 @@ function Navbar(props) {
 
     return (
         <>
-            <TeamModal 
+            {/* <TeamModal 
                 show={showConfirmationModal}
                 notificationObject={selectedNotificationObject}
                 username={props.username === undefined ? props.userObj.username : props.username}
                 justClose={() => setShowConfirmationModal(false)}
                 oldTeam={props.userObj.teamName}
                 calledFromNav={true}
-            />
+            /> */}
             {mobileWidth === true &&
                 <IconContext.Provider value={{ color: '#fff' }}>
                     <div className='mobile-navbar'>

@@ -56,8 +56,8 @@ function Notifications(props) {
                 history.push("/report-any-issues");
                 // setShowNotifications(false);
                 return;
-            } else if (notification.notificationSourcePath === "/team-invite") {
-                setShowConfirmationModal(true);
+            // } else if (notification.notificationSourcePath === "/team-invite") {
+            //     setShowConfirmationModal(true);
             } else if (notification.notificationSourcePath === "/profile") {
                 history.push("/profile");
             }
@@ -66,14 +66,14 @@ function Notifications(props) {
 
     return (
     <div className="notifications">
-        <TeamModal 
+        {/* <TeamModal 
             show={showConfirmationModal}
             notificationObject={selectedNotification}
             username={props.location.userObj === undefined ? props.username === undefined ? "" : props.username : props.location.userObj.username}
             justClose={() => setShowConfirmationModal(false)}
             oldTeam={props.location.userObj === undefined ? props.userObject.teamName : "N/A"} 
             calledFromNav={false}
-        />
+        /> */}
         <h1>Notifications</h1>
         <p>Click on the notification to view it and be redirected to the relevant page!</p>
         <div className="notifications-list">
