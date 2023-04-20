@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './ClosedProblemModal.css';
 import FFLogo from '../media/Icon.png';
-import Avatar1 from '../media/Avatar1.png
+import Avatar1 from '../media/Avatar1.png'
 import Avatar2 from '../media/Avatar2.png';
 import Avatar3 from '../media/Avatar3.png';
 import Avatar4 from '../media/Avatar4.png';
