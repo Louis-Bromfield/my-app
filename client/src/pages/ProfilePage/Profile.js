@@ -248,8 +248,9 @@ console.log("Profile.js UE");
                             className="profile-profile-pic"
                             src={props.profilePicture} 
                             alt="Temporary profile pic" 
-                            style={{border: profilePicStyle}}
+                            style={{ border: profilePicStyle, cursor: "pointer" }}
                             onClick={() => setOpenProfilePicChooser(true)}
+                            
                         />
                         <div className="profile-summary">
                             {/* <ul className="profile-summary-list">  */}
