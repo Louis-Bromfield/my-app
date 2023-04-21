@@ -90,7 +90,7 @@ function Forecast(props) {
                 </div>
                 <div className="individual-forecast-info-container" onClick={() => {
                     setShowModal(true);
-                    setModalContent("You can submit an unlimited number of predictions for any given forecast problem, with each one contributing to your final score. Each forecast is assessed based on how accurate you were and then weighted by that submission's duration (so forecasts that aren't updated for longer will receive a larger weighting than one that was updated quickly, so as to incentivise you to update your forecasts as soon as possible).")
+                    setModalContent("You can submit an unlimited number of predictions for any given forecast problem, with each one contributing to your final score. Each forecast is assessed based on how confident you were (i.e. how close to 0 or 100 you were with that prediction) and then weighted by that submission's duration (so forecasts that aren't updated for longer will receive a larger weighting than one that was updated quickly, so as to incentivise you to update your forecasts as soon as possible).")
                     setModalContent2(<a href="https://youtu.be/OkLP72O3hmo" target="_blank" rel="noreferrer nofollow" style={{ color: "#fff" }}><p>For a full breakdown, watch this video</p></a>)
                 }}>
                     <h3>How are forecasts assessed for accuracy?</h3>
