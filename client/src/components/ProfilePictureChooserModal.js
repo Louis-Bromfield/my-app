@@ -90,6 +90,7 @@ const ProfilePictureChooserModal = ({ show, justClose, username, changeProfilePi
             // }
             // await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, { profilePicture: avatarString });
             const res = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, { profilePicture: picChoice });
+            console.log(res);
             if (res.error === "No error") {
                 changeProfilePic(picChoice);
                 setResponseText("Profile picture successfully changed");
