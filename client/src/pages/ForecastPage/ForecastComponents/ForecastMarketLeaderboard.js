@@ -41,22 +41,24 @@ function ForecastMarketLeaderboard(props) {
                         <th className="snapshot-ffpoints-column">Market Points</th>
                     </tr>
                     {props.leaderboard.slice(start, finish).map((item, index) => {
-                        if (item.username === props.username) {
-                            return (
-                                <tr key={index+1} className="leaderboard-snapshot-row-matching-username">
-                                    <td className="leaderboard-snapshot-rank-data">{index+start+1}</td>
-                                    <td className="leaderboard-snapshot-username-data">{item.username}</td>
-                                    <td className="leaderboard-snapshot-ffPoints-data">{item.marketPoints.toFixed(0)}</td>
-                                </tr>
-                            )
-                        } else {
-                            return (
-                                <tr key={index+1} className="leaderboard-snapshot-row">
-                                    <td className="leaderboard-snapshot-rank-data">{index+start+1}</td>
-                                    <td className="leaderboard-snapshot-username-data">{item.username}</td>
-                                    <td className="leaderboard-snapshot-ffPoints-data">{item.marketPoints.toFixed(0)}</td>
-                                </tr>
-                            )
+                        if (item.username !== "Guest") {
+                            if (item.username === props.username) {
+                                return (
+                                    <tr key={index+1} className="leaderboard-snapshot-row-matching-username">
+                                        <td className="leaderboard-snapshot-rank-data">{index+start+1}</td>
+                                        <td className="leaderboard-snapshot-username-data">{item.username}</td>
+                                        <td className="leaderboard-snapshot-ffPoints-data">{item.marketPoints.toFixed(0)}</td>
+                                    </tr>
+                                )
+                            } else {
+                                return (
+                                    <tr key={index+1} className="leaderboard-snapshot-row">
+                                        <td className="leaderboard-snapshot-rank-data">{index+start+1}</td>
+                                        <td className="leaderboard-snapshot-username-data">{item.username}</td>
+                                        <td className="leaderboard-snapshot-ffPoints-data">{item.marketPoints.toFixed(0)}</td>
+                                    </tr>
+                                )
+                            }
                         }
                     })}
                 </tbody>
