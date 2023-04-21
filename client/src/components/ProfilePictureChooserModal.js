@@ -19,7 +19,7 @@ import Avatar14 from '../media/Avatar14.png';
 import Avatar15 from '../media/Avatar15.png';
 import Avatar16 from '../media/Avatar16.png';
 
-const ProfilePictureChooserModal = ({ show, justClose, username, updateProfilePic }) => {
+const ProfilePictureChooserModal = ({ show, justClose, username, changeProfilePic }) => {
     const showHideClassName = show ? "modal display-block" : "modal display-none";
     const [newPic, setNewPic] = useState({Avatar1});
 
@@ -30,7 +30,7 @@ const ProfilePictureChooserModal = ({ show, justClose, username, updateProfilePi
             return;
         } else {
             await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, { profilePicture: picChoice });
-            updateProfilePic(picChoice);
+            changeProfilePic(picChoice);
         };
     };
 
@@ -54,16 +54,16 @@ const ProfilePictureChooserModal = ({ show, justClose, username, updateProfilePi
                 <option value={Avatar11}>Avatar11</option>
                 <option value={Avatar12}>Avatar12</option>
                 <option value={Avatar13}>Avatar13</option>
-                <option value={Avatar14}>Avatar10</option>
-                <option value={Avatar15}>Avatar11</option>
-                <option value={Avatar16}>Avatar12</option>
+                <option value={Avatar14}>Avatar14</option>
+                <option value={Avatar15}>Avatar15</option>
+                <option value={Avatar16}>Avatar16</option>
             </select>
             <p>Preview:</p>
             <img 
                 src={newPic}
                 alt="Profile avatar preview" 
             />
-            <button type="button" onClick={() => changePicture(newPic, updateProfilePic)} className="close-modal2-btn">
+            <button type="button" onClick={() => changePicture(newPic, changeProfilePic)} className="close-modal2-btn">
                 Confirm Choice
             </button>
             <button type="button" onClick={justClose} className="close-modal2-btn">

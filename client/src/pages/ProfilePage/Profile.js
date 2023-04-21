@@ -7,6 +7,22 @@ import ProfileRewards from './ProfileRewards';
 import ProfileForecasts from './ProfileForecasts';
 import ProfilePictureChooserModal from '../../components/ProfilePictureChooserModal';
 // import ProfileTeam from './ProfileTeam';
+import Avatar1 from '../../media/Avatar1.png'
+import Avatar2 from '../../media/Avatar2.png';
+import Avatar3 from '../../media/Avatar3.png';
+import Avatar4 from '../../media/Avatar4.png';
+import Avatar5 from '../../media/Avatar5.png';
+import Avatar6 from '../../media/Avatar6.png';
+import Avatar7 from '../../media/Avatar7.png';
+import Avatar8 from '../../media/Avatar8.png';
+import Avatar9 from '../../media/Avatar9.png';
+import Avatar10 from '../../media/Avatar10.png';
+import Avatar11 from '../../media/Avatar11.png';
+import Avatar12 from '../../media/Avatar12.png';
+import Avatar13 from '../../media/Avatar13.png';
+import Avatar14 from '../../media/Avatar14.png';
+import Avatar15 from '../../media/Avatar15.png';
+import Avatar16 from '../../media/Avatar16.png';
 
 function Profile(props) {
     const [markets, setMarkets] = useState("");
@@ -212,6 +228,7 @@ console.log("Profile.js UE");
     };
 
     const changeProfilePic = (newPic) => {
+        console.log("called profile > changeProfilePic");
         if (newPic !== null && newPic !== "") {
             setNewProfilePic(newPic);
         };
@@ -225,10 +242,6 @@ console.log("Profile.js UE");
             </Modal>
             <ProfilePictureChooserModal 
                 show={openProfilePicChooser} 
-                // handleClose={() => {
-                //     changeProfilePicture(postIDToDelete); 
-                //     setOpenProfilePicChooser(false)
-                // }} 
                 justClose={() => setOpenProfilePicChooser(false)}
                 username={props.username}
                 changeProfilePic={changeProfilePic}
@@ -260,6 +273,7 @@ console.log("Profile.js UE");
                             onClick={() => setOpenProfilePicChooser(true)}
                             
                         />
+                        <p style={{ textAlign: "center" }}>Click picture to change</p>
                         <div className="profile-summary">
                             {/* <ul className="profile-summary-list">  */}
                                 <div key={0} className="profile-summary-list-item">
