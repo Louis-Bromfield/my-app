@@ -33,7 +33,7 @@ function ProfileStats(props) {
             formatBrierData(props.userObj, props.username);
             findUniquePlayerStats(props.userObj, props.username);
         } else {
-            if (props.ffPoints > 600 || props.userObj.trophies[0].obtained === true) {
+            if (props.ffPoints > 600 || props.userObj.trophies[0].obtained === true || props.username === "Guest") {
                     setIsHiddenBehindLevel(false);
                 if (props.userObj === undefined) {
                     formatBrierData(null, props.username);
