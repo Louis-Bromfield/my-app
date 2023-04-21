@@ -265,15 +265,17 @@ console.log("Profile.js UE");
                     <div className="profile-main-info">
                         {/* CHARMANDER */}
                         {/* <img className="profile-profile-pic" src={props.profilePicture || localStorage.getItem("profilePicture")} alt="Temporary profile pic"/> */}
-                        <img 
-                            className="profile-profile-pic"
-                            src={newProfilePic === null ? props.profilePicture : newProfilePic} 
-                            alt="Temporary profile pic" 
-                            style={{ border: profilePicStyle, cursor: "pointer" }}
-                            onClick={() => setOpenProfilePicChooser(true)}
-                            
-                        />
-                        <p style={{ textAlign: "center" }}>Click picture to change</p>
+                        <div>
+                            <img 
+                                className="profile-profile-pic"
+                                src={newProfilePic === null ? props.profilePicture : newProfilePic} 
+                                alt="Temporary profile pic" 
+                                style={{ border: profilePicStyle, cursor: "pointer" }}
+                                onClick={() => setOpenProfilePicChooser(true)}
+                                
+                            />
+                            <p style={{ textAlign: "center" }}>Click picture to change</p>
+                        </div>
                         <div className="profile-summary">
                             {/* <ul className="profile-summary-list">  */}
                                 <div key={0} className="profile-summary-list-item">
