@@ -96,7 +96,7 @@ function HomeProfilePreview(props) {
             <ProfilePictureChooserModal
                 show={openProfilePicChooser} 
                 justClose={() => setOpenProfilePicChooser(false)}
-                username={props.userObj.username}
+                username={props.username}
                 changeProfilePic={changeProfilePic}
             />
             <p style={{ fontSize: "1.2em" }} className="home-button-large-title">My Profile Preview</p>
