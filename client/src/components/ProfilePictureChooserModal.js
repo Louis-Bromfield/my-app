@@ -19,9 +19,9 @@ import Avatar14 from '../media/Avatar14.png';
 import Avatar15 from '../media/Avatar15.png';
 import Avatar16 from '../media/Avatar16.png';
 
-const ProfilePictureChooserModal = ({ show, justClose, username }) => {
+const ProfilePictureChooserModal = ({ show, justClose, username, updateProfilePic }) => {
     const showHideClassName = show ? "modal display-block" : "modal display-none";
-    const [newPic, setNewPic] = useState("");
+    const [newPic, setNewPic] = useState({Avatar1});
 
     const changePicture = async (picChoice) => {
         console.log("in change picture");
@@ -30,6 +30,7 @@ const ProfilePictureChooserModal = ({ show, justClose, username }) => {
             return;
         } else {
             await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, { profilePicture: picChoice });
+            updateProfilePic(picChoice);
         };
     };
 
@@ -52,37 +53,17 @@ const ProfilePictureChooserModal = ({ show, justClose, username }) => {
                 <option value={Avatar10}>Avatar10</option>
                 <option value={Avatar11}>Avatar11</option>
                 <option value={Avatar12}>Avatar12</option>
-                <option value={Avatar9}>Avatar13</option>
-                <option value={Avatar10}>Avatar10</option>
-                <option value={Avatar11}>Avatar11</option>
-                <option value={Avatar12}>Avatar12</option>
+                <option value={Avatar13}>Avatar13</option>
+                <option value={Avatar14}>Avatar10</option>
+                <option value={Avatar15}>Avatar11</option>
+                <option value={Avatar16}>Avatar12</option>
             </select>
             <p>Preview:</p>
-            {/* <img 
-                src={newPic === "Avatar1" ? {Avatar1} : 
-                      newPic === "Avatar2" ? {Avatar2} :
-                      newPic === "Avatar3" ? {Avatar3} :
-                      newPic === "Avatar4" ? {Avatar4} :
-                      newPic === "Avatar5" ? {Avatar5} :
-                      newPic === "Avatar6" ? {Avatar6} :
-                      newPic === "Avatar7" ? {Avatar7} :
-                      newPic === "Avatar8" ? {Avatar8} :
-                      newPic === "Avatar9" ? {Avatar9} :
-                      newPic === "Avatar10" ? {Avatar10} :
-                      newPic === "Avatar11" ? {Avatar11} :
-                      newPic === "Avatar12" ? {Avatar12} :
-                      newPic === "Avatar13" ? {Avatar13} :
-                      newPic === "Avatar14" ? {Avatar14} :
-                      newPic === "Avatar15" ? {Avatar15} :
-                      {Avatar16}
-                      } 
-                alt="Profile avatar preview" 
-            /> */}
             <img 
                 src={newPic}
                 alt="Profile avatar preview" 
             />
-            <button type="button" onClick={() => changePicture(newPic)} className="close-modal2-btn">
+            <button type="button" onClick={() => changePicture(newPic, updateProfilePic)} className="close-modal2-btn">
                 Confirm Choice
             </button>
             <button type="button" onClick={justClose} className="close-modal2-btn">

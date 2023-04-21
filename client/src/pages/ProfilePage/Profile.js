@@ -29,6 +29,7 @@ function Profile(props) {
     const [teamData, setTeamData] = useState();
     const [isTeam, setIsTeam] = useState(false);
     const [openProfilePicChooser, setOpenProfilePicChooser] = useState(false);
+    const [newProfilePic, setNewProfilePic] = useState(null);
 
     useEffect(() => {
         if (props.user.markets === undefined) {
@@ -209,6 +210,12 @@ console.log("Profile.js UE");
             };
         };
     };
+
+    const changeProfilePic = (newPic) => {
+        if (newPic !== null && newPic !== "") {
+            setNewProfilePic(newPic);
+        };
+    };
     
     return (
         <div className="profile">
@@ -224,6 +231,7 @@ console.log("Profile.js UE");
                 // }} 
                 justClose={() => setOpenProfilePicChooser(false)}
                 username={props.username}
+                changeProfilePic={changeProfilePic}
             />
             <div className="main-profile-grid">
                 <div className="profile-grid">
@@ -246,7 +254,7 @@ console.log("Profile.js UE");
                         {/* <img className="profile-profile-pic" src={props.profilePicture || localStorage.getItem("profilePicture")} alt="Temporary profile pic"/> */}
                         <img 
                             className="profile-profile-pic"
-                            src={props.profilePicture} 
+                            src={newProfilePic === null ? props.profilePicture : newProfilePic} 
                             alt="Temporary profile pic" 
                             style={{ border: profilePicStyle, cursor: "pointer" }}
                             onClick={() => setOpenProfilePicChooser(true)}
