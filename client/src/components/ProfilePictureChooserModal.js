@@ -24,6 +24,8 @@ const ProfilePictureChooserModal = ({ show, justClose, username }) => {
     const [newPic, setNewPic] = useState("");
 
     const changePicture = async (picChoice) => {
+        console.log("in change picture");
+        console.log("picChoice = " + picChoice);
         if (picChoice === "") {
             return;
         } else {
@@ -50,7 +52,7 @@ const ProfilePictureChooserModal = ({ show, justClose, username }) => {
                 <option value="Avatar10" onClick={() => setNewPic("Avatar10")}>Avatar10</option>
                 <option value="Avatar11" onClick={() => setNewPic("Avatar11")}>Avatar11</option>
                 <option value="Avatar12" onClick={() => setNewPic("Avatar12")}>Avatar12</option>
-                <option value="Avatar9" onClick={() => setNewPic("Avatar13")}>Avatar9</option>
+                <option value="Avatar9" onClick={() => setNewPic("Avatar13")}>Avatar13</option>
                 <option value="Avatar10" onClick={() => setNewPic("Avatar14")}>Avatar10</option>
                 <option value="Avatar11" onClick={() => setNewPic("Avatar15")}>Avatar11</option>
                 <option value="Avatar12" onClick={() => setNewPic("Avatar16")}>Avatar12</option>
