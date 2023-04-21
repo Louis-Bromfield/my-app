@@ -22,6 +22,7 @@ import Avatar16 from '../media/Avatar16.png';
 const ProfilePictureChooserModal = ({ show, justClose, username, changeProfilePic }) => {
     const showHideClassName = show ? "modal display-block" : "modal display-none";
     const [newPic, setNewPic] = useState({Avatar1});
+    const [responseText, setResponseText] = useState("");
 
     const changePicture = async (picChoice) => {
         if (username === undefined || username === "Guest") {
@@ -88,8 +89,13 @@ const ProfilePictureChooserModal = ({ show, justClose, username, changeProfilePi
             //     return;
             // }
             // await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, { profilePicture: avatarString });
-            await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, { profilePicture: picChoice });
-            changeProfilePic(picChoice);
+            const res = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, { profilePicture: picChoice });
+            if (res.error === "No error") {
+                changeProfilePic(picChoice);
+                setResponseText("Profile picture successfully changed");
+            } else {
+                setResponseText("Something went wrong. Please try again later");
+            }
         };
     };
 
@@ -99,7 +105,7 @@ const ProfilePictureChooserModal = ({ show, justClose, username, changeProfilePi
             <img src={FFLogo} alt="" />
             <p>Choose a picture from the dropdown below:</p>
             {/* drop down here */}
-            <select name="picChoiceSelector" id="picChoiceSelector" onChange={(e) => setNewPic(e.target.value)}>
+            <select name="picChoiceSelector" id="picChoiceSelector" onChange={(e) => { setNewPic(e.target.value); setResponseText("") }}>
                 <option value={Avatar1}>Avatar1</option>
                 <option value={Avatar2}>Avatar2</option>
                 <option value={Avatar3}>Avatar3</option>
@@ -128,6 +134,7 @@ const ProfilePictureChooserModal = ({ show, justClose, username, changeProfilePi
             <button type="button" onClick={justClose} className="close-modal2-btn">
                 Close
             </button>
+            {responseText !== "" && <p>{responseText}</p>}
         </section>
         </div>
     );
