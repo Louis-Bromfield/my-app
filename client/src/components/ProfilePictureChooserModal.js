@@ -39,23 +39,23 @@ const ProfilePictureChooserModal = ({ show, justClose, username }) => {
             <img src={FFLogo} alt="" />
             <p>Choose a picture from the dropdown below:</p>
             {/* drop down here */}
-            <select name="picChoiceSelector" id="picChoiceSelector">
-                <option value="Avatar1" onClick={() => setNewPic("Avatar1")}>Avatar1</option>
-                <option value="Avatar2" onClick={() => setNewPic("Avatar2")}>Avatar2</option>
-                <option value="Avatar3" onClick={() => setNewPic("Avatar3")}>Avatar3</option>
-                <option value="Avatar4" onClick={() => setNewPic("Avatar4")}>Avatar4</option>
-                <option value="Avatar5" onClick={() => setNewPic("Avatar5")}>Avatar5</option>
-                <option value="Avatar6" onClick={() => setNewPic("Avatar6")}>Avatar6</option>
-                <option value="Avatar7" onClick={() => setNewPic("Avatar7")}>Avatar7</option>
-                <option value="Avatar8" onClick={() => setNewPic("Avatar8")}>Avatar8</option>
-                <option value="Avatar9" onClick={() => setNewPic("Avatar9")}>Avatar9</option>
-                <option value="Avatar10" onClick={() => setNewPic("Avatar10")}>Avatar10</option>
-                <option value="Avatar11" onClick={() => setNewPic("Avatar11")}>Avatar11</option>
-                <option value="Avatar12" onClick={() => setNewPic("Avatar12")}>Avatar12</option>
-                <option value="Avatar9" onClick={() => setNewPic("Avatar13")}>Avatar13</option>
-                <option value="Avatar10" onClick={() => setNewPic("Avatar14")}>Avatar10</option>
-                <option value="Avatar11" onClick={() => setNewPic("Avatar15")}>Avatar11</option>
-                <option value="Avatar12" onClick={() => setNewPic("Avatar16")}>Avatar12</option>
+            <select name="picChoiceSelector" id="picChoiceSelector" onChange={(e) => setNewPic(e.target.value)}>
+                <option value="Avatar1">Avatar1</option>
+                <option value="Avatar2">Avatar2</option>
+                <option value="Avatar3">Avatar3</option>
+                <option value="Avatar4">Avatar4</option>
+                <option value="Avatar5">Avatar5</option>
+                <option value="Avatar6">Avatar6</option>
+                <option value="Avatar7">Avatar7</option>
+                <option value="Avatar8">Avatar8</option>
+                <option value="Avatar9">Avatar9</option>
+                <option value="Avatar10">Avatar10</option>
+                <option value="Avatar11">Avatar11</option>
+                <option value="Avatar12">Avatar12</option>
+                <option value="Avatar9">Avatar13</option>
+                <option value="Avatar10">Avatar10</option>
+                <option value="Avatar11">Avatar11</option>
+                <option value="Avatar12">Avatar12</option>
             </select>
             <p>Preview:</p>
             <img src={newPic === "Avatar1" ? {Avatar1} : 
