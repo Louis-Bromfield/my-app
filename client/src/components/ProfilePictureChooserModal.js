@@ -40,22 +40,22 @@ const ProfilePictureChooserModal = ({ show, justClose, username }) => {
             <p>Choose a picture from the dropdown below:</p>
             {/* drop down here */}
             <select name="picChoiceSelector" id="picChoiceSelector" onChange={(e) => setNewPic(e.target.value)}>
-                <option value="Avatar1">Avatar1</option>
-                <option value="Avatar2">Avatar2</option>
-                <option value="Avatar3">Avatar3</option>
-                <option value="Avatar4">Avatar4</option>
-                <option value="Avatar5">Avatar5</option>
-                <option value="Avatar6">Avatar6</option>
-                <option value="Avatar7">Avatar7</option>
-                <option value="Avatar8">Avatar8</option>
-                <option value="Avatar9">Avatar9</option>
-                <option value="Avatar10">Avatar10</option>
-                <option value="Avatar11">Avatar11</option>
-                <option value="Avatar12">Avatar12</option>
-                <option value="Avatar9">Avatar13</option>
-                <option value="Avatar10">Avatar10</option>
-                <option value="Avatar11">Avatar11</option>
-                <option value="Avatar12">Avatar12</option>
+                <option value={Avatar1}>Avatar1</option>
+                <option value={Avatar2}>Avatar2</option>
+                <option value={Avatar3}>Avatar3</option>
+                <option value={Avatar4}>Avatar4</option>
+                <option value={Avatar5}>Avatar5</option>
+                <option value={Avatar6}>Avatar6</option>
+                <option value={Avatar7}>Avatar7</option>
+                <option value={Avatar8}>Avatar8</option>
+                <option value={Avatar9}>Avatar9</option>
+                <option value={Avatar10}>Avatar10</option>
+                <option value={Avatar11}>Avatar11</option>
+                <option value={Avatar12}>Avatar12</option>
+                <option value={Avatar9}>Avatar13</option>
+                <option value={Avatar10}>Avatar10</option>
+                <option value={Avatar11}>Avatar11</option>
+                <option value={Avatar12}>Avatar12</option>
             </select>
             <p>Preview:</p>
             {/* <img 
