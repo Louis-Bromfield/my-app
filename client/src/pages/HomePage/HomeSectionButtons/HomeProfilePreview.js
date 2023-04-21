@@ -101,7 +101,7 @@ function HomeProfilePreview(props) {
             />
             <p style={{ fontSize: "1.2em" }} className="home-button-large-title">My Profile Preview</p>
             <div className="home-profile-preview-container">
-            <img className="home-profile-preview-img" src={props.userObj.profilePicture} alt="" style={{border: profilePicStyle}} onClick={() => setOpenProfilePicChooser(true) }/>
+            <img className="home-profile-preview-img" src={newProfilePic === null ? props.userObj.profilePicture : newProfilePic} alt="" style={{border: profilePicStyle}} onClick={() => setOpenProfilePicChooser(true) }/>
                 {/* <div className="home-profile-preview-container-top-grid"> */}
                     {/* <div className="profile-top-info-container"> */}
                         <Link to="/my-profile" style={{ textDecoration: "none", color: "#404d72" }}><h2>{props.userObj.username}</h2></Link>

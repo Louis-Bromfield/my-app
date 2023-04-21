@@ -680,7 +680,7 @@ router.patch("/:username", async (req, res) => {
         },
         { new: true }
     );
-    res.json(updatedUser);
+    res.json({ newUser: updatedUser, error: "No error" });
     } catch (error) {
         res.json({ error: error.message })
     }
