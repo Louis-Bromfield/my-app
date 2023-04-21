@@ -58,7 +58,8 @@ const ProfilePictureChooserModal = ({ show, justClose, username }) => {
                 <option value="Avatar12">Avatar12</option>
             </select>
             <p>Preview:</p>
-            <img src={newPic === "Avatar1" ? {Avatar1} : 
+            {/* <img 
+                src={newPic === "Avatar1" ? {Avatar1} : 
                       newPic === "Avatar2" ? {Avatar2} :
                       newPic === "Avatar3" ? {Avatar3} :
                       newPic === "Avatar4" ? {Avatar4} :
@@ -74,7 +75,13 @@ const ProfilePictureChooserModal = ({ show, justClose, username }) => {
                       newPic === "Avatar14" ? {Avatar14} :
                       newPic === "Avatar15" ? {Avatar15} :
                       {Avatar16}
-                      } alt="Profile avatar preview" />
+                      } 
+                alt="Profile avatar preview" 
+            /> */}
+            <img 
+                src={newPic}
+                alt="Profile avatar preview" 
+            />
             <button type="button" onClick={() => changePicture(newPic)} className="close-modal2-btn">
                 Confirm Choice
             </button>
