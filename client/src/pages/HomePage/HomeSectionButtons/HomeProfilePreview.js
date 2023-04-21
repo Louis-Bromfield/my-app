@@ -5,6 +5,7 @@ import axios from 'axios';
 import { HomeButtonNavButton } from './HomeButtonNavButton';
 import Modal from '../../../components/Modal';
 import { FaInfoCircle } from 'react-icons/fa';
+import ProfilePictureChooserModal from '../../../components/ProfilePictureChooserModal';
 
 function HomeProfilePreview(props) {
     const [progressBarWidth, setProgressBarWidth] = useState();
@@ -14,6 +15,8 @@ function HomeProfilePreview(props) {
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
     const [profilePicStyle, setProfilePicStyle] = useState("none");
+    const [openProfilePicChooser, setOpenProfilePicChooser] = useState(false);
+    const [newProfilePic, setNewProfilePic] = useState(null);
 
     useEffect(() => {
         console.log("HomeProfilePreviewUE");
@@ -78,11 +81,24 @@ function HomeProfilePreview(props) {
         };
     };
 
+    const changeProfilePic = (newPic) => {
+        console.log("called profile > changeProfilePic");
+        if (newPic !== null && newPic !== "") {
+            setNewProfilePic(newPic);
+        };
+    };
+
     return (
         <div className="home-profile-preview">
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>
+            <ProfilePictureChooserModal
+                show={openProfilePicChooser} 
+                justClose={() => setOpenProfilePicChooser(false)}
+                username={props.userObj.username}
+                changeProfilePic={changeProfilePic}
+            />
             <p style={{ fontSize: "1.2em" }} className="home-button-large-title">My Profile Preview</p>
             <div className="home-profile-preview-container">
             <img className="home-profile-preview-img" src={props.userObj.profilePicture} alt="" style={{border: profilePicStyle}}/>

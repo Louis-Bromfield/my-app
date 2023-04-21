@@ -24,6 +24,9 @@ const ProfilePictureChooserModal = ({ show, justClose, username, changeProfilePi
     const [newPic, setNewPic] = useState({Avatar1});
 
     const changePicture = async (picChoice) => {
+        if (username === undefined) {
+            return;
+        };
         console.log("in change picture");
         console.log("picChoice = " + picChoice);
         if (picChoice === "") {
