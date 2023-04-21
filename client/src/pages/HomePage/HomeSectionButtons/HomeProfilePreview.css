@@ -29,6 +29,7 @@
     width: 15%;
     object-fit: cover;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .home-profile-preview-level-and-xp {
