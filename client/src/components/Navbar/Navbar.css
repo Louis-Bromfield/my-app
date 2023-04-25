@@ -276,9 +276,9 @@
 }
 
 @media (max-width: 1400px) {
-    .navbar {
+    /* .navbar {
         height: 12vh;
-    }
+    } */
     .nav-title {
         font-size: 0.85em;
     }
