@@ -114,7 +114,7 @@ function IndividualNewsFeedPost(props) {
         setNewCommentStatus(false);
     };
 
-    const submitNewComment = async (comment) => {
+    const submitNewComment = async (comment, author) => {
         const ID = props.location.postObject === undefined ? localStorage.getItem("postID") : props.location.postObject._id;
         try {
             await axios.patch(`${process.env.REACT_APP_API_CALL_HPNFP}/postComment/${ID}`, 
@@ -124,7 +124,7 @@ function IndividualNewsFeedPost(props) {
                 newComment: comment,
                 // CHARMANDER Would like to change this as otherwise you could make posts in someone else's name
                 // author: localStorage.getItem("username")
-                author: props.username
+                author: author
             });
             setNewCommentStatus(true);
             setNewCommentToRender(comment)
@@ -347,15 +347,15 @@ function IndividualNewsFeedPost(props) {
                             </div>
                         </div>
                     }
-                    {(submittedRatings === true || props.username === author) &&
-                        // show rating results
+                    {/* {(submittedRatings === true || props.username === author) && */}
+                        {/* // show rating results */}
                         <div className="post-rate-results">
                             <p><b>{likes.length}</b> {likes.length === 1 ? "forecaster" : "forecasters"} liked this post.</p>
                             <p><b>{dislikes.length}</b> {dislikes.length === 1 ? "forecaster" : "forecasters"} disliked this post.</p>
                             <p><b>{truthfulRatingCount}</b> {truthfulRatingCount === 1 ? "forecaster" : "forecasters"} rated this post as Truthful.</p>
                             <p><b>{relevantRatingCount}</b> {relevantRatingCount === 1 ? "forecaster" : "forecasters"} rated this post as Relevant.</p>
                         </div>
-                    }
+                    {/* } */}
                 </div>
             </div>
             <div className="comments-container">
@@ -369,7 +369,7 @@ function IndividualNewsFeedPost(props) {
                         onChange={(e) => handleCommentChange(e)}/>
                     <button 
                         className="submit-comment-btn"
-                        onClick={() => submitNewComment(comment)}>
+                        onClick={() => submitNewComment(comment, props.username)}>
                         Post Comment
                     </button>
                 </div>

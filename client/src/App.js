@@ -183,7 +183,7 @@ function App() {
                 setUserFFPoints={setUserFFPoints}
             />} />
             <Route path="/change-log" render={(props) => <ChangeLog {...props} />} />
-            <Route path="/news-post" render={(props) => <IndividualNewsFeedPost {...props} />} />
+            <Route path="/news-post" render={(props) => <IndividualNewsFeedPost {...props} username={username} />} />
             <Route path='/forecast' render={(props) => <Forecast {...props} 
                 markets={markets} 
                 username={username} 

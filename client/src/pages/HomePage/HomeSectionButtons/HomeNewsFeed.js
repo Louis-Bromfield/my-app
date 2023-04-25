@@ -593,7 +593,8 @@ function HomeNewsFeed(props) {
                         {filteredFeed.map((item, index) => {
                             const articleProps = {
                                 pathname: "/news-post",
-                                postObject: item
+                                postObject: item,
+                                username: props.username
                             }
                             return (
                                 <li key={index} className="news-feed-post">
@@ -671,7 +672,8 @@ function HomeNewsFeed(props) {
                         {feed.map((item, index) => {
                             const articleProps = {
                                 pathname: "/news-post",
-                                postObject: item
+                                postObject: item,
+                                username: props.username
                             };
                             // check if any element from post.markets is in userMarkets
                             if (item.markets.some(market => userMarkets.includes(market))) {
