@@ -259,7 +259,21 @@ function Navbar(props) {
                                                                 </li>
                                                             );
                                                         };
-                                                    } else return null;
+                                                    // } else return null;
+                                                    } else {
+                                                        return (
+                                                            <li 
+                                                                key={index} 
+                                                                className={localStorage.getItem("selectedPage") === item.title ? "nav-text-selected" : "nav-text"}
+                                                                onClick={() => setShowNotifications(!showNotifications)}>
+                                                                    <Link>
+                                                                        {item.iconSelected}
+                                                                        <span className="nav-title"><p>{item.title}</p></span>
+                                                                        {numberOfNewNotis > 0 ? <h5 className="notification-counter" style={{ height: "100%" }}>{numberOfNewNotis}</h5> : null}
+                                                                    </Link>
+                                                            </li>
+                                                        )
+                                                    }
                                                 })}
                                             </ul>
                                             }
