@@ -111,7 +111,7 @@ function ReportAnyIssues() {
                                 <h3 style={{ color: "#404d72" }}>{newFeedback.reportComments}</h3>
                                 <p><i>{newFeedback.reportType}</i> - {newFeedback.reportDate.slice(0, 15)} </p>
                                 <br />
-                                <p><b>Louis' Response:</b> {newFeedback.reportResponse}</p>
+                                <p><b>Our Response:</b> {newFeedback.reportResponse}</p>
                             </li>
                         }
                         {feedbackArr.map((item, index) => {
@@ -120,7 +120,7 @@ function ReportAnyIssues() {
                                     <h3 style={{ color: "#404d72" }}>{item.reportComments}</h3>
                                     <p><i>{item.reportType}</i> - {item.reportDate.slice(0, 15)} </p>
                                     <br />
-                                    <p><b>Louis' Response:</b> {item.reportResponse}</p>
+                                    <p><b>Our Response:</b> {item.reportResponse}</p>
                                 </li>
                             )
                         })}
