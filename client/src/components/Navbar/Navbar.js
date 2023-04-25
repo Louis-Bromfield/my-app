@@ -268,7 +268,7 @@ function Navbar(props) {
                                                                 onClick={() => setShowNotifications(!showNotifications)}>
                                                                     <Link>
                                                                         {item.iconSelected}
-                                                                        <span className="nav-title"><p>{item.title}</p></span>
+                                                                        {/* <span className="nav-title"><p>{item.title}</p></span> */}
                                                                         {numberOfNewNotis > 0 ? <h5 className="notification-counter" style={{ height: "100%" }}>{numberOfNewNotis}</h5> : null}
                                                                     </Link>
                                                             </li>
