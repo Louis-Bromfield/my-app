@@ -28,6 +28,12 @@
     }
 }
 
+@media (max-width: 1000px) {
+    .learn {
+        max-width: 90%;
+    }
+}
+
 @media (max-width: 800px) {
     .learn-grid {
         display: flex;

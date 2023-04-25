@@ -186,6 +186,12 @@
     }
 }
 
+@media (max-width: 1000px) {
+    .profile {
+        max-width: 90%;
+    }
+}
+
 @media (max-width: 900px) {
     .profile-main-info {
         grid-template-columns: 40% 60%;
@@ -202,9 +208,9 @@
 }
 
 @media (max-width: 620px) {
-    .profile {
+    /* .profile {
         width: 90%;
-    }
+    } */
     /* .main-profile-grid {
         margin-left: -6vw;
     } */

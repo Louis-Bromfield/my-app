@@ -127,3 +127,9 @@
         min-height: 300%;
     } */
 }
+
+@media (max-width: 1000px) {
+    .search {
+        max-width: 90%;
+    }
+}

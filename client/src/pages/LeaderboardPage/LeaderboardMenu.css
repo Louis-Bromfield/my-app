@@ -232,6 +232,12 @@
     flex-direction: row;
 }
 
+@media (max-width: 1000px) {
+    .leaderboard-menu {
+        max-width: 90%;
+    }
+}
+
 @media (max-width: 950px) {
     .market-div {
         width: 40%;

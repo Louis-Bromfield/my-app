@@ -159,7 +159,8 @@
 
 .post-author-left {
     display: flex;
-    flex-direction: row;
+    /* flex-direction: row; */
+    flex-direction: column;
     padding-bottom: 1vh;
     border-bottom: 1px solid lightgray;
     height: 100%;
@@ -235,9 +236,9 @@
     .summary-field {
         width: 100%;
     }
-    .author-profile-pic {
+    /* .author-profile-pic {
         height: 6vh;
-    }
+    } */
 }
 
 @media (max-width: 900px) {
