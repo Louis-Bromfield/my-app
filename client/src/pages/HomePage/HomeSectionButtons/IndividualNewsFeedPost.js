@@ -72,7 +72,7 @@ function IndividualNewsFeedPost(props) {
                 if (res.data.ratings[i].relevant === true) {
                     relevantCount++;
                 };
-                if (res.data.ratings[i].username === cookie.username) {
+                if (res.data.ratings[i].username === props.username) {
                     setSubmittedRatings(true);
                 };
             };
@@ -100,7 +100,7 @@ function IndividualNewsFeedPost(props) {
                 if (props.location.postObject.ratings[i].relevant === true) {
                     relevantCount++;
                 };
-                if (props.location.postObject.ratings[i].username === cookie.username) {
+                if (props.location.postObject.ratings[i].username === props.username) {
                     setSubmittedRatings(true);
                 };
             };
@@ -124,18 +124,18 @@ function IndividualNewsFeedPost(props) {
                 newComment: comment,
                 // CHARMANDER Would like to change this as otherwise you could make posts in someone else's name
                 // author: localStorage.getItem("username")
-                author: cookie.username
+                author: props.username
             });
             setNewCommentStatus(true);
             setNewCommentToRender(comment)
             setComment("");
             // CHARMANDER
             // giveUserPoints(localStorage.getItem("username"));
-            giveUserPoints(cookie.username);
-            // if (cookie.username !== undefined && author !== cookie.username) {
-            if (cookie.username !== author && props.username !== author) {
+            giveUserPoints(props.username);
+            // if (props.username !== undefined && author !== props.username) {
+            if (props.username !== author && props.username !== author) {
                 await axios.patch(`${process.env.REACT_APP_API_CALL_U}/newNotification/${author}`, {
-                    notificationMessage: `${cookie.username === undefined ? "Someone" : cookie.username} just commented on your news feed post!`,
+                    notificationMessage: `${props.username === undefined ? "Someone" : props.username} just commented on your news feed post!`,
                     notificationSourcePath: "/news-post",
                     notificationSourceObjectID: ID
                 });
@@ -194,17 +194,17 @@ function IndividualNewsFeedPost(props) {
 
     const submitRatingOnPost = async () => {
         try {
-            if (cookie.username === "Guest") {
+            if (props.username === "Guest") {
                 setShowModal(true);
                 setModalContent("You must be logged into your own account to rate posts.");
                 return;
-            } else if (cookie.username === author) {
+            } else if (props.username === author) {
                 setShowModal(true);
                 setModalContent("You cannot rate your own post.");
             } else if (submittedTruthfulRating === true && submittedRelevantRating === true) {
                 // add in axios here to edit post document
                 const res = await axios.patch(`${process.env.REACT_APP_API_CALL_HPNFP}/postRatings/${postID}`, {
-                    username: cookie.username,
+                    username: props.username,
                     truthful: truthful,
                     relevant: relevant
                 });
@@ -220,7 +220,7 @@ function IndividualNewsFeedPost(props) {
                 };
                 // send user a notification for when they receive a rating
                 await axios.patch(`${process.env.REACT_APP_API_CALL_U}/newNotification/${author}`, {
-                    notificationMessage: `${cookie.username === undefined ? "Someone" : cookie.username} just rated your news feed post! If this was the first rating you received, you have been awarded the Gather Round trophy!`,
+                    notificationMessage: `${props.username === undefined ? "Someone" : props.username} just rated your news feed post! If this was the first rating you received, you have been awarded the Gather Round trophy!`,
                     notificationSourcePath: "/news-post",
                     notificationSourceObjectID: postID,
                     notificationRating: true,
@@ -255,7 +255,7 @@ function IndividualNewsFeedPost(props) {
                             <img className="author-profile-pic" src={authorProfilePicture === undefined ? "" : authorProfilePicture} alt=""/>
                             <div className="post-author-details">
                                 <Link 
-                                    to={author === cookie.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: author}}
+                                    to={author === props.username ? {pathname: "/my-profile"} : {pathname: "/search", clickedUsername: author}}
                                     onClick={() => localStorage.setItem("selectedPage", "Search")}
                                     style={{ textDecoration: "none", color: "#404d72"}}>
                                         <h3>{author}</h3>
@@ -347,7 +347,7 @@ function IndividualNewsFeedPost(props) {
                             </div>
                         </div>
                     }
-                    {(submittedRatings === true || cookie.username === author) &&
+                    {(submittedRatings === true || props.username === author) &&
                         // show rating results
                         <div className="post-rate-results">
                             <p><b>{likes.length}</b> {likes.length === 1 ? "forecaster" : "forecasters"} liked this post.</p>
@@ -385,7 +385,7 @@ function IndividualNewsFeedPost(props) {
                                 style={{ textDecoration: "none", color: "#404d72"}}>
                                     {/* CHARMANDER */}
                                     {/* <h4 className="comment-author">{localStorage.getItem("username")}</h4> */}
-                                    <h4 className="comment-author">{cookie.username}</h4>
+                                    <h4 className="comment-author">{props.username}</h4>
                             </Link>
                             <h4>{newCommentToRender}</h4>
                         </div>
@@ -404,7 +404,7 @@ function IndividualNewsFeedPost(props) {
                                             className="comment-in-chain">
                                                 <Link 
                                                     to={usernameProps}
-                                                    onClick={() => localStorage.setItem("selectedPage", item.author === cookie.username ? "My Profile" : "Search")}>
+                                                    onClick={() => localStorage.setItem("selectedPage", item.author === props.username ? "My Profile" : "Search")}>
                                                     <h4 className="comment-author"
                                                     style={{ textDecoration: "none" }}>{subComment.author}</h4>
                                                 </Link>
@@ -415,7 +415,7 @@ function IndividualNewsFeedPost(props) {
                             ) 
                         } else if (typeof item === "object") {
                             const usernameProps = {
-                                pathname: item.author === cookie.username ? "/my-profile" : "/search",
+                                pathname: item.author === props.username ? "/my-profile" : "/search",
                                 clickedUsername: item.author
                             }
                             return (
@@ -425,7 +425,7 @@ function IndividualNewsFeedPost(props) {
                                         <div className="author-details">
                                             <Link 
                                                 to={usernameProps}
-                                                onClick={() => localStorage.setItem("selectedPage", item.author === cookie.username ? "My Profile" : "Search")}
+                                                onClick={() => localStorage.setItem("selectedPage", item.author === props.username ? "My Profile" : "Search")}
                                                 style={{ textDecoration: "none" }}>
                                                 <h4 className="comment-author">{item.author}</h4>
                                             </Link>
