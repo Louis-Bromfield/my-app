@@ -130,6 +130,6 @@
 
 @media (max-width: 1000px) {
     .search {
-        max-width: 90%;
+        width: 90%;
     }
 }

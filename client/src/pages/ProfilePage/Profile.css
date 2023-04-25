@@ -188,7 +188,7 @@
 
 @media (max-width: 1000px) {
     .profile {
-        max-width: 90%;
+        width: 90%;
     }
 }
 

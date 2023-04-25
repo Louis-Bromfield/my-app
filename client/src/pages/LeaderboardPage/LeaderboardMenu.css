@@ -234,7 +234,7 @@
 
 @media (max-width: 1000px) {
     .leaderboard-menu {
-        max-width: 90%;
+        width: 90%;
     }
 }
 

@@ -109,7 +109,7 @@
 
 @media (max-width: 1000px) {
     .home {
-        max-width: 90%;
+        width: 90%;
     }
 }
 

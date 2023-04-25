@@ -183,6 +183,12 @@
     }
 }
 
+@media (max-width: 1000px) {
+    .individual-leaderboard {
+        width: 90%;
+    }
+}
+
 @media (max-width: 800px) {
     .leaderboard-spotlight-row {
         font-size: 0.8em;

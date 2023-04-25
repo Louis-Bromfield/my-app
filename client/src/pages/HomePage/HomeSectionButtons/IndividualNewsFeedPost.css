@@ -241,6 +241,12 @@
     } */
 }
 
+@media (max-width: 1000px) {
+    .individual-post-container {
+        width: 90%;
+    }
+}
+
 @media (max-width: 900px) {
     .post-button {
         width: 50%;
