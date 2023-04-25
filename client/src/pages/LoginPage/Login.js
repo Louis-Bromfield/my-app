@@ -359,8 +359,8 @@ function Login(props) {
                         </div> */}
                     </div> 
                     <div className="login-div">
-                        <h2>Forgot your password?</h2>
-                        <p>Check your Prolific inbox for the message we sent with your login info. If you can't access that, email fantasyforecastcontact@gmail.com with your Prolific ID and we'll reset it for you.</p>
+                        <h2>Login not working or Forgot your password?</h2>
+                        <p>Check your Prolific inbox for the message we sent with your login info. If you can't access that, email fantasyforecastcontact@gmail.com with your Prolific ID and we'll reset it for you. If you can access that message but your login details aren't working, reply to that message on Prolific and we will reset it for you.</p>
                     </div>
             </div>
         </div>  
