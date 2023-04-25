@@ -245,7 +245,7 @@
     }
     .post-rating-container {
         width: 80%;
-        text-align: center;
+        /* text-align: center; */
     }
 }
 
