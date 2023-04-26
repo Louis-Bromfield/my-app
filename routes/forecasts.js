@@ -791,9 +791,9 @@ router.patch("/submitOrUpdateMultiple", async (req, res) => {
             const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.documentID,{
                 $push: { [location]: {
                     "certainties": {
-                        "certainty1": req.body.certainties.certainty1,
-                        "certainty2": req.body.certainties.certainty2,
-                        "certainty3": req.body.certainties.certainty3,
+                        "certainty1": req.body.certainty1,
+                        "certainty2": req.body.certainty2,
+                        "certainty3": req.body.certainty3,
                     },
                     "comments": req.body.comments,
                     "date": req.body.date
