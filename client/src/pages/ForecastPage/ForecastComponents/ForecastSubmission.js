@@ -649,7 +649,7 @@ console.log("here 343");
                     // }
                 });
                 setForecastResponseMessage("Forecast successfully submitted! Check out the chart to see it!")
-                props.changeForecast(submittedForecast.data);
+                // props.changeForecast(submittedForecast.data);
                 setUserHasAttempted(true);
                 document.getElementsByClassName("forecast-certainty-input").value = 0;
                 setCertainty(0);
