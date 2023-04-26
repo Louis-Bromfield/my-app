@@ -31,10 +31,10 @@ router.get("/:problemName", async (req, res) => {
 router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
     try {
         console.log("=============");
-        console.log(req.params);
+        // console.log(req.params);
         console.log("=============");
         const selectedProblem = await Forecasts.findOne({ problemName: req.params.problemName });
-        console.log(selectedProblem);
+        // console.log(selectedProblem);
         let responseObj = {};
         if (selectedProblem.submittedForecasts.length === 0) {
             responseObj.highestCertainty = "N/A";
@@ -622,7 +622,7 @@ router.get("/:markets", async (req, res) => {
 // Add a new problem to the database
 router.post("/newProblem", async (req, res) => {
     try {
-        console.log(req.body);
+        console.log("req.body");
         const newProblem = new Forecasts({
             problemName: req.body.problemName,
             startDate: req.body.startDate,
@@ -1070,7 +1070,7 @@ router.patch("/captainAProblem/:selectedForecast/:username/:captainedStatus", as
             if (allForecastData.submittedForecasts[i].username === req.params.username) {
                 allForecastData.submittedForecasts[i].captainedStatus = booleanStatus;
                 const new1 = await Forecasts.findByIdAndUpdate(allForecastData._id, { submittedForecasts: allForecastData.submittedForecasts }, {new: true});
-                console.log(new1);
+                // console.log(new1);
             };
         };
         res.send("Done");

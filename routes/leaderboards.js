@@ -53,7 +53,7 @@ router.get("/leaderboard/:leaderboardName/", async (req, res) => {
 router.get("/newGetLeaderboardRoute/:leaderboardName", async (req, res) => {
     try {
         const allUsers = await Users.find();
-        console.log(allUsers);
+        // console.log(allUsers);
         let usersForMarket = [];
         for (let i = 0; i < allUsers.length; i++) {
             if (allUsers[i].markets.includes(req.params.leaderboardName)) {
@@ -69,7 +69,7 @@ router.get("/newGetLeaderboardRoute/:leaderboardName", async (req, res) => {
             };
         };
         // usersForMarket = usersForMarket.sort((a, b) => b.totalScoreForMarket - a.totalScoreForMarket);
-        console.log(usersForMarket);
+        // console.log(usersForMarket);
         res.json(usersForMarket);
     } catch (err) {
         console.error("Error in leaderboards > newGetLeaderboardRoute");
@@ -133,9 +133,9 @@ router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle/:localStorage
                 topThree: [ffRankingsSorted[0], ffRankingsSorted[1], ffRankingsSorted[2]]
             });
         } else {
-            console.log(allUsers);
+            // console.log(allUsers);
             const allUsersSorted = allUsers.sort((a, b) => b.totalBrier - a.totalBrier);
-            console.log("allUsersSorted");
+            // console.log("allUsersSorted");
             res.json({
                 rankings: allUsersSorted,
                 topThree: [allUsersSorted[0], allUsersSorted[1], allUsersSorted[2]]

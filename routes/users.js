@@ -34,7 +34,7 @@ const checkCookie = async (req, res, next) => {
         // console.log(sessionInDB);
         // console.log("=========6======");
         if (!sessionInDB) {
-            console.log("No session in DB!");
+            // console.log("No session in DB!");
             //  send error that will trigger user logout in frontend
             const err = new Error(`No session exists.`);
             err.status=404;
@@ -43,7 +43,7 @@ const checkCookie = async (req, res, next) => {
         // or if doc with sessionID exists, but it is expired, delete session object 
         // (so that logging back in creates a new one) and return err
         } else if (sessionInDB && (new Date() > new Date(sessionInDB.expiration))) {
-            console.log("Session is in DB but expired!!");
+            // console.log("Session is in DB but expired!!");
             const err = new Error(`Session is in DB but expired!!`);
             err.status=401;
             err.statusCode=401;
@@ -232,7 +232,7 @@ router.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
             res.json({ loginSuccess: false, message: "This is a team account. Please login to your individual account."});
         }
         let match;
-        console.log(req.params);
+        // console.log(req.params);
         if (req.params.isPassword === "true") {
             match = await bcrypt.compare(req.params.passwordOrResetCode, user.password);
         } else if (req.params.isPassword === "false") {
@@ -280,7 +280,7 @@ router.get("/getIndividualProblemResults/:problemName", async (req, res) => {
         };
         // sort by score
         const sortedProblemRankings = problemRankings.sort((a, b) => b.score - a.score);
-        console.log(sortedProblemRankings);
+        // console.log(sortedProblemRankings);
         // return array
         res.json(sortedProblemRankings);
     } catch (error) {
@@ -595,7 +595,7 @@ router.patch("/onboardingTask/:username", async (req, res) => {
         let allOnboardingTrue = true;
 console.log("allOnboardingTrue should be true = " + allOnboardingTrue);
         for (let i = 0; i < Object.keys(userOnboarding).length; i++) {
-console.log("Current item = " + Object.values(userOnboarding)[i]);
+// console.log("Current item = " + Object.values(userOnboarding)[i]);
             if (Object.values(userOnboarding)[i] === false) {
 console.log("I have found an onboarding task you haven't completed yet");
                 allOnboardingTrue = false;
@@ -1310,10 +1310,10 @@ router.patch("/reset/resetUserAccFromLogin/fireEmail/resetPW/r", async (req, res
     try {
         console.log("In reset");
         const user = await Users.findOne({ username: req.body.username, email: req.body.email });
-        const fakeUser = await Users.findOne({ username: "78w5786y3487ty65348e75", email: "88w7e8r678sdfsdhjfbsdjh" });
-        console.log(user);
-        console.log("this is response when user isn't found vvvvv");
-        console.log(fakeUser);
+        // const fakeUser = await Users.findOne({ username: "78w5786y3487ty65348e75", email: "88w7e8r678sdfsdhjfbsdjh" });
+        // console.log(user);
+        // console.log("this is response when user isn't found vvvvv");
+        // console.log(fakeUser);
         if (user) {
             let newPW = crypto.randomBytes(20).toString("hex");
             let transporter = nodemailer.createTransport({
