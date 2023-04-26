@@ -703,7 +703,7 @@ router.patch("/submitOrUpdateSingle", async (req, res) => {
                     }
                 ]
             };
-            const newForecastSavedToDB = await Forecasts.findByIdAndUpdate(document._id, 
+            const newForecastSavedToDB = await Forecasts.findByIdAndUpdate(req.body.documentID, 
                 { 
                     $push: { submittedForecasts: toPushToDB },
                 }, 
