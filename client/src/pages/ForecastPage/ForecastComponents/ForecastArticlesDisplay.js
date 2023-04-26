@@ -11,9 +11,9 @@ function ForecastArticlesDisplay(props) {
         try {
             let term = "";
             if (searchTerm.includes("Bedford")) {
-                term = "Bedford Mayor"
+                term = "Bedford Mayor election UK"
             } else if (searchTerm.includes("Mansfield")) {
-                term = "Mansfield Mayor"
+                term = "Mansfield Mayor election UK"
             } else if (searchTerm.includes("Oldham")) {
                 term = "Oldham election"
             } else {
