@@ -651,7 +651,7 @@ console.log("here 343");
                 // if ((new Date(nDateBSTSuffix) - new Date(selectedForecastObject.startDate))/1000 <= 86400) {
                 if ((new Date() - new Date(selectedForecastObject.startDate))/1000 <= 86400) {
                     setShowModal(true);
-                    setModalContent("You submitted within 24 hours of the problem going live, if you haven't yet got it, you've just unlocked the Quick off the Mark trophy!");
+                    setModalContent("You submitted within 24 hours of the problem going live, if you haven't yet got it, you've just unlocked the Quick off the Mark trophy! If you select a new forecast from the dropdown and then return to this one and your forecast isn't showing, just refresh the page and it should be there.");
                 };
             } catch (error) {
                 console.error("error in ForecastSubmission.js > handleForecastSubmit")
@@ -823,7 +823,7 @@ console.log("here 343");
                 // if ((new Date(nDateBSTSuffix) - new Date(selectedForecastObject.startDate))/1000 <= 86400) {
                 if ((new Date() - new Date(selectedForecastObject.startDate))/1000 <= 86400) {
                     setShowModal(true);
-                    setModalContent("You submitted within 24 hours of the problem going live, if you haven't yet got it, you've just unlocked the Quick off the Mark trophy!");
+                    setModalContent("You submitted within 24 hours of the problem going live, if you haven't yet got it, you've just unlocked the Quick off the Mark trophy! If you select a new forecast from the dropdown and then return to this one and your forecast isn't showing, just refresh the page and it should be there.");
                 };
                 
             } catch (error) {
@@ -892,7 +892,19 @@ console.log("here 343");
                 }
                 {marketWarning === false && 
                     <div className="forecast-selection-div">
-                        <label htmlFor="forecast-selection"><h2 className="header-label">Select a Problem</h2></label>
+                        <label htmlFor="forecast-selection">
+                            <h2 className="header-label">
+                                Select a Problem
+                            </h2>
+                            <FaInfoCircle 
+                                color={"orange"} 
+                                className="modal-i-btn"
+                                onClick={() => { 
+                                    setShowModal(true); 
+                                    setModalContent(`If any of the problems in this dropdown say OPEN AND UNATTEMPTED after you submit a prediction for them, try refreshing and checking again.`); 
+                                }}
+                            />
+                        </label>
                         <select 
                             className="forecast-selection-select"
                             name="forecast-selection" 
@@ -967,7 +979,7 @@ console.log("here 343");
                             {/* {selectedForecast.includes("Scotland") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://whatscotlandthinks.org/questions/how-would-you-vote-in-the-in-a-scottish-independence-referendum-if-held-now-ask/?removed" target="_blank"><h4>(<u>Link: What Scotland Thinks</u>)</h4></a>} */}
                             {/* {selectedForecast.includes("Statesman's") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://sotn.newstatesman.com/2022/07/conservative-leadership-election-candidates-who-backing/" target="_blank"><h4>(<u>Link: The New Statesman's Tracker</u>)</h4></a>} */}
                             {/* {selectedForecast.includes("538") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://projects.fivethirtyeight.com/biden-approval-rating/" target="_blank"><h4>(<u>Link: 538 Biden Polls</u>)</h4></a>} */}
-                            {selectedForecast.includes("scoreboard") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://www.bbc.co.uk/news/election/2022/england/results" target="_blank"><h4>(<u>Link: BBC</u>)</h4></a>}
+                            {selectedForecast.includes("scoreboard") && <a style={{ color: "#fff", textDecoration: "none" }} href="https://www.bbc.co.uk/news/election/2022/england/results" target="_blank"><h4>(<u>Link: BBC 2022 Scoreboard</u>)</h4></a>}
                         </h2>
                         {/* <h3 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 38)}</h3> */}
                         <h3 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 34)}</h3>

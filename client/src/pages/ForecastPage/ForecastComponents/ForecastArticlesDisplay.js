@@ -9,7 +9,16 @@ function ForecastArticlesDisplay(props) {
 
     const googleNewsScrape = async (searchTerm) => {
         try {
-            let term = "UK Local Elections";
+            let term = "";
+            if (searchTerm.includes("Bedford")) {
+                term = "Bedford Mayor"
+            } else if (searchTerm.includes("Mansfield")) {
+                term = "Mansfield Mayor"
+            } else if (searchTerm.includes("Oldham")) {
+                term = "Oldham election"
+            } else {
+                term = "UK Local Elections";
+            }
             let googleNewsScrapeResult;
             googleNewsScrapeResult = await axios.get(`${process.env.REACT_APP_API_CALL_GSN}/${term}`);
             setArticles(googleNewsScrapeResult.data);
