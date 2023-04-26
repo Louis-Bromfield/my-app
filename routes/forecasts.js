@@ -661,7 +661,7 @@ router.patch("/submitOrUpdateSingle", async (req, res) => {
             console.log("this user has forecasted this problem before");
             const location = `submittedForecasts.${indexLocation}.forecasts`;
             // console.log(`location = ${location}`);
-            const updatedForecastDocument = await Forecasts.findByIdAndUpdate(document.documentID, {
+            const newForecastSavedToDB = await Forecasts.findByIdAndUpdate(req.body.documentID, {
                 $push: { [location]: {
                     "certainty": req.body.certainty,
                     "comments": req.body.comments,
@@ -670,8 +670,7 @@ router.patch("/submitOrUpdateSingle", async (req, res) => {
             }, 
             { new: true }
             );
-            res.json(updatedForecastDocument);
-            return;
+            res.json(newForecastSavedToDB);
         } else {
             console.log("this user has not forecasted this problem before");
             const user = await Users.findOne({ username: req.body.username });
@@ -711,7 +710,6 @@ router.patch("/submitOrUpdateSingle", async (req, res) => {
                 { new: true }
             );
             res.json(newForecastSavedToDB);
-            return;
         }
         // New
 
@@ -765,8 +763,9 @@ router.patch("/submitOrUpdateSingle", async (req, res) => {
 //         // console.log(newForecastSavedToDB);
 //         res.json(newForecastSavedToDB);
     } catch (error) {
-        console.error("Error in forecasts.js > patch");
+        console.error("Error in forecasts.js > patch submitOrUpdateSingle");
         console.error(error);
+        res.json({ error: true, errorMessage: error})
     }
 });
 
@@ -904,8 +903,9 @@ router.patch("/submitOrUpdateMultiple", async (req, res) => {
         // console.log(newForecastSavedToDB);
         // res.json(newForecastSavedToDB);
     } catch (error) {
-        console.error("Error in forecasts.js > patch");
+        console.error("Error in forecasts.js > patch submitOrUpdateMultiple");
         console.error(error);
+        res.json({ error: true, errorMessage: error})
     }
 });
 
