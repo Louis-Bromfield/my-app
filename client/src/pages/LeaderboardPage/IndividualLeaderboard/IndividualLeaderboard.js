@@ -284,7 +284,7 @@ function IndividualLeaderboard(props) {
                     </option>
                 </select> */}
             </div>
-            <div className="leaderboard-prize-container" style={{ margin: "0 auto", textAlign: "center" }}>
+            {currentLeaderboardName === "UK Local Elections 2023" && <div className="leaderboard-prize-container" style={{ margin: "0 auto", textAlign: "center" }}>
                 <h3>Prizes:</h3>
                 <p>This leaderboard will be used to determine who wins our prizes</p>
                 <p><strong>1st:</strong>£25</p>
@@ -293,7 +293,7 @@ function IndividualLeaderboard(props) {
                 <p><strong>16th-24th:</strong>&nbsp;£10</p>
                 <p><strong>25th-50th:</strong>&nbsp;£5</p>
                 <p>If LouisB or MattW are in the top 50, the prize will go to the next user in the list.</p>
-            </div>
+            </div>}
             <Leaderboard 
                 leaderboardTitle={currentLeaderboardName} 
                 leaderboardRankings={filteredRankings} 
