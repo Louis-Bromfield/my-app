@@ -834,8 +834,8 @@ router.patch("/submitOrUpdateMultiple", async (req, res) => {
                             certainty2: req.body.newForecastObject.certainty2,
                             certainty3: req.body.newForecastObject.certainty3, 
                         },
-                        comments: req.body.comments, 
-                        date: req.body.date
+                        comments: req.body.newForecastObject.comments, 
+                        date: req.body.newForecastObject.date
                     }
                 ]
                 // ], 
