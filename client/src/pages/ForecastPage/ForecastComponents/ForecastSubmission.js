@@ -569,7 +569,10 @@ console.log("here 343");
                 const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateSingle`, {
                 
                     documentID: selectedForecastDocumentID,
-                    newForecastObject: newForecastObj,
+                    // newForecastObject: newForecastObj,
+                    certainty: newCertainty, 
+                    comments: `(${username})~ ${newComments}`, 
+                    date: new Date().toString(),
                     username: username
                 });
                 props.changeForecast(newForecastTwo.data);
@@ -637,11 +640,11 @@ console.log("here 343");
                     // date: new Date().toString()
                     problemName: forecast,
                     username: username,
-                    newForecastObject: {
-                        certainty: certainty,
-                        comments: `(${username})~ ${comments}`,
-                        date: new Date().toString()
-                    }
+                    // newForecastObject: {
+                    certainty: certainty,
+                    comments: `(${username})~ ${comments}`,
+                    date: new Date().toString()
+                    // }
                 });
                 setForecastResponseMessage("Forecast successfully submitted! Check out the chart to see it!")
                 props.changeForecast(submittedForecast.data);
@@ -714,7 +717,12 @@ console.log("here 343");
                 const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateMultiple`, {
                 
                     documentID: selectedForecastDocumentID,
-                    newForecastObject: newForecastObj,
+                    certainty1: newCertainty1, 
+                    certainty2: newCertainty2, 
+                    certainty3: newCertainty3,
+                    comments: `(${username})~ ${newComments}`, 
+                    date: new Date().toString(),
+                    // newForecastObject: newForecastObj,
                     username: username
                 });
                 setForecastResponseMessage("Forecast successfully updated! Check out the chart to see it!");
@@ -818,15 +826,11 @@ console.log("here 343");
                     // date: new Date().toString()
                     problemName: forecast,
                     username: username,
-                    newForecastObject: {
-                        certainties: {
-                            certainty1: certainty1,
-                            certainty2: certainty2,
-                            certainty3: certainty3,
-                        },
-                        comments: `(${username})~ ${comments}`,
-                        date: new Date().toString()
-                    }
+                    certainty1: certainty1,
+                    certainty2: certainty2,
+                    certainty3: certainty3,
+                    comments: `(${username})~ ${comments}`,
+                    date: new Date().toString()
                 });
                 setForecastResponseMessage("Forecast successfully submitted! Check out the chart to see it!")
                 props.changeForecast(submittedForecast.data);

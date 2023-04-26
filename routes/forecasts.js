@@ -663,9 +663,9 @@ router.patch("/submitOrUpdateSingle", async (req, res) => {
             // console.log(`location = ${location}`);
             const updatedForecastDocument = await Forecasts.findByIdAndUpdate(document.documentID, {
                 $push: { [location]: {
-                    "certainty": req.body.newForecastObject.certainty,
-                    "comments": req.body.newForecastObject.comments,
-                    "date": req.body.newForecastObject.date
+                    "certainty": req.body.certainty,
+                    "comments": req.body.comments,
+                    "date": req.body.date
                 }}
             }, 
             { new: true }
@@ -698,9 +698,9 @@ router.patch("/submitOrUpdateSingle", async (req, res) => {
                 username: req.body.username, 
                 forecasts: [
                     {
-                        certainty: req.body.newForecastObject.certainty, 
-                        comments: req.body.newForecastObject.comments, 
-                        date: req.body.newForecastObject.date
+                        certainty: req.body.certainty, 
+                        comments: req.body.comments, 
+                        date: req.body.date
                     }
                 ]
             };
@@ -791,12 +791,12 @@ router.patch("/submitOrUpdateMultiple", async (req, res) => {
             const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.documentID,{
                 $push: { [location]: {
                     "certainties": {
-                        "certainty1": req.body.newForecastObject.certainties.certainty1,
-                        "certainty2": req.body.newForecastObject.certainties.certainty2,
-                        "certainty3": req.body.newForecastObject.certainties.certainty3,
+                        "certainty1": req.body.certainties.certainty1,
+                        "certainty2": req.body.certainties.certainty2,
+                        "certainty3": req.body.certainties.certainty3,
                     },
-                    "comments": req.body.newForecastObject.comments,
-                    "date": req.body.newForecastObject.date
+                    "comments": req.body.comments,
+                    "date": req.body.date
                 }},
             },
             { new: true }
@@ -830,12 +830,12 @@ router.patch("/submitOrUpdateMultiple", async (req, res) => {
                 forecasts: [
                     {
                         certainties: {
-                            certainty1: req.body.newForecastObject.certainty1,
-                            certainty2: req.body.newForecastObject.certainty2,
-                            certainty3: req.body.newForecastObject.certainty3, 
+                            certainty1: req.body.certainty1,
+                            certainty2: req.body.certainty2,
+                            certainty3: req.body.certainty3, 
                         },
-                        comments: req.body.newForecastObject.comments, 
-                        date: req.body.newForecastObject.date
+                        comments: req.body.comments, 
+                        date: req.body.date
                     }
                 ]
                 // ], 
