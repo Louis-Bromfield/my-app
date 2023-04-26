@@ -564,8 +564,9 @@ console.log("here 343");
                     date: new Date().toString()
                     // date: nDateBSTSuffix
                 };
+                // SQUIRTLE
                 // const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/update`, {
-                const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/update`, {
+                const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateSingle`, {
                 
                     documentID: selectedForecastDocumentID,
                     newForecastObject: newForecastObj,
@@ -624,14 +625,23 @@ console.log("here 343");
                 // let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
                 // let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20)).toString();
                 // let nDateBSTSuffix = nDate.slice(0, 25) + "GMT+0100 (British Summer Time)";
-                const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submit`, {
+                // SQUIRTLE
+                // const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submit`, {
+                const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateSingle`, {
                 
+                    // SQUIRTLE
+                    // problemName: forecast,
+                    // username: username,
+                    // certainty: certainty,
+                    // comments: `(${username})~ ${comments}`,
+                    // date: new Date().toString()
                     problemName: forecast,
                     username: username,
-                    certainty: certainty,
-                    comments: `(${username})~ ${comments}`,
-                    date: new Date().toString()
-                    // date: nDateBSTSuffix
+                    newForecastObject: {
+                        certainty: certainty,
+                        comments: `(${username})~ ${comments}`,
+                        date: new Date().toString()
+                    }
                 });
                 setForecastResponseMessage("Forecast successfully submitted! Check out the chart to see it!")
                 props.changeForecast(submittedForecast.data);
@@ -699,7 +709,9 @@ console.log("here 343");
                     date: new Date().toString()
                     // date: nDateBSTSuffix
                 };
-                const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/updateMultiple`, {
+                // SQUIRTLE
+                // const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/updateMultiple`, {
+                const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateMultiple`, {
                 
                     documentID: selectedForecastDocumentID,
                     newForecastObject: newForecastObj,
@@ -792,16 +804,27 @@ console.log("here 343");
                 // let convertedDate = new Date(date).toLocaleString("en-GB", { timeZone: "Europe/London" });
                 // let nDate = new Date(convertedDate.slice(6, 10), Number(convertedDate.slice(3, 5))-1, convertedDate.slice(0, 2), convertedDate.slice(12, 14), convertedDate.slice(15, 17), convertedDate.slice(18, 20)).toString();
                 // let nDateBSTSuffix = nDate.slice(0, 25) + "GMT+0100 (British Summer Time)";
-                const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitMultiple`, {
+                // SQUIRTLE
+                // const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitMultiple`, {
+                const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateMultiple`, {
                 
+                    // SQUIRTLE
+                    // problemName: forecast,
+                    // username: username,
+                    // certainty1: certainty1,
+                    // certainty2: certainty2,
+                    // certainty3: certainty3,
+                    // comments: `(${username})~ ${comments}`,
+                    // date: new Date().toString()
                     problemName: forecast,
                     username: username,
-                    certainty1: certainty1,
-                    certainty2: certainty2,
-                    certainty3: certainty3,
-                    comments: `(${username})~ ${comments}`,
-                    date: new Date().toString()
-                    // date: nDateBSTSuffix
+                    newForecastObject: {
+                        certainty1: certainty1,
+                        certainty2: certainty2,
+                        certainty3: certainty3,
+                        comments: `(${username})~ ${comments}`,
+                        date: new Date().toString()
+                    }
                 });
                 setForecastResponseMessage("Forecast successfully submitted! Check out the chart to see it!")
                 props.changeForecast(submittedForecast.data);
@@ -996,7 +1019,7 @@ console.log("here 343");
                                                 className="modal-i-btn"
                                                 onClick={() => { 
                                                     setShowModal(true); 
-                                                    setModalContent(`Here you need to enter a number representing your CONFIDENCE that the stated forecast WILL HAPPEN. For example, if the forecast is stating that Warnock will defeat Walker, your number from 0 to 100 is your confidence that he will do so. If you think Warnock will absolutely defeat Walker, you will probably submit a number closer to 100. If you think Walker will win, you will probably enter a number closer to 0. You have unlimited submissions for each forecast, so if you change your mind or learn something new and want to update your prediction, come back here and submit a new one!`); 
+                                                    setModalContent(`Here you need to enter a number representing your CONFIDENCE that the stated forecast WILL HAPPEN. You have unlimited submissions for each forecast, so if you change your mind or learn something new and want to update your prediction, come back here and submit a new one!`); 
                                                     setModalContent2("");
                                                 }}
                                             />
@@ -1110,7 +1133,7 @@ console.log("here 343");
                                             <FaInfoCircle 
                                                 onClick={() => {
                                                     setShowModal(true);
-                                                    setModalContent("You have 100 points to allocate between these three outcomes.");
+                                                    setModalContent(`Here you need to enter a number representing your CONFIDENCE that each outcome WILL HAPPEN. You have 100 points to allocate between the three and you have unlimited submissions for each forecast, so if you change your mind or learn something new and want to update your prediction, come back here and submit a new one!`);
                                                     setModalContent2("");
                                                 }}
                                                 style={{ "color": "orange", "cursor": "pointer" }}

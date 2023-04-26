@@ -643,257 +643,371 @@ router.post("/newProblem", async (req, res) => {
 });
 
 
-// Submit a prediction to a problem for the first time
-router.patch("/submit", async (req, res) => {
+// Submit or update a prediction to a single outcome problem
+router.patch("/submitOrUpdateSingle", async (req, res) => {
     try {
-console.log("in submit");
+        // New
+        console.log("in submit");
         const document = await Forecasts.findOne({ problemName: req.body.problemName });
-        const toPushToDB = {
-            username: req.body.username, 
-            forecasts: [
-                {
-                    certainty: req.body.certainty, 
-                    comments: req.body.comments, 
-                    date: req.body.date
-                }
-            ]
-            // ], 
-            // captainedStatus: req.body.captainedStatus
-        };
-
-        const user = await Users.findOne({ username: req.body.username });
-
-        if ((new Date(req.body.date) - new Date(document.startDate))/1000 <= 86400) {
-console.log("yes was within 24 hours");
-            // const user = await Users.findOne({ username: req.body.username });
-            for (let i = 0; i < user.trophies.length; i++) {
-                if (user.trophies[i].trophyText === "Quick off the Mark" && user.trophies[i].obtained === false) {
-                    user.trophies[i].obtained = true;
-                    break;
-                };
-            };
-            // The numberOfAttemptedForecasts variable will be used for when we send out the 2nd survey
-            // using a counter rather than a boolean for attempting all of them as we the number of 
-            // problems we give could change up until the beginning
-            await Users.findOneAndUpdate({ username: req.body.username }, {
-                trophies: user.trophies,
-                numberOfAttemptedForecasts: user.numberOfAttemptedForecasts + 1
-            });
-        } else {
-console.log("no was not within 24 hours, still updating numberOfAttemptedForecasts anyway");
-            await Users.findOneAndUpdate({ username: req.body.username }, {
-                numberOfAttemptedForecasts: user.numberOfAttemptedForecasts + 1
-            });
+        let found = false;
+        let indexLocation = 0;
+        for (let i = 0; i < document.submittedForecasts.length; i++) {
+            if (document.submittedForecasts[i].username === req.body.username) {
+                found = true;
+                indexLocation = i;
+            }
         }
-
-        const newForecastSavedToDB = await Forecasts.findByIdAndUpdate(document._id, 
-            { 
-                $push: { submittedForecasts: toPushToDB },
+        if (found === true) {
+            console.log("this user has forecasted this problem before");
+            const location = `submittedForecasts.${indexLocation}.forecasts`;
+            // console.log(`location = ${location}`);
+            const updatedForecastDocument = await Forecasts.findByIdAndUpdate(document.documentID, {
+                $push: { [location]: {
+                    "certainty": req.body.newForecastObject.certainty,
+                    "comments": req.body.newForecastObject.comments,
+                    "date": req.body.newForecastObject.date
+                }}
             }, 
             { new: true }
-        );
-        // console.log(newForecastSavedToDB);
-        res.json(newForecastSavedToDB);
+            );
+            res.json(updatedForecastDocument);
+            return;
+        } else {
+            console.log("this user has not forecasted this problem before");
+            const user = await Users.findOne({ username: req.body.username });
+            if ((new Date(req.body.date) - new Date(document.startDate))/1000 <= 86400) {
+                for (let i = 0; i < user.trophies.length; i++) {
+                    if (user.trophies[i].trophyText === "Quick off the Mark" && user.trophies[i].obtained === false) {
+                        user.trophies[i].obtained = true;
+                        break;
+                    };
+                };
+                // The numberOfAttemptedForecasts variable will be used for when we send out the 2nd survey
+                // using a counter rather than a boolean for attempting all of them as we the number of 
+                // problems we give could change up until the beginning
+                await Users.findOneAndUpdate({ username: req.body.username }, {
+                    trophies: user.trophies,
+                    numberOfAttemptedForecasts: user.numberOfAttemptedForecasts + 1
+                });
+            } else {
+                await Users.findOneAndUpdate({ username: req.body.username }, {
+                    numberOfAttemptedForecasts: user.numberOfAttemptedForecasts + 1
+                });
+            }
+            const toPushToDB = {
+                username: req.body.username, 
+                forecasts: [
+                    {
+                        certainty: req.body.newForecastObject.certainty, 
+                        comments: req.body.newForecastObject.comments, 
+                        date: req.body.newForecastObject.date
+                    }
+                ]
+            };
+            const newForecastSavedToDB = await Forecasts.findByIdAndUpdate(document._id, 
+                { 
+                    $push: { submittedForecasts: toPushToDB },
+                }, 
+                { new: true }
+            );
+            res.json(newForecastSavedToDB);
+            return;
+        }
+        // New
+
+        // --------------------------------------------------------
+//         console.log("in submit");
+//         const document = await Forecasts.findOne({ problemName: req.body.problemName });
+//         const toPushToDB = {
+//             username: req.body.username, 
+//             forecasts: [
+//                 {
+//                     certainty: req.body.certainty, 
+//                     comments: req.body.comments, 
+//                     date: req.body.date
+//                 }
+//             ]
+//             // ], 
+//             // captainedStatus: req.body.captainedStatus
+//         };
+
+//         const user = await Users.findOne({ username: req.body.username });
+
+//         if ((new Date(req.body.date) - new Date(document.startDate))/1000 <= 86400) {
+// console.log("yes was within 24 hours");
+//             // const user = await Users.findOne({ username: req.body.username });
+//             for (let i = 0; i < user.trophies.length; i++) {
+//                 if (user.trophies[i].trophyText === "Quick off the Mark" && user.trophies[i].obtained === false) {
+//                     user.trophies[i].obtained = true;
+//                     break;
+//                 };
+//             };
+//             // The numberOfAttemptedForecasts variable will be used for when we send out the 2nd survey
+//             // using a counter rather than a boolean for attempting all of them as we the number of 
+//             // problems we give could change up until the beginning
+//             await Users.findOneAndUpdate({ username: req.body.username }, {
+//                 trophies: user.trophies,
+//                 numberOfAttemptedForecasts: user.numberOfAttemptedForecasts + 1
+//             });
+//         } else {
+// console.log("no was not within 24 hours, still updating numberOfAttemptedForecasts anyway");
+//             await Users.findOneAndUpdate({ username: req.body.username }, {
+//                 numberOfAttemptedForecasts: user.numberOfAttemptedForecasts + 1
+//             });
+//         }
+
+//         const newForecastSavedToDB = await Forecasts.findByIdAndUpdate(document._id, 
+//             { 
+//                 $push: { submittedForecasts: toPushToDB },
+//             }, 
+//             { new: true }
+//         );
+//         // console.log(newForecastSavedToDB);
+//         res.json(newForecastSavedToDB);
     } catch (error) {
         console.error("Error in forecasts.js > patch");
         console.error(error);
     }
 });
 
-// Submit a prediction to a problem for the first time
-router.patch("/submitMultiple", async (req, res) => {
+// Submit or update a prediction to a multiple outcome problem
+router.patch("/submitOrUpdateMultiple", async (req, res) => {
     try {
+        // New
+        console.log("in submitOrUpdateMultiple");
         const document = await Forecasts.findOne({ problemName: req.body.problemName });
-        console.log(req.body.problemName);
-        const toPushToDB = {
-            username: req.body.username, 
-            forecasts: [
-                {
-                    certainties: {
-                        certainty1: req.body.certainty1,
-                        certainty2: req.body.certainty2,
-                        certainty3: req.body.certainty3, 
+
+        let found = false;
+        let indexLocation = 0;
+        for (let i = 0; i < document.submittedForecasts.length; i++) {
+            if (document.submittedForecasts[i].username === req.body.username) {
+                found = true;
+                indexLocation = i;
+            }
+        }
+        if (found === true) {
+            console.log("this user has forecasted this problem before");
+            const location = `submittedForecasts.${indexLocation}.forecasts`;
+            const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.documentID,{
+                $push: { [location]: {
+                    "certainties": {
+                        "certainty1": req.body.newForecastObject.certainties.certainty1,
+                        "certainty2": req.body.newForecastObject.certainties.certainty2,
+                        "certainty3": req.body.newForecastObject.certainties.certainty3,
                     },
-                    comments: req.body.comments, 
-                    date: req.body.date
-                }
-            ]
-            // ], 
-            // captainedStatus: req.body.captainedStatus
-        };
-
-        const user = await Users.findOne({ username: req.body.username });
-
-        if ((new Date(req.body.date) - new Date(document.startDate))/1000 <= 86400) {
-            // const user = await Users.findOne({ username: req.body.username });
-            for (let i = 0; i < user.trophies.length; i++) {
-                if (user.trophies[i].trophyText === "Quick off the Mark" && user.trophies[i].obtained === false) {
-                    user.trophies[i].obtained = true;
-                    break;
-                };
-            };
-            // The numberOfAttemptedForecasts variable will be used for when we send out the 2nd survey
-            // using a counter rather than a boolean for attempting all of them as we the number of 
-            // problems we give could change up until the beginning
-            await Users.findOneAndUpdate({ username: req.body.username }, {
-                trophies: user.trophies,
-                numberOfAttemptedForecasts: user.numberOfAttemptedForecasts + 1
-            });
-        } else {
-            await Users.findOneAndUpdate({ username: req.body.username }, {
-                numberOfAttemptedForecasts: user.numberOfAttemptedForecasts + 1
-            });
-        }
-
-        const newForecastSavedToDB = await Forecasts.findByIdAndUpdate(document._id, 
-            { 
-                $push: { submittedForecasts: toPushToDB },
-            }, 
+                    "comments": req.body.newForecastObject.comments,
+                    "date": req.body.newForecastObject.date
+                }},
+            },
             { new: true }
-        );
-        console.log(newForecastSavedToDB);
-        res.json(newForecastSavedToDB);
+            );
+            res.json(updatedForecastDocument);
+            return;
+        } else {
+            console.log("this user has not forecasted this problem before");
+            const user = await Users.findOne({ username: req.body.username });
+            if ((new Date(req.body.date) - new Date(document.startDate))/1000 <= 86400) {
+                for (let i = 0; i < user.trophies.length; i++) {
+                    if (user.trophies[i].trophyText === "Quick off the Mark" && user.trophies[i].obtained === false) {
+                        user.trophies[i].obtained = true;
+                        break;
+                    };
+                };
+                // The numberOfAttemptedForecasts variable will be used for when we send out the 2nd survey
+                // using a counter rather than a boolean for attempting all of them as we the number of 
+                // problems we give could change up until the beginning
+                await Users.findOneAndUpdate({ username: req.body.username }, {
+                    trophies: user.trophies,
+                    numberOfAttemptedForecasts: user.numberOfAttemptedForecasts + 1
+                });
+            } else {
+                await Users.findOneAndUpdate({ username: req.body.username }, {
+                    numberOfAttemptedForecasts: user.numberOfAttemptedForecasts + 1
+                });
+            }
+            const toPushToDB = {
+                username: req.body.username, 
+                forecasts: [
+                    {
+                        certainties: {
+                            certainty1: req.body.newForecastObject.certainty1,
+                            certainty2: req.body.newForecastObject.certainty2,
+                            certainty3: req.body.newForecastObject.certainty3, 
+                        },
+                        comments: req.body.comments, 
+                        date: req.body.date
+                    }
+                ]
+                // ], 
+                // captainedStatus: req.body.captainedStatus
+            };
+            const newForecastSavedToDB = await Forecasts.findByIdAndUpdate(document._id, 
+                { 
+                    $push: { submittedForecasts: toPushToDB },
+                }, 
+                { new: true }
+            );
+            res.json(newForecastSavedToDB);
+            return;
+        }
+        // New
+
+        // ----------------------------------------------------------------------------------
+        // const document = await Forecasts.findOne({ problemName: req.body.problemName });
+        // console.log(req.body.problemName);
+        // const toPushToDB = {
+        //     username: req.body.username, 
+        //     forecasts: [
+        //         {
+        //             certainties: {
+        //                 certainty1: req.body.certainty1,
+        //                 certainty2: req.body.certainty2,
+        //                 certainty3: req.body.certainty3, 
+        //             },
+        //             comments: req.body.comments, 
+        //             date: req.body.date
+        //         }
+        //     ]
+        //     // ], 
+        //     // captainedStatus: req.body.captainedStatus
+        // };
+
+        // const user = await Users.findOne({ username: req.body.username });
+
+        // if ((new Date(req.body.date) - new Date(document.startDate))/1000 <= 86400) {
+        //     // const user = await Users.findOne({ username: req.body.username });
+        //     for (let i = 0; i < user.trophies.length; i++) {
+        //         if (user.trophies[i].trophyText === "Quick off the Mark" && user.trophies[i].obtained === false) {
+        //             user.trophies[i].obtained = true;
+        //             break;
+        //         };
+        //     };
+        //     // The numberOfAttemptedForecasts variable will be used for when we send out the 2nd survey
+        //     // using a counter rather than a boolean for attempting all of them as we the number of 
+        //     // problems we give could change up until the beginning
+        //     await Users.findOneAndUpdate({ username: req.body.username }, {
+        //         trophies: user.trophies,
+        //         numberOfAttemptedForecasts: user.numberOfAttemptedForecasts + 1
+        //     });
+        // } else {
+        //     await Users.findOneAndUpdate({ username: req.body.username }, {
+        //         numberOfAttemptedForecasts: user.numberOfAttemptedForecasts + 1
+        //     });
+        // }
+
+        // const newForecastSavedToDB = await Forecasts.findByIdAndUpdate(document._id, 
+        //     { 
+        //         $push: { submittedForecasts: toPushToDB },
+        //     }, 
+        //     { new: true }
+        // );
+        // console.log(newForecastSavedToDB);
+        // res.json(newForecastSavedToDB);
     } catch (error) {
         console.error("Error in forecasts.js > patch");
         console.error(error);
     }
 });
 
-// Update a prediction to a single certainty problem
-router.patch("/update", async (req, res) => {
-    try {
-        // ---------------------Prev-------------------------
-        // Brute force approach, does work but concerns of race conditions
-        // find the Object in submittedForecasts[] where username = username
-        // const document = await Forecasts.findOne({ _id: req.body.problemID });
-        
-        // const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.problemID, 
-        //     {
-        //         submittedForecasts: req.body.newSubmittedForecasts,
-        //     },
-        //     { new: true }
-        // );
-        // res.json(updatedForecastDocument);
-        // --------------------------------------------------
-        
-        // ---------------------First approach, but was causing incorrect forecast attribution------------------
-        // push the passed in {certainty, comments} object to the end of the submittedForecasts.forecasts array
-        // const updatedForecastPushedToDB = await Forecasts.findByIdAndUpdate(document._id, 
-        //     { 
-        //         $push: { [req.body.locationOfForecasts]: {
-        //             "certainty": req.body.updatedForecastsForUser.certainty, 
-        //             "comments": req.body.updatedForecastsForUser.comments, 
-        //             "date": req.body.updatedForecastsForUser.date 
-        //         }}
-        //     }, 
-        //     { new: true }
-        // );
-        // res.json(updatedForecastPushedToDB);
-        // --------------------------------------------------
+// SQUIRTLE PREVIOUS UPDATE ENDPOINTS HERE
+// // Update a prediction to a single certainty problem
+// router.patch("/update", async (req, res) => {
+//     try {
+//         const forecastDocument = await Forecasts.findById(req.body.documentID);
+//         let indexLocation = 0;
+//         for (let i = 0; i < forecastDocument.submittedForecasts.length; i++) {
+//             if (forecastDocument.submittedForecasts[i].username === req.body.username) {
+//                 console.log(`found user ${forecastDocument.submittedForecasts[i].username} at index ${i}`);
+//                 indexLocation = i;
+//                 console.log(`indexLocation = ${indexLocation}`);
+//                 break;
+//             };
+//         };
+//         const location = `submittedForecasts.${indexLocation}.forecasts`;
+//         // console.log(`location = ${location}`);
+//         const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.documentID, {
+//             $push: { [location]: {
+//                 "certainty": req.body.newForecastObject.certainty,
+//                 "comments": req.body.newForecastObject.comments,
+//                 "date": req.body.newForecastObject.date
+//             }}
+//         }, 
+//         { new: true }
+//         );
+//         res.json(updatedForecastDocument);
+//     } catch (error) {
+//         console.error("Error in forecasts.js > update");
+//         console.error(error);
+//     }
+// });
 
-        // New idea, do location finding on this end.
-        // Req body = 
-        // documentID: setSelectedForecastDocumentID,           DOCUMENT ID
-        // newForecastObject: newForecastObj,                   FORECASTOBJ CONTAINING CERTAINTY, COMMENTS, DATE
-        // username: username                                       USERNAME
-        // console.log("req.body.documentID");
-        // console.log(req.body.documentID);
-        const forecastDocument = await Forecasts.findById(req.body.documentID);
-        // console.log("forecastDocument");
-        // console.log(forecastDocument);
-        // console.log("username");
-        // console.log(req.body.username);
-        let indexLocation = 0;
-        for (let i = 0; i < forecastDocument.submittedForecasts.length; i++) {
-            if (forecastDocument.submittedForecasts[i].username === req.body.username) {
-                console.log(`found user ${forecastDocument.submittedForecasts[i].username} at index ${i}`);
-                indexLocation = i;
-                console.log(`indexLocation = ${indexLocation}`);
-                break;
-            };
-        };
-        const location = `submittedForecasts.${indexLocation}.forecasts`;
-        // console.log(`location = ${location}`);
-        const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.documentID, {
-            $push: { [location]: {
-                "certainty": req.body.newForecastObject.certainty,
-                "comments": req.body.newForecastObject.comments,
-                "date": req.body.newForecastObject.date
-            }}
-        }, 
-        { new: true }
-        );
-        // console.log(updatedForecastDocument);
-        res.json(updatedForecastDocument);
+// // Update a prediction to a multiple certainty problem
+// router.patch("/updateMultiple", async (req, res) => {
+//     try {
+//         const forecastDocument = await Forecasts.findById(req.body.documentID);
+//         let indexLocation = 0;
+//         for (let i = 0; i < forecastDocument.submittedForecasts.length; i++) {
+//             if (forecastDocument.submittedForecasts[i].username === req.body.username) {
+//                 indexLocation = i;
+//                 break;
+//             };
+//         };
+//         const location = `submittedForecasts.${indexLocation}.forecasts`;
+//         const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.documentID,{
+//             $push: { [location]: {
+//                 "certainties": {
+//                     "certainty1": req.body.newForecastObject.certainties.certainty1,
+//                     "certainty2": req.body.newForecastObject.certainties.certainty2,
+//                     "certainty3": req.body.newForecastObject.certainties.certainty3,
+//                 },
+//                 "comments": req.body.newForecastObject.comments,
+//                 "date": req.body.newForecastObject.date
+//             }},
+//         },
+//         { new: true }
+//         );
+//         console.log(updatedForecastDocument);
+//         res.json(updatedForecastDocument);
 
-    } catch (error) {
-        console.error("Error in forecasts.js > update");
-        console.error(error);
-    }
-});
+//         // Prev approach
+//         // const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.problemID, 
+//         //     {
+//         //         submittedForecasts: req.body.newSubmittedForecasts,
+//         //     },
+//         //     { new: true }
+//         // );
+//         // res.json(updatedForecastDocument);
 
-// Update a prediction to a multiple certainty problem
-router.patch("/updateMultiple", async (req, res) => {
-    try {
-        const forecastDocument = await Forecasts.findById(req.body.documentID);
-        let indexLocation = 0;
-        for (let i = 0; i < forecastDocument.submittedForecasts.length; i++) {
-            if (forecastDocument.submittedForecasts[i].username === req.body.username) {
-                indexLocation = i;
-                break;
-            };
-        };
-        const location = `submittedForecasts.${indexLocation}.forecasts`;
-        const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.documentID,{
-            $push: { [location]: {
-                "certainties": {
-                    "certainty1": req.body.newForecastObject.certainties.certainty1,
-                    "certainty2": req.body.newForecastObject.certainties.certainty2,
-                    "certainty3": req.body.newForecastObject.certainties.certainty3,
-                },
-                "comments": req.body.newForecastObject.comments,
-                "date": req.body.newForecastObject.date
-            }},
-        },
-        { new: true }
-        );
-        console.log(updatedForecastDocument);
-        res.json(updatedForecastDocument);
-
-        // Prev approach
-        // const updatedForecastDocument = await Forecasts.findByIdAndUpdate(req.body.problemID, 
-        //     {
-        //         submittedForecasts: req.body.newSubmittedForecasts,
-        //     },
-        //     { new: true }
-        // );
-        // res.json(updatedForecastDocument);
-
-        // First approach
-        // push the passed in {certainty, comments} object to the end of the submittedForecasts.forecasts array
-        // increase numberOfForecastsSubmittedByUser by 1 - not essential, as we could just take submittedForecasts.forecasts.length
-        // const updatedForecastPushedToDB = await Forecasts.findByIdAndUpdate(document._id, 
-        //     { 
-        //         $push: { [req.body.locationOfForecasts]: {
-        //             "certainties": {
-        //                 certainty1: req.body.updatedForecastsForUser.certainty1, 
-        //                 certainty2: req.body.updatedForecastsForUser.certainty2,
-        //                 certainty3: req.body.updatedForecastsForUser.certainty3
-        //             },
-        //             "comments": req.body.updatedForecastsForUser.comments, 
-        //             "date": req.body.updatedForecastsForUser.date 
-        //         }}
-        //     }, 
-        //     { new: true }
-        // );
-        // res.json(updatedForecastPushedToDB);
-    } catch (error) {
-        console.error("Error in forecasts.js > update");
-        console.error(error);
-    }
-});
+//         // First approach
+//         // push the passed in {certainty, comments} object to the end of the submittedForecasts.forecasts array
+//         // increase numberOfForecastsSubmittedByUser by 1 - not essential, as we could just take submittedForecasts.forecasts.length
+//         // const updatedForecastPushedToDB = await Forecasts.findByIdAndUpdate(document._id, 
+//         //     { 
+//         //         $push: { [req.body.locationOfForecasts]: {
+//         //             "certainties": {
+//         //                 certainty1: req.body.updatedForecastsForUser.certainty1, 
+//         //                 certainty2: req.body.updatedForecastsForUser.certainty2,
+//         //                 certainty3: req.body.updatedForecastsForUser.certainty3
+//         //             },
+//         //             "comments": req.body.updatedForecastsForUser.comments, 
+//         //             "date": req.body.updatedForecastsForUser.date 
+//         //         }}
+//         //     }, 
+//         //     { new: true }
+//         // );
+//         // res.json(updatedForecastPushedToDB);
+//     } catch (error) {
+//         console.error("Error in forecasts.js > update");
+//         console.error(error);
+//     }
+// });
 
 // Add a new comment or reply to the forecast chat
+
+
+
+
+
 router.patch("/addNewComment", async (req, res) => {
     try {
         const forecast = await Forecasts.findOne({ problemName: req.body.problemName });
