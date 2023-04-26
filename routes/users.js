@@ -267,8 +267,8 @@ router.get("/getIndividualProblemResults/:problemName", async (req, res) => {
             // console.log(allUsers[i]);
             // console.log("=============");
             for (let j = 0; j < allUsers[i].brierScores.length; j++) {
-                console.log("currently on user " + allUsers[i].username);
-                console.log(`${allUsers[i].brierScores[j].problemName} === ${req.params.problemName}`);
+                // console.log("currently on user " + allUsers[i].username);
+                // console.log(`${allUsers[i].brierScores[j].problemName} === ${req.params.problemName}`);
                 if (allUsers[i].brierScores[j].problemName === req.params.problemName) {
                     console.log("found one!");
                     problemRankings.push({
@@ -294,9 +294,9 @@ router.get("/getIndividualProblemResults/:problemName", async (req, res) => {
 router.post("/", async (req, res) => {
     const user = await Users.findOne({ username: req.body.username });
     console.log("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-    console.log("if no user is found, we get vvv");
-    console.log(user);
-    console.log("if no user is found, we get ^^^");
+    // console.log("if no user is found, we get vvv");
+    // console.log(user);
+    // console.log("if no user is found, we get ^^^");
     if (user !== null) {
         res.json({
             userCreationSuccess: false,
@@ -434,11 +434,11 @@ router.patch("/newNotification/:username", async (req, res) => {
 // Set seenByUser value to true
 router.patch("/editNotifications/:username", async (req, res) => {
     try {
-        console.log(req.body);
-        console.log(req.params);
+        // console.log(req.body);
+        // console.log(req.params);
         console.log("+++++++++++++++++++++++++++");
         let user = await Users.findOne({ username: req.params.username });
-        console.log(user);
+        // console.log(user);
         console.log("+++++++++++++++++++++++++++++++++++++");
         if (req.body.setAllToTrue === true) {
             console.log("HERE TRUE");
@@ -526,7 +526,7 @@ router.patch("/newPW/:username", async (req, res) => {
 // Update onboarding
 router.patch("/onboardingTask/:username", async (req, res) => {
     try {
-        console.log(req.body);
+        // console.log(req.body);
         const user = await Users.findOne({ username: req.params.username });
         let userOnboarding = user.onboarding;
         let userFFPoints = user.fantasyForecastPoints;
@@ -587,8 +587,8 @@ router.patch("/onboardingTask/:username", async (req, res) => {
             };
         };
         console.log("======================");
-        console.log(userOnboarding);
-        console.log(userFFPoints);
+        // console.log(userOnboarding);
+        // console.log(userFFPoints);
         console.log("======================");
 
         // Check if they've completed all onboarding tasks
@@ -691,7 +691,7 @@ router.patch("/createJoinLeaveTeam/:username", async (req, res) => {
         let message = "No message yet";
         const document = await Users.findOne({ username: req.params.username });
         console.log("_________________");
-        console.log(document);
+        // console.log(document);
         
         if (req.body.action === "leave") {
             const updatedUser = await Users.findByIdAndUpdate(document._id, {

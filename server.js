@@ -234,7 +234,7 @@ passport.use(new GoogleStrategy({
     store: true
   },
   function(req, accessToken, refreshToken, profile, cb) {
-    console.log(profile);
+    // console.log(profile);
     // console.log("113 " + passwordFromClient);
     // console.log("114 " + typeof passwordFromClient);
     const passwordCheck = passwordFromClient;
@@ -280,11 +280,11 @@ passport.use(new GoogleStrategy({
             password: passwordFromClient,
             // pwdResetCode: passwordResetCodeFromClient,
         }, { new: true });
-        console.log("updatedUser");
-        console.log(userWithPW);
-        console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        console.log("user");
-        console.log(user);
+        // console.log("updatedUser");
+        // console.log(userWithPW);
+        // console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        // console.log("user");
+        // console.log(user);
         return cb(err, user);
     });
  }
@@ -346,10 +346,10 @@ db.once("open", () => console.log("Successfully connected to the Database"));
 
 // New
 const loggingMiddleWare = async (params, next) => {
-    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    console.log(params.username);
-    console.log(params.password);
-    console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    // console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    // console.log(params.username);
+    // console.log(params.password);
+    // console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     usernameFromClient = params.username;
     prolificIDFromClient = params.prolific;
     passwordResetCodeFromClient = params.resetCode;
@@ -382,7 +382,7 @@ const loggingMiddleWare = async (params, next) => {
     // console.log("237 hashedPassword = " + hashedPassword);
     passwordFromClient = hashedPassword;
     // passwordResetCodeFromClient = hashedResetCode;
-    console.log("=====================================================================");
+    // console.log("=====================================================================");
     
     next();
 };
@@ -446,16 +446,16 @@ app.get("/auth/google/callback",
 app.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
     try {
         const user = await User.findOne({ username: req.params.username });
-        console.log(user);
+        // console.log(user);
         if (!user) {
             res.json({ loginSuccess: false, message: "This user does not exist in the database"});
         };
         if (user.isTeam === true) {
-            console.log("3");
+            // console.log("3");
             res.json({ loginSuccess: false, message: "This is a team account. Please login to your individual account."});
         }
         let match;
-        console.log(req.params);
+        // console.log(req.params);
         if (req.params.isPassword === "true") {
             match = await bcrypt.compare(req.params.passwordOrResetCode, user.password);
         } else if (req.params.isPassword === "false") {
