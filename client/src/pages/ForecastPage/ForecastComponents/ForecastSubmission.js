@@ -823,7 +823,7 @@ console.log("here 343");
                             certainty1: certainty1,
                             certainty2: certainty2,
                             certainty3: certainty3,
-                        }
+                        },
                         comments: `(${username})~ ${comments}`,
                         date: new Date().toString()
                     }
