@@ -569,6 +569,7 @@ console.log("here 343");
                 const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateSingle`, {
                 
                     documentID: selectedForecastDocumentID,
+                    problemName: forecast,
                     // newForecastObject: newForecastObj,
                     certainty: newCertainty, 
                     comments: `(${username})~ ${newComments}`, 
@@ -638,6 +639,7 @@ console.log("here 343");
                     // certainty: certainty,
                     // comments: `(${username})~ ${comments}`,
                     // date: new Date().toString()
+                    documentID: selectedForecastDocumentID,
                     problemName: forecast,
                     username: username,
                     // newForecastObject: {
@@ -717,6 +719,7 @@ console.log("here 343");
                 const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateMultiple`, {
                 
                     documentID: selectedForecastDocumentID,
+                    problemName: forecast,
                     certainty1: newCertainty1, 
                     certainty2: newCertainty2, 
                     certainty3: newCertainty3,
@@ -824,6 +827,7 @@ console.log("here 343");
                     // certainty3: certainty3,
                     // comments: `(${username})~ ${comments}`,
                     // date: new Date().toString()
+                    documentID: selectedForecastDocumentID,
                     problemName: forecast,
                     username: username,
                     certainty1: certainty1,
