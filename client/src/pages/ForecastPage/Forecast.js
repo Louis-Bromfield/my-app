@@ -143,11 +143,11 @@ function Forecast(props) {
                             </div>
                             <div className="bottom-half-stats-and-leaderboard">
                                 {/* Add chat window here */}
-                                <ForecastChat
+                                {/* <ForecastChat
                                     forecast={forecast}
                                     username={props.username}
                                     userObject={props.userObject}
-                                />
+                                /> */}
                                 {/* <ForecastStatistics 
                                     selectedForecast={forecast} 
                                     today={false} 
