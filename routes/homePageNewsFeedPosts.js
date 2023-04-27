@@ -116,7 +116,7 @@ router.patch("/postComment/:id", async (req, res) => {
 router.patch("/postRatings/:id", async (req, res) => {
     try {
         const user = await Users.findOne({ username: req.body.username });
-        if (user.fantasyForecastPoints < 2000) {
+        if (user.fantasyForecastPoints < 400) {
             res.json({
                 status: "Error in user rank",
                 statusCode: -1

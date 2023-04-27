@@ -210,7 +210,7 @@ function IndividualNewsFeedPost(props) {
                 });
                 if (res.statusCode === -1 && res.status === "Error in user rank") {
                     setShowModal(true);
-                    setModalContent("You must be at least Level 20 to submit Truthful / Relevance ratings.");
+                    setModalContent("You must be at least Level 4 to submit Truthful / Relevance ratings.");
                 };
                 if (truthful === true) {
                     setTruthfulRatingCount(truthfulRatingCount + 1);
