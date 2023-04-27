@@ -74,17 +74,18 @@ function Search(props) {
             // const lbRankings = userData.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
             for (let i = 0; i < userData.data.length; i++) {
                 if (userData.data[i].username === username) {
-                    let k = i+1 % 10;
-                    let l = i+1 % 100;
-                    if (k === 1 && l !== 11) {
-                        setIndex(i+1+"st");
-                    } else if (k === 2 && l !== 12) {
-                        setIndex(i+1+"nd");
-                    } else if (k === 3 && l !== 13) {
-                        setIndex(i+1+"rd");
-                    } else {
-                        setIndex(i+1+"th");
-                    };
+                    setIndex(`${i}/${userData.data.length}`)
+                    // let k = i+1 % 10;
+                    // let l = i+1 % 100;
+                    // if (k === 1 && l !== 11) {
+                    //     setIndex(i+1+"st");
+                    // } else if (k === 2 && l !== 12) {
+                    //     setIndex(i+1+"nd");
+                    // } else if (k === 3 && l !== 13) {
+                    //     setIndex(i+1+"rd");
+                    // } else {
+                    //     setIndex(i+1+"th");
+                    // };
                 };
             };
             // const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${username}`);
