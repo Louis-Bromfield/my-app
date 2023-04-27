@@ -73,7 +73,7 @@ console.log("Profile.js UE");
             setErrorMessage("");
             const lbName = "Fantasy Forecast All-Time"
             const userData = await axios.get(`${process.env.REACT_APP_API_CALL_L}/leaderboard/${lbName}`);
-            setIndex(`${i}/${userData.data.length}`)
+            // setIndex(`${i}/${userData.data.length}`)
             
             // const lbRankings = userData.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
             for (let i = 0; i < userData.data.length; i++) {
