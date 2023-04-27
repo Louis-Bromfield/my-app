@@ -133,6 +133,7 @@
     flex-direction: column;
     /* box-shadow: 0.5px 1px 2.5px 0.5px #888888; */
     /* border-bottom: 2px solid lightgray; */
+    border-bottom: 2px solid #d3d3d3;
     padding: 2%;
     background-color: #fff;
     font-size: 0.9em;

@@ -44,9 +44,22 @@ router.get("/:username", async (req, res) => {
 
 // Get all the info from one leaderboard
 router.get("/leaderboard/:leaderboardName/", async (req, res) => {
-    const data = await Leaderboards.findOne({ leaderboardName: req.params.leaderboardName });
-    const sortedData = data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
-    res.json(sortedData);
+    if (req.params.leaderboardName !== "Fantasy Forecast All-Time") {
+        const data = await Leaderboards.findOne({ leaderboardName: req.params.leaderboardName });
+        const sortedData = data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
+        res.json(sortedData);
+    } else {
+        const allUsers = await Users.find();
+        const sortedUsers = allUsers.sort((a, b) => b.fantasyForecastPoints - a.fantasyForecastPoints);
+        res.json(sortedUsers);
+        // let index = 0;
+        // for (let i = 0; i < sortedUsers.length; i++) {
+        //     if (sortedUsers.username === req.params.username) {
+        //         index = i;
+        //     }
+        // };
+        // res.json({ success: true, userRank: index });
+    };
 })
 
 // New version of service above this, as we aren't really using the leaderboard collection anymore
