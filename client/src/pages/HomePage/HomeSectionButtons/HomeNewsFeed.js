@@ -569,7 +569,7 @@ function HomeNewsFeed(props) {
                                     </div>
                                 </div>
                                 <p className="post-author-description">{newPostDescription}</p>
-                                {(newPostURL !== "" || newPostURL.length !== 0) && <div className="post-news-preview">
+                                {(newPostURL !== "N/A" || newPostURL.length !== 0) && <div className="post-news-preview">
                                     <a href={newPostURL} target="_blank" rel="noreferrer nofollow" className="post-news-a">
                                             {postPreviewImage !== "" && <img src={postPreviewImage} className="post-news-image" alt="News pic"/>}
                                             {postPreviewImage === "" && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
@@ -642,7 +642,7 @@ function HomeNewsFeed(props) {
                                     </div>
                                     <Link style={{ textDecoration: "none", color: "black" }} to={articleProps} onClick={() => localStorage.setItem("postID", item._id)}>
                                         <p className="post-author-description">{item.postDescription} <i style={{"color":"#404d72"}}><u>Comments: ({item.comments.length})</u></i></p>
-                                        {(item.articleURL !== "" || item.articleURL.length !== 0) && <div className="post-news-preview">
+                                        {(item.articleURL !== "N/A" || item.articleURL.length !== 0) && <div className="post-news-preview">
                                             <a href={item.articleURL} target="_blank" rel="noreferrer nofollow">
                                                 {item.articleImage !== null && <img src={item.articleImage} className="post-news-image" alt="News pic"/>}
                                                 {item.articleImage === null && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
@@ -723,7 +723,7 @@ function HomeNewsFeed(props) {
                                         </div>
                                         <Link style={{ textDecoration: "none", color: "black"}} to={articleProps} onClick={() => localStorage.setItem("postID", item._id)}>
                                             <p className="post-author-description">{item.postDescription} <i style={{"color":"#404d72"}}><u>Comments: ({item.comments.length})</u></i></p>
-                                            {(item.articleURL !== "" || item.articleURL.length !== 0) && <div className="post-news-preview">
+                                            {(item.articleURL !== "N/A" || item.articleURL.length !== 0) && <div className="post-news-preview">
                                                 <a href={item.articleURL} target="_blank" rel="noreferrer nofollow">
                                                     {item.articleImage !== null && <img src={item.articleImage} className="post-news-image" alt="News pic"/>}
                                                     {item.articleImage === null && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
