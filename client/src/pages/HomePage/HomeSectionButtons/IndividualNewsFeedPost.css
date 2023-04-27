@@ -26,6 +26,7 @@
     grid-template-columns: 75% 23%;
     column-gap: 2%;
     margin: 0 auto;
+    width: 100%;
 }
 
 .post-rate-submission {
