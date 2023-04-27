@@ -78,7 +78,7 @@ console.log("Profile.js UE");
             // const lbRankings = userData.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
             for (let i = 0; i < userData.data.length; i++) {
                 if (userData.data[i].username === username) {
-                    setIndex(`${i}/${userData.data.length}`)
+                    setIndex(`${i+1}/${userData.data.length}`)
                     // let k = i+1 % 10;
                     // let l = i+1 % 100;
                     // if (k === 1 && l !== 11) {
