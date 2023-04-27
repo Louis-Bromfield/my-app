@@ -25,7 +25,7 @@
     display: grid; 
     grid-template-columns: 75% 23%;
     column-gap: 2%;
-    /* margin: 0 auto; */
+    margin: 0 auto;
 }
 
 .post-rate-submission {
@@ -239,20 +239,13 @@
     /* .author-profile-pic {
         height: 6vh;
     } */
-    .individual-post-container {
-        margin: 0 auto;
-    }
     .post-container {
         display: flex;
         flex-direction: column;
-        width: 90%;
     }
     .post-rating-container {
         width: 80%;
         /* text-align: center; */
-    }
-    .comments-container {
-        width: 90%;
     }
 }
 
