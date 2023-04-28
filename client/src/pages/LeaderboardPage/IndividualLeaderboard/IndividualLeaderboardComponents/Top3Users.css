@@ -1,6 +1,6 @@
 .top-three-users-highlight {
-    width: 50%;
-    max-width: 50%;
+    width: 100%;
+    /* max-width: 50%; */
     display: flex;
     flex-direction: row;
     align-items: center;
