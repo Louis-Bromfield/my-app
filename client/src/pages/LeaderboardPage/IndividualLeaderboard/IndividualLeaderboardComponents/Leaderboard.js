@@ -156,56 +156,58 @@ function Leaderboard(props) {
             // };
             let ffRankings = [];
             for (let i = 0; i < rankings.length; i++) {
-                if (rankings[i].markets.includes(props.leaderboardTitle)) {
-                    if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
-                        ffRankings[i] = {
-                            profilePicture: rankings[i].profilePicture,
-                            username: rankings[i].username,
-                            marketPoints: 0.0,
-                            brierScores: [],
-                            avgAllTimeBrier: 0.0,
-                            isTeam: rankings[i].isTeam
-                          };
-                          ffRankings[i].profilePicture = rankings[i].profilePicture;
-                          ffRankings[i].username = rankings[i].username;
-                          ffRankings[i].marketPoints = rankings[i].fantasyForecastPoints;
-                          ffRankings[i].brierScores = rankings[i].brierScores;
-                          ffRankings[i].brierScoresForMarket = [];
-                          ffRankings[i].totalBrier = 0;
-                          let numberOfBriers = 0;
-                          if (rankings[i].brierScores.length > 0) {
-                            for (let j = 0; j < rankings[i].brierScores.length; j++) {
-                                numberOfBriers++;
-                                ffRankings[i].totalBrier += rankings[i].brierScores[j].brierScore;
+                if (rankings[i].username !== "Guest") {
+                    if (rankings[i].markets.includes(props.leaderboardTitle)) {
+                        if (props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") {
+                            ffRankings[i] = {
+                                profilePicture: rankings[i].profilePicture,
+                                username: rankings[i].username,
+                                marketPoints: 0.0,
+                                brierScores: [],
+                                avgAllTimeBrier: 0.0,
+                                isTeam: rankings[i].isTeam
                             };
-                        };
-                        if (rankings[i].brierScores.length === 0) {
-                            ffRankings[i].avgAllTimeBrier = 0;
-                        } else {
-                            let avgBrierScore = ffRankings[i].totalBrier / numberOfBriers;
-                            ffRankings[i].avgAllTimeBrier = isNaN(avgBrierScore) ? 0.0 : ffRankings[i].totalBrier/numberOfBriers;
-                        };
-                    } else {
-                        rankings[i].brierScoresForMarket = [];
-                        rankings[i].totalBrier = 0;
-                        let numberOfBriersInThisMarket = 0;
-                        if (rankings[i].brierScores.length > 0) {
-                            for (let j = 0; j < rankings[i].brierScores.length; j++) {
-                                if (rankings[i].brierScores[j].marketName === props.leaderboardTitle || rankings[i].brierScores[j].marketName === localStorage.getItem('currentLeaderboardName')) {
-                                    numberOfBriersInThisMarket++;
-                                    rankings[i].brierScoresForMarket.push({
-                                        problemName: rankings[i].brierScores[j].problemName,
-                                        brierScore: rankings[i].brierScores[j].brierScore
-                                    });
-                                    rankings[i].totalBrier += rankings[i].brierScores[j].brierScore;
+                            ffRankings[i].profilePicture = rankings[i].profilePicture;
+                            ffRankings[i].username = rankings[i].username;
+                            ffRankings[i].marketPoints = rankings[i].fantasyForecastPoints;
+                            ffRankings[i].brierScores = rankings[i].brierScores;
+                            ffRankings[i].brierScoresForMarket = [];
+                            ffRankings[i].totalBrier = 0;
+                            let numberOfBriers = 0;
+                            if (rankings[i].brierScores.length > 0) {
+                                for (let j = 0; j < rankings[i].brierScores.length; j++) {
+                                    numberOfBriers++;
+                                    ffRankings[i].totalBrier += rankings[i].brierScores[j].brierScore;
                                 };
                             };
-                        };
-                        if (rankings[i].brierScores.length === 0) {
-                            rankings[i].avgBrierScore = 0;
+                            if (rankings[i].brierScores.length === 0) {
+                                ffRankings[i].avgAllTimeBrier = 0;
+                            } else {
+                                let avgBrierScore = ffRankings[i].totalBrier / numberOfBriers;
+                                ffRankings[i].avgAllTimeBrier = isNaN(avgBrierScore) ? 0.0 : ffRankings[i].totalBrier/numberOfBriers;
+                            };
                         } else {
-                            let avgBrierScore = rankings[i].totalBrier / numberOfBriersInThisMarket;
-                            rankings[i].avgBrierScore = isNaN(avgBrierScore) ? 0.0 : rankings[i].totalBrier/numberOfBriersInThisMarket;
+                            rankings[i].brierScoresForMarket = [];
+                            rankings[i].totalBrier = 0;
+                            let numberOfBriersInThisMarket = 0;
+                            if (rankings[i].brierScores.length > 0) {
+                                for (let j = 0; j < rankings[i].brierScores.length; j++) {
+                                    if (rankings[i].brierScores[j].marketName === props.leaderboardTitle || rankings[i].brierScores[j].marketName === localStorage.getItem('currentLeaderboardName')) {
+                                        numberOfBriersInThisMarket++;
+                                        rankings[i].brierScoresForMarket.push({
+                                            problemName: rankings[i].brierScores[j].problemName,
+                                            brierScore: rankings[i].brierScores[j].brierScore
+                                        });
+                                        rankings[i].totalBrier += rankings[i].brierScores[j].brierScore;
+                                    };
+                                };
+                            };
+                            if (rankings[i].brierScores.length === 0) {
+                                rankings[i].avgBrierScore = 0;
+                            } else {
+                                let avgBrierScore = rankings[i].totalBrier / numberOfBriersInThisMarket;
+                                rankings[i].avgBrierScore = isNaN(avgBrierScore) ? 0.0 : rankings[i].totalBrier/numberOfBriersInThisMarket;
+                            };
                         };
                     };
                 };
