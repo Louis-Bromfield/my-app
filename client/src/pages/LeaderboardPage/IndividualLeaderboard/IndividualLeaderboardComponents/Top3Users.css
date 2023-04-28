@@ -26,9 +26,9 @@
 .rank-one-profile-pic,
 .rank-two-profile-pic,
 .rank-three-profile-pic {
-    width: 60%;
+    /* width: 60%;
     min-width: 60%;
-    max-width: 60%;
+    max-width: 60%; */
     height: 70%;
     max-height: 70%;
     border-radius: 50%;
