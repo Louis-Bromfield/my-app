@@ -26,10 +26,10 @@
 .rank-one-profile-pic,
 .rank-two-profile-pic,
 .rank-three-profile-pic {
-    /* width: 60%;
+    width: 60%;
     min-width: 60%;
     max-width: 60%;
-    height: 70%; */
+    height: 70%;
     max-height: 70%;
     border-radius: 50%;
 }
@@ -51,7 +51,7 @@
 
 @media (max-width: 1500px) {
     .top-three-users-highlight {
-        /* width: 100%; */
+        width: 100%;
         font-size: 0.85em;
         margin-bottom: 1vh;
     }
@@ -61,9 +61,9 @@
 }
 
 @media (max-width: 1100px) {
-    /* .top-three-users-highlight {
+    .top-three-users-highlight {
         width: 100%;
-    } */
+    }
     .top-three-individual-user > img {
         width: 100%;
     }
@@ -71,7 +71,7 @@
 
 @media (max-width: 700px) {
     .top-three-users-highlight {
-        /* max-width: 100%; */
+        max-width: 100%;
         font-size: 0.7em;
         border-top: 1px solid lightgray;
         border-bottom: 1px solid lightgray;
