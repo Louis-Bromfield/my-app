@@ -293,7 +293,9 @@ function IndividualLeaderboard(props) {
                 <p><strong>16th-24th:</strong>&nbsp;£10</p>
                 <p><strong>25th-50th:</strong>&nbsp;£5</p>
                 <p>If LouisB or MattW are in the top 50, the prize will go to the next user in the list.</p>
+                <br />
             </div>}
+
             <Leaderboard 
                 leaderboardTitle={currentLeaderboardName} 
                 leaderboardRankings={filteredRankings} 
