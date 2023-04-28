@@ -287,7 +287,7 @@ function IndividualLeaderboard(props) {
             {currentLeaderboardName === "UK Local Elections 2023" && <div className="leaderboard-prize-container" style={{ margin: "0 auto", textAlign: "center" }}>
                 <h3>Prizes:</h3>
                 <p>This leaderboard will be used to determine who wins our prizes</p>
-                <p><strong>1st:</strong>£25</p>
+                <p><strong>1st:</strong>&nbsp;£25</p>
                 <p><strong>2nd-10th:</strong>&nbsp;£20</p>
                 <p><strong>11th-15th:</strong>&nbsp;£15</p>
                 <p><strong>16th-24th:</strong>&nbsp;£10</p>
