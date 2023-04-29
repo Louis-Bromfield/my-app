@@ -329,7 +329,7 @@ console.log("Profile.js UE");
                                     <h2 
                                         className="profile-summary-list-item-value"
                                         onClick={() => {
-                                            setModalContent("This is your net score from truthful and relevant ratings received on your news feed posts. For example, if 3 forecasters said your post was both truthful and relevant, your score would be +6. If a fourth forecaster then rated your post as neither truthful or relevant, your score would drop to +4. This score can be useful for learning more about other forecasters. Submitting ratings on other forecaster's posts for truthfulness and relevance is locked until you reach Level 20.");
+                                            setModalContent("This is your net score from truthful and relevant ratings received on your news feed posts. For example, if 3 forecasters said your post was both truthful and relevant, your score would be +6. If a fourth forecaster then rated your post as neither truthful or relevant, your score would drop to +4. This score can be useful for learning more about other forecasters. Submitting ratings on other forecaster's posts for truthfulness and relevance is locked until you reach Level 4 (400 Fantasy Forecast Points).");
                                             setShowModal(true);
                                         }}>
                                             {props.user.ratings > 0 ? "+" + props.user.ratings : props.user.ratings === 0 ? "+/-" + props.user.ratings : "-" + props.user.ratings}
