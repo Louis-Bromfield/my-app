@@ -281,13 +281,13 @@ function IndividualNewsFeedPost(props) {
                         {/* </div> */}
                     </div>
                     <p className="post-author-description">{postDescription}</p>
-                    <div className="post-news-preview">
+                    {(articleURL !== "N/A" && articleURL.length !== 0) && <div className="post-news-preview">
                         <a href={articleURL} target="_blank" rel="noreferrer nofollow">
                             {articleImage !== null && <img src={articleImage} className="post-news-image" alt="News pic"/>}
                             {articleImage === null && <img src={ImagePlaceholder} className="post-news-image-placeholder" alt="News pic"/>}
                         </a>
                         <a href={articleURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{articleTitle}</h3></a>
-                    </div>
+                    </div>}
                     <div className="post-markets">
                         {markets.map((market, index) => {
                             if (index < markets.length-1) {
