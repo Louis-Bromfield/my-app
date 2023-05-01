@@ -373,7 +373,7 @@ function Leaderboard(props) {
                                 <th className="username-column" onClick={() => sortByCol("Username")} style={{ cursor: "pointer" }}>Username</th>
                                 <th className="ffpoints-column" onClick={() => sortByCol("Market Points")} style={{ cursor: "pointer" }}>Market Points</th>
                                 <th className="avg-brier-column" onClick={() => sortByCol("Avg Brier Score")} style={{ cursor: "pointer" }}>Average Brier Score</th>
-                                {width && <th className="last-five-briers-column">Last 5 Forecasts (&nbsp;&nbsp;/110&nbsp;&nbsp;)</th>}
+                                {width && <th className="last-five-briers-column">Last 6 Forecasts (&nbsp;&nbsp;/110&nbsp;&nbsp;)</th>}
                             </tr>
                             {usersData.map((item, index) => {
                                 // console.log(item);
@@ -668,7 +668,7 @@ function Leaderboard(props) {
                                 <th className="username-column" onClick={() => sortByCol("Username")} style={{ cursor: "pointer" }}>Username</th>
                                 <th className="ffpoints-column" onClick={() => sortByCol("Fantasy Forecast Points")} style={{ cursor: "pointer" }}>Fantasy Forecast Points</th>
                                 <th className="avg-brier-column" onClick={() => sortByCol("Avg Brier Score (All Markets)")} style={{ cursor: "pointer" }}>AVG Brier Score (All Markets)</th>
-                                {width && <th className="last-five-briers-column">Last 5 Forecasts (All Markets)</th>}
+                                {width && <th className="last-five-briers-column">Last 6 Forecasts (All Markets)</th>}
                             </tr>
                             {usersData.map((item, index) => {
                                 if (item.username === "admin" || item.username === "Guest") return null;
@@ -708,7 +708,7 @@ function Leaderboard(props) {
                                                     {width && <td className="leaderboard-last5Forecasts-data">
                                                         <span className="last-five-data-span">
                                                             {item.brierScores.map((item2, index) => {
-                                                                if (index >= item.brierScores.length - 5) {
+                                                                if (index >= item.brierScores.length - 6) {
                                                                     return (
                                                                         <ToolTip title={item2.problemName} key={index}>
                                                                             <h4 className="last-five-data-single-result">
@@ -757,7 +757,7 @@ function Leaderboard(props) {
                                                     {width && <td className="leaderboard-last5Forecasts-data">
                                                         <span className="last-five-data-span">
                                                             {item.brierScores.map((item2, index) => {
-                                                                if (index >= item.brierScores.length - 5) {
+                                                                if (index >= item.brierScores.length - 6) {
                                                                     return (
                                                                         <ToolTip title={item2.problemName} key={index}>
                                                                             <h4 className="last-five-data-single-result">
@@ -802,7 +802,7 @@ function Leaderboard(props) {
                                                 {width && <td className="leaderboard-last5Forecasts-data">
                                                     <span className="last-five-data-span">
                                                         {item.brierScores.map((item2, index) => {
-                                                            if (index >= item.brierScores.length - 5) {
+                                                            if (index >= item.brierScores.length - 6) {
                                                                 return (
                                                                     <ToolTip title={item2.problemName} key={index}>
                                                                         <h4 className="last-five-data-single-result">
@@ -844,7 +844,7 @@ function Leaderboard(props) {
                                                 {width && <td className="leaderboard-last5Forecasts-data">
                                                     <span className="last-five-data-span">
                                                         {item.brierScores.map((item2, index) => {
-                                                            if (index >= item.brierScores.length - 5) {
+                                                            if (index >= item.brierScores.length - 6) {
                                                                 return (
                                                                     <ToolTip title={item2.problemName} key={index}>
                                                                         <h4 className="last-five-data-single-result">
@@ -889,7 +889,7 @@ function Leaderboard(props) {
                                                 {width && <td className="leaderboard-last5Forecasts-data">
                                                     <span className="last-five-data-span">
                                                         {item.brierScores.map((item2, index) => {
-                                                            if (index >= item.brierScores.length - 5) {
+                                                            if (index >= item.brierScores.length - 6) {
                                                                 return (
                                                                     <ToolTip title={item2.problemName} key={index}>
                                                                         <h4 className="last-five-data-single-result">
@@ -931,7 +931,7 @@ function Leaderboard(props) {
                                                 {width && <td className="leaderboard-last5Forecasts-data">
                                                     <span className="last-five-data-span">
                                                         {item.brierScores.map((item2, index) => {
-                                                            if (index >= item.brierScores.length - 5) {
+                                                            if (index >= item.brierScores.length - 6) {
                                                                 return (
                                                                     <ToolTip title={item2.problemName} key={index}>
                                                                         <h4 className="last-five-data-single-result">
