@@ -446,7 +446,7 @@ function HomeNewsFeed(props) {
                                     name="summary" id="post-2" 
                                     placeholder="What's your post about? What's your opinion?" 
                                     rows="2"
-                                    maxLength={700}
+                                    maxLength={3500}
                                     value={newPostDescription}
                                     onChange={(e) => handlePostSummaryChange(e, false)}>
                                 </textarea>
