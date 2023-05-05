@@ -170,8 +170,7 @@ function ForecastAnalysisPage(props) {
             <h1 className="forecast-analysis-header">Forecast Analysis</h1>
             <p className="forecast-analysis-para">This page is designed around giving you more detailed feedback on your forecast performance. Your predictions are assessed based on three key metrics - 
                 Reactiveness (how big or small are your forecast updates?), Confidence (how close to 0 or 100 are your forecasts?) and Timeliness (how early was your first forecast submitted?). Under each
-                sub-heading you'll find more information that corresponds to your specific scores in each dimension.<b> As you are currently logged in as a Guest, the scores below are made up to allow you to see what
-                    information is given to forecasters to help them improve their performance. So long as you are logged in on the Guest account, these scores will be identical no matter what problem you select.</b>
+                sub-heading you'll find more information that corresponds to your specific scores in each dimension.
             </p>
             <div className="problem-and-scores-container">
                 {/* Problem name and what user scored */}
