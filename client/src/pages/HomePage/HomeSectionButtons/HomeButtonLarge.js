@@ -142,7 +142,7 @@ function HomeButtonLarge(props) {
                     />
                 }
             </p>
-            {props.user.fantasyForecastPoints >= 1000 && 
+            {props.user.fantasyForecastPoints >= 600 && 
                 <Line data={recentForecastData} options={options}/>
             }
             <HomeButtonNavButton path="my-profile" />
