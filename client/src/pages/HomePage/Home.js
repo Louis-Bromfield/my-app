@@ -52,10 +52,7 @@ function Home(props) {
 
     const getUserInfo = async (username) => {
         try {
-            const userDocument = await axios.get(`${process.env.API_CALL_U}/${username}`);
-console.log("HERE LOUIS++++++++++++++");
-console.log(userDocument);
-console.log("HERE LOUIS++++++++++++++");
+            const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
             if (userDocument.data[0].numberOfClosedForecasts > 0) {
                 setShowClosedProblemModal(true);
             };
