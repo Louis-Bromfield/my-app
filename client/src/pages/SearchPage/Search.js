@@ -8,14 +8,12 @@ import ProfileForecasts from '../ProfilePage/ProfileForecasts';
 import ProfileRewards from '../ProfilePage/ProfileRewards';
 import { useCookies } from 'react-cookie';
 import Modal from '../../components/Modal';
-import ProfileTeam from '../ProfilePage/ProfileTeam';
 
 function Search(props) {
     const [markets, setMarkets] = useState("");
     const [index, setIndex] = useState(-1);
     const [searchName, setSearchName] = useState("");
     const [playerUsername, setPlayerUsername] = useState("");
-    const [playerName, setPlayerName] = useState("");
     const [playerPoints, setPlayerPoints] = useState(0);
     const [errorMessage, setErrorMessage] = useState("");
     const [brierAverage, setBrierAverage] = useState("N/A");
@@ -55,7 +53,6 @@ function Search(props) {
     const [modalContent, setModalContent] = useState("");
     const [profilePicStyle, setProfilePicStyle] = useState("none");
     const [showInviteBtn, setShowInviteBtn] = useState(false);
-    const [inviteToTeamText, setInviteToTeamText] = useState("Invite to Team");
     const [isTeam, setIsTeam] = useState(false);
     const [teamName, setTeamName] = useState("");
     const [inTeam, setInTeam] = useState(false);
@@ -75,25 +72,8 @@ function Search(props) {
             for (let i = 0; i < userData.data.length; i++) {
                 if (userData.data[i].username === username) {
                     setIndex(`${i+1}/${userData.data.length}`)
-                    // let k = i+1 % 10;
-                    // let l = i+1 % 100;
-                    // if (k === 1 && l !== 11) {
-                    //     setIndex(i+1+"st");
-                    // } else if (k === 2 && l !== 12) {
-                    //     setIndex(i+1+"nd");
-                    // } else if (k === 3 && l !== 13) {
-                    //     setIndex(i+1+"rd");
-                    // } else {
-                    //     setIndex(i+1+"th");
-                    // };
                 };
             };
-            // const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${username}`);
-            // setSearchUserObj(userDocument.data.userObj);
-            // formatBrierData(userDocument.data.userObj, playerUsername);
-            // findUniquePlayerStats(userDocument.data.userObj, playerUsername);
-            // setBrierAverage(userDocument.data.averageBrier);
-            // setBestForecast(`${(userDocument.data.bestBrier).toFixed(2)} / 110 - ${userDocument.data.bestForecastProblem}`);
         } catch (error) {
             console.error("Error in Profile.js > retrieveUserInfoFromDB");
             console.error(error);
@@ -128,12 +108,6 @@ function Search(props) {
                 setErrorMessage("No profiles were found with this username. Please try again.");
                 setShowInviteBtn(false);
             } else if (userDocument.data.userObj !== null) {
-                // // Check if the searched player is in the same team as the searching user
-                // if ((userDocument.data.userObj.teamName === props.userObject.teamName) && props.userObject.teamName !== "") {
-                //     setShowInviteBtn(false);
-                // } else {
-                //     setShowInviteBtn(true);
-                // }
                 if (userDocument.data.userObj.isTeam === true) {
                     setIsTeam(true);
                 } else {
@@ -141,7 +115,6 @@ function Search(props) {
                 }
                 retrieveUserRankFromDB(username);
                 setPlayerUsername(userDocument.data.userObj.username);
-                // setPlayerName(userDocument.data.userObj.name);
                 setPlayerLevel(Math.floor((userDocument.data.userObj.fantasyForecastPoints/100).toFixed(0)));
                 setPlayerPoints(userDocument.data.userObj.fantasyForecastPoints.toFixed(0));
                 formatMarketsString(userDocument.data.userObj.markets);
@@ -184,21 +157,8 @@ function Search(props) {
                     setForecasterRank("Diviner");
                     setProfilePicStyle("7px solid #383D67");
                 };
-                // if (userDocument.data.userObj.inTeam === true) {
-                //     setTeamName(userDocument.data.userObj.teamName);
-                //     const teamDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${userDocument.data.userObj.teamName}`);
-                    
-                //     console.log(teamDocument);
-                //     setTeamData(teamDocument.data);
-                //     setShowInviteBtn(false);
-                // } else {
-                //     setShowInviteBtn(true);
-                // };
-                // setInTeam(userDocument.data.userObj.inTeam ? true : false);
             };
-            // setTimeout(() => {
             setLoading(false);
-            // }, 1500);
         } catch (error) {
             console.error("Error in Search > retrievePlayerInfo");
             console.error(error);
@@ -258,8 +218,6 @@ function Search(props) {
         let bestBrierMe = 0;
         let worstBrierMe = 110;
         let averageBrierMe = 0;
-        // CHARMANDER - cookie for username
-        // const myStats = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${cookie.username}`);
         const myStats = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${cookie.username}`);
         for (let i = 0; i < myStats.data[0].brierScores.length; i++) {
             if (myStats.data[0].brierScores[i].brierScore > bestBrierMe) {
@@ -303,9 +261,6 @@ function Search(props) {
         maintainAspectRatio: false,
         redraw: false
     };
-
-    // recentAverageData
-    // allAverageData
 
     const allTimeForecastData = {
         labels: allLabels,
@@ -387,98 +342,72 @@ function Search(props) {
                 }
                 {loading === false &&
                     <div className="profile-grid">
-                        {/* {(props.userObject.inTeam === true && showInviteBtn === true) && <div className="profile-team-invite-container">
-                            <button
-                                className="profile-team-invite-btn"
-                                onClick={() => inviteToTeam}
-                                >
-                                    <h3>{inviteToTeamText}</h3>
-                            </button>
-                        </div>} */}
-                        {/* <h1 className="profile-header">{playerUsername}</h1> */}
-                        {/* {inTeam === false ?  */}
-                            <h1 className="profile-header">{errorMessage === "" ? playerUsername : errorMessage}</h1> 
-                        {/* :
-                            <select 
-                                style={{ fontWeight: "bold", fontSize: "32px"}}
-                                className="profile-dropdown-selection"
-                                onChange={(e) => { 
-                                    retrievePlayerInfo(e.target.value);
-                                }}
-                            >
-                                    <option value={playerUsername}>{playerUsername}</option>
-                                    <option value={teamName}>{teamName}</option>
-                            </select>
-                        } */}
+                        <h1 className="profile-header">{errorMessage === "" ? playerUsername : errorMessage}</h1> 
                         <div className="profile-main-info">
                             <img className="profile-profile-pic" src={playerProfilePic || FakeProfilePic2} alt="Temporary profile pic" style={{border: profilePicStyle}}/>
                             <div className="profile-summary">
-                                {/* <ul className="profile-summary-list"> */}
-                                    <div key={0} className="profile-summary-list-item"
-                                        onClick={() => {
-                                            setModalContent("This is determined as their FF Points divided by 100. Earning more points = higher level, and these levels come with rewards.");
-                                            setShowModal(true);
-                                        }}>
-                                        <h2 className="profile-summary-list-item-value">{playerLevel} <h5>{forecasterRank}</h5></h2>
-                                        <h3>Forecaster Level</h3>
-                                    </div>
-                                    <div key={1} className="profile-summary-list-item"
-                                        onClick={() => {
-                                            setModalContent("Fantasy Forecast Points are earned by submitting forecasts, posting to your feed, completing learn quizzes, and more. If you haven't already, check out the Onboarding menu on the Home page for tips on getting started.");
-                                            setShowModal(true);
-                                        }}>
-                                        <h2 className="profile-summary-list-item-value">{playerPoints}</h2>
-                                        <h3>Fantasy Forecast Points</h3>
-                                    </div>
-                                    <div key={2} className="profile-summary-list-item"
-                                        onClick={() => {
-                                            setModalContent("This is the average score this player has received for every problem they have submitted at least one forecast to.");
-                                            setShowModal(true);
-                                        }}>
-                                        <h2 className="profile-summary-list-item-value">{isNaN(brierAverage) ? "N/A" : brierAverage}</h2>
-                                        <h3>Brier Score Average</h3>
-                                    </div>
-                                    <div key={3} className="profile-summary-list-item">
-                                        <h2
-                                            className="profile-summary-list-item-value"
-                                            style={{ cursor: "pointer" }}
-                                            onClick={() => {
-                                                setModalContent(bestForecastForModal);
-                                                setShowModal(true);
-                                            }}>
-                                            {bestForecast}</h2>
-                                        <h3>Best Forecast</h3>
-                                    </div>
-                                    <div key={4} className="profile-summary-list-item"
-                                        onClick={() => {
-                                            setModalContent("This is the player's placement in the Fantasy Forecast All-Time leaderboard, which is determined solely by Fantasy Forecast Points. To see it in full, go the Leaderboards page and select the Fantasy Forecast All-Time leaderboard.");
-                                            setShowModal(true);
-                                        }}>
-                                        <h2 className="profile-summary-list-item-value">{index}</h2>
-                                        <h3>Fantasy Forecast All-Time Rank</h3>
-                                    </div>
-                                    <div key={5} className="profile-summary-list-item">
-                                    <h2 
+                                <div key={0} className="profile-summary-list-item"
+                                    onClick={() => {
+                                        setModalContent("This is determined as their FF Points divided by 100. Earning more points = higher level, and these levels come with rewards.");
+                                        setShowModal(true);
+                                    }}>
+                                    <h2 className="profile-summary-list-item-value">{playerLevel} <h5>{forecasterRank}</h5></h2>
+                                    <h3>Forecaster Level</h3>
+                                </div>
+                                <div key={1} className="profile-summary-list-item"
+                                    onClick={() => {
+                                        setModalContent("Fantasy Forecast Points are earned by submitting forecasts, posting to your feed, completing learn quizzes, and more. If you haven't already, check out the Onboarding menu on the Home page for tips on getting started.");
+                                        setShowModal(true);
+                                    }}>
+                                    <h2 className="profile-summary-list-item-value">{playerPoints}</h2>
+                                    <h3>Fantasy Forecast Points</h3>
+                                </div>
+                                <div key={2} className="profile-summary-list-item"
+                                    onClick={() => {
+                                        setModalContent("This is the average score this player has received for every problem they have submitted at least one forecast to.");
+                                        setShowModal(true);
+                                    }}>
+                                    <h2 className="profile-summary-list-item-value">{isNaN(brierAverage) ? "N/A" : brierAverage}</h2>
+                                    <h3>Brier Score Average</h3>
+                                </div>
+                                <div key={3} className="profile-summary-list-item">
+                                    <h2
                                         className="profile-summary-list-item-value"
+                                        style={{ cursor: "pointer" }}
                                         onClick={() => {
-                                            setModalContent("This is your net score from truthful and relevant ratings received on your news feed posts. For example, if 3 forecasters said your post was both truthful and relevant, your score would be +6. If a fourth forecaster then rated your post as neither truthful or relevant, your score would drop to +4. This score can be useful for learning more about other forecasters. Submitting ratings on other forecaster's posts for truthfulness and relevance is locked until you reach Level 4 (400 Fantasy Forecast Points).");
+                                            setModalContent(bestForecastForModal);
                                             setShowModal(true);
                                         }}>
-                                            {postRating > 0 ? "+" + postRating : postRating === 0 ? "+/-" + postRating : "-" + postRating}
-                                    </h2>
-                                        <h3>Post Rating</h3>
-                                    </div>
-                                {/* </ul> */}
+                                        {bestForecast}</h2>
+                                    <h3>Best Forecast</h3>
+                                </div>
+                                <div key={4} className="profile-summary-list-item"
+                                    onClick={() => {
+                                        setModalContent("This is the player's placement in the Fantasy Forecast All-Time leaderboard, which is determined solely by Fantasy Forecast Points. To see it in full, go the Leaderboards page and select the Fantasy Forecast All-Time leaderboard.");
+                                        setShowModal(true);
+                                    }}>
+                                    <h2 className="profile-summary-list-item-value">{index}</h2>
+                                    <h3>Fantasy Forecast All-Time Rank</h3>
+                                </div>
+                                <div key={5} className="profile-summary-list-item">
+                                <h2 
+                                    className="profile-summary-list-item-value"
+                                    onClick={() => {
+                                        setModalContent("This is your net score from truthful and relevant ratings received on your news feed posts. For example, if 3 forecasters said your post was both truthful and relevant, your score would be +6. If a fourth forecaster then rated your post as neither truthful or relevant, your score would drop to +4. This score can be useful for learning more about other forecasters. Submitting ratings on other forecaster's posts for truthfulness and relevance is locked until you reach Level 4 (400 Fantasy Forecast Points).");
+                                        setShowModal(true);
+                                    }}>
+                                        {postRating > 0 ? "+" + postRating : postRating === 0 ? "+/-" + postRating : "-" + postRating}
+                                </h2>
+                                    <h3>Post Rating</h3>
+                                </div>
                             </div>
                         </div>
                         <br/>
-                        {/* <hr/> */}
                         <div className="profile-stats-rewards-container">
                             <div className="profile-nav-menu">
                                 <div style={{ borderLeft: "0px solid #fff" }} className={searchTab === "my-stats" ? "profile-tab-selected" : "profile-tab"} onClick={() => setSearchTab("my-stats")}><h3>{playerUsername !== "" ? `${playerUsername}'s Stats` : "Player Stats"}</h3></div>
                                 <div style={{borderLeft: "0px solid #fff" }}className={searchTab === "my-forecasts" ? "profile-tab-selected" : "profile-tab"} onClick={() => setSearchTab("my-forecasts")}><h3>{playerUsername !== "" ? `${playerUsername}'s Forecasts` : "Player Forecasts"}</h3></div>
                                 {isTeam === false && <div style={{borderLeft: "0px solid #fff" }} className={searchTab === "my-rewards" ? "profile-tab-selected" : "profile-tab"} onClick={() => setSearchTab("my-rewards")}><h3>{playerUsername !== "" ? `${playerUsername}'s Trophies` : "Player Trophies"}</h3></div>}
-                                {/* <div style={{ borderRight: "0px solid #fff", borderLeft: "0px solid #fff" }} className={searchTab === "my-team" ? "profile-tab-selected" : "profile-tab"} onClick={() => setSearchTab("my-team")}><h3>{playerUsername !== "" ? `${playerUsername}'s Team` : "Player Team"}</h3></div> */}
                             </div>
                             {searchTab === "my-stats" && 
                                 <div className="profile-stats">
@@ -533,7 +462,6 @@ function Search(props) {
                             }
                             {searchTab === "my-forecasts" && <ProfileForecasts userObj={searchUserObj} searched={true} playerUsername={playerUsername} />}
                             {searchTab === "my-rewards" && <ProfileRewards userObj={searchUserObj} />}
-                            {/* {searchTab === "my-team" && <ProfileTeam userObj={searchUserObj} teamData={teamData} searchPage={true} searchName={searchName} searchingUser={props.userObject} showInviteBtn={showInviteBtn} />} */}
                         </div>
                         <hr />
                     </div>

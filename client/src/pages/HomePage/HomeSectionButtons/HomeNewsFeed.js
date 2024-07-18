@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './HomeNewsFeed.css';
-import ProfilePic from '../../../media/ProfileP.png';
 import ReactLoading from 'react-loading';
 import * as AiIcons from 'react-icons/ai';
 import ImagePlaceholder from '../../../media/sd.png';
@@ -41,27 +40,19 @@ function HomeNewsFeed(props) {
     useEffect(() => {
         if (causeFeedNewsFeedRefreshWithoutAnimation === true) {
             getAllNewsFeedPostsFromDB();
-            // getUserMarketsFromDB(props.username);
-
-            // Version without querying server:
             getUserMarketsFromDB(props.userMarkets);
         } else if (causeFeedNewsFeedRefreshWithoutAnimation === false) {
             setNewPostLoading(true);
-            // setTimeout(() => {
-                getAllNewsFeedPostsFromDB();
-                getUserMarketsFromDB(props.userMarkets);
-                setNewPostLoading(false);
-            // }, 500);
+            getAllNewsFeedPostsFromDB();
+            getUserMarketsFromDB(props.userMarkets);
+            setNewPostLoading(false);
         };
         console.log("NewsFeed UE");
     }, [causeNewsFeedRefresh, causeFeedNewsFeedRefreshWithoutAnimation, props.username, props.userMarkets, props.userObj]);
-    // }, [props.userObj, props.userMarkets]);
 
     const getAllNewsFeedPostsFromDB = async () => {
         try {
             const allPosts = await axios.get(`${process.env.REACT_APP_API_CALL_HPNFP}`);
-            
-            console.log(allPosts);
             setFeed(allPosts === undefined ? [] : allPosts.data.reverse());
             setFilteredFeed(feed);
         } catch (error) {
@@ -69,28 +60,10 @@ function HomeNewsFeed(props) {
             console.error(error);
         };
     };
-    
-    // Querying Server
-    // const getUserMarketsFromDB = async (username) => {
-    //     try {
-    //         const allMarkets = await axios.get(`${process.env.REACT_APP_API_CALL_L}/${username}`);
-    //         let filtersArr = [];
-    //         let userMarketsArr = [];
-    //         for (let i = 0; i < allMarkets.data.length; i++) {
-    //             filtersArr.push(allMarkets.data[i].leaderboardName);
-    //             userMarketsArr.push(allMarkets.data[i].leaderboardName);
-    //         };
-    //         setUserMarkets(userMarketsArr);
-    //         setFilters(filtersArr);
-    //     } catch (error) {
-    //         console.error(error);
-    //     };
-    // };
 
     // Not-querying server
     const getUserMarketsFromDB = (userMarkets) => {
         try {
-            // const allMarkets = userMarkets;
             setUserMarkets(userMarkets);
             setFilters(userMarkets);
         } catch (error) {
@@ -121,7 +94,6 @@ function HomeNewsFeed(props) {
             const postURL = e.target.value;
             setNewPostURL(postURL);
             setPostPreviewLoading(true);
-            // const postPreviewObj = await axios.get(`${process.env.API_CALL_HELP}/getPostInfo`, {
             const postPreviewObj = await axios.get(`${process.env.REACT_APP_API_CALL_HELP}/getPostInfo`, {
                 params: {
                     URL: postURL
@@ -167,13 +139,6 @@ function HomeNewsFeed(props) {
 
     const submitNewsFeedPost = (e) => {
         e.preventDefault();
-        // if (newPostURL === "" || newPostURL.length === 0) {
-        //     setPostMessage("Please enter a valid link.");
-        //     setTimeout(() => {
-        //         setPostMessage("");
-        //     }, 3000);
-        //     return;
-        // };
         if (userMarketsForPost.length === 0) {
             setPostMessage("You must select at least one market.");
             setTimeout(() => {
@@ -191,7 +156,6 @@ function HomeNewsFeed(props) {
 
     const persistPostToDB = async (username) => {
         try {
-            // await axios.post(`${process.env.API_CALL_HPNFP}`, {
             await axios.post(`${process.env.REACT_APP_API_CALL_HPNFP}`, {
                 articleURL: (newPostURL === "" || newPostURL.length <= 8) ? "N/A" : newPostURL,
                 postDescription: newPostDescription,
@@ -201,7 +165,6 @@ function HomeNewsFeed(props) {
                 postDate: new Date(),
                 markets: userMarketsForPost,
                 authorProfilePicture: props.profilePicture || props.userObj.profilePicture,
-                // authorProfilePicture: localStorage.getItem("profilePicture"),
                 alternateArticleTitle: alternateArticleTitle,
                 authorFFPoints: props.userObj.fantasyForecastPoints
             });
@@ -214,7 +177,6 @@ function HomeNewsFeed(props) {
 
     const updateOnboarding = async (username) => {
         try {
-            // const updatedUserDocument = await axios.patch(`${process.env.API_CALL_U}/onboardingTask/${username}`, {
             const updatedUserDocument = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/onboardingTask/${username}`, {
                 onboardingTask: "submitAPost",
                 ffPointsIfFalse: 200,
@@ -224,25 +186,6 @@ function HomeNewsFeed(props) {
                 props.handleFirstPost(true);
                 props.handleFirstPostModalContent("You just earned 200 Fantasy Forecast Points for your first post! Future posts will earn you 15 points per post.")    
             };
-            // Try to redo this so that we don't need to do the GET first 
-            // const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
-            // if (userDocument.data[0].onboarding.submitAPost === true) {
-            //     userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 15
-            //     await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, {
-            //         fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints
-            //     });
-            // } else {
-            //     userDocument.data[0].onboarding.submitAPost = true;
-            //     userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 200
-            //     await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, 
-            //         { 
-            //             onboarding: userDocument.data[0].onboarding,
-            //             fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 
-            //         }
-            //     );
-            //     props.handleFirstPost(true);
-            //     props.handleFirstPostModalContent("You just earned 200 Fantasy Forecast Points for your first post! Future posts will earn you 15 per post.")
-            // };
         } catch (error) {
             console.error(error);
         };
@@ -269,7 +212,6 @@ function HomeNewsFeed(props) {
             return;
         };
         try {
-            // await axios.patch(`${process.env.API_CALL_HPNFP}/${postID}`, {
             await axios.patch(`${process.env.REACT_APP_API_CALL_HPNFP}/${postID}`, {
                 articleURL: postURL,
                 postDescription: postDescription,
@@ -291,7 +233,6 @@ function HomeNewsFeed(props) {
 
     const deletePost = async (postID) => {
         try {
-            // await axios.delete(`${process.env.API_CALL_HPNFP}/${postID}`);
             await axios.delete(`${process.env.REACT_APP_API_CALL_HPNFP}/${postID}/${props.username}`);
             setCauseFeedNewsFeedRefreshWithoutAnimation(false);
             setCauseFeedNewsFeedRefresh(causeNewsFeedRefresh+1);
@@ -303,14 +244,11 @@ function HomeNewsFeed(props) {
     const voteOnPost = async (vote, postID, postVotes, postAuthor) => {
         try {
             if (vote === "upvote") {
-                // await axios.patch(`${process.env.API_CALL_HPNFP}/vote/${postID}`, { vote: "upvote", username: props.username })
                 await axios.patch(`${process.env.REACT_APP_API_CALL_HPNFP}/vote/${postID}`, { vote: "upvote", username: props.username })
             } else if (vote === "downvote") {
-                // await axios.patch(`${process.env.API_CALL_HPNFP}/vote/${postID}`, { vote: "downvote", username: props.username })
                 await axios.patch(`${process.env.REACT_APP_API_CALL_HPNFP}/vote/${postID}`, { vote: "downvote", username: props.username })
             }
             if (props.username !== postAuthor) {
-                // await axios.patch(`${process.env.API_CALL_U}/newNotification/${postAuthor}`, {
                 await axios.patch(`${process.env.REACT_APP_API_CALL_U}/newNotification/${postAuthor}`, {
                     notificationMessage: `${props.username === undefined ? "Someone" : props.username} just voted on your news feed post!`,
                     notificationSourcePath: "/news-post",
@@ -326,8 +264,6 @@ function HomeNewsFeed(props) {
 
     const filterNewsFeed = (leaderboardName, feed, filters) => {
         let userMarketsBackup = [];
-        // Have to make this backup array manually as for some reason on line 312 it also splices userMarkets
-        // meaning the filter checkboxes on the News Feed just disappear :/ this loop solution does work though
         for (let i = 0; i < userMarkets.length; i++) {
             userMarketsBackup.push(userMarkets[i]);
         };
@@ -374,7 +310,7 @@ function HomeNewsFeed(props) {
                     }} 
                     justClose={() => setShowConfirmationModal(false)}
                 />
-                <p className="news-feed-title">
+                <h2 className="home-button-large-title">
                     My Feed
                     <FaInfoCircle 
                         onClick={() => {
@@ -383,7 +319,7 @@ function HomeNewsFeed(props) {
                         }}
                         style={{ "color": "orange", "cursor": "pointer" }}
                     />
-                </p>
+                </h2>
                 <div className="post">
                     {post === false && 
                         <div className="feed-top-buttons">
@@ -410,7 +346,6 @@ function HomeNewsFeed(props) {
                     {post === true && 
                         <form className="create-post-form">
                             <fieldset className="create-post-fieldset">
-                                {/* <legend></legend> */}
                                 <label htmlFor="post-1"><strong>Link:</strong></label>
                                 <br/>
                                 <input 
@@ -560,7 +495,6 @@ function HomeNewsFeed(props) {
                             <div className="news-feed-post">
                                 <div className="post-author">
                                     <div className="post-author-left">
-                                        {/* <img className="author-profile-pic" src={localStorage.getItem("profilePicture") || ProfilePic} alt=""/> */}
                                         <img className="author-profile-pic" src={props.profilePicture || props.userObj.profilePicture} alt=""/>
                                         <div className="post-author-details">
                                             <h3>{props.username}</h3>
@@ -576,13 +510,6 @@ function HomeNewsFeed(props) {
                                     </a>
                                     <a href={newPostURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{postPreviewTitle === "There was an error. Please check the link you have pasted is correct." ? alternateArticleTitle : postPreviewTitle}</h3></a>
                                 </div>}
-                                <div className="post-markets">
-                                    {userMarketsForPost.map((market, index) => {
-                                        return (
-                                            <h4 key={index}>&nbsp;{market}&nbsp;|</h4>
-                                        )
-                                    })}
-                                </div>
                             </div>
                         </div>
                     }
@@ -600,7 +527,6 @@ function HomeNewsFeed(props) {
                                 <li key={index} className="news-feed-post">
                                     <div className="post-author">
                                         <div className="post-author-left">
-                                            {/* <img className="author-profile-pic" src={item.author === props.username ? localStorage.getItem("profilePicture") : item.authorProfilePicture} alt=""/> */}
                                             <img className="author-profile-pic" src={item.authorProfilePicture} alt="" style={{border: `3px solid ${item.authorBorderColor}`}} />
                                             <div className="post-author-details">
                                                 <Link 
@@ -649,18 +575,6 @@ function HomeNewsFeed(props) {
                                             </a>
                                             <a href={item.articleURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{item.articleTitle}</h3></a>
                                         </div>}
-                                        <div className="post-markets">
-                                            {item.markets.map((market, index) => {
-                                                if (index < item.markets.length-1) {
-                                                    return (
-                                                        <p key={index}>&nbsp;{market}&nbsp;|</p>
-                                                    )
-                                                }
-                                                else return (
-                                                    <p key={index}>&nbsp;{market}&nbsp;</p>
-                                                )
-                                            })}
-                                        </div>
                                     </Link>
                                 </li>
                             )
@@ -681,7 +595,6 @@ function HomeNewsFeed(props) {
                                     <li key={index} className="news-feed-post">
                                         <div className="post-author">
                                             <div className="post-author-left">
-                                                {/* <img className="author-profile-pic" src={item.author === props.username ? localStorage.getItem("profilePicture") : item.authorProfilePicture} alt=""/> */}
                                                 <img className="author-profile-pic" src={item.authorProfilePicture} alt="" style={{border: `3px solid ${item.authorBorderColor}`}}/>
                                                 <div className="post-author-details">
                                                     <Link 
@@ -730,18 +643,6 @@ function HomeNewsFeed(props) {
                                                 </a>
                                                 <a href={item.articleURL} className="post-news-title" target="_blank" rel="noreferrer nofollow"><h3>{item.articleTitle}</h3></a>
                                             </div>}
-                                            <div className="post-markets">
-                                                {item.markets.map((market, index) => {
-                                                    if (index < item.markets.length-1) {
-                                                        return (
-                                                            <p key={index}>&nbsp;{market}&nbsp;|</p>
-                                                        )
-                                                    }
-                                                    else return (
-                                                        <p key={index}>&nbsp;{market}&nbsp;</p>
-                                                    )
-                                                })}
-                                            </div>
                                         </Link>
                                     </li>
                                 ) 

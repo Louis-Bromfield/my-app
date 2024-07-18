@@ -1,63 +1,49 @@
 .forecast-submission-and-selection-div {
     display: flex;
     flex-direction: column;
-    /* border: 2px dashed blue; */
     margin: 0 auto;
     width: 100%;
 }
 
 .forecast-top-bar {
-    display: grid;
-    grid-template-columns: 50% 20% 20%;
-    column-gap: 5%;
-    border: 1px solid black;
-    border-radius: 10px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    padding: 1%;
-    width: 100%;
-    margin: 0 auto;
-}
-
-.forecast-selection-div,
-.forecast-market-name-div,
-.forecast-market-stats-div {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    border-right: 1px solid lightgray;
+    width: 100%;
 }
 
 .header-label {
     color: #404d72;
 }
 
+.forecast-selection-div {
+    height: fit-content;
+    max-height: 100%;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll; 
+}
+
+.forecast-selection-question-header {
+    background-color: #404d72;
+    color: #fff;
+    text-align: center;
+    padding: 3%;
+}
+
 .forecast-submission-and-chart-div {
-    display: grid;
-    grid-template-columns: 40% 60%;
-    border: 1px solid black;
-    border-top: none;
-    padding-top: 1.5vh;
+    display: flex;
+    flex-direction: column;
+    /* border: 3px solid red; */
 }
 
 .forecast-submission-div {
-    margin: 0 auto;
+    /* margin: 0 auto; */
     margin-bottom: 2vh;
     display: flex;
     flex-direction: column;
-    padding: 1%;
-    /* padding-bottom: 0%; */
-    width: 90%;
-    /* border: 1px solid black;
-    border-top-style: none;
-    border-radius: 10px;
-    border-top-right-radius: 0%;
-    border-top-left-radius: 0%; */
-    /* border: 1px solid black; */
-}
-
-.forecast-submission-div {
-    text-align: center;
+    /* padding: 1%; */
+    /* width: 90%; */
+    /* text-align: center; */
 }
 
 .forecast-selection-select {
@@ -65,15 +51,17 @@
 }
 
 .selected-forecast {
-    /* margin: 0 auto; */
     margin-bottom: 1vh;
     background-color: #404d72;
     color: #fff;
     padding: 1%;
+    text-align: center;
+    /* font-size: 100%; */
 }
 
 .selected-forecast-close-date {
     margin-bottom: 1vh;
+    margin: 0 auto;
 }
 
 .forecast-submission-and-error-container {
@@ -89,16 +77,12 @@
 .forecast-submission-input {
     display: flex;
     flex-direction: column;
-    /* grid-template-columns: 25% 45% 20%; */
-    /* column-gap: 5%; */
     row-gap: 8%;
     height: 100%;
     margin: 0 auto;
-    /* margin-bottom: 1vh; */
     padding: 1%;
     text-align: center;
     width: 100%;
-    /* align-items: center; */
 }
 
 .forecast-submission-input-certainty-section,
@@ -122,7 +106,6 @@
 }
 
 .forecast-certainty-input {
-    /* padding: 1%; */
     text-align: center;
     margin-bottom: 1vh;
     width: 100%;
@@ -143,7 +126,6 @@
 .placeholder-container-no-error {
     display: flex;
     flex-direction: column;
-    /* grid-template-columns: 25% 75%; */
 }
 
 .last-certainty-div,
@@ -287,6 +269,11 @@
     margin: 0 auto;
     padding-bottom: 2vh;
     font-size: 0.9em;
+}
+
+.new-forecast-layout-container {
+    display: grid;
+    grid-template-columns: 23% 77%;
 }
 
 @media (max-width: 1100px) {

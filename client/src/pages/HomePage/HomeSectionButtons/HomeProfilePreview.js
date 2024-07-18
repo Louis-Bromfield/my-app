@@ -17,21 +17,17 @@ function HomeProfilePreview(props) {
     const [profilePicStyle, setProfilePicStyle] = useState("none");
     const [openProfilePicChooser, setOpenProfilePicChooser] = useState(false);
     const [newProfilePic, setNewProfilePic] = useState(null);
+    const [learnProgress, setLearnProgress] = useState(0);
+    const [totalQuizCount, setTotalQuizCount] = useState(0);
 
     useEffect(() => {
         console.log("HomeProfilePreviewUE");
-        // if (props.userFFPoints === undefined) {
-        //     getUserDetails(props.username);
-        // } else {
-        //     setFFPoints(props.userFFPoints);
-        // };
         if (props.userObj === undefined || props.userObj === {}) {
             getUserDetails(props.username);
         } else {
             setFFPoints(props.userObj.fantasyForecastPoints);
         };
         
-        // Need to add checks for if the user has below 100 points (100 would be level 1 (fine), but 60 points would be level 0.6 (not fine))
         const targetRounded = Math.ceil(ffPoints/100) * 100;
         const progressPercentage = (targetRounded - ffPoints);
         setProgressBarWidth(`${100 - progressPercentage.toFixed(0)}%`);
@@ -67,10 +63,20 @@ function HomeProfilePreview(props) {
             setForecasterRank("Diviner");
             setProfilePicStyle("5px solid #383D67");
         };
+        let totalQuizzes = 0;
+        let completeQuizzes = 0;
+        for (let i = 0; i < Object.values(props.userLearnQuizzes).length; i++) {
+            if (Object.values(props.userLearnQuizzes)[i] === true || Object.values(props.userLearnQuizzes)[i] === false) {
+                totalQuizzes++;
+                if (Object.values(props.userLearnQuizzes)[i] === true) {
+                    completeQuizzes++;
+                };
+            };
+        };
+        setLearnProgress(completeQuizzes);
+        setTotalQuizCount(totalQuizzes);
     }, [props.userObj.fantasyForecastPoints, ffPoints]);
 
-    // I'm fine with leaving this one here because it's wrapped in an undefined checker in the useEffect hook
-    // so it won't fire everytime, only if we've lost that user prop
     const getUserDetails = async (username) => {
         try {
             const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
@@ -99,42 +105,28 @@ function HomeProfilePreview(props) {
                 username={props.username}
                 changeProfilePic={changeProfilePic}
             />
-            <p style={{ fontSize: "1.2em" }} className="home-button-large-title">My Profile Preview</p>
+            <h2 className="home-button-large-title">My Profile Preview</h2>
             <div className="home-profile-preview-container">
-            <img className="home-profile-preview-img" src={newProfilePic === null ? props.userObj.profilePicture : newProfilePic} alt="" style={{border: profilePicStyle}} onClick={() => setOpenProfilePicChooser(true) }/>
-                {/* <div className="home-profile-preview-container-top-grid"> */}
-                    {/* <div className="profile-top-info-container"> */}
-                        <Link to="/my-profile" style={{ textDecoration: "none", color: "#404d72" }}><h2>{props.userObj.username}</h2></Link>
-                        <p>Level {Math.floor((ffPoints/100)).toFixed(0)} {forecasterRank}</p>
-                        <p>
-                            {ffPoints === undefined ? 0.00 : ffPoints.toFixed(0)} Fantasy Forecast Points
-                            <FaInfoCircle 
-                                color={"orange"} 
-                                className="modal-i-btn"
-                                onClick={() => { setShowModal(true); setModalContent(`Fantasy Forecast Points are earned through the majority of your interactions with the site. Submitting a forecast (you'll also get points when a problem closes and you receive a score based on how accurate you were), posting to the news feed, completing the Onboarding tasks, attempting the quizzes found on the Learn page and more! Head to the Learn page and select the "Fantasy Forecast Points" topic for more info!`)}}
-                            />
-                            </p>
-                        <br />
-                    {/* </div> */}
-                    {/* <img className="home-profile-preview-img" src={props.user.profilePicture} alt="" /> */}
-                {/* </div> */}
-                {/* <h3>Progress To Next Level:</h3> */}
+                <img className="home-profile-preview-img" src={newProfilePic === null ? props.userObj.profilePicture : newProfilePic} alt="" style={{border: profilePicStyle}} onClick={() => setOpenProfilePicChooser(true) }/>
+                            <Link to="/my-profile" style={{ textDecoration: "none", color: "#404d72" }}><h2>{props.userObj.username}</h2></Link>
+                            <p>Level {Math.floor((ffPoints/100)).toFixed(0)} {forecasterRank}</p>
+                            <br />
                 <div className="home-profile-preview-level-and-xp">
                     <div className="home-profile-preview-level">
                         <h2>{Math.floor((ffPoints/100)).toFixed(0)}</h2>
                     </div>
                     <div className="home-profile-preview-xp">
                         <div 
-                        className="progress-bar" 
-                        style={{ 
-                            backgroundColor: "#404d72", 
-                            color: "white", 
-                            width: `${progressBarWidth}`,
-                            borderTopLeftRadius: "10px",
-                            borderBottomLeftRadius: "10px"
-                        }}>
+                            className="progress-bar" 
+                            style={{ 
+                                backgroundColor: "#404d72", 
+                                color: "white", 
+                                width: `${progressBarWidth}`,
+                                borderTopLeftRadius: "10px",
+                                borderBottomLeftRadius: "10px"
+                            }}>
                                 <p>{progressBarWidth}</p>
-                        </div>
+                            </div>
                         <div 
                         className="progress-bar" 
                         style={{ 
@@ -144,8 +136,27 @@ function HomeProfilePreview(props) {
                             borderTopRightRadius: "10px",
                             borderBottomRightRadius: "10px"
                         }}>
-                                <p>{oppositeProgressBarWidth}</p>
+                            <p>{oppositeProgressBarWidth}</p>
                         </div>
+                    </div>
+                </div>
+                <div className="home-profile-preview-stats-list-container">
+                    <div className="home-profile-preview-stats-list-left">
+                        <p>
+                            Fantasy Forecast Points
+                            <FaInfoCircle 
+                                color={"orange"} 
+                                className="modal-i-btn"
+                                onClick={() => { setShowModal(true); setModalContent(`Fantasy Forecast Points are earned through the majority of your interactions with the site. Submitting a forecast (you'll also get points when a problem closes and you receive a score based on how accurate you were), posting to the news feed, completing the Onboarding tasks, attempting the quizzes found on the Learn page and more! Head to the Learn page and select the "Fantasy Forecast Points" topic for more info!`)}}
+                            />
+                        </p>
+                        <p>Quiz Completion</p>
+                        <p>Average Score</p>
+                    </div>
+                    <div className="home-profile-preview-stats-list-right">
+                        <p><strong>{ffPoints === undefined ? 0 : ffPoints.toFixed(0)}</strong></p>
+                        <p><strong>{learnProgress} / {totalQuizCount}</strong></p>
+                        <p><strong>108.11</strong></p>
                     </div>
                 </div>
             </div>

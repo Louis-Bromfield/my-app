@@ -28,69 +28,10 @@ const ProfilePictureChooserModal = ({ show, justClose, username, changeProfilePi
         if (username === undefined || username === "Guest") {
             return;
         };
-        console.log("in change picture");
-        console.log("picChoice = " + picChoice);
         if (picChoice === "") {
             return;
         } else {
-            // if you use this you would need to change the setNewPic to be "AvatarX" rather than {AvatarX}
-            // let avatarString = "";
-            // switch (picChoice) {
-            //     case ({Avatar1}):
-            //         avatarString = "Avatar1";
-            //     break;
-            //     case ({Avatar2}):
-            //         avatarString = "Avatar2";
-            //     break;
-            //     case ({Avatar3}):
-            //         avatarString = "Avatar3";
-            //     break;
-            //     case ({Avatar4}):
-            //         avatarString = "Avatar4";
-            //     break;
-            //     case ({Avatar5}):
-            //         avatarString = "Avatar5";
-            //     break;
-            //     case ({Avatar6}):
-            //         avatarString = "Avatar6";
-            //     break;
-            //     case ({Avatar7}):
-            //         avatarString = "Avatar7";
-            //     break;
-            //     case ({Avatar8}):
-            //         avatarString = "Avatar8";
-            //     break;
-            //     case ({Avatar9}):
-            //         avatarString = "Avatar9";
-            //     break;
-            //     case ({Avatar10}):
-            //         avatarString = "Avatar10";
-            //     break;
-            //     case ({Avatar11}):
-            //         avatarString = "Avatar11";
-            //     break;
-            //     case ({Avatar12}):
-            //         avatarString = "Avatar12";
-            //     break;
-            //     case ({Avatar13}):
-            //         avatarString = "Avatar13";
-            //     break;
-            //     case ({Avatar14}):
-            //         avatarString = "Avatar14";
-            //     break;
-            //     case ({Avatar15}):
-            //         avatarString = "Avatar15";
-            //     break;
-            //     case ({Avatar16}):
-            //         avatarString = "Avatar16";
-            //     break;
-            // default:
-            //     avatarString = "https://lh3.googleusercontent.com/a-/AOh14GjV2ps962tYS-OQXR21ojsfIz9JRguOC4T353so=s96-c"
-            //     return;
-            // }
-            // await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, { profilePicture: avatarString });
             const res = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, { profilePicture: picChoice });
-            console.log(res);
             if (res.data.error === "No error") {
                 changeProfilePic(picChoice);
                 setResponseText("Profile picture successfully changed");

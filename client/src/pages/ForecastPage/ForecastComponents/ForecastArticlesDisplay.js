@@ -46,7 +46,6 @@ function ForecastArticlesDisplay(props) {
 
     if (articles === "loading") {
         return <div className="articles-loading">
-            {/* <h2>This section is under construction!</h2> */}
             <h2>Loading potentially useful articles...</h2>
             <ReactLoading type="bars" color="#404d72" height="15%" width="15%" />
         </div>
@@ -57,9 +56,7 @@ function ForecastArticlesDisplay(props) {
                 <h4 style={{ margin: "0 auto", textAlign: "center" }}>The articles shown below are generated from a web scrape of Google News using key words in the problem above. This can result in a wide variety in terms of their relevance and usefulness.</h4>
                 <hr />
                 {articles !== "loading" && <div className="articles-grid">
-                    {/* <ul> */}
                         <h4>These articles have been handpicked by us:</h4>
-                        {/* changed success */}
                         <a href="https://www.telegraph.co.uk/politics/2023/04/06/local-elections-may-2023-when-who-vote-where-polling/" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
                             {/* <p>{article.title}</p> */}
                             <div className="article-list-item" onClick={() => logUserAction(props.username === undefined ? props.userObject.username : props.username)}>
@@ -68,7 +65,6 @@ function ForecastArticlesDisplay(props) {
                                 </div>
                                 <div className="article-list-item-text-div">
                                     <h3 className="article-list-item-title">Local elections 2023: When are they and which results to watch out for?</h3>
-                                    {/* <p className="article-list-item-description">{article.description}</p> */}
                                     <hr />
                                     <h5 className="article-list-item-publisher">NPR</h5>
                                 </div>
@@ -83,22 +79,18 @@ function ForecastArticlesDisplay(props) {
                                 </div>
                                 <div className="article-list-item-text-div">
                                     <h3 className="article-list-item-title">Local elections 2023: When are they and who can vote?</h3>
-                                    {/* <p className="article-list-item-description">{article.description}</p> */}
                                     <hr />
                                     <h5 className="article-list-item-publisher">BBC News</h5>
                                 </div>
                             </div>
                         </a>
-                        {/* change this one */}
                         <a href="https://www.bbc.co.uk/news/uk-politics-65190787" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
-                            {/* <p>{article.title}</p> */}
                             <div className="article-list-item" onClick={() => logUserAction(props.username === undefined ? props.userObject.username : props.username)}>
                                 <div className="article-list-item-img-container">
                                     <img className="article-list-item-img" src="https://ichef.bbci.co.uk/news/976/cpsprodpb/11240/production/_129280207_le_2023_nick_eardley-nc.jpg.webp" alt="" />
                                 </div>
                                 <div className="article-list-item-text-div">
                                     <h3 className="article-list-item-title">Local elections 2023: What to expect from May's polls in England</h3>
-                                    {/* <p className="article-list-item-description">{article.description}</p> */}
                                     <hr />
                                     <h5 className="article-list-item-publisher">BBC News</h5>
                                 </div>
@@ -113,23 +105,19 @@ function ForecastArticlesDisplay(props) {
                             return (
                                 // <li>
                                     <a href={article.link} rel="noreferrer" target="_blank" key={index} style={{ "textDecoration": "none"}}>
-                                        {/* <p>{article.title}</p> */}
                                         <div className="article-list-item">
                                             <div className="article-list-item-img-container">
                                                 <img className="article-list-item-img" src={article.img} alt="" />
                                             </div>
                                             <div className="article-list-item-text-div">
                                                 <h3 className="article-list-item-title">{article.title}</h3>
-                                                {/* <p className="article-list-item-description">{article.description}</p> */}
                                                 <hr />
                                                 <h5 className="article-list-item-publisher">{article.source}</h5>
                                             </div>
                                         </div>
                                     </a>
-                                // </li>
                             )
                         })}
-                    {/* </ul> */}
                 </div>}
             </div>
         )

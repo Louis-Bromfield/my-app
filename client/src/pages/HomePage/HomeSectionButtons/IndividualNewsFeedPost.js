@@ -4,7 +4,6 @@ import * as AiIcons from 'react-icons/ai';
 import ImagePlaceholder from '../../../media/sd.png';
 import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
 import Modal from '../../../components/Modal';
 
 function IndividualNewsFeedPost(props) {
@@ -35,7 +34,6 @@ function IndividualNewsFeedPost(props) {
     const [relevant, setRelevant] = useState(false);
 
     const history = useHistory();
-    const [cookie, setCookie] = useCookies(['username']);
 
     useEffect(() => {
         doEffect();
@@ -122,17 +120,12 @@ function IndividualNewsFeedPost(props) {
                 postID: ID,
                 isNewComment: true,
                 newComment: comment,
-                // CHARMANDER Would like to change this as otherwise you could make posts in someone else's name
-                // author: localStorage.getItem("username")
                 author: author
             });
             setNewCommentStatus(true);
             setNewCommentToRender(comment)
             setComment("");
-            // CHARMANDER
-            // giveUserPoints(localStorage.getItem("username"));
             giveUserPoints(props.username);
-            // if (props.username !== undefined && author !== props.username) {
             if (props.username !== author && props.username !== author) {
                 await axios.patch(`${process.env.REACT_APP_API_CALL_U}/newNotification/${author}`, {
                     notificationMessage: `${props.username === undefined ? "Someone" : props.username} just commented on your news feed post!`,
@@ -151,7 +144,6 @@ function IndividualNewsFeedPost(props) {
         try {
             const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
             let userPrePoints = userDocument.data[0].fantasyForecastPoints;
-
             let trophyUpdate = false;
             let trophyText = "";
             if ((userPrePoints < 1500) && (userDocument.data[0].fantasyForecastPoints+10 >= 1500)) {
@@ -182,11 +174,6 @@ function IndividualNewsFeedPost(props) {
             });
             setModalContent("You just earned 10 Fantasy Forecast Points for commenting!");
             setShowModal(true);
-            // setTimeout(() => {
-            //     setShowModal("false");
-            //     setModalContent("");
-            //     setModalContent2("");
-            // }, 2500);
         } catch (error) {
             console.error(error);
         };
@@ -202,7 +189,6 @@ function IndividualNewsFeedPost(props) {
                 setShowModal(true);
                 setModalContent("You cannot rate your own post.");
             } else if (submittedTruthfulRating === true && submittedRelevantRating === true) {
-                // add in axios here to edit post document
                 const res = await axios.patch(`${process.env.REACT_APP_API_CALL_HPNFP}/postRatings/${postID}`, {
                     username: props.username,
                     truthful: truthful,
@@ -218,7 +204,6 @@ function IndividualNewsFeedPost(props) {
                 if (relevant === true) {
                     setRelevantRatingCount(relevantRatingCount + 1);
                 };
-                // send user a notification for when they receive a rating
                 await axios.patch(`${process.env.REACT_APP_API_CALL_U}/newNotification/${author}`, {
                     notificationMessage: `${props.username === undefined ? "Someone" : props.username} just rated your news feed post! If this was the first rating you received, you have been awarded the Gather Round trophy!`,
                     notificationSourcePath: "/news-post",
@@ -250,8 +235,6 @@ function IndividualNewsFeedPost(props) {
                 <div key={1} className="individual-news-feed-post">
                     <div className="post-author">
                         <div className="post-author-left">
-                            {/* CHARMANDER */}
-                            {/* <img className="author-profile-pic" src={author === localStorage.getItem("username") ? localStorage.getItem("profilePicture") : authorProfilePicture} alt=""/> */}
                             <img className="author-profile-pic" src={authorProfilePicture === undefined ? "" : authorProfilePicture} alt=""/>
                             <div className="post-author-details">
                                 <Link 
@@ -263,22 +246,6 @@ function IndividualNewsFeedPost(props) {
                                 <h5>{new Date(postDate).toString().slice(0, 21)}</h5>
                             </div>
                         </div>
-                        {/* <div className="post-author-right"> */}
-                            {/* <div className="post-votes"> */}
-                                {/* <AiIcons.AiFillLike  */}
-                                    {/* size={25}  */}
-                                    {/* className="post-control-btn"  */}
-                                    {/* color={"green"} /> */}
-                                    {/* onClick={() => voteOnPost("upvote", _id, likes)} /> */}
-                                    {/* {likes.length} */}
-                                {/* <AiIcons.AiFillDislike  */}
-                                    {/* size={25}  */}
-                                    {/* className="post-control-btn"  */}
-                                    {/* color={"darkred"} /> */}
-                                    {/* onClick={() => voteOnPost("downvote", _id, dislikes)} /> */}
-                                    {/* {dislikes.length} */}
-                            {/* </div> */}
-                        {/* </div> */}
                     </div>
                     <p className="post-author-description">{postDescription}</p>
                     {(articleURL !== "N/A" && articleURL.length !== 0) && <div className="post-news-preview">
@@ -347,15 +314,12 @@ function IndividualNewsFeedPost(props) {
                             </div>
                         </div>
                     }
-                    {/* {(submittedRatings === true || props.username === author) && */}
-                        {/* // show rating results */}
                         <div className="post-rate-results">
                             <p><b>{likes.length}</b> {likes.length === 1 ? "forecaster" : "forecasters"} liked this post.</p>
                             <p><b>{dislikes.length}</b> {dislikes.length === 1 ? "forecaster" : "forecasters"} disliked this post.</p>
                             <p><b>{truthfulRatingCount}</b> {truthfulRatingCount === 1 ? "forecaster" : "forecasters"} rated this post as Truthful.</p>
                             <p><b>{relevantRatingCount}</b> {relevantRatingCount === 1 ? "forecaster" : "forecasters"} rated this post as Relevant.</p>
                         </div>
-                    {/* } */}
                 </div>
             </div>
             <div className="comments-container">
@@ -374,17 +338,12 @@ function IndividualNewsFeedPost(props) {
                     </button>
                 </div>
                 <div className="comments-sub-container">
-                    {/* {showModal === true &&
-                        <h3 style={{ "color": "#404d72"}}>You just earned 10 Fantasy Forecast Points for commenting!</h3>
-                    } */}
                     {newCommentStatus === true && 
                         <div className="comment-in-chain">
                             <Link 
                                 to={{pathname: "/my-profile"}}
                                 onClick={() => localStorage.setItem("selectedPage", "Search")}
                                 style={{ textDecoration: "none", color: "#404d72"}}>
-                                    {/* CHARMANDER */}
-                                    {/* <h4 className="comment-author">{localStorage.getItem("username")}</h4> */}
                                     <h4 className="comment-author">{props.username}</h4>
                             </Link>
                             <h4>{newCommentToRender}</h4>

@@ -11,5 +11,5 @@ const getGoogleArticles = async (searchTerm) => {
         console.error(error);
     }
 }
-// getGoogleArticles("Trump");
+
 module.export = getGoogleArticles;

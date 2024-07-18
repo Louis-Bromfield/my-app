@@ -6,7 +6,7 @@ import { NavbarData } from './NavbarData';
 import { IconContext } from 'react-icons';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
-import FantasyForecastLogo from '../../media/sd2.png';
+import FantasyForecastLogo from '../../media/sd3.png';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import axios from 'axios';
 import TeamModal from '../TeamModal';
@@ -42,7 +42,6 @@ function Navbar(props) {
         let numberOfNewNotifications = 0;
         if (props.userObj.notifications !== undefined) {
             for (let i = 0; i < props.userObj.notifications.length; i++) {
-                // tally number of false seenByUsers here CHARMANDER
                 if (props.userObj.notifications[i].seenByUser === false) {
                     numberOfNewNotifications = numberOfNewNotifications + 1;
                 };
@@ -83,17 +82,8 @@ function Navbar(props) {
         logout();
     };
 
-    /// copy-paste this into Notifications.js when updated
     const handleNotificationSelection = async (notification) => {
-        // set seenByUser value to true
         let username = props.username === undefined ? props.userObj.username : props.username;
-        // if (changeAll === true) {
-        //     const res = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/editNotifications/${username}`, {
-        //         setAllToTrue: true
-        //     });
-        //     setNumberOfNewNotis(0);
-        //     return;
-        // } else {
             if (notification.seenByUser === false) {
                 const res = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/editNotifications/${username}`, {
                 
@@ -126,19 +116,10 @@ function Navbar(props) {
             } else if (notification.notificationSourcePath === "/profile") {
                 history.push("/profile");
             }
-        // };
     };
 
     return (
         <>
-            {/* <TeamModal 
-                show={showConfirmationModal}
-                notificationObject={selectedNotificationObject}
-                username={props.username === undefined ? props.userObj.username : props.username}
-                justClose={() => setShowConfirmationModal(false)}
-                oldTeam={props.userObj.teamName}
-                calledFromNav={true}
-            /> */}
             {mobileWidth === true &&
                 <IconContext.Provider value={{ color: '#fff' }}>
                     <div className='mobile-navbar'>
@@ -212,7 +193,6 @@ function Navbar(props) {
                                 )
                             } else return null;
                         }) : null}
-                        {/* Might want to replace this div with a Link so we can pass in props like userObj / username to access notifications array */}
                         <Link className="notification-item-seen" onClick={() => setShowNotifications(false)} to={linkObject}>
                             <div className="notification-item-info">
                                 <p><b>See all notifications</b></p>
@@ -225,12 +205,17 @@ function Navbar(props) {
             }
             {mobileWidth === false &&
                 <IconContext.Provider value ={{ color: "#fff" }}>
-                        {/* <nav className="nav-menu"> */}
                             <div className="navbar">
-                                {/* <div className="navbar-grid"> */}
                                 <div className="navbar-column" style={{ display: "flex", flexDirection: "column", margin: "0 auto", paddingTop: "1%" }}>
-                                    <img className="nav-logo" src={FantasyForecastLogo} alt="Fantasy Forecast Logo" style={{ width: "35%", margin: "0 auto", marginBottom: "0.5vh" }}/>
-                                    {/* <h1 className="nav-bar-title">Fantasy Forecast <img src={FantasyForecastLogo} alt="Logo" width="15%"></img></h1> */}
+                                        <img 
+                                            className="nav-logo" 
+                                            src={FantasyForecastLogo} 
+                                            alt="Fantasy Forecast Logo" 
+                                            style={{ 
+                                                width: "30%", 
+                                                margin: "0 auto"
+                                                // marginBottom: "0.5vh"
+                                            }}/>
                                     <div className="nav-menu-items-container">
                                         {width === false &&
                                             <ul className="nav-menu-items">
@@ -259,7 +244,6 @@ function Navbar(props) {
                                                                 </li>
                                                             );
                                                         };
-                                                    // } else return null;
                                                     } else {
                                                         return (
                                                             <li 
@@ -268,7 +252,6 @@ function Navbar(props) {
                                                                 onClick={() => setShowNotifications(!showNotifications)}>
                                                                     <Link>
                                                                         {item.iconSelected}
-                                                                        {/* <span className="nav-title"><p>{item.title}</p></span> */}
                                                                         {numberOfNewNotis > 0 ? <h5 className="notification-counter" style={{ height: "100%" }}>{numberOfNewNotis}</h5> : null}
                                                                     </Link>
                                                             </li>
@@ -307,10 +290,8 @@ function Navbar(props) {
                                                         )
                                                     }
                                                 })}
-                                                {/* NEW CHARMANDER */}
                                                 {showNotifications === true && 
                                                     <div className="notification-dropdown">
-                                                        {/* each item to be message above date in left column, and right column to be an arrow icon pointing right */}
                                                         {props.userObj.notifications !== undefined ? props.userObj.notifications.map((item, index) => {
                                                             if (index < 5) {
                                                                 return (
@@ -332,7 +313,6 @@ function Navbar(props) {
                                                             <AiOutlineArrowRight color={"#404d72"}/>
                                                         </Link>
                                                         <div className="profile-and-logout-container">
-                                                            {/* <p className="nav-text-profile-link"> */}
                                                                 <Link 
                                                                     to={"/my-profile"} 
                                                                     className="nav-text-profile" 
@@ -342,7 +322,6 @@ function Navbar(props) {
                                                                         setShowNotifications(false)}}>
                                                                     <h5>Go to My Profile</h5>
                                                                 </Link>
-                                                            {/* </p> */}
                                                             <button 
                                                                 className="nav-logout-btn" 
                                                                 onClick={() => {
@@ -354,14 +333,12 @@ function Navbar(props) {
                                                         </div>
                                                     </div>
                                                 }
-                                                {/* NEW CHARMANDER */}
                                             </ul>
                                             }
                                     </div>
                                     <div className="user-logout-container">
                                         {showNotifications === true && 
                                             <div className="notification-dropdown">
-                                                {/* each item to be message above date in left column, and right column to be an arrow icon pointing right */}
                                                 {props.userObj.notifications !== undefined ? props.userObj.notifications.map((item, index) => {
                                                     if (index < 5) {
                                                         return (
@@ -375,7 +352,6 @@ function Navbar(props) {
                                                         )
                                                     } else return null;
                                                 }) : null}
-                                                {/* Might want to replace this div with a Link so we can pass in props like userObj / username to access notifications array */}
                                                 <Link className="notification-item-seen" onClick={() => setShowNotifications(false)} to={linkObject}>
                                                     <div className="notification-item-info">
                                                         <p><b>See all notifications</b></p>
@@ -383,7 +359,6 @@ function Navbar(props) {
                                                     <AiOutlineArrowRight color={"#404d72"}/>
                                                 </Link>
                                                 <div className="profile-and-logout-container">
-                                                    {/* <p className="nav-text-profile-link"> */}
                                                         <Link 
                                                             to={"/my-profile"} 
                                                             className="nav-text-profile" 
@@ -393,7 +368,6 @@ function Navbar(props) {
                                                                 setShowNotifications(false)}}>
                                                             <h5>Go to My Profile</h5>
                                                         </Link>
-                                                    {/* </p> */}
                                                     <button 
                                                         className="nav-logout-btn" 
                                                         onClick={() => {
@@ -408,7 +382,6 @@ function Navbar(props) {
                                     </div>
                                 </div>
                             </div>
-                        {/* </nav> */}
                 </IconContext.Provider>
             }
         </>

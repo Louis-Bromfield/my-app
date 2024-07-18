@@ -1,12 +1,8 @@
 .home-page-news-feed-container {
-    /* box-shadow: 0.5px 1px 2.5px 0.5px #888888; */
-    /* border-bottom: 2px solid #404d72; */
-    padding: 1%;
     background-color: #fff;
 }
 
 .news-feed-title {
-    font-size: 28px;
     padding: 0.5%;
     background-color: #404d72;
     color: white;
@@ -43,15 +39,14 @@
 .feed-top-buttons {
     display: grid;
     grid-template-columns: 49.5% 49.5%;
-    /* grid-template-columns: 40% 40%; */
-    /* padding-left: 18%; */
     column-gap: 1%;
     margin: 0 auto;
+    margin-bottom: 1vh;
 }
 
 .create-post-button {
     background-color: rgba(255, 255, 255, 0.918);
-    font-size: 19px;
+    font-size: 17px;
     height: 7vh;
 }
 
@@ -134,7 +129,6 @@
 
 .news-feed-post {
     background-color: rgba(239, 239, 243, 0.233);
-    margin-top: 1%;
     border: 1px solid lightgray;
     padding: 3%;
     padding-bottom: 4%;
@@ -153,15 +147,8 @@
 }
 
 .author-profile-pic {
-    /* width: 12%;
-    min-width: 12%;
-    max-width: 12%;
-    height: 100%;
-    min-height: 100%;
-    max-height: 100%; */
-    width: 11%;
+    width: 13%;
     border-radius: 20%;
-    /* border: 1px solid #404d72; */
 }
 
 .post-author-left > h3 {
@@ -187,7 +174,8 @@
 }
 
 .post-author-description {
-    margin-top: 1%;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
 }
 
 .post-markets {
@@ -202,8 +190,8 @@
 
 .post-news-preview {
     display: grid;
-    grid-template-columns: 15% 85%;
-    padding: 2%;
+    grid-template-columns: 20% 80%;
+    padding: 3%;
     background-color: rgba(216, 211, 211, 0.13);
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 0%;
@@ -344,7 +332,6 @@
 }
 
 .post-control-btn[animation='1'] {
-    /* animation: wobble 1s 1; */
     animation: beLiked 1s 1;
 }
 

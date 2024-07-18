@@ -12,7 +12,6 @@
 
 .login-logo {
     width: 20%;
-    /* margin-bottom: 5vh; */
     margin-top: 1vh;
 }
 
@@ -20,8 +19,6 @@
     width: 90%;
     display: flex;
     flex-direction: column;
-    /* display: grid;
-    grid-template-columns: 40% 60%; */
     border: 1px solid #fff;
 }
 
@@ -39,10 +36,8 @@
 }
 
 .login-div {
-    /* border: 1px solid #fff; */
     width: 90%;
     margin-top: 2vh;
-    /* margin-bottom: 5vh; */
 }
 
 .prize-container {

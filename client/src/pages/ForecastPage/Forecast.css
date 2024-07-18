@@ -7,9 +7,17 @@
 }
 
 .forecast-header {
-    margin-left: 6vw;
-    margin-bottom: 2vh;
-    margin-right: 6vw;
+    /* margin-left: 6vw; */
+    /* margin-right: 6vw; */
+    display: grid;
+    grid-template-columns: 30% 70%;
+    font-size: 0.9em;
+    margin-bottom: 1vh;
+}
+
+.forecast-header-left {
+    display: flex;
+    flex-direction: row;
 }
 
 .forecast > p {
@@ -19,25 +27,25 @@
 .forecast-info-bar-container {
     display: flex;
     flex-direction: row;
-    /* border: 1px solid red; */
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
-    justify-content: center;
-    height: 6vh;
-    margin-bottom: 2vh;
+    /* float: right; */
+    justify-content: right;
+    margin-bottom: 1vh;
 }
 
 .individual-forecast-info-container {
     border: 1px solid lightgray;
     padding: 1%;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     background-color: #2d4ca121;
     text-align: center;
 }
 
 .individual-forecast-info-container:hover {
     cursor: pointer;
-    background-color: #517ae911;
+    background-color: #404d72;
+    color: #fff;
     transition: 0.2s ease;
 }
 
@@ -46,21 +54,18 @@
     display: flex;
     flex-direction: row;
     width: 90%;
-    /* border: 1px solid green; */
     margin: 0 auto;
 }
 
 .bottom-half-right-results-and-metrics {
     display: flex;
     flex-direction: column;
-    /* row-gap: 2vh; */
 }
 
 .new-forecast-container-bottom-half {
     display: grid;
     grid-template-columns: 49% 49%;
     column-gap: 2%;
-    /* padding-left: 5%; */
     margin: 0 auto;
     margin-top: 2vh;
 }
@@ -68,9 +73,14 @@
 .bottom-half-stats-and-leaderboard {
     display: flex;
     flex-direction: column;
-    /* border: 2px solid purple; */
     row-gap: 2vh;
     text-align: center;
+}
+
+.forecast-redesign-main-container {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    /* border: 3px solid red; */
 }
 
 @media (max-width: 1500px) {
@@ -90,7 +100,6 @@
 @media (max-width: 600px) {
     .new-forecast-container-bottom-half {
         grid-template-columns: 100%;
-        /* border: 1px solid red; */
         padding: 0%;
     }
     .forecast-info-bar-container {

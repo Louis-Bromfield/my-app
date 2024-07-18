@@ -11,14 +11,11 @@
 .trophy-grid-container {
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
-    /* border: 1px solid red; */
 }
 
 .individual-trophy-container {
     display: flex;
     flex-direction: column;
-    /* border: 1px solid blue; */
-    /* border-bottom: 1px solid darkgray; */
     width: 100%;
     margin: 0 auto;
     align-items: center;

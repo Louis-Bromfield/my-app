@@ -3,15 +3,16 @@ const router = express.Router();
 const HomePageNewsFeedPost = require('../models/HomePageNewsFeedPosts');
 const { extract } = require('article-parser');
 const Users = require('../models/Users');
+const cors = require('cors');
 
 // Get all posts
-router.get("/", async (req, res) => {
+router.get("/", cors(), async (req, res) => {
     const allHomeNewsFeedPosts = await HomePageNewsFeedPost.find();
     res.json(allHomeNewsFeedPosts);
 });
 
 // Get one post
-router.get("/:id", async (req, res) => {
+router.get("/:id", cors(), async (req, res) => {
     try {
         const singleHomeNewsFeedPost = await HomePageNewsFeedPost.findById(req.params.id);
         res.json(singleHomeNewsFeedPost);
@@ -31,7 +32,7 @@ const getArticleHeadline = async (url) => {
 };
 
 // Create a new post
-router.post("/", async (req, res) => {
+router.post("/", cors(), async (req, res) => {
     let borderColour = "";
     if (req.body.authorFFPoints >= 1500 && req.body.authorFFPoints < 2000) {
         borderColour = "#cd7f32";
@@ -66,7 +67,7 @@ router.post("/", async (req, res) => {
 });
 
 // Update a post
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", cors(), async (req, res) => {
     try {
         const updatedPost = await HomePageNewsFeedPost.findByIdAndUpdate(req.params.id,
             {
@@ -91,7 +92,7 @@ router.patch("/:id", async (req, res) => {
 });
 
 // Update a post
-router.patch("/postComment/:id", async (req, res) => {
+router.patch("/postComment/:id", cors(), async (req, res) => {
     try {
         // New comment, not a reply
         if (req.body.isNewComment === true) {
@@ -113,7 +114,7 @@ router.patch("/postComment/:id", async (req, res) => {
 });
 
 // Update a post's ratings
-router.patch("/postRatings/:id", async (req, res) => {
+router.patch("/postRatings/:id", cors(), async (req, res) => {
     try {
         const user = await Users.findOne({ username: req.body.username });
         if (user.fantasyForecastPoints < 400) {
@@ -133,17 +134,6 @@ router.patch("/postRatings/:id", async (req, res) => {
             truthful: req.body.truthful,
             relevant: req.body.relevant
         }
-
-        // if (req.body.truthful === true && req.body.relevant === true) {
-        //     user.ratings = user.ratings + 2;
-        // } else if ((req.body.truthful === true && req.body.relevant === false) || (req.body.truthful === false && req.body.relevant === true)) {
-        //     // do nothing as the positive and negative cancel each other out
-        // } else if (req.body.truthful === true && req.body.relevant === true) {
-        //     user.ratings = user.ratings - 2;
-        // }
-        // await Users.findOneAndUpdate({ username: req.body.author }, {
-        //     ratings: user.ratings
-        // });
         const updatedPost = await HomePageNewsFeedPost.findByIdAndUpdate(req.params.id,
             {
                 $push: { ratings: newRatings }
@@ -157,7 +147,7 @@ router.patch("/postRatings/:id", async (req, res) => {
 });
 
 // Update all posts when a user changes their username
-router.patch("/changeUsernameOrProfilePic/:currentUsername", async (req, res) => {
+router.patch("/changeUsernameOrProfilePic/:currentUsername", cors(), async (req, res) => {
     try {
         const allPosts = await HomePageNewsFeedPost.find();
         for (let i = 0; i < allPosts.length; i++) {
@@ -177,7 +167,7 @@ router.patch("/changeUsernameOrProfilePic/:currentUsername", async (req, res) =>
 });
 
 // Vote on a post
-router.patch("/vote/:id", async (req, res) => {
+router.patch("/vote/:id", cors(), async (req, res) => {
     try {
         const postDoc = await HomePageNewsFeedPost.findById(req.params.id);
         let newHomePagePostSavedToDB;
@@ -262,7 +252,7 @@ router.patch("/vote/:id", async (req, res) => {
 });
 
 // Delete a post
-router.delete("/:id/:postAuthor", async (req, res) => {
+router.delete("/:id/:postAuthor", cors(), async (req, res) => {
     try {
         const deletedPost = await HomePageNewsFeedPost.findByIdAndDelete(req.params.id);
         const user = await Users.findOne({username: req.params.postAuthor});

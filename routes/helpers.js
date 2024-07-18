@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { extract } = require('article-parser');
 const Feedback = require('../models/Feedback');
+const cors = require('cors');
 
 const getArticleHeadline = async (url) => {
     try {
@@ -13,7 +14,7 @@ const getArticleHeadline = async (url) => {
 };
 
 // Get post info for post preview
-router.get("/getPostInfo", async (req, res) => {
+router.get("/getPostInfo", cors(), async (req, res) => {
     try {
         if (req.query.URL === "" || req.query.URL.length === 0) {
             res.json({});
@@ -28,7 +29,7 @@ router.get("/getPostInfo", async (req, res) => {
     };
 });
 
-router.get("/getAllFeedback/responses", async (req, res) => {
+router.get("/getAllFeedback/responses", cors(), async (req, res) => {
     try {
         const allPosts = await Feedback.find();
         res.json({ retrieveSuccess: true, allPosts: allPosts });
@@ -40,7 +41,7 @@ router.get("/getAllFeedback/responses", async (req, res) => {
 });
 
 // Submit feedback
-router.post("/submitFeedback", async (req, res) => {
+router.post("/submitFeedback", cors(), async (req, res) => {
     try {
         const feedbackToSubmit = new Feedback({
             reportType: req.body.reportType,

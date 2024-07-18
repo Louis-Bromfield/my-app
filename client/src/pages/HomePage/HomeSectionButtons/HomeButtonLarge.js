@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import './HomeButtonLarge.css';
 import { HomeButtonNavButton } from './HomeButtonNavButton';
@@ -16,15 +15,11 @@ function HomeButtonLarge(props) {
 
     useEffect(() => {
         if (props.user.fantasyForecastPoints >= 600) {
-            // Querying Server 
-                // getBrierDataFromDB(props.user.username === undefined ? localStorage.getItem('username') : props.user.username);
-            // Using props
             getBrierDataFromDB(props.user);
         };
         console.log("HBL UE");
     }, [props.user]);
 
-    // Not querying server, using props
     const getBrierDataFromDB = (user) => {
         try {
             if (user.brierScores.length === 0) {
@@ -53,38 +48,6 @@ function HomeButtonLarge(props) {
             console.error(error);
         };
     };
-
-    // Querying Server - not needed with props
-    // const getBrierDataFromDB = async (username) => {
-    //     try {
-    //         const brierDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
-    //         if (brierDocument.data[0].brierScores.length === 0) {
-    //             setData([]);
-    //             setLabels([]);
-    //             return;
-    //         }
-    //         let brierArray = [null];
-    //         let labelsArray = [""];
-    //         let averageArray = [null];
-    //         let counter = 0;
-    //         for (let i = brierDocument.data[0].brierScores.length-1; counter < 10 && i >= 0; i--) {
-    //             brierArray.push(brierDocument.data[0].brierScores[i].brierScore);
-    //             labelsArray.push(brierDocument.data[0].brierScores[i].problemName);
-    //             averageArray.push(brierDocument.data[0].brierScores[i].averageScore);
-    //             counter++;
-    //         };
-    //         brierArray.push(null);
-    //         labelsArray.push("");
-    //         averageArray.push(null);
-    //         setData(brierArray.reverse());
-    //         setLabels(labelsArray.reverse());
-    //         setAverageData(averageArray.reverse());
-    //         // getChartLabels(brierDocument.data[0].brierScores);
-    //     } catch (error) {
-    //         console.error("Error in HomeButtonLarge > getBrierDataFromDB");
-    //         console.error(error);
-    //     };
-    // };
 
     const recentForecastData = {
         labels: labels,
@@ -116,9 +79,14 @@ function HomeButtonLarge(props) {
     const options = {
         scales: {
             y: {
-                beginAtZero: true,
+                beginAtZero: true
             },
             x: {
+                display: false
+            }
+        },
+        plugins: {
+            legend: {
                 display: false
             }
         }
@@ -129,10 +97,9 @@ function HomeButtonLarge(props) {
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>
-            <p className="home-button-large-title" style={{ fontSize: "1.2em" }}>
+            <h3 className="home-button-large-title">
                 {props.title}
                 {props.user.fantasyForecastPoints < 600 &&
-                // {(props.user.fantasyForecastPoints < 600 || props.user.trophies[0].obtained === false) &&
                     <FaInfoCircle 
                         onClick={() => {
                             setShowModal(true);
@@ -141,7 +108,7 @@ function HomeButtonLarge(props) {
                         style={{ "color": "orange", "cursor": "pointer" }}
                     />
                 }
-            </p>
+            </h3>
             {props.user.fantasyForecastPoints >= 600 && 
                 <Line data={recentForecastData} options={options}/>
             }

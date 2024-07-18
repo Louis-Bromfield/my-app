@@ -34,13 +34,6 @@ function QuizResults(props) {
         };
     }, [props.quizQuestions, props.quizResults]);
 
-    // useEffect(() => {
-    //     console.log("2nd QR UE");
-    //     if (numberOfCorrectAnswers > 0 && numberOfQuestions > 0 && numberOfCorrectAnswers === numberOfQuestions) {
-    //         awardTrophy(props.username);
-    //     }
-    // }, [numberOfCorrectAnswers, numberOfQuestions]);
-
     const awardTrophy = async (numberOfQuestions, numberOfCorrectAnswers, username) => {
         if ((trophyAwarded === false) && (numberOfCorrectAnswers > 0 && numberOfQuestions > 0 && numberOfCorrectAnswers === numberOfQuestions)) {
             try {
@@ -161,7 +154,6 @@ function QuizResults(props) {
             })}
             <div className="quiz-results-total">
                 <h1>Total: {numberOfCorrectAnswers} / {numberOfQuestions}</h1>
-                {/* <h2>You scored {numberOfCorrectAnswers} / {numberOfQuestions}</h2> */}
                 {numberOfQuestions - numberOfCorrectAnswers === 0 && <h3>Congratulations, you got them all correct! If this is the first time this has happened, you'll have unlocked the Perfection trophy!</h3>}
                 {numberOfQuestions - numberOfCorrectAnswers === 1 && <h4>An impressive score, but not quite all correct. Feel free to check out the topic content by either re-selecting it from the left-hand menu or the button below, and you always have unlimited attempts at the quiz to test yourself!</h4>}
                 {numberOfQuestions - numberOfCorrectAnswers > 1 && <h4>Don't worry if you didn't get all the answers, you have unlimited access to and unlimited attempts at this quiz!</h4>}

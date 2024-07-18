@@ -6,23 +6,6 @@ import Modal from '../../components/Modal';
 import ProfileRewards from './ProfileRewards';
 import ProfileForecasts from './ProfileForecasts';
 import ProfilePictureChooserModal from '../../components/ProfilePictureChooserModal';
-// import ProfileTeam from './ProfileTeam';
-import Avatar1 from '../../media/Avatar1.png'
-import Avatar2 from '../../media/Avatar2.png';
-import Avatar3 from '../../media/Avatar3.png';
-import Avatar4 from '../../media/Avatar4.png';
-import Avatar5 from '../../media/Avatar5.png';
-import Avatar6 from '../../media/Avatar6.png';
-import Avatar7 from '../../media/Avatar7.png';
-import Avatar8 from '../../media/Avatar8.png';
-import Avatar9 from '../../media/Avatar9.png';
-import Avatar10 from '../../media/Avatar10.png';
-import Avatar11 from '../../media/Avatar11.png';
-import Avatar12 from '../../media/Avatar12.png';
-import Avatar13 from '../../media/Avatar13.png';
-import Avatar14 from '../../media/Avatar14.png';
-import Avatar15 from '../../media/Avatar15.png';
-import Avatar16 from '../../media/Avatar16.png';
 
 function Profile(props) {
     const [markets, setMarkets] = useState("");
@@ -49,7 +32,6 @@ function Profile(props) {
 
     useEffect(() => {
         if (props.user.markets === undefined) {
-            // CHARMANDER
             const markets = localStorage.getItem('markets').split(",");
             formatMarketsString(markets);
         } else {
@@ -73,27 +55,12 @@ console.log("Profile.js UE");
             setErrorMessage("");
             const lbName = "Fantasy Forecast All-Time"
             const userData = await axios.get(`${process.env.REACT_APP_API_CALL_L}/leaderboard/${lbName}`);
-            // setIndex(`${i}/${userData.data.length}`)
-            
-            // const lbRankings = userData.data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
             for (let i = 0; i < userData.data.length; i++) {
                 if (userData.data[i].username === username) {
                     setIndex(`${i+1}/${userData.data.length}`)
-                    // let k = i+1 % 10;
-                    // let l = i+1 % 100;
-                    // if (k === 1 && l !== 11) {
-                    //     setIndex(i+1+"st");
-                    // } else if (k === 2 && l !== 12) {
-                    //     setIndex(i+1+"nd");
-                    // } else if (k === 3 && l !== 13) {
-                    //     setIndex(i+1+"rd");
-                    // } else {
-                    //     setIndex(i+1+"th");
-                    // };      
                 };
             };
             const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${username}`);
-            
             
             if (userDocument.data.userObj === null) {
                 setErrorMessage("No profiles were found with this username. Please try again.");
@@ -161,7 +128,6 @@ console.log("Profile.js UE");
                 string += `${markets[i]}, `;
             };
         };
-        // Remove the last comma from the final market in the list
         string = string.slice(0, string.length-2);
         setMarkets(string);
     };
@@ -179,22 +145,6 @@ console.log("Profile.js UE");
                 setShowModal(true);
                 setModalContent("You just got 100 Fantasy Forecast Points for visiting your profile for the first time!");
             };
-            // Try to redo this so that we don't need to do the GET first 
-            // const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
-            // if (userDocument.data[0].onboarding.visitProfilePage === true) {
-            //     return;
-            // } else {
-            //     userDocument.data[0].onboarding.visitProfilePage = true;
-            //     userDocument.data[0].fantasyForecastPoints = userDocument.data[0].fantasyForecastPoints + 100
-            //     await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, 
-            //         { 
-            //             onboarding: userDocument.data[0].onboarding,
-            //             fantasyForecastPoints: userDocument.data[0].fantasyForecastPoints 
-            //         }
-            //     );
-            //     setShowModal(true);
-            //     setModalContent("You just got 100 Fantasy Forecast Points for visiting your profile for the first time! If you forget your password, log back in using your Reset Code and then set your new password at the bottom of this page.");
-            // };
         } catch (error) {
             console.error(error);
         };
@@ -237,7 +187,6 @@ console.log("Profile.js UE");
     
     return (
         <div className="profile">
-            {/* <h1>My Profile</h1> */}
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>
@@ -249,20 +198,7 @@ console.log("Profile.js UE");
             />
             <div className="main-profile-grid">
                 <div className="profile-grid">
-                    {/* {props.user.inTeam === false ?  */}
-                        <h1 className="profile-header">{errorMessage === "" ? props.username : errorMessage}</h1> 
-                    {/* : */}
-                        {/* <select 
-                            style={{ fontWeight: "bold", fontSize: "32px"}}
-                            className="profile-dropdown-selection"
-                            onChange={(e) => { 
-                                retrieveUserInfoFromDB(e.target.value);
-                            }}
-                        >
-                                <option value={props.username}>{props.username}</option>
-                                <option value={props.teamName}>{props.user.teamName}</option>
-                        </select>
-                    } */}
+                    <h1 className="profile-header">{errorMessage === "" ? props.username : errorMessage}</h1> 
                     <div className="profile-main-info">
                         {/* CHARMANDER */}
                         {/* <img className="profile-profile-pic" src={props.profilePicture || localStorage.getItem("profilePicture")} alt="Temporary profile pic"/> */}
@@ -275,68 +211,65 @@ console.log("Profile.js UE");
                             
                         />
                         <div className="profile-summary">
-                            {/* <ul className="profile-summary-list">  */}
-                                <div key={0} className="profile-summary-list-item">
-                                    <h2 
-                                        className="profile-summary-list-item-value"
-                                        onClick={() => {
-                                            setModalContent("This is determined as your FF Points divided by 100. Earning more points = higher level, and these levels come with rewards.");
-                                            setShowModal(true);
-                                        }}>
-                                            {fantasyForecastPoints === undefined ? (Math.floor(props.user.fantasyForecastPoints/100)).toFixed(0): level}
-                                            <h5>{forecasterRank}</h5>
-                                    </h2>
-                                    <h3>Forecaster Level</h3>
-                                </div>
-                                <div key={1} className="profile-summary-list-item"
+                            <div key={0} className="profile-summary-list-item">
+                                <h2 
+                                    className="profile-summary-list-item-value"
                                     onClick={() => {
-                                        setModalContent("Fantasy Forecast Points are earned by submitting forecasts, posting to your feed, completing learn quizzes, and more. If you haven't already, check out the Onboarding menu on the Home page for tips on getting started.");
+                                        setModalContent("This is determined as your FF Points divided by 100. Earning more points = higher level, and these levels come with rewards.");
                                         setShowModal(true);
                                     }}>
-                                    <h2 className="profile-summary-list-item-value">{fantasyForecastPoints === undefined ? props.user.fantasyForecastPoints.toFixed(0): fantasyForecastPoints.toFixed(0)}</h2>
-                                    <h3>Fantasy Forecast Points</h3>
-                                </div>
-                                <div key={2} className="profile-summary-list-item"
+                                        {fantasyForecastPoints === undefined ? (Math.floor(props.user.fantasyForecastPoints/100)).toFixed(0): level}
+                                        <h5>{forecasterRank}</h5>
+                                </h2>
+                                <h3>Forecaster Level</h3>
+                            </div>
+                            <div key={1} className="profile-summary-list-item"
+                                onClick={() => {
+                                    setModalContent("Fantasy Forecast Points are earned by submitting forecasts, posting to your feed, completing learn quizzes, and more. If you haven't already, check out the Onboarding menu on the Home page for tips on getting started.");
+                                    setShowModal(true);
+                                }}>
+                                <h2 className="profile-summary-list-item-value">{fantasyForecastPoints === undefined ? props.user.fantasyForecastPoints.toFixed(0): fantasyForecastPoints.toFixed(0)}</h2>
+                                <h3>Fantasy Forecast Points</h3>
+                            </div>
+                            <div key={2} className="profile-summary-list-item"
+                                onClick={() => {
+                                    setModalContent("This is the average score you've received for every problem you have submitted at least one forecast to.");
+                                    setShowModal(true);
+                                }}>
+                                <h2 className="profile-summary-list-item-value">{isNaN(brierAverage) ? "N/A" : brierAverage }</h2>
+                                <h3>Brier Score Average</h3>
+                            </div>
+                            <div key={3} className="profile-summary-list-item">
+                                <h2 
+                                    className="profile-summary-list-item-value"
+                                    style={{ cursor: "pointer" }}
                                     onClick={() => {
-                                        setModalContent("This is the average score you've received for every problem you have submitted at least one forecast to.");
+                                        setModalContent(bestForecastForModal);
                                         setShowModal(true);
                                     }}>
-                                    <h2 className="profile-summary-list-item-value">{isNaN(brierAverage) ? "N/A" : brierAverage }</h2>
-                                    <h3>Brier Score Average</h3>
-                                </div>
-                                <div key={3} className="profile-summary-list-item">
-                                    <h2 
-                                        className="profile-summary-list-item-value"
-                                        style={{ cursor: "pointer" }}
-                                        onClick={() => {
-                                            setModalContent(bestForecastForModal);
-                                            setShowModal(true);
-                                        }}>
-                                            {bestForecast}
-                                    </h2>
-                                    <h3>Best Forecast</h3>
-                                </div>
-                                <div key={4} className="profile-summary-list-item"
+                                        {bestForecast}
+                                </h2>
+                                <h3>Best Forecast</h3>
+                            </div>
+                            <div key={4} className="profile-summary-list-item"
+                                onClick={() => {
+                                    setModalContent("This is your placement in the Fantasy Forecast All-Time leaderboard, which is determined solely by Fantasy Forecast Points. To see it in full, go the Leaderboards page and select the Fantasy Forecast All-Time leaderboard.");
+                                    setShowModal(true);
+                                }}>
+                                    <h2 className="profile-summary-list-item-value">{index}</h2>
+                                    <h3>Fantasy Forecast All-Time Rank</h3>
+                            </div>
+                            <div key={5} className="profile-summary-list-item">
+                                <h2 
+                                    className="profile-summary-list-item-value"
                                     onClick={() => {
-                                        setModalContent("This is your placement in the Fantasy Forecast All-Time leaderboard, which is determined solely by Fantasy Forecast Points. To see it in full, go the Leaderboards page and select the Fantasy Forecast All-Time leaderboard.");
+                                        setModalContent("This is your net score from truthful and relevant ratings received on your news feed posts. For example, if 3 forecasters said your post was both truthful and relevant, your score would be +6. If a fourth forecaster then rated your post as neither truthful or relevant, your score would drop to +4. This score can be useful for learning more about other forecasters. Submitting ratings on other forecaster's posts for truthfulness and relevance is locked until you reach Level 4 (400 Fantasy Forecast Points).");
                                         setShowModal(true);
                                     }}>
-                                        <h2 className="profile-summary-list-item-value">{index}</h2>
-                                        <h3>Fantasy Forecast All-Time Rank</h3>
-                                </div>
-                                <div key={5} className="profile-summary-list-item">
-                                    {/* <h2 className="profile-summary-list-item-value">{markets.split(", ").length}</h2> */}
-                                    <h2 
-                                        className="profile-summary-list-item-value"
-                                        onClick={() => {
-                                            setModalContent("This is your net score from truthful and relevant ratings received on your news feed posts. For example, if 3 forecasters said your post was both truthful and relevant, your score would be +6. If a fourth forecaster then rated your post as neither truthful or relevant, your score would drop to +4. This score can be useful for learning more about other forecasters. Submitting ratings on other forecaster's posts for truthfulness and relevance is locked until you reach Level 4 (400 Fantasy Forecast Points).");
-                                            setShowModal(true);
-                                        }}>
-                                            {props.user.ratings > 0 ? "+" + props.user.ratings : props.user.ratings === 0 ? "+/-" + props.user.ratings : "-" + props.user.ratings}
-                                    </h2>
-                                    <h3>Post Rating</h3>
-                                </div>
-                            {/* </ul> */}
+                                        {props.user.ratings > 0 ? "+" + props.user.ratings : props.user.ratings === 0 ? "+/-" + props.user.ratings : "-" + props.user.ratings}
+                                </h2>
+                                <h3>Post Rating</h3>
+                            </div>
                         </div>
                     </div>
                     <div className="profile-stats-rewards-container">
@@ -344,7 +277,6 @@ console.log("Profile.js UE");
                             <div style={{ borderLeft: "0px solid #fff" }} className={profileTab === "my-stats" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-stats")}><h3>My Stats</h3></div>
                             <div style={{borderLeft: "0px solid #fff" }} className={profileTab === "my-forecasts" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-forecasts")}><h3>My Forecasts</h3></div>
                             {isTeam === false && <div style={{borderLeft: "0px solid #fff" }} className={profileTab === "my-trophies" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-trophies")}><h3>My Trophies</h3></div>}
-                            {/* <div style={{ borderRight: "0px solid #fff", borderLeft: "0px solid #fff" }} className={profileTab === "my-team" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-team")}><h3>My Team</h3></div> */}
                         </div>
                         {profileTab === "my-stats" && <ProfileStats 
                             username={props.username} 
@@ -355,31 +287,8 @@ console.log("Profile.js UE");
                         />}
                         {profileTab === "my-forecasts" && <ProfileForecasts userObj={userObj} searched={false} />}
                         {profileTab === "my-trophies" && <ProfileRewards userObj={userObj} />}
-                        {/* {profileTab === "my-team" && <ProfileTeam userObj={userObj} teamData={teamData} searchPage={false} />} */}
                     </div>
                     <br />
-                    {/* <div className="profile-details-container">
-                        <div className="profile-details-sub-container">
-                            <h3 className="profile-details-header">Want to change your password?</h3>
-                            <label htmlFor="password" className="profile-details-label">Password:</label>
-                            <input 
-                                className="profile-details-input"
-                                type="password" 
-                                name="password" 
-                                id="password"
-                                onChange={(e) => { 
-                                    setNewPassword(e.target.value);
-                                    setPasswordChangeMsg("");
-                                }}
-                            />
-                            <button onClick={() => changePassword(newPassword)} className="change-pw-btn">Change Password</button>
-                            {passwordChangeMsg}
-                        </div>
-                        <div className="profile-details-sub-container">
-                            <h3 className="profile-details-header">Want to delete your account?</h3>
-                            <p>Send an email to <b>fantasyforecastcontact@gmail.com</b> and we will delete it for you.</p>
-                        </div>
-                    </div> */}
                 </div>
             </div>
         </div>

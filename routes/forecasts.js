@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Forecasts = require('../models/Forecasts');
 const Users = require('../models/Users');
+const cors = require('cors');
 
 // Get all forecasts
-router.get("/", async (req, res) => {
+router.get("/", cors(), async (req, res) => {
     try {
         const allForecastData = await Forecasts.find();
         const sorted = allForecastData.sort(function (a, b){
@@ -17,7 +18,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get one forecast
-router.get("/:problemName", async (req, res) => {
+router.get("/:problemName", cors(), async (req, res) => {
     try {
         const forecast = await Forecasts.find({ problemName: req.params.problemName });
         res.json(forecast);
@@ -28,7 +29,7 @@ router.get("/:problemName", async (req, res) => {
 });
 
 // Get detailed forecast info
-router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
+router.get("/getDetailedForecastInfo/:problemName/:today", cors(), async (req, res) => {
     try {
         console.log("=============");
         // console.log(req.params);
@@ -186,7 +187,7 @@ router.get("/getDetailedForecastInfo/:problemName/:today", async (req, res) => {
 })
 
 // Get one forecast using ID
-router.get("/getByID/:problemID", async (req, res) => {
+router.get("/getByID/:problemID", cors(), async (req, res) => {
     try {
         const forecast = await Forecasts.find({ _id: req.params.problemID });
         res.json(forecast);
@@ -197,7 +198,7 @@ router.get("/getByID/:problemID", async (req, res) => {
 });
 
 // Get a specific user's forecast object for a given problem
-router.get("/:problemName/:closedStatus/:username/:singleCertainty", async (req, res) => {
+router.get("/:problemName/:closedStatus/:username/:singleCertainty", cors(), async (req, res) => {
     console.log(`req.params.singleCertainty === ${req.params.singleCertainty}`);
     try {
         if (req.params.closedStatus === "true") {
@@ -611,7 +612,7 @@ router.get("/:problemName/:closedStatus/:username/:singleCertainty", async (req,
 });
 
 // Get all forecasts that are in the user's markets - currently doing the filtering client-side
-router.get("/:markets", async (req, res) => {
+router.get("/:markets", cors(), async (req, res) => {
     try {
 
     } catch (error) {
@@ -619,8 +620,28 @@ router.get("/:markets", async (req, res) => {
     };
 });
 
+// Get most recent problems to display on the home page
+// router.get("/getHomeProblems", cors(), async (req, res) => {
+//     try {
+//         const allForecastData = await Forecasts.find();
+//         console.log("hooray");
+//         const sorted = allForecastData.sort(function (a, b) {
+//             return new Date(a.closeDate) - new Date(b.closeDate);
+//         });
+//         res.json({
+//             success: true,
+//             forecastData: sorted
+//         });
+//     } catch (error) {
+//         res.json({
+//             success: false,
+//             forecastData: []
+//         });
+//     };
+// });
+
 // Add a new problem to the database
-router.post("/newProblem", async (req, res) => {
+router.post("/newProblem", cors(), async (req, res) => {
     try {
         console.log("req.body");
         const newProblem = new Forecasts({
@@ -644,7 +665,7 @@ router.post("/newProblem", async (req, res) => {
 
 
 // Submit or update a prediction to a single outcome problem
-router.patch("/submitOrUpdateSingle", async (req, res) => {
+router.patch("/submitOrUpdateSingle", cors(), async (req, res) => {
     try {
         // New
         console.log("in submit");
@@ -770,7 +791,7 @@ router.patch("/submitOrUpdateSingle", async (req, res) => {
 });
 
 // Submit or update a prediction to a multiple outcome problem
-router.patch("/submitOrUpdateMultiple", async (req, res) => {
+router.patch("/submitOrUpdateMultiple", cors(), async (req, res) => {
     try {
         // New
         console.log("in submitOrUpdateMultiple");
@@ -911,7 +932,7 @@ router.patch("/submitOrUpdateMultiple", async (req, res) => {
 
 // SQUIRTLE PREVIOUS UPDATE ENDPOINTS HERE
 // // Update a prediction to a single certainty problem
-// router.patch("/update", async (req, res) => {
+// router.patch("/update", cors(), async (req, res) => {
 //     try {
 //         const forecastDocument = await Forecasts.findById(req.body.documentID);
 //         let indexLocation = 0;
@@ -942,7 +963,7 @@ router.patch("/submitOrUpdateMultiple", async (req, res) => {
 // });
 
 // // Update a prediction to a multiple certainty problem
-// router.patch("/updateMultiple", async (req, res) => {
+// router.patch("/updateMultiple", cors(), async (req, res) => {
 //     try {
 //         const forecastDocument = await Forecasts.findById(req.body.documentID);
 //         let indexLocation = 0;
@@ -1008,7 +1029,7 @@ router.patch("/submitOrUpdateMultiple", async (req, res) => {
 
 
 
-router.patch("/addNewComment", async (req, res) => {
+router.patch("/addNewComment", cors(), async (req, res) => {
     try {
         const forecast = await Forecasts.findOne({ problemName: req.body.problemName });
         if (req.body.isFirstComment === true) {
@@ -1041,7 +1062,7 @@ router.patch("/addNewComment", async (req, res) => {
 })
 
 // Update all instances of a username where a user has changed theirs
-router.patch("/changeUsername/:username", async (req, res) => {
+router.patch("/changeUsername/:username", cors(), async (req, res) => {
     try {
         const allForecastData = await Forecasts.find();
         for (let i = 0; i < allForecastData.length; i++) {
@@ -1060,7 +1081,7 @@ res.send("Done");
 });
 
 // Update whether or not a user is captaining a problem 
-router.patch("/captainAProblem/:selectedForecast/:username/:captainedStatus", async (req, res) => {
+router.patch("/captainAProblem/:selectedForecast/:username/:captainedStatus", cors(), async (req, res) => {
     try {
         let booleanStatus;
         if (req.params.captainedStatus === "true") booleanStatus = true;

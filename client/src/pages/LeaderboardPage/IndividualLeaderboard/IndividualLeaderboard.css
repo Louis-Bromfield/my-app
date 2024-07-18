@@ -1,5 +1,5 @@
 .individual-leaderboard {
-    width: 80%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
@@ -110,8 +110,6 @@
 }
 
 .leaderboard-spotlight-row {
-    /* display: grid;
-    grid-template-columns: 80% 15%; */
     display: flex;
     width: 100%;
     align-items: center;
@@ -131,7 +129,6 @@
     display: flex;
     flex-direction: row;
     background-color: rgb(248, 247, 247);
-    /* color: #404d75; */
     padding-top: 1%;
     outline: none;
     border: none;

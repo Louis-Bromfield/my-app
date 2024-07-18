@@ -68,7 +68,6 @@ function ProfileStats(props) {
         // Only executes a server query if the userObj obtained in Profile.js is undefined, so I think
         // keep it for insurance purposes as it doesn't fire otherwise
         if (userObj === null || userObj === undefined) {
-            // Happy to keep as it's only if there's an issue with userObj
             const brierData = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
             userObj = brierData.data[0];
         };

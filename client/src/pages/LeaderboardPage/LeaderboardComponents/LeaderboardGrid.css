@@ -3,7 +3,6 @@
     width: 95%;
     grid-template-columns: 25% 25% 25% 25%;
     margin: 0% 1% 1% 1%;
-    /* padding-bottom: 1vh; */
 }
 
 .your-markets-leaderboards,
@@ -14,7 +13,6 @@
 
 @media (max-width: 1500px) {
     .leaderboard-grid {
-        /* grid-template-columns: 50% 50%; */
         font-size: 0.90em;
     }
 }
@@ -31,8 +29,8 @@
 @media (max-width: 400px) {
     .your-markets-leaderboards,
     .all-markets-leaderboards {
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
     }
 }

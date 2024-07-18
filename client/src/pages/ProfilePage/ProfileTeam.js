@@ -97,12 +97,7 @@ function ProfileTeam(props) {
 
     const inviteToTeam = async () => {
         try {
-            console.log("here in invite to team");
-            // send notification to user, when they click on it it has a check and if it's a team invite it opens a modal and then 
-            // asks the user to decide if they want to accept/reject it or close the modal?
-            // if they click "accept" but are already in a team, inform them they have to leave their current team first
             await axios.patch(`${process.env.REACT_APP_API_CALL_U}/newNotification/${props.searchName}`, {
-            
                 notificationMessage: `You have been invited to join ${props.searchingUser.teamName}! Here you can accept or reject the request. Being part of a team means that any score you receive will also contribute to a score for your team (If three players score 10, 40 and 100, the team will receive the average of these which is 50). Your individual score is unaffected by being in a team, but this is another way for you to climb the leaderboards! For more info, go to the Learn page and select Forecasting Teams.`,
                 notificationSourcePath: "/team-invite",
                 notificationSourceObjectID: props.searchingUser.teamName
@@ -162,11 +157,7 @@ function ProfileTeam(props) {
                                     onClick={() => localStorage.setItem("selectedPage", "Search")}>
                                         <div className="profile-team-bottom-row-individual-member">
                                             <img className="profile-team-bottom-row-individual-member-photo" src={item.profilePic} alt="Team member profile pic" />
-                                            {/* <Link  */}
-                                                {/*  to={{pathname: "/search", clickedUsername: item.username}} */}
-                                                {/*  onClick={() => localStorage.setItem("selectedPage", "Search")}> */}
-                                                    <h4>{item.username}</h4>
-                                            {/* </Link> */}
+                                                <h4>{item.username}</h4>
                                             <h4>{item.ffPoints.toFixed(0)} FF Points</h4>
                                         </div>
                                 </Link>
@@ -185,7 +176,6 @@ function ProfileTeam(props) {
                 <div className="profile-team-results">
                     <br />
                     <h2 className="profile-header" style={{ color: "#404d72" }}>Team Forecast Results</h2>
-                    {/* loop through team document to get all problems at least one member has attempted */}
                     {props.teamData.length !== 0 ? (props.teamData !== undefined && props.teamData.userObj.brierScores.length !== 0 ? reversedBriers.map((item, index) => {
                         console.log(item);
                         return (

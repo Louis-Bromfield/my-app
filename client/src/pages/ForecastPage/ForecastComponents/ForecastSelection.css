@@ -1,0 +1,24 @@
+.forecast-selection {
+    border-right: 1px solid lightgray;
+    padding: 1%;
+}
+
+.forecast-selection-item {
+    padding: 3%;
+}
+
+.forecast-selection-item:hover {
+    cursor: pointer;
+    background-color: #404d72;
+    color: #fff;
+    transition: 0.2s ease;
+    /* border-radius: 1%; */
+}
+
+.colorGreen {
+    color: "green";
+}
+
+.colorRed {
+    color: "red";
+}

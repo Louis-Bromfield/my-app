@@ -7,19 +7,16 @@
 .profile-team-container {
     display: flex;
     flex-direction: column;
-    /* border: 2px dotted red; */
 }
 
 .profile-team-top-row {
     display: grid;
     grid-template-columns: 50% 50%;
     margin: 0 auto;
-    /* border: 2px solid green; */
     width: 100%;
 }
 
 .profile-team-stats {
-    /* border: 3px solid purple; */
     display: flex;
     flex-direction: column;
     margin: 0 auto;
@@ -43,7 +40,6 @@
     margin: 0 auto;
     text-align: center;
     border-bottom: 1px solid lightgray;
-    /* border: 1px solid yellow; */
     padding: 1%;
 }
 
@@ -70,7 +66,6 @@
     padding: 1%;
     outline: none;
     color: rgb(238, 52, 52);
-    /* width: 150%; */
     cursor: pointer;
 }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Login.css';
-import FFLogo from '../../media/sd2.png';
+import FFLogo from '../../media/sd3.png';
 // import { useHistory } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
@@ -110,7 +110,6 @@ function Login(props) {
                 } else if (isPassword === false) {
                     console.log("8");
                     userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${false}`);
-                
                     if (!userObj) return;
                 };
             };

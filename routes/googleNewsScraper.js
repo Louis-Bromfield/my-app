@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const GoogleNewsRSS = require('google-news-rss');
 const { extract } = require('article-parser');
+const cors = require('cors');
 
 // Get all articles
-router.get("/:searchTerm", async (req, res) => {
+router.get("/:searchTerm", cors(), async (req, res) => {
     try {
         const googleNews = new GoogleNewsRSS();
         let articles = await googleNews.search(req.params.searchTerm);

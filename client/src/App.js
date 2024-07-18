@@ -16,7 +16,6 @@ import Search from './pages/SearchPage/Search';
 import Profile from './pages/ProfilePage/Profile';
 import Login from './pages/LoginPage/Login';
 import LoginSuccess from './pages/LoginSuccessPage/LoginSuccess';
-import HelpOurResearch from './pages/HelpOurResearchPage/HelpOurResearch';
 import ReportAnyIssues from './pages/ReportAnyIssuesPage/ReportAnyIssues';
 import Notifications from './pages/NotificationsPage/Notifications';
 import { useCookies } from 'react-cookie';
@@ -56,7 +55,6 @@ function App() {
   };
 
   const login = async (username) => {
-    // const userObj = await axios.get(`${process.env.API_CALL_U}/${username}`);
     const userObj = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
     
     if (userObj.data.length === 0) {
@@ -64,7 +62,6 @@ function App() {
     };
     // Add user to leaderboard
     const ffAllTime = "Fantasy Forecast All-Time";
-    // await axios.patch(`${process.env.API_CALL_L}/${ffAllTime}`, {
     await axios.patch(`${process.env.REACT_APP_API_CALL_L}/${ffAllTime}`, {
         username: username,
         isGroup: false,
@@ -128,8 +125,9 @@ function App() {
                 return;
             };
             console.log("paIFDBTPDB");
-            const userPulledFromDB = await axios.get(`${process.env.API_CALL_U}/${username}`);  
-            
+            const userPulledFromDB = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);  
+console.log("userPulledFromDB");
+console.log(userPulledFromDB);
             
             if (userPulledFromDB.data === [] || userPulledFromDB.data[0].username === undefined) {
                 return;
@@ -205,7 +203,6 @@ function App() {
             />} />
             <Route path='/learn' render={(props) => <Learn {...props} username={username} isLoggedIn={isLoggedIn} />} />
             <Route path='/search' render={(props) => <Search {...props} username={username} userObject={userObject} />} />
-            <Route path='/survey' render={(props) => <HelpOurResearch {...props} username={username} userObject={userObject} />}/>
             {/* <Route path='/my-profile' render={(props) => <Profile {...props} user={userObject} username={username} name={name} updateUsername={updateUsername} profilePicture={profilePicture}/>} /> */}
             <Route path='/my-profile' render={(props) => <Profile {...props} user={userObject} username={username} name={name} profilePicture={profilePicture}/>} />
             <Route path='/report-any-issues' render={(props) => <ReportAnyIssues {...props} />} />

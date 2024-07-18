@@ -5,7 +5,6 @@ import Modal from '../../../components/Modal';
 
 function TopicQuiz(props) {
     const [quizMessage, setQuizMessage] = useState("");
-    // const [selectedAnswers, setSelectedAnswers] = useState([]);
     const [showSubmit, setShowSubmit] = useState(false);
     const [selectedAnswersForMarking, setSelectedAnswersForMarking] = useState([]);
     const [showModal, setShowModal] = useState(false);
@@ -18,7 +17,6 @@ function TopicQuiz(props) {
             setModalContent("You must be logged into your own account to submit a quiz response.");
             return;
         } else {
-            // persistQuizCompletionToDBAndUpdateOnboarding(username, props.topic);
             const correctAnswers = checkAnswers();
             props.updateQuizResults(correctAnswers);
             if (correctAnswers !== "FAIL") {
@@ -30,28 +28,6 @@ function TopicQuiz(props) {
             };
         };
     };
-
-    // const persistQuizCompletionToDB = async (username, topic) => {
-    //     try {
-    //         if (topic === "Brier Scores") {
-    //             await axios.patch(`${process.env.REACT_APP_API_CALL_LQ}/${username}`, {
-    //                 brierComplete: true
-    //             });
-                
-    //         } else if (topic === "The Good Judgment Project") {
-    //             await axios.patch(`${process.env.REACT_APP_API_CALL_LQ}/${username}`, {
-    //                 gjpComplete: true
-    //             });
-    //         } else if (topic === "Superforecasters") {
-    //             await axios.patch(`${process.env.REACT_APP_API_CALL_LQ}/${username}`, {
-    //                 superforecastersComplete: true
-    //             });
-    //         };
-    //         updateOnboarding(username);
-    //     } catch (error) {
-    //         console.error(error);
-    //     };
-    // };
 
     const persistQuizCompletionToDBAndUpdateOnboarding = async (username, topic) => {
         try {
@@ -86,14 +62,6 @@ function TopicQuiz(props) {
                 } else if (topic === "Superforecasters") {
                     userDocument.data[0].learnQuizzes.superforecastersComplete = true;
                 };
-                // for (let i = 0; i < userDocument.data[0].trophies.length; i++) {
-                //     if (userDocument.data[0].trophies[i].trophyText === "Perfection" && userDocument.data[0].trophies[i].obtained === false) {
-                //         userDocument.data[0].trophies[i].obtained = true;
-                //         setShowModal(true);
-                //         setModalContent("You just unlocked the Perfection trophy! Trophies can be found on your profile page in the My Trophies section.")
-                //         break;
-                //     }
-                // }
                 await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, 
                     {
                         learnQuizzes: userDocument.data[0].learnQuizzes
@@ -121,24 +89,8 @@ function TopicQuiz(props) {
         for (let i = 0; i < selectedAnswersForMarking.length; i++) {
             for (let j = 0; j < selectedAnswersForMarking[i].length; j++) {
                 answers.push(selectedAnswersForMarking[i][j][0]);
-                // if (selectedAnswers[i][j][0][2] === true) {
-                //     numberOfAnswers++;
-                // };
             };
         };
-        // for (let i = 0; i < props.quizAnswers.length; i++) {
-        //     if (props.quizAnswers[i] === true) {
-        //         numberOfExpectedAnswers++;
-        //     }
-        // }
-        // // Check if the user has submitted enough answers
-        // if (numberOfAnswers < numberOfExpectedAnswers) {
-        //     setQuizMessage("You have not selected enough answers.");
-        //     setTimeout(() => {
-        //         setQuizMessage("");
-        //     }, 3000);
-        //     return "FAIL";
-        // };
         // Check if their answers are correct
         for (let i = 0; i < answers.length; i++) {
             if (answers[i][2] === true && props.quizAnswers[i] === true) {
@@ -207,7 +159,6 @@ function TopicQuiz(props) {
                                 newIndex = newIndex + 2;
                                 if (newIndex < props.quizQuestions[index].length) {
                                     let radioName = index;
-                                    // selectedAnswers = [...selectedAnswers, [props.quizQuestions[index][newIndex], radioName, false]];
                                     selectedAnswers[index].push([[props.quizQuestions[index][newIndex], radioName, false]]);
                                     return (
                                         <div className="answer-selection">

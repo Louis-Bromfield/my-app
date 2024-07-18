@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import './ForecastResults.css';
-import ReactLoading from 'react-loading';
 
 function ForecastResults(props) {
     const [results, setResults] = useState([]);
@@ -9,20 +8,13 @@ function ForecastResults(props) {
 
     useEffect(() => {
         console.log("Forecast Results UE2");
-        // async function doEffect() {
         if (props.selectedForecast.isClosed === true) {
             setLoading(true);
-            // get all users
-            // const allUsers = await getAllUsers();
-            // scrape all users for those names that appear in the leaderboard
-            // findAllScores(allUsers, props.problemName);
             pullAllScores(props.selectedForecast.problemName);
-        // };
             setTimeout(() => {
                 setLoading(false);
             }, 500);
         };
-        // doEffect();
     }, [props.problemName, props.isClosed]);
 
     const pullAllScores = async (problemName) => {
@@ -35,41 +27,8 @@ function ForecastResults(props) {
         };
     };
 
-    // const getAllUsers = async () => {
-    //     try {
-    //         const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}`);
-    //         return userDocument.data;
-    //     } catch (err) {
-    //         console.error("Error in ForecastResults > getAllUsers");
-    //         console.error(err);
-    //         return {};
-    //     };
-    // };
-
-    // const findAllScores = (users, problemName) => {
-    //     let problemLeaderboard = [];
-    //     if (users === {}) {
-    //         setResults([]);
-    //         return;
-    //     };
-
-    //     for (let i = 0; i < users.length; i++) {
-    //         for (let j = 0; j < users[i].brierScores.length; j++) {
-    //             if (users[i].brierScores[j].problemName === problemName) {
-    //                 problemLeaderboard.push({
-    //                     username: users[i].username,
-    //                     score: Number(users[i].brierScores[j].brierScore.toFixed(2))
-    //                 });
-    //             };
-    //         };
-    //     };
-    //     const sortedLeaderboard = problemLeaderboard.sort((a, b) => b.score - a.score);
-    //     setResults(sortedLeaderboard);
-    // };
-
     return (
         <div className="forecast-results">
-            {/* <h2 className="forecast-results-title">Forecast Results</h2> */}
             <div className="show-div">
                 <h4>Here's a breakdown of how everyone who attempted this problem fared.</h4>
                 <table className="forecast-results-table">
@@ -114,7 +73,6 @@ function ForecastResults(props) {
                         })}
                     </tbody>
                 </table>
-            {/* </div>} */}
             </div>
         </div>
     )

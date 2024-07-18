@@ -53,14 +53,12 @@ const ClosedProblemModal = (props) => {
             <section className="modal-main">
                 <img src={FFLogo} alt="" />
                 <p>We've closed some forecast problems! Go to My Forecasts and select the problem for a breakdown of your performance!</p>
-                {/* <p>You will receive a 5% boost for every problem where you score 75+!</p> */}
                 <a href="https://youtu.be/OkLP72O3hmo" target="_blank" rel="noreferrer nofollow" style={{ color: "#fff" }}>
                     <p>Want to know more about how your scores are calculated? Click here.</p>
                 </a>
                 <button onClick={() => closeModal(props.username)} className="close-modal-btn">
                     Close
                 </button>
-                {/* Add condition to only render this if there is another problem to show */}
                 {brierArr.length > 1 &&
                     <button onClick={setNewProblem} className="next-problem-btn">
                         Next Problem
@@ -77,11 +75,6 @@ const ClosedProblemModal = (props) => {
                         <p>You Scored: <u>{currentProblem.brierScore.toFixed(0)}</u> Market Points and FFPoints!</p>
                         <br />
                         {currentProblem.brierScore >= 100 && <p>If this was your first 100+ score or your third in a row, you will have received the "Gold Standard" or "Triple Gold Standard" trophies respectively!</p>}
-                        {/* {(currentProblem.performanceBoost >= 1 && currentProblem.brierScore >= 75) &&
-                            <p>
-                                As you scored 75 or above on this problem, you received a Boost of <u>5% ({(currentProblem.brierScore - (currentProblem.brierScore / 105) * 100).toFixed(2)} points)</u> on this prediction.
-                            </p>
-                        } */}
                     </div>
                 </div>
             </section>

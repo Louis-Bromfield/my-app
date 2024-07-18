@@ -48,20 +48,10 @@ function ForecastAdmin(props) {
         console.log("Forecast Admin UE");
     }, [props.allForecasts]);
 
-    // const getAllForecastsFromDB = async () => {
-    //     try {
-    //         const allForecastsDocument = await axios.get('${process.env.REACT_APP_API_CALL_F}');
-    //         setAllForecasts(allForecastsDocument.data);
-    //         setSelectedProblem(allForecastsDocument.data[0].problemName);
-    //     } catch (error) {
-    //         console.error("Error in ForecastAdmin > getAllForecastsFromDB");
-    //         console.error(error);
-    //     };
-    // };
-
     const getAllMarketsFromDB = async () => {
         try {
-            const allMarketsDocument = await axios.get(`${process.env.REACT_APP_API_CALL_L}/justNames/${props.username}`);
+            // const allMarketsDocument = await axios.get(`${process.env.REACT_APP_API_CALL_L}/justNames/${props.username}`);
+            const allMarketsDocument = await axios.get(`http://localhost:8000/leaderboards/justNames/${props.username}`);
             
             let filteredbyIsFFOrNot = [];
             for (let i = 0; i < allMarketsDocument.data.length; i++) {
@@ -83,8 +73,8 @@ function ForecastAdmin(props) {
         } else {
             setAdminText("");
             try {
-                await axios.post(`${process.env.REACT_APP_API_CALL_F}/newProblem`, {
-                
+                // await axios.post(`${process.env.REACT_APP_API_CALL_F}/newProblem`, {
+                await axios.post(`http://localhost:8000/forecasts/newProblem`, {
                     problemName: problemName,
                     startDate: oDateTime,
                     closeDate: cDateTime,
@@ -100,7 +90,6 @@ function ForecastAdmin(props) {
     };
 
     const formatDate = (type, date, time) => {
-        // const formattedDateTime = new Date(`${date.toString().slice(0, 15)} ${time.toString().slice(0, 5)}:00 GMT+0100 (British Summer Time)`).toString();
         const formattedDateTime = new Date(`${date.toString().slice(0, 15)} ${time.toString().slice(0, 5)}:00 GMT+0100 (British Summer Time)`).toString();
         if (type === "Open") {
             setFormattedOpenDateTime(formattedDateTime);
@@ -111,65 +100,46 @@ function ForecastAdmin(props) {
     };
 
     const closeAndCalculateBriers = async (problemName, happenedStatus, notHappenedStatus, market, closeEarly) => {
-        console.log("Here");
         try {
-            // Brier Scores
             let scores;
             if (closeEarly === true) {
                 console.log("Here2");
-                scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
+                // scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
+                scores = await axios.patch(`http://localhost:8000/users/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
                 
                     problemName: problemName,
                     newProblemCloseDateTime: newProblemCloseDateTime
                 });
-console.log("17A - SCORES");
-// console.log(scores);
             } else if (closeEarly === false) {
                 console.log("Here3");
-                scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
+                // scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
+                scores = await axios.patch(`http://localhost:8000/users/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
                 
                 problemName: problemName
                 });
             };
-console.log("17B - SCORES");
-// console.log(scores);
-            // Market Points
-            // const updatedMarket = await axios.patch(`${process.env.REACT_APP_API_CALL_L}/closedProblem/${market}`, {
-            //     scores: scores.data
-            // });
-            // console.log(updatedMarket.data);
         } catch (error) {
             console.error("Error in ForecastAdmin > closeAndCalculateBriers");
             console.error(error);
         };
     };
 
-    // Might be worth sorting backend before doing this!
     const closeAndCalculateBriersMultipleOutcomes = async (problemName, outcome1Status, outcome2Status, outcome3Status, market, closeEarly) => {
         try {
-            // works
             let outcome = outcome1Status === true ? "outcome1" : outcome2Status === true ? "outcome2" : "outcome3";
-            console.log(outcome);
-
-            // to find out
             let scores;
             if (closeEarly === true) {
-                scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
-                
+                // scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
+                scores = await axios.patch(`http://localhost:8000/users/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
                     problemName: problemName,
                     newProblemCloseDateTime: newProblemCloseDateTime
                 });
             } else if (closeEarly === false) {
-                scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
-                
+                // scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
+                scores = await axios.patch(`http://localhost:8000/users/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
                     problemName: problemName
                 });
             };
-            // Market Points
-            // const updatedMarket = await axios.patch(`${process.env.REACT_APP_API_CALL_L}/closedProblem/${market}`, {
-            //     scores: scores.data
-            // });
-            // console.log(updatedMarket.data);
         } catch (error) {
             console.error("Error in closeAndCalculateBriersMultipleOutcomes");
             console.error(error);
@@ -207,11 +177,9 @@ console.log("17B - SCORES");
                         }}
                     >
                         <option value={"Placeholder"}>Select from this dropdown:</option>
-                        {/* map function for all forecasts */}
                         {allForecasts.map((item, index) => {
                             if (item.isClosed === false && new Date() > new Date(item.closeDate)) {
                                 return (
-                                    // NEED CLOSING
                                     <option 
                                         key={item._id} 
                                         value={item.problemName}>
@@ -219,14 +187,12 @@ console.log("17B - SCORES");
                                     </option>
                                 )    
                             } else if (item.isClosed === true) {
-                                // Already closed so don't need to show it
                                 return null;
                             }
                             return null;
                         })}
                     </select>
                     <h3>{problemSelectedText}</h3>
-                    {/* One outcome, so happened or didn't happen */}
                     {adminSingleCertainty === true &&
                         <div className="radio-responses">
                             <input 
@@ -261,7 +227,6 @@ console.log("17B - SCORES");
                             <br />
                         </div>
                     }
-                    {/* Three outcomes, so increased, stayed the same or decreased */}
                     {adminSingleCertainty === false &&
                         <div className="radio-responses">
                             <input 
@@ -355,11 +320,9 @@ console.log("17B - SCORES");
                     }}
                 >
                     <option value={"Placeholder"}>Select from this dropdown:</option>
-                    {/* map function for all forecasts */}
                     {allForecasts.map((item, index) => {
                         if (item.isClosed === false) {
                             return (
-                                // Can be closed
                                 <option 
                                     key={item._id} 
                                     value={item.problemName}>
@@ -367,7 +330,6 @@ console.log("17B - SCORES");
                                 </option>
                             )    
                         } else if (item.isClosed === true) {
-                            // Already closed so don't need to show it
                             return null;
                         }
                         return null;
@@ -408,7 +370,6 @@ console.log("17B - SCORES");
                         <br />
                     </div>
                 }
-                {/* Three outcomes, so increased, stayed the same or decreased */}
                 {adminSingleCertainty === false &&
                     <div className="radio-responses">
                         <input 
@@ -472,7 +433,6 @@ console.log("17B - SCORES");
                     onClick={() => { 
                         console.log(problemNewCloseDate); 
                         console.log(problemNewCloseTime); 
-                        // console.log(new Date(`${problemNewCloseDate.toString().slice(0, 15)} ${problemNewCloseTime.toString().slice(0, 5)}:00 GMT+0100 (British Summer Time)`).toString())
                         console.log(new Date(`${problemNewCloseDate.toString().slice(0, 15)} ${problemNewCloseTime.toString().slice(0, 5)}:00 GMT+0100 (British Summer Time)`).toString())
                         setNewProblemCloseDateTime(new Date(`${problemNewCloseDate.toString().slice(0, 15)} ${problemNewCloseTime.toString().slice(0, 5)}:00 GMT+0100 (British Summer Time)`).toString())}}>
                             MUST CLICK: Format New Close Date Time

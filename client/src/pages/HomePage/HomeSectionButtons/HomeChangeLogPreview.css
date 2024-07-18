@@ -1,14 +1,12 @@
 .change-log-list {
-    padding: 0.5vw;
-    margin: 0 auto;
+    padding: 1.5%;
+    margin-left: 3.5%;
 }
 
 .list-span {
     display: flex;
-    flex-direction: column;
-    text-align: center;
-    /* grid-template-columns: 11% 80%; */
-    /* column-gap: 9%; */
+    flex-direction: row;
+    text-align: left;
     margin-left: 0;
 }
 

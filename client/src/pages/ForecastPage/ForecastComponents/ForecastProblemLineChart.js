@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import './ForecastProblemLineChart.css';
-// import { FaInfoCircle } from 'react-icons/fa';
 import Modal from '../../../components/Modal';
 
 function ForecastProblemLineChart(props) {
   const [chartData, setChartData] = useState([]);
   const [userChartData, setUserChartData] = useState([]);
   const [averageChartData, setAverageChartData] = useState([]);
-  const [averageSinceLastPrediction, setAverageSinceLastPredictionData] = useState([]);
   const [labelsArray, setLabelsArray] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState("");
@@ -21,7 +19,6 @@ function ForecastProblemLineChart(props) {
   const [userOutcomeThreeChartData, setUserOutcomeThreeChartData] = useState([]);      
   const [allChartData, setAllChartData] = useState([]);
   const [simulatedUserData, setSimulatedUserData] = useState([]);
-//   const [hasLoadedAlready, setHasLoadedAlready] = useState(1000);
 
   useEffect(() => {
     if (props.selectedForecastObject === {} || props.forecastSingleCertainty === undefined) {
@@ -30,10 +27,7 @@ function ForecastProblemLineChart(props) {
         formatCertainties(props.selectedForecastObject, props.updateTodayStats, props.username);
     } 
     if (props.refreshChartAppearance !== 0) {
-        console.log("here yes");
         if (props.selectedForecastObject.singleCertainty === true) {
-            console.log("HERE LOUIS");
-            console.log(userChartData);
             let newUserChartData = userChartData.data;
             if (newUserChartData.length >= 1) {
                 newUserChartData[newUserChartData.length-1] = {
@@ -60,16 +54,10 @@ function ForecastProblemLineChart(props) {
                 pointRadius: 4
             }
             setUserChartData(userData);
-            // console.log(props.userPreviousAttemptCertainty);
-            // console.log(props.userPreviousAttemptComments);
-            // formatCertainties(props.selectedForecastObject, props.updateTodayStats, props.username);
         } else if (props.selectedForecastObject.singleCertainty === false) {
-            console.log("HERE LOUIS MULTIPLE OUTCOME");
-            console.log(userOutcomeOneChartData);
             let newUserOutcomeOneData = userOutcomeOneChartData.length === 0 ? userOutcomeOneChartData : userOutcomeOneChartData.data;
             let newUserOutcomeTwoData = userOutcomeTwoChartData.length === 0 ? userOutcomeTwoChartData : userOutcomeTwoChartData.data;
             let newUserOutcomeThreeData = userOutcomeThreeChartData.length === 0 ? userOutcomeThreeChartData : userOutcomeThreeChartData.data;
-            console.log(`${props.previousCertaintyOne} + ${props.previousCertaintyTwo} + ${props.previousCertaintyThree}`)
             if (newUserOutcomeOneData.length >= 1) {
                 newUserOutcomeOneData[newUserOutcomeOneData.length-1] = {
                     username: props.username,
@@ -139,29 +127,21 @@ function ForecastProblemLineChart(props) {
             setUserOutcomeOneChartData(userOutcomeOneChData);
             setUserOutcomeTwoChartData(userOutcomeTwoChData);
             setUserOutcomeThreeChartData(userOutcomeThreeChData);
-            // console.log(props.userPreviousAttemptCertainty);
-            // console.log(props.userPreviousAttemptComments);
-            // formatCertainties(props.selectedForecastObject, props.updateTodayStats, props.username);
         };
         createLabelsArray(new Date(props.selectedForecastObject.startDate), new Date(props.selectedForecastObject.closeDate));
     } else {
         console.log("here no");
     }
-    console.log("Line Chart UEEEEEEEEE");
-    // setHasLoadedAlready(0);
   }, [props.selectedForecastObject, props.refreshChartAppearance]);
 
   const formatCertainties = (selectedForecastObject, updateTodayStats, username) => {
-    // No forecasts yet submitted
     if (selectedForecastObject.submittedForecasts.length === 0) {
         setChartData({ label: "All Forecasts", data: [] });
         setUserChartData({ label: "Your Forecasts", data: [] });
         setAverageChartData({ label: "Daily Average Certainty", data: [] });
-      //   createLabelsArray(new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate));
         return;
     };
     if (props.forecastSingleCertainty === true) {
-        // Forecasts Submitted
         let lastForecastDate = "";
         let newCertainties = selectedForecastObject.submittedForecasts;
         let userData = {
@@ -181,14 +161,7 @@ function ForecastProblemLineChart(props) {
             showLine: false,
             pointRadius: 4
         };
-        let sliceIndex = 0;
-        if ((new Date(selectedForecastObject.closeDate) - new Date(selectedForecastObject.startDate))/1000 < 604800) {
-            // Until WE CAN GET CONSISTENCY KEEP IT ALL AT 15
-            // sliceIndex = 18;
-            sliceIndex = 15;
-        } else {
-            sliceIndex = 15;
-        }
+        let sliceIndex = 15;
         if (newCertainties.length > 0 || newCertainties[0] === '') {
             for (let i = 0; i < newCertainties.length; i++) {
                 for (let j = 0; j < newCertainties[i].forecasts.length; j++) {
@@ -213,14 +186,6 @@ function ForecastProblemLineChart(props) {
                         }
                     // else if it is from the same day as the last forecast, replace the last forecast with this newer one
                     } else if (newCertainties[i].forecasts[j].date.slice(0, sliceIndex) === lastForecastDate) {
-                        // this should ONLY be doing data.data[data.data.length-1] = ({ if the previous forecast located at data.data[data.data.length-1] was from
-                        // the same user as the one you're working with right now (that's how the multi outcome chart works) - what this code is doing is 
-                        // overriding the last forecast in the chart's data if they're from the same date, so it's always overriding them and whoever was last that
-                        // day is the only one being shown
-
-                        // fix to above is added below, previously it was just doing the data.data[data.data.length-1] = {( )} EVERY TIME
-                        // now there's checking and this seems to work
-
                         // if current forecast object username === last forecast stored in chart data, replace
                         if (newCertainties[i].username === data.data[data.data.length-1].username) {
                             data.data[data.data.length-1] = ({
@@ -268,7 +233,6 @@ function ForecastProblemLineChart(props) {
             };
             const dailyAverages = getNewDailyAverages(data.data, new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate), selectedForecastObject.isClosed);
             updateTodayStats(`${dailyAverages[dailyAverages.length-1].y.toFixed(2)}%`, todayForecasts.length);
-            // Simulate data for days with no predictions
             let simulatedUserData = {
                 label: "Your Certainty Since Last Forecast",
                 data: [],
@@ -318,20 +282,6 @@ function ForecastProblemLineChart(props) {
                 borderWidth: 4,
                 pointRadius: 0
             });
-            // Create line for days with no prediction (since the last prediction was made)
-            // let today = new Date();
-            // let averageSinceLatestPrediction = [];
-            // if ((today > new Date(data.data[data.data.length-1].x)) && (today < new Date(selectedForecastObject.closeDate))) {
-            //     averageSinceLatestPrediction = [dailyAverages[dailyAverages.length-1], {x: today.toString().slice(0, 15), y: dailyAverages[dailyAverages.length-1].y}];
-            // };
-            // setAverageSinceLastPredictionData({
-            //     label: "Average Certainty Since Last Prediction",
-            //     data: averageSinceLatestPrediction,
-            //     backgroundColor: "rgba(255, 0, 0, 0.5)",
-            //     borderColor: "rgba(255, 0, 0, 0.5)",
-            //     borderWidth: 4,
-            //     pointRadius: 0
-            // });
         };
         createLabelsArray(new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate));
     } else if (props.forecastSingleCertainty === false) {
@@ -430,7 +380,6 @@ function ForecastProblemLineChart(props) {
                         };
                     };
                 };
-                // Here
                 // If the forecast was made by the logged in user, add to user array but check if date is same (replace) or different (append)
                 if (selectedForecastObject.submittedForecasts[i].username === username) {
                     // Same date as last forecast, so replace
@@ -542,27 +491,6 @@ function ForecastProblemLineChart(props) {
                 });
             };
         };
-
-        // Adding in simulated data for days with no predictions (copying last data over to all days) - for SPECIFIC PREDICTIONS
-        // if (outcomeOneData[outcomeOneData.length-1].x !== new Date().toString().slice(0, 15)) {
-        //     let outcomeOneY = outcomeOneData[outcomeOneData.length-1].y;
-        //     let outcomeTwoY = outcomeTwoData[outcomeTwoData.length-1].y;
-        //     let outcomeThreeY = outcomeThreeData[outcomeThreeData.length-1].y;
-        //     let newDate = new Date().toString().slice(0, 15);
-        //     outcomeOneData.push({
-        //         y: outcomeOneY,
-        //         x: newDate
-        //     });
-        //     outcomeTwoData.push({
-        //         y: outcomeTwoY,
-        //         x: newDate
-        //     });
-        //     outcomeThreeData.push({
-        //         y: outcomeThreeY,
-        //         x: newDate
-        //     });
-        // };
-
         // Adding in simulated data for days with no predictions (copying last data over to all days) - for SPECIFIC PREDICTIONS
         if ((userOutcomeOneData.length > 0) && (userOutcomeOneData[userOutcomeOneData.length-1].x !== new Date().toString().slice(0, 15))) {
             let outcomeOneY = userOutcomeOneData[userOutcomeOneData.length-1].y;
@@ -673,26 +601,6 @@ function ForecastProblemLineChart(props) {
           labelsToReturn.push(newDate);
       };
       setLabelsArray(labelsToReturn);
-    //   let labelsToReturn = [];
-    // // Problem is live for 48 hours or less - 1 tick per hour
-    //   if ((end - start)/1000 <= 172800) {
-    //     for (let d = start; d <= end; d = new Date(d.getTime()+1000*60*60)) {
-    //         let newDate = new Date(d).toString().slice(0, 18); 
-    //         labelsToReturn.push(newDate);
-    //     };
-    //     // Problem is live for 2-7 days
-    //   } else if ((end-start)/1000 < 604800) {
-    //     for (let d = start; d <= end; d = new Date(d.getTime()+1000*60*60)) {
-    //         let newDate = new Date(d).toString().slice(0, 18); 
-    //         labelsToReturn.push(newDate);
-    //     };
-    //   } else {
-    //     for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
-    //         let newDate = new Date(d).toString().slice(0, 15);
-    //         labelsToReturn.push(newDate);
-    //     };
-    //   }
-    //   setLabelsArray(labelsToReturn);
     };
 
     const createNewLabelsArray = (start, end, isClosed) => {
@@ -721,7 +629,7 @@ function ForecastProblemLineChart(props) {
         for (let i = 0; i < days.length; i++) {
             for (let j = 0; j < sortedCertainties.length; j++) {
                 // If the forecast we're looking at right now is EARLIER than the date we want
-                
+
                 // If the forecast we're looking at right now is EXACTLY the date we want
                 if (days[i] === sortedCertainties[j].x) {
                     arrOfAllForecastValues.push(sortedCertainties[j].y);
@@ -738,35 +646,8 @@ function ForecastProblemLineChart(props) {
         return averageArr;
     };
 
-    const getDailyAverages = (certainties) => {
-        // Sort main array by date
-        let sortedCertainties = certainties.sort((a, b) => new Date(a.x) - new Date(b.x));
-        let arr = [[sortedCertainties[0]]];
-        // Sort that array into an array of date "bins"
-        for (let i = 1; i < sortedCertainties.length; i++) {
-            if (sortedCertainties[i].x === arr[arr.length-1][0].x) {
-                arr[arr.length-1].push(sortedCertainties[i]);
-            } else if (sortedCertainties[i].x !== arr[arr.length-1][0].x) {
-                arr.push([sortedCertainties[i]]);
-            };
-        };
-        let finalArr = [];
-        // Loop through "bin" array and work out averages by date/bin
-        for (let i = 0; i < arr.length; i++) {
-            let avg = 0;
-            let date = arr[i][0].x;
-            for (let j = 0; j < arr[i].length; j++) {
-                avg = avg + arr[i][j].y;
-            };
-            avg = avg / arr[i].length;
-            finalArr.push({x: date, y: avg});
-        };
-        return finalArr;
-    };
-
     const data = {
         labels: labelsArray,
-        // datasets: [chartData, averageChartData],
         datasets: [{
             label: chartData.label,
             data: chartData.data,
@@ -798,14 +679,6 @@ function ForecastProblemLineChart(props) {
             borderWidth: simulatedUserData.borderWidth,
             showLine: simulatedUserData.showLine,
             pointRadius: simulatedUserData.pointRadius
-        // }, {
-        //     label: averageSinceLastPrediction.label,
-        //     data: averageSinceLastPrediction.data,
-        //     backgroundColor: averageSinceLastPrediction.backgroundColor,
-        //     borderColor: averageSinceLastPrediction.borderColor,
-        //     borderWidth: averageSinceLastPrediction.borderWidth,
-        //     showLine: averageSinceLastPrediction.showLine,
-        //     pointRadius: averageSinceLastPrediction.pointRadius  
         }],
         spanGaps: false,
         responsive: true,
@@ -814,7 +687,6 @@ function ForecastProblemLineChart(props) {
 
     const multiOutcomeData = {
         labels: labelsArray,
-        // datasets: [chartData, averageChartData],
         datasets: [{
             label: outcomeOneChartData.label,
             data: outcomeOneChartData.data,
@@ -872,16 +744,14 @@ function ForecastProblemLineChart(props) {
             pointRadius: allChartData.pointRadius
         }],
         spanGaps: false,
-        // responsive: true,
-        // maintainAspectRatio: true
     };
 
     const options = {
         responsive: true,
         maintainAspectRatio: false,
-        animation: {
-            duration: 0
-        },
+        // animation: {
+        //     duration: 0
+        // },
         scales: {
             y: {
                 beginAtZero: true,
@@ -921,26 +791,12 @@ function ForecastProblemLineChart(props) {
                 <p>{modalContent}</p>
                 <p>{modalContent2}</p>
             </Modal>
-            {/* <h2>
-                {props.selectedForecastObject.problemName}
-                <FaInfoCircle 
-                    color={"orange"} 
-                    className="modal-i-btn"
-                    onClick={() => {
-                        setShowModal(true);
-                        setModalContent(`Beneath this info button is the main visualisation of all forecasts made for the given problem. The chart displays the most recent prediction made by any user on each day (so if you submit 10 predictions today, only your tenth will show on the chart unless you update it again - in which case, your 11th will show instead). While this may obscure some data, it prevents the chart from becoming unreadable (if I submit 100 predictions today at each integer from 0-100, the chart would have a vertical line of data which is of no use to anybody). The buttons underneath the chart allow you to alter the chart's visualisation and display various permutations of the forecast data. Click on any of them to see the chart change! Look under the chart for more info and data on the problem and market!`)
-                        setModalContent2("All forecast data has been converted to GMT (Greenwich Mean Time), purely for visualisation purposes.");
-                        setModalContent2("All forecast data has been converted to EST (Eastern Standard Time), purely for visualisation purposes.");
-                    }}
-                />
-            </h2> */}
             {/* Copy this and make one just for mobile (like if width) */}
             <div className="chart-container" style={{ position: "relative", margin: "auto", width: "100%", height: "60vh" }}>
                 <Line 
                     data={props.forecastSingleCertainty === true ? data : multiOutcomeData} 
                     options={options} 
                     height={"100%"} 
-                    // onLoad={() => setHasLoadedAlready(0)}
                 />
             </div>
         </div>

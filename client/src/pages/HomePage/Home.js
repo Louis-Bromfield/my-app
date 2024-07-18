@@ -10,6 +10,8 @@ import Modal from '../../components/Modal';
 import ClosedProblemModal from '../../components/ClosedProblemModal';
 import HomeChangeLogPreview from './HomeSectionButtons/HomeChangeLogPreview';
 import HomeProfilePreview from './HomeSectionButtons/HomeProfilePreview';
+import HomeProblemPreview from './HomeSectionButtons/HomeProblemPreview';
+import { FaInfoCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
@@ -32,7 +34,6 @@ function Home(props) {
     const [userOnboarding, setUserOnboarding] = useState({});
     const [userClosedForecastCount, setUserClosedForecastCount] = useState(0);
     const [userLearnQuizzes, setUserLearnQuizzes] = useState({ brierComplete: false, gjpComplete: false, superforecastersComplete: false });
-    const [cookie, setCookie] = useCookies(['username']);
 
     const onboardingButtonClick = (showOnboarding, buttonText) => {
         setShowOnboarding(!showOnboarding);
@@ -41,29 +42,17 @@ function Home(props) {
 
     useEffect(() => {
         if (localStorage.getItem("firstVisit") === "true") {
-            // setShowModal(true);
-            // const welcomeString = "Welcome to Fantasy Forecast! The survey can be found by clicking on the 'Survey' tab at the top of the screen (or from the dropdown menu in the top-left if you're on a mobile device). If this is your first time here, we recommend checking out the Onboarding menu on the right (or down below if you're on mobile) for ideas on how to get started with the site - have fun!";
             const welcomeString = "Welcome to Fantasy Forecast! If this is your first time here, we recommend checking out the Onboarding menu on the right (or down below if you're on mobile) for ideas on how to get started with the site - have fun!";
             setModalContent(welcomeString);
             setShowModal(true);
             localStorage.setItem("firstVisit", false);
         };
-        // if (props.user.numberOfClosedForecasts === undefined) {
-            // getClosedForecastCount(localStorage.getItem("username") || props.username);
-            // Version without contacting server (use props instead) - was having issues, defined props.user as [object Object], maybe as it 
-            // was from page load (like refreshing) rather than from login, where App.js sets the value?
-            // So for now, keep previous version but update App.js userObj again to be sure
             getUserInfo(props.username);
-        // };
-    // }, [props.user.numberOfClosedForecasts, props.username]);
-    console.log("HOME UE");
     }, [props.username]);
 
     const getUserInfo = async (username) => {
         try {
-            // const userDocument = await axios.get(`${process.env.API_CALL_U}/${username}`);
-            const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
-            
+            const userDocument = await axios.get(`${process.env.API_CALL_U}/${username}`);
             if (userDocument.data[0].numberOfClosedForecasts > 0) {
                 setShowClosedProblemModal(true);
             };
@@ -112,11 +101,16 @@ function Home(props) {
         <div className="home">
             <div className="home-header-intro">
                 <h1>Welcome back, {props.username}!</h1>
-                <p>This is the home page for Fantasy Forecast. Use this as a central hub for 
-                    navigating the site! Check out the news feed to see the latest stories that
-                    your fellow forecasters have shared, or use any of the shortcuts to visit the 
-                    forecasting, learn, and profile pages or the leaderboards!
-                </p>
+                <FaInfoCircle 
+                    onClick={() => {
+                        setShowModal(true);
+                        setModalContent(`This is the home page for Fantasy Forecast. Use this as a central hub for 
+                        navigating the site! Check out the news feed to see the latest stories that
+                        your fellow forecasters have shared, or use any of the shortcuts to visit the 
+                        forecasting, learn, and profile pages or the leaderboards!`)
+                    }}
+                    style={{ "color": "orange", "cursor": "pointer" }}
+                />
             </div>
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
@@ -134,6 +128,7 @@ function Home(props) {
             } 
             <div className="home-page-div">
                 <div className="home-page-grid">
+                    <HomeProblemPreview username={props.username} />
                     <div className="home-page-news-feed">
                         <HomeNewsFeed 
                             username={props.username} 
@@ -148,8 +143,9 @@ function Home(props) {
                         <HomeProfilePreview 
                             userObj={userObj}
                             username={props.username}
+                            userLearnQuizzes={userLearnQuizzes}
                         />
-                        <NewForecastsCallToAction username={props.username} /> 
+                        {/* <NewForecastsCallToAction username={props.username} />  */}
                         <div className={onboardingClassName}>
                             <Onboarding 
                                 userOnboarding={userOnboarding}
@@ -161,7 +157,8 @@ function Home(props) {
                                 setOnboardingClassName={setOnboardingClassName}
                             />
                         </div>
-                        <HomeButtonSmall 
+                        {/* Commented out as it's all in Profile Preview */}
+                        {/* <HomeButtonSmall 
                             title={homeStats} 
                             subtitle={subtitle} 
                             handleClick={scrollHomeStats} 
@@ -170,9 +167,9 @@ function Home(props) {
                             userLearnQuizzes={userLearnQuizzes}
                             forecasts={props.forecasts}
                             currentAvgBrier={currentAvgBrier}
-                        />
+                        /> */}
                         <HomeButtonLarge 
-                            title="Your Recent Stats"
+                            title="Your Recent Forecasts"
                             user={userObj} 
                         /> 
                         <HomeChangeLogPreview />

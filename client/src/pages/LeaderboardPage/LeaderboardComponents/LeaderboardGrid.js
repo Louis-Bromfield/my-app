@@ -30,7 +30,6 @@ function LeaderboardGrid(props) {
                     )
                 })}
                 {props.user === false && props.markets.map((item, index) => {
-                    // if (item[1] === true) {
                         const leaderboardProps = {
                             pathname: "/leaderboard",
                             leaderboardName: item,
@@ -38,26 +37,14 @@ function LeaderboardGrid(props) {
                             username: props.username,
                             user: false
                         };
-                        // if (item[2] === true) {
-                            return (
-                                <Link 
-                                    key={index} 
-                                    to={leaderboardProps}
-                                    className="all-markets-leaderboards">
-                                        <LeaderboardShortcut name={item} className="leaderboard-shortcut-blue"/>
-                                </Link>
-                            )
-                        // } else if (item[2] === false) {
-                        //     return (
-                        //         <Link 
-                        //             key={index} 
-                        //             to={leaderboardProps}
-                        //             className="all-markets-leaderboards">
-                        //                 <LeaderboardShortcut name={item[0]} className="leaderboard-shortcut-red" />
-                        //         </Link>
-                        //     )
-                        // } else return null;
-                    // } else return null;
+                        return (
+                            <Link 
+                                key={index} 
+                                to={leaderboardProps}
+                                className="all-markets-leaderboards">
+                                    <LeaderboardShortcut name={item} className="leaderboard-shortcut-blue"/>
+                            </Link>
+                        )
                 })}
             </div>
         </div>

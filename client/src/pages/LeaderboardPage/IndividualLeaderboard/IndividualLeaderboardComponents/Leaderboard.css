@@ -30,12 +30,6 @@
     border-bottom: 1px solid lightgray;
 }
 
-/* .leaderboard-title-row > th, */
-/* .leaderboard-row > td, */
-/* .leaderboard-row-matching-username > td { */
-    /* border-left: 1px solid lightgrey; */
-/* } */
-
 .username-column:hover,
 .ffpoints-column:hover,
 .avg-brier-column:hover {
@@ -93,7 +87,6 @@
 }
 
 .leaderboards-profile-pic {
-    /* width: 10%; */
     height: 3vh;
     border-radius: 50%;
     vertical-align: middle;

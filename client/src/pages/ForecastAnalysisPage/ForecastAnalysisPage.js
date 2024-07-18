@@ -136,7 +136,6 @@ function ForecastAnalysisPage(props) {
         for (let i = 0; i < confidenceArray.length; i++) {
             sum += confidenceArray[i];
         };
-        // Smaller score = more confidence, so we subtract it from 100 to flip it.
         let finalConfidenceScore = (100 - (sum / confidenceArray.length)).toFixed(0)
         setConfidenceScore(finalConfidenceScore);
         setConfidenceScoreForCSS(`${finalConfidenceScore}%`)
@@ -173,7 +172,6 @@ function ForecastAnalysisPage(props) {
                 sub-heading you'll find more information that corresponds to your specific scores in each dimension.
             </p>
             <div className="problem-and-scores-container">
-                {/* Problem name and what user scored */}
                 <div className="problem-container">
                     <h2 className="selected-problem">{props.location.forecastObj === undefined ? forecastObj.problemName : props.location.forecastObj.problemName }</h2>
                     <h3>
@@ -187,7 +185,6 @@ function ForecastAnalysisPage(props) {
                         />
                     </h3>
                 </div>
-                {/* Scores w/ bars visualisation */}
                 <div className="scores-container">
                     <div className="individual-score-container">
                         <div className="bar-container">
@@ -215,7 +212,6 @@ function ForecastAnalysisPage(props) {
                     </div>
                 </div>
             </div>
-            {/* Explanation of scores */}
             {atLeastOneForecast === true && 
                 <div className="full-explanation-of-scores-container">
                     <div className="individual-score-explanation-container">

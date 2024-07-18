@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Leaderboards = require('../models/Leaderboards');
 const Users = require("../models/Users");
+const cors = require('cors');
 
 // Get all leaderboards
-router.get("/", async (req, res) => {
+router.get("/", cors(), async (req, res) => {
     const leaderboards = await Leaderboards.find();
     let leaderboardNames = [];
     Object.values(leaderboards).forEach(leaderboard => {
@@ -14,7 +15,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get all leaderboards
-router.get("/justNames/:username", async (req, res) => {
+router.get("/justNames/:username", cors(), async (req, res) => {
     const leaderboards = await Leaderboards.find();
     let leaderboardNames = [];
     Object.values(leaderboards).forEach(leaderboard => {
@@ -30,7 +31,7 @@ router.get("/justNames/:username", async (req, res) => {
 });
 
 // Get all leaderboards that a user is in
-router.get("/:username", async (req, res) => {
+router.get("/:username", cors(), async (req, res) => {
     const allLeaderboards = await Leaderboards.find();
     let allUserLeaderboards = [];
     Object.values(allLeaderboards).forEach(leaderboard => {
@@ -43,7 +44,7 @@ router.get("/:username", async (req, res) => {
 });
 
 // Get all the info from one leaderboard
-router.get("/leaderboard/:leaderboardName/", async (req, res) => {
+router.get("/leaderboard/:leaderboardName/", cors(), async (req, res) => {
     if (req.params.leaderboardName !== "Fantasy Forecast All-Time") {
         const data = await Leaderboards.findOne({ leaderboardName: req.params.leaderboardName });
         const sortedData = data.rankings.sort((a, b) => b.marketPoints - a.marketPoints);
@@ -52,37 +53,20 @@ router.get("/leaderboard/:leaderboardName/", async (req, res) => {
         const allUsers = await Users.find();
         const sortedUsers = allUsers.sort((a, b) => b.fantasyForecastPoints - a.fantasyForecastPoints);
         res.json(sortedUsers);
-        // let index = 0;
-        // for (let i = 0; i < sortedUsers.length; i++) {
-        //     if (sortedUsers.username === req.params.username) {
-        //         index = i;
-        //     }
-        // };
-        // res.json({ success: true, userRank: index });
     };
 })
 
 // New version of service above this, as we aren't really using the leaderboard collection anymore
-router.get("/newGetLeaderboardRoute/:leaderboardName", async (req, res) => {
+router.get("/newGetLeaderboardRoute/:leaderboardName", cors(), async (req, res) => {
     try {
         const allUsers = await Users.find();
         // console.log(allUsers);
         let usersForMarket = [];
         for (let i = 0; i < allUsers.length; i++) {
             if (allUsers[i].markets.includes(req.params.leaderboardName)) {
-                // console.log("yes it does include this market");
-                // allUsers[i].totalForMarket = 0;
-                // for (let j = 0; j < allUsers[i].brierScores.length; j++) {
-                //     if (allUsers[i].brierScores[j].marketName === req.params.leaderboardName) {
-                //         allUsers[i].totalForMarket += allUsers[i].brierScores[j].brierScore;
-                //     };
-                // };
                 usersForMarket.push(allUsers[i]);
-                // console.log("new user pushed!");
             };
         };
-        // usersForMarket = usersForMarket.sort((a, b) => b.totalScoreForMarket - a.totalScoreForMarket);
-        // console.log(usersForMarket);
         res.json(usersForMarket);
     } catch (err) {
         console.error("Error in leaderboards > newGetLeaderboardRoute");
@@ -93,7 +77,7 @@ router.get("/newGetLeaderboardRoute/:leaderboardName", async (req, res) => {
 // Get all leaderboard info to render
 // Issue at the moment is that none of the additons to the allUsers[i] objects is persisting
 // e.g. line 74: .brierScoresForMarket is non-existent in returned allUsers array of objects
-router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle/:localStorageLBName", async (req, res) => {
+router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle/:localStorageLBName", cors(), async (req, res) => {
     try {
         const allUsers = await Users.find();
         let ffRankings = [];
@@ -146,9 +130,7 @@ router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle/:localStorage
                 topThree: [ffRankingsSorted[0], ffRankingsSorted[1], ffRankingsSorted[2]]
             });
         } else {
-            // console.log(allUsers);
             const allUsersSorted = allUsers.sort((a, b) => b.totalBrier - a.totalBrier);
-            // console.log("allUsersSorted");
             res.json({
                 rankings: allUsersSorted,
                 topThree: [allUsersSorted[0], allUsersSorted[1], allUsersSorted[2]]
@@ -162,7 +144,7 @@ router.get("/getAllInfoToRender/:isFFLeaderboard/:leaderboardTitle/:localStorage
 });
 
 // Create a leaderboard
-router.post("/", async (req, res) => {
+router.post("/", cors(), async (req, res) => {
     const newLeaderboard = new Leaderboards({
         leaderboardName: req.body.leaderboardName,
         rankings: req.body.rankings,
@@ -178,13 +160,12 @@ router.post("/", async (req, res) => {
 });
 
 // Update market points for a closed problem
-router.patch("/closedProblem/:market", async (req, res) => {
+router.patch("/closedProblem/:market", cors(), async (req, res) => {
     try {
         const marketDocument = await Leaderboards.findOne({ leaderboardName: req.params.market });
         for (let i = 0; i < req.body.scores.scores.length; i++) {
             const index = marketDocument.rankings.indexOf(marketDocument.rankings.find(el => el.username === req.body.scores.scores[i].username));
             marketDocument.rankings[index].marketPoints += req.body.scores.scores[i].brierScore;
-// console.log(`${i} done`);
         };
         const updatedMarket = await Leaderboards.findByIdAndUpdate(marketDocument._id, { rankings: marketDocument.rankings }, { new: true });
         res.json(updatedMarket);
@@ -195,7 +176,7 @@ router.patch("/closedProblem/:market", async (req, res) => {
 });
 
 // Add a user to a leaderboard
-router.patch("/:leaderboardName", async (req, res) => {
+router.patch("/:leaderboardName", cors(), async (req, res) => {
     try {
         const document = await Leaderboards.findOne({ leaderboardName: req.params.leaderboardName });
         if (document.rankings.some(user => user.username === req.body.username)) {
@@ -226,7 +207,7 @@ router.patch("/:leaderboardName", async (req, res) => {
 });
 
 // Kick a user from a leaderboard
-router.patch("/kick/:leaderboardName", async (req, res) => {
+router.patch("/kick/:leaderboardName", cors(), async (req, res) => {
     try {
         const document = await Leaderboards.findOne({ leaderboardName: req.params.leaderboardName });
         let userIndex = document.rankings.findIndex(el => el.username === req.body.username);
@@ -245,7 +226,7 @@ router.patch("/kick/:leaderboardName", async (req, res) => {
 });
 
 // Add a user to a leaderboard from market sign up - always add
-router.patch("/marketSignUp/:leaderboardName", async (req, res) => {
+router.patch("/marketSignUp/:leaderboardName", cors(), async (req, res) => {
     try {
         const document = await Leaderboards.findOne({ leaderboardName: req.params.leaderboardName });
         if (document.rankings.some(user => user.username === req.body.username)) {
@@ -271,7 +252,7 @@ router.patch("/marketSignUp/:leaderboardName", async (req, res) => {
 });
 
 // Remove a user from a leaderboard
-router.patch("/removeUser/:leaderboardName/:username", async (req, res) => {
+router.patch("/removeUser/:leaderboardName/:username", cors(), async (req, res) => {
     try {
         const document = await Leaderboards.findOne({ leaderboardName: req.params.leaderboardName });
         if (document.rankings.some(user => user.username === req.params.username) === false) {
@@ -311,7 +292,7 @@ router.patch("/removeUser/:leaderboardName/:username", async (req, res) => {
 });
 
 // User accepts request to join leaderboard
-router.patch("/:leaderboardName/acceptInvite/:username", async (req, res) => {
+router.patch("/:leaderboardName/acceptInvite/:username", cors(), async (req, res) => {
     try {
         const document = await Leaderboards.findOne({ leaderboardName: req.params.leaderboardName });
         for (let i = 0; i < document.rankings.length; i++) {
@@ -333,7 +314,7 @@ router.patch("/:leaderboardName/acceptInvite/:username", async (req, res) => {
 });
 
 // User rejects invite or when user leaves leaderboard
-router.patch("/:leaderboardName/removeUser/:username", async (req, res) => {
+router.patch("/:leaderboardName/removeUser/:username", cors(), async (req, res) => {
     try {
         const document = await Leaderboards.findOne({ leaderboardName: req.params.leaderboardName });
         for (let i = 0; i < document.rankings.length; i++) {
@@ -355,7 +336,7 @@ router.patch("/:leaderboardName/removeUser/:username", async (req, res) => {
 });
 
 // Update all leaderboards when a user changes their username
-router.patch("/changeUsername/:currentUsername", async (req, res) => {
+router.patch("/changeUsername/:currentUsername", cors(), async (req, res) => {
     try {
         const allLeaderboards = await Leaderboards.find();
         let updatedArr = [];
