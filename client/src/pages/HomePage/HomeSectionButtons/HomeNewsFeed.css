@@ -1,5 +1,8 @@
 .home-page-news-feed-container {
     /* background-color: #fff; */
+    border: 1px solid lightgray;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
 }
 
 .news-feed-title {

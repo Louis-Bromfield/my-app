@@ -11,7 +11,9 @@
     flex-direction: column;
     row-gap: 1.5vh;
     /* background-color: #fff; */
-    /* border: 0.5px solid lightgray; */
+    border: 0.5px solid lightgray;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
 }
 
 .onboarding-div-closed {
