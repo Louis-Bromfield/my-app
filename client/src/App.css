@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@500&family=Encode+Sans&family=Lato:wght@400&family=Open+Sans:wght@300&family=Titillium+Web&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Proxima+Nova');
+/* @import url('https://fonts.googleapis.com/css?family=Proxima+Nova'); */
 
 html {
     /* background-color: rgb(248, 247, 247); */
@@ -10,9 +10,9 @@ html {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  /* font-family: 'Assistant', sans-serif; */
+  font-family: 'Assistant', sans-serif;
   /* font-family: 'Lato', sans-serif; */
-  font-family: "Proxima Nova", sans-serif;
+  /* font-family: "Proxima Nova", sans-serif; */
   -ms-overflow-style: none;
 }
 

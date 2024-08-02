@@ -15,6 +15,8 @@ import { FaInfoCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 
+const bcrypt = require("bcryptjs");
+
 function Home(props) {
     let width, height;
     width = window.innerWidth;
@@ -52,7 +54,8 @@ function Home(props) {
 
     const getUserInfo = async (username) => {
         try {
-            const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
+            // const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
+            const userDocument = await axios.get(`http://localhost:8000/users/${username}`);
             if (userDocument.data[0].numberOfClosedForecasts > 0) {
                 setShowClosedProblemModal(true);
             };
