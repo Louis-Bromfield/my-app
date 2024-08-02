@@ -164,12 +164,11 @@ function ForecastAnalysisPage(props) {
             <button 
                 onClick={() => history.push("forecast")} 
                 className="forecast-analysis-header-link">
-                    Back to My Forecasts
+                    Back to Forecasts
             </button>
             <h1 className="forecast-analysis-header">Forecast Analysis</h1>
             <p className="forecast-analysis-para">This page is designed around giving you more detailed feedback on your forecast performance. Your predictions are assessed based on three key metrics - 
-                Reactiveness (how big or small are your forecast updates?), Confidence (how close to 0 or 100 are your forecasts?) and Timeliness (how early was your first forecast submitted?). Under each
-                sub-heading you'll find more information that corresponds to your specific scores in each dimension.
+                Reactiveness (how big or small are your forecast updates?), Confidence (how close to 0 or 100 are your forecasts?) and Timeliness (how early was your first forecast submitted?).
             </p>
             <div className="problem-and-scores-container">
                 <div className="problem-container">
@@ -179,7 +178,7 @@ function ForecastAnalysisPage(props) {
                         <FaInfoCircle 
                             onClick={() => {
                                 setShowModal(true);
-                                setModalContent(`Note that your Reactiveness and Confidence scores do not contribute to your overall score for this problem (${Number(localStorage.getItem("closedForecastScore")).toFixed(0)} / 110), but exist purely for evaluative purposes, however your Time Score does. Your score (out of 110) was given a boost from 0-10 based on when you submitted your first forecast for this problem (the earlier, the better). You can also find this score on My Forecasts > Select a closed Problem > Show Prediction Breakdown.`)
+                                setModalContent(`Note that your Reactiveness and Confidence scores do not contribute to your overall score for this problem (${Number(localStorage.getItem("closedForecastScore")).toFixed(0)} / 110), but exist purely for evaluative purposes, however your Time Score does. Your score (out of 110) was given a boost from 0-10 based on when you submitted your first forecast for this problem (the earlier, the better). You can also find this score on Forecasts > Select a closed Problem > Show Prediction Breakdown.`)
                             }}
                             style={{ "color": "orange", "cursor": "pointer" }}
                         />

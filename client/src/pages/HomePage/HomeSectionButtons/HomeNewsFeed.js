@@ -163,7 +163,7 @@ function HomeNewsFeed(props) {
                 likes: [],
                 dislikes: [],
                 postDate: new Date(),
-                markets: userMarketsForPost,
+                markets: [],
                 authorProfilePicture: props.profilePicture || props.userObj.profilePicture,
                 alternateArticleTitle: alternateArticleTitle,
                 authorFFPoints: props.userObj.fantasyForecastPoints
@@ -328,7 +328,7 @@ function HomeNewsFeed(props) {
                                 onClick={openPostSubmission}>
                                     Post to your feed
                             </button>
-                            {filteringFeed === false ?
+                            {/* {filteringFeed === false ?
                                 <button 
                                     className="create-post-button" 
                                     onClick={() => setFilteringFeed(true)}>
@@ -340,7 +340,7 @@ function HomeNewsFeed(props) {
                                     onClick={() => setFilteringFeed(false)}>
                                         Close Filters
                                 </button>
-                            }
+                            } */}
                         </div>
                     }
                     {post === true && 
@@ -386,7 +386,7 @@ function HomeNewsFeed(props) {
                                     onChange={(e) => handlePostSummaryChange(e, false)}>
                                 </textarea>
                                 <br/>
-                                <h4>Markets:</h4>
+                                {/* <h4>Markets:</h4>
                                 <p>Select all markets that your post is relevant to (only forecasters in the markets you select will be able to see your post. Select Fantasy Forecast All-Time if you feel it's relevant to everyone!)</p>
                                 <hr />
                                 {editingPost === false &&
@@ -423,7 +423,7 @@ function HomeNewsFeed(props) {
                                             )
                                         })}
                                     </div>
-                                }
+                                } */}
                                 {postMessage !== "" && <h3 style={{ color: "red" }}>{postMessage}</h3>}
                                 <div className="post-buttons">
                                     {editingPost === false &&

@@ -9,7 +9,7 @@ const Modal = ({ handleClose, show, children }) => {
     <div className={showHideClassName}>
       <section className="modal-main">
         <img src={FFLogo} alt="" />
-        {children}
+        <h3>{children}</h3>
         <button type="button" onClick={handleClose} className="close-modal-btn">
             Close
         </button>

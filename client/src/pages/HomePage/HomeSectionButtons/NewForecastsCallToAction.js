@@ -13,8 +13,7 @@ function NewForecastsCallToAction(props) {
 
     const checkForForecastsUserHasNotAttempted = async (username) => {
         try {
-            // const forecastData = await axios.get(`${process.env.REACT_APP_API_CALL_U}/unattemptedForecasts/${username}`);
-            const forecastData = await axios.get(`http://localhost:8000/users/unattemptedForecasts/${username}`);
+            const forecastData = await axios.get(`${process.env.REACT_APP_API_CALL_U}/unattemptedForecasts/${username}`);
             setUnattemptedForecasts(forecastData.data);
         } catch (error) {
             console.error(error);

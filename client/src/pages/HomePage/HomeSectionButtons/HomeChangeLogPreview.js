@@ -5,8 +5,8 @@ import './HomeChangeLogPreview.css';
 function HomeChangeLogPreview() {
     const changeLogArr = [
         `21.04.2023 After a brief hiatus, work has resumed on Fantasy Forecast. Every page has seen a redesign, slimming their widths to be more compact while reducing the amount of visual noise from sections standing out from others for a sleeker look. Font size across the site has decreased, the navbar at the top has also been redesigned to be more top-down, rather than the row of three components as it was before, helping decrease width used and making it more responsive to different screen sizes. The profile and search pages have been simplified, and the home page column on the right has been neatened.`,
-        `29.11.2022 Big wave of changes in the months since the summer. New additions include: Text to show unattempted forecasts, redesign of the My Forecasts page, including a new Forecast Chat, more info (i) buttons around the site to help explain features, a notifications menu (which can be accessed by clicking on My Profile at the top of the screen your profile picture in the top right on a mobile device), trophies on the profile page and profile picture borders, brought back the Results tab on the forecast page for closed forecasts, and various styling elements throughout the site, amongst other features!`,
-        `27.06.2022 Added extra support for the Articles tab on the My Forecasts page for the long-term problems so they should now perform more accurate searches based on the problem wording, previously they were searching for "UK Politics" as they didn't match previous criteria for the article scraper.`,
+        `29.11.2022 Big wave of changes in the months since the summer. New additions include: Text to show unattempted forecasts, redesign of the Forecasts page, including a new Forecast Chat, more info (i) buttons around the site to help explain features, a notifications menu (which can be accessed by clicking on Profile at the top of the screen your profile picture in the top right on a mobile device), trophies on the profile page and profile picture borders, brought back the Results tab on the forecast page for closed forecasts, and various styling elements throughout the site, amongst other features!`,
+        `27.06.2022 Added extra support for the Articles tab on the Forecasts page for the long-term problems so they should now perform more accurate searches based on the problem wording, previously they were searching for "UK Politics" as they didn't match previous criteria for the article scraper.`,
         `25.06.2022 Added ability to sort leaderboards by username, points, or AVG Brier Score by clicking the column name row. The Feedback page (found at the bottom of the Home page) also now shows the submitted feedback (still anonymously) and my response to them to hopefully help make the development process even more transparent.`,
         `24.06.2022 Added fix for the learn quizzes not accepting responses if the first attempt had the wrong number of answers (the first time is fine but subsequent attempts to submit with the right amount of responses were blocked improperly).`,
         `24.06.2022 Added password resetting on the login page, as well as more information for new users about what the site involves. Also added a fix for the Fantasy Forecast All-Time leaderboard as it wasn't updating the Average Brier Score column. Also reduced the requirement to see your stats from Level 10 to 6, as Onboarding tasks were changed recently and this reduced requirement reflects that.`,
@@ -19,7 +19,7 @@ function HomeChangeLogPreview() {
 
     return (
         <div className="home-button-small">
-            <h3 className="home-button-small-title">Site Updates!</h3>
+            <h3 className="home-button-small-title">Site Updates</h3>
             <div className="change-log-list">
                 {changeLogArr.map((item, index) => {
                     if (index <= 4) {
@@ -33,7 +33,7 @@ function HomeChangeLogPreview() {
                         } else return (
                             <span key={item} className="list-span">
                                 <h5 style={{ color: "#404d72"}}>{item.slice(0, 10)}&nbsp;&nbsp;&nbsp;</h5>
-                                <h5>{item.slice(11, 50)}...</h5>
+                                <h5>{item.slice(11, 60)}...</h5>
                             </span>
                         )
                     } else return null;

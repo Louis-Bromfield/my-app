@@ -1,9 +1,5 @@
 .individual-home-problem-preview {
-    padding: 2%;
-    border-bottom: 1px solid lightgray;
-}
-
-.individual-home-problem-preview:hover {
-    background-color: #404d7228;
-    transition: 0.2s ease;
+    /* padding: 2%; */
+    text-align: center;
+    padding-right: 2%;
 }

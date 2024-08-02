@@ -1,52 +1,57 @@
 .articles {
     display: flex;
     flex-direction: column;
+    overflow-x: scroll;
     /* row-gap: 3vh; */
-    margin: 0 auto;
-    border: 1px solid lightgray;
-    border-radius: 5px;
-    padding: 1%;
+    /* margin: 0 auto; */
+    /* border: 1px solid lightgray; */
+    /* border-radius: 5px; */
+    /* padding: 1%; */
     width: 100%;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */ 
+    overflow-x: scroll;
+    overflow: hidden;
+    border-left: 1px solid lightgray;
+    padding: 0% 1% 3% 1%;
 }
 
 .articles > h3 {
     margin: 0 auto;
 }
 
-.articles-grid {
-    display: grid;
-    /* flex-direction: column; */
-    justify-content: center;
-    width: 100%;
-    grid-template-columns: 100%;
-    /* grid-template-rows: 18vh 18vh 18vh 18vh 18vh 18vh; */
-    /* column-gap: 2%; */
-    row-gap: 0.5vh;
-    font-size: 0.9em;
-    /* margin: 0 auto; */
-    /* border: 1px solid green; */
+.articles-header {
+    display: flex;
+    flex-direction: column;
+    /* text-align: left; */
+    text-align: center;
 }
 
-.articles-loading {
+.articles-grid {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: left; */
+    row-gap: 1vh;
+    font-size: 0.9em;
+    /* border: 1px solid lightgray; */
+    border-left: none;
+    /* overflow-x: visible; */
+}
+
+/* .articles-loading {
     display: flex;
     flex-direction: column;
     margin: 0 auto;
     width: 60%;
     align-items: center;
-}
+} */
 
 .article-list-item {
-    /* border: 1px solid darkgray; */
-    /* box-shadow: 0 0 0.5px 0.5px #404d72; */
     display: grid;
     grid-template-columns: 25% 75%;
-    /* flex-direction: row; */ 
+    width: 100%;
+    height: fit-content;
     margin: 0 auto;
-    /* height: 100%; */
-    height: 15vh;
-    /* width: 100%; */
-    /* min-height: 100%; */
-    /* max-height: 100%; */
     cursor: pointer;
 }
 
@@ -69,8 +74,8 @@
 .article-list-item-img {
     /* min-width: 80%; */
     /* max-width: 80%; */
-    width: 80%;
-    height: 9vh;
+    width: 50%;
+    /* height: 9vh; */
     /* min-height: 50%; */
     /* max-height: 50%; */
     border: 1px solid lightgray;

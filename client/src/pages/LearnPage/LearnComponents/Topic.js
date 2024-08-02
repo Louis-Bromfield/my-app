@@ -17,7 +17,18 @@ function Topic(props) {
         case("Fantasy Forecast Points"):
             text = TopicContent[0];
         break;
-        case("Brier Scores"):
+        case("2024 US Presidential Election"):
+            youtubeLink = <iframe 
+                className="youtube-iframe" 
+                src="https://www.youtube.com/watch?v=cRa07hTrfII" 
+                title="YouTube video player" 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen>
+            </iframe>
+            text = TopicContent[1];
+        break;
+        case("How Are Forecasts Scored?"):
             youtubeLink = <iframe 
                 className="youtube-iframe" 
                 src="https://www.youtube.com/embed/9W7rnmEWVmQ" 
@@ -26,7 +37,7 @@ function Topic(props) {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowFullScreen>
             </iframe>
-            text = TopicContent[1];
+            text = TopicContent[2];
         break;
         case("The Good Judgment Project"):
             youtubeLink = <iframe 
@@ -37,7 +48,7 @@ function Topic(props) {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowFullScreen>
             </iframe>
-            text = TopicContent[2];
+            text = TopicContent[3];
         break;
         case("Superforecasters"):
             youtubeLink = <iframe 
@@ -48,7 +59,7 @@ function Topic(props) {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowFullScreen>
             </iframe>
-            text = TopicContent[3];
+            text = TopicContent[4];
         break;
         default:
             youtubeLink = <iframe 

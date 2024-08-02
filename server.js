@@ -90,7 +90,7 @@ const UserSchema = mongoose.Schema({
             {
                 trophyText: "Seer",
                 obtained: false,
-                trophyModalText: "This trophy is earned by reaching Level 15, or 1500 Fantasy Forecast Points. You will be given a Level-exclusive profile border (bronze) to let other forecasters know of your rank, and you'll be given the ability to use Forecast Chats (which can be found at the bottom of the My Forecasts page when you have selected a problem from the dropdown list.)."
+                trophyModalText: "This trophy is earned by reaching Level 15, or 1500 Fantasy Forecast Points. You will be given a Level-exclusive profile border (bronze) to let other forecasters know of your rank, and you'll be given the ability to use Forecast Chats (which can be found at the bottom of the Forecasts page when you have selected a problem from the dropdown list.)."
             },
             {
                 trophyText: "Soothsayer",
@@ -214,7 +214,7 @@ db.once("open", () => console.log("Successfully connected to the Database"));
 // });
 
 // Get one user for logging in
-app.get("/:username/:passwordOrResetCode/:isPassword", async (req, res) => {
+app.get("/:username/:passwordOrResetCode/:isPassword", cors(), async (req, res) => {
     try {
         const user = await User.findOne({ username: req.params.username });
         if (!user) {

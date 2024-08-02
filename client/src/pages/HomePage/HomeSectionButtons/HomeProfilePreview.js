@@ -19,6 +19,7 @@ function HomeProfilePreview(props) {
     const [newProfilePic, setNewProfilePic] = useState(null);
     const [learnProgress, setLearnProgress] = useState(0);
     const [totalQuizCount, setTotalQuizCount] = useState(0);
+    const [completeTrophyCount, setCompleteTrophyCount] = useState(0);
 
     useEffect(() => {
         console.log("HomeProfilePreviewUE");
@@ -75,6 +76,15 @@ function HomeProfilePreview(props) {
         };
         setLearnProgress(completeQuizzes);
         setTotalQuizCount(totalQuizzes);
+        let trophyCount = 0;
+        if (props.userObj.trophies !== undefined) {
+            for (let i = 0; i < props.userObj.trophies.length; i++) {
+                if (props.userObj.trophies[i].obtained === true) {
+                    trophyCount++;
+                };
+            };
+            setCompleteTrophyCount(trophyCount);
+        }
     }, [props.userObj.fantasyForecastPoints, ffPoints]);
 
     const getUserDetails = async (username) => {
@@ -105,7 +115,7 @@ function HomeProfilePreview(props) {
                 username={props.username}
                 changeProfilePic={changeProfilePic}
             />
-            <h2 className="home-button-large-title">My Profile Preview</h2>
+            <h2 className="home-button-large-title">Profile</h2>
             <div className="home-profile-preview-container">
                 <img className="home-profile-preview-img" src={newProfilePic === null ? props.userObj.profilePicture : newProfilePic} alt="" style={{border: profilePicStyle}} onClick={() => setOpenProfilePicChooser(true) }/>
                             <Link to="/my-profile" style={{ textDecoration: "none", color: "#404d72" }}><h2>{props.userObj.username}</h2></Link>
@@ -122,8 +132,8 @@ function HomeProfilePreview(props) {
                                 backgroundColor: "#404d72", 
                                 color: "white", 
                                 width: `${progressBarWidth}`,
-                                borderTopLeftRadius: "10px",
-                                borderBottomLeftRadius: "10px"
+                                borderTopLeftRadius: "5px",
+                                borderBottomLeftRadius: "5px"
                             }}>
                                 <p>{progressBarWidth}</p>
                             </div>
@@ -133,8 +143,8 @@ function HomeProfilePreview(props) {
                             backgroundColor: "orange", 
                             color: "white",
                             width: `${oppositeProgressBarWidth}`,
-                            borderTopRightRadius: "10px",
-                            borderBottomRightRadius: "10px"
+                            borderTopRightRadius: "5px",
+                            borderBottomRightRadius: "5px"
                         }}>
                             <p>{oppositeProgressBarWidth}</p>
                         </div>
@@ -142,21 +152,23 @@ function HomeProfilePreview(props) {
                 </div>
                 <div className="home-profile-preview-stats-list-container">
                     <div className="home-profile-preview-stats-list-left">
-                        <p>
+                        <h4>
                             Fantasy Forecast Points
                             <FaInfoCircle 
                                 color={"orange"} 
                                 className="modal-i-btn"
                                 onClick={() => { setShowModal(true); setModalContent(`Fantasy Forecast Points are earned through the majority of your interactions with the site. Submitting a forecast (you'll also get points when a problem closes and you receive a score based on how accurate you were), posting to the news feed, completing the Onboarding tasks, attempting the quizzes found on the Learn page and more! Head to the Learn page and select the "Fantasy Forecast Points" topic for more info!`)}}
                             />
-                        </p>
-                        <p>Quiz Completion</p>
-                        <p>Average Score</p>
+                        </h4>
+                        <h4>Quiz Completion</h4>
+                        <h4>Average Score</h4>
+                        <h4>Trophies Earned</h4>
                     </div>
                     <div className="home-profile-preview-stats-list-right">
-                        <p><strong>{ffPoints === undefined ? 0 : ffPoints.toFixed(0)}</strong></p>
-                        <p><strong>{learnProgress} / {totalQuizCount}</strong></p>
-                        <p><strong>108.11</strong></p>
+                        <h4><strong>{ffPoints === undefined ? 0 : ffPoints.toFixed(0)}</strong></h4>
+                        <h4><strong>{learnProgress} / {totalQuizCount}</strong></h4>
+                        <h4><strong>108.11</strong></h4>
+                        <h4><strong>{completeTrophyCount} / 12</strong></h4>
                     </div>
                 </div>
             </div>

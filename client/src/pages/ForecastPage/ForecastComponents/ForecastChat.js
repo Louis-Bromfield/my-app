@@ -120,22 +120,22 @@ function ForecastChat(props) {
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>
-            <h2 style={{ color: "#404d72" }}>
+            <h2 className="new-forecast-input-header">
                 Forecast Chat
             </h2>
             <div className="chat">
-            <div className="comment-submit-field">
-                <input 
-                    type="text" 
-                    value={comment}
-                    className="comment-field" 
-                    onChange={(e) => handleCommentChange(e)}/>
-                <button 
-                    className="submit-comment-btn"
-                    onClick={() => submitNewComment(comment)}>
-                    Post Comment
-                </button>
-            </div>
+                <div className="comment-submit-field">
+                    <input 
+                        type="text" 
+                        value={comment}
+                        className="comment-field" 
+                        onChange={(e) => handleCommentChange(e)}/>
+                    <button 
+                        className="submit-comment-btn"
+                        onClick={() => submitNewComment(comment)}>
+                        Post Comment
+                    </button>
+                </div>
                 <div className="chat">
                     {newCommentStatus === true &&
                         <div className="chat-item">

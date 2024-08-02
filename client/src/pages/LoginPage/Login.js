@@ -96,11 +96,11 @@ function Login(props) {
             let userObj;
             console.log("4");
             if (isGuest === true) {
-                console.log("5");
+                console.log("5 true");
                 userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${true}`);
                 
             } else if (isGuest === false) {
-                console.log("5");
+                console.log("5 false");
                 if (isPassword === true) {
                     console.log("6");
                     userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${true}`);

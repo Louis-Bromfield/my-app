@@ -5,12 +5,14 @@
 }
 
 .trophy-img {
-    width: 10%;
+    width: 15%;
 }
 
 .trophy-grid-container {
     display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns: 33% 33% 33%;
+    margin-top: 1vh;
+    row-gap: 1vh;
 }
 
 .individual-trophy-container {
@@ -19,6 +21,7 @@
     width: 100%;
     margin: 0 auto;
     align-items: center;
+    padding: 1%;
 }
 
 .individual-trophy-container:hover {

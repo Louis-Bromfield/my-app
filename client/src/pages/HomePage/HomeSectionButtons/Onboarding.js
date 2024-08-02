@@ -68,13 +68,13 @@ function Onboarding(props) {
                     <li 
                             className="onboarding-list-item" 
                             style={{ color: onboardingBooleans.visitProfilePage ? "green" : "none" }}
-                            onClick={() => { props.setShowModal(true); props.setModalContent("This can be done by clicking on the My Profile button at the top of the page, then selecting Go to my Profile, or by clicking Go to My Profile on the Home Page's Profile Preview!")}}>
+                            onClick={() => { props.setShowModal(true); props.setModalContent("This can be done by clicking on the Profile button at the top of the page, then selecting Go to my Profile, or by clicking Go to My Profile on the Home Page's Profile Preview!")}}>
                                 <h4>Visit your profile page: 100pts</h4>
                         </li>
                         <li 
                             className="onboarding-list-item" 
                             style={{ color: onboardingBooleans.submitAForecast ? "green" : "none" }}
-                            onClick={() => { props.setShowModal(true); props.setModalContent("On the My Forecasts page, select a Problem from the dropdown menu at the top. Submit a forecast to any problem to complete this onboarding task!")}}>
+                            onClick={() => { props.setShowModal(true); props.setModalContent("On the Forecasts page, select a Problem from the dropdown menu at the top. Submit a forecast to any problem to complete this onboarding task!")}}>
                                 <h4>Submit a forecast: 300pts</h4>
                         </li>
                         <li 

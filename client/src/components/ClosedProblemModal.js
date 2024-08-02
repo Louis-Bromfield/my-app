@@ -52,7 +52,7 @@ const ClosedProblemModal = (props) => {
         <div className={showHideClassName}>
             <section className="modal-main">
                 <img src={FFLogo} alt="" />
-                <p>We've closed some forecast problems! Go to My Forecasts and select the problem for a breakdown of your performance!</p>
+                <p>We've closed some forecast problems! Go to Forecasts and select the problem for a breakdown of your performance!</p>
                 <a href="https://youtu.be/OkLP72O3hmo" target="_blank" rel="noreferrer nofollow" style={{ color: "#fff" }}>
                     <p>Want to know more about how your scores are calculated? Click here.</p>
                 </a>

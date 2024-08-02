@@ -28,23 +28,49 @@ function HomeProblemPreview(props) {
     return (
         <div className="home-problem-preview">
             {/* <NewForecastsCallToAction username={props.username} />  */}
-            <h2 className="home-button-large-title">
+            {/* <h2 className="home-button-large-title">
                 Live Forecasts
-            </h2>
+            </h2> */}
             {/* Need to have a list (use map?) of either say 5-10 problems closest
             to closing. If we don't have enough live ones, maybe have closed ones? 
             Would ideally like a way to show users if the one they're looking at is
             live or not, maybe the live one could be have "live" in green? and closed
             would say "Closed" in red, the live ones having a flashing live button like
             you see on news websites would be amazing */}
-            {problemData.length !== 0 ? problemData.map((item, index) => {
-                return (
-                    <IndividualHomeProblemPreview 
-                        data={item}
-                        index={index}
-                    />
-                )
-            }) : null}
+            <div className="ticker-wrap">
+                <div className="ticker">
+                    {problemData.length !== 0 ? problemData.map((item, index) => {
+                        return (
+                            <div className="ticker-item">
+                                <IndividualHomeProblemPreview 
+                                    data={item}
+                                    index={index}
+                                />
+                            </div>
+                        )
+                    }) : null}
+                    {problemData.length !== 0 ? problemData.map((item, index) => {
+                        return (
+                            <div className="ticker-item">
+                                <IndividualHomeProblemPreview 
+                                    data={item}
+                                    index={index}
+                                />
+                            </div>
+                        )
+                    }) : null}
+                    {problemData.length !== 0 ? problemData.map((item, index) => {
+                        return (
+                            <div className="ticker-item">
+                                <IndividualHomeProblemPreview 
+                                    data={item}
+                                    index={index}
+                                />
+                            </div>
+                        )
+                    }) : null}
+                </div>
+            </div>
             {/* <HomeButtonNavButton path={"forecast"}/> */}
         </div>
     )

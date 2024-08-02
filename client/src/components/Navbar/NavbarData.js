@@ -10,7 +10,7 @@ export const NavbarData = [
         iconSelected: <AiIcons.AiFillHome size={20} color={"#fff"} />
     },
     {
-        title: "My Forecasts",
+        title: "Forecasts",
         path: "/forecast",
         icon: <AiIcons.AiFillFund size={20} />,
         iconSelected: <AiIcons.AiFillFund size={20} color={"#fff"} />
@@ -34,7 +34,7 @@ export const NavbarData = [
         iconSelected: <AiIcons.AiOutlineSearch size={20} color={"#fff"} />
     },
     {
-        title: "My Profile",
+        title: "Profile",
         path: "/my-profile",
         icon: <AiIcons.AiFillIdcard size={20} />,
         iconSelected: <AiIcons.AiFillIdcard size={20} color={"#fff"} />

@@ -50,8 +50,7 @@ function ForecastAdmin(props) {
 
     const getAllMarketsFromDB = async () => {
         try {
-            // const allMarketsDocument = await axios.get(`${process.env.REACT_APP_API_CALL_L}/justNames/${props.username}`);
-            const allMarketsDocument = await axios.get(`http://localhost:8000/leaderboards/justNames/${props.username}`);
+            const allMarketsDocument = await axios.get(`${process.env.REACT_APP_API_CALL_L}/justNames/${props.username}`);
             
             let filteredbyIsFFOrNot = [];
             for (let i = 0; i < allMarketsDocument.data.length; i++) {
@@ -73,8 +72,7 @@ function ForecastAdmin(props) {
         } else {
             setAdminText("");
             try {
-                // await axios.post(`${process.env.REACT_APP_API_CALL_F}/newProblem`, {
-                await axios.post(`http://localhost:8000/forecasts/newProblem`, {
+                await axios.post(`${process.env.REACT_APP_API_CALL_F}/newProblem`, {
                     problemName: problemName,
                     startDate: oDateTime,
                     closeDate: cDateTime,
@@ -104,17 +102,13 @@ function ForecastAdmin(props) {
             let scores;
             if (closeEarly === true) {
                 console.log("Here2");
-                // scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
-                scores = await axios.patch(`http://localhost:8000/users/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
-                
+                scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
                     problemName: problemName,
                     newProblemCloseDateTime: newProblemCloseDateTime
                 });
             } else if (closeEarly === false) {
                 console.log("Here3");
-                // scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
-                scores = await axios.patch(`http://localhost:8000/users/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
-                
+                scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
                 problemName: problemName
                 });
             };
@@ -129,14 +123,12 @@ function ForecastAdmin(props) {
             let outcome = outcome1Status === true ? "outcome1" : outcome2Status === true ? "outcome2" : "outcome3";
             let scores;
             if (closeEarly === true) {
-                // scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
-                scores = await axios.patch(`http://localhost:8000/users/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
+                scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
                     problemName: problemName,
                     newProblemCloseDateTime: newProblemCloseDateTime
                 });
             } else if (closeEarly === false) {
-                // scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
-                scores = await axios.patch(`http://localhost:8000/users/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
+                scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBriersMultipleOutcomes/${outcome}/${market}/${closeEarly}`, {
                     problemName: problemName
                 });
             };

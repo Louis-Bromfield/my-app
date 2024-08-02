@@ -132,6 +132,7 @@ function ForecastProblemLineChart(props) {
     } else {
         console.log("here no");
     }
+    console.log("UE Fired here Louis+++++++++++++++++")
   }, [props.selectedForecastObject, props.refreshChartAppearance]);
 
   const formatCertainties = (selectedForecastObject, updateTodayStats, username) => {
@@ -154,7 +155,7 @@ function ForecastProblemLineChart(props) {
             pointRadius: 4
         }
         let data = {
-            label: "All Forecasts", 
+            label: "All Yes % Forecasts", 
             data: [], 
             backgroundColor: "green", 
             borderColor: "green", 
@@ -234,7 +235,7 @@ function ForecastProblemLineChart(props) {
             const dailyAverages = getNewDailyAverages(data.data, new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate), selectedForecastObject.isClosed);
             updateTodayStats(`${dailyAverages[dailyAverages.length-1].y.toFixed(2)}%`, todayForecasts.length);
             let simulatedUserData = {
-                label: "Your Certainty Since Last Forecast",
+                label: "Your Most Recent Yes %",
                 data: [],
                 backgroundColor: "green",
                 borderColor: "orange",
@@ -275,7 +276,7 @@ function ForecastProblemLineChart(props) {
             setUserChartData(userData);
             setSimulatedUserData(simulatedUserData);
             setAverageChartData({
-                label: "Average Certainty",
+                label: "Average Yes %",
                 data: ((new Date(selectedForecastObject.closeDate) - new Date(selectedForecastObject.startDate))/1000 >= 0) ? dailyAverages : [],
                 backgroundColor: "#404d72",
                 borderColor: "#404d72",

@@ -1,6 +1,6 @@
 .learn {
-    width: 90%;
-    height: 100%;
+    /* width: 90%; */
+    /* height: 100%; */
     display: flex;
     flex-direction: column;
     margin: 0 auto;
@@ -9,9 +9,8 @@
 
 .learn-grid {
     display: grid;
-    grid-template-columns: 25% 70%;
-    column-gap: 5%;
-    margin-top: 5vh;
+    grid-template-columns: 30% 70%;
+    margin-top: 1vh;
 }
 
 .topic-pane {

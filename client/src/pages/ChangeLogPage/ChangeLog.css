@@ -1,6 +1,9 @@
 .change-log {
     flex-direction: column;
-    width: 90%;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 3vh;
+    /* text-align: center; */
 }
 
 .full-list-item {

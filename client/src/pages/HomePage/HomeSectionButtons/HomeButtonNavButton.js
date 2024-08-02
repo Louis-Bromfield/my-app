@@ -10,8 +10,8 @@ export const HomeButtonNavButton = (props) => {
 
     switch (props.path) {
         case ("forecast"):
-            buttonDestination = "My Forecasts";
-            localStoragePageName = "My Forecasts"
+            buttonDestination = "Forecasts";
+            localStoragePageName = "Forecasts"
             break;
         case ("leaderboard"):
             buttonDestination = "the Leaderboards";
@@ -26,8 +26,8 @@ export const HomeButtonNavButton = (props) => {
             localStoragePageName = "Learn"
             break;
         case ("my-profile"):
-            buttonDestination = "My Profile";
-            localStoragePageName = "My Profile"
+            buttonDestination = "Profile";
+            localStoragePageName = "Profile"
             break;
         default:
             buttonDestination = "Home";

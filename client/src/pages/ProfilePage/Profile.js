@@ -8,7 +8,6 @@ import ProfileForecasts from './ProfileForecasts';
 import ProfilePictureChooserModal from '../../components/ProfilePictureChooserModal';
 
 function Profile(props) {
-    const [markets, setMarkets] = useState("");
     const [index, setIndex] = useState(-1);
     const [brierAverage, setBrierAverage] = useState("N/A");
     const [bestForecast, setBestForecast] = useState("N/A");
@@ -20,7 +19,7 @@ function Profile(props) {
     const [modalContent, setModalContent] = useState("");
     const [level, setLevel] = useState(0);
     const [profileTab, setProfileTab] = useState("my-stats");
-    const [forecasterRank, setForecasterRank] = useState("");
+    const [forecasterRank, setForecasterRank] = useState("Player");
     const [errorMessage, setErrorMessage] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [passwordChangeMsg, setPasswordChangeMsg] = useState("");
@@ -31,12 +30,6 @@ function Profile(props) {
     const [newProfilePic, setNewProfilePic] = useState(null);
 
     useEffect(() => {
-        if (props.user.markets === undefined) {
-            const markets = localStorage.getItem('markets').split(",");
-            formatMarketsString(markets);
-        } else {
-            formatMarketsString(props.user.markets);
-        }
         if (props.username === undefined) {
             // this should change tbh as it would mean anyone could get anyone's user info
             // CHARMANDER
@@ -121,17 +114,6 @@ console.log("Profile.js UE");
         };
     };
 
-    const formatMarketsString = (markets) => {
-        let string = "";
-        for (let i = 0; i < markets.length; i++) {
-            if (markets[i] !== '"Fantasy Forecast All-Time"') {
-                string += `${markets[i]}, `;
-            };
-        };
-        string = string.slice(0, string.length-2);
-        setMarkets(string);
-    };
-
     const updateOnboarding = async (username) => {
         try {
             const updatedUserDocument = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/onboardingTask/${username}`, {
@@ -198,10 +180,9 @@ console.log("Profile.js UE");
             />
             <div className="main-profile-grid">
                 <div className="profile-grid">
-                    <h1 className="profile-header">{errorMessage === "" ? props.username : errorMessage}</h1> 
+                    <h1 className="profile-header">{errorMessage === "" ? `${props.username} - Level ${(Math.floor(props.user.fantasyForecastPoints/100)).toFixed(0)} ${forecasterRank}`: errorMessage}</h1> 
+                    <br />
                     <div className="profile-main-info">
-                        {/* CHARMANDER */}
-                        {/* <img className="profile-profile-pic" src={props.profilePicture || localStorage.getItem("profilePicture")} alt="Temporary profile pic"/> */}
                         <img 
                             className="profile-profile-pic"
                             src={newProfilePic === null ? props.profilePicture : newProfilePic} 
@@ -275,7 +256,7 @@ console.log("Profile.js UE");
                     <div className="profile-stats-rewards-container">
                         <div className="profile-nav-menu">
                             <div style={{ borderLeft: "0px solid #fff" }} className={profileTab === "my-stats" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-stats")}><h3>My Stats</h3></div>
-                            <div style={{borderLeft: "0px solid #fff" }} className={profileTab === "my-forecasts" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-forecasts")}><h3>My Forecasts</h3></div>
+                            <div style={{borderLeft: "0px solid #fff" }} className={profileTab === "my-forecasts" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-forecasts")}><h3>Forecasts</h3></div>
                             {isTeam === false && <div style={{borderLeft: "0px solid #fff" }} className={profileTab === "my-trophies" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-trophies")}><h3>My Trophies</h3></div>}
                         </div>
                         {profileTab === "my-stats" && <ProfileStats 

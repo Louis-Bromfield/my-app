@@ -363,7 +363,7 @@ function IndividualNewsFeedPost(props) {
                                             className="comment-in-chain">
                                                 <Link 
                                                     to={usernameProps}
-                                                    onClick={() => localStorage.setItem("selectedPage", item.author === props.username ? "My Profile" : "Search")}>
+                                                    onClick={() => localStorage.setItem("selectedPage", item.author === props.username ? "Profile" : "Search")}>
                                                     <h4 className="comment-author"
                                                     style={{ textDecoration: "none" }}>{subComment.author}</h4>
                                                 </Link>
@@ -384,7 +384,7 @@ function IndividualNewsFeedPost(props) {
                                         <div className="author-details">
                                             <Link 
                                                 to={usernameProps}
-                                                onClick={() => localStorage.setItem("selectedPage", item.author === props.username ? "My Profile" : "Search")}
+                                                onClick={() => localStorage.setItem("selectedPage", item.author === props.username ? "Profile" : "Search")}
                                                 style={{ textDecoration: "none" }}>
                                                 <h4 className="comment-author">{item.author}</h4>
                                             </Link>

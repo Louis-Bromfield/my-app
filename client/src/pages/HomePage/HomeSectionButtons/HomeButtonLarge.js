@@ -58,16 +58,16 @@ function HomeButtonLarge(props) {
                 fill: false,
                 backgroundColor: "#404d72",
                 borderColor: "#404d72",
-                pointRadius: 3,
-                borderWidth: 3
+                pointRadius: 0,
+                borderWidth: 4
             }, {
                 label: "Average Scores (All Players)",
                 data: averageData,
                 fill: false,
                 backgroundColor: "orange",
                 borderColor: "orange",
-                pointRadius: 3,
-                borderWidth: 3
+                pointRadius: 0,
+                borderWidth: 4
             }
         ],
         spanGaps: false,
@@ -112,7 +112,7 @@ function HomeButtonLarge(props) {
             {props.user.fantasyForecastPoints >= 600 && 
                 <Line data={recentForecastData} options={options}/>
             }
-            <HomeButtonNavButton path="my-profile" />
+            <HomeButtonNavButton path="forecast" />
         </div>
     )
 }

@@ -99,19 +99,6 @@ function Home(props) {
 
     return (
         <div className="home">
-            <div className="home-header-intro">
-                <h1>Welcome back, {props.username}!</h1>
-                <FaInfoCircle 
-                    onClick={() => {
-                        setShowModal(true);
-                        setModalContent(`This is the home page for Fantasy Forecast. Use this as a central hub for 
-                        navigating the site! Check out the news feed to see the latest stories that
-                        your fellow forecasters have shared, or use any of the shortcuts to visit the 
-                        forecasting, learn, and profile pages or the leaderboards!`)
-                    }}
-                    style={{ "color": "orange", "cursor": "pointer" }}
-                />
-            </div>
             <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
             </Modal>
@@ -127,8 +114,8 @@ function Home(props) {
                 </ClosedProblemModal>
             } 
             <div className="home-page-div">
+                <HomeProblemPreview username={props.username} />
                 <div className="home-page-grid">
-                    <HomeProblemPreview username={props.username} />
                     <div className="home-page-news-feed">
                         <HomeNewsFeed 
                             username={props.username} 
@@ -157,24 +144,13 @@ function Home(props) {
                                 setOnboardingClassName={setOnboardingClassName}
                             />
                         </div>
-                        {/* Commented out as it's all in Profile Preview */}
-                        {/* <HomeButtonSmall 
-                            title={homeStats} 
-                            subtitle={subtitle} 
-                            handleClick={scrollHomeStats} 
-                            username={props.username} 
-                            user={userObj} 
-                            userLearnQuizzes={userLearnQuizzes}
-                            forecasts={props.forecasts}
-                            currentAvgBrier={currentAvgBrier}
-                        /> */}
                         <HomeButtonLarge 
-                            title="Your Recent Forecasts"
+                            title="My Recent Forecasts"
                             user={userObj} 
                         /> 
                         <HomeChangeLogPreview />
                         <div className="report-any-issues-container">
-                            <p className="home-button-small-title" style={{ fontSize: "1.2em" }}>Got any site issues, feedback, or praise?</p>
+                            <h3 className="home-button-large-title">Got any site issues, feedback, or praise?</h3>
                             <Link to="/report-any-issues" className="home-button-nav-button">Submit Your Views Anonymously Here</Link>
                         </div>
                     </div>

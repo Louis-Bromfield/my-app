@@ -712,7 +712,7 @@ console.log(e);
                     }
                     {marketWarning === false && 
                         <div className="forecast-selection-div">
-                            <h2 className="forecast-selection-question-header">Forecast Questions</h2>
+                            <h2 className="forecast-selection-question-header">Questions</h2>
                                 {props.allForecasts.map((item, index) => {
                                     if (item.isClosed === true) {
                                         return (
@@ -749,12 +749,12 @@ console.log(e);
                                 className="modal-i-btn"
                                 onClick={() => { 
                                     setShowModal(true); 
-                                    setModalContent(`This is where you will submit all of your predictions. Each problem has a deadline, found below the button that opened this box, and you are able to submit as many predictions as you want before said deadline. EVERY forecast you make contributes to your final score for the problem, so getting it right earlier will be more rewarding! We also ask that you submit an explanation of your 0-100% forecast, this will help remind you why you forecasted what you did in case you come back to update it.`); 
-                                    setModalContent2(`The Articles section below contains handpicked and web-scraped articles based on the forecast wording, so the scraped ones may vary in terms of usefulness. The Chart and Problem Stats tabs will show you what other users are saying for this forecast.`)
+                                    setModalContent(`This is where you will submit all of your forecasts! All questions have a deadline, found below the button that opened this box, and you can submit AS MANY forecasts as you want before the deadline. EVERY forecast you make contributes to your final score, so allocating more points to the correct outcome SOONER will be more rewarding! You can also submit an explanation to accompany your forecast, this will help you if you come back and update it!`); 
+                                    setModalContent2(`The Articles section below contains links to news articles using the question wording. Use the Chart to see how you're forecasting compared to everyone else. Do you agree? Or are you thinking differently to the crowd?`)
                                 }}
                             />
                         </h2>
-                        <h2 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 34)}</h2>
+                        <h3 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 31)}</h3>
                         <div className="forecast-chart-stats-switcher">
                             <ForecastProblemLineChart
                                 selectedForecastObject={selectedForecastObject} 
@@ -822,20 +822,41 @@ console.log(e);
                                 {(forecastSingleCertainty === true && (forecastResponseMessage !== "Forecast successfully updated! Check out the chart to see it!" && forecastResponseMessage !== "Forecast successfully submitted! Check out the chart to see it!")) &&
                                     <div className="forecast-submission-input">
                                         <div className="forecast-submission-input-certainty-section">
-                                            <h3>
-                                                Your Certainty (0.00 - 100.00%)
+                                            <h2 className="new-forecast-input-header">
+                                                Enter Your Forecast (0 - 100%)
                                                 <FaInfoCircle 
                                                     color={"orange"} 
                                                     className="modal-i-btn"
                                                     onClick={() => { 
                                                         setShowModal(true); 
-                                                        setModalContent(`Here you need to enter a number representing your CONFIDENCE that the stated forecast WILL HAPPEN. You have unlimited submissions for each forecast, so if you change your mind or learn something new and want to update your prediction, come back here and submit a new one!`); 
+                                                        setModalContent(`Here you input your confidence for each outcome. You have 100 points to allocate across the two outcomes, and you can even use decimals. As you update one number, the other will automatically change for you. You can come back and update your forecast as often as you like!`);
                                                         setModalContent2("");
                                                     }}
                                                 />
-                                            </h3>
-                                            {userHasAttempted === false && 
-                                                <input 
+                                            </h2>
+                                            <div className="new-forecast-binary-container">
+                                                <div className="new-forecast-input-binaries">
+                                                    <h2>{selectedForecastObject.potentialOutcomes[0]}</h2>
+                                                    <input
+                                                        type="number"
+                                                        defaultValue={0}
+                                                        className="forecast-certainty-input"    
+                                                    >
+                                                    </input>
+                                                </div>
+                                                <div className="new-forecast-input-binaries">
+                                                    <h2>{selectedForecastObject.potentialOutcomes[1]}</h2>
+                                                    <input
+                                                        type="number"
+                                                        defaultValue={0}
+                                                        className="forecast-certainty-input"    
+                                                    >
+                                                    </input>
+                                                </div>
+                                            </div>
+
+                                            {/* CHARMANDER: Old input form */}
+                                                {/* <input 
                                                     type="number" 
                                                     placeholder="Enter Your Prediction" 
                                                     defaultValue={0}
@@ -845,23 +866,11 @@ console.log(e);
                                                     max="100"
                                                     step="0.05"
                                                     disabled={isInputDisabled}
-                                                />
-                                            }
-                                            {userHasAttempted === true && 
-                                                <input 
-                                                    type="number" 
-                                                    className="forecast-certainty-input" 
-                                                    defaultValue={0}
-                                                    onChange={handleCertaintyChange}
-                                                    min="0"
-                                                    max="100"
-                                                    step="0.05"
-                                                    disabled={isInputDisabled}
-                                                />
-                                            }
+                                                /> */}
+                                            {/* CHARMANDER: Old input form */}
                                         </div>
                                         <div className="forecast-submission-input-explanation-section">
-                                            <h3>
+                                            <h2>
                                                 Forecast Explanation
                                                 <FaInfoCircle 
                                                     color={"orange"} 
@@ -872,7 +881,7 @@ console.log(e);
                                                         setModalContent2("");
                                                         }}
                                                 />
-                                            </h3>
+                                            </h2>
                                             {userHasAttempted === true &&
                                                 <textarea 
                                                     className="forecast-submission-explanation-input"
@@ -895,7 +904,7 @@ console.log(e);
                                             <button 
                                                 className="disabled-submit-forecast-btn" 
                                                 disabled={buttonDisabled}>
-                                                    Error
+                                                    <h2>Error</h2>
                                             </button>
                                         }
                                         {(buttonDisabled === false && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
@@ -905,14 +914,14 @@ console.log(e);
                                                 onClick={() => {
                                                     handleForecastUpdate(selectedForecast, certainty, forecastComments, props.username); 
                                                 }}>
-                                                    Update Forecast
+                                                    <h2>Update Forecast</h2>
                                             </button>
                                         }
                                         {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === false)) &&
                                             <button 
                                                 className="disabled-submit-forecast-btn" 
                                                 disabled={buttonDisabled}>
-                                                    ERROR
+                                                    <h2>ERROR</h2>
                                             </button>
                                         }
                                         {(buttonDisabled === false && (hasAForecastBeenSelected === true && userHasAttempted === false)) &&
@@ -922,7 +931,7 @@ console.log(e);
                                                 onClick={() => {
                                                     handleForecastSubmit(selectedForecast, certainty, forecastComments, props.username, selectedForecastObject); 
                                                 }}>
-                                                    Submit Forecast
+                                                    <h2>Submit Forecast</h2>
                                             </button>
                                         }
                                     </div>
@@ -1015,7 +1024,7 @@ console.log(e);
                                                 <button 
                                                     className="disabled-submit-forecast-btn" 
                                                     disabled={buttonDisabled}>
-                                                        Error
+                                                       <h2>Error</h2>
                                                 </button>
                                             }
                                             {(buttonDisabled === false && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
@@ -1027,14 +1036,14 @@ console.log(e);
                                                         setUserPreviousAttemptCertainty(`${certaintyOne*100} / ${certaintyTwo*100} / ${certaintyThree*100}`);
                                                         setUserPreviousAttemptComments(forecastComments);
                                                     }}>
-                                                        Update Forecast
+                                                        <h2>Update Forecast</h2>
                                                 </button>
                                             }
                                             {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === false)) &&
                                                 <button 
                                                     className="disabled-submit-forecast-btn" 
                                                     disabled={buttonDisabled}>
-                                                        ERROR
+                                                        <h2>ERROR</h2>
                                                 </button>
                                             }
                                             {(buttonDisabled === false && (hasAForecastBeenSelected === true && userHasAttempted === false)) &&
@@ -1046,7 +1055,7 @@ console.log(e);
                                                         setUserPreviousAttemptCertainty(`${certaintyOne*100} / ${certaintyTwo*100} / ${certaintyThree*100}`);
                                                         setUserPreviousAttemptComments(forecastComments);
                                                     }}>
-                                                        Submit Forecast
+                                                        <h2>Submit Forecast</h2>
                                                 </button>
                                             }
                                         </div>
@@ -1059,7 +1068,7 @@ console.log(e);
                                     <h3 className="forecast-message" style={{ color: "red" }}>{forecastResponseMessage}</h3>
                                 }
                             </div>
-                            <div className="forecast-submission-potential-scores">
+                            {/* <div className="forecast-submission-potential-scores">
                                 <div className="placeholder-container-no-error">
                                     <div className="last-certainty-div">
                                         <h2 className="previous-attempt-titles">
@@ -1090,14 +1099,14 @@ console.log(e);
                                         <h4>{userPreviousAttemptComments.includes("~") ? userPreviousAttemptComments.split("~")[1] : userPreviousAttemptComments}</h4>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 }
                 {(forecastClosed === true && hasAForecastBeenSelected === true) && 
                     <div className="forecast-submission-and-chart-div">
                         {forecastClosed === true ? <h2 className="selected-forecast" style={{ backgroundColor: "darkred" }}>{selectedForecast}</h2> : <h2 className="selected-forecast">{selectedForecast}</h2>}
-                        <h3 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 41)}</h3>
+                        <h3 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 38)}</h3>
                         <div className="forecast-chart-stats-switcher">
                             {/* Non-switcher version: July 2024 */}
                             <ForecastProblemLineChart
@@ -1194,12 +1203,9 @@ console.log(e);
                                         }
                                     </div>
                                     <div className="forecast-review-div-right">
-                                        <h2>{closedForecastScore}</h2>
-                                        <h3 style={{ color: "#404d72" }}>Your Brier Score</h3>
-                                        <h3>(110 = Best, 0 = Worst)</h3>
-                                        <br />
-                                        <h2>{closedForecastScore}</h2>
-                                        <h3 style={{ color: "#404d72" }}>Market / FF Points Earned</h3>
+                                    <h3 style={{ color: "#404d72" }}>You Scored:</h3>
+                                    <h2>{closedForecastScore} / 110</h2>
+                                    <h3 style={{ color: "#404d72" }}>Earning you {closedForecastScore} Market and FF Points</h3>
                                     </div>
                                 </div>
                             </div>

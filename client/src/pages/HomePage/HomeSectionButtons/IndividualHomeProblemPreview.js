@@ -307,16 +307,19 @@ function IndividualHomeProblemPreview(props) {
 
     return (
         <div className="individual-home-problem-preview">
-            <h3 style={{ "padding-bottom": "1vh" }}>
+            <h4 className="individual-home-problem-preview-question" style={{ "padding-bottom": "1vh" }}>
                 {props.data.isClosed === false ? `LIVE: ${props.data.problemName}` : `CLOSED: ${props.data.problemName}`}
-            </h3>
-            {/* Add a setProblemToPreview local storage variable which then gets called on My Forecasts page */}
-            <Link to={{pathname: "/forecast"}}>
-                <Line 
-                    data={props.data.singleCertainty === true ? chartDataToViz : multiOutcomeChartData} 
-                    options={options}
-                />
-            </Link>
+            </h4>
+            {/* Add a setProblemToPreview local storage variable which then gets called on Forecasts page */}
+            <div>
+            {/* <div style={{ width: "90%" }}> */}
+                <Link to={{pathname: "/forecast"}}>
+                    <Line 
+                        data={props.data.singleCertainty === true ? chartDataToViz : multiOutcomeChartData} 
+                        options={options}
+                    />
+                </Link>
+            </div>
         </div>
     )
 }

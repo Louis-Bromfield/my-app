@@ -1,23 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Assistant:wght@500&family=Encode+Sans&family=Lato:wght@400&family=Open+Sans:wght@300&family=Titillium+Web&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Proxima+Nova');
 
 html {
-    background-color: rgb(248, 247, 247);
+    /* background-color: rgb(248, 247, 247); */
+    background-color: #fff;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Assistant', sans-serif;
+  /* font-family: 'Assistant', sans-serif; */
+  /* font-family: 'Lato', sans-serif; */
+  font-family: "Proxima Nova", sans-serif;
   -ms-overflow-style: none;
 }
 
 .main-div {
-    background-color: rgb(248, 247, 247);
+    /* background-color: rgb(248, 247, 247); */
     padding-bottom: 5vh;
 }
 
 .home,
+.forecast,
 .calibration,
 .individual-leaderboard,
 .leaderboard-menu,
@@ -29,20 +34,15 @@ html {
 .change-log,
 .help-our-research,
 .report-any-issues,
-.notifications {
-  display: flex;
-  margin: 3vh 0vw 4vh 8vw;
-  background-color: rgb(248, 247, 247);
-}
-
+.notifications,
+.search,
 .profile {
-    margin-top: 0vh;
-}
-
-.forecast {
-    display: flex;
-    margin: 3vh 2vw 4vh 2vw;
-    background-color: rgb(248, 247, 247);
+  display: flex;
+  /* margin: 3vh 0vw 4vh 8vw; */
+  margin: 0 auto;
+  margin-top: 3vh;
+  /* background-color: rgb(248, 247, 247); */
+  width: 80%;
 }
 
 .modal-i-btn {

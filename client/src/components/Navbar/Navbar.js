@@ -127,7 +127,7 @@ function Navbar(props) {
                             <FaIcons.FaBars onClick={showSidebar} />
                         </Link>
                         <div className="mobile-image-and-noti-container">
-                            <img src={profilePicture} className="mobile-navbar-profile-pic" alt="User's profile pic" style={{border: profilePicStyle}} onClick={() => setShowNotifications(!showNotifications)}/>
+                            {/* <img src={profilePicture} className="mobile-navbar-profile-pic" alt="User's profile pic" style={{border: profilePicStyle}} onClick={() => setShowNotifications(!showNotifications)}/> */}
                             {numberOfNewNotis > 0 ? <h3 className="notification-counter" onClick={() => setShowNotifications(!showNotifications)}>{numberOfNewNotis}</h3> : null}
                         </div>
                     </div>
@@ -206,13 +206,14 @@ function Navbar(props) {
             {mobileWidth === false &&
                 <IconContext.Provider value ={{ color: "#fff" }}>
                             <div className="navbar">
-                                <div className="navbar-column" style={{ display: "flex", flexDirection: "column", margin: "0 auto", paddingTop: "1%" }}>
+                                {/* <div className="navbar-column" style={{ display: "flex", flexDirection: "column", margin: "0 auto", paddingTop: "0.5%" }}> */}
+                                <div className="navbar-grid">
                                         <img 
                                             className="nav-logo" 
                                             src={FantasyForecastLogo} 
                                             alt="Fantasy Forecast Logo" 
                                             style={{ 
-                                                width: "30%", 
+                                                // width: "30%", 
                                                 margin: "0 auto"
                                                 // marginBottom: "0.5vh"
                                             }}/>
@@ -220,7 +221,7 @@ function Navbar(props) {
                                         {width === false &&
                                             <ul className="nav-menu-items">
                                                 {NavbarData.map((item, index) => {
-                                                    if (item.title !== "My Profile") {
+                                                    if (item.title !== "Profile") {
                                                         if (localStorage.getItem('selectedPage') === item.title) {
                                                             return (
                                                                 <li 
@@ -252,7 +253,7 @@ function Navbar(props) {
                                                                 onClick={() => setShowNotifications(!showNotifications)}>
                                                                     <Link>
                                                                         {item.iconSelected}
-                                                                        {numberOfNewNotis > 0 ? <h5 className="notification-counter" style={{ height: "100%" }}>{numberOfNewNotis}</h5> : null}
+                                                                        {numberOfNewNotis > 0 ? <h5 className="notification-counter" style={{ height: "50%" }}>{numberOfNewNotis}</h5> : null}
                                                                     </Link>
                                                             </li>
                                                         )
@@ -263,7 +264,7 @@ function Navbar(props) {
                                             {width === true &&
                                             <ul className="nav-menu-items">
                                                 {NavbarData.map((item, index) => {
-                                                    if (item.title !== "My Profile") {
+                                                    if (item.title !== "Profile") {
                                                         return (
                                                             <li 
                                                                 key={index} 
@@ -284,7 +285,7 @@ function Navbar(props) {
                                                                     <Link>
                                                                         {item.iconSelected}
                                                                         <span className="nav-title"><p>{item.title}</p></span>
-                                                                        {numberOfNewNotis > 0 ? <h5 className="notification-counter" style={{ height: "100%" }}>{numberOfNewNotis}</h5> : null}
+                                                                        {numberOfNewNotis > 0 ? <h5 className="notification-counter" style={{ height: "50%" }}>{numberOfNewNotis}</h5> : null}
                                                                     </Link>
                                                             </li>
                                                         )
@@ -317,8 +318,8 @@ function Navbar(props) {
                                                                     to={"/my-profile"} 
                                                                     className="nav-text-profile" 
                                                                     onClick={() => {
-                                                                        localStorage.setItem('selectedPage', 'My Profile'); 
-                                                                        setSelectedPage("My Profile");
+                                                                        localStorage.setItem('selectedPage', 'Profile'); 
+                                                                        setSelectedPage("Profile");
                                                                         setShowNotifications(false)}}>
                                                                     <h5>Go to My Profile</h5>
                                                                 </Link>
@@ -363,8 +364,8 @@ function Navbar(props) {
                                                             to={"/my-profile"} 
                                                             className="nav-text-profile" 
                                                             onClick={() => {
-                                                                localStorage.setItem('selectedPage', 'My Profile'); 
-                                                                setSelectedPage("My Profile");
+                                                                localStorage.setItem('selectedPage', 'Profile'); 
+                                                                setSelectedPage("Profile");
                                                                 setShowNotifications(false)}}>
                                                             <h5>Go to My Profile</h5>
                                                         </Link>
@@ -374,8 +375,8 @@ function Navbar(props) {
                                                             signOut(props.logOut); 
                                                             history.push("/")
                                                         }}>
-                                                            <p>Log Out</p>
-                                                        </button>
+                                                            <h5>Log Out</h5>
+                                                    </button>
                                                 </div>
                                             </div>
                                         }

@@ -8,6 +8,7 @@ import Modal from '../../components/Modal';
 import { FaInfoCircle } from 'react-icons/fa';
 import ForecastSelection from './ForecastComponents/ForecastSelection';
 import ForecastDataSubmission from './ForecastComponents/ForecastDataSubmission';
+import ForecastChat from './ForecastComponents/ForecastChat';
 
 function Forecast(props) {
     const [forecastSelected, setForecastSelected] = useState(false);
@@ -69,7 +70,7 @@ console.log("CHARMANDER");
             </Modal>
             <div className="forecast-header">
                 <div className="forecast-header-left">
-                    <h1>My Forecasts</h1>
+                    <h1>Forecasts</h1>
                     <FaInfoCircle 
                         onClick={() => {
                             setShowModal(true);
@@ -142,6 +143,25 @@ console.log("CHARMANDER");
                         leaderboardData={leaderboardData}
                     />
                 </div>
+                {hasAForecastBeenSelected === true && 
+                    <div className="new-forecast-container-bottom-half">
+                        <div className="new-forecast-container-bottom-half-row">
+                            <div></div>
+                            <ForecastArticlesDisplay 
+                                searchTerm={forecast}
+                                userObject={props.userObject}   
+                                username={props.username}
+                            />
+                        </div>
+                        <div className="new-forecast-container-bottom-half-row">
+                            <div></div>
+                            <ForecastChat 
+                                forecast={forecast}
+                                username={props.username}
+                            />
+                        </div>
+                    </div>                    
+                }
                 {/* {hasAForecastBeenSelected === true &&
                     <div className="new-forecast-container-bottom-half">
                         <div className="bottom-half-articles-div">

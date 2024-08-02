@@ -5,9 +5,9 @@
 
 .list-span {
     display: flex;
-    flex-direction: row;
-    text-align: left;
-    margin-left: 0;
+    flex-direction: column;
+    text-align: center;
+    margin: 0 auto;
 }
 
 @media (max-width: 450px) {

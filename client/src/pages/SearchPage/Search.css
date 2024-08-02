@@ -1,8 +1,6 @@
 .search {
-    width: 90%;
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
     margin-top: 3vh;
 }
 
@@ -64,7 +62,7 @@
 
 .profile-grid {
     margin-bottom: 4vh;
-    padding: 1%;
+    /* padding: 1%; */
 }
 
 .profile-profile-pic {
@@ -93,12 +91,6 @@
 .selected {
     background-color: #404d72;
     color: #fff;
-}
-
-@media (max-width: 1500px) {
-    .profile-header {
-        font-size: 1.8em;
-    }
 }
 
 @media (max-width: 1000px) {

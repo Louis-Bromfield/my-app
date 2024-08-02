@@ -1,9 +1,8 @@
 .forecast-chat {
     margin: 0 auto;
-    border: 1px solid lightgray;
-    border-radius: 5px;
+    border-left: 1px solid lightgray;
     width: 100%;
-    padding-top: 1vh;
+    padding: 1%;
 }
 
 .chat {
@@ -24,4 +23,10 @@
 .reply-chat-item {
     margin-left: 1vw;
     margin-top: 1vh;
+}
+
+@media (max-width: 1500px) {
+    .forecast-chat {
+        font-size: 0.85em;
+    }
 }

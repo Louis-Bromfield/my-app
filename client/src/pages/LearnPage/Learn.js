@@ -8,7 +8,7 @@ import Modal from '../../components/Modal';
 function Learn(props) {
     const [topic, setTopic] = useState("Fantasy Forecast Points");
     const [content, setContent] = useState("info");
-    const topicsArray = ["Fantasy Forecast Points", "Brier Scores", "The Good Judgment Project", "Superforecasters"];
+    const topicsArray = ["Fantasy Forecast Points", "2024 US Presidential Election", "How Are Forecasts Scored?", "The Good Judgment Project", "Superforecasters"];
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
 
@@ -38,12 +38,12 @@ function Learn(props) {
                 <p>{modalContent}</p>
             </Modal>
             <h1>Learn</h1>
-            <p>Welcome to the Learn page. Here you'll find a selection of topics that relate to political forecasting. 
+            {/* <p>Welcome to the Learn page. Here you'll find a selection of topics that relate to political forecasting. 
                 Brier Scores will tell you about how we assess forecast accuracy; The Good Judgment Project is a 
                 pioneering research endeavour that provides a profound understanding of forecasting in action, as 
                 well as tips on how to improve, and Superforecasters imparts lessons on the very best in the business. 
                 Each topic also has a quiz, which you can attempt <b>an unlimited number of times.</b>
-            </p>
+            </p> */}
             <div className="learn-grid">
                 <div className="topic-list">
                     <TopicsMenu 

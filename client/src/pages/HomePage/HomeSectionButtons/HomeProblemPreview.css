@@ -1,8 +1,86 @@
 .home-problem-preview {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    border: 0.5px solid lightgray;
+    /* display: flex;
+    flex-direction: row; */
+    /* border: 0.5px solid lightgray; */
+    /* border: 3px solid red; */
     background-color: #fff;
-    font-size: 0.9em;
+    font-size: 0.8em;
+    /* width: fit-content; */
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */ 
+    overflow-x: scroll;
+    /* height: 15vh; */
+    /* height: fit-content; */
+    margin-bottom: 1vh;
+}
+
+@-webkit-keyframes ticker {
+    0% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+    }
+
+    100% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+@keyframes ticker {
+    0% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+    }
+
+    100% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+  
+.ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    /* overflow-x: hidden; */
+    /* height: 25vh; */
+    /* background-color: rgba(#000, 0.9);  */
+    /* padding-left: 100%; */
+    padding-top: 1%;
+    padding-bottom: 1%;
+    box-sizing: content-box;
+}
+
+.ticker {
+    /* display: inline-block; */
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    /* line-height: 4rem;   */
+    /* white-space: normal; */
+    padding-right: 100%;
+    box-sizing: content-box;
+
+    -webkit-animation-iteration-count: infinite; 
+            animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+            animation-timing-function: linear;
+    -webkit-animation-name: ticker;
+            animation-name: ticker;
+    -webkit-animation-duration: 210s;
+            animation-duration: 210s;
+}
+
+.ticker-item {
+    /* display: inline-block; */
+    display: flex;
+    /* height: 100%; */
+    padding-right: 0.5%;
+    /* border-right: 1px solid lightgray; */
+    /* font-size: 1rem; */
+    /* color: white;    */
 }

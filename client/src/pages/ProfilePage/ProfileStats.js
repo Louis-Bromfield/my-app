@@ -225,14 +225,13 @@ function ProfileStats(props) {
                             <br/>
                             <ul className="profile-stats-selectors">
                                 <li className={selectedStats} onClick={() => { setStats(recentForecastData); setSelectedStats("selected"); setSelectedStats2("unselected")}}><h4>Recent Forecasts</h4></li>
-                                <h2>|</h2>
                                 <li className={selectedStats2} onClick={() => { setStats(allTimeForecastData); setSelectedStats("unselected"); setSelectedStats2("selected")}}><h4>All Forecasts</h4></li>
                             </ul>
                             <Line className="profile-stats-line-chart" data={stats || recentForecastData} options={options} />
                         </div>
                         <div className="profile-stats-grid">
                             <br/>
-                            <h2>Comparative Stats</h2>
+                            <h3 style={{ textAlign: "center" }}>Forecast Scores</h3>
                             <hr />
                             <div className="profile-stats-grid-headers">
                                 <h3>Me</h3>
@@ -242,25 +241,25 @@ function ProfileStats(props) {
                             </div>
                             <div className="profile-stats-grid-body-three-cols">
                                 <h4 className="oddrow">{bestChanged === true ? playerBestBrier : "N/A"}</h4>
-                                <h4 className="oddrow" style={{backgroundColor: "rgb(250, 250, 250)", color: "#404d72" }}>Best Score</h4>
+                                <h4 className="oddrow" style={{backgroundColor: "rgb(250, 250, 250)", color: "#404d72" }}>Best</h4>
                                 <h4 className="oddrow">{bestGlobalBrier}</h4>
                                 <h4>{worstChanged === true ? playerWorstBrier : "N/A"}</h4>
-                                <h4 style={{ color: "#404d72" }}>Worst Score</h4>
+                                <h4 style={{ color: "#404d72" }}>Worst</h4>
                                 <h4>{worstGlobalBrier}</h4>
                                 <h4 className="oddrow">{isNaN(playerAverageBrier) ? "N/A" : playerAverageBrier}</h4>
-                                <h4 className="oddrow" style={{backgroundColor: "rgb(250, 250, 250)", color: "#404d72" }}>Average Score</h4>
+                                <h4 className="oddrow" style={{backgroundColor: "rgb(250, 250, 250)", color: "#404d72" }}>Average</h4>
                                 <h4 className="oddrow">{averageGlobalBrier}</h4>
                             </div>
                             <br />
-                            <h2 className="player-stats-title">Unique Player Stats</h2>
+                            <h3 className="player-stats-title" style={{ textAlign: "center" }}>Unique Player Stats</h3>
                             <hr className="player-stats-title-hr" />
                             <div className="profile-stats-grid-body-two-cols">
                                 <h4>Fantasy Forecast Points:</h4>
                                 <h3 style={{ color: "#404d72" }}>{ffPoints}</h3>
-                                <h4>Problems Attempted:</h4>
+                                <h4>Questions Attempted:</h4>
                                 <h3 style={{ color: "#404d72" }}>{problemsAttempted}</h3>
-                                <h4># of Markets In:</h4>
-                                <h3 style={{ color: "#404d72" }}>{marketsIn}</h3>
+                                {/* <h4># of Markets In:</h4>
+                                <h3 style={{ color: "#404d72" }}>{marketsIn}</h3> */}
                                 <h4>Onboarding Tasks Complete:</h4>
                                 <h3 style={{ color: "#404d72" }}>{onboardingProgress} / 4</h3>
                             </div>

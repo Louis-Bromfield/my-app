@@ -1,9 +1,8 @@
 .home {
-    width: 92.5%;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
-    margin-top: 3vh;
+    margin-top: 1vh;
     font-size: 90%;
 }
 
@@ -11,8 +10,8 @@
     display: flex;
     flex-direction: column;
     row-gap: 1.5vh;
-    background-color: #fff;
-    border: 0.5px solid lightgray;
+    /* background-color: #fff; */
+    /* border: 0.5px solid lightgray; */
 }
 
 .onboarding-div-closed {
@@ -27,8 +26,10 @@
 
 .home-page-grid {
     display: grid;
-    grid-template-columns: 24% 50% 24%;
+    /* grid-template-columns: 23% 52% 23%; */
+    /* grid-template-columns: 24% 50% 24%; */
     column-gap: 1%;
+    grid-template-columns: 69% 30%;
 }
 
 .create-post-button {
@@ -136,3 +137,4 @@
     margin: 0 auto;
     margin-top: 2vh;
 }
+    
