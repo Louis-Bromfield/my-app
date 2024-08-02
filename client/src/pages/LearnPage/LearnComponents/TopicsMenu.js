@@ -16,7 +16,7 @@ function TopicsMenu(props) {
                 {props.topic === props.topicsArray[3] && <li className="selected-topic" onClick={() => props.handleClick(props.topicsArray[3])}><h4>{props.topicsArray[3]}</h4></li>}
                 {props.topic !== props.topicsArray[3] && <li onClick={() => props.handleClick(props.topicsArray[3])}><h4>{props.topicsArray[3]}</h4></li>}
                 {props.topic === props.topicsArray[4] && <li className="selected-topic" onClick={() => props.handleClick(props.topicsArray[4])}><h4>{props.topicsArray[3]}</h4></li>}
-                {props.topic !== props.topicsArray[4] && <li onClick={() => props.handleClick(props.topicsArray[3])}><h4>{props.topicsArray[4]}</h4></li>}
+                {props.topic !== props.topicsArray[4] && <li onClick={() => props.handleClick(props.topicsArray[4])}><h4>{props.topicsArray[4]}</h4></li>}
             </ul>
         </div>
     )

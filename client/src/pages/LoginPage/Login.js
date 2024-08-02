@@ -225,7 +225,7 @@ function Login(props) {
                                     // setProlificIDForLogin(e.target.value);
                                 }}
                             /> */}
-                            <label htmlFor="username-login">Prolific ID:</label>
+                            <label htmlFor="username-login">Username</label>
                             <input 
                                 type="text" 
                                 name="login-prolificID" 
