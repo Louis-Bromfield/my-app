@@ -93,26 +93,26 @@ function Login(props) {
             return;
         };
         try {
-            let userObj;
+            let userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${true}`);
             console.log("4");
-            if (isGuest === true) {
-                console.log("5 true");
-                userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${true}`);
+            // if (isGuest === true) {
+            //     console.log("5 true");
+            //     userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${true}`);
                 
-            } else if (isGuest === false) {
-                console.log("5 false");
-                if (isPassword === true) {
-                    console.log("6");
-                    userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${true}`);
+            // } else if (isGuest === false) {
+            //     console.log("5 false");
+            //     if (isPassword === true) {
+            //         console.log("6");
+            //         userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${true}`);
                 
-                    console.log("7");
-                    if (!userObj) return;
-                } else if (isPassword === false) {
-                    console.log("8");
-                    userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${false}`);
-                    if (!userObj) return;
-                };
-            };
+            //         console.log("7");
+            //         if (!userObj) return;
+            //     } else if (isPassword === false) {
+            //         console.log("8");
+            //         userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${false}`);
+            //         if (!userObj) return;
+            //     };
+            // };
             console.log("9");
             console.log(userObj);
             if (userObj.data.loginSuccess === false)  {
