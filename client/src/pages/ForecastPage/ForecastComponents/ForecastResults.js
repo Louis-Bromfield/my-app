@@ -4,16 +4,11 @@ import './ForecastResults.css';
 
 function ForecastResults(props) {
     const [results, setResults] = useState([]);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         console.log("Forecast Results UE2");
         if (props.selectedForecast.isClosed === true) {
-            setLoading(true);
             pullAllScores(props.selectedForecast.problemName);
-            setTimeout(() => {
-                setLoading(false);
-            }, 500);
         };
     }, [props.problemName, props.isClosed]);
 

@@ -125,7 +125,8 @@ function App() {
                 return;
             };
             console.log("paIFDBTPDB");
-            const userPulledFromDB = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);  
+            // const userPulledFromDB = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);  
+            const userPulledFromDB = await axios.get(`http://localhost:8000/users/${username}`);  
 console.log("userPulledFromDB");
 console.log(userPulledFromDB);
             
@@ -182,7 +183,7 @@ console.log(userPulledFromDB);
             />} />
             <Route path="/change-log" render={(props) => <ChangeLog {...props} />} />
             <Route path="/news-post" render={(props) => <IndividualNewsFeedPost {...props} username={username} />} />
-            <Route path='/forecast' render={(props) => <Forecast {...props} 
+            <Route path='/races' render={(props) => <Forecast {...props} 
                 markets={markets} 
                 username={username} 
                 userObject={userObject}
@@ -229,7 +230,7 @@ console.log(userPulledFromDB);
                 <Redirect to="/"></Redirect>
                 {localStorage.setItem("selectedPage", "Home")}
             </Route>
-            <Route exact path="/forecast">
+            <Route exact path="/races">
                 <Redirect to="/"></Redirect>
                 {localStorage.setItem("selectedPage", "Home")}
             </Route>

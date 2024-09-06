@@ -2,8 +2,6 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import './HomeProblemPreview.css';
 import IndividualHomeProblemPreview from './IndividualHomeProblemPreview';
-import { HomeButtonNavButton } from './HomeButtonNavButton';
-import NewForecastsCallToAction from './NewForecastsCallToAction';
 
 
 function HomeProblemPreview(props) {
@@ -18,6 +16,7 @@ function HomeProblemPreview(props) {
     const getProblemData = async () => {
         try {
             const forecastData = await axios.get(`${process.env.REACT_APP_API_CALL_F}`);
+            // const forecastData = await axios.get(`http://localhost:8000/forecasts`);
             setProblemData(forecastData.data);
         } catch (error) {
             console.error("Error in HomeProblemPreview > getProblemData");
@@ -27,16 +26,6 @@ function HomeProblemPreview(props) {
 
     return (
         <div className="home-problem-preview">
-            {/* <NewForecastsCallToAction username={props.username} />  */}
-            {/* <h2 className="home-button-large-title">
-                Live Forecasts
-            </h2> */}
-            {/* Need to have a list (use map?) of either say 5-10 problems closest
-            to closing. If we don't have enough live ones, maybe have closed ones? 
-            Would ideally like a way to show users if the one they're looking at is
-            live or not, maybe the live one could be have "live" in green? and closed
-            would say "Closed" in red, the live ones having a flashing live button like
-            you see on news websites would be amazing */}
             <div className="ticker-wrap">
                 <div className="ticker">
                     {problemData.length !== 0 ? problemData.map((item, index) => {
@@ -71,7 +60,6 @@ function HomeProblemPreview(props) {
                     }) : null}
                 </div>
             </div>
-            {/* <HomeButtonNavButton path={"forecast"}/> */}
         </div>
     )
 }

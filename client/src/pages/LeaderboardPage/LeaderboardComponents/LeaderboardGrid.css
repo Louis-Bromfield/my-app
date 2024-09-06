@@ -1,8 +1,10 @@
 .leaderboard-grid {
     display: grid;
-    width: 95%;
-    grid-template-columns: 25% 25% 25% 25%;
-    margin: 0% 1% 1% 1%;
+    width: 30%;
+    grid-template-columns: 50% 50%;
+    margin: 0 auto;
+    text-align: center;
+    /* border: 1px solid red; */
 }
 
 .your-markets-leaderboards,

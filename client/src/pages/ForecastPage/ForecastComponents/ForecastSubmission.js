@@ -2,13 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './ForecastSubmission.css';
 import axios from 'axios';
 import Modal from '../../../components/Modal';
-import { FaInfoCircle } from 'react-icons/fa';
+import { FaInfoCircle, FaHorseHead } from 'react-icons/fa';
+import * as FaIcons from 'react-icons/fa';
 import ForecastBreakdown from './ForecastBreakdown';
 import ForecastProblemLineChart from './ForecastProblemLineChart';
-import ForecastStatistics from './ForecastStatistics';
-import MarketStatistics from './MarketStatistics';
-import ForecastMarketLeaderboard from './ForecastMarketLeaderboard';
-import ForecastResults from './ForecastResults';
 
 function ForecastSubmission(props) {
     const [forecastProblems, setForecastProblems] = useState([]);
@@ -24,7 +21,13 @@ function ForecastSubmission(props) {
     const [userHasAttempted, setUserHasAttempted] = useState(false);
     const [userPreviousAttemptCertainty, setUserPreviousAttemptCertainty] = useState();
     const [userPreviousAttemptComments, setUserPreviousAttemptComments] = useState("");
-    const [certainty, setCertainty] = useState();
+    const [certainty, setCertainty] = useState(50);
+    const [noCertainty, setNoCertainty] = useState(50);
+    const [certaintyToShow, setCertaintyToShow] = useState(50);
+    const [noCertaintyToShow, setNoCertaintyToShow] = useState(50);
+    const [tripleCertainty1ToShow, setTripleCertainty1ToShow] = useState(0);
+    const [tripleCertainty2ToShow, setTripleCertainty2ToShow] = useState(0);
+    const [tripleCertainty3ToShow, setTripleCertainty3ToShow] = useState(0);
     const [forecastComments, setForecastComments] = useState("");
     const [forecastResponseMessage, setForecastResponseMessage] = useState("");
     const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -51,24 +54,11 @@ function ForecastSubmission(props) {
     const [outcomeTwoCertainty, setOutcomeTwoCertainty] = useState("0%");
     const [outcomeThreeCertainty, setOutcomeThreeCertainty] = useState("0%");
     const [selectedForecastDocumentID, setSelectedForecastDocumentID] = useState("");
-    const [switcherTab, setSwitcherTab] = useState("chart");
-    const [todayAverage, setTodayAverage] = useState("");
-    const [todayForecastCount, setTodayForecastCount] = useState("");
+    // const [switcherTab, setSwitcherTab] = useState("chart");
+    // const [todayAverage, setTodayAverage] = useState("");
+    // const [todayForecastCount, setTodayForecastCount] = useState("");
     const [forecastFoundFromNotifications, setForecastFoundFromNotifications] = useState(false);
     const [refreshChartAppearance, setRefreshChartAppearance] = useState(0);
-
-    let alertStyle;
-    if (dropdownHighlight === true) {
-        alertStyle = {
-            border: "5px solid red",
-            borderRadius: "8px"
-        };
-    }
-    else {
-        alertStyle = {
-            border: "1px solid black"
-        };
-    };
 
     useEffect(() => {
         console.log("ForecastSubmission UE");
@@ -80,7 +70,6 @@ function ForecastSubmission(props) {
         try {
             let filtered = [];
             let filteredAndOrganised = [];
-            let globalIndex = 0;
             for (let i = 0; i < userMarkets.length; i++) {
                 if (userMarkets[i] !== '"Fantasy Forecast All-Time"' || userMarkets[i] !== "Fantasy Forecast All-Time") {
                     filteredAndOrganised.push([userMarkets[i]]);
@@ -164,7 +153,6 @@ function ForecastSubmission(props) {
 
     // When a forecast problem is selected from the dropdown
     const handleChange = (e) => {
-console.log("in handlechange my dude");
 console.log(e);
         if (e === "All currently open forecasts are available here...") {
             props.toggleDiv(false);
@@ -189,6 +177,9 @@ console.log(e);
             setCertaintyOne(0);
             setCertaintyTwo(0);
             setCertaintyThree(0);
+            setTripleCertainty1ToShow(0);
+            setTripleCertainty2ToShow(0);
+            setTripleCertainty3ToShow(0);
             setForecastComments("");
             setRefreshChartAppearance(0);
         };
@@ -359,14 +350,16 @@ console.log(e);
         };
     };
 
-    const handleCertaintyChange = (e) => {
+    // Charmander - need to handle the certainty changing here, not in the new function I made at bottom of this before renders
+    const handleCertaintyChange = (e, isCertaintyYes) => {
+        console.log(e.target.value);
         const certainty = e.target.value;
         if (certainty > 100) {
             setButtonDisabled(true);
-            setForecastResponseMessage("Please enter a certainty BELOW or equal to 100");
+            setForecastResponseMessage("Please enter a certainty between 0 and 100");
             return;
         } else if (certainty < 0) {
-            setForecastResponseMessage("Please enter a certainty ABOVE or equal to 100");
+            setForecastResponseMessage("Please enter a forecast from 0-100");
             setButtonDisabled(true);
             return;
         } else {
@@ -377,6 +370,15 @@ console.log(e);
             setButtonDisabled(true);
             setForecastResponseMessage("Please input a certainty between 0 and 100");
         };
+        if (isCertaintyYes === true) {
+            console.log("yessir");
+            setCertaintyToShow(certainty);
+            setNoCertaintyToShow(100 - certainty);
+        } else if (isCertaintyYes === false) {
+            console.log("nosir");
+            setCertaintyToShow(100-certainty);
+            setNoCertaintyToShow(certainty)
+        };
         let currentPrediction = certainty/100;
         setCertainty(currentPrediction);
     };
@@ -385,49 +387,58 @@ console.log(e);
         const certainty = e.target.value;
         if (certainty > 100) {
             setButtonDisabled(true);
-            setForecastResponseMessage("Please enter a certainty BELOW or equal to 100");
+            setForecastResponseMessage("Please enter forecasts between 0 and 100");
             return;
         } else if (certainty < 0) {
-            setForecastResponseMessage("Please enter a certainty ABOVE or equal to 100");
+            setForecastResponseMessage("Please enter forecasts between 0 and 100");
             setButtonDisabled(true);
             return;
         } else if (e.target.value.length === 0) {
             setButtonDisabled(true);
-            setForecastResponseMessage("Please input a certainty between 0 and 100");
+            setForecastResponseMessage("Please input forecasts between 0 and 100");
         } else {
             setForecastResponseMessage("");
             setButtonDisabled(false);
             if (certaintyVal === 1) {
                 if ((Number(certainty) + Number((certaintyTwo*100)) + Number((certaintyThree*100))) > 100) {
-                    setForecastResponseMessage("The three certainties cannot exceed 100.");
+                    let amount = ((Number(certainty) + Number((certaintyTwo*100)) + Number((certaintyThree*100))))-100;
+                    setForecastResponseMessage(`The three forecasts cannot exceed 100. Reduce your %s by ${amount}`);
                     setCertaintyOne(Number(certainty/100));
+                    setTripleCertainty1ToShow(certainty);
                     setButtonDisabled(true);
                     return;
                 } else {
                     setButtonDisabled(false);
                     setCertaintyOne(Number(certainty/100));
+                    setTripleCertainty1ToShow(certainty);
                     return;
                 }
             } else if (certaintyVal === 2) {
                 if ((Number((certaintyOne*100)) + Number(certainty) + Number((certaintyThree*100))) > 100) {
-                    setForecastResponseMessage("The three certainties cannot exceed 100.");
+                    let amount = ((Number((certaintyOne*100)) + Number(certainty) + Number((certaintyThree*100))))-100;
+                    setForecastResponseMessage(`The three forecasts cannot exceed 100. Reduce your %s by ${amount}`);
                     setCertaintyTwo(Number(certainty/100));
+                    setTripleCertainty2ToShow(certainty);
                     setButtonDisabled(true);
                     return;
                 } else {
                     setButtonDisabled(false);
                     setCertaintyTwo(Number(certainty/100));
+                    setTripleCertainty2ToShow(certainty);
                     return;
                 };
             } else if (certaintyVal === 3) {
                 if ((Number((certaintyOne*100)) + Number((certaintyTwo*100)) + Number(certainty)) > 100) {
-                    setForecastResponseMessage("The three certainties cannot exceed 100.");
+                    let amount = ((Number((certaintyOne*100)) + Number((certaintyTwo*100)) + Number(certainty)))-100;
+                    setForecastResponseMessage(`The three forecasts cannot exceed 100. Reduce your %s by ${amount}`);
                     setCertaintyThree(Number(certainty/100));
+                    setTripleCertainty3ToShow(certainty);
                     setButtonDisabled(true);
                     return;
                 } else {
                     setButtonDisabled(false);
                     setCertaintyThree(Number(certainty/100));
+                    setTripleCertainty3ToShow(certainty);
                     return;
                 };
             };
@@ -449,6 +460,10 @@ console.log(e);
 
     // Add the loading animation until it's submitted?
     const handleForecastUpdate = async (forecast, newCertainty, newComments, username) => {
+        console.log(forecast);
+        console.log(newCertainty);
+        console.log(newComments);
+        console.log(username);
         if (props.username === "Guest") {
             setShowModal(true);
             setModalContent("You must be logged into your own account to submit a forecast.");
@@ -456,11 +471,11 @@ console.log(e);
             return;
         } else {
             if (newCertainty === undefined) {
-                setForecastResponseMessage("Please enter a certainty between 0.00-100.00");
+                setForecastResponseMessage("Please enter a certainty between 0-100");
                 return;
             };
             if ((newCertainty*100) > 100 || (newCertainty*100) < 0) {
-                setForecastResponseMessage("Please enter a certainty within 0.00-100.00");
+                setForecastResponseMessage("Please enter a certainty within 0-100");
                 return;
             };
             if (newComments === "") {
@@ -470,6 +485,7 @@ console.log(e);
             try {
                 // const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/update`, {
                 const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateSingle`, {
+                // const newForecastTwo = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateSingle`, {
                     documentID: selectedForecastDocumentID,
                     problemName: forecast,
                     // newForecastObject: newForecastObj,
@@ -574,16 +590,17 @@ console.log(e);
                 return;
             }
             try {
-                const newForecastObj = {
-                    certainties: {
-                        certainty1: newCertainty1, 
-                        certainty2: newCertainty2, 
-                        certainty3: newCertainty3, 
-                    },
-                    comments: `(${username})~ ${newComments}`, 
-                    date: new Date().toString()
-                };
+                // const newForecastObj = {
+                //     certainties: {
+                //         certainty1: newCertainty1, 
+                //         certainty2: newCertainty2, 
+                //         certainty3: newCertainty3, 
+                //     },
+                //     comments: `(${username})~ ${newComments}`, 
+                //     date: new Date().toString()
+                // };
                 const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateMultiple`, {
+                // const newForecastTwo = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateMultiple`, {
                     documentID: selectedForecastDocumentID,
                     problemName: forecast,
                     certainty1: newCertainty1, 
@@ -712,14 +729,15 @@ console.log(e);
                     }
                     {marketWarning === false && 
                         <div className="forecast-selection-div">
-                            <h2 className="forecast-selection-question-header">Questions</h2>
+                            <h2 className="forecast-selection-question-header">Pick a Horse Race</h2>
                                 {props.allForecasts.map((item, index) => {
                                     if (item.isClosed === true) {
                                         return (
                                             <div>
                                                 <h4 className="forecast-selection-item" onClick={() => handleChange(item.problemName)}>
-                                                    <span style={{ color: "red"}}>CLOSED: </span> 
-                                                    {item.problemName}
+                                                    <FaIcons.FaHorseHead color={"#404d72"} />
+                                                    &nbsp;{item.problemName}
+                                                    <span style={{ color: "red"}}> (CLOSED)</span> 
                                                 </h4>
                                                 <hr />
                                             </div>
@@ -728,8 +746,9 @@ console.log(e);
                                         return (
                                             <div>
                                                 <h4 className="forecast-selection-item" onClick={() => handleChange(item.problemName)}>
-                                                    <span style={{ color: "green"}}>LIVE: </span> 
-                                                    {item.problemName}
+                                                    <FaIcons.FaHorseHead color={"#404d72"} />
+                                                    &nbsp;{item.problemName}
+                                                    <span style={{ color: "green"}}> (LIVE)</span> 
                                                 </h4>
                                                 <hr />
                                             </div>
@@ -749,7 +768,7 @@ console.log(e);
                                 className="modal-i-btn"
                                 onClick={() => { 
                                     setShowModal(true); 
-                                    setModalContent(`This is where you will submit all of your forecasts! All questions have a deadline, found below the button that opened this box, and you can submit AS MANY forecasts as you want before the deadline. EVERY forecast you make contributes to your final score, so allocating more points to the correct outcome SOONER will be more rewarding! You can also submit an explanation to accompany your forecast, this will help you if you come back and update it!`); 
+                                    setModalContent(`This is where you will submit all of your forecasts! All races have a deadline, found below the button that opened this box, and you can submit AS MANY forecasts as you want before the deadline. EVERY forecast you make contributes to your final score, so allocating more points to the correct outcome SOONER will be more rewarding! You can also submit an explanation to accompany your forecast, this will help you if you come back and update it!`); 
                                     setModalContent2(`The Articles section below contains links to news articles using the question wording. Use the Chart to see how you're forecasting compared to everyone else. Do you agree? Or are you thinking differently to the crowd?`)
                                 }}
                             />
@@ -768,9 +787,6 @@ console.log(e);
                                 previousCertaintyTwo={previousCertaintyTwo}
                                 previousCertaintyThree={previousCertaintyThree}
                             />
-
-
-
                             {/* <div className="forecast-chart-stats-switcher-tab-menu">
                                 <div className={switcherTab === "problemStats" ? "forecast-chart-stats-switcher-tab-selected" : "forecast-chart-stats-switcher-tab"} onClick={() => setSwitcherTab("chart")}><h3>Chart</h3></div>
                                 <div className={switcherTab === "chart" ? "forecast-chart-stats-switcher-tab-selected" : "forecast-chart-stats-switcher-tab"} onClick={() => setSwitcherTab("problemStats")}><h3>Problem Stats</h3></div>
@@ -829,7 +845,7 @@ console.log(e);
                                                     className="modal-i-btn"
                                                     onClick={() => { 
                                                         setShowModal(true); 
-                                                        setModalContent(`Here you input your confidence for each outcome. You have 100 points to allocate across the two outcomes, and you can even use decimals. As you update one number, the other will automatically change for you. You can come back and update your forecast as often as you like!`);
+                                                        setModalContent(`How likely do you think each possible outcome is? Using the sliders, allocate 100 points across across the two outcomes. The more you allocate to one outcome, the more you'll gain if that outcome happens. As you update one number, the other will automatically change for you. You can come back and update your forecast as often as you like!`);
                                                         setModalContent2("");
                                                     }}
                                                 />
@@ -837,21 +853,49 @@ console.log(e);
                                             <div className="new-forecast-binary-container">
                                                 <div className="new-forecast-input-binaries">
                                                     <h2>{selectedForecastObject.potentialOutcomes[0]}</h2>
-                                                    <input
+                                                    <h1 className="certainty-show">{Math.round(certaintyToShow, 2)}%</h1>
+                                                    <input 
+                                                        type="range" 
+                                                        id="certaintyYes" 
+                                                        name="certaintyYes" 
+                                                        min="0" 
+                                                        max="100" 
+                                                        step="1"
+                                                        default="50"
+                                                        onChange={(e) => handleCertaintyChange(e, true)}
+                                                        value={certaintyToShow}
+                                                        style={{ width: "100%", accentColor: "#404d72" }}
+                                                    />
+                                                    {/* <input
                                                         type="number"
                                                         defaultValue={0}
                                                         className="forecast-certainty-input"    
                                                     >
-                                                    </input>
+                                                    </input> */}
+                                                    {/* <label for="certaintyYes">{selectedForecastObject.potentialOutcomes[0]}</label> */}
                                                 </div>
                                                 <div className="new-forecast-input-binaries">
                                                     <h2>{selectedForecastObject.potentialOutcomes[1]}</h2>
+                                                    <h1 className="certainty-show">{Math.round(noCertaintyToShow, 2)}%</h1>
+                                                    <input 
+                                                        type="range" 
+                                                        id="certaintyNo" 
+                                                        name="certaintyNo" 
+                                                        min="0" 
+                                                        max="100" 
+                                                        step="1"
+                                                        default="50"
+                                                        onChange={(e) => handleCertaintyChange(e, false)}
+                                                        value={noCertaintyToShow}
+                                                        style={{ width: "100%", accentColor: "#404d72" }}
+                                                    />
+                                                    {/* <h2>{selectedForecastObject.potentialOutcomes[1]}</h2>
                                                     <input
                                                         type="number"
                                                         defaultValue={0}
                                                         className="forecast-certainty-input"    
                                                     >
-                                                    </input>
+                                                    </input> */}
                                                 </div>
                                             </div>
 
@@ -869,36 +913,38 @@ console.log(e);
                                                 /> */}
                                             {/* CHARMANDER: Old input form */}
                                         </div>
-                                        <div className="forecast-submission-input-explanation-section">
-                                            <h2>
-                                                Forecast Explanation
-                                                <FaInfoCircle 
-                                                    color={"orange"} 
-                                                    className="modal-i-btn"
-                                                    onClick={() => { 
-                                                        setShowModal(true); 
-                                                        setModalContent(`Feel free to note what resources, articles, key events or info helped to inform your prediction. This will be helpful for when you update your predictions (to see how you justified prior forecasts).`)
-                                                        setModalContent2("");
-                                                        }}
-                                                />
-                                            </h2>
-                                            {userHasAttempted === true &&
-                                                <textarea 
-                                                    className="forecast-submission-explanation-input"
-                                                    name="forecast-explanation"
-                                                    disabled={isInputDisabled}
-                                                    onChange={handleCommentsChange}>
-                                                </textarea>
-                                            }
-                                            {userHasAttempted === false &&
-                                                <textarea 
-                                                    placeholder="Explain why you gave the above certainty/certainties"
-                                                    className="forecast-submission-explanation-input"
-                                                    name="forecast-explanation"
-                                                    disabled={isInputDisabled}
-                                                    onChange={handleCommentsChange}>
-                                                </textarea>
-                                            }
+                                        <div className="forecast-submission-explanation-and-btn-container">
+                                            <div className="forecast-submission-input-explanation-section">
+                                                <h2>
+                                                    Forecast Explanation
+                                                    <FaInfoCircle 
+                                                        color={"orange"} 
+                                                        className="modal-i-btn"
+                                                        onClick={() => { 
+                                                            setShowModal(true); 
+                                                            setModalContent(`Feel free to note what resources, articles, key events or info helped to inform your prediction. This will be helpful for when you update your predictions (to see how you justified prior forecasts).`)
+                                                            setModalContent2("");
+                                                            }}
+                                                    />
+                                                </h2>
+                                                {userHasAttempted === true &&
+                                                    <textarea 
+                                                        className="forecast-submission-explanation-input"
+                                                        name="forecast-explanation"
+                                                        disabled={isInputDisabled}
+                                                        onChange={handleCommentsChange}>
+                                                    </textarea>
+                                                }
+                                                {userHasAttempted === false &&
+                                                    <textarea 
+                                                        placeholder="Explain why you gave the above certainty/certainties"
+                                                        className="forecast-submission-explanation-input"
+                                                        name="forecast-explanation"
+                                                        disabled={isInputDisabled}
+                                                        onChange={handleCommentsChange}>
+                                                    </textarea>
+                                                }
+                                            </div>
                                         </div>
                                         {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
                                             <button 
@@ -939,19 +985,68 @@ console.log(e);
                                 {(forecastSingleCertainty === false && (forecastResponseMessage !== "Forecast successfully updated! Check out the chart to see it!" && forecastResponseMessage !== "Forecast successfully submitted! Check out the chart to see it!")) &&
                                     <div className="multiple-forecast-submission-input">
                                         <div className="forecast-submission-input-certainty-section">
-                                            <h3>
-                                                Your Certainty (0.00 - 100.00%)
+                                        <h2 className="new-forecast-input-header">
+                                                Enter Your Forecast (0 - 100%)
                                                 <FaInfoCircle 
-                                                    onClick={() => {
-                                                        setShowModal(true);
-                                                        setModalContent(`Here you need to enter a number representing your CONFIDENCE that each outcome WILL HAPPEN. You have 100 points to allocate between the three and you have unlimited submissions for each forecast, so if you change your mind or learn something new and want to update your prediction, come back here and submit a new one!`);
+                                                    color={"orange"} 
+                                                    className="modal-i-btn"
+                                                    onClick={() => { 
+                                                        setShowModal(true); 
+                                                        setModalContent(`How likely do you think each possible outcome is? Using the sliders, allocate 100 points across across the three outcomes. The more you allocate to one outcome, the more you'll gain if that outcome happens. You can come back and update your forecast as often as you like!`);
                                                         setModalContent2("");
                                                     }}
-                                                    style={{ "color": "orange", "cursor": "pointer" }}
                                                 />
-                                            </h3>
+                                            </h2>
                                             <div className="multiple-input-fields">
-                                                <div className="input-header-container">
+                                                <div className="new-forecast-input-binaries">
+                                                    <h3>{forecastPotentialOutcomes[0]}</h3>
+                                                    <h1 className="certainty-show">{Math.round(tripleCertainty1ToShow, 2)}%</h1>
+                                                    <input 
+                                                        type="range" 
+                                                        id="tripleCertainty1" 
+                                                        name="tripleCertainty1" 
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        onChange={(e) => handleMultipleCertaintyChange(1, e)}
+                                                        value={tripleCertainty1ToShow}
+                                                        style={{ width: "100%", accentColor: "#404d72" }}
+                                                    />
+                                                </div>
+                                                <div className="new-forecast-input-binaries">
+                                                    <h3>{forecastPotentialOutcomes[1]}</h3>
+                                                    <h1 className="certainty-show">{Math.round(tripleCertainty2ToShow, 2)}%</h1>
+                                                    <input 
+                                                        type="range" 
+                                                        id="tripleCertainty2" 
+                                                        name="tripleCertainty2" 
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        onChange={(e) => handleMultipleCertaintyChange(2, e)}
+                                                        value={tripleCertainty2ToShow}
+                                                        style={{ width: "100%", accentColor: "#404d72" }}
+                                                    />
+                                                </div>
+                                                <div className="new-forecast-input-binaries">
+                                                    <h3>{forecastPotentialOutcomes[2]}</h3>
+                                                    <h1 className="certainty-show">{Math.round(tripleCertainty3ToShow, 2)}%</h1>
+                                                    <input 
+                                                        type="range" 
+                                                        id="tripleCertainty3" 
+                                                        name="tripleCertainty3" 
+                                                        min="0"
+                                                        max="100"
+                                                        step="1"
+                                                        onChange={(e) => handleMultipleCertaintyChange(3, e)}
+                                                        value={tripleCertainty3ToShow}
+                                                        style={{ width: "100%", accentColor: "#404d72" }}
+                                                    />
+                                                </div>
+
+
+                                                {/* Previous format */}
+                                                {/* <div className="input-header-container">
                                                     <h3>{forecastPotentialOutcomes[0]}</h3>
                                                     <input 
                                                         type="number" 
@@ -986,22 +1081,22 @@ console.log(e);
                                                         step="0.05"
                                                         disabled={isInputDisabled}
                                                     />
-                                                </div>
+                                                </div> */}
                                             </div>
                                         </div>
                                         <div className="forecast-submission-explanation-and-btn-container">
                                             <div className="forecast-submission-input-explanation-section">
-                                                <h3>
+                                                <h2>
                                                     Forecast Explanation
                                                     <FaInfoCircle 
-                                                    color={"orange"} 
-                                                    className="modal-i-btn"
-                                                    onClick={() => { 
-                                                        setShowModal(true); 
-                                                        setModalContent(`Feel free to note what resources, articles, key events or info helped to inform your prediction. This will be helpful for when you update your predictions (to see how you justified prior forecasts).`);
-                                                        setModalContent2("")}}
+                                                        color={"orange"} 
+                                                        className="modal-i-btn"
+                                                        onClick={() => { 
+                                                            setShowModal(true); 
+                                                            setModalContent(`Feel free to note what resources, articles, key events or info helped to inform your prediction. This will be helpful for when you update your predictions (to see how you justified prior forecasts).`);
+                                                            setModalContent2("")}}
                                                     />
-                                                </h3>
+                                                </h2>
                                                 {userHasAttempted === true &&
                                                     <textarea 
                                                         className="forecast-submission-explanation-input"
@@ -1062,10 +1157,10 @@ console.log(e);
                                     </div>
                                 }
                                 {(forecastResponseMessage === "Forecast successfully updated! Check out the chart to see it!" || forecastResponseMessage === "Forecast successfully submitted! Check out the chart to see it!") && 
-                                    <h3 className="forecast-message" style={{ color: "green" }}>{forecastResponseMessage}</h3>
+                                    <h2 className="forecast-message" style={{ color: "green" }}>{forecastResponseMessage}</h2>
                                 }
                                 {(forecastResponseMessage !== "" && (forecastResponseMessage !== "Forecast successfully updated! Check out the chart to see it!" && forecastResponseMessage !== "Forecast successfully submitted! Check out the chart to see it!")) && 
-                                    <h3 className="forecast-message" style={{ color: "red" }}>{forecastResponseMessage}</h3>
+                                    <h2 className="forecast-message" style={{ color: "red" }}>{forecastResponseMessage}</h2>
                                 }
                             </div>
                             {/* <div className="forecast-submission-potential-scores">

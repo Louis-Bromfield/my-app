@@ -53,6 +53,9 @@ function HomeNewsFeed(props) {
     const getAllNewsFeedPostsFromDB = async () => {
         try {
             const allPosts = await axios.get(`${process.env.REACT_APP_API_CALL_HPNFP}`);
+            // const allPosts = await axios.get(`http://localhost:8000/homePageNewsFeedPosts`);
+console.log("Here?");
+console.log(allPosts);
             setFeed(allPosts === undefined ? [] : allPosts.data.reverse());
             setFilteredFeed(feed);
         } catch (error) {
@@ -184,7 +187,7 @@ function HomeNewsFeed(props) {
             });
             if (updatedUserDocument.data.firstTime === true) {
                 props.handleFirstPost(true);
-                props.handleFirstPostModalContent("You just earned 200 Fantasy Forecast Points for your first post! Future posts will earn you 15 points per post.")    
+                props.handleFirstPostModalContent("You just earned 200 Horse Race Points for your first post! Future posts will earn you 15 points per post.")    
             };
         } catch (error) {
             console.error(error);
@@ -315,7 +318,7 @@ function HomeNewsFeed(props) {
                     <FaInfoCircle 
                         onClick={() => {
                             setShowModal(true);
-                            setModalContent(`This is the main feed for Fantasy Forecast where all users can post links to articles, videos and websites they feel might be of use or of interest to others in the same market. Feel free to post whatever you feel other users might want to see here!`)
+                            setModalContent(`This is the main feed for Horse Race Politics where all users can post links to articles, videos and websites they feel might be of use or of interest to others in the same market. Feel free to post whatever you feel other users might want to see here!`)
                         }}
                         style={{ "color": "orange", "cursor": "pointer" }}
                     />
@@ -387,7 +390,7 @@ function HomeNewsFeed(props) {
                                 </textarea>
                                 <br/>
                                 {/* <h4>Markets:</h4>
-                                <p>Select all markets that your post is relevant to (only forecasters in the markets you select will be able to see your post. Select Fantasy Forecast All-Time if you feel it's relevant to everyone!)</p>
+                                <p>Select all markets that your post is relevant to (only forecasters in the markets you select will be able to see your post. Select Horse Race All-Time if you feel it's relevant to everyone!)</p>
                                 <hr />
                                 {editingPost === false &&
                                     <div className="post-checkboxes">

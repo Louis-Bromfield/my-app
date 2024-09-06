@@ -48,12 +48,14 @@ console.log("Profile.js UE");
             setErrorMessage("");
             const lbName = "Fantasy Forecast All-Time"
             const userData = await axios.get(`${process.env.REACT_APP_API_CALL_L}/leaderboard/${lbName}`);
+            // const userData = await axios.get(`http://localhost:8000/leaderboards/leaderboard/${lbName}`);
             for (let i = 0; i < userData.data.length; i++) {
                 if (userData.data[i].username === username) {
                     setIndex(`${i+1}/${userData.data.length}`)
                 };
             };
             const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${username}`);
+            // const userDocument = await axios.get(`http://localhost:8000/users/profileData/${username}`);
             
             if (userDocument.data.userObj === null) {
                 setErrorMessage("No profiles were found with this username. Please try again.");
@@ -103,9 +105,7 @@ console.log("Profile.js UE");
                 };
             };
             if (userDocument.data.userObj.inTeam === true) {
-                const teamDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${userDocument.data.userObj.teamName}`);
-                
-                
+                const teamDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${userDocument.data.userObj.teamName}`);    
                 setTeamData(teamDocument.data);
             }
         } catch (error) {
@@ -117,15 +117,13 @@ console.log("Profile.js UE");
     const updateOnboarding = async (username) => {
         try {
             const updatedUserDocument = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/onboardingTask/${username}`, {
-            
-            
                 onboardingTask: "visitProfilePage",
                 ffPointsIfFalse: 100,
                 ffPointsIfTrue: 0
             });
             if (updatedUserDocument.data.firstTime === true) {
                 setShowModal(true);
-                setModalContent("You just got 100 Fantasy Forecast Points for visiting your profile for the first time!");
+                setModalContent("You just got 100 Horse Race Points for visiting your profile for the first time!");
             };
         } catch (error) {
             console.error(error);
@@ -180,7 +178,8 @@ console.log("Profile.js UE");
             />
             <div className="main-profile-grid">
                 <div className="profile-grid">
-                    <h1 className="profile-header">{errorMessage === "" ? `${props.username} - Level ${(Math.floor(props.user.fantasyForecastPoints/100)).toFixed(0)} ${forecasterRank}`: errorMessage}</h1> 
+                    {/* <h1 className="profile-header">{errorMessage === "" ? `${props.username} - Level ${(Math.floor(props.user.fantasyForecastPoints/100)).toFixed(0)} ${forecasterRank}`: errorMessage}</h1>  */}
+                    <h1 className="page-header">{errorMessage === "" ? `${props.username} - Level ${(Math.floor(props.user.fantasyForecastPoints/100)).toFixed(0)} ${forecasterRank}`: errorMessage}</h1> 
                     <br />
                     <div className="profile-main-info">
                         <img 
@@ -202,15 +201,15 @@ console.log("Profile.js UE");
                                         {fantasyForecastPoints === undefined ? (Math.floor(props.user.fantasyForecastPoints/100)).toFixed(0): level}
                                         <h5>{forecasterRank}</h5>
                                 </h2>
-                                <h3>Forecaster Level</h3>
+                                <h3>Jockey Level</h3>
                             </div>
                             <div key={1} className="profile-summary-list-item"
                                 onClick={() => {
-                                    setModalContent("Fantasy Forecast Points are earned by submitting forecasts, posting to your feed, completing learn quizzes, and more. If you haven't already, check out the Onboarding menu on the Home page for tips on getting started.");
+                                    setModalContent("Horse Race Points are earned by submitting forecasts, posting to your feed, completing learn quizzes, and more. If you haven't already, check out the Onboarding menu on the Home page for tips on getting started.");
                                     setShowModal(true);
                                 }}>
                                 <h2 className="profile-summary-list-item-value">{fantasyForecastPoints === undefined ? props.user.fantasyForecastPoints.toFixed(0): fantasyForecastPoints.toFixed(0)}</h2>
-                                <h3>Fantasy Forecast Points</h3>
+                                <h3>Horse Race Points</h3>
                             </div>
                             <div key={2} className="profile-summary-list-item"
                                 onClick={() => {
@@ -234,11 +233,11 @@ console.log("Profile.js UE");
                             </div>
                             <div key={4} className="profile-summary-list-item"
                                 onClick={() => {
-                                    setModalContent("This is your placement in the Fantasy Forecast All-Time leaderboard, which is determined solely by Fantasy Forecast Points. To see it in full, go the Leaderboards page and select the Fantasy Forecast All-Time leaderboard.");
+                                    setModalContent("This is your placement in the Horse Race Politics All-Time leaderboard, which is determined solely by Horse Race Politics Points. To see it in full, go the Leaderboards page and select the Fantasy Forecast All-Time leaderboard.");
                                     setShowModal(true);
                                 }}>
                                     <h2 className="profile-summary-list-item-value">{index}</h2>
-                                    <h3>Fantasy Forecast All-Time Rank</h3>
+                                    <h3>Horse Race Politics All-Time Rank</h3>
                             </div>
                             <div key={5} className="profile-summary-list-item">
                                 <h2 
@@ -256,7 +255,7 @@ console.log("Profile.js UE");
                     <div className="profile-stats-rewards-container">
                         <div className="profile-nav-menu">
                             <div style={{ borderLeft: "0px solid #fff" }} className={profileTab === "my-stats" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-stats")}><h3>My Stats</h3></div>
-                            <div style={{borderLeft: "0px solid #fff" }} className={profileTab === "my-forecasts" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-forecasts")}><h3>Forecasts</h3></div>
+                            <div style={{borderLeft: "0px solid #fff" }} className={profileTab === "my-forecasts" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-forecasts")}><h3>My Races</h3></div>
                             {isTeam === false && <div style={{borderLeft: "0px solid #fff" }} className={profileTab === "my-trophies" ? "profile-tab-selected" : "profile-tab"} onClick={() => setProfileTab("my-trophies")}><h3>My Trophies</h3></div>}
                         </div>
                         {profileTab === "my-stats" && <ProfileStats 

@@ -44,7 +44,7 @@ function Home(props) {
 
     useEffect(() => {
         if (localStorage.getItem("firstVisit") === "true") {
-            const welcomeString = "Welcome to Fantasy Forecast! If this is your first time here, we recommend checking out the Onboarding menu on the right (or down below if you're on mobile) for ideas on how to get started with the site - have fun!";
+            const welcomeString = "Welcome to Horse Race Politics! If this is your first time here, we recommend checking out the Onboarding menu on the right (or down below if you're on mobile) for ideas on how to get started with the site - have fun!";
             setModalContent(welcomeString);
             setShowModal(true);
             localStorage.setItem("firstVisit", false);
@@ -55,6 +55,7 @@ function Home(props) {
     const getUserInfo = async (username) => {
         try {
             const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
+            // const userDocument = await axios.get(`http://localhost:8000/users/${username}`);
             if (userDocument.data[0].numberOfClosedForecasts > 0) {
                 setShowClosedProblemModal(true);
             };

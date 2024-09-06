@@ -5,6 +5,7 @@
 
 .forecast-selection-item {
     padding: 3%;
+    border: 3px solid yellow;
 }
 
 .forecast-selection-item:hover {

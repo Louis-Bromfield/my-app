@@ -1,5 +1,5 @@
 .top-three-users-highlight {
-    width: 100%;
+    width: 66%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -8,6 +8,7 @@
     font-size: 0.8em;
     box-shadow: 0.5px 1px 5px 0.5px #888888;
     padding-top: 1vh;
+    margin-bottom: 1vh;
 }
 
 .top-three-individual-user {
@@ -21,17 +22,9 @@
 .rank-one-profile-pic,
 .rank-two-profile-pic,
 .rank-three-profile-pic {
-    height: 70%;
-    max-height: 70%;
-    border-radius: 50%;
-}
-
-@media (max-width: 1500px) {
-    .top-three-users-highlight {
-        width: 100%;
-        font-size: 0.85em;
-        margin-bottom: 1vh;
-    }
+    height: 50%;
+    max-height: 50%;
+    border-radius: 20%;
 }
 
 @media (max-width: 1100px) {

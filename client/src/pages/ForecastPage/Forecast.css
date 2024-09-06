@@ -4,16 +4,19 @@
     flex-direction: column;
     margin: 0 auto;
     margin-top: 3vh;
-    font-size: 0.9em;
+    /* font-size: 0.9em; */
 }
 
 .forecast-header {
     /* margin-left: 6vw; */
     /* margin-right: 6vw; */
-    display: grid;
-    grid-template-columns: 30% 70%;
-    font-size: 0.9em;
+    /* display: grid; */
+    /* grid-template-columns: 30% 70%; */
+    display: flex;
+    flex-direction: row;
+    /* font-size: 0.9em; */
     margin-bottom: 1vh;
+    float: right;
 }
 
 .forecast-header-left {
@@ -68,6 +71,7 @@
     width: 100%;
     margin: 0 auto;
     margin-top: 2vh;
+    border-right: 1px solid lightgray;
 }
 
 .new-forecast-container-bottom-half-row {

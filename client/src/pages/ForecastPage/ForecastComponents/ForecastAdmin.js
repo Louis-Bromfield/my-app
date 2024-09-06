@@ -99,16 +99,18 @@ function ForecastAdmin(props) {
 
     const closeAndCalculateBriers = async (problemName, happenedStatus, notHappenedStatus, market, closeEarly) => {
         try {
-            let scores;
+            // let scores;
             if (closeEarly === true) {
                 console.log("Here2");
-                scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
+                // scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
+                await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
                     problemName: problemName,
                     newProblemCloseDateTime: newProblemCloseDateTime
                 });
             } else if (closeEarly === false) {
                 console.log("Here3");
-                scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
+                // scores = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
+                await axios.patch(`${process.env.REACT_APP_API_CALL_U}/calculateBrier/${happenedStatus}/${market}/${closeEarly}`, {
                 problemName: problemName
                 });
             };

@@ -1,36 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import './ForecastArticlesDisplay.css';
-import PlaceholderIcon from '../../../media/sd.png';
-import ReactLoading from 'react-loading';
 
 function ForecastArticlesDisplay(props) {
     const [articles, setArticles] = useState("loading");
 
-    const googleNewsScrape = async (searchTerm) => {
-        try {
-            // let term = "";
-            // if (searchTerm.includes("Bedford")) {
-            //     term = "Bedford Mayor election UK"
-            // } else if (searchTerm.includes("Mansfield")) {
-            //     term = "Mansfield Mayor election UK"
-            // } else if (searchTerm.includes("Oldham")) {
-            //     term = "Oldham election"
-            // } else {
-            //     term = "UK Local Elections";
-            // }
-            // let googleNewsScrapeResult;
-            let term = "2024 US Election";
-            let googleNewsScrapeResult = await axios.get(`${process.env.REACT_APP_API_CALL_GSN}/${term}`);
-            setArticles(googleNewsScrapeResult.data);
-        } catch (error) {
-            console.error(error);
-        };
-    };
+    // const googleNewsScrape = async (searchTerm) => {
+    //     try {
+    //         let term = "2024 US Election";
+    //         let googleNewsScrapeResult = await axios.get(`${process.env.REACT_APP_API_CALL_GSN}/${term}`);
+    //         setArticles(googleNewsScrapeResult.data);
+    //     } catch (error) {
+    //         console.error(error);
+    //     };
+    // };
 
     const logUserAction = async (username) => {
         try {
-            const res = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, {
+            await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, {
                 articleVisits: props.userObject.articleVisits + 1
             });
             props.userObject.articleVisits++;
@@ -40,17 +27,6 @@ function ForecastArticlesDisplay(props) {
         };
     };
 
-    useEffect(() => {
-        // setArticles("loading");
-        // googleNewsScrape(props.searchTerm.problemName);
-    }, [props.searchTerm]);
-
-    // if (articles === "loading") {
-    //     return <div className="articles-loading">
-    //         <h2>Loading potentially useful articles...</h2>
-    //         <ReactLoading type="bars" color="#404d72" height="15%" width="15%" />
-    //     </div>
-    // } else {
         return (
             <div className="articles">
                 <div className="articles-header">

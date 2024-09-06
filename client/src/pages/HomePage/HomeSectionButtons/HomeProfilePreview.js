@@ -153,11 +153,11 @@ function HomeProfilePreview(props) {
                 <div className="home-profile-preview-stats-list-container">
                     <div className="home-profile-preview-stats-list-left">
                         <h4>
-                            Fantasy Forecast Points
+                            Horse Race Points
                             <FaInfoCircle 
                                 color={"orange"} 
                                 className="modal-i-btn"
-                                onClick={() => { setShowModal(true); setModalContent(`Fantasy Forecast Points are earned through the majority of your interactions with the site. Submitting a forecast (you'll also get points when a problem closes and you receive a score based on how accurate you were), posting to the news feed, completing the Onboarding tasks, attempting the quizzes found on the Learn page and more! Head to the Learn page and select the "Fantasy Forecast Points" topic for more info!`)}}
+                                onClick={() => { setShowModal(true); setModalContent(`Horse Race Points are earned through the majority of your interactions with the site. Submitting a forecast (you'll also get points when a problem closes and you receive a score based on how accurate you were), posting to the news feed, completing the Onboarding tasks, attempting the quizzes found on the Learn page and more! Head to the Learn page and select the "Horse Race Points" topic for more info!`)}}
                             />
                         </h4>
                         <h4>Quiz Completion</h4>

@@ -5,9 +5,9 @@ import ForecastSubmission from './ForecastComponents/ForecastSubmission';
 import axios from 'axios';
 import ForecastArticlesDisplay from './ForecastComponents/ForecastArticlesDisplay';
 import Modal from '../../components/Modal';
-import { FaInfoCircle } from 'react-icons/fa';
-import ForecastSelection from './ForecastComponents/ForecastSelection';
-import ForecastDataSubmission from './ForecastComponents/ForecastDataSubmission';
+// import { FaInfoCircle } from 'react-icons/fa';
+// import ForecastSelection from './ForecastComponents/ForecastSelection';
+// import ForecastDataSubmission from './ForecastComponents/ForecastDataSubmission';
 import ForecastChat from './ForecastComponents/ForecastChat';
 
 function Forecast(props) {
@@ -42,15 +42,16 @@ console.log("CHARMANDER");
     const getAllForecastsFromDB = async () => {
         try {
             const allForecastsUnfiltered = await axios.get(`${process.env.REACT_APP_API_CALL_F}`);
+            // const allForecastsUnfiltered = await axios.get(`http://localhost:8000/forecasts`);
             setAllForecasts(allForecastsUnfiltered.data);
         } catch (error) {
             console.error(error);
         };
     };
 
-    const handleClick = (forecastObj) => {
-        setSelectedForecast(forecastObj);
-    };
+    // const handleClick = (forecastObj) => {
+    //     setSelectedForecast(forecastObj);
+    // };
 
     useEffect(() => {
         getAllForecastsFromDB();
@@ -68,23 +69,25 @@ console.log("CHARMANDER");
                 <p>{modalContent}</p>
                 <p>{modalContent2}</p>
             </Modal>
+            <h1 className="page-header">Races</h1>
             <div className="forecast-header">
-                <div className="forecast-header-left">
-                    <h1>Forecasts</h1>
+                {/* <div className="forecast-header-left">
+                    <h1>Races</h1>
                     <FaInfoCircle 
                         onClick={() => {
                             setShowModal(true);
-                            setModalContent(`This is the page for submitting your forecasts. To forecast, select a problem 
+                            setModalContent(`This is the page for submitting your forecasts. Each forecast question is called a 'Race',
+                            and you can submit predictions as to which outcome you think is going to happen. To do this, select a race 
                             from the list below. Your job is to predict how likely an outcome is to happen on a 
                             scale from 0-100, and you can update your prediction as many times as you like.`)
                         }}
                         style={{ "color": "orange", "cursor": "pointer" }}
                     />
-                </div>
+                </div> */}
                 <div className="forecast-info-bar-container">
                     <div className="individual-forecast-info-container" onClick={() => {
                         setShowModal(true);
-                        setModalContent("This is where you manage all of your forecasts. Your job is to select a problem from the dropdown menu below and submit predictions based on how confident you are of the outcome happening on a scale of 0-100. Once you submit a forecast, you are free to update it as many times as you like! A chart will show the forecasts submitted by all other users who have attempted this problem, and relevant statistics and articles will be available to assist you, as well as a comment section for you to discuss with other forecasters.")
+                        setModalContent("This is where you manage all of your predictions. Your job is to select a race from the dropdown menu below and submit predictions based on how confident you are of the outcome happening on a scale of 0-100. Once you submit a prediction, you are free to update it as many times as you like! A chart will show the predictions submitted by all other users who have attempted this problem, and relevant statistics and articles will be available to assist you, as well as a comment section for you to discuss with other players.")
                         setModalContent2("");
                     }}>
                         <h4>What do I do on this page?</h4>

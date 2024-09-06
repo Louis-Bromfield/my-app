@@ -41,7 +41,7 @@ function ForecastMarketLeaderboard(props) {
                         <th className="snapshot-ffpoints-column">Market Points</th>
                     </tr>
                     {props.leaderboard.slice(start, finish).map((item, index) => {
-                        if (item.username !== "Guest") {
+                        // if (item.username !== "Guest") {
                             if (item.username === props.username) {
                                 return (
                                     <tr key={index+1} className="leaderboard-snapshot-row-matching-username">
@@ -59,7 +59,7 @@ function ForecastMarketLeaderboard(props) {
                                     </tr>
                                 )
                             }
-                        }
+                        // }
                     })}
                 </tbody>
             </table>

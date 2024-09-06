@@ -27,13 +27,13 @@ function ProfileRewards(props) {
                 <p>{modalContent}</p>
             </Modal>
             <h2 className="profile-header">My Trophies ({completeTrophyCount}/12)</h2>
-            <p>Here you can find all possible trophies that you can obtain through Fantasy Forecast. Trophies you have obtained are in colour, and those that are not are in
+            <p>Here you can find all possible trophies that you can obtain through Horse Race Politics. Trophies you have obtained are in colour, and those that are not are in
                 grey. Each trophy can be clicked on to tell you how it has been or can be obtained.
             </p>
             <div className="trophy-grid-container">
                 {props.userObj.trophies !== undefined ? props.userObj.trophies.map((item, index) => {
                     return (
-                        <div className="individual-trophy-container" onClick={() => { setShowModal(true); setModalContent(item.trophyText === "Seer" ? "This trophy is earned by reaching Level 15, or 1500 Fantasy Forecast Points. You will be given a Level-exclusive profile border (bronze) to let other forecasters know of your rank." : item.trophyModalText)}}>
+                        <div className="individual-trophy-container" onClick={() => { setShowModal(true); setModalContent(item.trophyText === "Seer" ? "This trophy is earned by reaching Level 15, or 1500 Horse Race Points. You will be given a Level-exclusive profile border (bronze) to let other forecasters know of your rank." : item.trophyModalText)}}>
                             <img src={item.obtained === true ? Trophy : TrophyModified} alt="" className="trophy-img" />
                             <h4>{item.trophyText}</h4>
                         </div>

@@ -97,9 +97,9 @@
     color: #747070;
 }
 
-.article-list-item:hover {
+/* .article-list-item:hover {
     box-shadow: 0 0 4px 2px gray;
-}
+} */
 
 @media (max-width: 1500px) {
     .articles {

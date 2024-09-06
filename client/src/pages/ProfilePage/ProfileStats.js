@@ -13,7 +13,6 @@ function ProfileStats(props) {
     const [playerWorstBrier, setPlayerWorstBrier] = useState();
     const [playerAverageBrier, setPlayerAverageBrier] = useState();
     const [problemsAttempted, setProblemsAttempted] = useState(0);
-    const [marketsIn, setMarketsIn] = useState(0);
     const [ffPoints, setFFPoints] = useState(0);
     const [onboardingProgress, setOnboardingProgress] = useState(0);
     const [bestChanged, setBestChanged] = useState(false);
@@ -194,7 +193,6 @@ function ProfileStats(props) {
                 userObj = userDoc.data[0];
             };
             setProblemsAttempted(userObj.brierScores.length || "X");
-            setMarketsIn(userObj.markets.length || "X");
             setFFPoints(userObj.fantasyForecastPoints.toFixed(0) || "X");
             let onboardingCount = 0;
             Object.entries(userObj.onboarding).forEach(
@@ -215,11 +213,11 @@ function ProfileStats(props) {
         <div className="profile-stats">
             <h2 className="profile-header">My Stats</h2>
             {isHiddenBehindLevel === true &&
-                <h3>This section of your profile is locked until you reach Level 6 (600 Fantasy ForecastPoints) or you unlock the Ready To Go trophy. Complete the onboarding tasks on the Home page, submit forecasts, post to the feed and more to earn the points you need!</h3>
+                <h3>This section of your profile is locked until you reach Level 6 (600 Horse Race Points) or you unlock the Ready To Go trophy. Complete the onboarding tasks on the Home page, submit forecasts, post to the feed and more to earn the points you need!</h3>
             }
             {isHiddenBehindLevel === false && 
                 <div className="">
-                    <h4>Check out your Fantasy Forecast stats and how you're stacking up to the rest of the playerbase.</h4>
+                    <h4>Check out your Horse Race stats and how you're stacking up to the rest of the playerbase.</h4>
                     <div className="profile-stats-inner">
                         <div className="profile-stats-recent-forecasts">
                             <br/>
@@ -254,7 +252,7 @@ function ProfileStats(props) {
                             <h3 className="player-stats-title" style={{ textAlign: "center" }}>Unique Player Stats</h3>
                             <hr className="player-stats-title-hr" />
                             <div className="profile-stats-grid-body-two-cols">
-                                <h4>Fantasy Forecast Points:</h4>
+                                <h4>Horse Race Points:</h4>
                                 <h3 style={{ color: "#404d72" }}>{ffPoints}</h3>
                                 <h4>Questions Attempted:</h4>
                                 <h3 style={{ color: "#404d72" }}>{problemsAttempted}</h3>

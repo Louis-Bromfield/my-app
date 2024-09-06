@@ -9,8 +9,8 @@ function ForecastProblemLineChart(props) {
   const [averageChartData, setAverageChartData] = useState([]);
   const [labelsArray, setLabelsArray] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [modalContent, setModalContent] = useState("");
-  const [modalContent2, setModalContent2] = useState("");
+//   const [modalContent, setModalContent] = useState("");
+//   const [modalContent2, setModalContent2] = useState("");
   const [outcomeOneChartData, setOutcomeOneChartData] = useState([]);
   const [outcomeTwoChartData, setOutcomeTwoChartData] = useState([]);
   const [outcomeThreeChartData, setOutcomeThreeChartData] = useState([]);
@@ -21,119 +21,119 @@ function ForecastProblemLineChart(props) {
   const [simulatedUserData, setSimulatedUserData] = useState([]);
 
   useEffect(() => {
-    if (props.selectedForecastObject === {} || props.forecastSingleCertainty === undefined) {
-        return;
-    } else {
-        formatCertainties(props.selectedForecastObject, props.updateTodayStats, props.username);
-    } 
-    if (props.refreshChartAppearance !== 0) {
-        if (props.selectedForecastObject.singleCertainty === true) {
-            let newUserChartData = userChartData.data;
-            if (newUserChartData.length >= 1) {
-                newUserChartData[newUserChartData.length-1] = {
-                    username: props.username,
-                    x: new Date().toString().slice(0, 15),
-                    y: props.userPreviousAttemptCertainty,
-                    description: props.userPreviousAttemptComments
+    console.log("UE Fired here Louis+++++++++++++++++");
+      if (props.selectedForecastObject === {} || props.forecastSingleCertainty === undefined) {
+            return;
+        } else {
+            formatCertainties(props.selectedForecastObject, props.updateTodayStats, props.username);
+        } 
+        if (props.refreshChartAppearance !== 0) {
+            if (props.selectedForecastObject.singleCertainty === true) {
+                let newUserChartData = userChartData.data;
+                if (newUserChartData.length >= 1) {
+                    newUserChartData[newUserChartData.length-1] = {
+                        username: props.username,
+                        x: new Date().toString().slice(0, 15),
+                        y: props.userPreviousAttemptCertainty,
+                        description: props.userPreviousAttemptComments
+                    };
+                } else {
+                    newUserChartData.push({
+                        username: props.username,
+                        x: new Date().toString().slice(0, 15),
+                        y: props.userPreviousAttemptCertainty,
+                        description: props.userPreviousAttemptComments
+                    });
                 };
-            } else {
-                newUserChartData.push({
-                    username: props.username,
-                    x: new Date().toString().slice(0, 15),
-                    y: props.userPreviousAttemptCertainty,
-                    description: props.userPreviousAttemptComments
-                });
-            };
-            let userData = {
-                label: "Your Forecasts",
-                data: newUserChartData,
-                backgroundColor: "green",
-                borderColor: "orange",
-                showLine: true,
-                borderWidth: 4,
-                pointRadius: 4
-            }
-            setUserChartData(userData);
-        } else if (props.selectedForecastObject.singleCertainty === false) {
-            let newUserOutcomeOneData = userOutcomeOneChartData.length === 0 ? userOutcomeOneChartData : userOutcomeOneChartData.data;
-            let newUserOutcomeTwoData = userOutcomeTwoChartData.length === 0 ? userOutcomeTwoChartData : userOutcomeTwoChartData.data;
-            let newUserOutcomeThreeData = userOutcomeThreeChartData.length === 0 ? userOutcomeThreeChartData : userOutcomeThreeChartData.data;
-            if (newUserOutcomeOneData.length >= 1) {
-                newUserOutcomeOneData[newUserOutcomeOneData.length-1] = {
-                    username: props.username,
-                    x: new Date().toString().slice(0, 15),
-                    y: props.previousCertaintyOne*100,
-                    description: props.userPreviousAttemptComments
+                let userData = {
+                    label: "Your Forecasts",
+                    data: newUserChartData,
+                    backgroundColor: "green",
+                    borderColor: "orange",
+                    showLine: true,
+                    borderWidth: 4,
+                    pointRadius: 4
+                }
+                setUserChartData(userData);
+            } else if (props.selectedForecastObject.singleCertainty === false) {
+                let newUserOutcomeOneData = userOutcomeOneChartData.length === 0 ? userOutcomeOneChartData : userOutcomeOneChartData.data;
+                let newUserOutcomeTwoData = userOutcomeTwoChartData.length === 0 ? userOutcomeTwoChartData : userOutcomeTwoChartData.data;
+                let newUserOutcomeThreeData = userOutcomeThreeChartData.length === 0 ? userOutcomeThreeChartData : userOutcomeThreeChartData.data;
+                if (newUserOutcomeOneData.length >= 1) {
+                    newUserOutcomeOneData[newUserOutcomeOneData.length-1] = {
+                        username: props.username,
+                        x: new Date().toString().slice(0, 15),
+                        y: props.previousCertaintyOne*100,
+                        description: props.userPreviousAttemptComments
+                    };
+                    newUserOutcomeTwoData[newUserOutcomeTwoData.length-1] = {
+                        username: props.username,
+                        x: new Date().toString().slice(0, 15),
+                        y: props.previousCertaintyTwo*100,
+                        description: props.userPreviousAttemptComments
+                    };
+                    newUserOutcomeThreeData[newUserOutcomeThreeData.length-1] = {
+                        username: props.username,
+                        x: new Date().toString().slice(0, 15),
+                        y: props.previousCertaintyThree*100,
+                        description: props.userPreviousAttemptComments
+                    };
+                } else {
+                    newUserOutcomeOneData.push({
+                        username: props.username,
+                        x: new Date().toString().slice(0, 15),
+                        y: props.previousCertaintyOne*100,
+                        description: props.userPreviousAttemptComments
+                    });
+                    newUserOutcomeTwoData.push({
+                        username: props.username,
+                        x: new Date().toString().slice(0, 15),
+                        y: props.previousCertaintyTwo*100,
+                        description: props.userPreviousAttemptComments
+                    });
+                    newUserOutcomeThreeData.push({
+                        username: props.username,
+                        x: new Date().toString().slice(0, 15),
+                        y: props.previousCertaintyThree*100,
+                        description: props.userPreviousAttemptComments
+                    });
+                }
+                let userOutcomeOneChData = {
+                    label: `${props.selectedForecastObject.potentialOutcomes[0]} (Me)`,
+                    data: newUserOutcomeOneData,
+                    backgroundColor: "lightblue",
+                    borderColor: "lightblue",
+                    showLine: true,
+                    borderWidth: 3,
+                    pointRadius: 2
                 };
-                newUserOutcomeTwoData[newUserOutcomeTwoData.length-1] = {
-                    username: props.username,
-                    x: new Date().toString().slice(0, 15),
-                    y: props.previousCertaintyTwo*100,
-                    description: props.userPreviousAttemptComments
+                let userOutcomeTwoChData = {
+                    label: `${props.selectedForecastObject.potentialOutcomes[1]} (Me)`,
+                    data: newUserOutcomeTwoData,
+                    backgroundColor: "pink",
+                    borderColor: "pink",
+                    showLine: true,
+                    borderWidth: 3,
+                    pointRadius: 2
                 };
-                newUserOutcomeThreeData[newUserOutcomeThreeData.length-1] = {
-                    username: props.username,
-                    x: new Date().toString().slice(0, 15),
-                    y: props.previousCertaintyThree*100,
-                    description: props.userPreviousAttemptComments
+                let userOutcomeThreeChData = {
+                    label: `${props.selectedForecastObject.potentialOutcomes[2]} (Me)`,
+                    data: newUserOutcomeThreeData,
+                    backgroundColor: "lightgreen",
+                    borderColor: "lightgreen",
+                    showLine: true,
+                    borderWidth: 3,
+                    pointRadius: 2
                 };
-            } else {
-                newUserOutcomeOneData.push({
-                    username: props.username,
-                    x: new Date().toString().slice(0, 15),
-                    y: props.previousCertaintyOne*100,
-                    description: props.userPreviousAttemptComments
-                });
-                newUserOutcomeTwoData.push({
-                    username: props.username,
-                    x: new Date().toString().slice(0, 15),
-                    y: props.previousCertaintyTwo*100,
-                    description: props.userPreviousAttemptComments
-                });
-                newUserOutcomeThreeData.push({
-                    username: props.username,
-                    x: new Date().toString().slice(0, 15),
-                    y: props.previousCertaintyThree*100,
-                    description: props.userPreviousAttemptComments
-                });
-            }
-            let userOutcomeOneChData = {
-                label: `${props.selectedForecastObject.potentialOutcomes[0]} (Me)`,
-                data: newUserOutcomeOneData,
-                backgroundColor: "lightblue",
-                borderColor: "lightblue",
-                showLine: true,
-                borderWidth: 3,
-                pointRadius: 2
+                setUserOutcomeOneChartData(userOutcomeOneChData);
+                setUserOutcomeTwoChartData(userOutcomeTwoChData);
+                setUserOutcomeThreeChartData(userOutcomeThreeChData);
             };
-            let userOutcomeTwoChData = {
-                label: `${props.selectedForecastObject.potentialOutcomes[1]} (Me)`,
-                data: newUserOutcomeTwoData,
-                backgroundColor: "pink",
-                borderColor: "pink",
-                showLine: true,
-                borderWidth: 3,
-                pointRadius: 2
-            };
-            let userOutcomeThreeChData = {
-                label: `${props.selectedForecastObject.potentialOutcomes[2]} (Me)`,
-                data: newUserOutcomeThreeData,
-                backgroundColor: "lightgreen",
-                borderColor: "lightgreen",
-                showLine: true,
-                borderWidth: 3,
-                pointRadius: 2
-            };
-            setUserOutcomeOneChartData(userOutcomeOneChData);
-            setUserOutcomeTwoChartData(userOutcomeTwoChData);
-            setUserOutcomeThreeChartData(userOutcomeThreeChData);
+            createLabelsArray(new Date(props.selectedForecastObject.startDate), new Date(props.selectedForecastObject.closeDate));
+        } else {
+            console.log("here no");
         };
-        createLabelsArray(new Date(props.selectedForecastObject.startDate), new Date(props.selectedForecastObject.closeDate));
-    } else {
-        console.log("here no");
-    }
-    console.log("UE Fired here Louis+++++++++++++++++")
-  }, [props.selectedForecastObject, props.refreshChartAppearance]);
+    }, [props.selectedForecastObject, props.refreshChartAppearance]);
 
   const formatCertainties = (selectedForecastObject, updateTodayStats, username) => {
     if (selectedForecastObject.submittedForecasts.length === 0) {
@@ -750,9 +750,9 @@ function ForecastProblemLineChart(props) {
     const options = {
         responsive: true,
         maintainAspectRatio: false,
-        // animation: {
-        //     duration: 0
-        // },
+        animation: {
+            duration: 0
+        },
         scales: {
             y: {
                 beginAtZero: true,
@@ -787,11 +787,11 @@ function ForecastProblemLineChart(props) {
     };
     return (
         <div className="forecast-problem-line-chart">
-            {console.log("Line Chart Markup")}
-            <Modal show={showModal} handleClose={() => setShowModal(false)}>
+            {/* {console.log("Line Chart Markup")} */}
+            {/* <Modal show={showModal} handleClose={() => setShowModal(false)}>
                 <p>{modalContent}</p>
                 <p>{modalContent2}</p>
-            </Modal>
+            </Modal> */}
             {/* Copy this and make one just for mobile (like if width) */}
             <div className="chart-container" style={{ position: "relative", margin: "auto", width: "100%", height: "60vh" }}>
                 <Line 

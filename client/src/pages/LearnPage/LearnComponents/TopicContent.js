@@ -1,15 +1,15 @@
 import './TopicContent.css';
-import Brier_Certainty_Chart_Full from '../../../media/Brier_Certainty_Chart_Full.JPG';
-import Zero_To_Twenty_Chart from '../../../media/Brier_Certainty_Zero_To_Twenty.JPG';
-import Eighty_To_Hundred_Chart from '../../../media/Brier_Certainty_Eighty_To_Hundred.JPG';
+// import Brier_Certainty_Chart_Full from '../../../media/Brier_Certainty_Chart_Full.JPG';
+// import Zero_To_Twenty_Chart from '../../../media/Brier_Certainty_Zero_To_Twenty.JPG';
+// import Eighty_To_Hundred_Chart from '../../../media/Brier_Certainty_Eighty_To_Hundred.JPG';
 
 // Each sub-array = one topic, this file will be messy but at least it's contained
 export const TopicContent = [
     // FF Points
     <div className="topic-text-paragraph">
-        <p>Across Fantasy Forecast, you will have numerous opportunities to earn points. On the home page, you'll find the Onboarding menu, which will provide you with a handful of ways to both get started on earning points, as well as giving you some pointers as to what you can do on the site.</p>
+        <p>Across Horse Race Politics, you will have numerous opportunities to earn points. On the home page, you'll find the Onboarding menu, which will provide you with a handful of ways to both get started on earning points, as well as giving you some pointers as to what you can do on the site.</p>
         <p>Points are awarded for submitting forecasts, posting to the news feed, voting on other people's posts, completing the quizzes at the end of each section on this Learn page, and more.</p>
-        <p>Fantasy Forecast Points will determine your rank in the <strong>Fantasy Forecast All-Time</strong> leaderboard. With every 100 points you earn, you level up. Levels bring with them rewards, such as different titles ("Forecaster", "Diviner", "Oracle", etc.) as well as profile picture border colours and the ability to rate other user's posts as truthful and/or relevant.</p>
+        <p>Horse Race Points will determine your rank in the <strong>Horse Race Politics All-Time</strong> leaderboard. With every 100 points you earn, you level up. Levels bring with them rewards, such as different titles ("Forecaster", "Diviner", "Oracle", etc.) as well as profile picture border colours and the ability to rate other user's posts as truthful and/or relevant.</p>
         <p>For the US Presidential Election Tournament, placement here is determined EXCLUSIVELY by your forecasting performance. You can score up to 110 points per forecast question, and these will determine where you rank on the 2024 US Presidential Election Leaderboard.</p>
         <p>This page has been made to help get you up to speed on the 2024 Presidential Election itself, how forecasts are scored on this website, and some forecasting research that may provide tips on how to improve your own performance.</p>
         <p className="middle-align">Happy Forecasting!</p>
@@ -44,7 +44,7 @@ export const TopicContent = [
             <img src={Eighty_To_Hundred_Chart} alt="" className="chart" />
         </div>
         <p>The first chart shows how a certainty of 20% provides an approximate 0.7 point improvement over a certainty of 0%. The second chart shows an equivalent 20% increase, however this time it is going from 80% to 100% certainty, and it shows that the improvement in Brier score is much smaller, only a roughly 0.08 improvement.</p> */}
-        <p><b>So is this how Fantasy Forecast calculates scores? Just one formula?</b></p>
+        <p><b>So is this how Horse Race Politics calculates scores? Just one formula?</b></p>
         <p>Not quite. There are a couple of core issues with the Brier score as is. Firstly, the range of possible scores (0-2) is a VERY small range. It's hard to easily see who the best forecasters are! Secondly, the Brier score is calculated in such a way that smaller is better, whereas we want players to feel rewarded for their efforts, giving them MORE points for better and earlier predictions. So, instead of settling for the 0-2 score, we spice things up.</p>
         <p>Firstly, we flip it. So a 0 now becomes 2, a 0.25 becomes 1.75, a 0.9 becomes a 1.1, and so on. But we're still in the 0-2 ballpark, so we simply multiply this new number by 50, giving us a score from 0-100.</p>
         <p><i>That's more like it.</i></p>
@@ -91,7 +91,7 @@ export const TopicContent = [
     </div>,
     // Superforecasters
     <div className="topic-text-paragraph">
-        <p>One of the main goals of Fantasy Forecast is to help you become a better forecaster; to become better at parsing information and using it to make reasonable and informed predictions about the future. One of the previous sections on this Learn page explores the Good Judgement Project, or GJP, and how they exceeded the goals of 50% improvements over the WOTC by hitting almost 80%. It’s worth our while to consider who were the ones achieving such impressive feats, and how did they do it?</p>
+        <p>One of the main goals of Horse Race Politics is to help you become a better forecaster; to become better at parsing information and using it to make reasonable and informed predictions about the future. One of the previous sections on this Learn page explores the Good Judgement Project, or GJP, and how they exceeded the goals of 50% improvements over the WOTC by hitting almost 80%. It’s worth our while to consider who were the ones achieving such impressive feats, and how did they do it?</p>
         <p>Philip Tetlock, the main man behind the GJP, called these individuals “Superforecasters” - the best of the best, and they comprised roughly 2% of the Project’s participants. He defined them as “ordinary people”, who were incredibly consistent and accurate.</p>
         <p>They were able to make more accurate forecasts 300 days out from a problem’s end date than non-Superforecasters could when 100 days out. They adjusted their forecasts in light of new information much more often, and would frequently make much smaller changes to their certainties, showing a lesser susceptibility to making extreme alterations and being heavily swayed by the latest news (unless they deemed it necessary to dramatically alter their prediction).</p>
         <p>The most surprising thing about Superforecasters is that becoming one is much easier than it sounds. There are a list of characteristics than can expedite the process to becoming a great predictor. Tetlock described them as open-minded, willing to treat their beliefs as testable hypotheses, and treat forecasting as a cultivatable skill rather than some innate genealogical gift that some people just “have”. They were better at just saying “I got that wrong” and learning from it, rather than succumbing to an endless cycle of defeatism and fatalism. They were also more willing to question their own personal biases, like whether your predictions of a score in a football match is being influenced by what you want to happen (perhaps due to support for a team in the match or for a team who would benefit from a certain result).</p>

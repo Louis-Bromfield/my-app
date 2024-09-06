@@ -14,7 +14,7 @@ function Topic(props) {
     let text;
 
     switch(props.title) {
-        case("Fantasy Forecast Points"):
+        case("Horse Race Points"):
             text = TopicContent[0];
         break;
         case("2024 US Presidential Election"):
@@ -78,7 +78,7 @@ function Topic(props) {
     let quizAnswers;
 
     switch(props.title) {
-        case("Fantasy Forecast Points"):
+        case("Horse Race Points"):
             quizQuestions = QuizQuestions[0];
             quizAnswers = QuizAnswers[0].correctAnswers;
         break;
@@ -114,7 +114,7 @@ function Topic(props) {
             {props.paneContent === "info" && 
             <div className="topic">
                 <h1 className="topic-title">{props.title}</h1>
-                {(props.title !== "Fantasy Forecast Points" && props.title !== "Forecasting Teams") && <div className="topic-youtube-video">{youtubeLink}</div>}
+                {(props.title !== "Horse Race Points" && props.title !== "Forecasting Teams") && <div className="topic-youtube-video">{youtubeLink}</div>}
                 <div className="topic-text">{text}</div>
             </div>
             }
@@ -132,7 +132,7 @@ function Topic(props) {
                     />
                 </div>
             }
-            {(props.title !== "Fantasy Forecast Points" && props.title !== "Forecasting Teams") && <div className="btn-div">
+            {(props.title !== "Horse Race Points" && props.title !== "Forecasting Teams") && <div className="btn-div">
                 {props.paneContent === "quiz" &&
                     <button className="quiz-to-topic-btn" onClick={() => props.changeLearnPage("info", props.title)}>Return to Topic</button>
                 }

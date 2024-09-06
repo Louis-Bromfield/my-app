@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Users = require('../models/Users');
 const Forecasts = require('../models/Forecasts');
-const HomePageNewsFeedPosts = require('../models/HomePageNewsFeedPosts');
-const Leaderboards = require('../models/Leaderboards');
-const findOrCreate = require("mongoose-findorcreate");
+// const HomePageNewsFeedPosts = require('../models/HomePageNewsFeedPosts');
+// const Leaderboards = require('../models/Leaderboards');
+// const findOrCreate = require("mongoose-findorcreate");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
-const nodemailer = require("nodemailer");
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 // Error handling 
 router.use((err, req, res, next) => {

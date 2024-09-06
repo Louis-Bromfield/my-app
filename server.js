@@ -6,6 +6,7 @@ const cors = require('cors');
 const port = process.env.PORT || 8000;
 const path = require("path");
 const bcrypt = require("bcryptjs");
+const bodyParser = require("body-parser");
 
 const UserSchema = mongoose.Schema({
     username: {
@@ -200,6 +201,12 @@ const req = require('express/lib/request');
 // app.use("/submitFeedback", submitFeedbackRoutes);
 
 app.use(express.static(path.join(__dirname, "client", "build")))
+
+app.use(cors());
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
 
 // Database connectivity
 // mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });

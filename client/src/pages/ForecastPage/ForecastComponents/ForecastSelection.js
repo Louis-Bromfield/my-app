@@ -13,7 +13,7 @@ function ForecastSelection(props) {
     
     return (
         <div className="forecast-selection">
-            <h3>Forecast Questions</h3>
+            <h3>Races</h3>
                 {props.allForecasts.map((item, index) => {
                     if (item.isClosed === true) {
                         return (

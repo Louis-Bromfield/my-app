@@ -171,7 +171,7 @@ function Leaderboard(props) {
             {loading === true && 
                 <div className="leaderboard-loading-container">
                     <h3>Loading market data...</h3>
-                    <ReactLoading type="bars" color="#404d72" height="10%" width="10%" />
+                    <ReactLoading type="bars" color="#404d72" height="20%" width="20%" />
                 </div>
             }
             {loading === false &&
@@ -179,7 +179,7 @@ function Leaderboard(props) {
                     {(props.isFFLeaderboard === true && props.leaderboardTitle !== "Fantasy Forecast All-Time") &&
                         <tbody>
                             <tr className="leaderboard-title-row">
-                                <th className="position-column">#</th>
+                                <th className="position-column">Rank</th>
                                 <th className="username-column" onClick={() => sortByCol("Username")} style={{ cursor: "pointer" }}>Username</th>
                                 <th className="ffpoints-column" onClick={() => sortByCol("Market Points")} style={{ cursor: "pointer" }}>Market Points</th>
                                 <th className="avg-brier-column" onClick={() => sortByCol("Avg Brier Score")} style={{ cursor: "pointer" }}>Average Brier Score</th>
@@ -208,7 +208,7 @@ function Leaderboard(props) {
                                                     })()}
                                                 </td>
                                                 <td className="leaderboard-username-data">
-                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" alt="Profile Picture" />}
                                                     <Link 
                                                         to={{pathname: "/my-profile"}}
                                                         onClick={() => localStorage.setItem("selectedPage", "Search")}
@@ -254,7 +254,7 @@ function Leaderboard(props) {
                                                     })()}
                                                 </td>
                                                 <td className="leaderboard-username-data">
-                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" alt="Profile Picture" />}
                                                     <Link 
                                                         to={{pathname: "/search", clickedUsername: item.username}}
                                                         onClick={() => localStorage.setItem("selectedPage", "Search")}
@@ -303,7 +303,7 @@ function Leaderboard(props) {
                                                     })()}
                                                 </td>
                                                 <td className="leaderboard-username-data">
-                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" alt="Profile Picture" />}
                                                     {item.username}
                                                 </td>
                                                 <td className="leaderboard-ffPoints-data">{Number(item.totalBrier).toFixed(0)}</td>
@@ -343,7 +343,7 @@ function Leaderboard(props) {
                                                     })()}
                                                 </td>
                                                 <td className="leaderboard-username-data">
-                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" alt="Profile Picture" />}
                                                     {item.username}
                                                 </td>
                                                 <td className="leaderboard-ffPoints-data">{Number(item.totalBrier).toFixed(0)}</td>
@@ -387,7 +387,7 @@ function Leaderboard(props) {
                                                     })()}
                                                 </td>
                                                 <td className="leaderboard-username-data">
-                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" alt="Profile Picture" />}
                                                     {item.username}
                                                 </td>
                                                 <td className="leaderboard-ffPoints-data">{Number(item.totalBrier).toFixed(0)}</td>
@@ -427,7 +427,7 @@ function Leaderboard(props) {
                                                     })()}
                                                 </td>
                                                 <td className="leaderboard-username-data">
-                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" alt="Profile Picture" />}
                                                     {item.username}
                                                 </td>
                                                 <td className="leaderboard-ffPoints-data">{Number(item.totalBrier).toFixed(0)}</td>
@@ -457,11 +457,11 @@ function Leaderboard(props) {
                     {(props.isFFLeaderboard === false || props.leaderboardTitle === "Fantasy Forecast All-Time") &&
                         <tbody>
                             <tr className="leaderboard-title-row">
-                                <th className="position-column">#</th>
-                                <th className="username-column" onClick={() => sortByCol("Username")} style={{ cursor: "pointer" }}>Username</th>
-                                <th className="ffpoints-column" onClick={() => sortByCol("Fantasy Forecast Points")} style={{ cursor: "pointer" }}>Fantasy Forecast Points</th>
-                                <th className="avg-brier-column" onClick={() => sortByCol("Avg Brier Score (All Markets)")} style={{ cursor: "pointer" }}>AVG Brier Score (All Markets)</th>
-                                {width && <th className="last-five-briers-column">Last 6 Forecasts (All Markets)</th>}
+                                <th className="position-column">Rank</th>
+                                <th className="username-column" onClick={() => sortByCol("Username")} style={{ cursor: "pointer" }}>Jockey</th>
+                                <th className="ffpoints-column" onClick={() => sortByCol("Fantasy Forecast Points")} style={{ cursor: "pointer" }}>Horse Race Points</th>
+                                <th className="avg-brier-column" onClick={() => sortByCol("Avg Brier Score (All Markets)")} style={{ cursor: "pointer" }}>Average Score</th>
+                                {width && <th className="last-five-briers-column">Last 6 Race Scores (0-110)</th>}
                             </tr>
                             {usersData.map((item, index) => {
                                 if (item.username === "admin" || item.username === "Guest") return null;
@@ -486,7 +486,7 @@ function Leaderboard(props) {
                                                         })()}
                                                     </td>
                                                     <td className="leaderboard-username-data">
-                                                        {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" style={{border: (item.marketPoints < 1500) ? "none" : (item.marketPoints >= 1500 && item.marketPoints < 2000) ? "2px solid rgb(205, 127, 50)" : (item.marketPoints >= 2000 && item.marketPoints < 2500 ? "2px solid silver" : (item.marketPoints >= 2500 && item.marketPoints < 5000) ? "2px solid goldenrod" : "2px solid #383D67")}}/>}
+                                                        {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" alt="Profile Picture" style={{border: (item.marketPoints < 1500) ? "none" : (item.marketPoints >= 1500 && item.marketPoints < 2000) ? "2px solid rgb(205, 127, 50)" : (item.marketPoints >= 2000 && item.marketPoints < 2500 ? "2px solid silver" : (item.marketPoints >= 2500 && item.marketPoints < 5000) ? "2px solid goldenrod" : "2px solid #383D67")}}/>}
                                                         <Link 
                                                             to={{pathname: "/my-profile"}}
                                                             onClick={() => localStorage.setItem("selectedPage", "Search")}
@@ -533,7 +533,7 @@ function Leaderboard(props) {
                                                         })()}
                                                     </td>
                                                     <td className="leaderboard-username-data">
-                                                        {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" style={{border: (item.marketPoints < 1500) ? "none" : (item.marketPoints >= 1500 && item.marketPoints < 2000) ? "2px solid rgb(205, 127, 50)" : (item.marketPoints >= 2000 && item.marketPoints < 2500 ? "2px solid silver" : (item.marketPoints >= 2500 && item.marketPoints < 5000) ? "2px solid goldenrod" : "2px solid #383D67")}}/>}
+                                                        {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" alt="Profile Picture" style={{border: (item.marketPoints < 1500) ? "none" : (item.marketPoints >= 1500 && item.marketPoints < 2000) ? "2px solid rgb(205, 127, 50)" : (item.marketPoints >= 2000 && item.marketPoints < 2500 ? "2px solid silver" : (item.marketPoints >= 2500 && item.marketPoints < 5000) ? "2px solid goldenrod" : "2px solid #383D67")}}/>}
                                                         <Link 
                                                             to={{pathname: "/search", clickedUsername: item.username}}
                                                             onClick={() => localStorage.setItem("selectedPage", "Search")}
@@ -583,7 +583,7 @@ function Leaderboard(props) {
                                                     })()}
                                                 </td>
                                                 <td className="leaderboard-username-data">
-                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" alt="Profile Picture" />}
                                                     {item.username}
                                                 </td>
                                                 <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
@@ -625,7 +625,7 @@ function Leaderboard(props) {
                                                     })()}
                                                 </td>
                                                 <td className="leaderboard-username-data">
-                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" alt="Profile Picture" />}
                                                     {item.username}
                                                 </td>
                                                 <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
@@ -670,7 +670,7 @@ function Leaderboard(props) {
                                                     })()}
                                                 </td>
                                                 <td className="leaderboard-username-data">
-                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" alt="Profile Picture" />}
                                                     {item.username}
                                                 </td>
                                                 <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>
@@ -712,7 +712,7 @@ function Leaderboard(props) {
                                                     })()}
                                                 </td>
                                                 <td className="leaderboard-username-data">
-                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" />}
+                                                    {biggerWidth && <img src={item.profilePicture || ProfileP} className="leaderboards-profile-pic" alt="Profile Picture" />}
                                                     {item.username}
                                                 </td>
                                                 <td className="leaderboard-ffPoints-data">{Number(item.marketPoints).toFixed(0)}</td>

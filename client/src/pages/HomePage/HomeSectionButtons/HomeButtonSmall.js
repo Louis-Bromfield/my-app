@@ -81,7 +81,7 @@ function HomeButtonSmall(props) {
             break;
         case("Leaderboards"):
             mainData = leaderboardRank;
-            subtitle = "Fantasy Forecast Points"
+            subtitle = "Horse Race Points"
             path ="leaderboard-select"
             break;
         default:

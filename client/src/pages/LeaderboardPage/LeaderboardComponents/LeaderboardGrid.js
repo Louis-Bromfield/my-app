@@ -1,18 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import './LeaderboardGrid.css';
 import PropTypes from 'prop-types';
 import LeaderboardShortcut from './LeaderboardShortcut';
 
 function LeaderboardGrid(props) {
-    
-    useEffect(() => {
-    }, [props])
 
     return (
         <div>
             <div className="leaderboard-grid">
-                {props.user === true && props.markets.map((item, index) => {  
+                {props.markets.map((item, index) => {  
+                    return (
+                        <LeaderboardShortcut 
+                            name={item} 
+                            className="leaderboard-shortcut" 
+                            handleClick={() => props.handleLeaderboardChange(item)}
+                        />
+                    )
+                })}
+                {/* {props.user === true && props.markets.map((item, index) => {  
                     const leaderboardProps = {
                         pathname: "/leaderboard",
                         leaderboardName: item,
@@ -45,7 +50,7 @@ function LeaderboardGrid(props) {
                                     <LeaderboardShortcut name={item} className="leaderboard-shortcut-blue"/>
                             </Link>
                         )
-                })}
+                })} */}
             </div>
         </div>
     )

@@ -3,14 +3,10 @@ import { useHistory } from 'react-router-dom';
 import './Notifications.css';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import axios from 'axios';
-import TeamModal from '../../components/TeamModal';
 
 function Notifications(props) {
     const history = useHistory();
     const [selectedNotification, setSelectedNotification] = useState({});
-    const [showModal, setShowModal] = useState(false);
-    const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-    const [selectedNotificationObject, setSelectedNotificationObject] = useState({});
 
     useEffect(() => {
         console.log(props.location.userObj);
@@ -19,7 +15,7 @@ function Notifications(props) {
 
     const handleNotificationSelection = async (notification) => {
             if (notification.seenByUser === false) {
-                const res = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/editNotifications/${props.location.userObj.username}`, {
+                await axios.patch(`${process.env.REACT_APP_API_CALL_U}/editNotifications/${props.location.userObj.username}`, {
                     setAllToTrue: false,
                     notificationMessage: notification.notificationMessage,
                     notificationIndex: notification.notificationIndex

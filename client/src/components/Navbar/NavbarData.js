@@ -10,10 +10,14 @@ export const NavbarData = [
         iconSelected: <AiIcons.AiFillHome size={20} color={"#fff"} />
     },
     {
-        title: "Forecasts",
-        path: "/forecast",
-        icon: <AiIcons.AiFillFund size={20} />,
-        iconSelected: <AiIcons.AiFillFund size={20} color={"#fff"} />
+        title: "Races",
+        path: "/races",
+        icon: <FaIcons.FaHorseHead size={20} />,
+        iconSelected: <FaIcons.FaHorseHead size={20} color={"#fff"} />
+        // icon: <FaIcons.FaHorse size={20} />,
+        // iconSelected: <FaIcons.FaHorse size={20} color={"#fff"} />
+        // icon: <AiIcons.AiFillFund size={20} />,
+        // iconSelected: <AiIcons.AiFillFund size={20} color={"#fff"} />
     },
     {
         title: "Leaderboards",
@@ -27,12 +31,12 @@ export const NavbarData = [
         icon: <AiIcons.AiFillRead size={20} />,
         iconSelected: <AiIcons.AiFillRead size={20} color={"#fff"} />
     },
-    {
-        title: "Search",
-        path: "/search",
-        icon: <AiIcons.AiOutlineSearch size={20} />,
-        iconSelected: <AiIcons.AiOutlineSearch size={20} color={"#fff"} />
-    },
+    // {
+    //     title: "Search",
+    //     path: "/search",
+    //     icon: <AiIcons.AiOutlineSearch size={20} />,
+    //     iconSelected: <AiIcons.AiOutlineSearch size={20} color={"#fff"} />
+    // },
     {
         title: "Profile",
         path: "/my-profile",

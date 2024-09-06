@@ -9,7 +9,7 @@ const TeamModal = ({ show, notificationObject, username, justClose, oldTeam, cal
 
     const acceptInvite = async () => {
         try {
-            const res = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/createJoinLeaveTeam/${username}`, {
+            await axios.patch(`${process.env.REACT_APP_API_CALL_U}/createJoinLeaveTeam/${username}`, {
                 action: "join",
                 teamName: notificationObject.notificationSourceObjectID,
                 oldTeam: oldTeam

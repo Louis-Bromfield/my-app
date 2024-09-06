@@ -7,7 +7,6 @@ import Leaderboard from './IndividualLeaderboardComponents/Leaderboard';
 import axios from 'axios';
 
 function IndividualLeaderboard(props) {
-    const history = useHistory();
     const [currentLeaderboardName, setCurrentLeaderboardName] = useState();
     const [filteredRankings, setFilteredRankings] = useState([]);
     const [isFFLeaderboard, setIsFFLeaderboard] = useState();
@@ -17,31 +16,34 @@ function IndividualLeaderboard(props) {
     const [leaderboardFilter, setLeaderboardFilter] = useState("all");
 
     useEffect(() => {
-        if (props.location.leaderboardName === undefined) {
+        if (props.leaderboardName === undefined) {
             setCurrentLeaderboardName(localStorage.getItem('currentLeaderboardName'));
             getLeaderboardData(localStorage.getItem('currentLeaderboardName'));
         } else {
-            localStorage.setItem('currentLeaderboardName', props.location.leaderboardName);
+            localStorage.setItem('currentLeaderboardName', props.leaderboardName);
             setCurrentLeaderboardName(localStorage.getItem('currentLeaderboardName'));
-            getLeaderboardData(props.location.leaderboardName);
+            getLeaderboardData(props.leaderboardName);
         }
         console.log("Individual Leaderboard UE");
-    }, []);
+    }, [props.leaderboardName]);
 
     useEffect(() => {
-        if (props.location.user === true) {
-            const leaderboardObj = props.location.navigationOrderUnsorted.find(el => el.leaderboardName === localStorage.getItem('currentLeaderboardName'));
-            setIsFFLeaderboard(true);
-        } else if (props.location.user === false) {
-            const leaderboardObj = props.location.navigationOrderUnsorted.find(el => el.leaderboardName === localStorage.getItem('currentLeaderboardName'));
-            setIsFFLeaderboard(true);
-        }
+        // if (props.user === true) {
+        //     const leaderboardObj = props.navigationOrderUnsorted.find(el => el.leaderboardName === localStorage.getItem('currentLeaderboardName'));
+        //     setIsFFLeaderboard(true);
+        // } else if (props.user === false) {
+        //     const leaderboardObj = props.navigationOrderUnsorted.find(el => el.leaderboardName === localStorage.getItem('currentLeaderboardName'));
+        //     setIsFFLeaderboard(true);
+        // }
+        props.navigationOrderUnsorted.find(el => el.leaderboardName === localStorage.getItem('currentLeaderboardName'));
+        setIsFFLeaderboard(true);
         console.log("2nd Individual Leaderboard UE");
-    }, [currentLeaderboardName, props.location.navigationOrderUnsorted, props.location.user]);
+    }, [props.leaderboardName, props.navigationOrderUnsorted, props.user]);
     
     const getLeaderboardData = async (leaderboard) => {
         try {
             const lbData = await axios.get(`${process.env.REACT_APP_API_CALL_U}/`);
+            // const lbData = await axios.get(`http://localhost:8000/users`);
             setFilteredRankings(lbData.data);
         } catch (error) {
             console.error("Error occured in getLeaderboardData func in IndividualLeaderboard");
@@ -52,12 +54,7 @@ function IndividualLeaderboard(props) {
     return (
         <div className="individual-leaderboard">
             <div className="button-container">
-                <button 
-                    className="return-to-leaderboard-menu-btn" 
-                    onClick={() => history.push("leaderboard-select")}>
-                        Return to Leaderboard Menu
-                </button>
-                {(userInMarket === true && props.location.user === true && isFFLeaderboard === false) &&
+                {(userInMarket === true && props.user === true && isFFLeaderboard === false) &&
                     <button
                         className="members-btn"
                         onClick={() => {setMemberMenuStatus(!memberMenuStatus)}}>
@@ -66,7 +63,7 @@ function IndividualLeaderboard(props) {
                 }
             </div>
             <div className="leaderboard-title-and-navigation">
-                <h1>{currentLeaderboardName} Leaderboard</h1>
+                <h2>{currentLeaderboardName} Leaderboard</h2>
             </div>
             <div className="leaderboard-spotlight-row">
                 <Top3Users 
@@ -75,18 +72,6 @@ function IndividualLeaderboard(props) {
             </div>
             <div className="leaderboard-filter-select">
             </div>
-            {currentLeaderboardName === "UK Local Elections 2023" && <div className="leaderboard-prize-container" style={{ margin: "0 auto", textAlign: "center" }}>
-                <h3>Prizes:</h3>
-                <p>This leaderboard will be used to determine who wins our prizes</p>
-                <p><strong>1st:</strong>&nbsp;£25</p>
-                <p><strong>2nd-10th:</strong>&nbsp;£20</p>
-                <p><strong>11th-15th:</strong>&nbsp;£15</p>
-                <p><strong>16th-24th:</strong>&nbsp;£10</p>
-                <p><strong>25th-50th:</strong>&nbsp;£5</p>
-                <p>If LouisB or MattW are in the top 50, the prize will go to the next user in the list.</p>
-                <br />
-            </div>}
-
             <Leaderboard 
                 leaderboardTitle={currentLeaderboardName} 
                 leaderboardRankings={filteredRankings} 

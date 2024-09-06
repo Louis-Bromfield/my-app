@@ -1,39 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import './Login.css';
-import FFLogo from '../../media/sd3.png';
-// import { useHistory } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
-
+import HRPLogo from '../../media/HRP.png';
 
 function Login(props) {
-    // localStorage.setItem("loggedInFromGoogle", true)
     const [usernameForCreate, setUsernameForCreate] = useState("");
     const [prolificIDForCreate, setProlificIDForCreate] = useState("");
     const [passwordForCreate, setPasswordForCreate] = useState("");
     const [confirmPasswordForCreate, setConfirmPasswordForCreate] = useState("");
-    // const [passwordResetCodeForCreate, setPasswordResetCodeForCreate] = useState("");
     const [usernameForLogin, setUsernameForLogin] = useState("");
     const [passwordForLogin, setPasswordForLogin] = useState("");
-    // const [passwordResetCodeForLogin, setPasswordResetCodeForLogin] = useState("");
     const [prolificIDForLogin, setProlificIDForLogin] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [errorMessageForAccountCreation, setErrorMessageForAccountCreation] = useState("");
-    const [confirmProlificIDForCreate, setConfirmProlificIDForCreate] = useState("");
-    // const [loggedIn, setLoggedIn] = useState(false);
     const [problematicInfo, setProblematicInfo] = useState("_");
     const [credentialsSuccessfullyChecked, setCredentialsSuccessfullyChecked] = useState(null);
-    // const [emailForPasswordReset, setEmailForPasswordReset] = useState("");
-    // const [usernameForPasswordReset, setUsernameForPasswordReset] = useState("");
-    const [resetMessage, setResetMessage] = useState("");
+    // const [cookie, setCookie] = useCookies(['username']);
 
-    const [cookie, setCookie] = useCookies(['username']);
-
-    // useEffect(() => {
-    //     setLoggedIn(localStorage.getItem("loggedInFromGoogle"));
-    // }, []);
-
-    // const checkCredentials = async (uName, pWord, pID) => {
     const checkCredentials = async (pID, pWord) => {
         if (/\s/.test(pID) || pID === "") {
             setErrorMessageForAccountCreation("Your ProlificID should contain no spaces.");
@@ -44,19 +27,11 @@ function Login(props) {
         } else if (pWord.length < 4 || (/\s/.test(pWord)) || pWord === "") {
             setErrorMessageForAccountCreation("Your password must be longer than 4 characters and contain no spaces.");
             return;
-        // } else if (pID !== cpID) {
-        //     setErrorMessageForAccountCreation("Your ProlificIDs do not match");
-        //     return;
-        // } else if (pWord !== cpWord) {
-        //     setErrorMessageForAccountCreation("Your passwords do not match.");
-        //     return;
-        // } else if (pID.length < 4 || /\s/.test(pID) || pID === "") {
-        //     setErrorMessageForAccountCreation("Your ProlificID is too short and cannot contain spaces.");
-        //     return;
         } else {
             try {
                 // CHARMANDER - ADD CODE FOR CREATING USER, THEN LOGIN WITH RETURNED OBJECT
                 const user = await axios.post(`${process.env.REACT_APP_API_CALL_U}/`, {
+                // const user = await axios.post(`http://localhost:8000/users`, {
                     username: pID,
                     pID: pID,
                     password: pWord
@@ -71,7 +46,7 @@ function Login(props) {
                     setProblematicInfo("");
                     setCredentialsSuccessfullyChecked(true);
                     localStorage.setItem("username", pID);
-                    setCookie('username', pID, { path: "/", sameSite: "Lax" });
+                    // setCookie('username', pID, { path: "/", sameSite: "Lax" });
                     loginFromLogin(pID, pWord, true, false);
                 };
             } catch (error) {
@@ -94,25 +69,8 @@ function Login(props) {
         };
         try {
             let userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${true}`);
+            // let userObj = await axios.get(`http://localhost:8000/${prolificID}/${passwordOrResetCode}/${true}`);
             console.log("4");
-            // if (isGuest === true) {
-            //     console.log("5 true");
-            //     userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${true}`);
-                
-            // } else if (isGuest === false) {
-            //     console.log("5 false");
-            //     if (isPassword === true) {
-            //         console.log("6");
-            //         userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${true}`);
-                
-            //         console.log("7");
-            //         if (!userObj) return;
-            //     } else if (isPassword === false) {
-            //         console.log("8");
-            //         userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${prolificID}/${passwordOrResetCode}/${false}`);
-            //         if (!userObj) return;
-            //     };
-            // };
             console.log("9");
             console.log(userObj);
             if (userObj.data.loginSuccess === false)  {
@@ -127,22 +85,14 @@ function Login(props) {
                 console.log("12");
                 props.setUserObject(userObj.data);
                 props.setUsername(userObj.data.username);
-                setCookie('username', userObj.data.username, { path: "/", sameSite: "Lax" });
-                // document.cookie = `usernameD=${userObj.data.username};path=/;secure:true`;
+                // setCookie('username', userObj.data.username, { path: "/", sameSite: "Lax" });
                 props.setUserFFPoints(userObj.data.fantasyForecastPoints);
                 props.setName(userObj.data.username);
                 props.setMarkets(userObj.data.markets);
                 props.setProfilePicture(userObj.data.profilePicture);
                 localStorage.setItem('isLoggedIn', true);
                 localStorage.setItem('username', userObj.data.username);
-                // localStorage.setItem('name', "XXXXXXXXXX");
-                // localStorage.setItem('markets', userObj.data.markets);
-                // localStorage.setItem('userObj', userObj);
-                // localStorage.setItem('profilePicture', userObj.data.profilePicture);
                 localStorage.setItem('selectedPage', "Home");
-                // if (isPassword === false) {
-                //     localStorage.setItem("loggedInWithResetCode", true);
-                // };
                 props.setIsLoggedIn(true);
             }
         } catch(error) {
@@ -174,40 +124,7 @@ function Login(props) {
 
     return (
         <div className="login-main-div">
-            <img className="login-logo" src={FFLogo} alt="" />
-            {/* <div className="login-div">
-                <h2>Login here:</h2>
-                <label htmlFor="login-password">Prolific ID:</label>
-                <input 
-                    type="prolificID" 
-                    name="login-prolificID" 
-                    id="login-prolificID" 
-                    // maxLength={15}
-                    onChange={(e) => { 
-                        setCredentialsSuccessfullyChecked(null);
-                        setErrorMessage("");
-                        setProlificIDForLogin(e.target.value);
-                    }}
-                />
-                <label htmlFor="login-password">Password:</label>
-                <input 
-                    type="password" 
-                    name="login-password" 
-                    id="login-password" 
-                    maxLength={15}
-                    onChange={(e) => { 
-                        setCredentialsSuccessfullyChecked(null);
-                        setErrorMessage("");
-                        setPasswordForLogin(e.target.value);
-                    }}
-                />
-                <button className="login-btn" onClick={() => loginFromLogin(prolificIDForLogin, passwordForLogin, true, false)}>Login to Fantasy Forecast</button>
-                {errorMessage}
-            </div> */}
-            {/* <div className="login-div">
-                <h2>Forgot your password?</h2>
-                <h2>Email fantasyforecastcontact@gmail.com with your username and Prolific ID and we'll reset it for you.</h2>
-            </div> */}
+            <img className="login-logo" src={HRPLogo} alt="" />
             <div className="login-main-div">
                 {/* <img className="login-logo" src={FFLogo} alt="" /> */}
                     <div className="signup-container">
@@ -251,7 +168,7 @@ function Login(props) {
                                     setPasswordForLogin(e.target.value);
                                 }}
                             />
-                            <button className="login-btn" onClick={() => loginFromLogin(prolificIDForLogin, passwordForLogin, true, false)}>Login to Fantasy Forecast</button>
+                            <button className="login-btn" onClick={() => loginFromLogin(prolificIDForLogin, passwordForLogin, true, false)}>Login to Horse Race Politics</button>
                             {errorMessage}
                         </div>
                         {/* <div className="signup-div">

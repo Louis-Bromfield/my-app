@@ -6,10 +6,9 @@ import { NavbarData } from './NavbarData';
 import { IconContext } from 'react-icons';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
-import FantasyForecastLogo from '../../media/sd3.png';
+import HRPLogo from '../../media/HRP.png';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import axios from 'axios';
-import TeamModal from '../TeamModal';
 
 function Navbar(props) {
     const [selectedPage, setSelectedPage] = useState("Home");
@@ -210,8 +209,8 @@ function Navbar(props) {
                                 <div className="navbar-grid">
                                         <img 
                                             className="nav-logo" 
-                                            src={FantasyForecastLogo} 
-                                            alt="Fantasy Forecast Logo" 
+                                            src={HRPLogo} 
+                                            alt="HRP Logo" 
                                             style={{ 
                                                 // width: "30%", 
                                                 margin: "0 auto"
@@ -337,7 +336,7 @@ function Navbar(props) {
                                             </ul>
                                             }
                                     </div>
-                                    <div className="user-logout-container">
+                                    {/* <div className="user-logout-container">
                                         {showNotifications === true && 
                                             <div className="notification-dropdown">
                                                 {props.userObj.notifications !== undefined ? props.userObj.notifications.map((item, index) => {
@@ -380,7 +379,7 @@ function Navbar(props) {
                                                 </div>
                                             </div>
                                         }
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                 </IconContext.Provider>

@@ -73,7 +73,7 @@ function TopicQuiz(props) {
                     ffPointsIfTrue: 0
                 });
                 props.handleQuizCompletion(true);
-                props.handleQuizCompletionModalContent("You just got 250 Fantasy Forecast Points for completing your first quiz! Completing quizzes will now return 5 points per quiz.");
+                props.handleQuizCompletionModalContent("You just got 250 Horse Race Points for completing your first quiz! Completing quizzes will now return 5 points per quiz.");
             };
         } catch (error) {
             console.error(error);
@@ -84,8 +84,6 @@ function TopicQuiz(props) {
         // Calculate how many they got right and check they have selected enough answers
         let correctAnswers = [];
         let answers = [];
-        let numberOfAnswers = 0;
-        let numberOfExpectedAnswers = 0;
         for (let i = 0; i < selectedAnswersForMarking.length; i++) {
             for (let j = 0; j < selectedAnswersForMarking[i].length; j++) {
                 answers.push(selectedAnswersForMarking[i][j][0]);

@@ -6,11 +6,10 @@ import { Line } from 'react-chartjs-2';
 import ReactLoading from 'react-loading';
 import ProfileForecasts from '../ProfilePage/ProfileForecasts';
 import ProfileRewards from '../ProfilePage/ProfileRewards';
-import { useCookies } from 'react-cookie';
 import Modal from '../../components/Modal';
 
 function Search(props) {
-    const [markets, setMarkets] = useState("");
+    // const [markets, setMarkets] = useState("");
     const [index, setIndex] = useState(-1);
     const [searchName, setSearchName] = useState("");
     const [playerUsername, setPlayerUsername] = useState("");
@@ -48,15 +47,10 @@ function Search(props) {
     const [searchTab, setSearchTab] = useState("my-stats");
     const [searchUserObj, setSearchUserObj] = useState({});
     const [postRating, setPostRating] = useState(0);
-    const [cookie, setCookie] = useCookies(['username']);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
     const [profilePicStyle, setProfilePicStyle] = useState("none");
     const [showInviteBtn, setShowInviteBtn] = useState(false);
-    const [isTeam, setIsTeam] = useState(false);
-    const [teamName, setTeamName] = useState("");
-    const [inTeam, setInTeam] = useState(false);
-    const [teamData, setTeamData] = useState({});
 
     useEffect(() => {
         if (props.location.clickedUsername !== undefined) {
@@ -81,16 +75,16 @@ function Search(props) {
     };
 
     // Move to backend?
-    const formatMarketsString = (markets) => {
-        let string = "";
-        for (let i = 0; i < markets.length; i++) {
-            if (markets[i] !== '"Fantasy Forecast All-Time"') {
-                string += `${markets[i]}, `;
-            };
-        };
-        string = string.slice(0, string.length-2);
-        setMarkets(string);
-    };
+    // const formatMarketsString = (markets) => {
+    //     let string = "";
+    //     for (let i = 0; i < markets.length; i++) {
+    //         if (markets[i] !== '"Fantasy Forecast All-Time"') {
+    //             string += `${markets[i]}, `;
+    //         };
+    //     };
+    //     string = string.slice(0, string.length-2);
+    //     setMarkets(string);
+    // };
 
     const retrievePlayerInfo = async (username) => {
         setLoading(true);
@@ -108,16 +102,11 @@ function Search(props) {
                 setErrorMessage("No profiles were found with this username. Please try again.");
                 setShowInviteBtn(false);
             } else if (userDocument.data.userObj !== null) {
-                if (userDocument.data.userObj.isTeam === true) {
-                    setIsTeam(true);
-                } else {
-                    setIsTeam(false);
-                }
                 retrieveUserRankFromDB(username);
                 setPlayerUsername(userDocument.data.userObj.username);
                 setPlayerLevel(Math.floor((userDocument.data.userObj.fantasyForecastPoints/100).toFixed(0)));
                 setPlayerPoints(userDocument.data.userObj.fantasyForecastPoints.toFixed(0));
-                formatMarketsString(userDocument.data.userObj.markets);
+                // formatMarketsString(userDocument.data.userObj.markets);
                 setPlayerProfilePic(userDocument.data.userObj.profilePicture);
                 setSearchUserObj(userDocument.data.userObj);
                 formatBrierData(userDocument.data.userObj, playerUsername);
@@ -218,7 +207,7 @@ function Search(props) {
         let bestBrierMe = 0;
         let worstBrierMe = 110;
         let averageBrierMe = 0;
-        const myStats = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${cookie.username}`);
+        const myStats = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${userObj.username}`);
         for (let i = 0; i < myStats.data[0].brierScores.length; i++) {
             if (myStats.data[0].brierScores[i].brierScore > bestBrierMe) {
                 setBestChangedMe(true);
@@ -352,15 +341,15 @@ function Search(props) {
                                         setShowModal(true);
                                     }}>
                                     <h2 className="profile-summary-list-item-value">{playerLevel} <h5>{forecasterRank}</h5></h2>
-                                    <h3>Forecaster Level</h3>
+                                    <h3>Jockey Level</h3>
                                 </div>
                                 <div key={1} className="profile-summary-list-item"
                                     onClick={() => {
-                                        setModalContent("Fantasy Forecast Points are earned by submitting forecasts, posting to your feed, completing learn quizzes, and more. If you haven't already, check out the Onboarding menu on the Home page for tips on getting started.");
+                                        setModalContent("Horse Race Points are earned by submitting forecasts, posting to your feed, completing learn quizzes, and more. If you haven't already, check out the Onboarding menu on the Home page for tips on getting started.");
                                         setShowModal(true);
                                     }}>
                                     <h2 className="profile-summary-list-item-value">{playerPoints}</h2>
-                                    <h3>Fantasy Forecast Points</h3>
+                                    <h3>Horse Race Points</h3>
                                 </div>
                                 <div key={2} className="profile-summary-list-item"
                                     onClick={() => {
@@ -383,17 +372,17 @@ function Search(props) {
                                 </div>
                                 <div key={4} className="profile-summary-list-item"
                                     onClick={() => {
-                                        setModalContent("This is the player's placement in the Fantasy Forecast All-Time leaderboard, which is determined solely by Fantasy Forecast Points. To see it in full, go the Leaderboards page and select the Fantasy Forecast All-Time leaderboard.");
+                                        setModalContent("This is the player's placement in the Horse Race Politics All-Time leaderboard, which is determined solely by Horse Race Points. To see it in full, go the Leaderboards page and select the Horse Race Politics All-Time leaderboard.");
                                         setShowModal(true);
                                     }}>
                                     <h2 className="profile-summary-list-item-value">{index}</h2>
-                                    <h3>Fantasy Forecast All-Time Rank</h3>
+                                    <h3>Horse Race Politics All-Time Rank</h3>
                                 </div>
                                 <div key={5} className="profile-summary-list-item">
                                 <h2 
                                     className="profile-summary-list-item-value"
                                     onClick={() => {
-                                        setModalContent("This is your net score from truthful and relevant ratings received on your news feed posts. For example, if 3 forecasters said your post was both truthful and relevant, your score would be +6. If a fourth forecaster then rated your post as neither truthful or relevant, your score would drop to +4. This score can be useful for learning more about other forecasters. Submitting ratings on other forecaster's posts for truthfulness and relevance is locked until you reach Level 4 (400 Fantasy Forecast Points).");
+                                        setModalContent("This is your net score from truthful and relevant ratings received on your news feed posts. For example, if 3 forecasters said your post was both truthful and relevant, your score would be +6. If a fourth forecaster then rated your post as neither truthful or relevant, your score would drop to +4. This score can be useful for learning more about other forecasters. Submitting ratings on other forecaster's posts for truthfulness and relevance is locked until you reach Level 4 (400 Horse Race Points).");
                                         setShowModal(true);
                                     }}>
                                         {postRating > 0 ? "+" + postRating : postRating === 0 ? "+/-" + postRating : "-" + postRating}
@@ -406,8 +395,8 @@ function Search(props) {
                         <div className="profile-stats-rewards-container">
                             <div className="profile-nav-menu">
                                 <div style={{ borderLeft: "0px solid #fff" }} className={searchTab === "my-stats" ? "profile-tab-selected" : "profile-tab"} onClick={() => setSearchTab("my-stats")}><h3>{playerUsername !== "" ? `${playerUsername}'s Stats` : "Player Stats"}</h3></div>
-                                <div style={{borderLeft: "0px solid #fff" }}className={searchTab === "my-forecasts" ? "profile-tab-selected" : "profile-tab"} onClick={() => setSearchTab("my-forecasts")}><h3>{playerUsername !== "" ? `${playerUsername}'s Forecasts` : "Player Forecasts"}</h3></div>
-                                {isTeam === false && <div style={{borderLeft: "0px solid #fff" }} className={searchTab === "my-rewards" ? "profile-tab-selected" : "profile-tab"} onClick={() => setSearchTab("my-rewards")}><h3>{playerUsername !== "" ? `${playerUsername}'s Trophies` : "Player Trophies"}</h3></div>}
+                                <div style={{borderLeft: "0px solid #fff" }}className={searchTab === "my-forecasts" ? "profile-tab-selected" : "profile-tab"} onClick={() => setSearchTab("my-forecasts")}><h3>{playerUsername !== "" ? `${playerUsername}'s Races` : "Players' Races"}</h3></div>
+                                {/* {isTeam === false && <div style={{borderLeft: "0px solid #fff" }} className={searchTab === "my-rewards" ? "profile-tab-selected" : "profile-tab"} onClick={() => setSearchTab("my-rewards")}><h3>{playerUsername !== "" ? `${playerUsername}'s Trophies` : "Player Trophies"}</h3></div>} */}
                             </div>
                             {searchTab === "my-stats" && 
                                 <div className="profile-stats">
@@ -447,7 +436,7 @@ function Search(props) {
                                             <h2 className="player-stats-title">Unique Player Stats</h2>
                                             <hr className="player-stats-title-hr" />
                                             <div className="profile-stats-grid-body-two-cols">
-                                                <h4>Fantasy Forecast Points:</h4>
+                                                <h4>Horse Race Points:</h4>
                                                 <h3 style={{ color: "#404d72" }}>{ffPoints}</h3>
                                                 <h4>Problems Attempted:</h4>
                                                 <h3 style={{ color: "#404d72" }}>{problemsAttempted}</h3>

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
+// import "chart.js/auto";
 import { Line } from 'react-chartjs-2';
 import { Link } from 'react-router-dom';
+import {Chart as ChartJS} from 'chart.js/auto'
 import './IndividualHomeProblemPreview.css';
 
 function IndividualHomeProblemPreview(props) {
     const [data, setData] = useState([]);
-    const [averageChartData, setAverageChartData] = useState([]);
-    const [multiOutcomeChartData, setMultiOutcomeChartData] = useState([]);
+    const [averageChartData, setAverageChartData] = useState({ datasets: [] });
+    const [multiOutcomeChartData, setMultiOutcomeChartData] = useState({ datasets: [] });
 
     useEffect(() => {
         formatForecastData(props.data);

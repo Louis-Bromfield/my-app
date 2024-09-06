@@ -7,6 +7,16 @@
     margin-top: 3vh;
 }
 
+.page-header {
+    margin: 0 auto;
+    /* font-size: 110%; */
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 1vh;
+    text-align: center;
+    /* color: #404d72; */
+}
+
 .leaderboard-menu > h3 {
     padding-left: 1%;
 }

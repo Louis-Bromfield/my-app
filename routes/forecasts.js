@@ -3,6 +3,14 @@ const router = express.Router();
 const Forecasts = require('../models/Forecasts');
 const Users = require('../models/Users');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+
+router.use(cors());
+router.use(cors());
+// parse application/x-www-form-urlencoded
+router.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+router.use(bodyParser.json())
 
 // Get all forecasts
 router.get("/", cors(), async (req, res) => {
@@ -665,10 +673,11 @@ router.post("/newProblem", cors(), async (req, res) => {
 
 
 // Submit or update a prediction to a single outcome problem
-router.patch("/submitOrUpdateSingle", cors(), async (req, res) => {
+router.patch("/submitOrUpdateSingle", async (req, res) => {
     try {
         // New
         console.log("in submit");
+        console.log(req.body);
         const document = await Forecasts.findOne({ problemName: req.body.problemName });
         let found = false;
         let indexLocation = 0;
