@@ -125,11 +125,10 @@ function App() {
                 return;
             };
             console.log("paIFDBTPDB");
-            // const userPulledFromDB = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);  
-            const userPulledFromDB = await axios.get(`http://localhost:8000/users/${username}`);  
+            const userPulledFromDB = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);  
+            // const userPulledFromDB = await axios.get(`http://localhost:8000/users/${username}`);  
 console.log("userPulledFromDB");
 console.log(userPulledFromDB);
-            
             if (userPulledFromDB.data === [] || userPulledFromDB.data[0].username === undefined) {
                 return;
             } else {
