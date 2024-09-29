@@ -1,9 +1,10 @@
 .leaderboard-grid {
     display: grid;
-    width: 30%;
+    width: 50%;
     grid-template-columns: 50% 50%;
     margin: 0 auto;
     text-align: center;
+    margin-top: 1vh;
     /* border: 1px solid red; */
 }
 
@@ -19,12 +20,19 @@
     }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 1200px) {
+    .leaderboard-grid {
+        width: 50%;
+    }
+}
+
+@media (max-width: 400px) {
     .leaderboard-grid {
         margin: 0 auto;
         display: flex;
         flex-direction: column;
-        row-gap: 2vh;
+        width: 70%;
+        row-gap: 0;
     }
 }
 

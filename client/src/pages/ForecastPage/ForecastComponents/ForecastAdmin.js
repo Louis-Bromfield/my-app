@@ -50,7 +50,8 @@ function ForecastAdmin(props) {
 
     const getAllMarketsFromDB = async () => {
         try {
-            const allMarketsDocument = await axios.get(`${process.env.REACT_APP_API_CALL_L}/justNames/${props.username}`);
+            // const allMarketsDocument = await axios.get(`${process.env.REACT_APP_API_CALL_L}/justNames/${props.username}`);
+            const allMarketsDocument = await axios.get(`http://localhost:8000/leaderboards/justNames/${props.username}`);
             
             let filteredbyIsFFOrNot = [];
             for (let i = 0; i < allMarketsDocument.data.length; i++) {
@@ -72,7 +73,8 @@ function ForecastAdmin(props) {
         } else {
             setAdminText("");
             try {
-                await axios.post(`${process.env.REACT_APP_API_CALL_F}/newProblem`, {
+                // await axios.post(`${process.env.REACT_APP_API_CALL_F}/newProblem`, {
+                await axios.post(`http://localhost:8000/forecasts/newProblem`, {
                     problemName: problemName,
                     startDate: oDateTime,
                     closeDate: cDateTime,

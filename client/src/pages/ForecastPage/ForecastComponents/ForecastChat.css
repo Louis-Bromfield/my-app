@@ -24,9 +24,3 @@
     margin-left: 1vw;
     margin-top: 1vh;
 }
-
-@media (max-width: 1500px) {
-    .forecast-chat {
-        font-size: 0.85em;
-    }
-}

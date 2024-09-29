@@ -16,7 +16,18 @@ export const TopicContent = [
     </div>,
     // US Presidential Election
     <div className="topic-text-paragraph">
-        <p>To Add: Information on Election</p>
+        <p><i>If the above video does not load, click <a href="https://www.youtube.com/watch?v=9sTK9zOuZwg" target="_blank" rel="noopener noreferrer">here</a> to watch it (Sky News: "US election 2024: How does it work?").</i></p>
+        <p><strong>When is the Election?</strong></p>
+        <p>The election campaign is hot underway, but the actual day for voting is November 4th, 2024.</p>
+        <p><strong>Who is competing?</strong></p>
+        <p>The US has what is referred to as a "two-party system". This means that elections are almost exclusively contested by the two biggest parties in the country, the Democrats and the Republicans. Each party has a candidate for the presidency, this is the current Vice President Kamala Harris for the Democrats and former president Donald Trump for the Republicans. The Democratic candidate was Joe Biden until fairly recently, but he was replaced after long-standing concerns about his age came to a boil in a disastrous debate performance against Trump.</p>
+        <p><strong>How does the election work?</strong></p>
+        <p>On November 4th, Americans will cast their vote for president - but they also cast votes for more local representatives, such as their Senators and Congressmen/women. When the votes are tallied, the presidential candidate with the most votes doesn't simply "win" a given state, they win the state's Electoral College votes.</p>
+        <p><strong>What does that mean?</strong></p>
+        <p>It gets wierd, but bear with us. Each state has a certain number of Electoral College votes, and this is determined by the state's population. States like California and Texas have 54 and 40 respectively, while smaller ones like Vermont have 3. This measn that there are 538 votes up for grabs in each election. To win the election, a candidate must win at least 270 EC votes. Once crossed, a candidate has won the election. This is why most discussions around the US election revolves around which individual states are candidates focussing their efforts on.</p>
+        <p><strong>Does this mean some states are more important than others?</strong></p>
+        <p>Yes. A lot of states are considered "safe" by both parties, states that they, and most others, assume are already in the bag - for example, California is effectively unlosable for Democrats. However, there are a handful of states that could go either way, and these are called "swing states".</p>
+        <p>In this election, we ask players to try and predict the outcomes of these states individually. These are: Arizona, Georgia, Michigan, Nevada, North Carolina, Pennsylvania, and Wisconsin. It is widely held that these states are the route to the White House.</p>
     </div>,
     // Brier Scores
     <div className="topic-text-paragraph">

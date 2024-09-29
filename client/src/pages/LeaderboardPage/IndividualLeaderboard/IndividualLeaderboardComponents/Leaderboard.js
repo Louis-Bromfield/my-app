@@ -180,9 +180,9 @@ function Leaderboard(props) {
                         <tbody>
                             <tr className="leaderboard-title-row">
                                 <th className="position-column">Rank</th>
-                                <th className="username-column" onClick={() => sortByCol("Username")} style={{ cursor: "pointer" }}>Username</th>
+                                <th className="username-column" onClick={() => sortByCol("Username")} style={{ cursor: "pointer" }}>Jockey</th>
                                 <th className="ffpoints-column" onClick={() => sortByCol("Market Points")} style={{ cursor: "pointer" }}>Market Points</th>
-                                <th className="avg-brier-column" onClick={() => sortByCol("Avg Brier Score")} style={{ cursor: "pointer" }}>Average Brier Score</th>
+                                <th className="avg-brier-column" onClick={() => sortByCol("Avg Brier Score")} style={{ cursor: "pointer" }}>Average Race Score</th>
                                 {width && <th className="last-five-briers-column">Last 6 Forecasts (&nbsp;&nbsp;/110&nbsp;&nbsp;)</th>}
                             </tr>
                             {usersData.map((item, index) => {
@@ -220,7 +220,7 @@ function Leaderboard(props) {
                                                 <td className="leaderboard-avgBrierScore-data">{isNaN(Number(item.avgBrierScore).toFixed(1)) ? 0.0 : Number(item.avgBrierScore).toFixed(1)}</td>
                                                 {width && <td className="leaderboard-last5Forecasts-data">
                                                     <span className="last-five-data-span">
-                                                        {item.brierScoresForMarket.map((item2, index) => {
+                                                        {(item.brierScoresForMarket !== undefined && item.brierScoresForMarket.length > 0) && item.brierScoresForMarket.map((item2, index) => {
                                                             return (
                                                                 <ToolTip title={item2.problemName} key={index}>
                                                                     <h4 className="last-five-data-single-result">
@@ -266,7 +266,7 @@ function Leaderboard(props) {
                                                 <td className="leaderboard-avgBrierScore-data">{isNaN(Number(item.avgBrierScore).toFixed(1)) ? 0.0 : Number(item.avgBrierScore).toFixed(1)}</td>
                                                 {width && <td className="leaderboard-last5Forecasts-data">
                                                     <span className="last-five-data-span">
-                                                    {item.brierScoresForMarket.map((item2, index) => {
+                                                    {(item.brierScoresForMarket !== undefined && item.brierScoresForMarket.length > 0) && item.brierScoresForMarket.map((item2, index) => {
                                                             return (
                                                                 <ToolTip title={item2.problemName} key={index}>
                                                                     <h4 className="last-five-data-single-result">
@@ -310,7 +310,7 @@ function Leaderboard(props) {
                                                 <td className="leaderboard-avgBrierScore-data">{Number(item.avgBrierScore).toFixed(1)}</td>
                                                 {width && <td className="leaderboard-last5Forecasts-data">
                                                     <span className="last-five-data-span">
-                                                        {item.brierScoresForMarket.map((item2, index) => {
+                                                        {(item.brierScoresForMarket !== undefined && item.brierScoresForMarket.length > 0) && item.brierScoresForMarket.map((item2, index) => {
                                                             return (
                                                                 <ToolTip title={item2.problemName} key={index}>
                                                                     <h4 className="last-five-data-single-result">
@@ -350,7 +350,7 @@ function Leaderboard(props) {
                                                 <td className="leaderboard-avgBrierScore-data">{Number(item.avgBrierScore).toFixed(1)}</td>
                                                 {width && <td className="leaderboard-last5Forecasts-data">
                                                     <span className="last-five-data-span">
-                                                        {item.brierScoresForMarket.map((item2, index) => {
+                                                        {(item.brierScoresForMarket !== undefined && item.brierScoresForMarket.length > 0) && item.brierScoresForMarket.map((item2, index) => {
                                                             return (
                                                                 <ToolTip title={item2.problemName} key={index}>
                                                                     <h4 className="last-five-data-single-result">
@@ -394,7 +394,7 @@ function Leaderboard(props) {
                                                 <td className="leaderboard-avgBrierScore-data">{Number(item.avgBrierScore).toFixed(1)}</td>
                                                 {width && <td className="leaderboard-last5Forecasts-data">
                                                     <span className="last-five-data-span">
-                                                        {item.brierScoresForMarket.map((item2, index) => {
+                                                        {(item.brierScoresForMarket !== undefined && item.brierScoresForMarket.length > 0) && item.brierScoresForMarket.map((item2, index) => {
                                                             return (
                                                                 <ToolTip title={item2.problemName} key={index}>
                                                                     <h4 className="last-five-data-single-result">
@@ -434,7 +434,7 @@ function Leaderboard(props) {
                                                 <td className="leaderboard-avgBrierScore-data">{Number(item.avgBrierScore).toFixed(1)}</td>
                                                 {width && <td className="leaderboard-last5Forecasts-data">
                                                     <span className="last-five-data-span">
-                                                        {item.brierScoresForMarket.map((item2, index) => {
+                                                        {(item.brierScoresForMarket !== undefined && item.brierScoresForMarket.length > 0) && item.brierScoresForMarket.map((item2, index) => {
                                                             return (
                                                                 <ToolTip title={item2.problemName} key={index}>
                                                                     <h4 className="last-five-data-single-result">
@@ -460,7 +460,7 @@ function Leaderboard(props) {
                                 <th className="position-column">Rank</th>
                                 <th className="username-column" onClick={() => sortByCol("Username")} style={{ cursor: "pointer" }}>Jockey</th>
                                 <th className="ffpoints-column" onClick={() => sortByCol("Fantasy Forecast Points")} style={{ cursor: "pointer" }}>Horse Race Points</th>
-                                <th className="avg-brier-column" onClick={() => sortByCol("Avg Brier Score (All Markets)")} style={{ cursor: "pointer" }}>Average Score</th>
+                                <th className="avg-brier-column" onClick={() => sortByCol("Avg Brier Score (All Markets)")} style={{ cursor: "pointer" }}>Average Race Score</th>
                                 {width && <th className="last-five-briers-column">Last 6 Race Scores (0-110)</th>}
                             </tr>
                             {usersData.map((item, index) => {

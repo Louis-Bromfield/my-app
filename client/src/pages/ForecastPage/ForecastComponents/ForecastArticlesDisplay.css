@@ -2,11 +2,6 @@
     display: flex;
     flex-direction: column;
     overflow-x: scroll;
-    /* row-gap: 3vh; */
-    /* margin: 0 auto; */
-    /* border: 1px solid lightgray; */
-    /* border-radius: 5px; */
-    /* padding: 1%; */
     width: 100%;
     -ms-overflow-style: none; /* for Internet Explorer, Edge */
     scrollbar-width: none; /* for Firefox */ 
@@ -23,28 +18,16 @@
 .articles-header {
     display: flex;
     flex-direction: column;
-    /* text-align: left; */
     text-align: center;
 }
 
 .articles-grid {
     display: flex;
     flex-direction: column;
-    /* justify-content: left; */
     row-gap: 1vh;
     font-size: 0.9em;
-    /* border: 1px solid lightgray; */
     border-left: none;
-    /* overflow-x: visible; */
 }
-
-/* .articles-loading {
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    width: 60%;
-    align-items: center;
-} */
 
 .article-list-item {
     display: grid;
@@ -53,6 +36,10 @@
     height: fit-content;
     margin: 0 auto;
     cursor: pointer;
+}
+
+.article-list-item:hover {
+    text-decoration: underline;
 }
 
 .article-list-item-text-div {
@@ -72,12 +59,7 @@
 }
 
 .article-list-item-img {
-    /* min-width: 80%; */
-    /* max-width: 80%; */
     width: 50%;
-    /* height: 9vh; */
-    /* min-height: 50%; */
-    /* max-height: 50%; */
     border: 1px solid lightgray;
     border-radius: 5px;
 }
@@ -97,57 +79,12 @@
     color: #747070;
 }
 
-/* .article-list-item:hover {
-    box-shadow: 0 0 4px 2px gray;
-} */
-
-@media (max-width: 1500px) {
-    .articles {
-        font-size: 0.85em;
-    }
-}
-
-@media (max-width: 1100px) {
-    .articles-grid {
-        grid-template-columns: 60%;
-        font-size: 1em;
-        grid-template-rows: 16vh 16vh 16vh 16vh 16vh 16vh 16vh 16vh 16vh 16vh 16vh 16vh;
-    }
-}
-
 @media (max-width: 650px) {
-    .articles-grid {
-        grid-template-columns: 100%;
-    }
-    .article-list-item {
-        width: 90%;
-        height: 16vh;
-    }
-    .article-list-item-text-div {
-        font-size: 0.9em;
-    }
     .articles-loading {
         font-size: 0.8em;
         text-align: center;
     }
 }
-
-@media (max-width: 600px) {
-    .articles-grid {
-        row-gap: 0vh;
-    }
-    .articles-grid a {
-        width: 100%;
-        height: 13vh;
-    }
-    .article-list-item-img {
-        min-width: 70%;
-        max-width: 70%;
-        width: 70%;
-        height: 50%;
-    }
-}
-
 @media (max-width: 400px) {
     .articles-grid a {
         width: 100%;

@@ -6,7 +6,6 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 router.use(cors());
-router.use(cors());
 // parse application/x-www-form-urlencoded
 router.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json

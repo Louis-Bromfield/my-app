@@ -17,10 +17,28 @@
 
 .forecast-selection-div {
     height: fit-content;
-    max-height: 100%;
-    -ms-overflow-style: none; /* for Internet Explorer, Edge */
-    scrollbar-width: none; /* for Firefox */
+    max-height: 60vh;
     overflow-y: scroll; 
+    border-bottom: 3px solid #404d72;
+    background: linear-gradient(to bottom, #ffffff 0%,#ffffff 85%,#c3ceda 100%);
+}
+
+.race-selector {
+    background-color: #404d72;
+    color: #fff;
+    text-align: center;
+    margin: 0 auto;
+    padding: 1%;
+    font-size: 120%;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+    max-height: 100vh;
+    overflow-y: scroll; 
+}
+
+.race-option {
+    font-size: 120%;
 }
 
 .forecast-selection-question-header {
@@ -316,6 +334,11 @@
     grid-template-columns: 23% 77%;
 }
 
+.new-forecast-layout-container-mobile {
+    display: flex;
+    flex-direction: column;
+}
+
 .forecast-selection {
     border-right: 1px solid lightgray;
     padding: 1%;
@@ -343,22 +366,18 @@
 
 .certainty-show {
     padding: 1%;
-    /* border: 1px solid lightgray; */
     color: #404d72;
 }
 
-@media (max-width: 1100px) {
-    .forecast-selection-select {
-        width: 85%;
+@media (max-width: 1200px) {
+    .forecast-selection-item {
+        font-size: 90%;
     }
 }
 
 @media (max-width: 900px) {
-    .header-label > h2, h3 {
-        font-size: 1em;
-    }
-    .forecast-submission-and-selection-div {
-        font-size: 0.9em;
+    .selected-forecast-close-date {
+        margin-top: 1vh;
     }
     .forecast-submission-and-chart-div {
         grid-template-columns: 100%;
@@ -377,6 +396,16 @@
     }
     .selected-forecast {
         font-size: 1.2em;
+    }
+    .multiple-input-fields {
+        font-size: 80%;
+    }
+}
+
+@media (max-width: 600px) {
+    .multiple-input-fields {
+        display: flex;
+        flex-direction: column;
     }
 }
 
@@ -418,5 +447,9 @@
 @media (max-width: 400px) {
     .header-label {
         font-size: 0.9em;
+    }
+    .new-forecast-binary-container {
+        display: flex;
+        flex-direction: column;
     }
 }

@@ -20,7 +20,7 @@ function Topic(props) {
         case("2024 US Presidential Election"):
             youtubeLink = <iframe 
                 className="youtube-iframe" 
-                src="https://www.youtube.com/watch?v=cRa07hTrfII" 
+                src="https://www.youtube.com/watch?v=9sTK9zOuZwg" 
                 title="YouTube video player" 
                 frameBorder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 

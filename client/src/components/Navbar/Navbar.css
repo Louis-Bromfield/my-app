@@ -185,61 +185,7 @@
     margin-top: 1vh;
 }
 
-@media (max-width: 1700px) {
-    /* .nav-logo {
-        width: 100%;
-        margin-left: 15%;
-    }
-    .nav-title {
-        font-size: 0.85em;
-    }
-    .navbar-grid {
-        width: 95%;
-        grid-template-columns: 16% 59% 18%;
-    }
-    .navbar-profile-pic {
-        height: 100%;
-    } */
-    /* .nav-text-profile,
-    .nav-logout-btn {
-        font-size: 0.9em;
-    } */
-}
-
-@media (max-width: 1400px) {
-    .nav-title {
-        font-size: 0.85em;
-    }
-    .nav-logo {
-        width: 75%;
-        padding-bottom: 1%;
-        margin-left: 15%;
-    }
-    .navbar-grid {
-        width: 85%;
-        grid-template-columns: 25% 67% 18%;
-        padding-top: 0.5%;
-        column-gap: 2%;
-    }
-    .user-logout-container {
-        padding-top: 2%;
-    }
-    .nav-menu-items {
-        margin: 0 auto;
-    }
-    .navbar-profile-pic {
-        height: 80%;
-    }
-    .nav-text-profile,
-    .nav-logout-btn {
-        font-size: 0.9em;
-    }
-}
-
 @media (max-width: 1350px) {
-    .navbar-grid {
-        grid-template-columns: 30% 40% 25%;
-    }
     .notification-dropdown {
         font-size: 0.9em;
         width: 30%;
@@ -249,8 +195,8 @@
 }
 
 @media (max-width: 800px) {
-    .navbar-grid {
-        grid-template-columns: 30% 50% 25%;
+    .navbar {
+        margin-bottom: 1vh;
     }
 }
 
@@ -294,20 +240,21 @@
 
 .mobile-nav-menu {
     background-color: #404d72;
-    width: 80%;
-    height: 75%;
+    width: 100%;
+    height: 50%;
     display: flex;
     justify-content: center;
     position: fixed;
     top: 0;
     left: -100%;
     transition: 850ms;
-    border-radius: 0px 0px 40% 0px;
+    border-radius: 0 0 5% 0%;
 }
 
 .mobile-nav-menu.active {
     left: 0;
     transition: 350ms;
+    z-index: 1;
 }
 
 .mobile-nav-text,
@@ -317,7 +264,7 @@
     align-items: center;
     padding: 8px 0px 8px 16px;
     list-style: none;
-    height: 60px;
+    height: 10%;
 }
 
 .mobile-nav-text a {
@@ -409,7 +356,6 @@
 @media (max-width: 1000px) {
     .nav-logo {
         display: inline;
-        /* width: 33%; */
     }
 }
 

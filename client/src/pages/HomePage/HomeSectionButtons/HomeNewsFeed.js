@@ -52,8 +52,8 @@ function HomeNewsFeed(props) {
 
     const getAllNewsFeedPostsFromDB = async () => {
         try {
-            const allPosts = await axios.get(`${process.env.REACT_APP_API_CALL_HPNFP}`);
-            // const allPosts = await axios.get(`http://localhost:8000/homePageNewsFeedPosts`);
+            // const allPosts = await axios.get(`${process.env.REACT_APP_API_CALL_HPNFP}`);
+            const allPosts = await axios.get(`http://localhost:8000/homePageNewsFeedPosts`);
 console.log("Here?");
 console.log(allPosts);
             setFeed(allPosts === undefined ? [] : allPosts.data.reverse());

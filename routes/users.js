@@ -10,6 +10,12 @@ const crypto = require("crypto");
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
+router.use(cors());
+// parse application/x-www-form-urlencoded
+router.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+router.use(bodyParser.json())
+
 // Error handling 
 router.use((err, req, res, next) => {
     res.redirect("/");
@@ -235,9 +241,18 @@ router.get("/getIndividualProblemResults/:problemName", cors(), async (req, res)
 });
 
 // Create a new user
-router.post("/", cors(), async (req, res) => {
+router.post("/", async (req, res) => {
+    console.log(req.body);
+    if (req.body.username === undefined) {
+        res.json({
+            userCreationSuccess: false,
+            err: true,
+            message: "There was an error. Please try again later."
+        });
+    };
+    console.log("We are creating a new user at router.post(/users)");
+    // Check if user already exists
     const user = await Users.findOne({ username: req.body.username });
-    console.log("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
     if (user !== null) {
         res.json({
             userCreationSuccess: false,
@@ -246,15 +261,16 @@ router.post("/", cors(), async (req, res) => {
         })
         return;
     }
-    console.log("NEW USER CREATION");
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newUser = new Users({
         username: req.body.username,
-        pID: req.body.pID,
-        password: hashedPassword
+        password: hashedPassword,
+        email: req.body.email,
+        country: req.body.country,
+        emailConsent: req.body.emailConsent,
+        profilePicture: req.body.profilePicture
     });
     try {
-        // Save to DB
         const newUserSavedToDB = await newUser.save();
         res.json({
             userCreationSuccess: true,
@@ -485,6 +501,8 @@ router.patch("/:username", cors(), async (req, res) => {
             username: req.body.username,
             password: req.body.password,
             email: req.body.email,
+            country: req.body.country,
+            emailConsent: req.body.emailConsent,
             fantasyForecastPoints: req.body.fantasyForecastPoints,
             markets: req.body.markets,
             name: req.body.name,

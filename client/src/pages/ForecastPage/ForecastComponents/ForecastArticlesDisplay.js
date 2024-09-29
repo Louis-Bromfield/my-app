@@ -32,43 +32,35 @@ function ForecastArticlesDisplay(props) {
                 <div className="articles-header">
                     <h2 className="new-forecast-input-header">Articles</h2>
                     <h4>The following articles are here to help provide some context for the US Presidential Election.</h4>
-                    {/* <h4 style={{ margin: "0 auto" }}>The articles shown below are generated from a web scrape of Google News using key words in the problem above. This can result in a wide variety in terms of their relevance and usefulness.</h4> */}
                 </div>
                 <div className="articles-grid">
-                    {/* <h4>These articles have been handpicked by us:</h4> */}
-                    <a href="https://www.telegraph.co.uk/politics/2023/04/06/local-elections-may-2023-when-who-vote-where-polling/" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
-                        {/* <p>{article.title}</p> */}
+                    <a href="https://projects.fivethirtyeight.com/polls/president-general/2024/national/?ex_cid=abcpromo" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
                         <div className="article-list-item" onClick={() => logUserAction(props.username === undefined ? props.userObject.username : props.username)}>
                             <div className="article-list-item-img-container">
-                                <img className="article-list-item-img" src="https://www.telegraph.co.uk/content/dam/politics/2023/04/06/TELEMMGLPICT000331337931_trans_NvBQzQNjv4Bqx5egiJ9MQyAqq6uO2mksLR6vTgUo7goj1e1R4oK598Y.jpeg?imwidth=1280" alt="" />
+                                <img className="article-list-item-img" src="https://projects.fivethirtyeight.com/2024-election-forecast/images/state_probabilities.svg?v=1a79a04d" alt="" />
                             </div>
                             <div className="article-list-item-text-div">
-                                <h3 className="article-list-item-title">NPR: Local elections 2023: When are they and which results to watch out for?</h3>
-                                <hr />
+                                <h3 className="article-list-item-title">538: Who’s ahead in the national polls?</h3>
                             </div>
                         </div>
                     </a>
-                    {/* change this one */}
-                    <a href="https://www.bbc.co.uk/news/uk-politics-65013652" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
-                        {/* <p>{article.title}</p> */}
+                    <a href="https://news.sky.com/story/us-election-poll-tracker-who-is-favourite-to-win-check-the-latest-polls-and-play-our-game-to-predict-who-you-think-will-win-13211891" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
                         <div className="article-list-item" onClick={() => logUserAction(props.username === undefined ? props.userObject.username : props.username)}>
                             <div className="article-list-item-img-container">
-                                <img className="article-list-item-img" src="https://ichef.bbci.co.uk/news/976/cpsprodpb/C1B7/production/_129219594_le_2023_index_promo_guide_to_elections_v2-nc.jpg.webp" alt="" />
+                                <img className="article-list-item-img" src="https://e3.365dm.com/24/09/2048x1152/skynews-harris-trump-debate_6680706.jpg?20240910010052" alt="" />
                             </div>
                             <div className="article-list-item-text-div">
-                                <h3 className="article-list-item-title">BBC News: Local elections 2023: When are they and who can vote?</h3>
-                                <hr />
+                                <h3 className="article-list-item-title">Sky News: US election poll tracker: Who is favourite to win?</h3>
                             </div>
                         </div>
                     </a>
-                    <a href="https://www.bbc.co.uk/news/uk-politics-65190787" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
+                    <a href="https://www.bbc.co.uk/news/articles/c511pyn3xw3o" rel="noreferrer" target="_blank" style={{ "textDecoration": "none"}}>
                         <div className="article-list-item" onClick={() => logUserAction(props.username === undefined ? props.userObject.username : props.username)}>
                             <div className="article-list-item-img-container">
-                                <img className="article-list-item-img" src="https://ichef.bbci.co.uk/news/976/cpsprodpb/11240/production/_129280207_le_2023_nick_eardley-nc.jpg.webp" alt="" />
+                                <img className="article-list-item-img" src="https://ichef.bbci.co.uk/ace/standard/976/cpsprodpb/727d/live/dde1d440-74fc-11ef-8c1a-df523ba43a9a.png.webp" alt="" />
                             </div>
                             <div className="article-list-item-text-div">
-                                <h3 className="article-list-item-title">BBC News: Local elections 2023: What to expect from May's polls in England</h3>
-                                <hr />
+                                <h3 className="article-list-item-title">BBC News: Seven swing states set to decide the 2024 US election</h3>
                             </div>
                         </div>
                     </a>

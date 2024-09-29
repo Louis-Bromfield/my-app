@@ -15,7 +15,14 @@ const UserSchema = mongoose.Schema({
     password: {
         type: String
     },
-    pID: {
+    email: {
+        type: String
+    },
+    emailConsent: {
+        type: Boolean,
+        default: false
+    },
+    country: {
         type: String
     },
     fantasyForecastPoints: {
@@ -27,7 +34,7 @@ const UserSchema = mongoose.Schema({
     },
     markets: {
         type: Array,
-        default: ["Fantasy Forecast All-Time", "UK Local Elections 2023"]
+        default: ["Fantasy Forecast All-Time", "2024 US Presidential Election"]
     },
     onboarding: {
         type: Object,
@@ -63,12 +70,6 @@ const UserSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    authRT: {
-        type: String
-    },
-    // pwdResetCode: {
-    //     type: String
-    // },
     email: {
         type: String,
         default: "NO EMAIL ADDRESS"

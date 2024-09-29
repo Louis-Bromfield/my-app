@@ -146,7 +146,7 @@ function Navbar(props) {
                                     onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title); setShowNotifications(false)}}>
                                         <Link to={item.path}>
                                             {item.iconSelected}
-                                            <span className="mobile-nav-title">{item.title}</span>
+                                            <span className="mobile-nav-title">&nbsp;{item.title}</span>
                                         </Link>
                                 </li>
                             )
@@ -158,7 +158,7 @@ function Navbar(props) {
                                     onClick={() => { localStorage.setItem('selectedPage', item.title); setSelectedPage(item.title); setShowNotifications(false)}}>
                                         <Link to={item.path}>
                                             {item.icon}
-                                            <span className="mobile-nav-title">{item.title}</span>
+                                            <span className="mobile-nav-title">&nbsp;{item.title}</span>
                                         </Link>
                                 </li>
                             );
@@ -179,7 +179,7 @@ function Navbar(props) {
                 {showNotifications === true && 
                     <div className="notification-dropdown">
                         {/* each item to be message above date in left column, and right column to be an arrow icon pointing right */}
-                        {props.userObj.notifications !== undefined ? props.userObj.notifications.map((item, index) => {
+                        {(props.userObj.notifications !== undefined && props.userObj.notifications.length > 0) ? props.userObj.notifications.map((item, index) => {
                             if (index < 5) {
                                 return (
                                     <div className={item.seenByUser === false ? "notification-item-new" : "notification-item-seen"} onClick={() => { handleNotificationSelection(item); item.seenByUser = true; }}>
@@ -292,7 +292,7 @@ function Navbar(props) {
                                                 })}
                                                 {showNotifications === true && 
                                                     <div className="notification-dropdown">
-                                                        {props.userObj.notifications !== undefined ? props.userObj.notifications.map((item, index) => {
+                                                        {(props.userObj.notifications !== undefined && props.userObj.notifications.length > 0) ? props.userObj.notifications.map((item, index) => {
                                                             if (index < 5) {
                                                                 return (
                                                                     <div className={item.seenByUser === false ? "notification-item-new" : "notification-item-seen"} onClick={() => { setSelectedNotificationObject(item); handleNotificationSelection(item); item.seenByUser = true; }}>

@@ -12,6 +12,7 @@ function HomeProfilePreview(props) {
     const [oppositeProgressBarWidth, setOppositeProgressBarWidth] = useState();
     const [ffPoints, setFFPoints] = useState(0.00);
     const [forecasterRank, setForecasterRank] = useState("");
+    const [averageScore, setAverageScore] = useState(0.00);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState("");
     const [profilePicStyle, setProfilePicStyle] = useState("none");
@@ -91,6 +92,14 @@ function HomeProfilePreview(props) {
         try {
             const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
             setFFPoints(userDocument.data[0].fantasyForecastPoints);
+            let averageScore = 0.00;
+            if (userDocument.data[0].brierScores.length > 0) {
+                for (let i = 0; i < userDocument.data[0].brierScores.length; i++) {
+                    averageScore += userDocument.data[0].brierScores[i].brierScore;
+                };
+                averageScore = averageScore / userDocument.data[0].brierScores.length;
+            }
+            setAverageScore(averageScore);
         } catch (error) {
             console.error("Error in HomeProfilePreview > getUserDetails");
             console.error(error);
@@ -160,14 +169,35 @@ function HomeProfilePreview(props) {
                                 onClick={() => { setShowModal(true); setModalContent(`Horse Race Points are earned through the majority of your interactions with the site. Submitting a forecast (you'll also get points when a problem closes and you receive a score based on how accurate you were), posting to the news feed, completing the Onboarding tasks, attempting the quizzes found on the Learn page and more! Head to the Learn page and select the "Horse Race Points" topic for more info!`)}}
                             />
                         </h4>
-                        <h4>Quiz Completion</h4>
-                        <h4>Average Score</h4>
-                        <h4>Trophies Earned</h4>
+                        <h4>
+                            Quiz Completion
+                            <FaInfoCircle 
+                                color={"orange"} 
+                                className="modal-i-btn"
+                                onClick={() => { setShowModal(true); setModalContent(`Quizzes can be found at the end of each topic on the Learn page!`)}}
+                            />
+                        </h4>
+                        <h4>
+                            Average Score
+                            <FaInfoCircle 
+                                color={"orange"} 
+                                className="modal-i-btn"
+                                onClick={() => { setShowModal(true); setModalContent(`For every race you submit a prediction to, you'll get a score from 0-110. This number here on your home page will simply tell you your average, but go to the Leaderboards to see how you're comparing to others!`)}}
+                            />
+                        </h4>
+                        <h4>
+                            Trophies Earned
+                            <FaInfoCircle 
+                                color={"orange"} 
+                                className="modal-i-btn"
+                                onClick={() => { setShowModal(true); setModalContent(`Trophies are earned for performing certain tasks on the site and achieving certain scores on the Races page. Go to your Profile page and select My Trophies to see how you're doing!`)}}
+                            />
+                        </h4>
                     </div>
                     <div className="home-profile-preview-stats-list-right">
                         <h4><strong>{ffPoints === undefined ? 0 : ffPoints.toFixed(0)}</strong></h4>
                         <h4><strong>{learnProgress} / {totalQuizCount}</strong></h4>
-                        <h4><strong>108.11</strong></h4>
+                        <h4><strong>{averageScore}</strong></h4>
                         <h4><strong>{completeTrophyCount} / 12</strong></h4>
                     </div>
                 </div>

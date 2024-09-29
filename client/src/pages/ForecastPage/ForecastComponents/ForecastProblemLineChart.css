@@ -8,8 +8,8 @@
 }
 
 
-@media (max-width: 1100px) {
-    .forecast-problem-line-chart {
-        width: 95%;
+@media (max-width: 1200px) {
+    .chart-container {
+        height: 40vh;
     }
 }

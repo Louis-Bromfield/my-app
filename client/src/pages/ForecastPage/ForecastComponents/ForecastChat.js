@@ -121,7 +121,7 @@ function ForecastChat(props) {
                 <p>{modalContent}</p>
             </Modal>
             <h2 className="new-forecast-input-header">
-                Forecast Chat
+                Comments
             </h2>
             <div className="chat">
                 <div className="comment-submit-field">
@@ -145,11 +145,11 @@ function ForecastChat(props) {
                                     onClick={() => localStorage.setItem("selectedPage", "Search")}
                                     style={{ textDecoration: "none", color: "#404d72"}}>
                                         {newCommentToRender.author}
-                                </Link> | {newCommentToRender.date !== undefined ? newCommentToRender.date.slice(0, 21) : newCommentToRender.date}</h4>
+                                </Link> | {newCommentToRender.date !== undefined ? newCommentToRender.date.slice(4, 21) : newCommentToRender.date}</h4>
                             <p>{newCommentToRender.comment}</p>
                         </div>
                     }
-                    {props.forecast.chat !== undefined ? props.forecast.chat.map((item, index) => {
+                    {(props.forecast.chat !== undefined && props.forecast.chat.length > 0) ? props.forecast.chat.map((item, index) => {
                         return (
                             <div key={item} className="chat-item">
                                 <h4>
@@ -158,9 +158,9 @@ function ForecastChat(props) {
                                         onClick={() => localStorage.setItem("selectedPage", "Search")}
                                         style={{ textDecoration: "none", color: "#404d72"}}>
                                             {item.author}
-                                    </Link> | {item.date !== undefined ? item.date.slice(0, 21) : item.date}</h4>
+                                    </Link> | {item.date !== undefined ? item.date.slice(4, 21) : item.date}</h4>
                                 <p>{item.comment}</p>
-                                {item.replies.map((newItem, newIndex) => {
+                                {/* {item.replies.map((newItem, newIndex) => {
                                     if (item.replies.length > 0) {
                                         return (
                                             <li key={newItem} className="reply-chat-item">
@@ -177,8 +177,8 @@ function ForecastChat(props) {
                                             </li>
                                         )
                                     } else return null;
-                                })}
-                                {(newReplyCommentStatus === true && index === idForCommentToReplyTo) &&
+                                })} */}
+                                {/* {(newReplyCommentStatus === true && index === idForCommentToReplyTo) &&
                                     <li key={newReplyCommentToRender} className="reply-chat-item">
                                         <h4>
                                             <Link 
@@ -191,8 +191,8 @@ function ForecastChat(props) {
                                             </h4>
                                         <p>{newReplyCommentToRender.comment}</p>
                                     </li>
-                                }
-                                <div className="sub-comment-submit-field">
+                                } */}
+                                {/* <div className="sub-comment-submit-field">
                                     <input 
                                         type="text" 
                                         className="comment-field" 
@@ -202,7 +202,7 @@ function ForecastChat(props) {
                                         onClick={() => submitNewReply(replyComment, item, index)}>
                                         Reply
                                     </button>
-                                </div>
+                                </div> */}
                             </div>
                         )
                     }) : null}

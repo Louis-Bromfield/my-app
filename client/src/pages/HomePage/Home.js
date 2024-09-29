@@ -18,10 +18,8 @@ import { useCookies } from 'react-cookie';
 const bcrypt = require("bcryptjs");
 
 function Home(props) {
-    let width, height;
-    width = window.innerWidth;
-    height = window.innerHeight;
-    
+    const [width, setWidth] = useState(window.innerWidth);
+    const [height, setHeight] = useState(window.innerHeight);
     const [showOnboarding, setShowOnboarding] = useState(false);
     const [buttonText, setButtonText] = useState("Hide");
     const [homeStats, setHomeStats] = useState("Your Average Brier Score");
@@ -54,8 +52,8 @@ function Home(props) {
 
     const getUserInfo = async (username) => {
         try {
-            const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
-            // const userDocument = await axios.get(`http://localhost:8000/users/${username}`);
+            // const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
+            const userDocument = await axios.get(`http://localhost:8000/users/${username}`);
             if (userDocument.data[0].numberOfClosedForecasts > 0) {
                 setShowClosedProblemModal(true);
             };
@@ -116,9 +114,18 @@ function Home(props) {
                     setUserClosedForecastCount={setUserClosedForecastCount}>
                 </ClosedProblemModal>
             } 
-            <div className="home-page-div">
-                <HomeProblemPreview username={props.username} />
+            {width >= 1100 && <div className="home-page-div">
+                {/* <HomeProblemPreview username={props.username} /> */}
                 <div className="home-page-grid">
+                    <div className="home-page-grid-left-col">
+                        <HomeProblemPreview username={props.username} isTop={true} />
+                        <HomeProblemPreview username={props.username} isTop={false} />
+                        <HomeChangeLogPreview isMobile={false} />
+                        <div className="report-any-issues-container">
+                            <h3 className="home-button-large-title">Got any site issues, feedback, or praise?</h3>
+                            <Link to="/report-any-issues" className="home-button-nav-button">Submit Your Views Anonymously Here</Link>
+                        </div>
+                    </div>
                     <div className="home-page-news-feed">
                         <HomeNewsFeed 
                             username={props.username} 
@@ -151,14 +158,93 @@ function Home(props) {
                             title="My Recent Forecasts"
                             user={userObj} 
                         /> 
-                        <HomeChangeLogPreview />
+                        { /* <HomeChangeLogPreview />
+                        <div className="report-any-issues-container">
+                            <h3 className="home-button-large-title">Got any site issues, feedback, or praise?</h3>
+                            <Link to="/report-any-issues" className="home-button-nav-button">Submit Your Views Anonymously Here</Link>
+                        </div> */}
+                    </div>
+                </div>
+            </div>}
+            {(width < 1100 && width >= 800) && 
+                <div className="home-page-grid-middle-CSS">
+                    <div className="home-page-news-feed">
+                        <HomeNewsFeed 
+                            username={props.username} 
+                            userProfilePicture={props.profilePicture}
+                            userObj={userObj}
+                            userMarkets={userMarkets}
+                            handleFirstPost={setShowModal} 
+                            handleFirstPostModalContent={setModalContent}
+                        />
+                    </div>
+                    <div className="home-page-stats-div">
+                        <HomeProblemPreview username={props.username} isTop={true} />
+                        <HomeProblemPreview username={props.username} isTop={false} />
+                        <HomeProfilePreview 
+                            userObj={userObj}
+                            username={props.username}
+                            userLearnQuizzes={userLearnQuizzes}
+                        />
+                        {/* <NewForecastsCallToAction username={props.username} />  */}
+                        <div className={onboardingClassName}>
+                            <Onboarding 
+                                userOnboarding={userOnboarding}
+                                handleClick={() => onboardingButtonClick(showOnboarding, buttonText)} 
+                                buttonText={buttonText} 
+                                isHidden={showOnboarding}
+                                setShowModal={setShowModal}
+                                setModalContent={setModalContent}
+                                setOnboardingClassName={setOnboardingClassName}
+                            />
+                        </div>
+                        <HomeButtonLarge 
+                            title="My Recent Forecasts"
+                            user={userObj} 
+                        /> 
+                        <HomeChangeLogPreview isMobile={false} />
                         <div className="report-any-issues-container">
                             <h3 className="home-button-large-title">Got any site issues, feedback, or praise?</h3>
                             <Link to="/report-any-issues" className="home-button-nav-button">Submit Your Views Anonymously Here</Link>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
+            {width <= 650 && 
+                <div className="home-page-grid-small-CSS">
+                    <div className="home-page-news-feed">
+                        <HomeNewsFeed 
+                            username={props.username} 
+                            userProfilePicture={props.profilePicture}
+                            userObj={userObj}
+                            userMarkets={userMarkets}
+                            handleFirstPost={setShowModal} 
+                            handleFirstPostModalContent={setModalContent}
+                        />
+                    </div>
+                    <div className="home-page-stats-div">
+                        <HomeProblemPreview username={props.username} isTop={true} />
+                        <HomeProblemPreview username={props.username} isTop={false} />
+                        {/* <NewForecastsCallToAction username={props.username} />  */}
+                        <div className={onboardingClassName}>
+                            <Onboarding 
+                                userOnboarding={userOnboarding}
+                                handleClick={() => onboardingButtonClick(showOnboarding, buttonText)} 
+                                buttonText={buttonText} 
+                                isHidden={showOnboarding}
+                                setShowModal={setShowModal}
+                                setModalContent={setModalContent}
+                                setOnboardingClassName={setOnboardingClassName}
+                            />
+                        </div>
+                        <HomeChangeLogPreview isMobile={true} />
+                        <div className="report-any-issues-container">
+                            <h3 className="home-button-large-title">Got any site issues, feedback, or praise?</h3>
+                            <Link to="/report-any-issues" className="home-button-nav-button">Submit Your Views Anonymously Here</Link>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     )
 }

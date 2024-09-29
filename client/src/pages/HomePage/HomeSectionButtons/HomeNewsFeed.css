@@ -1,6 +1,6 @@
 .home-page-news-feed-container {
     /* background-color: #fff; */
-    border: 1px solid lightgray;
+    /* border: 1px solid lightgray; */
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
@@ -139,7 +139,7 @@
 
 .post-author {
     display: grid;
-    grid-template-columns: 40% 60%;
+    grid-template-columns: 80% 20%;
 }
 
 .post-author-left {
@@ -179,6 +179,7 @@
 .post-author-description {
     margin-top: 1vh;
     margin-bottom: 1vh;
+    font-size: 120%;
 }
 
 .post-markets {

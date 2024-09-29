@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './HomeChangeLogPreview.css';
 
-function HomeChangeLogPreview() {
+function HomeChangeLogPreview(props) {
     const changeLogArr = [
         `21.04.2023 After a brief hiatus, work has resumed on Horse Race Politics. Every page has seen a redesign, slimming their widths to be more compact while reducing the amount of visual noise from sections standing out from others for a sleeker look. Font size across the site has decreased, the navbar at the top has also been redesigned to be more top-down, rather than the row of three components as it was before, helping decrease width used and making it more responsive to different screen sizes. The profile and search pages have been simplified, and the home page column on the right has been neatened.`,
         `29.11.2022 Big wave of changes in the months since the summer. New additions include: Text to show unattempted forecasts, redesign of the Forecasts page, including a new Forecast Chat, more info (i) buttons around the site to help explain features, a notifications menu (which can be accessed by clicking on Profile at the top of the screen your profile picture in the top right on a mobile device), trophies on the profile page and profile picture borders, brought back the Results tab on the forecast page for closed forecasts, and various styling elements throughout the site, amongst other features!`,
@@ -20,7 +20,7 @@ function HomeChangeLogPreview() {
     return (
         <div className="home-button-small">
             <h3 className="home-button-small-title">Site Updates</h3>
-            <div className="change-log-list">
+            {props.isMobile === false && <div className="change-log-list">
                 {changeLogArr.map((item, index) => {
                     if (index <= 4) {
                         if (item.length <= 50) {
@@ -38,7 +38,7 @@ function HomeChangeLogPreview() {
                         )
                     } else return null;
                 })}
-            </div>
+            </div>}
             <Link 
                 className="home-button-nav-button"
                 to="/change-log">

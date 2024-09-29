@@ -5,7 +5,7 @@ import PlaceholderIcon from '../../../media/leaderboard.png';
 function LeaderboardShortcut(props) {
     return (
         <div className={props.className} onClick={props.handleClick}>
-            <img className="leaderboard-shortcut-img" src={PlaceholderIcon} alt=""/>
+            {/* {window.innerWidth > 400 && <img className="leaderboard-shortcut-img" src={PlaceholderIcon} alt=""/>} */}
             <h4>{props.name}</h4>
         </div>
     )

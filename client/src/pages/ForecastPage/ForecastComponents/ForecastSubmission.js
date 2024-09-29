@@ -8,6 +8,8 @@ import ForecastBreakdown from './ForecastBreakdown';
 import ForecastProblemLineChart from './ForecastProblemLineChart';
 
 function ForecastSubmission(props) {
+    const [width, setWidth] = useState(window.innerWidth);
+    const [height, setHeight] = useState(window.innerHeight);
     const [forecastProblems, setForecastProblems] = useState([]);
     const [forecastProblemsForDropdown, setForecastProblemsForDropdown] = useState([]);
     const [selectedForecast, setSelectedForecast] = useState("No forecast problem selected");
@@ -63,7 +65,7 @@ function ForecastSubmission(props) {
     useEffect(() => {
         console.log("ForecastSubmission UE");
         getAllForecastsFromDB(props.userObjectMarkets);
-        getLeaderboardFromDB(props.selectedForecast.market);
+        // getLeaderboardFromDB(props.selectedForecast.market);
     }, [props.selectedForecast, props.markets, props.allForecasts, props.userObject]);
 
     const getAllForecastsFromDB = async (userMarkets) => {
@@ -484,8 +486,8 @@ console.log(e);
             }
             try {
                 // const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/update`, {
-                const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateSingle`, {
-                // const newForecastTwo = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateSingle`, {
+                // const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateSingle`, {
+                const newForecastTwo = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateSingle`, {
                     documentID: selectedForecastDocumentID,
                     problemName: forecast,
                     // newForecastObject: newForecastObj,
@@ -533,7 +535,8 @@ console.log(e);
                 return;
             }
             try {
-                const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateSingle`, {
+                // const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateSingle`, {
+                    const submittedForecast = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateMultiple`, {
                     documentID: selectedForecastDocumentID,
                     problemName: forecast,
                     username: username,
@@ -599,8 +602,8 @@ console.log(e);
                 //     comments: `(${username})~ ${newComments}`, 
                 //     date: new Date().toString()
                 // };
-                const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateMultiple`, {
-                // const newForecastTwo = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateMultiple`, {
+                // const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateMultiple`, {
+                const newForecastTwo = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateMultiple`, {
                     documentID: selectedForecastDocumentID,
                     problemName: forecast,
                     certainty1: newCertainty1, 
@@ -657,7 +660,8 @@ console.log(e);
                 return;
             }
             try {
-                const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateMultiple`, {
+                // const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateMultiple`, {
+                const submittedForecast = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateMultiple`, {
                     documentID: selectedForecastDocumentID,
                     problemName: forecast,
                     username: username,
@@ -719,25 +723,26 @@ console.log(e);
                 <br />
                 <p>{modalContent2}</p>
             </Modal>
-            <div className="new-forecast-layout-container">
-                {/* problem selection */}
-                <div className="forecast-top-bar">
-                    {marketWarning === true &&
-                        <div className="forecast-selection-div-empty">
-                            <h4>There are currently no forecasts available right now. Try refreshing and returning to this page or hang tight until new forecast problems are released!</h4>
-                        </div>
-                    }
                     {marketWarning === false && 
-                        <div className="forecast-selection-div">
-                            <h2 className="forecast-selection-question-header">Pick a Horse Race</h2>
-                                {props.allForecasts.map((item, index) => {
+            <div className={width > 700 ? "new-forecast-layout-container" : "new-forecast-layout-container-mobile" }>
+            {width > 700 && <div className="forecast-top-bar">
+                {marketWarning === true &&
+                    <div className="forecast-selection-div-empty">
+                        <h4>There are currently no forecasts available right now. Try refreshing and returning to this page or hang tight until new forecast problems are released!</h4>
+                    </div>
+                }
+                {marketWarning === false && 
+                    <div className="forecast-selection-div">
+                        <h2 className="forecast-selection-question-header">Pick a Horse Race</h2>
+                            {props.allForecasts.map((item, index) => {
+                                if (new Date() > new Date(item.startDate)) {
                                     if (item.isClosed === true) {
                                         return (
                                             <div>
                                                 <h4 className="forecast-selection-item" onClick={() => handleChange(item.problemName)}>
                                                     <FaIcons.FaHorseHead color={"#404d72"} />
-                                                    &nbsp;{item.problemName}
                                                     <span style={{ color: "red"}}> (CLOSED)</span> 
+                                                    &nbsp;{item.problemName}
                                                 </h4>
                                                 <hr />
                                             </div>
@@ -747,21 +752,23 @@ console.log(e);
                                             <div>
                                                 <h4 className="forecast-selection-item" onClick={() => handleChange(item.problemName)}>
                                                     <FaIcons.FaHorseHead color={"#404d72"} />
+                                                    <span style={{ color: "green"}}> (LIVE - {Math.floor((Math.abs(new Date(item.closeDate) - new Date()))/(1000*60*60*24))} days)</span> 
                                                     &nbsp;{item.problemName}
-                                                    <span style={{ color: "green"}}> (LIVE)</span> 
+                                                    {/* &nbsp;(Deadline: {Math.floor((Math.abs(new Date(item.closeDate) - new Date()))/(1000*60*60*24))} days) */}
                                                 </h4>
                                                 <hr />
                                             </div>
                                         )
                                     }
-                                })}
-                        </div>
-                    }
-                </div>
+                                }
+                            })}
+                    </div>
+                }
+            </div>}
                 {/* chart and submission */}
                 {(forecastClosed === false && hasAForecastBeenSelected === true) &&
                     <div className="forecast-submission-and-chart-div">
-                        <h2 className="selected-forecast">
+                        {width > 700 && <h2 className="selected-forecast">
                             {selectedForecast}
                             <FaInfoCircle 
                                 color={"orange"} 
@@ -772,7 +779,27 @@ console.log(e);
                                     setModalContent2(`The Articles section below contains links to news articles using the question wording. Use the Chart to see how you're forecasting compared to everyone else. Do you agree? Or are you thinking differently to the crowd?`)
                                 }}
                             />
-                        </h2>
+                        </h2>}
+                        {width <= 700 && 
+                            <div className="forecast-selection-div">
+                                <select className="race-selector" id="race-selector" onChange={(e) => { handleChange(e.target.value)}}>
+                                    <option value="" selected disabled hidden>Choose a Race to predict here!</option>
+                                    {props.allForecasts.map((item, index) => {
+                                        if (new Date() > new Date(item.startDate)) {
+                                            if (item.isClosed === true) {
+                                                return (
+                                                    <option className="race-option" value={item.problemName}>CLOSED: {item.problemName}</option>
+                                                )
+                                            } else if (item.isClosed === false) {
+                                                return (
+                                                    <option className="race-option" value={item.problemName}>OPEN: {item.problemName}</option>
+                                                )
+                                            }
+                                        }
+                                    })}
+                                </select>
+                            </div>
+                        }
                         <h3 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 31)}</h3>
                         <div className="forecast-chart-stats-switcher">
                             <ForecastProblemLineChart
@@ -1200,7 +1227,40 @@ console.log(e);
                 }
                 {(forecastClosed === true && hasAForecastBeenSelected === true) && 
                     <div className="forecast-submission-and-chart-div">
-                        {forecastClosed === true ? <h2 className="selected-forecast" style={{ backgroundColor: "darkred" }}>{selectedForecast}</h2> : <h2 className="selected-forecast">{selectedForecast}</h2>}
+                        {forecastClosed === true ? 
+                            <h2 className="selected-forecast" style={{ backgroundColor: "darkred" }}>{selectedForecast}</h2> : 
+                            <h2 className="selected-forecast">{selectedForecast}</h2>
+                        }
+                        {width > 700 && <h2 className="selected-forecast" style={{ backgroundColor: "darkred" }}>
+                            {selectedForecast}
+                            <FaInfoCircle 
+                                color={"orange"} 
+                                className="modal-i-btn"
+                                onClick={() => { 
+                                    setShowModal(true); 
+                                    setModalContent(`This is where you will submit all of your forecasts! All races have a deadline, found below the button that opened this box, and you can submit AS MANY forecasts as you want before the deadline. EVERY forecast you make contributes to your final score, so allocating more points to the correct outcome SOONER will be more rewarding! You can also submit an explanation to accompany your forecast, this will help you if you come back and update it!`); 
+                                    setModalContent2(`The Articles section below contains links to news articles using the question wording. Use the Chart to see how you're forecasting compared to everyone else. Do you agree? Or are you thinking differently to the crowd?`)
+                                }}
+                            />
+                        </h2>}
+                        {width <= 700 && 
+                            <div className="forecast-selection-div">
+                                <select className="race-selector" id="race-selector" onChange={(e) => { handleChange(e.target.value)}}>
+                                    <option value="" selected disabled hidden>Choose a Race to predict here!</option>
+                                    {props.allForecasts.map((item, index) => {
+                                        if (item.isClosed === true) {
+                                            return (
+                                                <option className="race-option" value={item.problemName}>CLOSED: {item.problemName}</option>
+                                            )
+                                        } else if (item.isClosed === false) {
+                                            return (
+                                                <option className="race-option" value={item.problemName}>OPEN: {item.problemName}</option>
+                                            )
+                                        }
+                                    })}
+                                </select>
+                            </div>
+                        }
                         <h3 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 38)}</h3>
                         <div className="forecast-chart-stats-switcher">
                             {/* Non-switcher version: July 2024 */}
@@ -1331,12 +1391,70 @@ console.log(e);
                 }
                 {(forecastClosed === true && hasAForecastBeenSelected === false) && 
                     <div className="forecast-submission-div">
-                        <h2 className="selected-forecast">{selectedForecast}</h2>
+                        {width > 700 && <h2 className="selected-forecast">
+                            {selectedForecast}
+                            <FaInfoCircle 
+                                color={"orange"} 
+                                className="modal-i-btn"
+                                onClick={() => { 
+                                    setShowModal(true); 
+                                    setModalContent(`This is where you will submit all of your forecasts! All races have a deadline, found below the button that opened this box, and you can submit AS MANY forecasts as you want before the deadline. EVERY forecast you make contributes to your final score, so allocating more points to the correct outcome SOONER will be more rewarding! You can also submit an explanation to accompany your forecast, this will help you if you come back and update it!`); 
+                                    setModalContent2(`The Articles section below contains links to news articles using the question wording. Use the Chart to see how you're forecasting compared to everyone else. Do you agree? Or are you thinking differently to the crowd?`)
+                                }}
+                            />
+                        </h2>}
+                        {width <= 700 && 
+                            <div className="forecast-selection-div">
+                                <select className="race-selector" id="race-selector" onChange={(e) => { handleChange(e.target.value)}}>
+                                    <option value="" selected disabled hidden>Choose a Race to predict here!</option>
+                                    {props.allForecasts.map((item, index) => {
+                                        if (item.isClosed === true) {
+                                            return (
+                                                <option className="race-option" value={item.problemName}>CLOSED: {item.problemName}</option>
+                                            )
+                                        } else if (item.isClosed === false) {
+                                            return (
+                                                <option className="race-option" value={item.problemName}>OPEN: {item.problemName}</option>
+                                            )
+                                        }
+                                    })}
+                                </select>
+                            </div>
+                        }
                     </div>
                 }
                 {(forecastClosed === false && hasAForecastBeenSelected === false) && 
                     <div className="forecast-submission-div">
-                        <h2 className="selected-forecast">{selectedForecast}</h2>
+                        {width > 700 && <h2 className="selected-forecast">
+                            {selectedForecast}
+                            <FaInfoCircle 
+                                color={"orange"} 
+                                className="modal-i-btn"
+                                onClick={() => { 
+                                    setShowModal(true); 
+                                    setModalContent(`This is where you will submit all of your forecasts! All races have a deadline, found below the button that opened this box, and you can submit AS MANY forecasts as you want before the deadline. EVERY forecast you make contributes to your final score, so allocating more points to the correct outcome SOONER will be more rewarding! You can also submit an explanation to accompany your forecast, this will help you if you come back and update it!`); 
+                                    setModalContent2(`The Articles section below contains links to news articles using the question wording. Use the Chart to see how you're forecasting compared to everyone else. Do you agree? Or are you thinking differently to the crowd?`)
+                                }}
+                            />
+                        </h2>}
+                        {width <= 700 && 
+                            <div className="forecast-selection-div">
+                                <select className="race-selector" id="race-selector" onChange={(e) => { handleChange(e.target.value)}}>
+                                    <option value="" selected disabled hidden>Choose a Race to predict here!</option>
+                                    {props.allForecasts.map((item, index) => {
+                                        if (item.isClosed === true) {
+                                            return (
+                                                <option className="race-option" value={item.problemName}>CLOSED: {item.problemName}</option>
+                                            )
+                                        } else if (item.isClosed === false) {
+                                            return (
+                                                <option className="race-option" value={item.problemName}>OPEN: {item.problemName}</option>
+                                            )
+                                        }
+                                    })}
+                                </select>
+                            </div>
+                        }
                     </div>
                 }
             </div>

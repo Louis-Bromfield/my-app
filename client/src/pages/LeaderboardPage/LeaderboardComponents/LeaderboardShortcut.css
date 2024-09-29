@@ -1,9 +1,6 @@
 .leaderboard-shortcut,
 .leaderboard-shortcut-blue,
 .leaderboard-shortcut-red {
-    border: 1px solid darkgray;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -12,26 +9,14 @@
     cursor: pointer;
 }
 
-.leaderboard-shortcut > img,
-.leaderboard-shortcut-blue > img,
-.leaderboard-shortcut-red > img {
-    width: 58%;
-    margin: auto;
-}
-
 .leaderboard-shortcut > h4,
 .leaderboard-shortcut-blue > h4,
 .leaderboard-shortcut-red > h4 {
-    padding: 3%;
+    padding: 4%;
     background-color: #404d72;
     color: white;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-}
-
-.leaderboard-shortcut-red > h4 {
-    background-color: #993131;
-    text-decoration: none;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
 }
 
 .leaderboard-shortcut:hover,
@@ -39,16 +24,6 @@
 .leaderboard-shortcut-red:hover {
     background-color: #5973c070;
     border: 1px solid black;
-}
-
-@media (max-width: 1100px) {
-    .leaderboard-shortcut,
-    .leaderboard-shortcut-blue,
-    .leaderboard-shortcut-red {
-        margin-bottom: 4vh;
-        height: 15vh;
-        font-size: 0.9em;
-    }
 }
 
 @media (max-width: 600px) {
@@ -61,10 +36,5 @@
         height: 100%;
         min-height: 100%;
         max-height: 100%;
-    }
-    .leaderboard-shortcut-img {
-        min-width: 40%;
-        max-width: 40%;
-        height: 80%;
     }
 }

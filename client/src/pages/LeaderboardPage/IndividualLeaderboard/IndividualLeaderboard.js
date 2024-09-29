@@ -42,8 +42,8 @@ function IndividualLeaderboard(props) {
     
     const getLeaderboardData = async (leaderboard) => {
         try {
-            const lbData = await axios.get(`${process.env.REACT_APP_API_CALL_U}/`);
-            // const lbData = await axios.get(`http://localhost:8000/users`);
+            // const lbData = await axios.get(`${process.env.REACT_APP_API_CALL_U}/`);
+            const lbData = await axios.get(`http://localhost:8000/users`);
             setFilteredRankings(lbData.data);
         } catch (error) {
             console.error("Error occured in getLeaderboardData func in IndividualLeaderboard");
