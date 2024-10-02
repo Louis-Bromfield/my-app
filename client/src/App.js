@@ -9,7 +9,7 @@ import ChangeLog from './pages/ChangeLogPage/ChangeLog';
 import IndividualNewsFeedPost from './pages/HomePage/HomeSectionButtons/IndividualNewsFeedPost';
 import Forecast from './pages/ForecastPage/Forecast';
 import ForecastAnalysisPage from './pages/ForecastAnalysisPage/ForecastAnalysisPage';
-import RaceSummary from './pages/RaceSummaryPage/RaceSummary';
+// import RaceSummary from './pages/RaceSummaryPage/RaceSummary';
 import LeaderboardMenu from './pages/LeaderboardPage/LeaderboardMenu';
 import IndividualLeaderboard from './pages/LeaderboardPage/IndividualLeaderboard/IndividualLeaderboard';
 import Learn from './pages/LearnPage/Learn';
@@ -191,9 +191,9 @@ console.log(userPulledFromDB);
                 userBriers={userObject.brierScores}
             />} />
             <Route path='/forecast-analysis' render ={(props) => <ForecastAnalysisPage {...props} username={username} />} />
-            <Route path="/race-summary" render={(props) => <RaceSummary {...props}
+            {/* <Route path="/race-summary" render={(props) => <RaceSummary {...props}
                 race="2024 US Election"
-            />} />
+            />} /> */}
             <Route path='/leaderboard-select' render={(props) => <LeaderboardMenu {...props} 
                 username={username} 
                 markets={markets} 
@@ -241,10 +241,10 @@ console.log(userPulledFromDB);
                 <Redirect to="/"></Redirect>
                 {localStorage.setItem("selectedPage", "Home")}
             </Route>
-            <Route exact path="/race-summary">
+            {/* <Route exact path="/race-summary">
                 <Redirect to="/"></Redirect>
                 {localStorage.setItem("selectedPage", "Home")}
-            </Route>
+            </Route> */}
             <Route exact path="/leaderboard-select">
                 <Redirect to="/"></Redirect>
                 {localStorage.setItem("selectedPage", "Home")}
