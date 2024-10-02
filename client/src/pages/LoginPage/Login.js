@@ -85,7 +85,8 @@ console.log("3");
             return;
         };
         try {
-            let userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${username}/${passwordOrResetCode}/${true}`);
+            let userObj = await axios.get(`https://fantasyforecast-ec48a35e6c66.herokuapp.com/${username}/${passwordOrResetCode}/${true}`);
+            // let userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${username}/${passwordOrResetCode}/${true}`);
             // let userObj = await axios.get(`http://localhost:8000/${username}/${passwordOrResetCode}/${true}`);
 console.log("4");
 console.log("9");
