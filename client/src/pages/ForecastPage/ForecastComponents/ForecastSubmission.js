@@ -723,7 +723,6 @@ console.log(e);
                 <br />
                 <p>{modalContent2}</p>
             </Modal>
-                    {marketWarning === false && 
             <div className={width > 700 ? "new-forecast-layout-container" : "new-forecast-layout-container-mobile" }>
             {width > 700 && <div className="forecast-top-bar">
                 {marketWarning === true &&
@@ -754,7 +753,6 @@ console.log(e);
                                                     <FaIcons.FaHorseHead color={"#404d72"} />
                                                     <span style={{ color: "green"}}> (LIVE - {Math.floor((Math.abs(new Date(item.closeDate) - new Date()))/(1000*60*60*24))} days)</span> 
                                                     &nbsp;{item.problemName}
-                                                    {/* &nbsp;(Deadline: {Math.floor((Math.abs(new Date(item.closeDate) - new Date()))/(1000*60*60*24))} days) */}
                                                 </h4>
                                                 <hr />
                                             </div>
@@ -798,6 +796,18 @@ console.log(e);
                                         }
                                     })}
                                 </select>
+                                {selectedForecast !== "No forecast problem selected" && <h2 className="selected-forecast">
+                                    {selectedForecast}
+                                    <FaInfoCircle 
+                                        color={"orange"} 
+                                        className="modal-i-btn"
+                                        onClick={() => { 
+                                            setShowModal(true); 
+                                            setModalContent(`This is where you will submit all of your forecasts! All races have a deadline, found below the button that opened this box, and you can submit AS MANY forecasts as you want before the deadline. EVERY forecast you make contributes to your final score, so allocating more points to the correct outcome SOONER will be more rewarding! You can also submit an explanation to accompany your forecast, this will help you if you come back and update it!`); 
+                                            setModalContent2(`The Articles section below contains links to news articles using the question wording. Use the Chart to see how you're forecasting compared to everyone else. Do you agree? Or are you thinking differently to the crowd?`)
+                                        }}
+                                    />
+                                </h2>}
                             </div>
                         }
                         <h3 className="selected-forecast-close-date" style={{ color: "darkred" }}>{forecastCloseDate.slice(0, 31)}</h3>
@@ -958,6 +968,7 @@ console.log(e);
                                                     <textarea 
                                                         className="forecast-submission-explanation-input"
                                                         name="forecast-explanation"
+                                                        style={{ width: "100%", maxWidth: "100%" }}
                                                         disabled={isInputDisabled}
                                                         onChange={handleCommentsChange}>
                                                     </textarea>
@@ -966,12 +977,28 @@ console.log(e);
                                                     <textarea 
                                                         placeholder="Explain why you gave the above certainty/certainties"
                                                         className="forecast-submission-explanation-input"
+                                                        style={{ width: "100%", maxWidth: "100%" }}
                                                         name="forecast-explanation"
                                                         disabled={isInputDisabled}
                                                         onChange={handleCommentsChange}>
                                                     </textarea>
                                                 }
                                             </div>
+                                            <br />
+                                            <hr />
+                                            <h2>
+                                                Resolution Criteria
+                                                <FaInfoCircle 
+                                                        color={"orange"} 
+                                                        className="modal-i-btn"
+                                                        onClick={() => { 
+                                                            setShowModal(true); 
+                                                            setModalContent(`These are the rules behind how we will use to decide which outcome actually happened. This allows for you to see, transparently, how outcomes are arrived at.`)
+                                                            setModalContent2("");
+                                                            }}
+                                                    />
+                                            </h2>
+                                            <p style={{ fontSize: "95%" }}>{selectedForecastObject.resolutionCriteria !== undefined ? selectedForecastObject.resolutionCriteria : "No criteria established yet."}</p>
                                         </div>
                                         {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
                                             <button 
@@ -1128,6 +1155,7 @@ console.log(e);
                                                     <textarea 
                                                         className="forecast-submission-explanation-input"
                                                         name="forecast-explanation"
+                                                        style={{ width: "100%", maxWidth: "100%" }}
                                                         disabled={isInputDisabled}
                                                         onChange={handleCommentsChange}>
                                                     </textarea>
@@ -1136,11 +1164,27 @@ console.log(e);
                                                     <textarea 
                                                         placeholder="Explain why you gave the above certainty/certainties"
                                                         className="forecast-submission-explanation-input"
+                                                        style={{ width: "100%", maxWidth: "100%" }}
                                                         name="forecast-explanation"
                                                         disabled={isInputDisabled}
                                                         onChange={handleCommentsChange}>
                                                     </textarea>
                                                 }
+                                                <br />
+                                                <hr />
+                                                <h2>
+                                                    Resolution Criteria
+                                                    <FaInfoCircle 
+                                                            color={"orange"} 
+                                                            className="modal-i-btn"
+                                                            onClick={() => { 
+                                                                setShowModal(true); 
+                                                                setModalContent(`These are the rules behind how we will use to decide which outcome actually happened. This allows for you to see, transparently, how outcomes are arrived at.`)
+                                                                setModalContent2("");
+                                                                }}
+                                                        />
+                                                </h2>
+                                                <p style={{ fontSize: "95%" }}>{selectedForecastObject.resolutionCriteria !== undefined ? selectedForecastObject.resolutionCriteria : "No criteria established yet."}</p>
                                             </div>
                                             {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
                                                 <button 
@@ -1248,14 +1292,16 @@ console.log(e);
                                 <select className="race-selector" id="race-selector" onChange={(e) => { handleChange(e.target.value)}}>
                                     <option value="" selected disabled hidden>Choose a Race to predict here!</option>
                                     {props.allForecasts.map((item, index) => {
-                                        if (item.isClosed === true) {
-                                            return (
-                                                <option className="race-option" value={item.problemName}>CLOSED: {item.problemName}</option>
-                                            )
-                                        } else if (item.isClosed === false) {
-                                            return (
-                                                <option className="race-option" value={item.problemName}>OPEN: {item.problemName}</option>
-                                            )
+                                        if (new Date() > new Date(item.startDate)) {
+                                            if (item.isClosed === true) {
+                                                return (
+                                                    <option className="race-option" value={item.problemName}>CLOSED: {item.problemName}</option>
+                                                )
+                                            } else if (item.isClosed === false) {
+                                                return (
+                                                    <option className="race-option" value={item.problemName}>OPEN: {item.problemName}</option>
+                                                )
+                                            }
                                         }
                                     })}
                                 </select>
@@ -1408,14 +1454,16 @@ console.log(e);
                                 <select className="race-selector" id="race-selector" onChange={(e) => { handleChange(e.target.value)}}>
                                     <option value="" selected disabled hidden>Choose a Race to predict here!</option>
                                     {props.allForecasts.map((item, index) => {
-                                        if (item.isClosed === true) {
-                                            return (
-                                                <option className="race-option" value={item.problemName}>CLOSED: {item.problemName}</option>
-                                            )
-                                        } else if (item.isClosed === false) {
-                                            return (
-                                                <option className="race-option" value={item.problemName}>OPEN: {item.problemName}</option>
-                                            )
+                                        if (new Date() > new Date(item.startDate)) {
+                                            if (item.isClosed === true) {
+                                                return (
+                                                    <option className="race-option" value={item.problemName}>CLOSED: {item.problemName}</option>
+                                                )
+                                            } else if (item.isClosed === false) {
+                                                return (
+                                                    <option className="race-option" value={item.problemName}>OPEN: {item.problemName}</option>
+                                                )
+                                            }
                                         }
                                     })}
                                 </select>
@@ -1442,14 +1490,16 @@ console.log(e);
                                 <select className="race-selector" id="race-selector" onChange={(e) => { handleChange(e.target.value)}}>
                                     <option value="" selected disabled hidden>Choose a Race to predict here!</option>
                                     {props.allForecasts.map((item, index) => {
-                                        if (item.isClosed === true) {
-                                            return (
-                                                <option className="race-option" value={item.problemName}>CLOSED: {item.problemName}</option>
-                                            )
-                                        } else if (item.isClosed === false) {
-                                            return (
-                                                <option className="race-option" value={item.problemName}>OPEN: {item.problemName}</option>
-                                            )
+                                        if (new Date() > new Date(item.startDate)) {
+                                            if (item.isClosed === true) {
+                                                return (
+                                                    <option className="race-option" value={item.problemName}>CLOSED: {item.problemName}</option>
+                                                )
+                                            } else if (item.isClosed === false) {
+                                                return (
+                                                    <option className="race-option" value={item.problemName}>OPEN: {item.problemName}</option>
+                                                )
+                                            }
                                         }
                                     })}
                                 </select>
