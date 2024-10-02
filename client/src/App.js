@@ -9,6 +9,7 @@ import ChangeLog from './pages/ChangeLogPage/ChangeLog';
 import IndividualNewsFeedPost from './pages/HomePage/HomeSectionButtons/IndividualNewsFeedPost';
 import Forecast from './pages/ForecastPage/Forecast';
 import ForecastAnalysisPage from './pages/ForecastAnalysisPage/ForecastAnalysisPage';
+import RaceSummary from './pages/RaceSummaryPage/RaceSummary';
 import LeaderboardMenu from './pages/LeaderboardPage/LeaderboardMenu';
 import IndividualLeaderboard from './pages/LeaderboardPage/IndividualLeaderboard/IndividualLeaderboard';
 import Learn from './pages/LearnPage/Learn';
@@ -125,8 +126,8 @@ function App() {
                 return;
             };
             console.log("paIFDBTPDB");
-            // const userPulledFromDB = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);  
-            const userPulledFromDB = await axios.get(`http://localhost:8000/users/${username}`);  
+            const userPulledFromDB = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);  
+            // const userPulledFromDB = await axios.get(`http://localhost:8000/users/${username}`);  
 console.log("userPulledFromDB");
 console.log(userPulledFromDB);
             if (userPulledFromDB.data === [] || userPulledFromDB.data[0].username === undefined) {
@@ -190,6 +191,9 @@ console.log(userPulledFromDB);
                 userBriers={userObject.brierScores}
             />} />
             <Route path='/forecast-analysis' render ={(props) => <ForecastAnalysisPage {...props} username={username} />} />
+            <Route path="/race-summary" render={(props) => <RaceSummary {...props}
+                race="2024 US Election"
+            />} />
             <Route path='/leaderboard-select' render={(props) => <LeaderboardMenu {...props} 
                 username={username} 
                 markets={markets} 
@@ -234,6 +238,10 @@ console.log(userPulledFromDB);
                 {localStorage.setItem("selectedPage", "Home")}
             </Route>
             <Route exact path="/forecast-analysis">
+                <Redirect to="/"></Redirect>
+                {localStorage.setItem("selectedPage", "Home")}
+            </Route>
+            <Route exact path="/race-summary">
                 <Redirect to="/"></Redirect>
                 {localStorage.setItem("selectedPage", "Home")}
             </Route>

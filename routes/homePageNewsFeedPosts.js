@@ -4,6 +4,13 @@ const HomePageNewsFeedPost = require('../models/HomePageNewsFeedPosts');
 const { extract } = require('article-parser');
 const Users = require('../models/Users');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+
+router.use(cors());
+// parse application/x-www-form-urlencoded
+router.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+router.use(bodyParser.json())
 
 // Get all posts
 router.get("/", cors(), async (req, res) => {
@@ -24,7 +31,11 @@ router.get("/:id", cors(), async (req, res) => {
 const getArticleHeadline = async (url) => {
     try {
         const article = await extract(url);
-        return [ article.title, article.image ];
+        if (article !== null) {
+            return [ article.title, article.image ];
+        } else {
+            return [null, null]
+        }
     } catch (error) {
         console.error(error);
         return [null, null];

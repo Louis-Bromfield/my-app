@@ -47,15 +47,15 @@ console.log("Profile.js UE");
         try {
             setErrorMessage("");
             const lbName = "Fantasy Forecast All-Time"
-            // const userData = await axios.get(`${process.env.REACT_APP_API_CALL_L}/leaderboard/${lbName}`);
-            const userData = await axios.get(`http://localhost:8000/leaderboards/leaderboard/${lbName}`);
+            const userData = await axios.get(`${process.env.REACT_APP_API_CALL_L}/leaderboard/${lbName}`);
+            // const userData = await axios.get(`http://localhost:8000/leaderboards/leaderboard/${lbName}`);
             for (let i = 0; i < userData.data.length; i++) {
                 if (userData.data[i].username === username) {
                     setIndex(`${i+1}/${userData.data.length}`)
                 };
             };
-            // const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${username}`);
-            const userDocument = await axios.get(`http://localhost:8000/users/profileData/${username}`);
+            const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/profileData/${username}`);
+            // const userDocument = await axios.get(`http://localhost:8000/users/profileData/${username}`);
             
             if (userDocument.data.userObj === null) {
                 setErrorMessage("No profiles were found with this username. Please try again.");

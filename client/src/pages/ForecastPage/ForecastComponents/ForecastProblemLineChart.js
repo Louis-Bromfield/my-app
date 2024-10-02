@@ -7,6 +7,7 @@ function ForecastProblemLineChart(props) {
   const [chartData, setChartData] = useState([]);
   const [userChartData, setUserChartData] = useState([]);
   const [averageChartData, setAverageChartData] = useState([]);
+  const [oppositeAverageChartData, setOppositeAverageChartData] = useState({ datasets: [] });
   const [labelsArray, setLabelsArray] = useState([]);
   const [showModal, setShowModal] = useState(false);
 //   const [modalContent, setModalContent] = useState("");
@@ -135,7 +136,7 @@ function ForecastProblemLineChart(props) {
         };
     }, [props.selectedForecastObject, props.refreshChartAppearance]);
 
-  const formatCertainties = (selectedForecastObject, updateTodayStats, username) => {
+const formatCertainties = (selectedForecastObject, updateTodayStats, username) => {
     if (selectedForecastObject.submittedForecasts.length === 0) {
         setChartData({ label: "All Forecasts", data: [] });
         setUserChartData({ label: "Your Forecasts", data: [] });
@@ -155,7 +156,7 @@ function ForecastProblemLineChart(props) {
             pointRadius: 4
         }
         let data = {
-            label: "All Yes % Forecasts", 
+            label: `${selectedForecastObject.potentialOutcomes[0]} %`, 
             data: [], 
             backgroundColor: "green", 
             borderColor: "green", 
@@ -232,10 +233,13 @@ function ForecastProblemLineChart(props) {
                     todayForecasts.push(data.data[i].x);
                 };
             };
-            const dailyAverages = getNewDailyAverages(data.data, new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate), selectedForecastObject.isClosed);
+            const dailyAverages = getNewDailyAverages(data.data, new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate), selectedForecastObject.isClosed, false);
+            const dailyOppositeAverages = getNewDailyAverages(data.data, new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate), selectedForecastObject.isClosed, true);
+
             updateTodayStats(`${dailyAverages[dailyAverages.length-1].y.toFixed(2)}%`, todayForecasts.length);
+
             let simulatedUserData = {
-                label: "Your Most Recent Yes %",
+                label: "Your Most Recent Prediction",
                 data: [],
                 backgroundColor: "green",
                 borderColor: "orange",
@@ -276,10 +280,18 @@ function ForecastProblemLineChart(props) {
             setUserChartData(userData);
             setSimulatedUserData(simulatedUserData);
             setAverageChartData({
-                label: "Average Yes %",
+                label: `Average ${selectedForecastObject.potentialOutcomes[0]} %`,
                 data: ((new Date(selectedForecastObject.closeDate) - new Date(selectedForecastObject.startDate))/1000 >= 0) ? dailyAverages : [],
                 backgroundColor: "#404d72",
                 borderColor: "#404d72",
+                borderWidth: 4,
+                pointRadius: 0
+            });
+            setOppositeAverageChartData({
+                label: `Average ${selectedForecastObject.potentialOutcomes[1]} %`,
+                data: ((new Date(data.closeDate) - new Date(data.startDate))/1000 >= 0) ? dailyOppositeAverages : [],
+                backgroundColor: "darkred",
+                borderColor: "darkred",
                 borderWidth: 4,
                 pointRadius: 0
             });
@@ -452,9 +464,9 @@ function ForecastProblemLineChart(props) {
 
         allData = outcomeOneData.concat(outcomeTwoData, outcomeThreeData);
         allData.sort((a, b) => a.x < b.x);
-        let avgOutcomeOneArr = getNewDailyAverages(outcomeOneData, new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate), selectedForecastObject.isClosed);
-        let avgOutcomeTwoArr = getNewDailyAverages(outcomeTwoData, new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate), selectedForecastObject.isClosed);
-        let avgOutcomeThreeArr = getNewDailyAverages(outcomeThreeData, new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate), selectedForecastObject.isClosed);
+        let avgOutcomeOneArr = getNewDailyAverages(outcomeOneData, new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate), selectedForecastObject.isClosed, false);
+        let avgOutcomeTwoArr = getNewDailyAverages(outcomeTwoData, new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate), selectedForecastObject.isClosed, false);
+        let avgOutcomeThreeArr = getNewDailyAverages(outcomeThreeData, new Date(selectedForecastObject.startDate), new Date(selectedForecastObject.closeDate), selectedForecastObject.isClosed, false);
 
         // Adding in simulated data for days with no predictions (copying last data over to all days) - for AVERAGE
         if ((avgOutcomeOneArr.length > 0) && (avgOutcomeOneArr[avgOutcomeOneArr.length-1].x !== new Date().toString().slice(0, 15))) {
@@ -616,7 +628,9 @@ function ForecastProblemLineChart(props) {
         return labelsToReturn;
     };
 
-    const getNewDailyAverages = (certainties, start, end, isClosed) => {
+    const getNewDailyAverages = (certainties, start, end, isClosed, opposite) => {
+        console.log("daily average");
+        console.log(opposite);
         // Create labels array
         let days = createNewLabelsArray(start, end, isClosed);
         // Sort main array by date
@@ -633,7 +647,11 @@ function ForecastProblemLineChart(props) {
 
                 // If the forecast we're looking at right now is EXACTLY the date we want
                 if (days[i] === sortedCertainties[j].x) {
-                    arrOfAllForecastValues.push(sortedCertainties[j].y);
+                    if (opposite !== undefined && opposite === true) {
+                        arrOfAllForecastValues.push(100 - sortedCertainties[j].y);
+                    } else {
+                        arrOfAllForecastValues.push(sortedCertainties[j].y);
+                    }
                 };
                 // If the forecast we're looking at right now is LATER than the date we want
                 if (days[i] > sortedCertainties[j].x || j === sortedCertainties.length-1) {
@@ -664,6 +682,13 @@ function ForecastProblemLineChart(props) {
             borderColor: averageChartData.borderColor,
             borderWidth: averageChartData.borderWidth,
             pointRadius: averageChartData.pointRadius
+        }, {
+            label: oppositeAverageChartData.label,
+            data: oppositeAverageChartData.data,
+            backgroundColor: oppositeAverageChartData.backgroundColor,
+            borderColor: oppositeAverageChartData.borderColor,
+            borderWidth: oppositeAverageChartData.borderWidth,
+            pointRadius: oppositeAverageChartData.pointRadius
         }, {
             label: userChartData.label,
             data: userChartData.data,

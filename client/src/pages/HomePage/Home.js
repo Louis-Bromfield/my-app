@@ -52,8 +52,8 @@ function Home(props) {
 
     const getUserInfo = async (username) => {
         try {
-            // const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
-            const userDocument = await axios.get(`http://localhost:8000/users/${username}`);
+            const userDocument = await axios.get(`${process.env.REACT_APP_API_CALL_U}/${username}`);
+            // const userDocument = await axios.get(`http://localhost:8000/users/${username}`);
             if (userDocument.data[0].numberOfClosedForecasts > 0) {
                 setShowClosedProblemModal(true);
             };
@@ -120,6 +120,12 @@ function Home(props) {
                     <div className="home-page-grid-left-col">
                         <HomeProblemPreview username={props.username} isTop={true} />
                         <HomeProblemPreview username={props.username} isTop={false} />
+                        {/* Temp solution */}
+                        {/* <div className="report-any-issues-container">
+                            <h3 className="home-button-large-title">The 2024 US Presidential Election Summary</h3>
+                            <Link to="/race-summary" className="home-button-nav-button">According to our Jockeys</Link>
+                        </div> */}
+                        {/* Temp solution */}
                         <HomeChangeLogPreview isMobile={false} />
                         <div className="report-any-issues-container">
                             <h3 className="home-button-large-title">Got any site issues, feedback, or praise?</h3>

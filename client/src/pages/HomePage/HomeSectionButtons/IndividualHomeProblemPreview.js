@@ -8,14 +8,17 @@ import './IndividualHomeProblemPreview.css';
 function IndividualHomeProblemPreview(props) {
     const [data, setData] = useState([]);
     const [averageChartData, setAverageChartData] = useState({ datasets: [] });
+    const [oppositeAverageChartData, setOppositeAverageChartData] = useState({ datasets: [] });
     const [multiOutcomeChartData, setMultiOutcomeChartData] = useState({ datasets: [] });
 
     useEffect(() => {
+        console.log(props.data.submittedForecasts);
         formatForecastData(props.data);
-    }, []);
+    }, [props.data]);
 
     const formatForecastData = (data) => {
-        if (data.submittedForecasts.length > 0) {
+        console.log(data);
+        if (data.submittedForecasts !== undefined && data.submittedForecasts.length > 0) {
             if (data.singleCertainty === true) {
                 let lastForecastDate = "";
                 let newCertainties = data.submittedForecasts;
@@ -61,12 +64,22 @@ function IndividualHomeProblemPreview(props) {
                             };
                         };
                     };
-                    const dailyAverages = getNewDailyAverages(allData.data, new Date(data.startDate), new Date(data.closeDate), data.isClosed);
+                    const dailyAverages = getNewDailyAverages(allData.data, new Date(data.startDate), new Date(data.closeDate), data.isClosed, false);
+                    const dailyOppositeAverages = getNewDailyAverages(allData.data, new Date(data.startDate), new Date(data.closeDate), data.isClosed, true);
+                    
                     setAverageChartData({
-                        label: "Average Certainty",
+                        label: `${props.data.potentialOutcomes[0]}`,
                         data: ((new Date(data.closeDate) - new Date(data.startDate))/1000 >= 0) ? dailyAverages : [],
                         backgroundColor: "#404d72",
                         borderColor: "#404d72",
+                        borderWidth: 4,
+                        pointRadius: 0
+                    });
+                    setOppositeAverageChartData({
+                        label: `${props.data.potentialOutcomes[1]}`,
+                        data: ((new Date(data.closeDate) - new Date(data.startDate))/1000 >= 0) ? dailyOppositeAverages : [],
+                        backgroundColor: "orange",
+                        borderColor: "orange",
                         borderWidth: 4,
                         pointRadius: 0
                     });
@@ -233,12 +246,12 @@ function IndividualHomeProblemPreview(props) {
         };
     };
 
-    const getNewDailyAverages = (certainties, start, end, isClosed) => {
+    const getNewDailyAverages = (certainties, start, end, isClosed, opposite) => {
         // Create labels array
         let days = createNewLabelsArray(start, end, isClosed);
         // Sort main array by date
         let sortedCertainties = certainties.sort((a, b) => new Date(a.x) - new Date(b.x));
-        let averageArr = [];         
+        let averageArr = [];   
         for (let i = 0; i < days.length; i++) {
             // formatting array of dates into objects containing said dates
             averageArr[i] = { x: days[i], y: null };
@@ -250,7 +263,11 @@ function IndividualHomeProblemPreview(props) {
                 
                 // If the forecast we're looking at right now is EXACTLY the date we want
                 if (days[i] === sortedCertainties[j].x) {
-                    arrOfAllForecastValues.push(sortedCertainties[j].y);
+                    if (opposite === true) {
+                        arrOfAllForecastValues.push(100 - sortedCertainties[j].y);
+                    } else {
+                        arrOfAllForecastValues.push(sortedCertainties[j].y);
+                    }
                 };
                 // If the forecast we're looking at right now is LATER than the date we want
                 if (days[i] > sortedCertainties[j].x || j === sortedCertainties.length-1) {
@@ -261,6 +278,13 @@ function IndividualHomeProblemPreview(props) {
                 averageArr[i].y = averageArr[i-1].y;
             }
         };
+        if (props.isSummaryPage === true && props.data.singleCertainty === true) {
+            console.log(averageArr[averageArr.length-1].y)
+            props.handleNewStatToShow(averageArr[averageArr.length-1].y);
+        };
+        if (opposite === true) {
+            console.log(averageArr);
+        }
         return averageArr;
     };
 
@@ -282,7 +306,16 @@ function IndividualHomeProblemPreview(props) {
             borderColor: averageChartData.borderColor,
             borderWidth: averageChartData.borderWidth,
             pointRadius: averageChartData.pointRadius
-        }],
+        },
+        {
+            label: oppositeAverageChartData.label,
+            data: oppositeAverageChartData.data,
+            backgroundColor: oppositeAverageChartData.backgroundColor,
+            borderColor: oppositeAverageChartData.borderColor,
+            borderWidth: oppositeAverageChartData.borderWidth,
+            pointRadius: oppositeAverageChartData.pointRadius 
+        }
+    ],
         spanGaps: false,
         responsive: true,
         maintainAspectRatio: false,
@@ -292,7 +325,7 @@ function IndividualHomeProblemPreview(props) {
     const options = {
         plugins: {
             legend: {
-                display: false
+                display: props.isSummaryPage === true ? true : false
             }
         },
         scales: {
@@ -303,7 +336,7 @@ function IndividualHomeProblemPreview(props) {
                 stepSize: 5,
             },
             x: {
-                display: false
+                display: true
             }
         }
     };
@@ -311,13 +344,13 @@ function IndividualHomeProblemPreview(props) {
 
     return (
         <div className="individual-home-problem-preview">
-            <h4 className="individual-home-problem-preview-question" style={{ "padding-bottom": "1vh" }}>
+            {props.isSummaryPage !== true && <h4 className="individual-home-problem-preview-question" style={{ "padding-bottom": "1vh" }}>
                 {props.data.isClosed === false ? `LIVE: ${props.data.problemName}` : `CLOSED: ${props.data.problemName}`}
-            </h4>
+            </h4>}
             {/* Add a setProblemToPreview local storage variable which then gets called on Forecasts page */}
             <div>
             {/* <div style={{ width: "90%" }}> */}
-                <Link to={{pathname: "/forecast"}}>
+                <Link to={{pathname: "/races"}}>
                     <Line 
                         data={props.data.singleCertainty === true ? chartDataToViz : multiOutcomeChartData} 
                         options={options}

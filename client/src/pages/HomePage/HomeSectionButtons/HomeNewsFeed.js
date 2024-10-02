@@ -52,8 +52,8 @@ function HomeNewsFeed(props) {
 
     const getAllNewsFeedPostsFromDB = async () => {
         try {
-            // const allPosts = await axios.get(`${process.env.REACT_APP_API_CALL_HPNFP}`);
-            const allPosts = await axios.get(`http://localhost:8000/homePageNewsFeedPosts`);
+            const allPosts = await axios.get(`${process.env.REACT_APP_API_CALL_HPNFP}`);
+            // const allPosts = await axios.get(`http://localhost:8000/homePageNewsFeedPosts`);
 console.log("Here?");
 console.log(allPosts);
             setFeed(allPosts === undefined ? [] : allPosts.data.reverse());
@@ -159,7 +159,8 @@ console.log(allPosts);
 
     const persistPostToDB = async (username) => {
         try {
-            await axios.post(`${process.env.REACT_APP_API_CALL_HPNFP}`, {
+            await axios.post("http://localhost:8000/homepagenewsfeedposts", {
+            // await axios.post(`homepagenewsfeedposts`, {
                 articleURL: (newPostURL === "" || newPostURL.length <= 8) ? "N/A" : newPostURL,
                 postDescription: newPostDescription,
                 author: username,
@@ -180,7 +181,8 @@ console.log(allPosts);
 
     const updateOnboarding = async (username) => {
         try {
-            const updatedUserDocument = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/onboardingTask/${username}`, {
+            // const updatedUserDocument = await axios.patch(`${process.env.REACT_APP_API_CALL_U}/onboardingTask/${username}`, {
+            const updatedUserDocument = await axios.patch(`http://localhost:8000/users/onboardingTask/${username}`, {
                 onboardingTask: "submitAPost",
                 ffPointsIfFalse: 200,
                 ffPointsIfTrue: 15
@@ -593,7 +595,7 @@ console.log(allPosts);
                                 username: props.username
                             };
                             // check if any element from post.markets is in userMarkets
-                            if (item.markets.some(market => userMarkets.includes(market))) {
+                            // if (item.markets.some(market => userMarkets.includes(market))) {
                                 return (
                                     <li key={index} className="news-feed-post">
                                         <div className="post-author">
@@ -649,7 +651,7 @@ console.log(allPosts);
                                         </Link>
                                     </li>
                                 ) 
-                            } else return null;
+                            // } else return null;
                         })}
                     </ul>
                 }

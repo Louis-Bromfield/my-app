@@ -15,8 +15,8 @@ function HomeProblemPreview(props) {
 
     const getProblemData = async () => {
         try {
-            // const forecastData = await axios.get(`${process.env.REACT_APP_API_CALL_F}`);
-            const forecastData = await axios.get(`http://localhost:8000/forecasts`);
+            const forecastData = await axios.get(`${process.env.REACT_APP_API_CALL_F}`);
+            // const forecastData = await axios.get(`http://localhost:8000/forecasts`);
             let openRaces = [];
             let closedRaces = [];
             for (let i = 0; i < forecastData.data.length; i++) {

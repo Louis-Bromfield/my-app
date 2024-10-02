@@ -486,8 +486,8 @@ console.log(e);
             }
             try {
                 // const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/update`, {
-                // const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateSingle`, {
-                const newForecastTwo = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateSingle`, {
+                const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateSingle`, {
+                // const newForecastTwo = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateSingle`, {
                     documentID: selectedForecastDocumentID,
                     problemName: forecast,
                     // newForecastObject: newForecastObj,
@@ -535,8 +535,8 @@ console.log(e);
                 return;
             }
             try {
-                // const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateSingle`, {
-                    const submittedForecast = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateMultiple`, {
+                const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateSingle`, {
+                    // const submittedForecast = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateMultiple`, {
                     documentID: selectedForecastDocumentID,
                     problemName: forecast,
                     username: username,
@@ -602,8 +602,8 @@ console.log(e);
                 //     comments: `(${username})~ ${newComments}`, 
                 //     date: new Date().toString()
                 // };
-                // const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateMultiple`, {
-                const newForecastTwo = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateMultiple`, {
+                const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateMultiple`, {
+                // const newForecastTwo = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateMultiple`, {
                     documentID: selectedForecastDocumentID,
                     problemName: forecast,
                     certainty1: newCertainty1, 
@@ -660,8 +660,8 @@ console.log(e);
                 return;
             }
             try {
-                // const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateMultiple`, {
-                const submittedForecast = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateMultiple`, {
+                const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateMultiple`, {
+                // const submittedForecast = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateMultiple`, {
                     documentID: selectedForecastDocumentID,
                     problemName: forecast,
                     username: username,
