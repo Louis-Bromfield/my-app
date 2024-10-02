@@ -142,13 +142,13 @@ console.log(allPosts);
 
     const submitNewsFeedPost = (e) => {
         e.preventDefault();
-        if (userMarketsForPost.length === 0) {
-            setPostMessage("You must select at least one market.");
-            setTimeout(() => {
-                setPostMessage("");
-            }, 3000);
-            return;
-        };
+        // if (userMarketsForPost.length === 0) {
+        //     setPostMessage("You must select at least one market.");
+        //     setTimeout(() => {
+        //         setPostMessage("");
+        //     }, 3000);
+        //     return;
+        // };
         persistPostToDB(props.username);
         setNewPostURL("");
         setNewPostDescription("");

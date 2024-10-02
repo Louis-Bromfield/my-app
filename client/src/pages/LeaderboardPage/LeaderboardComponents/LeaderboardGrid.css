@@ -26,7 +26,7 @@
     }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 600px) {
     .leaderboard-grid {
         margin: 0 auto;
         display: flex;

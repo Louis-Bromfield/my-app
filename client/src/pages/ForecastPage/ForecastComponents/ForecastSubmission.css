@@ -400,6 +400,10 @@
     .multiple-input-fields {
         font-size: 80%;
     }
+    .selected-forecast {
+        margin-top: 1vh;
+        margin-bottom: 0vh;
+    }
 }
 
 @media (max-width: 600px) {

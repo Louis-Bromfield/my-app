@@ -19,11 +19,17 @@
     border-top-right-radius: 5%;
 }
 
-.leaderboard-shortcut:hover,
+/* .leaderboard-shortcut:hover,
 .leaderboard-shortcut-blue:hover,
 .leaderboard-shortcut-red:hover {
     background-color: #5973c070;
     border: 1px solid black;
+} */
+
+.leaderboard-shortcut > h4:hover {
+    background: rgb(231, 226, 226);
+    color: #404d72;
+    transition: 0.2s ease-in-out;
 }
 
 @media (max-width: 600px) {

@@ -63,7 +63,7 @@ function IndividualLeaderboard(props) {
                 }
             </div>
             <div className="leaderboard-title-and-navigation">
-                <h2>{currentLeaderboardName} Leaderboard</h2>
+            <h2 className="selected-forecast">{currentLeaderboardName === "Fantasy Forecast All-Time" ? "Horse Race Politics All-Time" : currentLeaderboardName} Leaderboard</h2>
             </div>
             <div className="leaderboard-spotlight-row">
                 <Top3Users 
