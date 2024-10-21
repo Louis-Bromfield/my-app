@@ -52,8 +52,8 @@ function HomeNewsFeed(props) {
 
     const getAllNewsFeedPostsFromDB = async () => {
         try {
-            const allPosts = await axios.get(`${process.env.REACT_APP_API_CALL_HPNFP}`);
-            // const allPosts = await axios.get(`http://localhost:8000/homePageNewsFeedPosts`);
+            // const allPosts = await axios.get(`${process.env.REACT_APP_API_CALL_HPNFP}`);
+            const allPosts = await axios.get(`http://localhost:8000/homePageNewsFeedPosts`);
 console.log("Here?");
 console.log(allPosts);
             setFeed(allPosts === undefined ? [] : allPosts.data.reverse());
@@ -97,7 +97,7 @@ console.log(allPosts);
             const postURL = e.target.value;
             setNewPostURL(postURL);
             setPostPreviewLoading(true);
-            const postPreviewObj = await axios.get(`${process.env.REACT_APP_API_CALL_HELP}/getPostInfo`, {
+            const postPreviewObj = await axios.get(`http://localhost:8000/getPostInfo`, {
                 params: {
                     URL: postURL
                 }
@@ -159,7 +159,7 @@ console.log(allPosts);
 
     const persistPostToDB = async (username) => {
         try {
-            await axios.post("http://localhost:8000/homepagenewsfeedposts", {
+            const res = await axios.post("http://localhost:8000/homePageNewsFeedPosts", {
             // await axios.post(`homepagenewsfeedposts`, {
                 articleURL: (newPostURL === "" || newPostURL.length <= 8) ? "N/A" : newPostURL,
                 postDescription: newPostDescription,
@@ -174,6 +174,7 @@ console.log(allPosts);
             });
             setCauseFeedNewsFeedRefreshWithoutAnimation(false);
             setCauseFeedNewsFeedRefresh(causeNewsFeedRefresh+1);
+            console.log(res);
         } catch (error) {
             console.error(error);
         };
@@ -207,20 +208,21 @@ console.log(allPosts);
         setAlternateArticleTitle(postTitle);
     };
 
-    const persistEditPostToDB = async (e, postID, postURL, postDescription, postMarkets, altTitle) => {
+    const persistEditPostToDB = async (e, postID, postURL, postDescription, altTitle) => {
         e.preventDefault();
-        if (userMarketsForPost.length === 0) {
-            setPostMessage("You must select at least one market.");
-            setTimeout(() => {
-                setPostMessage("");
-            }, 3000);
-            return;
-        };
+        // if (userMarketsForPost.length === 0) {
+        //     setPostMessage("You must select at least one market.");
+        //     setTimeout(() => {
+        //         setPostMessage("");
+        //     }, 3000);
+        //     return;
+        // };
         try {
-            await axios.patch(`${process.env.REACT_APP_API_CALL_HPNFP}/${postID}`, {
+            // await axios.patch(`${process.env.REACT_APP_API_CALL_HPNFP}/${postID}`, {
+            await axios.patch(`http://localhost:8000/homePageNewsFeedPosts/${postID}`, {
                 articleURL: postURL,
                 postDescription: postDescription,
-                markets: postMarkets,
+                markets: [],
                 authorProfilePicture: props.profilePicture || props.userObj.profilePicture,
                 // authorProfilePicture: localStorage.getItem("profilePicture"),
                 articleTitle: postPreviewTitle === "There was an error. Please check the link you have pasted is correct." ? altTitle : postPreviewTitle
@@ -445,7 +447,8 @@ console.log(allPosts);
                                             id="post-2" 
                                             className="create-post-submit" 
                                             value="Confirm Edits" 
-                                            onClick={(e) => persistEditPostToDB(e, editingPostID, newPostURL, newPostDescription, userMarketsForPost, alternateArticleTitle)}/>
+                                            // onClick={(e) => persistEditPostToDB(e, editingPostID, newPostURL, newPostDescription, userMarketsForPost, alternateArticleTitle)}/>
+                                            onClick={(e) => persistEditPostToDB(e, editingPostID, newPostURL, newPostDescription, alternateArticleTitle)}/>
                                     }
                                     <button 
                                     className="create-post-close" 

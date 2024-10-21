@@ -9,6 +9,7 @@
     overflow: hidden;
     border-left: 1px solid lightgray;
     padding: 0% 1% 3% 1%;
+    margin-top: 3vh;
 }
 
 .articles > h3 {

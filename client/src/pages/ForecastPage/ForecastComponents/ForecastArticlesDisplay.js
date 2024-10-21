@@ -17,7 +17,8 @@ function ForecastArticlesDisplay(props) {
 
     const logUserAction = async (username) => {
         try {
-            await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, {
+            // await axios.patch(`${process.env.REACT_APP_API_CALL_U}/${username}`, {
+                await axios.patch(`http://localhost:8000/${username}`, {
                 articleVisits: props.userObject.articleVisits + 1
             });
             props.userObject.articleVisits++;

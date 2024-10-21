@@ -354,36 +354,43 @@ console.log(e);
 
     // Charmander - need to handle the certainty changing here, not in the new function I made at bottom of this before renders
     const handleCertaintyChange = (e, isCertaintyYes) => {
-        console.log(e.target.value);
-        const certainty = e.target.value;
-        if (certainty > 100) {
-            setButtonDisabled(true);
-            setForecastResponseMessage("Please enter a certainty between 0 and 100");
-            return;
-        } else if (certainty < 0) {
-            setForecastResponseMessage("Please enter a forecast from 0-100");
-            setButtonDisabled(true);
-            return;
-        } else {
-            setForecastResponseMessage("");
-            setButtonDisabled(false);
-        }
-        if (e.target.value.length === 0) {
-            setButtonDisabled(true);
-            setForecastResponseMessage("Please input a certainty between 0 and 100");
-        };
-        if (isCertaintyYes === true) {
-            console.log("yessir");
-            setCertaintyToShow(certainty);
-            setNoCertaintyToShow(100 - certainty);
-        } else if (isCertaintyYes === false) {
-            console.log("nosir");
-            setCertaintyToShow(100-certainty);
-            setNoCertaintyToShow(certainty)
-        };
-        let currentPrediction = certainty/100;
-        setCertainty(currentPrediction);
-    };
+        console.log("1, the number just entered is:" + e.target.value);
+		console.log("2, true for option 0, false for option 1: " + isCertaintyYes);
+		const thisCertainty = e.target.value;
+		console.log("3 = " + thisCertainty)
+		if (certainty > 100) {
+			setButtonDisabled(true);
+			setForecastResponseMessage('Please enter a certainty between 0 and 100');
+			return;
+		} else if (thisCertainty < 0) {
+			setForecastResponseMessage('Please enter a forecast from 0-100');
+			setButtonDisabled(true);
+			return;
+		} else {
+			setForecastResponseMessage('');
+			setButtonDisabled(false);
+		}
+		if (e.target.value.length === 0) {
+			setButtonDisabled(true);
+			setForecastResponseMessage('Please input a certainty between 0 and 100');
+		}
+		if (isCertaintyYes === true) {
+			console.log('yessir');
+			setCertaintyToShow(thisCertainty);
+			setNoCertaintyToShow(100 - thisCertainty);
+			let currentPrediction = thisCertainty / 100;
+			setCertainty(currentPrediction);
+			console.log("certainty Var is now = " + currentPrediction);
+		} else if (isCertaintyYes === false) {
+			console.log('nosir');
+			setCertaintyToShow(100 - thisCertainty);
+			setNoCertaintyToShow(thisCertainty);
+            
+			let currentPrediction = (100 - thisCertainty) / 100;
+			setCertainty(currentPrediction);
+			console.log("certainty Var is now = " + currentPrediction);
+		}
+	};
 
     const handleMultipleCertaintyChange = (certaintyVal, e) => {
         const certainty = e.target.value;
@@ -486,8 +493,8 @@ console.log(e);
             }
             try {
                 // const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/update`, {
-                const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateSingle`, {
-                // const newForecastTwo = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateSingle`, {
+                // const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateSingle`, {
+                const newForecastTwo = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateSingle`, {
                     documentID: selectedForecastDocumentID,
                     problemName: forecast,
                     // newForecastObject: newForecastObj,
@@ -534,9 +541,10 @@ console.log(e);
                 setForecastResponseMessage("Please enter a comment");
                 return;
             }
+            console.log(certainty);
             try {
-                const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateSingle`, {
-                    // const submittedForecast = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateMultiple`, {
+                // const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateSingle`, {
+                    const submittedForecast = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateMultiple`, {
                     documentID: selectedForecastDocumentID,
                     problemName: forecast,
                     username: username,
@@ -602,8 +610,8 @@ console.log(e);
                 //     comments: `(${username})~ ${newComments}`, 
                 //     date: new Date().toString()
                 // };
-                const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateMultiple`, {
-                // const newForecastTwo = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateMultiple`, {
+                // const newForecastTwo = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateMultiple`, {
+                const newForecastTwo = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateMultiple`, {
                     documentID: selectedForecastDocumentID,
                     problemName: forecast,
                     certainty1: newCertainty1, 
@@ -660,8 +668,8 @@ console.log(e);
                 return;
             }
             try {
-                const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateMultiple`, {
-                // const submittedForecast = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateMultiple`, {
+                // const submittedForecast = await axios.patch(`${process.env.REACT_APP_API_CALL_F}/submitOrUpdateMultiple`, {
+                const submittedForecast = await axios.patch(`http://localhost:8000/forecasts/submitOrUpdateMultiple`, {
                     documentID: selectedForecastDocumentID,
                     problemName: forecast,
                     username: username,
@@ -999,41 +1007,42 @@ console.log(e);
                                                     />
                                             </h2>
                                             <p style={{ fontSize: "95%" }}>{selectedForecastObject.resolutionCriteria !== undefined ? selectedForecastObject.resolutionCriteria : "No criteria established yet."}</p>
-                                        </div>
-                                        {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
+                                            {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
                                             <button 
                                                 className="disabled-submit-forecast-btn" 
                                                 disabled={buttonDisabled}>
                                                     <h2>Error</h2>
                                             </button>
-                                        }
-                                        {(buttonDisabled === false && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
-                                            <button 
-                                                className="submit-forecast-btn" 
-                                                disabled={buttonDisabled}
-                                                onClick={() => {
-                                                    handleForecastUpdate(selectedForecast, certainty, forecastComments, props.username); 
-                                                }}>
-                                                    <h2>Update Forecast</h2>
-                                            </button>
-                                        }
-                                        {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === false)) &&
-                                            <button 
-                                                className="disabled-submit-forecast-btn" 
-                                                disabled={buttonDisabled}>
-                                                    <h2>ERROR</h2>
-                                            </button>
-                                        }
-                                        {(buttonDisabled === false && (hasAForecastBeenSelected === true && userHasAttempted === false)) &&
-                                            <button 
-                                                className="submit-forecast-btn" 
-                                                disabled={buttonDisabled}
-                                                onClick={() => {
-                                                    handleForecastSubmit(selectedForecast, certainty, forecastComments, props.username, selectedForecastObject); 
-                                                }}>
-                                                    <h2>Submit Forecast</h2>
-                                            </button>
-                                        }
+                                            }
+                                            {(buttonDisabled === false && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
+                                                <button 
+                                                    className="submit-forecast-btn" 
+                                                    disabled={buttonDisabled}
+                                                    onClick={() => {
+                                                        handleForecastUpdate(selectedForecast, certainty, forecastComments, props.username); 
+                                                    }}>
+                                                        <h2>Update Forecast</h2>
+                                                </button>
+                                            }
+                                            {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === false)) &&
+                                                <button 
+                                                    className="disabled-submit-forecast-btn" 
+                                                    disabled={buttonDisabled}>
+                                                        <h2>ERROR</h2>
+                                                </button>
+                                            }
+                                            {(buttonDisabled === false && (hasAForecastBeenSelected === true && userHasAttempted === false)) &&
+                                                <button 
+                                                    className="submit-forecast-btn" 
+                                                    disabled={buttonDisabled}
+                                                    onClick={() => {
+                                                        // console.log(certainty);
+                                                        handleForecastSubmit(selectedForecast, certainty, forecastComments, props.username, selectedForecastObject); 
+                                                    }}>
+                                                        <h2>Submit Forecast</h2>
+                                                </button>
+                                            }
+                                        </div>
                                     </div>
                                 }
                                 {(forecastSingleCertainty === false && (forecastResponseMessage !== "Forecast successfully updated! Check out the chart to see it!" && forecastResponseMessage !== "Forecast successfully submitted! Check out the chart to see it!")) &&
@@ -1185,45 +1194,45 @@ console.log(e);
                                                         />
                                                 </h2>
                                                 <p style={{ fontSize: "95%" }}>{selectedForecastObject.resolutionCriteria !== undefined ? selectedForecastObject.resolutionCriteria : "No criteria established yet."}</p>
-                                            </div>
-                                            {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
+                                                {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
                                                 <button 
                                                     className="disabled-submit-forecast-btn" 
                                                     disabled={buttonDisabled}>
                                                        <h2>Error</h2>
                                                 </button>
-                                            }
-                                            {(buttonDisabled === false && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
-                                                <button 
-                                                    className="submit-forecast-btn" 
-                                                    disabled={buttonDisabled}
-                                                    onClick={() => {
-                                                        handleMultipleForecastUpdate(selectedForecast, certaintyOne, certaintyTwo, certaintyThree, forecastComments, props.username); 
-                                                        setUserPreviousAttemptCertainty(`${certaintyOne*100} / ${certaintyTwo*100} / ${certaintyThree*100}`);
-                                                        setUserPreviousAttemptComments(forecastComments);
-                                                    }}>
-                                                        <h2>Update Forecast</h2>
-                                                </button>
-                                            }
-                                            {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === false)) &&
-                                                <button 
-                                                    className="disabled-submit-forecast-btn" 
-                                                    disabled={buttonDisabled}>
-                                                        <h2>ERROR</h2>
-                                                </button>
-                                            }
-                                            {(buttonDisabled === false && (hasAForecastBeenSelected === true && userHasAttempted === false)) &&
-                                                <button 
-                                                    className="submit-forecast-btn" 
-                                                    disabled={buttonDisabled}
-                                                    onClick={() => {
-                                                        handleMultipleForecastSubmit(selectedForecast, certaintyOne, certaintyTwo, certaintyThree, forecastComments, props.username, selectedForecastObject); 
-                                                        setUserPreviousAttemptCertainty(`${certaintyOne*100} / ${certaintyTwo*100} / ${certaintyThree*100}`);
-                                                        setUserPreviousAttemptComments(forecastComments);
-                                                    }}>
-                                                        <h2>Submit Forecast</h2>
-                                                </button>
-                                            }
+                                                }
+                                                {(buttonDisabled === false && (hasAForecastBeenSelected === true && userHasAttempted === true)) &&
+                                                    <button 
+                                                        className="submit-forecast-btn" 
+                                                        disabled={buttonDisabled}
+                                                        onClick={() => {
+                                                            handleMultipleForecastUpdate(selectedForecast, certaintyOne, certaintyTwo, certaintyThree, forecastComments, props.username); 
+                                                            setUserPreviousAttemptCertainty(`${certaintyOne*100} / ${certaintyTwo*100} / ${certaintyThree*100}`);
+                                                            setUserPreviousAttemptComments(forecastComments);
+                                                        }}>
+                                                            <h2>Update Forecast</h2>
+                                                    </button>
+                                                }
+                                                {(buttonDisabled === true && (hasAForecastBeenSelected === true && userHasAttempted === false)) &&
+                                                    <button 
+                                                        className="disabled-submit-forecast-btn" 
+                                                        disabled={buttonDisabled}>
+                                                            <h2>ERROR</h2>
+                                                    </button>
+                                                }
+                                                {(buttonDisabled === false && (hasAForecastBeenSelected === true && userHasAttempted === false)) &&
+                                                    <button 
+                                                        className="submit-forecast-btn" 
+                                                        disabled={buttonDisabled}
+                                                        onClick={() => {
+                                                            handleMultipleForecastSubmit(selectedForecast, certaintyOne, certaintyTwo, certaintyThree, forecastComments, props.username, selectedForecastObject); 
+                                                            setUserPreviousAttemptCertainty(`${certaintyOne*100} / ${certaintyTwo*100} / ${certaintyThree*100}`);
+                                                            setUserPreviousAttemptComments(forecastComments);
+                                                        }}>
+                                                            <h2>Submit Forecast</h2>
+                                                    </button>
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                 }

@@ -41,8 +41,8 @@ console.log("CHARMANDER");
 
     const getAllForecastsFromDB = async () => {
         try {
-            const allForecastsUnfiltered = await axios.get(`${process.env.REACT_APP_API_CALL_F}`);
-            // const allForecastsUnfiltered = await axios.get(`http://localhost:8000/forecasts`);
+            // const allForecastsUnfiltered = await axios.get(`${process.env.REACT_APP_API_CALL_F}`);
+            const allForecastsUnfiltered = await axios.get(`http://localhost:8000/forecasts`);
             setAllForecasts(allForecastsUnfiltered.data);
         } catch (error) {
             console.error(error);

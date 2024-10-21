@@ -43,8 +43,8 @@ function Login(props) {
                 console.log(email);
                 console.log(country);
                 console.log(emailConsent);
-                const user = await axios.post(`${process.env.REACT_APP_API_CALL_U}/`, {
-                // const user = await axios.post(`http://localhost:8000/users/`, {
+                // const user = await axios.post(`${process.env.REACT_APP_API_CALL_U}/`, {
+                const user = await axios.post(`http://localhost:8000/users/`, {
                     username: username,
                     password: pWord,
                     email: email,
@@ -85,9 +85,9 @@ console.log("3");
             return;
         };
         try {
-            let userObj = await axios.get(`https://fantasyforecast-ec48a35e6c66.herokuapp.com/${username}/${passwordOrResetCode}/${true}`);
+            // let userObj = await axios.get(`https://fantasyforecast-ec48a35e6c66.herokuapp.com/${username}/${passwordOrResetCode}/${true}`);
             // let userObj = await axios.get(`${process.env.REACT_APP_API_CALL_MAIN}/${username}/${passwordOrResetCode}/${true}`);
-            // let userObj = await axios.get(`http://localhost:8000/${username}/${passwordOrResetCode}/${true}`);
+            let userObj = await axios.get(`http://localhost:8000/${username}/${passwordOrResetCode}/${true}`);
 console.log("4");
 console.log("9");
 console.log(userObj);

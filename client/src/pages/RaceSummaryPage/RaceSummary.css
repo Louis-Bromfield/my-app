@@ -1,0 +1,14 @@
+.race-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-results-container {
+    margin-top: 3vh;
+}
+
+.vis-one {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}

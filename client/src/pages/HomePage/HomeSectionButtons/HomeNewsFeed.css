@@ -150,7 +150,7 @@
 }
 
 .author-profile-pic {
-    width: 13%;
+    width: 10%;
     border-radius: 20%;
 }
 
@@ -251,7 +251,9 @@
         width: 100%;
     }
     .author-profile-pic {
-        height: 6vh;
+        /* height: 4vh; */
+        width: 30%;
+        height: 50%;
     }
 }
 
